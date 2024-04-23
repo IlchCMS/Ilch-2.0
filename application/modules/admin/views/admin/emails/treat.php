@@ -23,7 +23,7 @@ $module = $moduleMapper->getModulesByKey($this->getRequest()->getParam('key'), $
             <?=($email) ? $email->getLocale() : $this->getRequest()->getParam('locale') ?>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('desc') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('desc') ? ' has-error' : '' ?>">
         <label for="desc" class="col-xl-2 col-form-label">
             <?=$this->getTrans('emailDesc') ?>
         </label>
@@ -35,7 +35,7 @@ $module = $moduleMapper->getModulesByKey($this->getRequest()->getParam('key'), $
                    value="<?=($email) ? $email->getDesc() : $this->originalInput('desc') ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
         <label for="text" class="col-xl-2 col-form-label">
             <?=$this->getTrans('emailText') ?>
         </label>

@@ -8,7 +8,7 @@
             <h1><?=$this->getTrans('settingsSetting') ?></h1>
             <form method="POST">
                 <?=$this->getTokenField() ?>
-                <div class="row mb-3 <?=$this->validation()->hasError('locale') ? 'has-error' : '' ?>">
+                <div class="row mb-3<?=$this->validation()->hasError('locale') ? ' has-error' : '' ?>">
                     <div class="col-xl-3 col-form-label">
                         <?=$this->getTrans('locale') ?>
                     </div>
@@ -25,7 +25,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="row mb-3 <?=$this->validation()->hasError('optMail') ? 'has-error' : '' ?>">
+                <div class="row mb-3<?=$this->validation()->hasError('optMail') ? ' has-error' : '' ?>">
                     <div class="col-xl-3 col-form-label">
                         <?=$this->getTrans('optMail') ?>
                     </div>

@@ -5,7 +5,7 @@
 </h1>
 <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('reply') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('reply') ? ' has-error' : '' ?>">
         <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('acceptReply') ?>:
         </div>
@@ -19,7 +19,7 @@
             </div>
          </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('nesting') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('nesting') ? ' has-error' : '' ?>">
         <label for="nesting" class="col-xl-2 col-form-label">
             <?=$this->getTrans('nesting') ?>:
         </label>

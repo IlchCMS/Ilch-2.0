@@ -13,7 +13,7 @@ $history = $this->get('history');
 </h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('date') ? ' has-error' : '' ?>">
         <label for="date" class="col-lg-2 col-form-label">
             <?=$this->getTrans('date') ?>:
         </label>
@@ -32,7 +32,7 @@ $history = $this->get('history');
             </span>
         </div>
     </div>
-    <div class="row mb-3<?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -44,7 +44,7 @@ $history = $this->get('history');
                    value="<?=$this->originalInput('title', $history->getTitle()) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
         <label for="ck_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('text') ?>:
         </label>

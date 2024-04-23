@@ -7,7 +7,7 @@ $entrie = $this->get('box');
 
 <form method="POST">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('boxTitle') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('boxTitle') ? ' has-error' : '' ?>">
         <label for="boxTitle" class="col-xl-2 col-form-label">
             <?=$this->getTrans('boxTitle') ?>:
         </label>
@@ -19,7 +19,7 @@ $entrie = $this->get('box');
                    value="<?=$this->escape($this->originalInput('boxTitle', ($entrie->getId()?$entrie->getTitle():''))) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('boxContent') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('boxContent') ? ' has-error' : '' ?>">
         <label for="boxContent" class="col-xl-2 col-form-label">
             <?=$this->getTrans('boxContent') ?>:
         </label>

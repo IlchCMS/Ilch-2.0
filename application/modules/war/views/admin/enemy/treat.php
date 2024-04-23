@@ -2,7 +2,7 @@
 <h1><?=$this->getTrans('manageNewEnemy') ?></h1>
 <form id="article_form" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('enemyName') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('enemyName') ? ' has-error' : '' ?>">
         <label for="enemyNameInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('enemyName') ?>:
         </label>
@@ -14,7 +14,7 @@
                    value="<?=$this->escape($this->originalInput('enemyName', ($entrie->getId()?$entrie->getEnemyName():''))) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('enemyTag') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('enemyTag') ? ' has-error' : '' ?>">
         <label for="enemyTagInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('enemyTag') ?>:
         </label>
@@ -26,7 +26,7 @@
                    value="<?=$this->escape($this->originalInput('enemyTag', ($entrie->getId()?$entrie->getEnemyTag():''))) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('enemyHomepage') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('enemyHomepage') ? ' has-error' : '' ?>">
         <label for="enemyHomepageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('enemyHomepage') ?>:
         </label>
@@ -38,7 +38,7 @@
                    value="<?=$this->escape($this->originalInput('enemyHomepage', ($entrie->getId()?$entrie->getEnemyHomepage():''))) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('enemyImage') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('enemyImage') ? ' has-error' : '' ?>">
         <label for="selectedImage" class="col-xl-2 col-form-label">
             <?=$this->getTrans('enemyImage') ?>:
         </label>
@@ -56,7 +56,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('enemyContactName') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('enemyContactName') ? ' has-error' : '' ?>">
         <label for="enemyContactNameInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('enemyContactName') ?>:
         </label>
@@ -68,7 +68,7 @@
                    value="<?=$this->escape($this->originalInput('enemyContactName', ($entrie->getId()?$entrie->getEnemyContactName():''))) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('enemyContactEmail') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('enemyContactEmail') ? ' has-error' : '' ?>">
         <label for="enemyContactEmailInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('enemyContactEmail') ?>:
         </label>

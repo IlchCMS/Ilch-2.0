@@ -2,7 +2,7 @@
 <?php if ($this->get('emails') != ''): ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="row mb-3 <?=$this->validation()->hasError('subject') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('subject') ? ' has-error' : '' ?>">
             <label for="subject" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('subject') ?>:
             </label>
@@ -15,7 +15,7 @@
                        required />
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
             <label for="ck_1" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('text') ?>:
             </label>

@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('settings') ?></h1>
 <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('entrySettings') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('entrySettings') ? ' has-error' : '' ?>">
         <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('entrySettings') ?>:
         </div>
@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('notificationOnNewEntry') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('notificationOnNewEntry') ? ' has-error' : '' ?>">
         <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('notificationOnNewEntry') ?>:
         </div>
@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('entriesPerPage') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('entriesPerPage') ? ' has-error' : '' ?>">
         <label for="entriesPerPageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('entriesPerPage') ?>:
         </label>
@@ -42,7 +42,7 @@
                    value="<?=($this->escape($this->get('entriesPerPage')) != '') ? $this->escape($this->get('entriesPerPage')) : $this->escape($this->originalInput('entriesPerPage')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?= $this->validation()->hasError('welcomeMessage') ? 'has-error' : '' ?>" data-bs-toggle="dropdown" aria-expanded="false">
+    <div class="row mb-3<?= $this->validation()->hasError('welcomeMessage') ? ' has-error' : '' ?>" data-bs-toggle="dropdown" aria-expanded="false">
         <label for="ck_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('welcomeMessage') ?>:
         </label>

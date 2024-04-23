@@ -74,7 +74,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('paypalMePresetAmount') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('paypalMePresetAmount') ? ' has-error' : '' ?>">
         <label for="paypalMePresetAmount" class="col-xl-2 col-form-label">
             <?=$this->getTrans('paypalMePresetAmount') ?>:
         </label>

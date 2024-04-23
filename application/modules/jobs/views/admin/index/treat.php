@@ -10,7 +10,7 @@ $job = $this->get('job');
 </h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('show') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('show') ? ' has-error' : '' ?>">
         <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('show') ?>:
         </div>
@@ -24,7 +24,7 @@ $job = $this->get('job');
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -36,7 +36,7 @@ $job = $this->get('job');
                    value="<?=$this->escape($this->originalInput('title', $job->getTitle())) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
         <label for="ck_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('text') ?>:
         </label>
@@ -48,7 +48,7 @@ $job = $this->get('job');
                       rows="5"><?=$this->escape($this->originalInput('text', $job->getText())) ?></textarea>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('email') ? ' has-error' : '' ?>">
         <label for="email" class="col-xl-2 col-form-label">
             <?=$this->getTrans('email') ?>:
         </label>

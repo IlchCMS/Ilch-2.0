@@ -10,7 +10,7 @@
             <h1><?=$this->getTrans('setting') ?></h1>
             <form action="" method="POST">
                 <?=$this->getTokenField() ?>
-                <div class="row mb-3 <?=$this->validation()->hasError('acceptNewsletter') ? 'has-error' : '' ?>">
+                <div class="row mb-3<?=$this->validation()->hasError('acceptNewsletter') ? ' has-error' : '' ?>">
                     <div class="col-xl-3 col-form-label">
                         <?=$this->getTrans('acceptNewsletter') ?>:
                     </div>

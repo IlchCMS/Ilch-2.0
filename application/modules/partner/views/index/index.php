@@ -12,7 +12,7 @@
                    placeholder="Bot" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
         <label for="name" class="col-xl-2 col-form-label">
             <?=$this->getTrans('name') ?>:
         </label>
@@ -25,7 +25,7 @@
                    value="<?=($this->originalInput('name') != '' ? $this->escape($this->originalInput('name')) : '') ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('link') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('link') ? ' has-error' : '' ?>">
         <label for="link" class="col-xl-2 col-form-label">
             <?=$this->getTrans('link') ?>:
         </label>
@@ -38,7 +38,7 @@
                    value="<?=($this->originalInput('link') != '' ? $this->escape($this->originalInput('link')) : '') ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('banner') ? ' has-error' : '' ?>">
         <label for="banner" class="col-xl-2 col-form-label">
             <?=$this->getTrans('banner') ?>:
         </label>

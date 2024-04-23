@@ -12,7 +12,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('status') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('status') ? ' has-error' : '' ?>">
             <label for="status" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('visibility') ?>
             </label>
@@ -27,7 +27,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('catId') ? ' has-error' : '' ?>">
             <label for="catId" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('cat') ?>:
             </label>
@@ -50,7 +50,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
             <label for="name" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('productName') ?>:
             </label>
@@ -63,7 +63,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('itemnumber') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('itemnumber') ? ' has-error' : '' ?>">
             <label for="itemnumber" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('itemNumber') ?>:
             </label>
@@ -76,7 +76,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('stock') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('stock') ? ' has-error' : '' ?>">
             <label for="stock" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('stock') ?> / <?=$this->getTrans('salesUnit') ?>:
             </label>
@@ -98,7 +98,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('cordon') || $this->validation()->hasError('cordonColor') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('cordon') || $this->validation()->hasError('cordonColor') ? ' has-error' : '' ?>">
             <label for="cordon" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('cordon') ?>:
             </label>
@@ -129,7 +129,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('price') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('price') ? ' has-error' : '' ?>">
             <label for="price" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('price') ?>:
             </label>
@@ -152,7 +152,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3<?=$this->validation()->hasError('tax') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('tax') ? ' has-error' : '' ?>">
             <label for="tax" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('tax') ?>:
             </label>
@@ -178,7 +178,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('shippingCosts') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('shippingCosts') ? ' has-error' : '' ?>">
             <label for="shippingCosts" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('shippingCosts') ?>:
             </label>
@@ -207,7 +207,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('shippingTime') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('shippingTime') ? ' has-error' : '' ?>">
             <label for="shippingTime" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('shippingTime') ?>:
             </label>
@@ -233,7 +233,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('image') ? ' has-error' : '' ?>">
             <label for="selectedImage_image" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('productThumbnail') ?>:
             </label>
@@ -270,7 +270,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('image1') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('image1') ? ' has-error' : '' ?>">
             <label for="selectedImage_image1" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('productImage') ?> 1:
             </label>
@@ -307,7 +307,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('image2') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('image2') ? ' has-error' : '' ?>">
             <label for="selectedImage_image2" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('productImage') ?> 2:
             </label>
@@ -344,7 +344,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('image3') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('image3') ? ' has-error' : '' ?>">
             <label for="selectedImage_image3" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('productImage') ?> 3:
             </label>
@@ -381,7 +381,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('info') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('info') ? ' has-error' : '' ?>">
             <label for="info" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('shortInfo') ?>:
             </label>
@@ -397,7 +397,7 @@ $shopImgPath = '/application/modules/shop/static/img/';
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('desc') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('desc') ? ' has-error' : '' ?>">
             <label for="desc" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('description') ?>:
             </label>

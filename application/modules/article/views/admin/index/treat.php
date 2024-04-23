@@ -8,7 +8,7 @@ if ($this->get('article')) {
 <h1><?=($this->get('article')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form id="article_form" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('template') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('template') ? ' has-error' : '' ?>">
         <label for="template" class="col-xl-2 col-form-label">
             <?=$this->getTrans('template') ?>:
         </label>
@@ -27,7 +27,7 @@ if ($this->get('article')) {
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('teaser') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('teaser') ? ' has-error' : '' ?>">
         <label for="teaser" class="col-lg-2 col-form-label">
             <?=$this->getTrans('teaser') ?>:
         </label>
@@ -39,7 +39,7 @@ if ($this->get('article')) {
                    value="<?=($this->get('article')) ? $this->escape($this->get('article')->getTeaser()) : $this->originalInput('teaser') ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -67,7 +67,7 @@ if ($this->get('article')) {
             </span>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('cats') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('cats') ? ' has-error' : '' ?>">
         <label for="cats" class="col-xl-2 col-form-label">
             <?=$this->getTrans('cats') ?>:
         </label>
@@ -95,7 +95,7 @@ if ($this->get('article')) {
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('content') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('content') ? ' has-error' : '' ?>">
         <div class="offset-xl-2 col-xl-8">
             <textarea class="form-control ckeditor"
                       id="ck_1"
@@ -129,7 +129,7 @@ if ($this->get('article')) {
         </div>
     <?php endif; ?>
     <h1><?=$this->getTrans('options') ?></h1>
-    <div class="row mb-3 <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
         <label for="access" class="col-lg-2 col-form-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
@@ -177,7 +177,7 @@ if ($this->get('article')) {
             />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('image') ? ' has-error' : '' ?>">
         <label for="selectedImage" class="col-lg-2 col-form-label">
             <?=$this->getTrans('image') ?>:
         </label>
@@ -233,7 +233,7 @@ if ($this->get('article')) {
                       name="keywords"><?=($this->get('article')) ? $this->escape($this->get('article')->getKeywords()) : $this->originalInput('keywords')?></textarea>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('permaLink') ? ' has-error' : '' ?>">
         <label for="permaLink" class="col-lg-2 col-form-label">
             <?=$this->getTrans('permaLink') ?>:
         </label>

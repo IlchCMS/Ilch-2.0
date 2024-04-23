@@ -32,7 +32,7 @@
         </li>
     </ul>
     <br />
-    <div class="row mb-3 <?=$this->validation()->hasError('shopCurrency') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('shopCurrency') ? ' has-error' : '' ?>">
         <label for="shopCurrency" class="col-xl-2 col-form-label">
             <?=$this->getTrans('shopCurrency') ?>:
         </label>
@@ -52,7 +52,7 @@
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('fixTax') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('fixTax') ? ' has-error' : '' ?>">
         <label for="fixTax" class="col-xl-2 col-form-label">
             <?=$this->getTrans('fixTax') ?>:
         </label>
@@ -71,7 +71,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('fixShippingCosts') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('fixShippingCosts') ? ' has-error' : '' ?>">
         <label for="fixShippingCosts" class="col-xl-2 col-form-label">
             <?=$this->getTrans('fixShippingCosts') ?>:
         </label>
@@ -93,7 +93,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('fixShippingTime') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('fixShippingTime') ? ' has-error' : '' ?>">
         <label for="fixShippingTime" class="col-xl-2 col-form-label">
             <?=$this->getTrans('fixShippingTime') ?>:
         </label>
@@ -112,7 +112,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('allowWillCollect') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('allowWillCollect') ? ' has-error' : '' ?>">
         <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('allowWillCollect') ?>
         </div>
@@ -127,7 +127,7 @@
         </div>
     </div>
     <hr />
-    <div class="row mb-3 <?=$this->validation()->hasError('invoiceTextTop') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('invoiceTextTop') ? ' has-error' : '' ?>">
         <label for="invoiceTextTop" class="col-xl-2 col-form-label">
             <?=$this->getTrans('invoiceTextTop') ?>:
         </label>
@@ -144,7 +144,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('invoiceTextBottom') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('invoiceTextBottom') ? ' has-error' : '' ?>">
         <label for="invoiceTextBottom" class="col-xl-2 col-form-label">
             <?=$this->getTrans('invoiceTextBottom') ?>:
         </label>
@@ -161,7 +161,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('deliveryTextTop') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('deliveryTextTop') ? ' has-error' : '' ?>">
         <label for="deliveryTextTop" class="col-xl-2 col-form-label">
             <?=$this->getTrans('deliveryTextTop') ?>:
         </label>

@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('newPassword') ?></h1>
 <form method="POST">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('password') ? ' has-error' : '' ?>">
         <label class="col-xl-2 col-form-label">
             <?=$this->getTrans('profileNewPassword') ?>*
         </label>
@@ -16,7 +16,7 @@
             <?=$this->getTrans('profilePasswordInfo') ?>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('password2') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('password2') ? ' has-error' : '' ?>">
         <label class="col-xl-2 col-form-label">
             <?=$this->getTrans('profileNewPasswordRetype') ?>*
         </label>

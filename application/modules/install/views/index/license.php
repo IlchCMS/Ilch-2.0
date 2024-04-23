@@ -24,7 +24,7 @@ $licenseText = $this->get('licenseText');
         <?php endif; ?>
     </div>
     <?php if (!$this->get('licenseMissing')) : ?>
-        <label class="col-xl-12 checkbox inline <?=$this->validation()->hasError('licenseAccepted') ? 'text-danger' : '' ?>" style="margin-left: 20px;">
+        <label class="col-xl-12 checkbox inline<?=$this->validation()->hasError('licenseAccepted') ? ' text-danger' : '' ?>" style="margin-left: 20px;">
             <input type="checkbox" class="<?=$this->validation()->hasError('licenseAccepted') ? 'is-invalid' : '' ?>" name="licenseAccepted" value="1" <?=$this->originalInput('licenseAccepted', $this->get('licenseAccepted')) ? 'checked' : '' ?>> <?=$this->getTrans('acceptLicense') ?>
         </label>
     <?php endif; ?>

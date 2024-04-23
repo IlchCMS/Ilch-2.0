@@ -34,7 +34,7 @@ $teams = $this->get('teams');
                        placeholder="Bot" />
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('teamId') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('teamId') ? ' has-error' : '' ?>">
             <label for="teamId" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('team') ?>
             </label>
@@ -61,7 +61,7 @@ $teams = $this->get('teams');
                 </select>
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
             <label for="name" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('name') ?>
             </label>
@@ -82,7 +82,7 @@ $teams = $this->get('teams');
             <?php endif; ?>
         </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('email') ? ' has-error' : '' ?>">
             <label for="email" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('email') ?>
             </label>
@@ -123,7 +123,7 @@ $teams = $this->get('teams');
                 <?php endif; ?>
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('birthday') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('birthday') ? ' has-error' : '' ?>">
             <label for="age" class="col-xl-2 col-form-label" for="birthday">
                 <?=$this->getTrans('birthday') ?>
             </label>
@@ -153,7 +153,7 @@ $teams = $this->get('teams');
                 </div>
             <?php endif; ?>
         </div>
-        <div class="row mb-3<?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
             <label for="place" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('place') ?>
             </label>
@@ -165,7 +165,7 @@ $teams = $this->get('teams');
                        value="<?=$this->originalInput('place') ?>" />
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('skill') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('skill') ? ' has-error' : '' ?>">
             <label for="skill" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('skill') ?>
             </label>
@@ -178,7 +178,7 @@ $teams = $this->get('teams');
                 </select>
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
             <label for="ck_1" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('text') ?>
             </label>

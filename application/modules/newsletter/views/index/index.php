@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('menuNewsletter') ?></h1>
 <form action="" method="post">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('email') ? ' has-error' : '' ?>">
         <div class="col-xl-4">
             <div class="input-group">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-envelope"></i></span>

@@ -120,7 +120,7 @@ $config = \Ilch\Registry::get('config');
                                placeholder="Bot" />
                     </div>
                 </div>
-                <div class="row mb-3 <?=$this->validation()->hasError('shoutbox_name') ? 'has-error' : '' ?>">
+                <div class="row mb-3<?=$this->validation()->hasError('shoutbox_name') ? ' has-error' : '' ?>">
                     <div class="col-xl-12">
                         <input type="text"
                                class="form-control"
@@ -130,7 +130,7 @@ $config = \Ilch\Registry::get('config');
                                <?=($this->getUser() !== null) ? 'readonly' : 'required' ?> />
                     </div>
                 </div>
-                <div class="row mb-3 <?=$this->validation()->hasError('shoutbox_textarea') ? 'has-error' : '' ?>">
+                <div class="row mb-3<?=$this->validation()->hasError('shoutbox_textarea') ? ' has-error' : '' ?>">
                     <div class="col-xl-12">
                         <textarea class="form-control"
                                   style="resize: vertical"

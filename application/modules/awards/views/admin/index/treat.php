@@ -14,7 +14,7 @@ if ($awards != '') {
 <h1><?=($awards != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('date') ? ' has-error' : '' ?>">
         <label for="date" class="col-xl-2 col-form-label">
             <?=$this->getTrans('date') ?>:
         </label>
@@ -30,7 +30,7 @@ if ($awards != '') {
             </span>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('rank') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('rank') ? ' has-error' : '' ?>">
         <label for="rank" class="col-xl-2 col-form-label">
             <?=$this->getTrans('rank') ?>:
         </label>
@@ -44,7 +44,7 @@ if ($awards != '') {
                    value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getRank()) : $this->escape($this->originalInput('rank')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('image') ? ' has-error' : '' ?>">
         <label for="selectedImage" class="col-xl-2 col-form-label">
             <?=$this->getTrans('image') ?>:
         </label>
@@ -65,7 +65,7 @@ if ($awards != '') {
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=($this->validation()->hasError('typ') || $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=($this->validation()->hasError('typ') || $this->validation()->hasError('utId')) ? ' has-error' : '' ?>">
         <label for="user" class="col-xl-2 col-form-label">
             <?=$this->getTrans('userTeam') ?>:
         </label>
@@ -112,7 +112,7 @@ if ($awards != '') {
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=($this->validation()->hasError('event')) ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=($this->validation()->hasError('event')) ? ' has-error' : '' ?>">
         <label for="event" class="col-xl-2 col-form-label">
             <?=$this->getTrans('event') ?>:
         </label>
@@ -124,7 +124,7 @@ if ($awards != '') {
                    value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getEvent()) : $this->escape($this->originalInput('event')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('page') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('page') ? ' has-error' : '' ?>">
         <label for="page" class="col-xl-2 col-form-label">
             <?=$this->getTrans('page') ?>:
         </label>

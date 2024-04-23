@@ -110,7 +110,7 @@ if ($this->getUser()) {
         <?=$this->getTokenField() ?>
         <h1><?=$this->getTrans('menuEntry') ?></h1>
 
-        <div class="row mb-3 <?=in_array('reason', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=in_array('reason', $this->get('errorFields')) ? ' has-error' : '' ?>">
             <label for="reason" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('reason') ?>:
             </label>
@@ -122,7 +122,7 @@ if ($this->getUser()) {
                        value="<?=($this->get('post') != '') ? $this->get('post')['reason'] : '' ?>" />
             </div>
         </div>
-        <div class="row mb-3 <?=in_array('when', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=in_array('when', $this->get('errorFields')) ? ' has-error' : '' ?>">
             <label for="start" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('when') ?>:
             </label>
@@ -149,7 +149,7 @@ if ($this->getUser()) {
                 </span>
             </div>
         </div>
-        <div class="row mb-3 <?=in_array('text', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=in_array('text', $this->get('errorFields')) ? ' has-error' : '' ?>">
             <label for="text" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('description') ?>:
             </label>

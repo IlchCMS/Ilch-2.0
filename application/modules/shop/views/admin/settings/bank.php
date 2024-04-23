@@ -32,7 +32,7 @@
         </li>
     </ul>
     <br />
-    <div class="row mb-3 <?=$this->validation()->hasError('bankName') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('bankName') ? ' has-error' : '' ?>">
         <label for="bankName" class="col-xl-2 col-form-label">
             <?=$this->getTrans('bankName') ?>:
         </label>
@@ -45,7 +45,7 @@
                    value="<?=($this->escape($this->get('settings')->getBankName()) != '') ? $this->escape($this->get('settings')->getBankName()) : $this->escape($this->originalInput('bankName')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('bankOwner') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('bankOwner') ? ' has-error' : '' ?>">
         <label for="bankOwner" class="col-xl-2 col-form-label">
             <?=$this->getTrans('bankOwner') ?>:
         </label>
@@ -58,7 +58,7 @@
                    value="<?=($this->escape($this->get('settings')->getBankOwner()) != '') ? $this->escape($this->get('settings')->getBankOwner()) : $this->escape($this->originalInput('bankOwner')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('bankIBAN') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('bankIBAN') ? ' has-error' : '' ?>">
         <label for="bankIBAN" class="col-xl-2 col-form-label">
             <?=$this->getTrans('bankIBAN') ?>:
         </label>
@@ -71,7 +71,7 @@
                    value="<?=($this->escape($this->get('settings')->getBankIBAN()) != '') ? $this->escape($this->get('settings')->getBankIBAN()) : $this->escape($this->originalInput('bankIBAN')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('bankBIC') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('bankBIC') ? ' has-error' : '' ?>">
         <label for="bankBIC" class="col-xl-2 col-form-label">
             <?=$this->getTrans('bankBIC') ?>:
         </label>

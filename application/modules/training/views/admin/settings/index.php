@@ -7,7 +7,7 @@
     <?=$this->getTokenField() ?>
 
     <h1><?=$this->getTrans('boxSettings') ?></h1>
-    <div class="row mb-3 <?=$this->validation()->hasError('boxNexttrainingLimit') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('boxNexttrainingLimit') ? ' has-error' : '' ?>">
         <label for="limitNextTrainingInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('boxNexttrainingLimit') ?>:
         </label>

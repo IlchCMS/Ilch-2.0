@@ -179,14 +179,14 @@ $commentsClass = new Ilch\Comments();
                             ?>
                             <?php if ($this->getUser()): ?>
                                 <?php if ($user->getId() == $this->getUser()->getId()): ?>
-                                    <select class="form-select col-lg-3 mb-3 <?=$this->validation()->hasError('warAccept') ? ' has-error' : '' ?>" id="warAccept" name="warAccept">
+                                    <select class="form-select col-lg-3 mb-3<?=$this->validation()->hasError('warAccept') ? ' has-error' : '' ?>" id="warAccept" name="warAccept">
                                         <optgroup label="<?=$this->getTrans('choose') ?>">
                                             <option value="1" <?=($acceptArray ? $acceptArray->getAccept() : '') == 1 ? 'selected=""' : '' ?>><?=$this->getTrans('accept') ?></option>
                                             <option value="2" <?=($acceptArray ? $acceptArray->getAccept() : '') == 2 ? 'selected=""' : '' ?>><?=$this->getTrans('decline') ?></option>
                                             <option value="3" <?=($acceptArray ? $acceptArray->getAccept() : '') == 3 ? 'selected=""' : '' ?>><?=$this->getTrans('undecided') ?></option>
                                         </optgroup>
                                     </select>
-                                    <textarea class="form-control col-lg-3 mb-3 <?=$this->validation()->hasError('warComment') ? ' has-error' : '' ?>"
+                                    <textarea class="form-control col-lg-3 mb-3<?=$this->validation()->hasError('warComment') ? ' has-error' : '' ?>"
                                               style="resize: vertical"
                                               name="warComment"
                                               id="warComment" ></textarea>

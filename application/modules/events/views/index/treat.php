@@ -52,7 +52,7 @@ $types = $this->get('types');
                 </div>
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('creator') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('creator') ? ' has-error' : '' ?>">
             <label for="creator" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('by') ?>
             </label>
@@ -65,7 +65,7 @@ $types = $this->get('types');
                 </select>
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('start') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('start') ? ' has-error' : '' ?>">
             <label for="start" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('startTime') ?>
             </label>
@@ -82,7 +82,7 @@ $types = $this->get('types');
                 </span>
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('end') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('end') ? ' has-error' : '' ?>">
             <label for="end" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('endTime') ?>
             </label>
@@ -102,7 +102,7 @@ $types = $this->get('types');
                 </span>
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
             <label for="title" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('title') ?>
             </label>
@@ -114,7 +114,7 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getTitle()) : $this->escape($this->originalInput('title')) ?>" />
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
             <label for="place" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('place') ?>
             </label>
@@ -126,7 +126,7 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPlace()) : $this->escape($this->originalInput('place')) ?>" />
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('type') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('type') ? ' has-error' : '' ?>">
             <label for="place" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('type') ?>
             </label>
@@ -148,7 +148,7 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getType()) : $this->escape($this->originalInput('type')) ?>" />
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('website') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('website') ? ' has-error' : '' ?>">
             <label for="website" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('website') ?>
             </label>
@@ -161,7 +161,7 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getWebsite()) : $this->escape($this->originalInput('website')) ?>" />
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
             <label for="ck_1" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('text') ?>
             </label>
@@ -173,7 +173,7 @@ $types = $this->get('types');
                           rows="5"><?=($this->get('event') != '') ? $this->escape($this->get('event')->getText()) : $this->escape($this->originalInput('text')) ?></textarea>
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('price') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('price') ? ' has-error' : '' ?>">
             <label for="price" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('price') ?>
             </label>
@@ -207,7 +207,7 @@ $types = $this->get('types');
                 </select>
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('userLimit') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('userLimit') ? ' has-error' : '' ?>">
             <label for="userLimit" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('userLimit') ?> <div class="badge rounded-pill bg-secondary" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="<?=$this->getTrans('userLimitInfo') ?>"><i class="fa-solid fa-info"></i></div>
             </label>

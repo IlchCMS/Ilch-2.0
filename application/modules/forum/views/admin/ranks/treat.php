@@ -5,7 +5,7 @@
 <h1><?=($this->get('rank')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form method="POST">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -18,7 +18,7 @@
                    required />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('posts') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('posts') ? ' has-error' : '' ?>">
         <label for="posts" class="col-xl-2 col-form-label">
             <?=$this->getTrans('posts') ?>:
         </label>

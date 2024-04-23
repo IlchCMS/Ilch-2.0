@@ -39,7 +39,7 @@ $languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
                         <form class="form-signin" method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'login', 'action' => 'index']) ?>">
                             <?=$this->getTokenField() ?>
                             <h4><?=$this->getTrans('loginWelcome') ?></h4>
-                            <div class="row mb-3 <?php if (!empty($errors)) { echo 'has-error'; } ?>">
+                            <div class="row mb-3<?php if (!empty($errors)) { echo ' has-error'; } ?>">
                                 <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
                                     <input type="text"
@@ -50,7 +50,7 @@ $languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
                                            autocomplete="username">
                                 </div>
                             </div>
-                            <div class="row mb-3 <?php if (!empty($errors)) { echo 'has-error'; } ?>">
+                            <div class="row mb-3<?php if (!empty($errors)) { echo ' has-error'; } ?>">
                                 <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
                                     <input type="password"

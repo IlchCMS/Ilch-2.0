@@ -11,7 +11,7 @@ $cat = $this->get('cat');
 </h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
         <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -23,7 +23,7 @@ $cat = $this->get('cat');
                    value="<?=$this->escape($this->originalInput('title', $cat->getTitle())) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
         <label for="access" class="col-xl-2 col-form-label">
             <?=$this->getTrans('visibleFor') ?>:
         </label>

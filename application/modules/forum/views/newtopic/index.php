@@ -37,7 +37,7 @@ if ($this->getUser()) {
                         <?=$this->getTokenField() ?>
                         <div class="row">
                             <div class="col-xl-12">
-                                <div class="row mb-3 <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">
+                                <div class="row mb-3<?=$this->validation()->hasError('topicTitle') ? ' has-error' : '' ?>">
                                     <label for="topicTitle" class="col-lg-2 col-form-label">
                                         <?=$this->getTrans('topicTitle') ?>
                                     </label>
@@ -68,7 +68,7 @@ if ($this->getUser()) {
                                                value="<?=$this->originalInput('topicTitle') ?>" />
                                     </div>
                                 </div>
-                                <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+                                <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
                                     <label class="col-xl-2 col-form-label">
                                         <?=$this->getTrans('text') ?>
                                     </label>

@@ -14,7 +14,7 @@ $userGroupList = $this->get('userGroupList');
 <h1><?=($cat) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form method="POST">
     <?=$this->getTokenField(); ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('paragraph') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('paragraph') ? ' has-error' : '' ?>">
         <label for="paragraph" class="col-xl-2 col-form-label">
             <?=$this->getTrans('art') ?>
         </label>
@@ -27,7 +27,7 @@ $userGroupList = $this->get('userGroupList');
                    required />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
         <label for="name" class="col-xl-2 col-form-label">
             <?=$this->getTrans('name') ?>:
         </label>

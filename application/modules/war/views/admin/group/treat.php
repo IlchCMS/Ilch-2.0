@@ -2,7 +2,7 @@
 <h1><?=(!$entrie->getId()) ? $this->getTrans('manageNewGroup') : $this->getTrans('treatGroup') ?></h1>
 <form id="article_form" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('groupName') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('groupName') ? ' has-error' : '' ?>">
         <label for="groupNameInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('groupName') ?>:
         </label>
@@ -14,7 +14,7 @@
                    value="<?=$this->escape($this->originalInput('groupName', ($entrie->getId()?$entrie->getGroupName():''))) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('groupTag') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('groupTag') ? ' has-error' : '' ?>">
         <label for="groupTagInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('groupTag') ?>:
         </label>
@@ -26,7 +26,7 @@
                    value="<?=$this->escape($this->originalInput('groupTag', ($entrie->getId()?$entrie->getGroupTag():''))) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('groupImage') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('groupImage') ? ' has-error' : '' ?>">
         <label for="selectedImage_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('groupImage') ?>:
         </label>
@@ -44,7 +44,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('groupDesc') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('groupDesc') ? ' has-error' : '' ?>">
         <label for="groupDesc" class="col-xl-2 col-form-label">
             <?=$this->getTrans('groupDesc') ?>:
         </label>
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('userGroup') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('userGroup') ? ' has-error' : '' ?>">
         <label for="warGroup" class="col-xl-2 col-form-label">
             <?=$this->getTrans('assignedMember') ?>
         </label>

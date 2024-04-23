@@ -11,7 +11,7 @@
 <?php endif; ?>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
         <label for="name" class="col-xl-2 col-form-label"><?=$this->getTrans('name') ?>:</label>
         <div class="col-xl-4">
             <input type="text"
@@ -22,7 +22,7 @@
                    value="<?=$this->escape($currency->getName()) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('code') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('code') ? ' has-error' : '' ?>">
         <label for="code" class="col-xl-2 col-form-label"><?=$this->getTrans('currencyCode') ?>:</label>
         <div class="col-xl-4">
             <div class="input-group">

@@ -32,7 +32,7 @@
         </li>
     </ul>
     <br />
-    <div class="row mb-3 <?=$this->validation()->hasError('shopName') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('shopName') ? ' has-error' : '' ?>">
         <label for="shopName" class="col-xl-2 col-form-label">
             <?=$this->getTrans('shopName') ?>:
         </label>
@@ -45,7 +45,7 @@
                    value="<?=($this->escape($this->get('settings')->getShopName()) != '') ? $this->escape($this->get('settings')->getShopName()) : $this->escape($this->originalInput('shopName')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('shopStreet') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('shopStreet') ? ' has-error' : '' ?>">
         <label for="shopStreet" class="col-xl-2 col-form-label">
             <?=$this->getTrans('shopStreet') ?>:
         </label>
@@ -58,7 +58,7 @@
                    value="<?=($this->escape($this->get('settings')->getShopStreet()) != '') ? $this->escape($this->get('settings')->getShopStreet()) : $this->escape($this->originalInput('shopStreet')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('shopPlz') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('shopPlz') ? ' has-error' : '' ?>">
         <label for="shopPlz" class="col-xl-2 col-form-label">
             <?=$this->getTrans('shopPlz') ?>:
         </label>
@@ -71,7 +71,7 @@
                    value="<?=($this->escape($this->get('settings')->getShopPlz()) != '') ? $this->escape($this->get('settings')->getShopPlz()) : $this->escape($this->originalInput('shopPlz')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('shopCity') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('shopCity') ? ' has-error' : '' ?>">
         <label for="shopCity" class="col-xl-2 col-form-label">
             <?=$this->getTrans('shopCity') ?>:
         </label>
@@ -85,7 +85,7 @@
         </div>
     </div>
     <hr />
-    <div class="row mb-3 <?=$this->validation()->hasError('shopLogo') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('shopLogo') ? ' has-error' : '' ?>">
         <label for="selectedImage_shopLogo" class="col-xl-2 col-form-label">
             <?=$this->getTrans('shopLogo') ?>:
         </label>
@@ -122,7 +122,7 @@
         </div>
     </div>
     <hr />
-    <div class="row mb-3 <?=$this->validation()->hasError('shopTel') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('shopTel') ? ' has-error' : '' ?>">
         <label for="shopTel" class="col-xl-2 col-form-label">
             <?=$this->getTrans('shopTel') ?>:
         </label>
@@ -135,7 +135,7 @@
                    value="<?=($this->escape($this->get('settings')->getShopTel()) != '') ? $this->escape($this->get('settings')->getShopTel()) : $this->escape($this->originalInput('shopTel')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('shopFax') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('shopFax') ? ' has-error' : '' ?>">
         <label for="shopFax" class="col-xl-2 col-form-label">
             <?=$this->getTrans('shopFax') ?>:
         </label>
@@ -148,7 +148,7 @@
                    value="<?=($this->escape($this->get('settings')->getShopFax()) != '') ? $this->escape($this->get('settings')->getShopFax()) : $this->escape($this->originalInput('shopFax')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('shopMail') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('shopMail') ? ' has-error' : '' ?>">
         <label for="shopMail" class="col-xl-2 col-form-label">
             <?=$this->getTrans('shopMail') ?>:
         </label>
@@ -161,7 +161,7 @@
                    value="<?=($this->escape($this->get('settings')->getShopMail()) != '') ? $this->escape($this->get('settings')->getShopMail()) : $this->escape($this->originalInput('shopMail')) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('shopWeb') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('shopWeb') ? ' has-error' : '' ?>">
         <label for="shopWeb" class="col-xl-2 col-form-label">
             <?=$this->getTrans('shopWeb') ?>:
         </label>
@@ -175,7 +175,7 @@
         </div>
     </div>
     <hr />
-        <div class="row mb-3 <?=$this->validation()->hasError('shopStNr') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('shopStNr') ? ' has-error' : '' ?>">
         <label for="shopStNr" class="col-xl-2 col-form-label">
             <?=$this->getTrans('shopStNr') ?>:
         </label>

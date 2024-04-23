@@ -9,7 +9,7 @@ $vote = $this->get('vote');
 <h1><?=($vote->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form role="form" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
         <label for="group" class="col-xl-2 col-form-label">
             <?=$this->getTrans('participationGroup') ?>
         </label>
@@ -29,7 +29,7 @@ $vote = $this->get('vote');
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('access') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('access') ? ' has-error' : '' ?>">
         <label for="access" class="col-xl-2 col-form-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
@@ -49,7 +49,7 @@ $vote = $this->get('vote');
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('question') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('question') ? ' has-error' : '' ?>">
         <label for="question" class="col-xl-2 col-form-label">
             <?=$this->getTrans('question') ?>
         </label>
@@ -61,7 +61,7 @@ $vote = $this->get('vote');
                    value="<?=$this->escape($this->originalInput('question', $vote->getQuestion())) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('multiplereply') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('multiplereply') ? ' has-error' : '' ?>">
         <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('multiplereply') ?>
         </div>
@@ -75,7 +75,7 @@ $vote = $this->get('vote');
             </div>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('reply') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('reply') ? ' has-error' : '' ?>">
         <label for="reply" class="col-xl-2 col-form-label">
             <?=$this->getTrans('reply') ?>
         </label>

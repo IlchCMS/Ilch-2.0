@@ -15,7 +15,7 @@
             <div class="new-topic ilch-bg ilch-border">
                 <form method="POST">
                     <?=$this->getTokenField() ?>
-                    <div class="row mb-3 <?=$this->validation()->hasError('reason') ? 'has-error' : '' ?>">
+                    <div class="row mb-3<?=$this->validation()->hasError('reason') ? ' has-error' : '' ?>">
                         <label for="reason" class="col-xl-2 col-form-label">
                             <?=$this->getTrans('reason') ?>
                         </label>

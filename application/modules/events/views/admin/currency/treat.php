@@ -1,7 +1,7 @@
 <h1><?=($this->getRequest()->getParam('id')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
         <div class="col-xl-4">
             <input type="text"
                    class="form-control"

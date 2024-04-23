@@ -11,7 +11,7 @@ $cats = $this->get('cats');
 <h1><?=($link->getId()) ? $this->getTrans('menuActionEditLink') : $this->getTrans('menuActionNewLink') ?></h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
         <label for="name" class="col-xl-2 col-form-label">
             <?=$this->getTrans('name') ?>:
         </label>
@@ -24,7 +24,7 @@ $cats = $this->get('cats');
                    value="<?=$this->escape($this->originalInput('Name', $link->getName())) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('link') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('link') ? ' has-error' : '' ?>">
         <label for="link" class="col-xl-2 col-form-label">
             <?=$this->getTrans('link') ?>:
         </label>
@@ -37,7 +37,7 @@ $cats = $this->get('cats');
                    value="<?=$this->escape($this->originalInput('link', $link->getLink())) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('banner') ? ' has-error' : '' ?>">
         <label for="selectedImage_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('banner') ?>:
         </label>
@@ -65,7 +65,7 @@ $cats = $this->get('cats');
                       rows="3"><?=$this->escape($this->originalInput('desc', $link->getDesc())) ?></textarea>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('catId') ? ' has-error' : '' ?>">
         <label for="catId" class="col-xl-2 col-form-label">
             <?=$this->getTrans('category') ?>:
         </label>

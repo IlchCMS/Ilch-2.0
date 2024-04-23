@@ -59,7 +59,7 @@
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('event_upcoming_event_limit') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('event_upcoming_event_limit') ? ' has-error' : '' ?>">
         <label for="event_upcoming_event_limit" class="col-xl-2 col-form-label">
             <?=$this->getTrans('upcomingEventLimit') ?>:
         </label>
@@ -73,7 +73,7 @@
                    required />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('event_current_event_limit') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('event_current_event_limit') ? ' has-error' : '' ?>">
         <label for="event_current_event_limit" class="col-xl-2 col-form-label">
             <?=$this->getTrans('currentEventLimit') ?>:
         </label>
@@ -87,7 +87,7 @@
                    required />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('event_past_event_limit') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('event_past_event_limit') ? ' has-error' : '' ?>">
         <label for="event_past_event_limit" class="col-xl-2 col-form-label">
             <?=$this->getTrans('pastEventLimit') ?>:
         </label>
@@ -101,7 +101,7 @@
                    required />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('event_height') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('event_height') ? ' has-error' : '' ?>">
         <label for="event_height" class="col-xl-2 col-form-label">
             <?=$this->getTrans('imageHeight') ?>:
         </label>
@@ -115,7 +115,7 @@
                    required />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('event_width') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('event_width') ? ' has-error' : '' ?>">
         <label for="event_width" class="col-xl-2 col-form-label">
             <?=$this->getTrans('imageWidth') ?>:
         </label>
@@ -129,7 +129,7 @@
                    required />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('event_size') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('event_size') ? ' has-error' : '' ?>">
         <label for="event_size" class="col-xl-2 col-form-label">
             <?=$this->getTrans('imageSizeBytes') ?>:
         </label>
@@ -143,7 +143,7 @@
                    required />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('event_filetypes') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('event_filetypes') ? ' has-error' : '' ?>">
         <label for="event_filetypes" class="col-xl-2 col-form-label">
             <?=$this->getTrans('imageAllowedFileExtensions') ?>:
         </label>
@@ -173,7 +173,7 @@
                    value="<?=$this->get('event_google_maps_api_key') ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('event_google_maps_map_typ') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('event_google_maps_map_typ') ? ' has-error' : '' ?>">
         <label for="event_google_maps_map_typ" class="col-xl-2 col-form-label">
             <?=$this->getTrans('googleMapsMapTyp') ?>:
         </label>
@@ -186,7 +186,7 @@
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('event_google_maps_zoom') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('event_google_maps_zoom') ? ' has-error' : '' ?>">
         <label for="event_google_maps_zoom" class="col-xl-2 col-form-label">
             <?=$this->getTrans('googleMapsZoom') ?>:
         </label>
@@ -202,7 +202,7 @@
     </div>
 
     <h1><?=$this->getTrans('menuBoxes') ?></h1>
-    <div class="row mb-3 <?=$this->validation()->hasError('event_box_event_limit') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('event_box_event_limit') ? ' has-error' : '' ?>">
         <label for="event_box_event_limit" class="col-xl-2 col-form-label">
             <?=$this->getTrans('boxEventLimit') ?>:
         </label>

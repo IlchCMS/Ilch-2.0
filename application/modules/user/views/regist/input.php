@@ -22,7 +22,7 @@ $errors = $this->get('errors');
                            placeholder="Bot" />
                 </div>
             </div>
-            <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+            <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
                 <label for="name" class="col-form-label col-xl-2">
                     <?=$this->getTrans('name') ?>:
                 </label>
@@ -35,7 +35,7 @@ $errors = $this->get('errors');
                            autocomplete="username" />
                 </div>
             </div>
-            <div class="row mb-3 <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
+            <div class="row mb-3<?=$this->validation()->hasError('password') ? ' has-error' : '' ?>">
                 <label for="password" class="col-form-label col-xl-2">
                     <?=$this->getTrans('password') ?>:
                 </label>
@@ -48,7 +48,7 @@ $errors = $this->get('errors');
                            autocomplete="new-password" />
                 </div>
             </div>
-            <div class="row mb-3 <?=$this->validation()->hasError('password2') ? 'has-error' : '' ?>">
+            <div class="row mb-3<?=$this->validation()->hasError('password2') ? ' has-error' : '' ?>">
                 <label for="password2" class="col-form-label col-xl-2">
                     <?=$this->getTrans('password2') ?>:
                 </label>
@@ -61,7 +61,7 @@ $errors = $this->get('errors');
                            autocomplete="new-password" />
                 </div>
             </div>
-            <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
+            <div class="row mb-3<?=$this->validation()->hasError('email') ? ' has-error' : '' ?>">
                 <label for="email" class="col-form-label col-xl-2">
                     <?=$this->getTrans('emailAdress') ?>:
                 </label>

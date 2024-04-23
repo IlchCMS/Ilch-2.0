@@ -34,7 +34,7 @@ $prefix = $this->get('prefix');
             <div class="new-topic ilch-bg ilch-border">
                 <form method="POST">
                     <?=$this->getTokenField() ?>
-                    <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+                    <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
                         <div class="col-lg-12">
                             <textarea class="form-control ckeditor"
                                       id="ck_1"

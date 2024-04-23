@@ -10,7 +10,7 @@ if ($this->validation()->hasErrors()) {
 ?>
 <form method="POST">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('slider') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('slider') ? ' has-error' : '' ?>">
         <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('slider') ?>:
         </div>
@@ -25,7 +25,7 @@ if ($this->validation()->hasErrors()) {
         </div>
     </div>
     <div id="contentHeight" <?=(!$slider) ? 'hidden' : '' ?>>
-        <div class="row mb-3 <?=$this->validation()->hasError('boxSliderMode') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('boxSliderMode') ? ' has-error' : '' ?>">
             <label for="boxSliderMode" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('boxSliderMode') ?>:
             </label>
@@ -36,7 +36,7 @@ if ($this->validation()->hasErrors()) {
                 </select>
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('boxSliderHeight') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('boxSliderHeight') ? ' has-error' : '' ?>">
             <label for="boxSliderHeight" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('boxSliderHeight') ?>:
             </label>
@@ -50,7 +50,7 @@ if ($this->validation()->hasErrors()) {
             </div>
         </div>
 
-        <div class="row mb-3 <?=$this->validation()->hasError('boxSliderSpeed') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('boxSliderSpeed') ? ' has-error' : '' ?>">
             <label for="boxSliderSpeed" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('boxSliderSpeed') ?>:
             </label>

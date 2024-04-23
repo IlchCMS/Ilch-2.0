@@ -36,7 +36,7 @@ $entry = $this->get('calendar');
     <h1>
         <?=($entry->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
     </h1>
-    <div class="row mb-3 <?=$this->validation()->hasError('start') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('start') ? ' has-error' : '' ?>">
         <label for="start" class="col-xl-2 col-form-label">
             <?=$this->getTrans('start') ?>:
         </label>
@@ -52,7 +52,7 @@ $entry = $this->get('calendar');
             </span>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('end') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('end') ? ' has-error' : '' ?>">
         <label for="end" class="col-xl-2 col-form-label">
             <?=$this->getTrans('end') ?>:
         </label>
@@ -79,7 +79,7 @@ $entry = $this->get('calendar');
                    value="<?=$this->escape($this->originalInput('title', ($entry->getId()?$entry->getTitle():''))) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
         <label for="place" class="col-xl-2 col-form-label">
             <?=$this->getTrans('place') ?>:
         </label>
@@ -91,7 +91,7 @@ $entry = $this->get('calendar');
                    value="<?=$this->escape($this->originalInput('place', ($entry->getId()?$entry->getPlace():''))) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('periodType') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('periodType') ? ' has-error' : '' ?>">
         <label for="periodType" class="col-xl-2 col-form-label">
             <?=$this->getTrans('periodEntry') ?>:
         </label>
@@ -180,7 +180,7 @@ $entry = $this->get('calendar');
             </select>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
         <label for="ck_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('text') ?>:
         </label>

@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('newPassword') ?></h1>
 <form method="POST">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('email') ? ' has-error' : '' ?>">
         <label for="email" class="col-form-label col-xl-2">
             <?=$this->getTrans('email') ?>:
         </label>

@@ -20,7 +20,7 @@ if (!empty($profil->getBirthday())) {
             <h1><?=$this->getTrans('profileSettings') ?></h1>
             <form method="POST">
                 <?=$this->getTokenField() ?>
-                <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
+                <div class="row mb-3<?=$this->validation()->hasError('email') ? ' has-error' : '' ?>">
                     <label class="col-xl-2 col-form-label">
                         <?=$this->getTrans('profileEmail') ?>*
                     </label>

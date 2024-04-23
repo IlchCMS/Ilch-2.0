@@ -14,7 +14,7 @@ if ($user->getId()) {
     <input type="hidden"
            name="id"
            value="<?=$user->getId() ?>" />
-    <div class="row mb-3 <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
         <label for="name" class="col-xl-3 col-form-label">
             <?=$this->getTrans('userName') ?>
         </label>
@@ -27,7 +27,7 @@ if ($user->getId()) {
                    value="<?=($this->originalInput('name') != '') ? $this->escape($this->originalInput('name')) : $this->escape($user->getName()) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('email') ? ' has-error' : '' ?>">
         <label for="email" class="col-xl-3 col-form-label">
             <?=$this->getTrans('userEmail') ?>
         </label>
@@ -40,7 +40,7 @@ if ($user->getId()) {
                    value="<?=($this->originalInput('email') != '') ? $this->escape($this->originalInput('email')) : $this->escape($user->getEmail()) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('userPassword') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('userPassword') ? ' has-error' : '' ?>">
         <label for="password" class="col-xl-3 col-form-label">
             <?=$this->getTrans('userPassword') ?>
         </label>

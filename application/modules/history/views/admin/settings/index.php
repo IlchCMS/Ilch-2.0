@@ -6,7 +6,7 @@
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <h1><?=$this->getTrans('desc_order') ?></h1>
-    <div class="row mb-3 <?=$this->validation()->hasError('desc_order') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('desc_order') ? ' has-error' : '' ?>">
         <label for="desc_order" class="col-xl-2 col-form-label">
             <?=$this->getTrans('desc_orderText') ?>:
         </label>

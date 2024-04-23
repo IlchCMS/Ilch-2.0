@@ -7,7 +7,7 @@ $entrie = $this->get('page');
 
 <form method="POST">
     <?=$this->getTokenField() ?>
-    <div class="row mb-3 <?=$this->validation()->hasError('pageTitle') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('pageTitle') ? ' has-error' : '' ?>">
         <label for="pageTitle" class="col-xl-2 col-form-label">
             <?=$this->getTrans('pageTitle') ?>:
         </label>
@@ -19,7 +19,7 @@ $entrie = $this->get('page');
                    value="<?=$this->escape($this->originalInput('pageTitle', ($entrie->getId()?$entrie->getTitle():''))) ?>" />
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('pageContent') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('pageContent') ? ' has-error' : '' ?>">
         <label for="pageContent" class="col-xl-2 col-form-label">
             <?=$this->getTrans('pageContent') ?>:
         </label>
@@ -67,7 +67,7 @@ $entrie = $this->get('page');
                       name="keywords"><?=$this->escape($this->originalInput('keywords', ($entrie->getId()?$entrie->getKeywords():''))) ?></textarea>
         </div>
     </div>
-    <div class="row mb-3 <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('permaLink') ? ' has-error' : '' ?>">
         <label for="permaLink" class="col-xl-2">
             <?=$this->getTrans('permaLink') ?>:
         </label>

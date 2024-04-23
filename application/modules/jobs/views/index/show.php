@@ -28,7 +28,7 @@ $job = $this->get('job');
     <h1><?=$this->getTrans('apply') ?></h1>
     <form action="" method="POST">
         <?=$this->getTokenField() ?>
-        <div class="row mb-3 <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
             <label for="title" class="col-xl-3 col-form-label">
                 <div class="text-start">
                     <?=$this->getTrans('applyAs') ?>:
@@ -44,7 +44,7 @@ $job = $this->get('job');
                 </select>
             </div>
         </div>
-        <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
             <div class="col-xl-12">
                 <textarea class="form-control ckeditor"
                           id="ck_1"

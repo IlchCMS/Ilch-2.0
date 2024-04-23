@@ -26,7 +26,7 @@ $prefixes = $this->get('prefixes');
                 <form method="POST">
                     <?=$this->getTokenField() ?>
                     <?php if ($this->get('isFirstPost')) : ?>
-                    <div class="row mb-3 <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">
+                    <div class="row mb-3<?=$this->validation()->hasError('topicTitle') ? ' has-error' : '' ?>">
                         <label for="topicTitle" class="col-xl-2 col-form-label">
                             <?=$this->getTrans('topicTitle') ?>
                         </label>
@@ -58,7 +58,7 @@ $prefixes = $this->get('prefixes');
                         </div>
                     </div>
                     <?php endif; ?>
-                    <div class="row mb-3 <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+                    <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
                         <label class="col-xl-2 col-form-label">
                             <?=$this->getTrans('text') ?>
                         </label>
