@@ -83,7 +83,7 @@ $team = $this->get('team');
                                                             }
                                                         }
 
-                                                        echo '<a href="' . $profileIconField->getAddition() . $profileFieldContent->getValue() . '" target="_blank" rel="noopener" class="fa ' . $profileIconField->getIcon() . '" title="' . $profileFieldName . '"></a>';
+                                                        echo '<a href="' . $profileIconField->getAddition() . $profileFieldContent->getValue() . '" target="_blank" rel="noopener" class="' . $profileIconField->getIcon() . '" title="' . $profileFieldName . '"></a>';
                                                         break;
                                                     }
                                                 }
