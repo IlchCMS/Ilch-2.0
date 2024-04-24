@@ -114,7 +114,7 @@
                 <?=$this->getTrans('selected') ?>
             </button>
             <ul class="dropdown-menu listConvert" role="menu">
-                <li clas="dropdown-item"><a href="#" data-hiddenkey="convert" id="convert"><?=$this->getTrans('convert') ?></a></li>
+                <li><a class="dropdown-item" href="#" data-hiddenkey="convert" id="convert"><?=$this->getTrans('convert') ?></a></li>
             </ul>
         </div>
     </div>
