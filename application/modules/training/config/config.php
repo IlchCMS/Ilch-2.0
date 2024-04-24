@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'training',
-        'version' => '1.8.0',
+        'version' => '1.8.1',
         'icon_small' => 'fa-solid fa-graduation-cap',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -263,7 +263,9 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_training_entrants` ADD INDEX `FK_[prefix]_training_entrants_[prefix]_users` (`user_id`) USING BTREE;');
                 $this->db()->query('ALTER TABLE `[prefix]_training_entrants` ADD CONSTRAINT `FK_[prefix]_training_entrants_[prefix]_training` FOREIGN KEY (`train_id`) REFERENCES `[prefix]_training` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 $this->db()->query('ALTER TABLE `[prefix]_training_entrants` ADD CONSTRAINT `FK_[prefix]_training_entrants_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
-            // no break
+                // no break
+            case "1.8.0":
+                // no break
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

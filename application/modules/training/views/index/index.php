@@ -31,7 +31,7 @@ $training = $this->get('training');
                         <td><?=date('d.m.Y', strtotime($model->getDate())) ?> <?=$this->getTrans('at') ?> <?=date('H:i', strtotime($model->getDate())) ?> <?=$this->getTrans('clock') ?></td>
                         <td><a href="<?=$this->getUrl('training/index/show/id/' . $model->getId()) ?>"><?=$this->escape($model->getTitle()) ?></a></td>
                         <td><?=$this->escape($model->getPlace()) ?></td>
-                        <td class="text-center"><?=count($entrantsMapper->getEntrantsById($model->getId())) ?></td>
+                        <td class="text-center"><?=count($entrantsMapper->getEntrantsById($model->getId()) ?? []) ?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>
