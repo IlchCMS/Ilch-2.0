@@ -95,7 +95,7 @@ $trainEntrantsUser = $this->get('trainEntrantsUser');
         <?=$this->getTrans('entrant') ?>:
     </div>
     <div class="col-xl-9">
-        <?=$this->getTrans('entrys') ?> <?=$trainEntrantsUserCount = count($trainEntrantsUser ?? [
+        <?=$this->getTrans('entrys') ?> <?=$trainEntrantsUserCount = count($trainEntrantsUser ?? []) ?>
         <?php if ($trainEntrantsUserCount) : ?>
             <br />
             <?php foreach ($trainEntrantsUser as $model) : ?>
