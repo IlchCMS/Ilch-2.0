@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <?php
 
 /** @var \Ilch\View $this */
@@ -25,10 +24,10 @@ function rec(\Modules\Rule\Models\Rule $item, \Ilch\View $obj)
         echo '<div class="card">
     <div class="card-header" id="paragraph' . $paragraph . '">
         <h3 class="mb-0" data-bs-toggle="collapse" data-bs-target="#paragraph0_'.$paragraph.'" aria-expanded="false" aria-controls="paragraph0_'.$paragraph.'">
-            <a href="#paragraph'.$paragraph.'"><i class="fa fa-bookmark"></i></a> '.$obj->getTrans('art').' '.$paragraph.' : '.$obj->escape($item->getTitle()).'<span class="float-end bi bi-'.($obj->get('showallonstart')?'dash':'plus').'"></span>
+            <a href="#paragraph'.$paragraph.'"><i class="fa-solid fa-bookmark"></i></a> '.$obj->getTrans('art').' '.$paragraph.' : '.$obj->escape($item->getTitle()).'<span class="float-end fa-solid fa-'.($obj->get('showallonstart')?'minus':'plus').'"></span>
         </h3>
     </div>
-    <div id="paragraph0_'.$paragraph.'" class="panel-collapse collapse" aria-labelledby="paragraph'.$paragraph.'" data-bs-parent="#accordion">
+    <div id="paragraph0_'.$paragraph.'" class="collapse" aria-labelledby="paragraph'.$paragraph.'" data-bs-parent="#accordion">
         <div class="card-body">
             <table class="table table-striped table-responsive">';
 
@@ -75,11 +74,11 @@ function rec(\Modules\Rule\Models\Rule $item, \Ilch\View $obj)
         });
 
         $('#accordion .collapse')
-        .on('shown.bs.collapse', function() {
-            $(this).parent().find(".bi-plus").removeClass("bi-plus").addClass("bi-dash");
+        .on('show.bs.collapse', function() {
+            $(this).parent().find(".fa-plus").removeClass("fa-solid fa-plus").addClass("fa-solid fa-minus");
         })
-        .on('hidden.bs.collapse', function() {
-            $(this).parent().find(".bi-dash").removeClass("bi-dash").addClass("bi-plus");
+        .on('hide.bs.collapse', function() {
+            $(this).parent().find(".fa-minus").removeClass("fa-solid fa-minus").addClass("fa-solid fa-plus");
         });
 
         function openAnchorAccordion() {

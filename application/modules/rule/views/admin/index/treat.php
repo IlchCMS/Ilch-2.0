@@ -80,8 +80,7 @@ $userGroupList = $this->get('userGroupList');
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"
-                      required><?=$this->escape($this->originalInput('text', $rule->getText())) ?></textarea>
+                      rows="5"><?=$this->escape($this->originalInput('text', $rule->getText())) ?></textarea>
         </div>
     </div>
     <?=($rule->getId()) ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
