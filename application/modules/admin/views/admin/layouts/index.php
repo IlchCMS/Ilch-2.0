@@ -17,7 +17,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
 <div class="row">
 <?php foreach ($this->get('layouts') as $layout): ?>
     <div id="layouts" class="col-xl-3 col-md-6">
-        <div class="card">
+        <div class="card mb-3">
             <div class="card-header">
                 <div class="clearfix">
                     <div class="float-start">
