@@ -260,6 +260,11 @@ if ($this->get('article')) {
 <script>
 $('#access').chosen();
 $(document).ready(function() {
+    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
+        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
+        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
+    }
+
     new tempusDominus.TempusDominus(document.getElementById('date_created'), {
         restrictions: {
           minDate: new Date()

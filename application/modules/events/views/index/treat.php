@@ -277,6 +277,11 @@ $types = $this->get('types');
 $('#access').chosen();
 
 $(document).ready(function() {
+    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
+        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
+        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
+    }
+
     const start = new tempusDominus.TempusDominus(document.getElementById('start'), {
         restrictions: {
           minDate: new Date()

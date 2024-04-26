@@ -245,6 +245,11 @@ $training = $this->get('training');
 <script>
     $('#access').chosen();
 
+    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
+        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
+        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
+    }
+
     $(document).ready(function() {
         new tempusDominus.TempusDominus(document.getElementById('date'), {
             restrictions: {

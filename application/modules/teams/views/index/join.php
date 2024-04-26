@@ -221,6 +221,11 @@ $teams = $this->get('teams');
 <?php endif; ?>
 <script>
 $(document).ready(function() {
+    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
+        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
+        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
+    }
+
     new tempusDominus.TempusDominus(document.getElementById('birthday'), {
         restrictions: {
           maxDate: new Date()
