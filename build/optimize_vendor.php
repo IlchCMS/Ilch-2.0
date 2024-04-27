@@ -54,21 +54,6 @@ $directories = [
             'phpmailer/VERSION',
         ]
     ],
-    'ckeditor' => [
-        'remove' => [
-            'ckeditor/.github/',
-            'ckeditor/.npm/',
-            'ckeditor/samples/',
-            'ckeditor/.npmignore',
-            'ckeditor/bender-runner.config.json',
-            'ckeditor/bower.json',
-            'ckeditor/CHANGES.md',
-            'ckeditor/composer.json',
-            'ckeditor/package.json',
-            'ckeditor/README.md',
-            'ckeditor/SECURITY.md',
-        ]
-    ],
     'kartik-v' => [
         'keep' => [
             'bootstrap-star-rating/css/star-rating.min.css',
