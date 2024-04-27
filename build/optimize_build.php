@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 /**
- * Script to remove not needed files from the vendor directory, when creating a build (just --no-dev dependencies)
+ * Script to remove not needed files from the vendor and static/js directory, when creating a build (just --no-dev dependencies)
  */
 
 /* Configuration of files/directories to remove or keep,
@@ -108,6 +108,16 @@ $directories = [
     ],
 ];
 
+$directoriesStaticJs = [
+    'ckeditor5' => [
+        'keep' => [
+            'build/ckeditor.js',
+            'LICENSE.md',
+            'styles.css',
+        ],
+    ],
+];
+
 /**
  * Returns an array with all files in the directory and all its subdirectories
  * @param string $dirname
@@ -160,6 +170,7 @@ function quoteForPattern(string $fileOrDir): string
     return $quoted;
 }
 
+// Optimize vendor directory
 $vendorPath = realpath(__DIR__ . '/../vendor');
 $vendorFiles = getFilesRecursive($vendorPath, array_keys($directories));
 
@@ -197,6 +208,48 @@ removeEmptySubFolders($vendorPath);
 
 echo sprintf(
     'Removed %d files from the vendor directory saving %s kB.',
+    count($filesToDelete),
+    number_format($savedSpace / 1024, 2, '.', ' ')
+).PHP_EOL;
+
+// Optimize static/js directory
+$staticJsPath = realpath(__DIR__ . '/../static/js');
+$staticJsFiles = getFilesRecursive($staticJsPath, array_keys($directoriesStaticJs));
+
+$keeps = $removes = [];
+
+foreach ($directories as $baseDir => $dirOptions) {
+    $baseDirPath = $staticJsPath . DIRECTORY_SEPARATOR . $baseDir . DIRECTORY_SEPARATOR;
+    if (isset($dirOptions['keep'])) {
+        foreach ($dirOptions['keep'] as $keep) {
+            $keeps[] = $baseDirPath . str_replace('/', DIRECTORY_SEPARATOR, $keep);
+        }
+    } elseif (isset($dirOptions['remove'])) {
+        foreach ($dirOptions['remove'] as $remove) {
+            $keeps[] = $baseDirPath;
+            $removes[] = $baseDirPath . str_replace('/', DIRECTORY_SEPARATOR, $remove);
+        }
+    }
+}
+
+$keepPattern = '~^(' . implode('|', array_map('quoteForPattern', $keeps)) . ')~';
+$removePattern = '~^(' . implode('|', array_map('quoteForPattern', $removes)) . ')~';
+
+$keepFiles = preg_grep($keepPattern, $staticJsFiles);
+$removeFiles = preg_grep($removePattern, $staticJsFiles);
+
+$filesToDelete = array_diff($staticJsFiles, array_diff($keepFiles, $removeFiles));
+
+$savedSpace = 0;
+foreach ($filesToDelete as $item) {
+    $savedSpace += filesize($item);
+    unlink($item);
+}
+
+removeEmptySubFolders($staticJsPath);
+
+echo sprintf(
+    'Removed %d files from the static/js directory saving %s kB.',
     count($filesToDelete),
     number_format($savedSpace / 1024, 2, '.', ' ')
 ).PHP_EOL;
