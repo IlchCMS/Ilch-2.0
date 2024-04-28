@@ -162,7 +162,7 @@ $entry = $this->get('calendar');
                    data-jscolor=""
                    value="<?=$this->escape($this->originalInput('color', ($entry->getId()?$entry->getColor():'#32333B'))) ?>">
             <span class="input-group-text">
-                <span class="fa-solid fa-arrow-rotate-left" onclick="document.getElementById('color').color.fromString('32333B')"></span>
+                <span class="fa-solid fa-arrow-rotate-left" onclick="document.getElementById('color').jscolor.fromString('32333B')"></span>
             </span>
         </div>
     </div>

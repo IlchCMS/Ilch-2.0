@@ -86,7 +86,7 @@ $history = $this->get('history');
                    data-jscolor=""
                    value="<?=$this->originalInput('color', $history->getColor()) ? : '#75ce66' ?>">
             <span class="input-group-text">
-                <span class="fa-solid fa-undo" onclick="document.getElementById('color').color.fromString('75ce66')"></span>
+                <span class="fa-solid fa-undo" onclick="document.getElementById('color').jscolor.fromString('75ce66')"></span>
             </span>
         </div>
     </div>

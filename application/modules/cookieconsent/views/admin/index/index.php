@@ -65,7 +65,7 @@
                    data-jscolor=""
                    value="<?php if ($this->get('cookieConsentPopUpBGColor') != '') { echo $this->get('cookieConsentPopUpBGColor'); } else { echo '#000000'; } ?>">
             <span class="input-group-text">
-                <span class="fa fa-undo" onclick="document.getElementById('cookieConsentPopUpBGColor').color.fromString('000000')"></span>
+                <span class="fa fa-undo" onclick="document.getElementById('cookieConsentPopUpBGColor').jscolor.fromString('000000')"></span>
             </span>
         </div>
     </div>
@@ -80,7 +80,7 @@
                    data-jscolor=""
                    value="<?php if ($this->get('cookieConsentPopUpTextColor') != '') { echo $this->get('cookieConsentPopUpTextColor'); } else { echo '#ffffff'; } ?>">
             <span class="input-group-text">
-                <span class="fa fa-undo" onclick="document.getElementById('cookieConsentPopUpTextColor').color.fromString('ffffff')"></span>
+                <span class="fa fa-undo" onclick="document.getElementById('cookieConsentPopUpTextColor').jscolor.fromString('ffffff')"></span>
             </span>
         </div>
     </div>
@@ -97,7 +97,7 @@
                    data-jscolor=""
                    value="<?php if ($this->get('cookieConsentBtnBGColor') != '') { echo $this->get('cookieConsentBtnBGColor'); } else { echo '#f1d600'; } ?>">
             <span class="input-group-text">
-                <span class="fa fa-undo" onclick="document.getElementById('cookieConsentBtnBGColor').color.fromString('f1d600')"></span>
+                <span class="fa fa-undo" onclick="document.getElementById('cookieConsentBtnBGColor').jscolor.fromString('f1d600')"></span>
             </span>
         </div>
     </div>
@@ -112,7 +112,7 @@
                    data-jscolor=""
                    value="<?php if ($this->get('cookieConsentBtnTextColor') != '') { echo $this->get('cookieConsentBtnTextColor'); } else { echo '#000000'; } ?>">
             <span class="input-group-text">
-                <span class="fa fa-undo" onclick="document.getElementById('cookieConsentBtnTextColor').color.fromString('000000')"></span>
+                <span class="fa fa-undo" onclick="document.getElementById('cookieConsentBtnTextColor').jscolor.fromString('000000')"></span>
             </span>
         </div>
     </div>
