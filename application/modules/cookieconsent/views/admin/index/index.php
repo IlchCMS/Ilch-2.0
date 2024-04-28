@@ -62,6 +62,7 @@
             <input class="form-control color {hash:true}"
                    id="cookieConsentPopUpBGColor"
                    name="cookieConsentPopUpBGColor"
+                   data-jscolor=""
                    value="<?php if ($this->get('cookieConsentPopUpBGColor') != '') { echo $this->get('cookieConsentPopUpBGColor'); } else { echo '#000000'; } ?>">
             <span class="input-group-text">
                 <span class="fa fa-undo" onclick="document.getElementById('cookieConsentPopUpBGColor').color.fromString('000000')"></span>
@@ -76,6 +77,7 @@
             <input class="form-control color {hash:true}"
                    id="cookieConsentPopUpTextColor"
                    name="cookieConsentPopUpTextColor"
+                   data-jscolor=""
                    value="<?php if ($this->get('cookieConsentPopUpTextColor') != '') { echo $this->get('cookieConsentPopUpTextColor'); } else { echo '#ffffff'; } ?>">
             <span class="input-group-text">
                 <span class="fa fa-undo" onclick="document.getElementById('cookieConsentPopUpTextColor').color.fromString('ffffff')"></span>
@@ -92,6 +94,7 @@
             <input class="form-control color {hash:true}"
                    id="cookieConsentBtnBGColor"
                    name="cookieConsentBtnBGColor"
+                   data-jscolor=""
                    value="<?php if ($this->get('cookieConsentBtnBGColor') != '') { echo $this->get('cookieConsentBtnBGColor'); } else { echo '#f1d600'; } ?>">
             <span class="input-group-text">
                 <span class="fa fa-undo" onclick="document.getElementById('cookieConsentBtnBGColor').color.fromString('f1d600')"></span>
@@ -106,6 +109,7 @@
             <input class="form-control color {hash:true}"
                    id="cookieConsentBtnTextColor"
                    name="cookieConsentBtnTextColor"
+                   data-jscolor=""
                    value="<?php if ($this->get('cookieConsentBtnTextColor') != '') { echo $this->get('cookieConsentBtnTextColor'); } else { echo '#000000'; } ?>">
             <span class="input-group-text">
                 <span class="fa fa-undo" onclick="document.getElementById('cookieConsentBtnTextColor').color.fromString('000000')"></span>
@@ -115,4 +119,4 @@
     <?=$this->getSaveBar() ?>
 </form>
 
-<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.min.js') ?>"></script>

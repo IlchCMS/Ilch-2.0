@@ -94,6 +94,7 @@
             <input class="form-control color {hash:true}"
                    id="venoboxOverlayColor"
                    name="venoboxOverlayColor"
+                   data-jscolor=""
                    value="<?=$this->originalInput('venoboxOverlayColor', $this->get('venoboxOverlayColor')) ? : '#ffffff' ?>">
             <span class="input-group-text">
                 <span class="fa fa-undo" onclick="document.getElementById('venoboxOverlayColor').color.fromString('ffffff')"></span>
@@ -124,6 +125,7 @@
             <input class="form-control color {hash:true}"
                    id="venoboxBgcolor"
                    name="venoboxBgcolor"
+                   data-jscolor=""
                    value="<?=$this->originalInput('venoboxBgcolor', $this->get('venoboxBgcolor')) ? : '#ffffff' ?>">
             <span class="input-group-text">
                 <span class="fa fa-undo" onclick="document.getElementById('venoboxBgcolor').color.fromString('ffffff')"></span>
@@ -163,7 +165,7 @@
 
     <?=$this->getSaveBar() ?>
 </form>
-<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.min.js') ?>"></script>
 <script>
     $('#pictureOfXSource').chosen();
 </script>

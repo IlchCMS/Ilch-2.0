@@ -159,6 +159,7 @@ $entry = $this->get('calendar');
             <input class="form-control color {hash:true}"
                    id="color"
                    name="color"
+                   data-jscolor=""
                    value="<?=$this->escape($this->originalInput('color', ($entry->getId()?$entry->getColor():'#32333B'))) ?>">
             <span class="input-group-text">
                 <span class="fa-solid fa-arrow-rotate-left" onclick="document.getElementById('color').color.fromString('32333B')"></span>
@@ -196,7 +197,7 @@ $entry = $this->get('calendar');
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
-<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.min.js') ?>"></script>
 <script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
 <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
 <?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>

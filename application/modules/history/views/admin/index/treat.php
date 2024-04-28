@@ -83,6 +83,7 @@ $history = $this->get('history');
             <input class="form-control color {hash:true}"
                    id="color"
                    name="color"
+                   data-jscolor=""
                    value="<?=$this->originalInput('color', $history->getColor()) ? : '#75ce66' ?>">
             <span class="input-group-text">
                 <span class="fa-solid fa-undo" onclick="document.getElementById('color').color.fromString('75ce66')"></span>
@@ -110,7 +111,7 @@ $history = $this->get('history');
 </div>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
-<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.min.js') ?>"></script>
 <script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
 <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
 <?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>

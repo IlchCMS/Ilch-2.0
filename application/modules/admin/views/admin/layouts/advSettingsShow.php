@@ -19,6 +19,7 @@ function getInput(string $name, array $value, array $settingsValues, \Ilch\View 
             $input = sprintf('<input class="form-control color {hash:true}"
                                id="%s"
                                name="%s"
+                               data-jscolor=""
                                value="%s">', $name, $name, $settingsValue);
             break;
         case 'ckeditorbbcode':
@@ -112,4 +113,4 @@ function getInput(string $name, array $value, array $settingsValues, \Ilch\View 
     <?=$this->getSaveBar() ?>
 </form>
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
-<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.min.js') ?>"></script>
