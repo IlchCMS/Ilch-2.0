@@ -1,6 +1,7 @@
 legend .forum.fa {
     font-size: initial;
 }
+
 #forum {
     margin: 0;
     padding: 0;
@@ -165,6 +166,7 @@ legend .forum.fa {
 }
 @media (min-width: 768px) {
     #forum .forabg ul.topiclist li.header dl.title dd.posts {
+        width: 30%;
         display: flex;
         justify-content: center;
     }
@@ -175,6 +177,7 @@ legend .forum.fa {
     }
 }
 #forum .forabg ul.topiclist li.header dl.title dd.lastpost {
+    width: 23%;
     display: none;
 }
 @media (min-width: 992px) {
@@ -247,6 +250,7 @@ legend .forum.fa {
 }
 @media (min-width: 768px) {
     #forum .forabg ul.topiclist.topics li dl dd.posts {
+        width: 30%;
         display: flex;
         justify-content: center;
     }
