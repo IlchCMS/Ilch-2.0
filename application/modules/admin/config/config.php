@@ -974,9 +974,16 @@ class Config extends \Ilch\Config\Install
                 removeDir(APPLICATION_PATH . '/modules/media/static/js/ilchps');
                 removeDir(APPLICATION_PATH . '/modules/media/static/js/ilchyoutube');
                 removeDir(APPLICATION_PATH . '/modules/media/static/js/ilchyoutubehtml');
-                
+
                 // Remove bootstrap datetimepicker as we use "Tempus Dominus" now. datetimepicker was no longer compatible with Bootstrap 5.
                 removeDir(ROOT_PATH . '/static/js/datetimepicker');
+
+                // Delete no longer needed files of an older version of jscolor.
+                unlink(ROOT_PATH . '/static/js/jscolor/arrow.gif');
+                unlink(ROOT_PATH . '/static/js/jscolor/cross.gif');
+                unlink(ROOT_PATH . '/static/js/jscolor/hs.png');
+                unlink(ROOT_PATH . '/static/js/jscolor/hv.png');
+                unlink(ROOT_PATH . '/static/js/jscolor/jscolor.js');
                 break;
         }
 
