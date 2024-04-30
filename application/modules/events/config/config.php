@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'events',
-        'version' => '1.22.2',
+        'version' => '1.23.0',
         'icon_small' => 'fa-solid fa-ticket',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -204,8 +204,8 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-ticket' WHERE `key` = 'events';");
                 // no break
             case "1.22.0":
-                // no break
             case "1.22.1":
+            case "1.22.2":
                 // no break
         }
     }

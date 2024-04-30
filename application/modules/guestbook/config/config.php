@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'guestbook',
-        'version' => '1.13.1',
+        'version' => '1.14.0',
         'icon_small' => 'fa-solid fa-book',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -84,6 +84,9 @@ class Config extends \Ilch\Config\Install
             case "1.11.0":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-book' WHERE `key` = 'guestbook';");
                 // no break
+            case "1.12.0":
+            case "1.13.0":
+            case "1.13.1":
         }
     }
 }

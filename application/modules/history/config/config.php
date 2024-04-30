@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'history',
-        'version' => '1.9.0',
+        'version' => '1.10.0',
         'icon_small' => 'fa-solid fa-clock-rotate-left',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -112,6 +112,7 @@ class Config extends \Ilch\Config\Install
                     }
                 }
                 // no break
+            case "1.9.0":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

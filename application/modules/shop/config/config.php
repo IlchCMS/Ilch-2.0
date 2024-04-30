@@ -14,7 +14,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'shop',
-        'version' => '1.2.2',
+        'version' => '1.3.0',
         'icon_small' => 'fa-solid fa-cart-shopping',
         'author' => 'blackcoder & LordSchirmer',
         'link' => 'https://ilch.de',
@@ -342,6 +342,12 @@ class Config extends Install
                 // Change datatype for the status column as it doesn't need to be of type INT for the expected values 0, 1, 2 and 3.
                 $this->db()->query('ALTER TABLE `[prefix]_shop_orders` MODIFY COLUMN `status` TINYINT(1) NULL DEFAULT 0;');
                 // no break
+            case '1.1.0':
+            case '1.1.1':
+            case '1.1.2':
+            case '1.2.0':
+            case '1.2.1':
+            case '1.2.2':
         }
     }
 }

@@ -14,7 +14,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'calendar',
-        'version' => '1.10.0',
+        'version' => '1.11.0',
         'icon_small' => 'fa-solid fa-calendar',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -255,6 +255,8 @@ class Config extends \Ilch\Config\Install
             case "1.9.2":
                 // Remove old version of fullcalendar as this version comes with version 6.1.10.
                 removeDir(APPLICATION_PATH.'/modules/calendar/static/js/fullcalendar_5_11_3/');
+                // no break
+            case "1.10.0":
                 // no break
         }
     }

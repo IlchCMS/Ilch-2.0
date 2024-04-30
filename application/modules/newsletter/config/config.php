@@ -13,7 +13,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'newsletter',
-        'version' => '1.7.1',
+        'version' => '1.8.0',
         'icon_small' => 'fa-regular fa-newspaper',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -145,6 +145,8 @@ class Config extends Install
                 $this->db()->query('ALTER TABLE `[prefix]_newsletter_mails` ADD COLUMN `doubleOptInDate` DATETIME NOT NULL AFTER `confirmCode`;');
                 $this->db()->query('ALTER TABLE `[prefix]_newsletter_mails` ADD COLUMN `doubleOptInConfirmed` TINYINT(1) NOT NULL DEFAULT 1 AFTER `doubleOptInDate`;');
                 // no break
+            case "1.7.0":
+            case "1.7.1":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

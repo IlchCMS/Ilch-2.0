@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'rule',
-        'version' => '1.8.1',
+        'version' => '1.9.0',
         'icon_small' => 'fa-solid fa-gavel',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -160,6 +160,7 @@ class Config extends \Ilch\Config\Install
                 }
                 // no break
             case "1.8.0":
+            case "1.8.1":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

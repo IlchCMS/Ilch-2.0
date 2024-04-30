@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.34.7',
+        'version' => '1.35.0',
         'icon_small' => 'fa-solid fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
@@ -921,6 +921,11 @@ class Config extends \Ilch\Config\Install
 
                 // Delete the no longer used column 'prefix' of the 'forum_items' table.
                 $this->db()->query('ALTER TABLE `[prefix]_forum_items` DROP COLUMN `prefix`;');
+
+                // no break
+            case "1.34.5":
+            case "1.34.6":
+            case "1.34.7":
         }
 
         return '"' . $this->config['key'] . '" Update function executed.';

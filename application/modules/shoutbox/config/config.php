@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'shoutbox',
-        'version' => '1.5.1',
+        'version' => '1.6.0',
         'icon_small' => 'fa-solid fa-bullhorn',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -99,6 +99,7 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->delete('shoutbox_maxwordlength');
                 // no break
+            case "1.5.1":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

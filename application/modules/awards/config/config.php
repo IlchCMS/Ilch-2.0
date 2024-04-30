@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'awards',
-        'version' => '1.10.1',
+        'version' => '1.11.0',
         'icon_small' => 'fa-solid fa-trophy',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -108,6 +108,8 @@ class Config extends \Ilch\Config\Install
 
                 // Delete no longer needed columns of the awards table
                 $this->db()->query('ALTER TABLE `[prefix]_awards` DROP COLUMN `ut_id`, DROP COLUMN `typ`');
+            case '1.10.0':
+            case '1.10.1':
         }
     }
 }
