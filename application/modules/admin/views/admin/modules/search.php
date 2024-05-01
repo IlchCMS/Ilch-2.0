@@ -131,6 +131,11 @@ usort($modulesOnUpdateServer, 'custom_sort');
                                     title="<?=$this->getTrans('ilchCoreError') ?>">
                                 <i class="<?=$iconClass ?>"></i>
                             </button>
+                        <?php elseif (version_compare('2.2.0', $moduleOnUpdateServer->ilchCore, '>')): ?>
+                            <button class="btn disabled"
+                                    title="<?=$this->getTrans('moduleTooOld') ?>">
+                                <i class="<?=$iconClass ?>"></i>
+                            </button>
                         <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '>=')): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('alreadyExists') ?>">
