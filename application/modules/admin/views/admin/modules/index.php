@@ -142,7 +142,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                             title="<?=$this->getTrans('ilchCoreError') ?>">
                                         <i class="<?=$icon ?>"></i>
                                     </button>
-                                <?php elseif (version_compare('2.2.0', $moduleUpdateInformation->ilchCore, '>')): ?>
+                                <?php elseif (version_compare($versionsOfModules[$moduleUpdateInformation->key]['version'], $moduleUpdateInformation->version, '<') && version_compare('2.2.0', $moduleUpdateInformation->ilchCore, '>')): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('moduleTooOld') ?>">
                                         <i class="<?=$icon ?>"></i>
