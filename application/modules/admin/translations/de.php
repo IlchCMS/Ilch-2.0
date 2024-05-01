@@ -252,6 +252,7 @@ return [
     'dbVersionError' => 'Die Version der Datenbank-Software ist zu alt.',
     'phpVersionError' => 'Die Version von PHP ist zu alt.',
     'ilchCoreError' => 'Die Ilch-Kern Version ist zu alt.',
+    'layoutTooOld' => 'Das Layout ist möglicherweise zu alt und nicht mit Ilch 2.2.0 oder neuer kompatibel.',
     'dependencyError' => 'Abhängigkeiten sind nicht erfüllt.',
     'dependencyInfo' => 'Andere Module sind von diesem Modul abhängig. Deinstallieren oder aktualisieren Sie diese Module zuerst.',
     'requirements' => 'Anforderungen',

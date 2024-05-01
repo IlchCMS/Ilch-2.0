@@ -49,6 +49,8 @@ if (empty($layoutsOnUpdateServer)) {
                         $layoutExists = in_array($layoutOnUpdateServer->key, $this->get('layouts'));
                         $ilchCoreRequirement = empty($layoutOnUpdateServer->ilchCore) ? $coreVersion : $layoutOnUpdateServer->ilchCore;
                         $ilchCoreTooOld = version_compare($coreVersion, $ilchCoreRequirement, '<');
+                        // "layoutTooOld" was added to prevent the usage of old and likely with Ilch 2.2.0 and newer incompatible layouts.
+                        $layoutTooOld = version_compare('2.2.0', $ilchCoreRequirement, '>');
                         if ($layoutExists && version_compare($versionsOfLayouts[$layoutOnUpdateServer->key], $layoutOnUpdateServer->version, '>=')): ?>
                             <span class="btn disabled" title="<?=$this->getTrans('alreadyExists') ?>">
                                 <i class="fa-solid fa-check text-success"></i>
@@ -57,6 +59,11 @@ if (empty($layoutsOnUpdateServer)) {
                             <?php if ($ilchCoreTooOld): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('ilchCoreError') ?>">
+                                    <i class="fa-solid fa-arrows-rotate"></i>
+                                </button>
+                            <?php elseif ($layoutTooOld) : ?>
+                                <button class="btn disabled"
+                                        title="<?=$this->getTrans('layoutTooOld') ?>">
                                     <i class="fa-solid fa-arrows-rotate"></i>
                                 </button>
                             <?php else: ?>
@@ -72,6 +79,11 @@ if (empty($layoutsOnUpdateServer)) {
                         <?php elseif ($ilchCoreTooOld): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('ilchCoreError') ?>">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
+                        <?php elseif ($layoutTooOld) : ?>
+                            <button class="btn disabled"
+                                    title="<?=$this->getTrans('layoutTooOld') ?>">
                                 <i class="fa-solid fa-download"></i>
                             </button>
                         <?php else: ?>
