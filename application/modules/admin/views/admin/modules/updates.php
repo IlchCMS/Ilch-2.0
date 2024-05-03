@@ -90,7 +90,8 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                 }
 
                 if (!$module->getSystemModule() && $this->getUser()->hasAccess('module_'.$module->getKey())):
-                    if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<'))): ?>
+                    // Skip if there are no updates available either locally or on the updateserver
+                    if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (empty($moduleUpdate['local']) && (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<')))) : ?>
                     <tr id="Module_<?=$module->getKey() ?>"></tr>
                     <?php continue; ?>
                     <?php else:
