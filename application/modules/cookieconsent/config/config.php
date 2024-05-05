@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'cookieconsent',
-        'icon_small' => 'fa-paragraph',
+        'icon_small' => 'fa-solid fa-section',
         'system_module' => true,
         'languages' => [
             'de_DE' => [
@@ -55,6 +55,11 @@ class Config extends \Ilch\Config\Install
                 removeDir(ROOT_PATH.'/application/modules/cookieconsent/models');
                 removeDir(ROOT_PATH.'/application/modules/cookieconsent/views/index');
                 removeDir(ROOT_PATH.'/application/modules/cookieconsent/views/admin/settings');
+            case "2.1.60":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = '" . $this->config['icon_small'] . "' WHERE `key` = '" . $this->config['key'] . "';");
+                break;
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
