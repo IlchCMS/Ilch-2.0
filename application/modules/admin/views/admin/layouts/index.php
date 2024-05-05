@@ -46,10 +46,13 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                 <div class="clearfix">
                     <div class="float-start">
                         <?php
+                        // "layoutTooOld" was added to prevent the usage of old and likely with Ilch 2.2.0 and newer incompatible layouts.
                         if (empty($layout->getIlchCore())) {
                             $ilchCoreTooOld = false;
+                            $layoutTooOld = true;
                         } else {
                             $ilchCoreTooOld = version_compare($coreVersion, $layout->getIlchCore(), '<');
+                            $layoutTooOld = version_compare('2.2.0', $layout->getIlchCore(), '>');
                         }
 
                         $moduleNotInstalled = ($layout->getModulekey() != '' && isset($modulesNotInstalled[$layout->getModulekey()]));
@@ -66,6 +69,11 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                             <?php if (version_compare($coreVersion, $layoutOnUpdateServerFound->ilchCore, '<')): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('ilchCoreError') ?>">
+                                    <i class="fa-solid fa-arrows-rotate"></i>
+                                </button>
+                            <?php elseif ($layoutTooOld) : ?>
+                                <button class="btn disabled"
+                                        title="<?=$this->getTrans('layoutTooOld') ?>">
                                     <i class="fa-solid fa-arrows-rotate"></i>
                                 </button>
                             <?php else: ?>
@@ -89,6 +97,11 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                                             title="<?=$this->getTrans('ilchCoreError') ?>">
                                         <i class="fa"></i>
                                     </button>
+                                <?php elseif ($layoutTooOld) : ?>
+                                    <button class="btn btn-outline-secondary unchecked disabled"
+                                            title="<?=$this->getTrans('layoutTooOld') ?>">
+                                        <i class="fa"></i>
+                                    </button>
                                 <?php elseif ($moduleNotInstalled) : ?>
                                     <button class="btn btn-outline-secondary unchecked disabled"
                                             title="<?=$this->getTrans('layoutModuleNotInstalled') ?>">
@@ -105,6 +118,11 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                         <?php if ($ilchCoreTooOld) : ?>
                             <button class="btn btn-outline-secondary disabled"
                                     title="<?=$this->getTrans('ilchCoreError') ?>">
+                                <i class="fa-solid fa-gears"></i>
+                            </button>
+                        <?php elseif ($layoutTooOld) : ?>
+                            <button class="btn btn-outline-secondary disabled"
+                                    title="<?=$this->getTrans('layoutTooOld') ?>">
                                 <i class="fa-solid fa-gears"></i>
                             </button>
                         <?php elseif ($moduleNotInstalled) : ?>

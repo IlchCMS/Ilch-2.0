@@ -252,6 +252,8 @@ return [
     'phpVersionError' => 'The version of PHP is too old.',
     'dbVersionError' => 'The version of the database software is too old.',
     'ilchCoreError' => 'The Ilch-core version is too old.',
+    'layoutTooOld' => 'The layout is possibly too old and not compatible with Ilch 2.2.0 or newer.',
+    'moduleTooOld' => 'The module is possibly too old and not compatible with Ilch 2.2.0 or newer.',
     'dependencyError' => 'Dependencies not fullfilled',
     'dependencyInfo' => 'Other moduls are dependent on this module. Uninstall or update these moduls first.',
     'requirements' => 'Requirements',

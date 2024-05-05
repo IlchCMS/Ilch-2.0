@@ -109,6 +109,11 @@
                                         title="<?=$this->getTrans('ilchCoreError') ?>">
                                     <i class="fa-regular fa-floppy-disk"></i>
                                 </button>
+                            <?php elseif (version_compare('2.2.0', $module->getIlchCore(), '>')): ?>
+                                <button class="btn disabled"
+                                        title="<?=$this->getTrans('moduleTooOld') ?>">
+                                    <i class="fa-regular fa-floppy-disk"></i>
+                                </button>
                             <?php elseif (!checkOwnDependencies($this->get('versionsOfModules'), $this->get('dependencies')[$module->getKey()] ?? null)): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('dependencyError') ?>">

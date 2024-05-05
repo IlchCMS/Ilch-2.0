@@ -90,7 +90,8 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                 }
 
                 if (!$module->getSystemModule() && $this->getUser()->hasAccess('module_'.$module->getKey())):
-                    if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<'))): ?>
+                    // Skip if there are no updates available either locally or on the updateserver
+                    if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (empty($moduleUpdate['local']) && (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<')))) : ?>
                     <tr id="Module_<?=$module->getKey() ?>"></tr>
                     <?php continue; ?>
                     <?php else:
@@ -151,6 +152,11 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                                 <?php elseif (version_compare($coreVersion, $moduleUpdateInformation->ilchCore, '<')): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('ilchCoreError') ?>">
+                                        <i class="<?=$icon ?>"></i>
+                                    </button>
+                                <?php elseif (version_compare('2.2.0', $moduleUpdateInformation->ilchCore, '>')): ?>
+                                    <button class="btn disabled"
+                                            title="<?=$this->getTrans('moduleTooOld') ?>">
                                         <i class="<?=$icon ?>"></i>
                                     </button>
                                 <?php elseif (!empty(checkOthersDependencies([$moduleUpdateInformation->key => $moduleUpdateInformation->version], $dependencies))): ?>
