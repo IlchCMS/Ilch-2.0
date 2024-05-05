@@ -56,14 +56,14 @@
                 <div class="row mb-3">
                   <div class="col-xl-2">
                     <button type="submit" class="btn btn-outline-secondary filter-col" name="search" value="search">
-                        <span class="fa fa-search"></span> <?=$this->getTrans('search') ?>
+                        <span class="fa-solid fa-magnifying-glass"></span> <?=$this->getTrans('search') ?>
                     </button>
                   </div>
                 </div>
             </form>
         </div>
         <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#filter-panel">
-            <span class="fa fa-cogs"></span> <?=$this->getTrans('advancedSearch') ?>
+            <span class="fa-solid fa-gears"></span> <?=$this->getTrans('advancedSearch') ?>
         </button>
     </div>
     <?=$this->get('pagination')->getHtml($this, $this->get('rows')) ?>
@@ -98,7 +98,7 @@
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_medias', $media->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $media->getId()]) ?></td>
-                            <td><a href="<?=$this->getUrl(['action' => 'refresh', 'id' => $media->getId()]) ?>"><i class="fa fa-refresh" title="<?=$this->getTrans('refreshThumbnail') ?>"></i></a></td>
+                            <td><a href="<?=$this->getUrl(['action' => 'refresh', 'id' => $media->getId()]) ?>"><i class="fa-solid fa-arrows-rotate" title="<?=$this->getTrans('refreshThumbnail') ?>"></i></a></td>
                             <td><?=$this->escape($media->getEnding()) ?></td>
                             <td>
                                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>

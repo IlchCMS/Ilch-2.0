@@ -2,7 +2,7 @@
 
 <h1><?=$this->getTrans('mediaFromImport') ?>
     <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
-        <i class="fa fa-info" ></i>
+        <i class="fa-solid fa-info" ></i>
     </a>
 </h1>
 <?php if (!empty($this->get('media'))): ?>

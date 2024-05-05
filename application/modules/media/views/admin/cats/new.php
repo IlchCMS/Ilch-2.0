@@ -20,7 +20,7 @@ div.input-group {
             <div class="input-group">
                 <input type="text" class="form-control" name="title_option[]" placeholder="<?=$this->getTrans('catTitle') ?>">
                 <span class="input-group-text input-group-text-remove">
-                    <span class="fa fa-times"></span>
+                    <span class="fa-solid fa-xmark"></span>
                 </span>
             </div>
         </div>
