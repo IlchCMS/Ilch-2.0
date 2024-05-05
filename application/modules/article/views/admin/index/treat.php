@@ -63,7 +63,7 @@ if ($this->get('article')) {
                    value="<?=($this->get('article') && $this->get('article')->getDateCreated()) ? date('d.m.Y H:i', strtotime($this->get('article')->getDateCreated())) : '' ?>"
                    readonly>
             <span class="input-group-text">
-                <span class="fa fa-calendar"></span>
+                <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>

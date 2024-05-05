@@ -25,14 +25,14 @@ $userMapper = $this->get('userMapper');
                 <?php if ($article->getAuthorId() != ''): ?>
                     <?php $user = $userMapper->getUserById($article->getAuthorId()); ?>
                     <?php if ($user != ''): ?>
-                        <i class="fa fa-user" title="<?=$this->getTrans('author') ?>"></i> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a>&nbsp;&nbsp;
+                        <i class="fa-solid fa-user" title="<?=$this->getTrans('author') ?>"></i> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a>&nbsp;&nbsp;
                     <?php endif; ?>
                 <?php endif; ?>
-                <i class="fa fa-calendar" title="<?=$this->getTrans('date') ?>"></i> <a href="<?=$this->getUrl(['action' => 'show', 'year' => $date->format('Y', true), 'month' => $date->format('m', true)]) ?>"><?=$date->format('d.', true) ?> <?=$this->getTrans($date->format('F', true)) ?> <?=$date->format('Y', true) ?></a>
-                &nbsp;&nbsp;<i class="fa fa-clock-o" title="<?=$this->getTrans('time') ?>"></i> <?=$date->format('H:i', true) ?>
-                &nbsp;&nbsp;<i class="fa fa-folder-open-o" title="<?=$this->getTrans('cats') ?>"></i> <?=rtrim($categories, ', ') ?>
-                &nbsp;&nbsp;<i class="fa fa-comment-o" title="<?=$this->getTrans('comments') ?>"></i> <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId().'#comment']) ?>"><?=$commentsCount ?></a>
-                &nbsp;&nbsp;<i class="fa fa-eye" title="<?=$this->getTrans('hits') ?>"></i> <?=$article->getVisits() ?>
+                <i class="fa-solid fa-calendar" title="<?=$this->getTrans('date') ?>"></i> <a href="<?=$this->getUrl(['action' => 'show', 'year' => $date->format('Y', true), 'month' => $date->format('m', true)]) ?>"><?=$date->format('d.', true) ?> <?=$this->getTrans($date->format('F', true)) ?> <?=$date->format('Y', true) ?></a>
+                &nbsp;&nbsp;<i class="fa-regular fa-clock" title="<?=$this->getTrans('time') ?>"></i> <?=$date->format('H:i', true) ?>
+                &nbsp;&nbsp;<i class="fa-regular fa-folder-open" title="<?=$this->getTrans('cats') ?>"></i> <?=rtrim($categories, ', ') ?>
+                &nbsp;&nbsp;<i class="fa-regular fa-comment" title="<?=$this->getTrans('comments') ?>"></i> <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId().'#comment']) ?>"><?=$commentsCount ?></a>
+                &nbsp;&nbsp;<i class="fa-regular fa-eye" title="<?=$this->getTrans('hits') ?>"></i> <?=$article->getVisits() ?>
                 <?php if ($this->get('article_articleRating')) : ?>
                     <?php
                     $votes = explode(',', $article->getVotes());
@@ -40,16 +40,16 @@ $userMapper = $this->get('userMapper');
                     ?>
                     <?php if ($this->getUser() && in_array($this->getUser()->getId(), $votes) == false) : ?>
                         <a class="btn btn-sm btn-secondary btn-hover-success" href="<?=$this->getUrl(['id' => $article->getId(), 'action' => 'vote', 'from' => 'index']) ?>" title="<?=$this->getTrans('iLike') ?>">
-                            <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
+                            <i class="fa-solid fa-thumbs-up"></i> <?=$countOfVotes ?>
                         </a>
                     <?php else: ?>
                         <button class="btn btn-sm btn-secondary btn-success">
-                            <i class="fa fa-thumbs-up"></i> <?=$countOfVotes ?>
+                            <i class="fa-solid fa-thumbs-up"></i> <?=$countOfVotes ?>
                         </button>
                     <?php endif; ?>
                 <?php endif; ?>
                 <?php if ($article->getKeywords() != ''): ?>
-                    <br /><i class="fa fa-hashtag"></i>
+                    <br /><i class="fa-solid fa-hashtag"></i>
                     <?php $keywordsList = $article->getKeywords();
                     $keywordsListArray = explode(', ', $keywordsList);
                     $keywordsList = [];

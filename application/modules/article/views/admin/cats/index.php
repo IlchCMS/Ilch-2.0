@@ -27,7 +27,7 @@
                             <td><?=$this->getDeleteCheckbox('check_cats', $cat->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
-                            <td><i class="fa fa-sort"></i></td>
+                            <td><i class="fa-solid fa-sort"></i></td>
                             <td><?=$this->escape($cat->getName()) ?></td>
                         </tr>
                     <?php endforeach; ?>
