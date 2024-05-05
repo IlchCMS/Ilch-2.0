@@ -97,7 +97,7 @@
                    data-jscolor=""
                    value="<?=$this->originalInput('venoboxOverlayColor', $this->get('venoboxOverlayColor')) ? : '#ffffff' ?>">
             <span class="input-group-text">
-                <span class="fa fa-undo" onclick="document.getElementById('venoboxOverlayColor').jscolor.fromString('ffffff')"></span>
+                <span class="fa-solid fa-arrow-rotate-left" onclick="document.getElementById('venoboxOverlayColor').jscolor.fromString('ffffff')"></span>
             </span>
         </div>
     </div>
@@ -128,7 +128,7 @@
                    data-jscolor=""
                    value="<?=$this->originalInput('venoboxBgcolor', $this->get('venoboxBgcolor')) ? : '#ffffff' ?>">
             <span class="input-group-text">
-                <span class="fa fa-undo" onclick="document.getElementById('venoboxBgcolor').jscolor.fromString('ffffff')"></span>
+                <span class="fa-solid fa-arrow-rotate-left" onclick="document.getElementById('venoboxBgcolor').jscolor.fromString('ffffff')"></span>
             </span>
         </div>
     </div>
