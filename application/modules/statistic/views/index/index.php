@@ -25,7 +25,7 @@ $statistic_config = $this->get('statistic_config');
         <div class="card border-primary">
             <div class="card-header bg-primary">
                 <h4 class="card-title"><?=$this->getTrans('siteStatistic') ?></h4>
-                <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+                <span class="float-end clickable"><i class="fa-solid fa-chevron-up"></i></span>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -178,7 +178,7 @@ $statistic_config = $this->get('statistic_config');
         <div class="card border-primary">
             <div class="card-header bg-primary">
                 <h4 class="panel-title"><?=$this->getTrans('visitsStatistic') ?></h4>
-                <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+                <span class="float-end clickable"><i class="fa-solid fa-chevron-up"></i></span>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -361,7 +361,7 @@ $statistic_config = $this->get('statistic_config');
         <div class="card border-primary">
             <div class="card-header bg-primary">
                 <h4 class="panel-title"><?=$this->getTrans('browserStatistic') ?></h4>
-                <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+                <span class="float-end clickable"><i class="fa-solid fa-chevron-up"></i></span>
             </div>
             <div class="card-footer">
                 <?=$this->getTrans('browser') ?>
@@ -432,7 +432,7 @@ $statistic_config = $this->get('statistic_config');
         <div class="card border-primary">
             <div class="card-header bg-primary">
                 <h4 class="panel-title"><?=$this->getTrans('osStatistic') ?></h4>
-                <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+                <span class="float-end clickable"><i class="fa-solid fa-chevron-up"></i></span>
             </div>
             <div class="card-footer">
                 <?=$this->getTrans('os') ?>

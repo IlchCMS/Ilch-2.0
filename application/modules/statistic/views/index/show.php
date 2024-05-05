@@ -19,7 +19,7 @@ $browser = $this->getRequest()->getParam('browser');
             <div class="card border-primary">
                 <div class="card-header bg-primary">
                     <h4 class="card-title"><?=$this->getTrans('osStatistic') ?></h4>
-                    <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+                    <span class="float-end clickable"><i class="fa-solid fa-chevron-up"></i></span>
                 </div>
                 <div class="card-footer">
                     <?=$this->getTrans('os') ?>
@@ -55,7 +55,7 @@ $browser = $this->getRequest()->getParam('browser');
             <div class="card border-primary">
                 <div class="card-header bg-primary">
                     <h4 class="card-title"><?=$this->getTrans('browserStatistic') ?></h4>
-                    <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+                    <span class="float-end clickable"><i class="fa-solid fa-chevron-up"></i></span>
                 </div>
                 <div class="card-footer">
                     <?=$this->getTrans('browser') ?>
@@ -92,7 +92,7 @@ $browser = $this->getRequest()->getParam('browser');
             <div class="card border-primary">
                 <div class="card-header bg-primary">
                     <h4 class="card-title"><?=$this->getTrans('visitsStatistic') ?></h4>
-                    <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+                    <span class="float-end clickable"><i class="fa-solid fa-chevron-up"></i></span>
                 </div>
 
                 <div class="card-footer">
@@ -194,7 +194,7 @@ $browser = $this->getRequest()->getParam('browser');
             <div class="card border-primary">
                 <div class="card-header bg-primary">
                     <h4 class="card-title"><?=$this->getTrans('browserStatistic') ?></h4>
-                    <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+                    <span class="float-end clickable"><i class="fa-solid fa-chevron-up"></i></span>
                 </div>
                 <div class="card-footer">
                     <?=$this->getTrans('browser') ?>
@@ -264,7 +264,7 @@ $browser = $this->getRequest()->getParam('browser');
             <div class="card border-primary">
                 <div class="card-header bg-primary">
                     <h4 class="panel-title"><?=$this->getTrans('osStatistic') ?></h4>
-                    <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+                    <span class="float-end clickable"><i class="fa-solid fa-chevron-up"></i></span>
                 </div>
                 <div class="card-footer">
                     <?=$this->getTrans('os') ?>
@@ -312,7 +312,7 @@ $browser = $this->getRequest()->getParam('browser');
             <div class="card border-primary">
                 <div class="card-header bg-primary">
                     <h4 class="card-title"><?=$this->getTrans('visitsStatistic') ?></h4>
-                    <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+                    <span class="float-end clickable"><i class="fa-solid fa-chevron-up"></i></span>
                 </div>
 
                 <div class="card-footer">
@@ -415,7 +415,7 @@ $browser = $this->getRequest()->getParam('browser');
             <div class="card border-primary">
                 <div class="card-header bg-primary">
                     <h4 class="card-title"><?=$this->getTrans('browserStatistic') ?></h4>
-                    <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+                    <span class="float-end clickable"><i class="fa-solid fa-chevron-up"></i></span>
                 </div>
                 <div class="card-footer">
                     <?=$this->getTrans('browser') ?>
@@ -483,7 +483,7 @@ $browser = $this->getRequest()->getParam('browser');
             <div class="card border-primary">
                 <div class="card-header bg-primary">
                     <h4 class="card-title"><?=$this->getTrans('osStatistic') ?></h4>
-                    <span class="float-end clickable"><i class="fa fa-chevron-up"></i></span>
+                    <span class="float-end clickable"><i class="fa-solid fa-chevron-up"></i></span>
                 </div>
                 <div class="card-footer">
                     <?=$this->getTrans('os') ?>
