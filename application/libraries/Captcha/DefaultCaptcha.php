@@ -80,7 +80,7 @@ class DefaultCaptcha
                         document.getElementById(\'captcha\').src=\'' . $view->getUrl() . '/application/libraries/Captcha/Captcha.php?\'+Math.random();
                         document.getElementById(\'captcha-form\').focus();"
                         id="change-image">
-                        <i class="fa fa-refresh"></i>
+                        <i class="fa-solid fa-arrows-rotate"></i>
                     </a>
                 </span>
             </div>
