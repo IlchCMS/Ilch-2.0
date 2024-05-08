@@ -30,7 +30,7 @@ class Index extends Admin
     ];
 
     private const supportedLayouts = [
-        'privatlayout' => ['1.1.0', '1.1.1', '1.1.2']
+        'privatlayout' => ['1.1.0', '1.1.1', '1.1.2', '1.2.0']
     ];
 
     // Number of items per batch (work is split up).
