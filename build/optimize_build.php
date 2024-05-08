@@ -208,10 +208,6 @@ function optimizeDirectory(string $pathString, array $directories): string
 
     $filesToDelete = array_diff($directoryFiles, array_diff($keepFiles, $removeFiles));
 
-    if ($pathString == 'static/js') {
-        var_dump([$directoryFiles, $keepFiles, $removeFiles, array_diff($keepFiles, $removeFiles), $filesToDelete]);
-    }
-
     $savedSpace = 0;
     foreach ($filesToDelete as $item) {
         $savedSpace += filesize($item);
