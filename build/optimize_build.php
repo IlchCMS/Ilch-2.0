@@ -110,13 +110,10 @@ $directories = [
 
 $directoriesStaticJs = [
     'ckeditor5' => [
-        'remove' => [
-            'package.json',
-            'package-lock.json',
-            'tsconfig.json',
-            'webpack.config.js',
-            'build/ckeditor.d.ts',
-            'build/ckeditor.js.map',
+        'keep' => [
+            'build/ckeditor.js',
+            'LICENSE.md',
+            'styles.css',
         ]
     ],
 ];
@@ -204,7 +201,7 @@ function optimizeDirectory(string $pathString, array $directories): string
     $removePattern = '~^(' . implode('|', array_map('quoteForPattern', $removes)) . ')~';
 
     $keepFiles = preg_grep($keepPattern, $directoryFiles);
-    $removeFiles = preg_grep($removePattern, $directoryFiles);
+    $removeFiles = ($removes) ? preg_grep($removePattern, $directoryFiles) : [];
 
     $filesToDelete = array_diff($directoryFiles, array_diff($keepFiles, $removeFiles));
 
