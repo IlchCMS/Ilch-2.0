@@ -110,11 +110,14 @@ $directories = [
 
 $directoriesStaticJs = [
     'ckeditor5' => [
-        'keep' => [
-            'build/ckeditor.js',
-            'LICENSE.md',
-            'styles.css',
-        ],
+        'remove' => [
+            'package.json',
+            'package-lock.json',
+            'tsconfig.json',
+            'webpack.config.js',
+            'build/ckeditor.d.ts',
+            'build/ckeditor.js.map',
+        ]
     ],
 ];
 
@@ -170,89 +173,67 @@ function quoteForPattern(string $fileOrDir): string
     return $quoted;
 }
 
-// Optimize vendor directory
-$vendorPath = realpath(__DIR__ . '/../vendor');
-$vendorFiles = getFilesRecursive($vendorPath, array_keys($directories));
+/**
+ * Optimize spezific directory
+ * @param string $pathString
+ * @param array $directories
+ * @return string
+ */
+function optimizeDirectory(string $pathString, array $directories): string
+{
+    $directoryPath = realpath(__DIR__ . '/../' . $pathString);
+    $directoryFiles = getFilesRecursive($directoryPath, array_keys($directories));
 
-$keeps = $removes = [];
+    $keeps = $removes = [];
 
-foreach ($directories as $baseDir => $dirOptions) {
-    $baseDirPath = $vendorPath . DIRECTORY_SEPARATOR . $baseDir . DIRECTORY_SEPARATOR;
-    if (isset($dirOptions['keep'])) {
-        foreach ($dirOptions['keep'] as $keep) {
-            $keeps[] = $baseDirPath . str_replace('/', DIRECTORY_SEPARATOR, $keep);
-        }
-    } elseif (isset($dirOptions['remove'])) {
-        foreach ($dirOptions['remove'] as $remove) {
-            $keeps[] = $baseDirPath;
-            $removes[] = $baseDirPath . str_replace('/', DIRECTORY_SEPARATOR, $remove);
+    foreach ($directories as $baseDir => $dirOptions) {
+        $baseDirPath = $directoryPath . DIRECTORY_SEPARATOR . $baseDir . DIRECTORY_SEPARATOR;
+        if (isset($dirOptions['keep'])) {
+            foreach ($dirOptions['keep'] as $keep) {
+                $keeps[] = $baseDirPath . str_replace('/', DIRECTORY_SEPARATOR, $keep);
+            }
+        } elseif (isset($dirOptions['remove'])) {
+            foreach ($dirOptions['remove'] as $remove) {
+                $keeps[] = $baseDirPath;
+                $removes[] = $baseDirPath . str_replace('/', DIRECTORY_SEPARATOR, $remove);
+            }
         }
     }
+
+    $keepPattern = '~^(' . implode('|', array_map('quoteForPattern', $keeps)) . ')~';
+    $removePattern = '~^(' . implode('|', array_map('quoteForPattern', $removes)) . ')~';
+
+    $keepFiles = preg_grep($keepPattern, $directoryFiles);
+    $removeFiles = preg_grep($removePattern, $directoryFiles);
+
+    $filesToDelete = array_diff($directoryFiles, array_diff($keepFiles, $removeFiles));
+
+    if ($pathString == 'static/js') {
+        var_dump([$directoryFiles, $keepFiles, $removeFiles, array_diff($keepFiles, $removeFiles), $filesToDelete]);
+    }
+
+    $savedSpace = 0;
+    foreach ($filesToDelete as $item) {
+        $savedSpace += filesize($item);
+        unlink($item);
+    }
+
+    removeEmptySubFolders($directoryPath);
+
+    return sprintf(
+        'Removed %d files from the "' . $pathString . '" directory saving %s kB.',
+        count($filesToDelete),
+        number_format($savedSpace / 1024, 2, '.', ' ')
+    ).PHP_EOL;
 }
 
-$keepPattern = '~^(' . implode('|', array_map('quoteForPattern', $keeps)) . ')~';
-$removePattern = '~^(' . implode('|', array_map('quoteForPattern', $removes)) . ')~';
 
-$keepFiles = preg_grep($keepPattern, $vendorFiles);
-$removeFiles = preg_grep($removePattern, $vendorFiles);
+// Optimize vendor directory
+echo optimizeDirectory('vendor', $directories);
 
-$filesToDelete = array_diff($vendorFiles, array_diff($keepFiles, $removeFiles));
-
-$savedSpace = 0;
-foreach ($filesToDelete as $item) {
-    $savedSpace += filesize($item);
-    unlink($item);
-}
-
-removeEmptySubFolders($vendorPath);
-
-echo sprintf(
-    'Removed %d files from the vendor directory saving %s kB.',
-    count($filesToDelete),
-    number_format($savedSpace / 1024, 2, '.', ' ')
-).PHP_EOL;
 
 // Optimize static/js directory
-$staticJsPath = realpath(__DIR__ . '/../static/js');
-$staticJsFiles = getFilesRecursive($staticJsPath, array_keys($directoriesStaticJs));
-
-$keeps = $removes = [];
-
-foreach ($directories as $baseDir => $dirOptions) {
-    $baseDirPath = $staticJsPath . DIRECTORY_SEPARATOR . $baseDir . DIRECTORY_SEPARATOR;
-    if (isset($dirOptions['keep'])) {
-        foreach ($dirOptions['keep'] as $keep) {
-            $keeps[] = $baseDirPath . str_replace('/', DIRECTORY_SEPARATOR, $keep);
-        }
-    } elseif (isset($dirOptions['remove'])) {
-        foreach ($dirOptions['remove'] as $remove) {
-            $keeps[] = $baseDirPath;
-            $removes[] = $baseDirPath . str_replace('/', DIRECTORY_SEPARATOR, $remove);
-        }
-    }
-}
-
-$keepPattern = '~^(' . implode('|', array_map('quoteForPattern', $keeps)) . ')~';
-$removePattern = '~^(' . implode('|', array_map('quoteForPattern', $removes)) . ')~';
-
-$keepFiles = preg_grep($keepPattern, $staticJsFiles);
-$removeFiles = preg_grep($removePattern, $staticJsFiles);
-
-$filesToDelete = array_diff($staticJsFiles, array_diff($keepFiles, $removeFiles));
-
-$savedSpace = 0;
-foreach ($filesToDelete as $item) {
-    $savedSpace += filesize($item);
-    unlink($item);
-}
-
-removeEmptySubFolders($staticJsPath);
-
-echo sprintf(
-    'Removed %d files from the static/js directory saving %s kB.',
-    count($filesToDelete),
-    number_format($savedSpace / 1024, 2, '.', ' ')
-).PHP_EOL;
+echo optimizeDirectory('static/js', $directoriesStaticJs);
 
 // Further delete some handpicked files
 $savedSpace = 0;
