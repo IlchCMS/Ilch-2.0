@@ -423,7 +423,7 @@ legend .forum.fa {
     margin-bottom: 12px;
     background-repeat: no-repeat;
     background-position: 100% 0;
-    border: solid 1px #E4E4E4;
+    border: solid 1px var(--bs-border-color);
     overflow: hidden;
 }
 
