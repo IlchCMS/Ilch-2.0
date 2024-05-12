@@ -362,11 +362,6 @@ nav {
     cursor: inherit;
     display: block;
 }
-input[readonly] {
-    background-color: white !important;
-    cursor: text !important;
-}
-
 
 .input-group > .input-group-text:not(:last-child):not(:nth-last-child(2)) {
     border-right-width: 0;

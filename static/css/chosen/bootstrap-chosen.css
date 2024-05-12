@@ -26,7 +26,7 @@ select.form-control + .chosen-container.chosen-container-single .chosen-single {
 
 select.form-control + .chosen-container.chosen-container-single .chosen-single div {
     top: 4px;
-    color: #000;
+    color: var(--bs-body-color);
 }
 
 select.form-control + .chosen-container .chosen-drop {
@@ -136,7 +136,7 @@ select.form-control + .chosen-container-multi .chosen-choices li.search-choice {
     border: var(--bs-border-width) solid var(--bs-border-color);
     border-radius: 3px;
     color: var(--bs-body-color);
-    background-color: #f8f9fa;
+    background-color: var(--bs-body-bg);
     box-shadow: none;
 }
 
@@ -155,7 +155,7 @@ select.form-control + .chosen-container .chosen-search input[type=text]:focus{
 
 select.form-control + .chosen-container-multi .chosen-results li.result-selected {
     display: list-item;
-    color: #ccc;
+    color: var(--bs-body-color);
     cursor: default;
     background-color: var(--bs-body-bg);
 }
@@ -191,7 +191,7 @@ select.form-control + .chosen-container-multi .chosen-results li.result-selected
     font-weight: normal;
     line-height: 1.5;
     text-align: center;
-    background-color: #f8f9fa !important;
+    background-color: var(--bs-body-bg);
     height: auto !important;
     border-radius: 3px !important;
     margin: 0 2px 0 0 !important;
@@ -212,7 +212,7 @@ select.form-control + .chosen-container-multi .chosen-results li.result-selected
 .tokenfield .token .close {
     padding: 3px 6px 0 1px !important;
     font-size: 19px;
-    color: #888 !important;
+    color: var(--bs-body-color);
     font-weight: bold;
     opacity: 1;
     text-shadow: none;
@@ -220,7 +220,7 @@ select.form-control + .chosen-container-multi .chosen-results li.result-selected
 }
 
 .tokenfield .token .close:hover {
-    color: #464646 !important;
+    color: var(--bs-red);
 }
 
 .tokenfield .token-input {

@@ -66,26 +66,6 @@ li em {
     color: #000;
 }
 
-/* navigation */
-.navbar-nav > li > .dropdown-menu {
-    color: #333 !important;
-    background-color: #fff !important;
-}
-.navbar-nav > li > .dropdown-menu > li > a:hover,
-.navbar-nav > li > .dropdown-menu > li > a:active,
-.navbar-nav > li > .dropdown-menu > li > a:focus,
-.navbar-nav > li > .dropdown-menu > li > a:visited
-{
-    outline: 0;
-    color: #262626 !important;
-    text-decoration: none !important;
-    background-color: #f5f5f5 !important;
-}
-.navbar-nav > li > .dropdown-menu > li > a:hover {
-    color: #262626 !important;
-    text-decoration: none !important;
-    background-color: #f5f5f5 !important;
-}
 h1 a.activecart {
     float: right;
     text-decoration: none;
@@ -115,9 +95,10 @@ h1 a span.badge {
     -moz-box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
 }
-.card>a> img {
+.card > a > img {
     max-height: 150px !important;
     width: auto !important;
+    margin: 10px;
 }
 .card .caption,
 .card .caption h4,
@@ -137,7 +118,7 @@ h1 a span.badge {
     border-collapse: collapse;
 }
 .show td.big {
-    border: 1px solid #ddd !important;
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
     position: relative;
 }
 .show .big {
@@ -157,12 +138,11 @@ h1 a span.badge {
 .show .thumb a.thumbimg {
     margin: 0 3px 0 3px;
     cursor: pointer;
-    background: #fff;
 }
 .show .thumb a.thumbimg img {
     height: 50px !important;
     width: auto !important;
-    border: 1px solid #ddd;
+    border: var(--bs-border-width) solid var(--bs-border-color);
     border-radius: 3px;
     padding: 3px;
 }
@@ -180,7 +160,7 @@ h1 a span.badge {
     border: none;
 }
 .show .desc {
-    border-top: 1px solid #ddd;
+    border-top: var(--bs-border-width) solid var(--bs-border-color);
     margin-top: 5px;
     padding-top: 20px;
 }
@@ -201,7 +181,7 @@ h1 a span.badge {
 
 /* cart */
 .cart table {
-    border: 1px solid #ccc;
+    border: var(--bs-border-width) solid var(--bs-border-color);
     border-collapse: collapse;
     margin: 0;
     padding: 0;
@@ -209,8 +189,8 @@ h1 a span.badge {
     table-layout: fixed;
 }
 .cart table tr {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background: var(--bs-body-bg);
+    border: var(--bs-border-width) solid var(--bs-border-color);
 }
 .cart table th,
 .cart table td {
@@ -223,7 +203,7 @@ h1 a span.badge {
     height: 56px !important;
     width: auto !important;
     min-width: 50px;
-    border: 1px solid #ddd;
+    border: var(--bs-border-width) solid var(--bs-border-color);
     border-radius: 3px;
     padding: 2px;
 }
@@ -247,8 +227,8 @@ h1 a span.badge {
     margin: 10px 0 30px 0;
 }
 .cart table.sum tr:last-child {
-    border-top: 3px double #bbb;
-    border-bottom: 2px solid #bbb;
+    border-top: 3px double var(--bs-border-color);
+    border-bottom: 2px solid var(--bs-border-color);
     margin-bottom: 10px;
 }
 
@@ -313,7 +293,7 @@ h1 a span.badge {
 }
 .order h4 {
     padding-top: 20px;
-    border-top: 1px solid #eee;
+    border-top: var(--bs-border-width) solid var(--bs-border-color);
 }
 .mt1 {
     margin-top: 5px;

@@ -56,7 +56,7 @@ if(!empty($_SESSION['shopping_cart'])) {
 </h1>
 
 <?php if (!empty($shopItems) && !empty($categories)) : ?>
-    <nav class="navbar navbar-expand-lg border rounded bg-light mb-3">
+    <nav class="navbar navbar-expand-lg border rounded bg-body-tertiary mb-3">
         <div class="container-fluid">
             <a class="navbar-brand"><?=$this->getTrans('shopNavigation') ?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
