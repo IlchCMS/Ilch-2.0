@@ -69,6 +69,11 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
             $dbFactory = new Factory();
 
             $config = Registry::get('config');
+            
+            if (!$config) {
+                throw new \InvalidArgumentException('Config was null. config.php in tests folder might be missing.');
+            }
+
             Registry::set('db', $dbFactory->getInstanceByConfig($config));
         }
 
