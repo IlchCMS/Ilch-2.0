@@ -186,13 +186,16 @@ header .container .gaming .gaming-name {
     background:#f5f5f5;
     padding: 8px 15px;
 }
-/*-- card-begin --*/
 
+/*-- card-begin --*/
 .card {
     margin-bottom:20px;
 }
 
 .card-gaming > .card-body li {
+    display: block;
+    text-align: left;
+    margin-left: 0;
     line-height: 35px;
     border-bottom: 1px solid #DDD;
 }
