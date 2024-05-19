@@ -7,7 +7,7 @@ use Modules\Forum\Models\Prefix;
 ?>
 <h1><?=$this->getTrans('prefixes') ?></h1>
 <?php if (!empty($this->get('prefixes'))) : ?>
-    <form class="form-horizontal" method="POST">
+    <form method="POST">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">

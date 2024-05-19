@@ -22,19 +22,19 @@ $training = $this->get('training');
         <div class="nexttraining-box">
             <div class="row">
                 <a href="<?=$this->getUrl('training/index/show/id/' . $model->getId()) ?>">
-                    <div class="col-xs-4 ellipsis" title="<?=$this->escape($model->getPlace()) ?>">
+                    <div class="col-4 ellipsis" title="<?=$this->escape($model->getPlace()) ?>">
                         <div class="ellipsis-item">
                             <?=$this->escape($model->getTitle()) ?>
                         </div>
                     </div>
-                    <div class="col-xs-3 ellipsis">
+                    <div class="col-3 ellipsis">
                         <div class="ellipsis-item">
                             <?=count($entrantsMapper->getEntrantsById($model->getId()) ?? []) ?>
                         </div>
                     </div>
                 </a>
-                <div class="col-xs-3 small nexttraining-date">
-                    <div class="ellipsis-item text-right" title="<?=$countdown ?>">
+                <div class="col-3 small nexttraining-date">
+                    <div class="ellipsis-item text-end" title="<?=$countdown ?>">
                         <i><?=$countdown ?></i>
                     </div>
                 </div>

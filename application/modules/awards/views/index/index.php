@@ -9,7 +9,7 @@ $recipientToDisplayLimit = 6;
 <h1><?=$this->getTrans('menuAwards') ?></h1>
 <?php if ($this->get('awards')): ?>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="award">
                 <div class="awards_info">
                     <?=$this->getTrans('currentlyThereAre') ?> <b><?=$this->get('awardsCount') ?></b> <?=$this->getTrans('awards') ?>.
@@ -17,7 +17,7 @@ $recipientToDisplayLimit = 6;
             </div>
         </div>
         <?php foreach ($this->get('awards') as $award): ?>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <div class="award">
                     <div class="rank" align="center">
                         <a href="<?=$this->getUrl(['action' => 'show', 'id' => $award->getId()]) ?>">

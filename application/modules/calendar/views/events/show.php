@@ -33,50 +33,48 @@ $endDate = is_numeric($endDate) ? null : $endDate;
 ?>
 
 <h1><?=$this->escape($calendar->getTitle()) ?></h1>
-<div class="form-horizontal">
-    <?php if ($calendar->getPlace()): ?>
-        <div class="form-group">
-            <div class="col-lg-2"><?=$this->getTrans('place') ?></div>
-            <div class="col-lg-10"><?=$this->escape($calendar->getPlace()) ?></div>
-        </div>
-    <?php endif; ?>
-    <div class="form-group">
-        <div class="col-lg-2"><?=$this->getTrans('start') ?></div>
-        <div class="col-lg-10"><?=$this->getTrans($startDate->format('l')).$startDate->format(', d. ').$this->getTrans($startDate->format('F')).$startDate->format(' Y') ?> <?=$this->getTrans('at') ?> <?=$startDate->format('H:i') ?> <?=$this->getTrans('clock') ?></div>
+<?php if ($calendar->getPlace()): ?>
+    <div class="row mb-3">
+        <div class="col-xl-2"><?=$this->getTrans('place') ?></div>
+        <div class="col-xl-10"><?=$this->escape($calendar->getPlace()) ?></div>
     </div>
-    <?php if ($endDate): ?>
-        <div class="form-group">
-            <div class="col-lg-2"><?=$this->getTrans('end') ?></div>
-            <div class="col-lg-10">
-                <?=$this->getTrans($endDate->format('l')) . $endDate->format(', d. ') . $this->getTrans($endDate->format('F')) . $endDate->format(' Y') . ' ' . $this->getTrans('at').' '. $endDate->format('H:i').' '.$this->getTrans('clock') ?>
-            </div>
+<?php endif; ?>
+<div class="row mb-3">
+    <div class="col-xl-2"><?=$this->getTrans('start') ?></div>
+    <div class="col-xl-10"><?=$this->getTrans($startDate->format('l')).$startDate->format(', d. ').$this->getTrans($startDate->format('F')).$startDate->format(' Y') ?> <?=$this->getTrans('at') ?> <?=$startDate->format('H:i') ?> <?=$this->getTrans('clock') ?></div>
+</div>
+<?php if ($endDate): ?>
+    <div class="row mb-3">
+        <div class="col-xl-2"><?=$this->getTrans('end') ?></div>
+        <div class="col-xl-10">
+            <?=$this->getTrans($endDate->format('l')) . $endDate->format(', d. ') . $this->getTrans($endDate->format('F')) . $endDate->format(' Y') . ' ' . $this->getTrans('at').' '. $endDate->format('H:i').' '.$this->getTrans('clock') ?>
         </div>
-    <?php endif; ?>
-    <?php if ($calendar->getPeriodType()): ?>
-        <div class="form-group">
-            <div class="col-lg-2"><?=$this->getTrans('periodEntry') ?></div>
-            <div class="col-lg-10">
-                <?php
-                if ($calendar->getPeriodType()) {
-                    echo $periodTypes[$calendar->getPeriodType()];
-                    if ($calendar->getPeriodType() != 'days'){
-                        echo ' (x '.$calendar->getPeriodDay().')';
-                    } else {
-                        echo ' ('.$periodDays[$calendar->getPeriodDay()].')';
-                    }
+    </div>
+<?php endif; ?>
+<?php if ($calendar->getPeriodType()): ?>
+    <div class="row mb-3">
+        <div class="col-xl-2"><?=$this->getTrans('periodEntry') ?></div>
+        <div class="col-xl-10">
+            <?php
+            if ($calendar->getPeriodType()) {
+                echo $periodTypes[$calendar->getPeriodType()];
+                if ($calendar->getPeriodType() != 'days'){
+                    echo ' (x '.$calendar->getPeriodDay().')';
+                } else {
+                    echo ' ('.$periodDays[$calendar->getPeriodDay()].')';
                 }
-                ?>
-            </div>
+            }
+            ?>
         </div>
-    <?php endif; ?>
-    <div class="form-group">
-        <div class="col-lg-2"><?=$this->getTrans('description') ?></div>
-        <div class="col-lg-12">
-            <?php if ($calendar->getText()): ?>
-                <?=$this->purify($calendar->getText()) ?>
-            <?php else: ?>
-                <?=$this->getTrans('noDescription') ?>
-            <?php endif; ?>
-        </div>
+    </div>
+<?php endif; ?>
+<div class="row mb-3">
+    <div class="col-xl-2"><?=$this->getTrans('description') ?></div>
+    <div class="col-xl-12">
+        <?php if ($calendar->getText()): ?>
+            <?=$this->purify($calendar->getText()) ?>
+        <?php else: ?>
+            <?=$this->getTrans('noDescription') ?>
+        <?php endif; ?>
     </div>
 </div>

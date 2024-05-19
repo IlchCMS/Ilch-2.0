@@ -16,25 +16,25 @@ $prefixes = $this->get('prefixes');
 
 <div id="forum">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="new-post-head ilch-head">
                 <?=$this->getTrans('editPost') ?>
             </div>
         </div>
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="new-topic ilch-bg ilch-border">
-                <form class="form-horizontal" method="POST">
+                <form method="POST">
                     <?=$this->getTokenField() ?>
                     <?php if ($this->get('isFirstPost')) : ?>
-                    <div class="form-group <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">
-                        <label for="topicTitle" class="col-lg-2 control-label">
+                    <div class="row mb-3<?=$this->validation()->hasError('topicTitle') ? ' has-error' : '' ?>">
+                        <label for="topicTitle" class="col-xl-2 col-form-label">
                             <?=$this->getTrans('topicTitle') ?>
                         </label>
                         <?php if ($forum->getPrefixes() != '') : ?>
                             <?php $prefixIds = explode(',', $forum->getPrefixes()); ?>
                             <?php array_unshift($prefixIds, ''); ?>
-                            <div class="col-lg-2 prefix">
-                                <select class="form-control" id="topicPrefix" name="topicPrefix">
+                            <div class="col-xl-2 prefix">
+                                <select class="form-select" id="topicPrefix" name="topicPrefix">
                                     <?php foreach ($prefixIds as $prefixId) : ?>
                                         <?php $selected = ''; ?>
                                         <?php if ($prefixId == $topic->getTopicPrefix()->getId()) : ?>
@@ -49,7 +49,7 @@ $prefixes = $this->get('prefixes');
                                 </select>
                             </div>
                         <?php endif; ?>
-                        <div class="col-lg-5">
+                        <div class="col-xl-5">
                             <input type="text"
                                    class="form-control"
                                    id="topicTitle"
@@ -58,21 +58,21 @@ $prefixes = $this->get('prefixes');
                         </div>
                     </div>
                     <?php endif; ?>
-                    <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-                        <label class="col-lg-2 control-label">
+                    <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
+                        <label class="col-xl-2 col-form-label">
                             <?=$this->getTrans('text') ?>
                         </label>
-                        <div class="col-lg-10">
+                        <div class="col-xl-10">
                             <textarea class="form-control ckeditor"
                                       id="ck_1"
                                       name="text"
                                       toolbar="ilch_html_frontend"><?=$this->escape($post->getText()) ?></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-lg-offset-2 col-lg-8">
+                    <div class="row mb-3">
+                        <div class="offset-xl-2 col-xl-8">
                             <input type="submit"
-                                   class="btn btn-primary"
+                                   class="btn btn-sm btn-primary"
                                    name="editPost"
                                    value="<?=$this->getTrans('edit') ?>" />
                         </div>
@@ -82,3 +82,5 @@ $prefixes = $this->get('prefixes');
         </div>
     </div>
 </div>
+
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>

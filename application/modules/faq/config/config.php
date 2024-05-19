@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'faq',
-        'version' => '1.9.2',
+        'version' => '1.10.0',
         'icon_small' => 'fa-regular fa-circle-question',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -25,7 +25,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'A FAQ module (frequently asked questions) with categories, options regarding the sorting and a search function.',
             ],
         ],
-        'ilchCore' => '2.1.48',
+        'ilchCore' => '2.2.0',
         'phpVersion' => '7.3'
     ];
 
@@ -187,8 +187,8 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_faqs` ADD CONSTRAINT `FK_[prefix]_faqs_[prefix]_faqs_cats` FOREIGN KEY (`cat_id`) REFERENCES `[prefix]_faqs_cats` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 // no break
             case "1.9.0":
-                // no break
             case "1.9.1":
+            case "1.9.2":
                 // no break
         }
 

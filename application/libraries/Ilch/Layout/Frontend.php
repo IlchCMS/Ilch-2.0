@@ -516,10 +516,10 @@ class Frontend extends Base
     public function getHeader(): string
     {
         $html = '<meta charset="utf-8">
-                <title>' . $this->escape($this->getTitle()) . '</title>
-                <link rel="icon" href="' . $this->getBaseUrl($this->escape($this->getFavicon())) . '" type="image/x-icon">
-                <meta name="keywords" content="' . $this->escape($this->getKeywords()) . '" />
-                <meta name="description" content="' . $this->escape($this->getDescription()) . '" />';
+            <title>' . $this->escape($this->getTitle()) . '</title>
+            <link rel="icon" href="' . $this->getBaseUrl($this->escape($this->getFavicon())) . '" type="image/x-icon">
+            <meta name="keywords" content="' . $this->escape($this->getKeywords()) . '" />
+            <meta name="description" content="' . $this->escape($this->getDescription()) . '" />';
 
         if (is_array($this->get('metaTags'))) {
             foreach ($this->get('metaTags') as $key => $metaTag) {
@@ -536,20 +536,42 @@ class Frontend extends Base
         }
 
         $html .= '
-                <link rel="apple-touch-icon" href="' . $this->getBaseUrl($this->escape($this->getAppleIcon())) . '">
-                <link href="' . $this->getVendorUrl('fortawesome/font-awesome/css/all.min.css') . '" rel="stylesheet">
-                <link href="' . $this->getVendorUrl('fortawesome/font-awesome/css/v4-shims.min.css') . '" rel="stylesheet">
-                <link href="' . $this->getStaticUrl('css/ilch.css') . '" rel="stylesheet">
-                <link href="' . $this->getVendorUrl('npm-asset/jquery-ui/dist/themes/ui-lightness/jquery-ui.min.css') . '" rel="stylesheet">
-                <link href="' . $this->getVendorUrl('ckeditor/ckeditor/plugins/codesnippet/lib/highlight/styles/default.css') . '" rel="stylesheet">
-                <script src="' . $this->getVendorUrl('npm-asset/jquery/dist/jquery.min.js') . '"></script>
-                <script src="' . $this->getVendorUrl('npm-asset/jquery-ui/dist/jquery-ui.min.js') . '"></script>
-                <script src="' . $this->getVendorUrl('ckeditor/ckeditor/ckeditor.js') . '"></script>
-                <script src="' . $this->getStaticUrl('js/ilch.js') . '"></script>
-                <script src="' . $this->getStaticUrl('js/jquery.mjs.nestedSortable.js') . '"></script>
-                <script src="' . $this->getStaticUrl('../application/modules/admin/static/js/functions.js') . '"></script>
-                <script src="' . $this->getVendorUrl('ckeditor/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js') . '"></script>
-                <script>hljs.initHighlightingOnLoad();</script>';
+            <link href="' . $this->getStaticUrl('js/ckeditor5/styles.css') . '" rel="stylesheet" type="text/css">
+            <link rel="apple-touch-icon" href="' . $this->getBaseUrl($this->escape($this->getAppleIcon())) . '">
+            <link href="' . $this->getVendorUrl('fortawesome/font-awesome/css/all.min.css') . '" rel="stylesheet">
+            <link href="' . $this->getVendorUrl('fortawesome/font-awesome/css/v4-shims.min.css') . '" rel="stylesheet">
+            <link href="' . $this->getStaticUrl('css/ilch.css') . '" rel="stylesheet">
+            <link href="' . $this->getVendorUrl('npm-asset/jquery-ui/dist/themes/ui-lightness/jquery-ui.min.css') . '" rel="stylesheet">
+            <link href="' . $this->getStaticUrl('js/highlight/default.min.css') . '" rel="stylesheet">
+            <link href="' . $this->getVendorUrl('twbs/bootstrap/dist/css/bootstrap.min.css') . '" rel="stylesheet">
+            <script src="' . $this->getVendorUrl('npm-asset/jquery/dist/jquery.min.js') . '"></script>
+            <script src="' . $this->getVendorUrl('npm-asset/jquery-ui/dist/jquery-ui.min.js') . '"></script>
+            <script src="' . $this->getStaticUrl('js/ckeditor5/build/ckeditor.js') . '"></script>
+            <script src="' . $this->getStaticUrl('js/jquery.mjs.nestedSortable.js') . '"></script>
+            <script src="' . $this->getStaticUrl('../application/modules/admin/static/js/functions.js') . '"></script>
+            <script src="' . $this->getStaticUrl('js/highlight/highlight.min.js') . '"></script>
+            <script>
+                hljs.highlightAll();
+                var iframeUrlUserGallery = "' . $this->getUrl('user/iframe/indexckeditor/type/imageckeditor/') . '";
+                $(function () {
+                    const tooltipTriggerList = document.querySelectorAll(\'[data-bs-toggle="tooltip"]\')
+                    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+                });
+            </script>';
+
+        if ($this->getUser() && $this->getUser()->isAdmin()) {
+            $html .= '
+                <script>
+                    var iframeUrlImageCkeditor = "' . $this->getUrl('admin/media/iframe/indexckeditor/type/imageckeditor/') . '";
+                    var iframeUrlVideoCkeditor = "' . $this->getUrl('admin/media/iframe/indexckeditor/type/videockeditor/') . '";
+                    var iframeUrlFileCkeditor = "' . $this->getUrl('admin/media/iframe/indexckeditor/type/fileckeditor/') . '";
+                    var iframeMediaUploadCkeditor = "' . $this->getUrl('admin/media/iframe/uploadckeditor/') . '";
+                </script>';
+        }
+
+        if (strncmp($this->getTranslator()->getLocale(), 'de', 2) !== 0) {
+            $html .= '<script src="' . $this->getStaticUrl('js/ckeditor5/build/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') . '" charset="UTF-8"></script>';
+        }
 
         if (is_array($this->get('scriptTags'))) {
             foreach ($this->get('scriptTags') as $key => $scriptTag) {
@@ -565,34 +587,35 @@ class Frontend extends Base
         }
 
         if ($this->getConfigKey('cookie_consent') != 0) {
-            $html .= '<script>
-                        window.addEventListener("load", function(){
-                        window.cookieconsent.initialise({
-                          "palette": {
-                            "popup": {
-                              "background": "' . $this->escape($this->getConfigKey('cookie_consent_popup_bg_color')) . '",
-                              "text": "' . $this->escape($this->getConfigKey('cookie_consent_popup_text_color')) . '"
-                            },
-                            "button": {
-                              "background": "' . $this->escape($this->getConfigKey('cookie_consent_btn_bg_color')) . '",
-                              "text": "' . $this->escape($this->getConfigKey('cookie_consent_btn_text_color')) . '"
-                            }
-                          },
-                          "theme": "' . $this->escape($this->getConfigKey('cookie_consent_layout')) . '",
-                          "position": "' . $this->escape($this->getConfigKey('cookie_consent_pos')) . '",
-                          "type": "' . $this->escape($this->getConfigKey('cookie_consent_type')) . '",
-                          "content": {
-                            "message": "' . $this->getTrans('policyInfoText') . '",
-                            "dismiss": "' . $this->getTrans('dismissBTNText') . '",
-                            "allow": "' . $this->getTrans('allowBTNText') . '",
-                            "deny": "' . $this->getTrans('denyBTNText') . '",
-                            "link": "' . $this->getTrans('policyLinkText') . '",
-                            "href": "' . $this->getUrl(['module' => 'privacy', 'controller' => 'index', 'action' => 'index']) . '"
-                          }
-                        })});
-                        </script>
-                        <link rel="stylesheet" type="text/css" href="' . $this->getStaticUrl('js/cookieconsent/cookieconsent.min.css') . '" />
-                        <script src="' . $this->getStaticUrl('js/cookieconsent/cookieconsent.min.js') . '"></script>';
+            $html .= '
+                <script>
+                    window.addEventListener("load", function(){
+                    window.cookieconsent.initialise({
+                      "palette": {
+                        "popup": {
+                          "background": "' . $this->escape($this->getConfigKey('cookie_consent_popup_bg_color')) . '",
+                          "text": "' . $this->escape($this->getConfigKey('cookie_consent_popup_text_color')) . '"
+                        },
+                        "button": {
+                          "background": "' . $this->escape($this->getConfigKey('cookie_consent_btn_bg_color')) . '",
+                          "text": "' . $this->escape($this->getConfigKey('cookie_consent_btn_text_color')) . '"
+                        }
+                      },
+                      "theme": "' . $this->escape($this->getConfigKey('cookie_consent_layout')) . '",
+                      "position": "' . $this->escape($this->getConfigKey('cookie_consent_pos')) . '",
+                      "type": "' . $this->escape($this->getConfigKey('cookie_consent_type')) . '",
+                      "content": {
+                        "message": "' . $this->getTrans('policyInfoText') . '",
+                        "dismiss": "' . $this->getTrans('dismissBTNText') . '",
+                        "allow": "' . $this->getTrans('allowBTNText') . '",
+                        "deny": "' . $this->getTrans('denyBTNText') . '",
+                        "link": "' . $this->getTrans('policyLinkText') . '",
+                        "href": "' . $this->getUrl(['module' => 'privacy', 'controller' => 'index', 'action' => 'index']) . '"
+                      }
+                    })});
+                </script>
+                <link rel="stylesheet" type="text/css" href="' . $this->getStaticUrl('js/cookieconsent/cookieconsent.min.css') . '" />
+                <script src="' . $this->getStaticUrl('js/cookieconsent/cookieconsent.min.js') . '"></script>';
         }
 
         return $html;
@@ -618,7 +641,7 @@ class Frontend extends Base
      */
     public function getFooter(): string
     {
-        $html = '';
+        $html = '<script src="' . $this->getStaticUrl('js/ilch.js') . '"></script>';
 
         if (\Ilch\DebugBar::isInitialized()) {
             $html .= \Ilch\DebugBar::getInstance()->getJavascriptRenderer()->render();

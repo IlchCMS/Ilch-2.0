@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"Language-Team: Slovak (https://www.transifex.com/ckeditor/teams/11143/sk/)\n"
+"Language: sk\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
+
+msgctxt "Head title"
+msgid "Emoji"
+msgstr ""
+
+msgctxt "A label for a tooltip showing when the user hovers over the plugin icon."
+msgid "Emoji categories"
+msgstr "Kategórie Emoji"
+
+msgctxt "A category name."
+msgid "Smileys & People"
+msgstr "Smajlíky a ľudia"
+
+msgctxt "A category name."
+msgid "Animals & Nature"
+msgstr "Zvieratá a príroda"
+
+msgctxt "A category name."
+msgid "Food & Drink"
+msgstr "Jedlo a nápoje"
+
+msgctxt "A category name."
+msgid "Activity"
+msgstr "Aktivity"
+
+msgctxt "A category name."
+msgid "Travel & Places"
+msgstr "Cestovanie a miesta"
+
+msgctxt "A category name."
+msgid "Objects"
+msgstr "Objekty"
+
+msgctxt "A category name."
+msgid "Symbols"
+msgstr "Symboly"
+
+msgctxt "A category name."
+msgid "Flags"
+msgstr "Vlajky"
+
+msgctxt "A category name."
+msgid "All"
+msgstr "Všetko"

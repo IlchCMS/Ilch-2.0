@@ -35,14 +35,14 @@ $postsPerPage = $this->get('postsPerPage');
         </h1>
         <div class="topic-actions">
             <?php if ($this->getUser()) : ?>
-                <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index', 'id' => $forum->getId()]) ?>" class="btn btn-primary">
-                    <span class="btn-label">
+                <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index', 'id' => $forum->getId()]) ?>" class="btn btn-sm btn-primary">
+                    <span class="badge">
                         <i class="fa-solid fa-plus"></i>
                     </span><?=$this->getTrans('createNewTopic') ?>
                 </a>
             <?php else : ?>
                 <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
-                <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary">
+                <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-sm btn-primary">
                     <span class="btn-label">
                         <i class="fa-solid fa-user"></i>
                     </span><?=$this->getTrans('loginTopic') ?>
@@ -51,7 +51,7 @@ $postsPerPage = $this->get('postsPerPage');
             <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]) ?>
         </div>
         <?php if ($forumEdit) : ?>
-            <form class="form-horizontal" name="editForm" method="POST">
+            <form name="editForm" method="POST">
                 <?=$this->getTokenField() ?>
         <?php endif; ?>
         <div class="forabg">
@@ -121,24 +121,24 @@ $postsPerPage = $this->get('postsPerPage');
                                     </div>
                                 </dt>
                                 <dd class="posts small">
-                                    <div class="pull-left text-nowrap stats">
+                                    <div class="float-start text-nowrap stats">
                                         <?=$this->getTrans('replies') ?>:
                                         <br />
                                         <?=$this->getTrans('views') ?>:
                                     </div>
-                                    <div class="pull-left text-justify">
+                                    <div class="float-start">
                                         <?=$topic->getCountPosts() - 1 ?>
                                         <br />
                                         <?=$topic->getVisits() ?>
                                     </div>
                                 </dd>
                                 <dd class="lastpost small">
-                                    <div class="pull-left">
+                                    <div class="float-start">
                                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
                                             <img style="width:40px; padding-right: 5px;" src="<?=$this->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>" alt="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
                                         </a>
                                     </div>
-                                    <div class="pull-left">
+                                    <div class="float-start">
                                         <?=$this->getTrans('by') ?>
                                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
                                             <?=$this->escape($lastPost->getAutor()->getName()) ?>
@@ -164,8 +164,8 @@ $postsPerPage = $this->get('postsPerPage');
         </div>
         <div class="topic-actions">
             <?php if ($this->getUser()) : ?>
-                <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-primary">
-                    <span class="btn-label">
+                <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-sm btn-primary">
+                    <span class="badge">
                         <i class="fa-solid fa-plus"></i>
                     </span><?=$this->getTrans('createNewTopic') ?>
                 </a>
@@ -184,13 +184,13 @@ $postsPerPage = $this->get('postsPerPage');
                 <?php if (!$forumEdit) : ?>
                     <form method="post">
                         <?=$this->getTokenField() ?>
-                        <button class="btn btn-default" name="forumEdit" value="forumEdit"><?=$this->getTrans('forumEdit') ?></button>
+                        <button class="btn btn-outline-secondary" name="forumEdit" value="forumEdit"><?=$this->getTrans('forumEdit') ?></button>
                     </form>
                 <?php else : ?>
-                    <button class="btn btn-primary" name="topicDelete" value="topicDelete" id="topicDelete" OnClick="SetAction1()" disabled><?=$this->getTrans('topicDelete') ?></button>
-                    <button class="btn btn-primary" name="topicMove" value="topicMove" id="topicMove" OnClick="SetAction2()" disabled><?=$this->getTrans('topicMove') ?></button>
-                    <button class="btn btn-primary" name="topicChangeStatus" value="topicChangeStatus" id="topicChangeStatus" OnClick="SetAction3()" disabled><?=$this->getTrans('topicChangeStatus') ?></button>
-                    <button class="btn btn-primary" name="topicChangeType" value="topicChangeType" id="topicChangeType" OnClick="SetAction4()" disabled><?=$this->getTrans('topicChangeType') ?></button>
+                    <button class="btn btn-sm btn-primary" name="topicDelete" value="topicDelete" id="topicDelete" OnClick="SetAction1()" disabled><?=$this->getTrans('topicDelete') ?></button>
+                    <button class="btn btn-sm btn-primary" name="topicMove" value="topicMove" id="topicMove" OnClick="SetAction2()" disabled><?=$this->getTrans('topicMove') ?></button>
+                    <button class="btn btn-sm btn-primary" name="topicChangeStatus" value="topicChangeStatus" id="topicChangeStatus" OnClick="SetAction3()" disabled><?=$this->getTrans('topicChangeStatus') ?></button>
+                    <button class="btn btn-sm btn-primary" name="topicChangeType" value="topicChangeType" id="topicChangeType" OnClick="SetAction4()" disabled><?=$this->getTrans('topicChangeType') ?></button>
 
                     <script>
                         function SetAction1() {
@@ -212,7 +212,7 @@ $postsPerPage = $this->get('postsPerPage');
                 <?php endif; ?>
             <?php endif; ?>
             <?php if ($this->getUser()) : ?>
-                <div class="pull-right foren-actions">
+                <div class="float-end foren-actions">
                     <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'marktopicsasread', 'forumid' => $this->getRequest()->getParam('forumid')], null, true) ?>" class="ilch-link"><?=$this->getTrans('markTopicsAsRead') ?></a>
                 </div>
             <?php endif; ?>

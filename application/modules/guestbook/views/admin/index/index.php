@@ -1,17 +1,17 @@
 <h1><?=$this->getTrans('manage') ?></h1>
 <?=$this->get('pagination')->getHtml($this, array_merge(['action' => 'index'], ($this->getRequest()->getParam('showsetfree') ? ['showsetfree' => 1] : []))) ?>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
-        <li <?=(!$this->getRequest()->getParam('showsetfree')) ? 'class="active"' : '' ?>>
-            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>">
+        <li <?=(!$this->getRequest()->getParam('showsetfree')) ? 'class="nav-item"' : '' ?>>
+            <a class="nav-link active" href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>">
                 <?=$this->getTrans('entrys') ?>
             </a>
         </li>
         <?php if ($this->get('badge') > 0): ?>
             <li <?=($this->getRequest()->getParam('showsetfree')) ? 'class="active"' : '' ?>>
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
-                    <?=$this->getTrans('setfree') ?><span class="badge"><?=$this->get('badge') ?></span>
+                <a class="nav-link" href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
+                    <?=$this->getTrans('setfree') ?><span class="badge rounded-pill bg-secondary"><?=$this->get('badge') ?></span>
                 </a>
             </li>
         <?php endif; ?>
@@ -28,9 +28,9 @@
                     }
                     ?>
                     <col class="icon_width">
-                    <col class="col-lg-2">
-                    <col class="col-lg-2">
-                    <col class="col-lg-2">
+                    <col class="col-xl-2">
+                    <col class="col-xl-2">
+                    <col class="col-xl-2">
                     <col>
                 </colgroup>
                 <thead>

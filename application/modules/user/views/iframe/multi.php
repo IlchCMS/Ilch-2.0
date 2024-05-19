@@ -14,41 +14,45 @@
 }
 </style>
 
-<form class="form-horizontal" method="POST" action="<?=$_SESSION['media-url-action-button'] ?><?=$this->getRequest()->getParam('id') ?>">
+<form method="POST" action="<?=$_SESSION['media-url-action-button'] ?><?=$this->getRequest()->getParam('id') ?>">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-pills navbar-fixed-top">
-        <li><a href="<?=$this->getUrl(['controller' => 'iframe', 'action' => 'upload', 'id' => $this->getRequest()->getParam('id')]) ?>"><?=$this->getTrans('upload') ?></a></li>
-        <li><a href="<?=$_SESSION['media-url-media-button'] ?><?=$this->getRequest()->getParam('id') ?>"><?=$this->getTrans('media') ?></a></li>
-        <li class="pull-right"><button type="submit" class="btn btn-primary" name="save" value="save"><?=$this->getTrans('add') ?></button></li>
+        <li class="nav-item"><a href="<?=$this->getUrl(['controller' => 'iframe', 'action' => 'upload', 'id' => $this->getRequest()->getParam('id')]) ?>" class="nav-link"><?=$this->getTrans('upload') ?></a></li>
+        <li class="nav-item"><a href="<?=$_SESSION['media-url-media-button'] ?><?=$this->getRequest()->getParam('id') ?>" class="nav-link"><?=$this->getTrans('media') ?></a></li>
+        <li class="float-end nav-item"><button type="submit" class="btn btn-primary" name="save" value="save"><?=$this->getTrans('add') ?></button></li>
     </ul>
 
     <?php if ($this->get('medias') != ''): ?>
         <div id="ilchmedia">
             <div class="container-fluid">
-                <?php foreach ($this->get('medias') as $media): ?>
-                    <?php if (in_array($media->getEnding(), explode(' ', $this->get('usergallery_filetypes')))): ?>
-                        <div id="<?=$media->getId() ?>" class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb media_loader">
-                            <img class="image thumbnail img-responsive"
-                                 data-url="<?=$media->getUrl() ?>"
-                                 <?php if (file_exists($media->getUrlThumb())): ?>
-                                    src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
-                                 <?php else: ?>
-                                    src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
-                                 <?php endif; ?>
-                                 alt="<?=$media->getName() ?>">
-                            <input type="checkbox"
-                                   class="regular-checkbox big-checkbox"
-                                   id="<?=$media->getId() ?>_img"
-                                   name="check_image[]"
-                                   value="<?=$media->getId() ?>" />
-                            <label for="<?=$media->getId() ?>_img"></label>
-                        </div>
-                        <input type="text"
-                               class="hidden"
-                               name="check_url[]"
-                               value="<?=$media->getUrl() ?>" />
-                    <?php endif; ?>
-                <?php endforeach; ?>
+                <div class="row">
+                    <?php foreach ($this->get('medias') as $media): ?>
+                        <?php if (in_array($media->getEnding(), explode(' ', $this->get('usergallery_filetypes')))): ?>
+                            <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
+                                <img class="image img-thumbnail img-fluid thumbnail"
+                                     data-url="<?=$media->getUrl() ?>"
+                                     <?php if (file_exists($media->getUrlThumb())): ?>
+                                        src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
+                                     <?php else: ?>
+                                        src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
+                                     <?php endif; ?>
+                                     alt="<?=$media->getName() ?>">
+                                <div class="form-check">
+                                    <input type="checkbox"
+                                           class="form-check-input regular-checkbox big-checkbox"
+                                           id="<?=$media->getId() ?>_img"
+                                           name="check_image[]"
+                                           value="<?=$media->getId() ?>" />
+                                    <label class="form-check-label" for="<?=$media->getId() ?>_img"></label>
+                                </div>
+                            </div>
+                            <input type="text"
+                                   name="check_url[]"
+                                   value="<?=$media->getUrl() ?>"
+                                   hidden />
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </div>
     <?php else: ?>
@@ -65,15 +69,15 @@ $(".btn").click(function() {
 $(document).on("click", "img.image", function() {
     $(this).closest('div').find('input[type="checkbox"]').click();
     elem = $(this).closest('div').find('img');
-    if (elem.hasClass('chacked')) {
-        $(this).closest('div').find('img').removeClass("chacked");
+    if (elem.hasClass('checked')) {
+        $(this).closest('div').find('img').removeClass("checked");
     } else {
-        $(this).closest('div').find('img').addClass("chacked");
+        $(this).closest('div').find('img').addClass("checked");
     };
 });
 
 $(document).ready(function() {
-    function media_loader() { 
+    function media_loader() {
         var ID=$(".media_loader:last").attr("id");
         $.post("<?=$this->getUrl('admin/media/ajax/multi/type/') ?><?=$this->getRequest()->getParam('type') ?>/lastid/"+ID,
             function(data)

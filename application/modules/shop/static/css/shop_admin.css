@@ -97,8 +97,15 @@ button.stock {
     transform: rotate(-45deg);
 }
 .cordon-flipswitch {
+    height: 38px;
     display: inline-block;
     float: left;
+}
+.cordon-flipswitch .flipswitch-selection {
+    height: 33px;
+}
+.cordon-flipswitch .flipswitch-label {
+    line-height: 38px;
 }
 .cordon-text {
     width: 35% !important;
@@ -177,4 +184,7 @@ input.btn.del:hover {
 input.btn.keep:hover {
     color: #3c763d;
     background-color: #dff0d8;
+}
+.media-body .alert {
+    padding:0px 5px
 }

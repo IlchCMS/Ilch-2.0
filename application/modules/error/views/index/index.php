@@ -3,7 +3,7 @@
 /** @var \Ilch\View $this */
 ?>
 <div class="col-12">
-    <div class="row">
+    <div class="row mb-3">
         <div class="login_container">
             <div class="form_container">
                 <img class="logo" src="<?=$this->getStaticUrl('img/ilch_logo.png') ?>" alt="ilch">
@@ -16,8 +16,8 @@
                     </h2>
                     <h4 class="text-warning"><?=$this->escape($this->get('error')) ?> "<?=$this->escape($this->get('errorText')) ?>" <?=$this->getTrans('notFound'); ?>!</h4>
                 </div>
-                <div class="row text-center">
-                    <a class="btn btn-default" href="<?=$this->getUrl() ?>"><?=$this->getTrans('back'); ?></a>
+                <div class="col-md-auto text-center">
+                    <a class="btn btn-outline-secondary" href="<?=$this->getUrl() ?>"><?=$this->getTrans('back'); ?></a>
                 </div>
             </div>
         </div>

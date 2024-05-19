@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'away',
-        'version' => '1.6.1',
+        'version' => '1.7.0',
         'icon_small' => 'fa-solid fa-calendar-xmark',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -25,7 +25,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'User can enter when they are away (e.g. on holidays). There is an overview of this and the entries can be mananged in the admincenter.',
             ],
         ],
-        'ilchCore' => '2.1.48',
+        'ilchCore' => '2.2.0',
         'phpVersion' => '7.3'
     ];
 
@@ -110,6 +110,7 @@ class Config extends \Ilch\Config\Install
                         $this->db()->query("INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ('away/aways/index/');");
                     }
                 }
+            case "1.6.1":
         }
     }
 }

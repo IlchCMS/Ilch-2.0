@@ -16,7 +16,7 @@ $archive = $this->get('archive');
                             <?=$this->getTrans($date->format('F', true)).$date->format(' Y', true) ?>
                         </a>
                     </span>
-                    <span class="badge">
+                    <span class="badge rounded-pill bg-secondary">
                         <?=$articleMapper->getCountArticlesByMonthYearAccess($archiv->getDateCreated(), $this->get('readAccess')) ?>
                     </span>
                 </li>

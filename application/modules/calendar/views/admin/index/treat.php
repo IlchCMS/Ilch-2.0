@@ -29,49 +29,49 @@ $periodAppendix = [
 $entry = $this->get('calendar');
  ?>
 
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <h1>
         <?=($entry->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
     </h1>
-    <div class="form-group<?=$this->validation()->hasError('start') ? ' has-error' : '' ?>">
-        <label for="start" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('start') ? ' has-error' : '' ?>">
+        <label for="start" class="col-xl-2 col-form-label">
             <?=$this->getTrans('start') ?>:
         </label>
-        <div class="col-lg-4 input-group ilch-date date form_datetime_1">
+        <div id="start" class="col-xl-4 input-group ilch-date date form_datetime_1">
             <input type="text"
                    class="form-control"
                    id="start"
                    name="start"
                    value="<?=$this->escape($this->originalInput('start', ($entry->getId()?(new \Ilch\Date($entry->getStart()))->format('d.m.Y H:i'):''))) ?>"
                    readonly>
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('end') ? ' has-error' : '' ?>">
-        <label for="end" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('end') ? ' has-error' : '' ?>">
+        <label for="end" class="col-xl-2 col-form-label">
             <?=$this->getTrans('end') ?>:
         </label>
-        <div class="col-lg-4 input-group ilch-date date form_datetime_2">
+        <div id="end" class="col-xl-4 input-group ilch-date date form_datetime_2">
             <input type="text"
                    class="form-control"
                    id="end"
                    name="end"
                    value="<?=$this->escape($this->originalInput('end', ($entry->getId()?($entry->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getEnd()))->format('d.m.Y H:i') : ''):''))) ?>">
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
-        <label for="title" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+        <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="title"
@@ -79,11 +79,11 @@ $entry = $this->get('calendar');
                    value="<?=$this->escape($this->originalInput('title', ($entry->getId()?$entry->getTitle():''))) ?>" />
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
-        <label for="place" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
+        <label for="place" class="col-xl-2 col-form-label">
             <?=$this->getTrans('place') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="place"
@@ -91,12 +91,12 @@ $entry = $this->get('calendar');
                    value="<?=$this->escape($this->originalInput('place', ($entry->getId()?$entry->getPlace():''))) ?>" />
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('periodType') ? ' has-error' : '' ?>">
-        <label for="periodType" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('periodType') ? ' has-error' : '' ?>">
+        <label for="periodType" class="col-xl-2 col-form-label">
             <?=$this->getTrans('periodEntry') ?>:
         </label>
-        <div class="col-lg-4">
-            <select class="form-control" name="periodType" id="periodType">
+        <div class="col-xl-4">
+            <select class="form-select" name="periodType" id="periodType">
                 <option value="" <?=($this->originalInput('periodType', ($entry->getId()?$entry->getPeriodType():''))) == '' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
                 <?php foreach ($periodTypes as $key => $value): ?>
                     <option value="<?=$key ?>" <?=($this->originalInput('periodType', ($entry->getId()?$entry->getPeriodType():''))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
@@ -104,66 +104,73 @@ $entry = $this->get('calendar');
             </select>
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('periodDays') ? ' has-error' : '' ?>" id="periodDays_div">
-        <label for="periodDays" class="col-lg-2 control-label"></label>
-        <div class="col-lg-4">
-            <select class="form-control" name="periodDays" id="periodDays">
+    <div class="<?=$this->validation()->hasError('periodDays') ? ' has-error' : '' ?>" id="periodDays_div">
+      <div class="row mb-3">
+        <label for="periodDays" class="col-xl-2 col-form-label"></label>
+        <div class="col-xl-4">
+            <select class="form-select" name="periodDays" id="periodDays">
                 <option value="0" <?=($this->originalInput('periodDay', ($entry->getId()?$entry->getPeriodDay():'0'))) == '0' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
                 <?php foreach ($periodDays as $key => $value): ?>
                     <option value="<?=$key ?>" <?=($this->originalInput('periodDay', ($entry->getId()?$entry->getPeriodDay():'0'))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
+      </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('periodDay') ? ' has-error' : '' ?>" id="periodDay_div">
-        <label for="periodDay" class="col-lg-2 control-label"></label>
-        <div class="col-lg-4 input-group">
-            <span class="input-group-addon"><?=$this->getTrans('periodEvery') ?></span>
+    <div class="<?=$this->validation()->hasError('periodDay') ? ' has-error' : '' ?>" id="periodDay_div">
+      <div class="row mb-3">
+        <label for="periodDay" class="col-xl-2 col-form-label"></label>
+        <div class="col-xl-4 input-group">
+            <span class="input-group-text"><?=$this->getTrans('periodEvery') ?></span>
             <input type="text"
                    class="form-control"
                    id="periodDay"
                    name="periodDay"
                    value="<?=$this->escape($this->originalInput('periodDay', ($this->originalInput('periodType', ($entry->getId()?$entry->getPeriodType():'')) == 'days'?'0':($entry->getId()?$entry->getPeriodDay():'1')))) ?>" />
-            <span class="input-group-addon" id="periodDayAppendix"><?=(!empty($entry->getPeriodType())) ? $this->getTrans($periodAppendix[$entry->getPeriodType()]) : '' ?></span>
+            <span class="input-group-text" id="periodDayAppendix"><?=(!empty($entry->getPeriodType())) ? $this->getTrans($periodAppendix[$entry->getPeriodType()]) : '' ?></span>
         </div>
+      </div>
     </div>
 
-    <div class="form-group<?=$this->validation()->hasError('repeatUntil') ? ' has-error' : '' ?>" id="repeatUntil_div">
-        <label for="repeatUntil" class="col-lg-2 control-label">
+    <div class="<?=$this->validation()->hasError('repeatUntil') ? ' has-error' : '' ?>" id="repeatUntil_div">
+      <div class="row mb-3">
+        <label for="repeatUntil" class="col-xl-2 col-form-label">
             <?=$this->getTrans('repeatUntil') ?>:
         </label>
-        <div class="col-lg-4 input-group ilch-date date form_datetime_3">
+        <div id="repeatUntil" class="col-xl-4 input-group ilch-date date form_datetime_3">
             <input type="text"
                    class="form-control"
                    id="repeatUntil"
                    name="repeatUntil"
                    value="<?=$this->escape($this->originalInput('repeatUntil', ($entry->getId()?($entry->getRepeatUntil() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getRepeatUntil()))->format('d.m.Y H:i') : ''):''))) ?>"
                    readonly>
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
+      </div>
     </div>
 
-    <div class="form-group<?=$this->validation()->hasError('color') ? ' has-error' : '' ?>">
-        <label for="color" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('color') ? ' has-error' : '' ?>">
+        <label for="color" class="col-xl-2 col-form-label">
             <?=$this->getTrans('color') ?>:
         </label>
-        <div class="col-lg-4 input-group date">
+        <div class="col-xl-4 input-group date">
             <input class="form-control color {hash:true}"
                    id="color"
                    name="color"
+                   data-jscolor=""
                    value="<?=$this->escape($this->originalInput('color', ($entry->getId()?$entry->getColor():'#32333B'))) ?>">
-            <span class="input-group-addon">
-                <span class="fa-solid fa-arrow-rotate-left" onclick="document.getElementById('color').color.fromString('32333B')"></span>
+            <span class="input-group-text">
+                <span class="fa-solid fa-arrow-rotate-left" onclick="document.getElementById('color').jscolor.fromString('32333B')"></span>
             </span>
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
-        <label for="access" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
+        <label for="access" class="col-xl-2 col-form-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <option value="all" <?=in_array('all', $this->originalInput('groups', $this->get('groups'))) ? 'selected="selected"' : '' ?>><?=$this->getTrans('groupAll') ?></option>
                 <?php foreach ($this->get('userGroupList') as $groupList): ?>
@@ -174,11 +181,11 @@ $entry = $this->get('calendar');
             </select>
         </div>
     </div>
-    <div class="form-group<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
-        <label for="ck_1" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
+        <label for="ck_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('text') ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-xl-10">
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="text"
@@ -190,10 +197,11 @@ $entry = $this->get('calendar');
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
-<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.min.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
 <?=$this->getMedia()
@@ -205,40 +213,82 @@ $('#access').chosen();
 $(document).ready(function() {
     let jsPeriodAppendix = <?=json_encode($periodAppendix) ?>;
 
-    $(".form_datetime_1").datetimepicker({
-        format: "dd.mm.yyyy hh:ii",
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: true,
-    }).on('change.datetimepicker', function (e) {
-        let mindate = $(".form_datetime_1").data("datetimepicker").getDate();
-        $('.form_datetime_2').datetimepicker('minDate', mindate);
+    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
+        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
+        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
+    }
+
+    const start = new tempusDominus.TempusDominus(document.getElementById('start'), {
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        stepping: 15
     });
 
-    $(".form_datetime_2").datetimepicker({
-        format: "dd.mm.yyyy hh:ii",
-        startDate: new Date(),
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: false,
-        useCurrent: false,
-        minDate: $(".form_datetime_1").data("datetimepicker").getDate()
-    }).on('change.datetimepicker', function (e) {
-        let mindate = $(".form_datetime_2").data("datetimepicker").getDate();
-        $('.form_datetime_3').datetimepicker('minDate', mindate);
+    const end = new tempusDominus.TempusDominus(document.getElementById('end'), {
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        stepping: 15
     });
 
-    $(".form_datetime_3").datetimepicker({
-        format: "dd.mm.yyyy hh:ii",
-        startDate: new Date(),
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: false,
-        useCurrent: false,
-        minDate: $(".form_datetime_2").data("datetimepicker").getDate()
+    const repeatUntil = new tempusDominus.TempusDominus(document.getElementById('repeatUntil'), {
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        promptTimeOnDateChange: true,
+        stepping: 15
+    });
+
+    start.subscribe('change.td', (e) => {
+        end.updateOptions({
+            restrictions: {
+                minDate: e.date,
+            },
+        });
+    });
+
+    end.subscribe('change.td', (e) => {
+        repeatUntil.updateOptions({
+            restrictions: {
+                minDate: e.date,
+            },
+        });
+        start.updateOptions({
+            restrictions: {
+                maxDate: e.date,
+            },
+        });
     });
 
     diasableDays();

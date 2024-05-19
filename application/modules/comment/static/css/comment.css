@@ -22,7 +22,8 @@
 
 .comment-list .media-block .media-left {
     display: block;
-    float: left
+    float: left;
+    margin-right: 10px;
 }
 
 .comment-list .media-block .media-body {

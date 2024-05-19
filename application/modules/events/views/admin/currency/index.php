@@ -1,5 +1,5 @@
 <h1><?=$this->getTrans('currencies') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <table class="table table-hover table-striped">
         <colgroup>

@@ -1,14 +1,13 @@
 <h1><?=$this->getTrans('menuAccess') ?></h1>
 <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'group', 'action' => 'saveAccess']) ?>"
       method="POST"
-      class="form-horizontal"
       role="form"
       id="groupAccessForm">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
-        <label for="groupId" class="control-label col-sm-2"><?=$this->getTrans('group') ?></label>
-        <div class="col-sm-10">
-            <select class="form-control" id="groupId" name="groupId">
+    <div class="row mb-3">
+        <label for="groupId" class="col-form-label col-md-2"><?=$this->getTrans('group') ?></label>
+        <div class="col-md-10">
+            <select class="form-select" id="groupId" name="groupId">
                 <option value="0"
                         <?=(empty((int)$this->get('activeGroupId'))) ? 'selected="selected"' : '' ?>>
                         <?=$this->getTrans('chooseAGroup') ?>
@@ -22,8 +21,8 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
-        <label for="accessId" class="control-label col-sm-2">
+    <div class="row mb-3">
+        <label for="accessId" class="col-form-label col-md-2">
         <?php
         $accessTypes = $this->get('accessTypes');
         foreach ($accessTypes as $accessType => $typeData) {
@@ -35,8 +34,8 @@
         }
         $activeaccess = '';
         ?></label>
-        <div class="col-sm-10">
-            <select class="form-control" id="accessId" name="accessId">
+        <div class="col-md-10">
+            <select class="form-select" id="accessId" name="accessId">
                 <option value="0"
                         <?=(empty((int)$this->get('activeaccessId'))) ? 'selected="selected"' : '' ?>>
                         <?=$this->getTrans('choose') ?>
@@ -96,9 +95,9 @@
                 <table class="table table-hover table-striped">
                     <colgroup>
                         <col>
-                        <col class="col-lg-2">
-                        <col class="col-lg-2">
-                        <col class="col-lg-2">
+                        <col class="col-xl-2">
+                        <col class="col-xl-2">
+                        <col class="col-xl-2">
                     </colgroup>
                     <thead>
                         <tr>
@@ -180,9 +179,9 @@
                 <table class="table table-hover table-striped">
                     <colgroup>
                         <col>
-                        <col class="col-lg-2">
-                        <col class="col-lg-2">
-                        <col class="col-lg-2">
+                        <col class="col-xl-2">
+                        <col class="col-xl-2">
+                        <col class="col-xl-2">
                     </colgroup>
                     <thead>
                         <tr>

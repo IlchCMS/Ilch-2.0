@@ -1,6 +1,6 @@
 <h1><?=$this->getTrans('menuGameIcons') ?></h1>
 <?php if ($this->get('icons')): ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-striped table-hover">

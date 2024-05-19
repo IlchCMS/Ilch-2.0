@@ -1,19 +1,19 @@
 <?php if ($this->get('regist_accept') == '1'): ?>
     <?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
-    <form class="form-horizontal" method="POST">
+    <form method="POST">
         <?=$this->getTokenField() ?>
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="card panel-default">
+            <div class="card-header">
                 <?=$this->getTrans('rules') ?>
             </div>
-            <div class="panel-body" style="background: #eee;">
+            <div class="card-body" style="background: #eee;">
                 <?=$this->get('regist_rules') ?>
             </div>
-            <div class="panel-footer clearfix">
-                <div class="pull-left checkbox inline <?=$this->validation()->hasError('acceptRule') ? 'has-error' : '' ?>">
+            <div class="card-footer clearfix">
+                <div class="float-start checkbox inline<?=$this->validation()->hasError('acceptRule') ? ' has-error' : '' ?>">
                     <input type="checkbox" style="margin-left: 0;" id="acceptRule" name="acceptRule" value="1"> <label for="acceptRule"><?=$this->getTrans('acceptRule') ?></label>
                 </div>
-                <div class="pull-right">
+                <div class="float-end">
                     <?=$this->getSaveBar('nextButton', 'Regist') ?>
                 </div>
             </div>

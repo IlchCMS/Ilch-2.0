@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'media',
-        'icon_small' => 'fa-th',
+        'icon_small' => 'fa-solid fa-table-cells',
         'system_module' => true,
         'languages' => [
             'de_DE' => [
@@ -59,7 +59,12 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
+        switch ($installedVersion) {
+            case "2.1.60":
+                $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = '" . $this->config['icon_small'] . "' WHERE `key` = '" . $this->config['key'] . "';");
+                break;
+        }
 
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
-

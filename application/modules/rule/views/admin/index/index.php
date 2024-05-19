@@ -10,7 +10,7 @@ $rules = $this->get('rules');
 ?>
 <h1><?=$this->getTrans('manage') ?></h1>
 <?php if ($rules) : ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -20,8 +20,8 @@ $rules = $this->get('rules');
                     <col class="icon_width" />
                     <col class="icon_width" />
                     <col class="icon_width" />
-                    <col class="col-lg-2" />
-                    <col class="col-lg-2" />
+                    <col class="col-xl-2" />
+                    <col class="col-xl-2" />
                     <col />
                 </colgroup>
                 <thead>
@@ -59,14 +59,14 @@ $rules = $this->get('rules');
         <div class="content_savebox">
             <input type="hidden" class="content_savebox_hidden" name="action" value="" />
             <div class="btn-group dropup">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <?=$this->getTrans('selected') ?> <span class="caret"></span>
+                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                    <?=$this->getTrans('selected') ?>
                 </button>
                 <ul class="dropdown-menu listChooser" role="menu">
-                    <li><a href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
+                    <li><a class="dropdown-item" href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
                 </ul>
             </div>
-            <button type="submit" class="save_button btn btn-default" name="saveRules" value="save">
+            <button type="submit" class="save_button btn btn-outline-secondary" name="saveRules" value="save">
                 <?=$this->getTrans('saveButton') ?>
             </button>
         </div>

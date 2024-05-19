@@ -7,7 +7,7 @@ $entries = $this->get('entries');
 ?>
 <h1><?=$this->getTrans('manage') ?></h1>
 <?php if ($entries) : ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -15,8 +15,8 @@ $entries = $this->get('entries');
                     <col class="icon_width">
                     <col class="icon_width">
                     <col class="icon_width">
-                    <col class="col-lg-2">
-                    <col class="col-lg-2">
+                    <col class="col-xl-2">
+                    <col class="col-xl-2">
                     <col>
                 </colgroup>
                 <thead>

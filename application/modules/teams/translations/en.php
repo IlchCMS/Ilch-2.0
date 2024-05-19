@@ -10,6 +10,7 @@ return [
     'menuTeam' => 'Team',
     'teamName' => 'Name',
     'img' => 'Image',
+    'browse' => 'Browse',
     'leader' => 'Leader',
     'coLeader' => 'CoLeader',
     'noCoLeader' => 'No CoLeader',

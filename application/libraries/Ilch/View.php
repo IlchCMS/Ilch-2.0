@@ -55,12 +55,12 @@ class View extends Design\Base
     public function getSaveBar($saveKey = 'saveButton', $nameKey = null, $deleteKey = '')
     {
         $html = '<div class="content_savebox">
-                    <button type="submit" class="save_button btn btn-default" name="save'.$nameKey.'" value="save">
+                    <button type="submit" class="save_button btn btn-secondary" name="save'.$nameKey.'" value="save">
                         '.$this->getTrans($saveKey).'
                     </button>';
 
         if (!empty($deleteKey)) {
-            $html .= '<button type="submit" class="delete_button pull-right btn" name="delete" value="delete">
+            $html .= '<button type="submit" class="delete_button btn float-end" name="delete" value="delete">
                         '.$this->getTrans($deleteKey).'
                       </button>';
         }
@@ -81,12 +81,10 @@ class View extends Design\Base
         $html = '<div class="content_savebox">
                     <input type="hidden" class="content_savebox_hidden" name="action" value="" />
                         <div class="btn-group dropup">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">'.
-                                $this->getTrans('selected').' <span class="caret"></span>
-                            </button>
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">' . $this->getTrans('selected') . '</button>
                             <ul class="dropdown-menu listChooser" role="menu">';
         foreach ($actions as $key => $name) {
-            $html .= '<li><a href="#" data-hiddenkey="'.$key.'" id="'.$key.'">'.$this->getTrans($name).'</a></li>';
+            $html .= '<li><a href="#" class="dropdown-item" data-hiddenkey="'.$key.'" id="'.$key.'">'.$this->getTrans($name).'</a></li>';
         }
         $html .= '</ul></div></div>';
 
@@ -101,7 +99,7 @@ class View extends Design\Base
      */
     public function getEditIcon($url)
     {
-        return '<a href="'.$this->getUrl($url).'" title="'.$this->getTrans('edit').'"><span class="fa fa-edit text-success"></span></a>';
+        return '<a href="'.$this->getUrl($url).'" title="'.$this->getTrans('edit').'"><span class="fa-solid fa-pen-to-square text-success"></span></a>';
     }
 
     /**
@@ -112,7 +110,7 @@ class View extends Design\Base
      */
     public function getDeleteIcon($url)
     {
-        return '<a href="'.$this->getUrl($url, null, true).'" title="'.$this->getTrans('delete').'" class="delete_button"><span class="fa fa-trash-o text-danger"></span></a>';
+        return '<a href="'.$this->getUrl($url, null, true).'" title="'.$this->getTrans('delete').'" class="delete_button"><span class="fa-regular fa-trash-can text-danger"></span></a>';
     }
 
     /**

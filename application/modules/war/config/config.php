@@ -13,7 +13,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'war',
-        'version' => '1.15.5',
+        'version' => '1.16.0',
         'icon_small' => 'fa-solid fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -46,7 +46,7 @@ class Config extends Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.48',
+        'ilchCore' => '2.2.0',
         'phpVersion' => '7.3'
     ];
 
@@ -402,6 +402,11 @@ class Config extends Install
                 // no break
             case "1.15.2":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-shield' WHERE `key` = 'war';");
+                // no break
+            case "1.15.2":
+            case "1.15.3":
+            case "1.15.4":
+            case "1.15.5":
         }
     }
 }

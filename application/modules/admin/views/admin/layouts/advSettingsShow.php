@@ -19,6 +19,7 @@ function getInput(string $name, array $value, array $settingsValues, \Ilch\View 
             $input = sprintf('<input class="form-control color {hash:true}"
                                id="%s"
                                name="%s"
+                               data-jscolor=""
                                value="%s">', $name, $name, $settingsValue);
             break;
         case 'ckeditorbbcode':
@@ -52,7 +53,7 @@ function getInput(string $name, array $value, array $settingsValues, \Ilch\View 
                                                id="selectedImage_%s"
                                                value="%s"
                                                readonly />
-                                        <span class="input-group-addon"><a id="media_%s" href="javascript:media_%s()"><i class="fa-regular fa-image"></i></a></span>
+                                        <span class="input-group-text"><a id="media_%s" href="javascript:media_%s()"><i class="fa-regular fa-image"></i></a></span>
                                     </div>', $name, $name, $settingsValue, $name, $name);
             $input .= '<script>' . $obj->getMedia()
                             ->addMediaButton($obj->getUrl('admin/media/iframe/index/type/single/input/_' . $name . '/'))
@@ -65,7 +66,7 @@ function getInput(string $name, array $value, array $settingsValues, \Ilch\View 
                                type="text"
                                name="%s"
                                id="%s"
-                               maxlength="255" 
+                               maxlength="255"
                                value="%s" />', $name, $name, $settingsValue);
             break;
         case 'url':
@@ -89,20 +90,20 @@ function getInput(string $name, array $value, array $settingsValues, \Ilch\View 
 ?>
 
 <h1><?=$this->getTrans('menuAdvSettings') ?></h1>
-<form id="advsettings_form" class="form-horizontal" method="POST">
+<form id="advsettings_form" method="POST">
     <?=$this->getTokenField() ?>
     <?php foreach ($this->get('settings') as $key => $value) : ?>
         <?php if (!empty($value['type']) && $value['type'] === 'separator') : ?>
             <h2><?=$this->getOtherLayoutTrans($this->get('layoutKey'), $key) ?></h2>
         <?php else : ?>
-            <div class="form-group">
-                <label for="<?=$key ?>" class="col-lg-2 control-label">
+            <div class="row mb-3">
+                <label for="<?=$key ?>" class="col-xl-2 col-form-label">
                     <?=$this->getOtherLayoutTrans($this->get('layoutKey'), $key) ?>:
                 </label>
-                <div class="col-lg-10">
+                <div class="col-xl-10">
                     <?=getInput($key, $value, $this->get('settingsValues'), $this) ?>
                     <?php if (!empty($value['description'])) : ?>
-                        <div class="text-right"><small><?=$this->getOtherLayoutTrans($this->get('layoutKey'), $value['description']) ?></small><p></p></div>
+                        <div class="text-end"><small><?=$this->getOtherLayoutTrans($this->get('layoutKey'), $value['description']) ?></small><p></p></div>
                     <?php endif; ?>
                 </div>
             </div>
@@ -112,4 +113,4 @@ function getInput(string $name, array $value, array $settingsValues, \Ilch\View 
     <?=$this->getSaveBar() ?>
 </form>
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
-<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.min.js') ?>"></script>

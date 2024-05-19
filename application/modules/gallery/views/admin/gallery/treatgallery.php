@@ -8,7 +8,7 @@ $pagination = $this->get('pagination');
 <h1><?=$this->getTrans('gallery') ?>: <?=$this->get('galleryTitle') ?></h1>
 <?=$pagination->getHtml($this, ['action' => 'treatgallery', 'id' => $this->getRequest()->getParam('id')]) ?>
 <?php if ($this->get('image')) : ?>
-    <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
+    <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -16,8 +16,8 @@ $pagination = $this->get('pagination');
                     <col class="icon_width">
                     <col class="icon_width">
                     <col class="icon_width">
-                    <col class="col-lg-2">
-                    <col class="col-lg-4">
+                    <col class="col-xl-2">
+                    <col class="col-xl-4">
                     <col>
                 </colgroup>
                 <thead>
@@ -39,9 +39,9 @@ $pagination = $this->get('pagination');
                             <td><?=$this->getEditIcon(['controller' => 'image', 'action' => 'treatimage', 'gallery' => $image->getGalleryId(), 'id' => $image->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $image->getId(), 'gallery' => $this->getRequest()->getParam('id')]) ?></td>
                             <?php if (file_exists($image->getImageThumb())) : ?>
-                                <td><img class="image thumbnail img-responsive" src="<?=$this->getUrl() . '/' . $image->getImageThumb() ?>" alt="<?=$this->escape($image->getImageTitle()) ?>"/></td>
+                                <td><img class="image img-thumbnail img-fluid thumbnail" src="<?=$this->getUrl() . '/' . $image->getImageThumb() ?>" alt="<?=$this->escape($image->getImageTitle()) ?>"/></td>
                             <?php else : ?>
-                                <td><img class="image thumbnail img-responsive" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" alt="<?=$this->getTrans('noMediaAlt') ?>"/></td>
+                                <td><img class="image img-thumbnail img-fluid thumbnail" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" alt="<?=$this->getTrans('noMediaAlt') ?>"/></td>
                             <?php endif; ?>
                             <td><?=$this->escape($image->getImageTitle()) ?></td>
                             <td><div class="table_text"><?=$this->escape($image->getImageDesc()) ?></div></td>

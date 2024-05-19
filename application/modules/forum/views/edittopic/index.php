@@ -52,21 +52,21 @@ function rec(ForumItem $item, View $obj, ?int $i)
 
 <div id="forum">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="new-post-head ilch-head">
                 <?=$this->getTrans('topicMoveTo') ?>
             </div>
         </div>
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="new-topic ilch-bg ilch-border">
-                <form class="form-horizontal" method="POST">
+                <form method="POST">
                     <?=$this->getTokenField() ?>
-                    <div class="form-group">
-                        <label for="selectForum" class="col-lg-2 control-label">
+                    <div class="row mb-3">
+                        <label for="selectForum" class="col-xl-2 col-form-label">
                             <?=$this->getTrans('selectForum') ?>
                         </label>
-                        <div class="col-lg-6">
-                            <select class="form-control" id="selectForum" name="edit">
+                        <div class="col-xl-6">
+                            <select class="form-select" id="selectForum" name="edit">
                                 <?php foreach ($forumItems as $item) : ?>
                                     <?php rec($item, $this, $i = null) ?>
                                 <?php endforeach; ?>
@@ -76,9 +76,9 @@ function rec(ForumItem $item, View $obj, ?int $i)
                             <?php endforeach; ?>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-lg-offset-2 col-lg-10">
-                            <button type="submit" class="btn btn-primary" name="edittopic" value="edittopic">
+                    <div class="row mb-3">
+                        <div class="offset-xl-2 col-xl-10">
+                            <button type="submit" class="btn btn-sm btn-primary" name="edittopic" value="edittopic">
                                 <?=$this->getTrans('move') ?>
                             </button>
                         </div>

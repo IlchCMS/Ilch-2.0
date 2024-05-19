@@ -7,14 +7,14 @@ $entrantsMapper = $this->get('entrantsMapper');
 <?php if ($this->get('eventListUpcoming') == '' && $this->get('eventListCurrent') == '' && $this->get('getEventList') == '' && $this->get('eventListPast') == ''): ?>
     <h1><?=$this->getTrans('menuEventAll') ?></h1>
     <div class="row">
-        <div class="col-lg-12"><?=$this->getTrans('noEvent') ?></div>
+        <div class="col-xl-12"><?=$this->getTrans('noEvent') ?></div>
     </div>
 <?php endif; ?>
 
 <?php if ($this->get('eventListUpcoming') != ''): ?>
     <h1><?=$this->getTrans('menuEventUpcoming') ?></h1>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <ul class="event-list">
                 <?php if ($this->get('eventListUpcoming') != ''): ?>
                     <?php foreach ($this->get('eventListUpcoming') as $eventlist): ?>
@@ -75,7 +75,7 @@ $entrantsMapper = $this->get('entrantsMapper');
 <?php if ($this->get('eventListCurrent') != ''): ?>
     <h1><?=$this->getTrans('menuEventCurrent') ?></h1>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <ul class="event-list">
                 <?php foreach ($this->get('eventListCurrent') as $eventlist): ?>
                     <?php $eventEntrants = $entrantsMapper->getEventEntrantsById($eventlist->getId()) ?>
@@ -132,7 +132,7 @@ $entrantsMapper = $this->get('entrantsMapper');
 <?php if ($this->get('eventListPast') != ''): ?>
     <h1><?=$this->getTrans('menuEventPast') ?></h1>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <ul class="event-list">
                 <?php foreach ($this->get('eventListPast') as $eventlist): ?>
                     <?php $eventEntrants = $entrantsMapper->getEventEntrantsById($eventlist->getId()) ?>

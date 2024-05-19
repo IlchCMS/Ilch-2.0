@@ -2,7 +2,7 @@
     <script>$(document).ready(function(){
     $('.providers').on('click', function (e) {
         e.preventDefault();
-        
+
         var myForm = $(this).closest('form')[0];
         myForm.action = this.href;// the href of the link
         myForm.method = "POST";
@@ -10,17 +10,17 @@
         return false; // cancel the actual link
     });
     });</script>
-    <form class="form-horizontal" method="post">
+    <form method="post">
         <h1><?=$this->getTrans('menuLogin') ?></h1>
         <?=$this->getTokenField() ?>
         <input type="hidden" name="login_redirect_url" value="<?=$this->escape($this->get('redirectUrl')) ?>" />
-        <div class="form-group <?=$this->validation()->hasError('login_emailname') ? 'has-error' : '' ?>">
-            <label for="login_emailname" class="col-lg-2 control-label">
+        <div class="row mb-3<?=$this->validation()->hasError('login_emailname') ? ' has-error' : '' ?>">
+            <label for="login_emailname" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('nameEmail') ?>:
             </label>
-            <div class="col-lg-10">
+            <div class="col-xl-10">
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
                     <input type="text"
                            class="form-control"
                            id="login_emailname"
@@ -29,13 +29,13 @@
                 </div>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('login_password') ? 'has-error' : '' ?>">
-            <label for="login_password" class="col-lg-2 control-label">
+        <div class="row mb-3<?=$this->validation()->hasError('login_password') ? ' has-error' : '' ?>">
+            <label for="login_password" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('password') ?>:
             </label>
-            <div class="col-lg-10">
+            <div class="col-xl-10">
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
                     <input type="password"
                            class="form-control"
                            id="login_password"
@@ -44,8 +44,8 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
+        <div class="row mb-3">
+            <div class="offset-xl-2 col-xl-10">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" name="rememberMe" value="rememberMe"> <?=$this->getTrans('rememberMe') ?>
@@ -53,9 +53,9 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <button type="submit" name="login" class="btn btn-default">
+        <div class="row mb-3">
+            <div class="offset-xl-2 col-xl-10">
+                <button type="submit" name="login" class="btn btn-outline-secondary">
                     <i class="fa-solid fa-fw fa-right-to-bracket"></i> <?=$this->getTrans('login') ?>
                 </button>
                 <span class="social-logins">
@@ -63,7 +63,7 @@
                         <i class="fa-solid fa-fw fa-angle-right"></i>
                     <?php endif; ?>
                     <?php foreach ($this->get('providers') as $provider): ?>
-                        <a 
+                        <a
                             class="btn btn-link providers provider-<?= $provider->getKey() ?>"
                             href="<?= $this->getUrl([
                                 'module' => $provider->getModule(),
@@ -78,7 +78,7 @@
             </div>
         </div>
     </form>
-    <div class="col-lg-offset-2 col-lg-10">
+    <div class="offset-xl-2 col-xl-10">
             <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword']) ?>"><?=$this->getTrans('forgotPassword') ?></a><br />
     </div>
     <?php if ($this->get('regist_accept') == '1'): ?>
@@ -88,14 +88,14 @@
             <?=$this->getTrans('registDescription') ?>
         </p>
         <p>
-            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'regist', 'action' => 'index']) ?>" class="btn btn-default pull-left">
+            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'regist', 'action' => 'index']) ?>" class="btn btn-outline-secondary float-start">
                 <?=$this->getTrans('register') ?>
             </a>
         </p>
     <?php endif; ?>
 <?php else: ?>
-    <div class="center-block"><p><h4 class="text-center"><?=$this->getTrans('alreadyLoggedIn') ?></h4></p></div>
-    <div class="row text-center">
-        <a class="btn btn-default" href="<?=$this->getUrl() ?>"><?=$this->getTrans('back') ?></a>
+    <div class="mx-auto"><h4 class="text-center"><?=$this->getTrans('alreadyLoggedIn') ?></h4></div>
+    <div class="text-center">
+        <a class="btn btn-outline-secondary" href="<?=$this->getUrl() ?>"><?=$this->getTrans('back') ?></a>
     </div>
 <?php endif; ?>

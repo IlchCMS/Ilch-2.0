@@ -18,16 +18,16 @@ if (empty($layoutsOnUpdateServer)) {
 }
 ?>
 <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'search']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <?=(!empty($cacheFileDate)) ? '<span class="small">'.$this->getTrans('lastUpdateOn').' '.$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true).'</span>' : $this->getTrans('lastUpdateOn').': '.$this->getTrans('lastUpdateUnknown') ?></p>
-
+<div class="row">
 <?php foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer): ?>
-    <div id="layouts" class="col-lg-3 col-sm-6">
-        <div class="panel panel-ilch">
-            <div class="panel-heading">
+    <div id="layouts" class="col-xl-3 col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">
                 <div class="clearfix">
-                    <div class="pull-left">
+                    <div class="float-start">
                         <b><?=$this->escape($layoutOnUpdateServer->name) ?></b>
                     </div>
-                    <div class="pull-right">
+                    <div class="float-end">
                         <?php if ($layoutOnUpdateServer->link != ''): ?>
                             <a href="<?=$layoutOnUpdateServer->link ?>" alt="<?=$this->escape($layoutOnUpdateServer->author) ?>" title="<?=$this->escape($layoutOnUpdateServer->author) ?>" target="_blank" rel="noopener"><i><?=$this->escape($layoutOnUpdateServer->author) ?></i></a>
                         <?php else: ?>
@@ -36,19 +36,21 @@ if (empty($layoutsOnUpdateServer)) {
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                     <img src="<?=$this->get('updateserver').'layouts/images/'.$layoutOnUpdateServer->thumbs[0]->img ?>" alt="<?=$this->escape($layoutOnUpdateServer->name) ?>" />
                 </a>
                 <?=(!empty($layoutOnUpdateServer->official) && $layoutOnUpdateServer->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
             </div>
-            <div class="panel-footer">
+            <div class="card-footer">
                 <div class="clearfix">
-                    <div class="pull-left">
+                    <div class="float-start">
                         <?php
                         $layoutExists = in_array($layoutOnUpdateServer->key, $this->get('layouts'));
                         $ilchCoreRequirement = empty($layoutOnUpdateServer->ilchCore) ? $coreVersion : $layoutOnUpdateServer->ilchCore;
                         $ilchCoreTooOld = version_compare($coreVersion, $ilchCoreRequirement, '<');
+                        // "layoutTooOld" was added to prevent the usage of old and likely with Ilch 2.2.0 and newer incompatible layouts.
+                        $layoutTooOld = version_compare('2.2.0', $ilchCoreRequirement, '>');
                         if ($layoutExists && version_compare($versionsOfLayouts[$layoutOnUpdateServer->key], $layoutOnUpdateServer->version, '>=')): ?>
                             <span class="btn disabled" title="<?=$this->getTrans('alreadyExists') ?>">
                                 <i class="fa-solid fa-check text-success"></i>
@@ -59,11 +61,16 @@ if (empty($layoutsOnUpdateServer)) {
                                         title="<?=$this->getTrans('ilchCoreError') ?>">
                                     <i class="fa-solid fa-arrows-rotate"></i>
                                 </button>
+                            <?php elseif ($layoutTooOld) : ?>
+                                <button class="btn disabled"
+                                        title="<?=$this->getTrans('layoutTooOld') ?>">
+                                    <i class="fa-solid fa-arrows-rotate"></i>
+                                </button>
                             <?php else: ?>
                                 <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $layoutOnUpdateServer->key, 'version' => $versionsOfLayouts[$layoutOnUpdateServer->key], 'newVersion' => $layoutOnUpdateServer->version, 'from' => 'search']) ?>">
                                     <?=$this->getTokenField() ?>
                                     <button type="submit"
-                                            class="btn btn-default"
+                                            class="btn btn-outline-secondary"
                                             title="<?=$this->getTrans('layoutUpdate') ?>">
                                         <i class="fa-solid fa-arrows-rotate"></i>
                                     </button>
@@ -74,20 +81,25 @@ if (empty($layoutsOnUpdateServer)) {
                                     title="<?=$this->getTrans('ilchCoreError') ?>">
                                 <i class="fa-solid fa-download"></i>
                             </button>
+                        <?php elseif ($layoutTooOld) : ?>
+                            <button class="btn disabled"
+                                    title="<?=$this->getTrans('layoutTooOld') ?>">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
                         <?php else: ?>
                             <form method="POST" action="<?=$this->getUrl(['action' => 'search', 'key' => $layoutOnUpdateServer->key, 'version' => $layoutOnUpdateServer->version]) ?>">
                                 <?=$this->getTokenField() ?>
                                 <button type="submit"
-                                        class="btn btn-default"
+                                        class="btn btn-outline-secondary"
                                         title="<?=$this->getTrans('layoutDownload') ?>">
                                     <i class="fa-solid fa-download"></i>
                                 </button>
                             </form>
                         <?php endif; ?>
                     </div>
-                    <div class="pull-right">
+                    <div class="float-end">
                         <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
-                            <span class="btn btn-default">
+                            <span class="btn btn-outline-secondary">
                                 <i class="fa-solid fa-info text-info"></i>
                             </span>
                         </a>
@@ -97,3 +109,4 @@ if (empty($layoutsOnUpdateServer)) {
         </div>
     </div>
 <?php endforeach; ?>
+</div>

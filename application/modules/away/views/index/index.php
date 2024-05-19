@@ -7,15 +7,15 @@ if ($this->getUser()) {
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/away.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuAway') ?></h1>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
             <col>
-            <col class="col-lg-5">
-            <col class="col-lg-1">
+            <col class="col-xl-5">
+            <col class="col-xl-1">
         </colgroup>
         <thead>
             <tr>
@@ -25,7 +25,7 @@ if ($this->getUser()) {
             </tr>
         </thead>
         <?php if (!empty($this->get('aways'))): ?>
-            <form class="form-horizontal" method="POST" action="">
+            <form method="POST" action="">
                 <?=$this->getTokenField() ?>
                 <tbody>
                     <?php foreach ($this->get('aways') as $away): ?>
@@ -106,15 +106,15 @@ if ($this->getUser()) {
 </div>
 
 <?php if ($this->getUser()): ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <h1><?=$this->getTrans('menuEntry') ?></h1>
 
-        <div class="form-group <?=in_array('reason', $this->get('errorFields')) ? 'has-error' : '' ?>">
-            <label for="reason" class="col-lg-2 control-label">
+        <div class="row mb-3<?=in_array('reason', $this->get('errorFields')) ? ' has-error' : '' ?>">
+            <label for="reason" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('reason') ?>:
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input type="text"
                        class="form-control"
                        id="reason"
@@ -122,38 +122,38 @@ if ($this->getUser()) {
                        value="<?=($this->get('post') != '') ? $this->get('post')['reason'] : '' ?>" />
             </div>
         </div>
-        <div class="form-group <?=in_array('when', $this->get('errorFields')) ? 'has-error' : '' ?>">
-            <label for="start" class="col-md-2 control-label">
+        <div class="row mb-3<?=in_array('when', $this->get('errorFields')) ? ' has-error' : '' ?>">
+            <label for="start" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('when') ?>:
             </label>
-            <div class="col-lg-3 input-group ilch-date date form_datetime pull-left">
+            <div id="start" class="col-xl-3 input-group ilch-date date form_datetime float-start">
                 <input type="text"
                        class="form-control"
                        id="start"
                        name="start"
                        size="16"
                        readonly>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-solid fa-calendar"></span>
                 </span>
             </div>
-            <div class="col-lg-3 input-group ilch-date date form_datetime">
+            <div id="end" class="col-xl-3 input-group ilch-date date form_datetime">
                 <input type="text"
                        class="form-control"
                        id="end"
                        name="end"
                        size="16"
                        readonly>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-solid fa-calendar"></span>
                 </span>
             </div>
         </div>
-        <div class="form-group <?=in_array('text', $this->get('errorFields')) ? 'has-error' : '' ?>">
-            <label for="text" class="col-lg-2 control-label">
+        <div class="row mb-3<?=in_array('text', $this->get('errorFields')) ? ' has-error' : '' ?>">
+            <label for="text" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('description') ?>:
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <textarea class="form-control"
                           name="text"
                           id="text"
@@ -161,8 +161,8 @@ if ($this->getUser()) {
             </div>
         </div>
         <?php if ($this->get('calendarShow') == 1): ?>
-            <div class="form-group">
-                <div class="col-lg-offset-2 col-lg-10">
+            <div class="row mb-3">
+                <div class="offset-xl-2 col-xl-10">
                     <input type="checkbox"
                            id="calendarShow"
                            name="calendarShow"
@@ -174,27 +174,80 @@ if ($this->getUser()) {
                 </div>
             </div>
         <?php endif; ?>
-        <div class="col-lg-8" align="right">
+        <div class="col-xl-8" align="right">
             <?=$this->getSaveBar('addButton', 'Away') ?>
         </div>
     </form>
 <?php endif; ?>
 
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
 $(document).ready(function() {
-    $(".form_datetime").datetimepicker({
-        format: "dd.mm.yyyy",
-        startDate: new Date(),
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minView: 2,
-        todayHighlight: true,
-        linkField: "end",
-        linkFormat: "dd.mm.yyyy"
+    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
+        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
+        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
+    }
+
+    const start = new tempusDominus.TempusDominus(document.getElementById('start'), {
+        restrictions: {
+          minDate: new Date()
+        },
+        display: {
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            },
+            components: {
+                clock: false
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy"
+        }
+    });
+
+    const end = new tempusDominus.TempusDominus(document.getElementById('end'), {
+        restrictions: {
+          minDate: new Date()
+        },
+        display: {
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            },
+            components: {
+                clock: false
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy"
+        }
+    });
+
+    start.subscribe('change.td', (e) => {
+        end.updateOptions({
+            restrictions: {
+                minDate: e.date,
+            },
+        });
+    });
+
+    end.subscribe('change.td', (e) => {
+        start.updateOptions({
+            restrictions: {
+                maxDate: e.date,
+            },
+        });
     });
 });
 </script>

@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'partner',
-        'version' => '1.13.0',
+        'version' => '1.14.0',
         'icon_small' => 'fa-regular fa-handshake',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -34,7 +34,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.48',
+        'ilchCore' => '2.2.0',
         'phpVersion' => '7.3'
     ];
 
@@ -104,10 +104,12 @@ class Config extends \Ilch\Config\Install
                 }
                 // no break
             case "1.9.0":
-                // update Captcha
             case "1.10.0":
             case "1.11.0":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-regular fa-handshake' WHERE `key` = 'partner';");
+                // no break
+            case "1.12.0":
+            case "1.13.0":
         }
     }
 }

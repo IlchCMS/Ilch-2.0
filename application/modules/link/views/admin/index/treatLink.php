@@ -9,13 +9,13 @@ $link = $this->get('link');
 $cats = $this->get('cats');
 ?>
 <h1><?=($link->getId()) ? $this->getTrans('menuActionEditLink') : $this->getTrans('menuActionNewLink') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-        <label for="name" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
+        <label for="name" class="col-xl-2 col-form-label">
             <?=$this->getTrans('name') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="name"
@@ -24,11 +24,11 @@ $cats = $this->get('cats');
                    value="<?=$this->escape($this->originalInput('Name', $link->getName())) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('link') ? 'has-error' : '' ?>">
-        <label for="link" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('link') ? ' has-error' : '' ?>">
+        <label for="link" class="col-xl-2 col-form-label">
             <?=$this->getTrans('link') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="link"
@@ -37,11 +37,11 @@ $cats = $this->get('cats');
                    value="<?=$this->escape($this->originalInput('link', $link->getLink())) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
-        <label for="selectedImage_1" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('banner') ? ' has-error' : '' ?>">
+        <label for="selectedImage_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('banner') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
                 <input type="text"
                        class="form-control"
@@ -49,15 +49,15 @@ $cats = $this->get('cats');
                        name="banner"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
                        value="<?=$this->escape($this->originalInput('banner', $link->getBanner())) ?>" />
-                <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa-regular fa-image"></i></a></span>
+                <span class="input-group-text"><a id="media" href="javascript:media_1()"><i class="fa-regular fa-image"></i></a></span>
             </div>
         </div>
     </div>
-    <div class="form-group">
-        <label for="desc" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="desc" class="col-xl-2 col-form-label">
             <?=$this->getTrans('description') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <textarea class="form-control"
                       id="desc"
                       name="desc" 
@@ -65,12 +65,12 @@ $cats = $this->get('cats');
                       rows="3"><?=$this->escape($this->originalInput('desc', $link->getDesc())) ?></textarea>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
-        <label for="catId" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('catId') ? ' has-error' : '' ?>">
+        <label for="catId" class="col-xl-2 col-form-label">
             <?=$this->getTrans('category') ?>:
         </label>
-        <div class="col-lg-4">
-            <select class="form-control" id="catId" name="catId">
+        <div class="col-xl-4">
+            <select class="form-select" id="catId" name="catId">
                 <option value="0" <?=($this->originalInput('catId', $link->getCatId()) == 0) ? ' selected' : '' ?>>-- <?=$this->getTrans('optionNoCategory') ?> --</option>
             <?php foreach ($cats as $model) : ?>
                 <option value="<?=$model->getId() ?>"<?=($this->originalInput('catId', $link->getCatId()) == $model->getId()) ? ' selected' : '' ?>><?=$this->escape($model->getName()) ?></option>

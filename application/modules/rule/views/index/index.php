@@ -23,11 +23,11 @@ function rec(\Modules\Rule\Models\Rule $item, \Ilch\View $obj)
     if ($item->getParentId() === 0 && !$subItemsFalse) {
         echo '<div class="card">
     <div class="card-header" id="paragraph' . $paragraph . '">
-        <h3 class="mb-0" data-toggle="collapse" data-target="#paragraph0_' . $paragraph . '" aria-expanded="false" aria-controls="paragraph0_' . $paragraph . '">
-            <a href="#paragraph' . $paragraph . '"><i class="fa-solid fa-bookmark"></i></a> ' . $obj->getTrans('art') . ' ' . $paragraph . ' : ' . $obj->escape($item->getTitle()) . '<span class="pull-right glyphicon glyphicon-' . ($obj->get('showallonstart') ? 'minus' : 'plus') . '"></span>
+        <h3 class="mb-0" data-bs-toggle="collapse" data-bs-target="#paragraph0_'.$paragraph.'" aria-expanded="false" aria-controls="paragraph0_'.$paragraph.'">
+            <a href="#paragraph'.$paragraph.'"><i class="fa-solid fa-bookmark"></i></a> '.$obj->getTrans('art').' '.$paragraph.' : '.$obj->escape($item->getTitle()).'<span class="float-end fa-solid fa-'.($obj->get('showallonstart')?'minus':'plus').'"></span>
         </h3>
     </div>
-    <div id="paragraph0_' . $paragraph . '" class="panel-collapse collapse" aria-labelledby="paragraph' . $paragraph . '" data-parent="#accordion">
+    <div id="paragraph0_'.$paragraph.'" class="collapse" aria-labelledby="paragraph'.$paragraph.'" data-bs-parent="#accordion">
         <div class="card-body">
             <table class="table table-striped table-responsive">';
 
@@ -74,11 +74,11 @@ function rec(\Modules\Rule\Models\Rule $item, \Ilch\View $obj)
         });
 
         $('#accordion .collapse')
-        .on('shown.bs.collapse', function() {
-            $(this).parent().find(".glyphicon-plus").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+        .on('show.bs.collapse', function() {
+            $(this).parent().find(".fa-plus").removeClass("fa-solid fa-plus").addClass("fa-solid fa-minus");
         })
-        .on('hidden.bs.collapse', function() {
-            $(this).parent().find(".glyphicon-minus").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+        .on('hide.bs.collapse', function() {
+            $(this).parent().find(".fa-minus").removeClass("fa-solid fa-minus").addClass("fa-solid fa-plus");
         });
 
         function openAnchorAccordion() {

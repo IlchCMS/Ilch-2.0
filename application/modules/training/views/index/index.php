@@ -11,10 +11,10 @@ $training = $this->get('training');
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
-            <col class="col-lg-3">
+            <col class="col-xl-3">
             <col>
-            <col class="col-lg-3">
-            <col class="col-lg-1">
+            <col class="col-xl-3">
+            <col class="col-xl-1">
         </colgroup>
         <thead>
             <tr>

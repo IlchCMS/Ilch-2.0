@@ -3,18 +3,18 @@
 
 <h1><?=$this->getTrans('manage') ?>
     <div class="input-group input-group-sm filter">
-        <span class="input-group-addon">
+        <span class="input-group-text">
             <i class="fa-solid fa-filter"></i>
         </span>
         <input type="text" id="filterInput" class="form-control" placeholder="<?=$this->getTrans('filter') ?>">
-        <span class="input-group-addon">
+        <span class="input-group-text">
             <span id="filterClear" class="fa-solid fa-xmark"></span>
         </span>
     </div>
 </h1>
 
 <?php if (!empty($this->get('shopItems'))) : ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table id="sortTable" class="table table-hover table-striped">
@@ -39,8 +39,8 @@
                         <th class="sort"><?=$this->getTrans('productName') ?></th>
                         <th class="sort"><?=$this->getTrans('itemNumber') ?></th>
                         <th class="sort"><?=$this->getTrans('cat') ?></th>
-                        <th class="text-right"><?=$this->getTrans('stock') ?></th>
-                        <th class="text-right"><?=$this->getTrans('price') ?></th>
+                        <th class="text-end"><?=$this->getTrans('stock') ?></th>
+                        <th class="text-end"><?=$this->getTrans('price') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,9 +61,9 @@
                             <td class="text-center">
                             <?php
                             if ($shopItem->getStatus() == 1) {
-                                echo '<a href="' . $this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) . '" class="btn btn-xs alert-success" title="' . $this->getTrans('active') . '"><i class="fa-solid fa-eye"></i></a>';
+                                echo '<a href="' . $this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) . '" class="btn btn-sm btn-success" title="' . $this->getTrans('active') . '"><i class="fa-solid fa-eye"></i></a>';
                             } else {
-                                echo '<a href="' . $this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) . '" class="btn btn-xs alert-danger" title="' . $this->getTrans('inactive') . '"><i class="fa-solid fa-eye-slash inactiv"></i></a>';
+                                echo '<a href="' . $this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) . '" class="btn btn-sm btn-danger" title="' . $this->getTrans('inactive') . '"><i class="fa-solid fa-eye-slash inactiv"></i></a>';
                             }
                             ?>
                             </td>
@@ -71,16 +71,16 @@
                             <td><?=$this->escape($shopItem->getName()) ?></td>
                             <td><?=$this->escape($shopItem->getItemnumber()) ?></td>
                             <td><?=($shopCats) ? $this->escape($shopCats->getTitle()) : ''; ?></td>
-                            <td class="text-right">
+                            <td class="text-end">
                             <?php if ($this->escape($shopItem->getStock()) < 1) { ?>
-                                <button class="btn btn-sm alert-danger stock"><?=$this->escape($shopItem->getStock()) ?></button>
+                                <button class="btn btn-sm btn-danger stock"><?=$this->escape($shopItem->getStock()) ?></button>
                             <?php } elseif ($this->escape($shopItem->getStock()) <= 5) { ?>
-                                <button class="btn btn-sm alert-warning stock"><?=$this->escape($shopItem->getStock()) ?></button>
+                                <button class="btn btn-sm btn-warning stock"><?=$this->escape($shopItem->getStock()) ?></button>
                             <?php } else { ?>
-                                <button class="btn btn-sm alert-success stock"><?=$this->escape($shopItem->getStock()) ?></button>
+                                <button class="btn btn-sm btn-success stock"><?=$this->escape($shopItem->getStock()) ?></button>
                             <?php } ?>
                             </td>
-                            <td class="text-right"><?=$this->escape($shopItem->getPrice()) ?> <?=$this->escape($this->get('currency')) ?></td>
+                            <td class="text-end"><?=$this->escape($shopItem->getPrice()) ?> <?=$this->escape($this->get('currency')) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

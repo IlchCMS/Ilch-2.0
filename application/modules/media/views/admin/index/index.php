@@ -4,12 +4,12 @@
 <?php if ($this->get('medias') != ''): ?>
     <div id="filter-media" >
         <div id="filter-panel" class="collapse filter-panel">
-            <form class="form-horizontal" method="POST">
+            <form method="POST">
                 <?=$this->getTokenField() ?>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label" for="pref-perpage"><?=$this->getTrans('rowsPerPage') ?>:</label>
-                    <div class="col-lg-2">
-                        <select class="form-control" id="pref-perpage" name="rows">
+                <div class="row mb-3">
+                    <label class="col-xl-2 col-form-label" for="pref-perpage"><?=$this->getTrans('rowsPerPage') ?>:</label>
+                    <div class="col-xl-2">
+                        <select class="form-select" id="pref-perpage" name="rows">
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
@@ -30,22 +30,22 @@
                             <option value="400">400</option>
                             <option value="500">500</option>
                             <option value="1000">1000</option>
-                        </select>     
+                        </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label" for="pref-orderby"><?=$this->getTrans('orderBy') ?>:</label>
-                    <div class="col-lg-2">
-                        <select class="form-control" id="pref-orderby" name="order">
+                <div class="row mb-3">
+                    <label class="col-xl-2 col-form-label" for="pref-orderby"><?=$this->getTrans('orderBy') ?>:</label>
+                    <div class="col-xl-2">
+                        <select class="form-select" id="pref-orderby" name="order">
                             <option value="ASC"><?=$this->getTrans('ascending') ?></option>
                             <option value="DESC"><?=$this->getTrans('descending') ?></option>
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label" for="pref-orderbytype"><?=$this->getTrans('mediaType') ?>:</label>
-                    <div class="col-lg-2">
-                        <select class="form-control" id="pref-orderbytype" name="orderbytype">
+                <div class="row mb-3">
+                    <label class="col-xl-2 col-form-label" for="pref-orderbytype"><?=$this->getTrans('mediaType') ?>:</label>
+                    <div class="col-xl-2">
+                        <select class="form-select" id="pref-orderbytype" name="orderbytype">
                             <option value="all"><?=$this->getTrans('all') ?></option>
                             <option value="image"><?=$this->getTrans('image') ?></option>
                             <option value="video"><?=$this->getTrans('video') ?></option>
@@ -53,19 +53,21 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group">    
-                    <button type="submit" class="btn btn-default filter-col" name="search" value="search">
-                        <span class="fa fa-search"></span> <?=$this->getTrans('search') ?>
-                    </button>  
+                <div class="row mb-3">
+                  <div class="col-xl-2">
+                    <button type="submit" class="btn btn-outline-secondary filter-col" name="search" value="search">
+                        <span class="fa-solid fa-magnifying-glass"></span> <?=$this->getTrans('search') ?>
+                    </button>
+                  </div>
                 </div>
             </form>
-        </div>    
-        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
-            <span class="fa fa-cogs"></span> <?=$this->getTrans('advancedSearch') ?>
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#filter-panel">
+            <span class="fa-solid fa-gears"></span> <?=$this->getTrans('advancedSearch') ?>
         </button>
     </div>
     <?=$this->get('pagination')->getHtml($this, $this->get('rows')) ?>
-    <form class="form-horizontal" method="POST">
+    <form method="POST">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -73,11 +75,11 @@
                     <col class="icon_width">
                     <col class="icon_width">
                     <col class="icon_width">
-                    <col class="col-xs-1">
-                    <col class="col-lg-1">
+                    <col class="col-1">
+                    <col class="col-xl-1">
                     <col>
-                    <col class="col-lg-2">
-                    <col class="col-lg-2">
+                    <col class="col-xl-2">
+                    <col class="col-xl-2">
                 </colgroup>
                 <thead>
                     <tr>
@@ -96,7 +98,7 @@
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_medias', $media->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $media->getId()]) ?></td>
-                            <td><a href="<?=$this->getUrl(['action' => 'refresh', 'id' => $media->getId()]) ?>"><i class="fa fa-refresh" title="<?=$this->getTrans('refreshThumbnail') ?>"></i></a></td>
+                            <td><a href="<?=$this->getUrl(['action' => 'refresh', 'id' => $media->getId()]) ?>"><i class="fa-solid fa-arrows-rotate" title="<?=$this->getTrans('refreshThumbnail') ?>"></i></a></td>
                             <td><?=$this->escape($media->getEnding()) ?></td>
                             <td>
                                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
@@ -117,17 +119,17 @@
                             <td><a href="<?=$this->getBaseUrl($media->getUrl()) ?>" download="<?=$this->escape($media->getName().".".$media->getEnding()) ?>"><?=$this->escape($media->getName()) ?></a></td>
                             <td><?=$media->getDatetime() ?></td>
                             <td>
-                                <div class="btn-group dropdown">
+                                <div class="btn-group">
                                     <button type="button"
-                                            class="btn btn-default dropdown-toggle"
-                                            data-toggle="dropdown"><?=$this->escape($media->getCatName()) ?>
-                                        <span class="caret"></span>
+                                            class="btn btn-outline-secondary dropdown-toggle"
+                                            aria-expanded="false"
+                                            data-bs-toggle="dropdown"><?=$this->escape($media->getCatName()) ?>
                                     </button>
                                     <ul class="dropdown-menu listChooser" role="menu">
                                         <?php if ($this->get('catnames') != ''): ?>
                                             <?php foreach ($this->get('catnames') as $name): ?>
                                                 <li>
-                                                    <a href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId()]) ?>"><?=$this->escape($name->getCatName()) ?></a>
+                                                    <a class="dropdown-item" href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId()]) ?>"><?=$this->escape($name->getCatName()) ?></a>
                                                 </li>
                                             <?php endforeach; ?>
                                         <?php endif; ?>
@@ -149,14 +151,14 @@
                     <div class="modal-body">
                         <ul class="list-unstyled">
                             <?php foreach ($this->get('catnames') as $name): ?>
-                                <li><button name="assignedCategory" class="btn btn-default list-group-item" type="submit" value="<?=$name->getId() ?>"><?=$this->escape($name->getCatName()) ?></button></li>
+                                <li><button name="assignedCategory" class="btn btn-secondary list-group-item" type="submit" value="<?=$name->getId() ?>"><?=$this->escape($name->getCatName()) ?></button></li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
                     <div class="modal-footer">
                         <button type="button"
                                 class="btn btn-primary"
-                                data-dismiss="modal"><?=$this->getTrans('close') ?>
+                                data-bs-dismiss="modal"><?=$this->getTrans('close') ?>
                         </button>
                     </div>
                 </div>

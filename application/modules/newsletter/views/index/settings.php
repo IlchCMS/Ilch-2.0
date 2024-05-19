@@ -3,18 +3,18 @@
 <link href="<?=$this->getModuleUrl('../user/static/css/user.css') ?>" rel="stylesheet">
 
 <div class="row">
-    <div class="col-lg-12 profile">
+    <div class="col-xl-12 profile">
         <?php include APPLICATION_PATH . '/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('setting') ?></h1>
-            <form action="" class="form-horizontal" method="POST">
+            <form action="" method="POST">
                 <?=$this->getTokenField() ?>
-                <div class="form-group <?=$this->validation()->hasError('acceptNewsletter') ? 'has-error' : '' ?>">
-                    <div class="col-lg-3 control-label">
+                <div class="row mb-3<?=$this->validation()->hasError('acceptNewsletter') ? ' has-error' : '' ?>">
+                    <div class="col-xl-3 col-form-label">
                         <?=$this->getTrans('acceptNewsletter') ?>:
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-xl-4">
                         <div class="flipswitch">
                             <input type="radio" class="flipswitch-input" id="newsletter_yes" name="acceptNewsletter" value="1" <?=($countMail == '1') ? 'checked="checked"' : '' ?> />
                             <label for="newsletter_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
@@ -25,11 +25,11 @@
                      </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-lg-offset-3 col-lg-12">
+                <div class="row mb-3">
+                    <div class="offset-xl-3 col-xl-12">
                         <input type="submit"
                                name="saveEntry"
-                               class="btn"
+                               class="btn btn-outline-secondary"
                                value="<?=$this->getTrans('submit') ?>" />
                     </div>
                 </div>

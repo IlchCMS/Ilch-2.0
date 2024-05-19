@@ -5,13 +5,13 @@ $locale = $this->get('locale');
 ?>
 
 <h1><?=$this->getTrans('manage') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
                 <col />
-                <col class="col-lg-1" />
+                <col class="col-xl-1" />
             </colgroup>
             <thead>
                 <tr>

@@ -1,0 +1,46 @@
+msgid ""
+msgstr ""
+
+msgctxt "Head title"
+msgid "Emoji"
+msgstr ""
+
+msgctxt "A label for a tooltip showing when the user hovers over the plugin icon."
+msgid "Emoji categories"
+msgstr "Emoji Kategorien"
+
+msgctxt "A category name."
+msgid "Smileys & People"
+msgstr "Smilies & Leute"
+
+msgctxt "A category name."
+msgid "Animals & Nature"
+msgstr "Tiere & Natur"
+
+msgctxt "A category name."
+msgid "Food & Drink"
+msgstr "Essen & Getränke"
+
+msgctxt "A category name."
+msgid "Activity"
+msgstr "Aktivitäten"
+
+msgctxt "A category name."
+msgid "Travel & Places"
+msgstr "Reisen & Orte"
+
+msgctxt "A category name."
+msgid "Objects"
+msgstr "Objekte"
+
+msgctxt "A category name."
+msgid "Symbols"
+msgstr "Symbole"
+
+msgctxt "A category name."
+msgid "Flags"
+msgstr "Flaggen"
+
+msgctxt "A category name."
+msgid "All"
+msgstr "Alles"

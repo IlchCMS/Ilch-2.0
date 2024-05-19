@@ -11,41 +11,34 @@ $settingMapper = $this->get('settingMapper');
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('menuAvatar') ?></h1>
-            <form class="form-horizontal" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="row mb-3">
                     <?=$this->getTokenField() ?>
-                    <div class="col-lg-2 col-sm-2 col-2">
+                    <div class="col-xl-2 col-lg-2 col-2">
                         <img class="panel-profile-image" src="<?=$this->getBaseUrl().$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
-                        
+
                         <?php if ($profil->getAvatar() !== 'static/img/noavatar.jpg'): ?>
                             <label for="avatar_delete" style="margin-left: 10px; margin-top: 10px;">
                                 <input type="checkbox" id="avatar_delete" name="avatar_delete"> <?=$this->getTrans('avatarDelete') ?>
                             </label>
                         <?php endif; ?>
                     </div>
-                    <div class="col-lg-10 col-sm-10 col-10">
+                    <div class="col-xl-10 col-md-10 col-10">
                         <p><?=$this->getTrans('avatarSize') ?>: <?=$this->get('avatar_width') ?> Pixel <?=$this->getTrans('width') ?>, <?=$this->get('avatar_height') ?> Pixel <?=$this->getTrans('height') ?>.</p>
                         <p><?=$this->getTrans('maxFilesize') ?>: <?=$settingMapper->getNicebytes($this->get('avatar_size')) ?>.</p>
                         <p><?=$this->getTrans('allowedFileExtensions') ?>: <?=str_replace(' ', ', ', $this->get('avatar_filetypes')) ?></p>
-                        <div class="input-group col-lg-6">
-                            <span class="input-group-btn">
-                                <span class="btn btn-primary btn-file">
-                                    <?=$this->getTrans('browse') ?> <input type="file" name="avatar" accept="image/*">
-                                </span>
+                        <div class="input-group col-xl-6">
+                            <span class="btn btn-primary btn-file">
+                                <?=$this->getTrans('browse') ?> <input type="file" name="avatar" accept="image/*">
                             </span>
-                            <input type="text" 
-                                   class="form-control" 
+                            <input type="text"
+                                   class="form-control"
                                    readonly />
+                            <input type="submit"
+                                   class="btn btn-outline-secondary"
+                                   name="saveEntry"
+                                   value="<?=$this->getTrans('profileSubmit') ?>" />
                         </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-lg-offset-2 col-lg-12">
-                        <input type="submit" 
-                               class="btn"
-                               name="saveEntry" 
-                               value="<?=$this->getTrans('profileSubmit') ?>" />
                     </div>
                 </div>
             </form>

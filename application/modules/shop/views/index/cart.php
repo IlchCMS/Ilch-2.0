@@ -66,7 +66,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                     <th scope="col" width="25%"><?=$this->getTrans('productName') ?><br /><small><?=$this->getTrans('itemNumber') ?></small></th>
                     <th scope="col" width="20%"><?=$this->getTrans('singlePrice') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                     <th scope="col" width="18%" class="text-center"><?=$this->getTrans('entries') ?><br />&nbsp;</th>
-                    <th scope="col" width="20%" class="text-right"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
+                    <th scope="col" width="20%" class="text-end"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                 </tr>
             </thead>
             <tbody>
@@ -128,7 +128,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                             <input type="hidden" name="code" value="<?=$this->escape($itemCode); ?>" />
                             <input type="hidden" name="name" value="<?=$this->escape($itemName); ?>" />
                             <input type="hidden" name="action" value="remove" />
-                            <button type="submit" class="btn btn-sm btn-default fa-regular fa-trash-can remove"></button>
+                            <button type="submit" class="btn btn-sm btn-secondary remove"><i class="fa-regular fa-trash-can"></i></button>
                         </form>
                     </td>
                     <td data-label="<?=$this->getTrans('productName') ?>">
@@ -145,9 +145,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                             <input type="hidden" name="action" value="change" />
                             <div class="input-group">
                                 <input type="hidden" name="maxStock" value="<?=$itemMaxStock; ?>" />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-xs btn-default plus-btn" type="button" name="button"><i class="fa-solid fa-plus"></i></button>
-                                </span>
+                                <button class="btn btn-sm btn-outline-secondary plus-btn" type="button" name="button"><i class="fa-solid fa-plus"></i></button>
                                 <input class="form-control item-quantity input-sm"
                                     type="text"
                                     id="quantity"
@@ -155,13 +153,11 @@ if (!empty($_SESSION['shopping_cart'])) {
                                     onchange="this.form.submit()"
                                     value="<?=$product['quantity'] ?>"
                                     readonly>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-xs btn-default minus-btn" type="button" name="button"><i class="fa-solid fa-minus"></i></button>
-                                </span>
+                                <button class="btn btn-sm btn-outline-secondary minus-btn" type="button" name="button"><i class="fa-solid fa-minus"></i></button>
                             </div>
                         </form>
                     </td>
-                    <td data-label="<?=$this->getTrans('total') ?> (<?=$this->getTrans('withTax') ?>)" class="text-right">
+                    <td data-label="<?=$this->getTrans('total') ?> (<?=$this->getTrans('withTax') ?>)" class="text-end">
                         <b><?=number_format($itemPrice * $product['quantity'], 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
                     </td>
                 </tr>
@@ -175,7 +171,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 <th>
                     <?=$this->getTrans('deliveryCosts') ?>
                 </th>
-                <td data-label="<?=$this->getTrans('deliveryCosts') ?>" class="text-right" id="deliveryCosts">
+                <td data-label="<?=$this->getTrans('deliveryCosts') ?>" class="text-end" id="deliveryCosts">
                     <?php $shipping_costs = max($arrayShippingCosts); ?>
                     <?php if (isset($_SESSION['shopping_willCollect'])) : ?>
                         <?=number_format(0, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?>
@@ -188,7 +184,7 @@ if (!empty($_SESSION['shopping_cart'])) {
                 <th>
                     <b><?=$this->getTrans('totalPrice') ?></b>
                 </th>
-                <td data-label="<?=$this->getTrans('totalPrice') ?>" class="text-right" id="totalPrice">
+                <td data-label="<?=$this->getTrans('totalPrice') ?>" class="text-end" id="totalPrice">
                     <?php $total_price = $subtotal_price + $shipping_costs; ?>
                     <?php if (isset($_SESSION['shopping_willCollect'])) : ?>
                         <b><?=number_format($total_price - $shipping_costs, 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></b>
@@ -210,9 +206,9 @@ if (!empty($_SESSION['shopping_cart'])) {
             <?php unset($_SESSION['shopping_willCollect']) ?>
         <?php endif; ?>
 
-        <form method="post" action="order#shopAnker" class="text-right">
+        <form method="post" action="order#shopAnker" class="text-end">
             <div class="btn-group btn-group-sm">
-                <a class="btn btn-default" href="<?=$this->getUrl('shop/index') ?>#shopAnker"><i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?></a>
+                <a class="btn btn-outline-secondary" href="<?=$this->getUrl('shop/index') ?>#shopAnker"><i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?></a>
                 <?php if (empty($_SESSION['shopping_cart'])) : ?>
                     <?php unset($_SESSION['shopping_cart']); ?>
                 <?php endif; ?>
@@ -225,7 +221,7 @@ if (!empty($_SESSION['shopping_cart'])) {
     } else { ?>
         <?=$this->getTrans('cartEmpty') ?>
     <div class="row space20"></div>
-    <a href="<?=$this->getUrl('shop/index') ?>#shopAnker" class="btn btn-default">
+    <a href="<?=$this->getUrl('shop/index') ?>#shopAnker" class="btn btn-outline-secondary">
         <i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?>
     </a>
     <?php } ?>

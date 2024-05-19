@@ -86,17 +86,17 @@ $config = \Ilch\Registry::get('config');
     });
 </script>
 <div id="shoutbox-container<?=$this->get('uniqid') ?>">
-    <div id="shoutbox-button-container<?=$this->get('uniqid') ?>" class="form-horizontal">
-        <div class="form-group">
-            <div class="col-lg-12">
+    <div id="shoutbox-button-container<?=$this->get('uniqid') ?>">
+        <div class="row mb-3">
+            <div class="col-xl-12">
                 <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))) : ?>
-                    <div class="pull-left">
-                        <button class="btn" id="shoutbox-slide-down<?=$this->get('uniqid') ?>"><?=$this->getTrans('answer') ?></button>
+                    <div class="float-start">
+                        <button class="btn btn-outline-secondary" id="shoutbox-slide-down<?=$this->get('uniqid') ?>"><?=$this->getTrans('answer') ?></button>
                     </div>
                 <?php endif; ?>
                 <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')) : ?>
-                    <div class="pull-right">
-                        <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-default"><?=$this->getTrans('archive') ?></a>
+                    <div class="float-end">
+                        <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-outline-secondary"><?=$this->getTrans('archive') ?></a>
                     </div>
                 <?php endif; ?>
             </div>
@@ -105,14 +105,14 @@ $config = \Ilch\Registry::get('config');
 
     <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))) : ?>
         <div id="shoutbox-form-container<?=$this->get('uniqid') ?>" style="display: none;">
-            <form id="shoutboxForm_<?=$this->get('uniqid') ?>" name="shoutboxForm_<?=$this->get('uniqid') ?>" class="form-horizontal" method="post">
+            <form id="shoutboxForm_<?=$this->get('uniqid') ?>" name="shoutboxForm_<?=$this->get('uniqid') ?>" method="post">
                 <input type="hidden" name="uniqid" value="<?=$this->get('uniqid') ?>">
                <?=$this->getTokenField() ?>
-                <div class="form-group hidden">
-                    <label class="col-lg-2 control-label" for="bot">
+                <div class="row mb-3 d-none">
+                    <label class="col-xl-2 col-form-label" for="bot">
                         <?=$this->getTrans('bot') ?>
                     </label>
-                    <div class="col-lg-8">
+                    <div class="col-xl-8">
                         <input type="text"
                                class="form-control"
                                name="bot"
@@ -120,8 +120,8 @@ $config = \Ilch\Registry::get('config');
                                placeholder="Bot" />
                     </div>
                 </div>
-                <div class="form-group <?=$this->validation()->hasError('shoutbox_name') ? 'has-error' : '' ?>">
-                    <div class="col-lg-12">
+                <div class="row mb-3<?=$this->validation()->hasError('shoutbox_name') ? ' has-error' : '' ?>">
+                    <div class="col-xl-12">
                         <input type="text"
                                class="form-control"
                                name="shoutbox_name"
@@ -130,8 +130,8 @@ $config = \Ilch\Registry::get('config');
                                <?=($this->getUser() !== null) ? 'readonly' : 'required' ?> />
                     </div>
                 </div>
-                <div class="form-group <?=$this->validation()->hasError('shoutbox_textarea') ? 'has-error' : '' ?>">
-                    <div class="col-lg-12">
+                <div class="row mb-3<?=$this->validation()->hasError('shoutbox_textarea') ? ' has-error' : '' ?>">
+                    <div class="col-xl-12">
                         <textarea class="form-control"
                                   style="resize: vertical"
                                   name="shoutbox_textarea"
@@ -142,12 +142,12 @@ $config = \Ilch\Registry::get('config');
                                   required></textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-lg-12">
+                <div class="row mb-3">
+                    <div class="col-xl-12">
                         <?php if ($this->get('captchaNeeded') && $this->get('defaultcaptcha')) : ?>
                             <?=$this->get('defaultcaptcha')->getCaptcha($this) ?>
                         <?php endif; ?>
-                        <div class="pull-left">
+                        <div class="float-start">
                             <?php
                             if ($this->get('captchaNeeded')) {
                                 if ($this->get('googlecaptcha')) {
@@ -161,8 +161,8 @@ $config = \Ilch\Registry::get('config');
                             ?>
                         </div>
                         <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')) : ?>
-                            <div class="pull-right">
-                                <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-default"><?=$this->getTrans('archive') ?></a>
+                            <div class="float-end">
+                                <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-secondary"><?=$this->getTrans('archive') ?></a>
                             </div>
                         <?php endif; ?>
                     </div>

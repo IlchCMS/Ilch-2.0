@@ -14,7 +14,7 @@ $links = $this->get('links');
         <table class="table table-hover table-striped">
             <colgroup>
                 <col>
-                <col class="col-lg-1">
+                <col class="col-xl-1">
             </colgroup>
             <tr>
                 <th><?=$this->getTrans('category') ?></th>
@@ -44,7 +44,7 @@ $links = $this->get('links');
     <table class="table table-hover table-striped">
         <colgroup>
             <col>
-            <col class="col-lg-1">
+            <col class="col-xl-1">
         </colgroup>
         <thead>
             <tr>

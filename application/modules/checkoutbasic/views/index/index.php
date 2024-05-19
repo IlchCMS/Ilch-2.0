@@ -45,16 +45,16 @@ $checkouts = $this->get('checkout');
 <h1><?=$this->getTrans('bookedpayments') ?></h1>
 <table class="table table-hover table-striped">
     <colgroup>
-        <col class="col-lg-2">
+        <col class="col-xl-3">
         <col>
-        <col class="col-lg-2">
+        <col class="col-xl-3">
         <col>
     </colgroup>
     <thead>
         <tr>
             <th><?=$this->getTrans('datetime') ?></th>
             <th><?=$this->getTrans('name') ?></th>
-            <th><?=$this->getTrans('amount') ?></th> 
+            <th><?=$this->getTrans('amount') ?></th>
             <th><?=$this->getTrans('usage') ?></th>
         </tr>
     </thead>

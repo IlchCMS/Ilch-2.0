@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'link',
-        'version' => '1.10.1',
+        'version' => '1.11.0',
         'icon_small' => 'fa-solid fa-arrow-up-right-from-square',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -25,7 +25,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'With this you can link other websites with banners and descriptions. Further they can be categorized.',
             ],
         ],
-        'ilchCore' => '2.1.48',
+        'ilchCore' => '2.2.0',
         'phpVersion' => '7.3'
     ];
 
@@ -95,6 +95,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-arrow-up-right-from-square' WHERE `key` = 'link';");
                 // no break
             case "1.10.0":
+            case "1.10.1":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

@@ -4,15 +4,14 @@ if ($this->get('article') != '') {
     $articleID = $this->get('article')->getId();
 }
 ?>
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('editTemplate') ?></h1>
-<form id="article_form" class="form-horizontal" method="POST">
+<form id="article_form" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('teaser') ? 'has-error' : '' ?>">
-        <label for="teaser" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('teaser') ? ' has-error' : '' ?>">
+        <label for="teaser" class="col-xl-2 col-form-label">
             <?=$this->getTrans('teaser') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="teaser"
@@ -20,11 +19,11 @@ if ($this->get('article') != '') {
                    value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getTeaser()) : $this->originalInput('teaser') ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-        <label for="title" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+        <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="title"
@@ -32,8 +31,8 @@ if ($this->get('article') != '') {
                    value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getTitle()) : $this->originalInput('title') ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('content') ? 'has-error' : '' ?>">
-        <div class="col-lg-offset-2 col-lg-8">
+    <div class="row mb-3<?=$this->validation()->hasError('content') ? ' has-error' : '' ?>">
+        <div class="offset-xl-2 col-xl-8">
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="content"
@@ -41,12 +40,12 @@ if ($this->get('article') != '') {
         </div>
     </div>
     <?php if ($this->get('multilingual')): ?>
-        <div class="form-group">
-            <label for="language" class="col-lg-2 control-label">
+        <div class="row mb-3">
+            <label for="language" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('language') ?>:
             </label>
-            <div class="col-lg-8">
-                <select class="form-control" id="language" name="language">
+            <div class="col-xl-8">
+                <select class="form-select" id="language" name="language">
                     <?php
                     foreach ($this->get('languages') as $key => $value) {
                         $selected = '';
@@ -66,26 +65,26 @@ if ($this->get('article') != '') {
         </div>
     <?php endif; ?>
     <h1><?=$this->getTrans('options') ?></h1>
-    <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
-        <label for="selectedImage" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('image') ? ' has-error' : '' ?>">
+        <label for="selectedImage" class="col-xl-2 col-form-label">
             <?=$this->getTrans('image') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
                 <input type="text"
                        class="form-control"
                        id="selectedImage"
                        name="image"
                        value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getImage()) : $this->originalInput('image') ?>" />
-                <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a></span>
+                <span class="input-group-text"><a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a></span>
             </div>
         </div>
     </div>
-    <div class="form-group">
-        <label for="imageSource" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="imageSource" class="col-xl-2 col-form-label">
             <?=$this->getTrans('imageSource') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    name="imageSource"
@@ -94,33 +93,33 @@ if ($this->get('article') != '') {
         </div>
     </div>
     <h1><?=$this->getTrans('seo') ?></h1>
-    <div class="form-group">
-        <label for="description" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="description" class="col-xl-2 col-form-label">
             <?=$this->getTrans('seoDescription') ?>:
         </label>
-        <div class="col-lg-4">
-            <textarea class="form-control" 
-                      id="description" 
+        <div class="col-xl-4">
+            <textarea class="form-control"
+                      id="description"
                       name="description"><?=($this->get('article') != '') ? $this->escape($this->get('article')->getDescription()) : '' ?></textarea>
         </div>
     </div>
-    <div class="form-group">
-        <label for="keywords" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="keywords" class="col-xl-2 col-form-label">
             <?=$this->getTrans('seoKeywords') ?>:
         </label>
-        <div class="col-lg-4">
-            <textarea class="form-control" 
-                      id="keywords" 
+        <div class="col-xl-4">
+            <textarea class="form-control"
+                      id="keywords"
                       name="keywords"><?=($this->get('article') != '') ? $this->escape($this->get('article')->getKeywords()) : '' ?></textarea>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
-        <label for="permaLink" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('permaLink') ? ' has-error' : '' ?>">
+        <label for="permaLink" class="col-xl-2 col-form-label">
             <?=$this->getTrans('permaLink') ?>:
         </label>
-        <div class="col-lg-8">
+        <div class="col-xl-8">
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon3"><?=$this->getUrl() ?>index.php/</span>
+                <span class="input-group-text" id="basic-addon3"><?=$this->getUrl() ?>index.php/</span>
                 <input class="form-control"
                        type="text"
                        id="permaLink"
@@ -133,22 +132,8 @@ if ($this->get('article') != '') {
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
-<?php endif; ?>
 <script>
 $('#access').chosen();
-$(document).ready(function() {
-    $(".form_datetime").datetimepicker({
-        format: "dd.mm.yyyy hh:ii",
-        startDate: new Date(),
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: true
-    });
-});
 $('#cats').chosen();
 
 $('#title').change(
@@ -175,7 +160,7 @@ $('#language').change(
 ?>
 
 $('#preview').click(
-    function(e) 
+    function(e)
     {
         e.preventDefault();
         $('#article_form').attr('action', '<?=$this->getUrl('index.php/article/index/show/preview/true') ?>');
@@ -185,8 +170,6 @@ $('#preview').click(
         $('#article_form').attr('target', '');
     }
 );
-
-var ilchPsPlugin = "<?=$this->getBaseUrl('application/modules/media/static/js/ilchps/') ?>";
 
 $('#keywords').tokenfield();
 $('#keywords').on('tokenfield:createtoken', function (event) {

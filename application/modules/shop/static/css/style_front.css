@@ -66,26 +66,6 @@ li em {
     color: #000;
 }
 
-/* navigation */
-.navbar-nav > li > .dropdown-menu {
-    color: #333 !important;
-    background-color: #fff !important;
-}
-.navbar-nav > li > .dropdown-menu > li > a:hover,
-.navbar-nav > li > .dropdown-menu > li > a:active,
-.navbar-nav > li > .dropdown-menu > li > a:focus,
-.navbar-nav > li > .dropdown-menu > li > a:visited
-{
-    outline: 0;
-    color: #262626 !important;
-    text-decoration: none !important;
-    background-color: #f5f5f5 !important;
-}
-.navbar-nav > li > .dropdown-menu > li > a:hover {
-    color: #262626 !important;
-    text-decoration: none !important;
-    background-color: #f5f5f5 !important;
-}
 h1 a.activecart {
     float: right;
     text-decoration: none;
@@ -108,25 +88,26 @@ h1 a span.badge {
 }
 
 /* items show */
-a.thumbnail:hover {
+.shop-card-index:hover {
     text-decoration: none;
     border: 1px solid #eea236 !important;
     -webkit-box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
     -moz-box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
 }
-.thumbnail img {
+.card > a > img {
     max-height: 150px !important;
     width: auto !important;
+    margin: 10px;
 }
-.thumbnail .caption,
-.thumbnail .caption h4,
-.thumbnail .caption p,
-.thumbnail .caption form {
+.card .caption,
+.card .caption h4,
+.card .caption p,
+.card .caption form {
     text-align: center;
 }
-.thumbnail .caption h4,
-.thumbnail .caption p {
+.card .caption h4,
+.card .caption p {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -134,10 +115,11 @@ a.thumbnail:hover {
 
 /* show */
 .show table {
-    border-collapse: collapse;  
+    border-collapse: collapse;
 }
 .show td.big {
-    border: 1px solid #ddd !important;
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
+    position: relative;
 }
 .show .big {
     text-align: center;
@@ -156,12 +138,11 @@ a.thumbnail:hover {
 .show .thumb a.thumbimg {
     margin: 0 3px 0 3px;
     cursor: pointer;
-    background: #fff;
 }
-.show .thumb a.thumbimg img {    
+.show .thumb a.thumbimg img {
     height: 50px !important;
     width: auto !important;
-    border: 1px solid #ddd;
+    border: var(--bs-border-width) solid var(--bs-border-color);
     border-radius: 3px;
     padding: 3px;
 }
@@ -179,7 +160,7 @@ a.thumbnail:hover {
     border: none;
 }
 .show .desc {
-    border-top: 1px solid #ddd;
+    border-top: var(--bs-border-width) solid var(--bs-border-color);
     margin-top: 5px;
     padding-top: 20px;
 }
@@ -200,7 +181,7 @@ a.thumbnail:hover {
 
 /* cart */
 .cart table {
-    border: 1px solid #ccc;
+    border: var(--bs-border-width) solid var(--bs-border-color);
     border-collapse: collapse;
     margin: 0;
     padding: 0;
@@ -208,8 +189,8 @@ a.thumbnail:hover {
     table-layout: fixed;
 }
 .cart table tr {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background: var(--bs-body-bg);
+    border: var(--bs-border-width) solid var(--bs-border-color);
 }
 .cart table th,
 .cart table td {
@@ -222,7 +203,7 @@ a.thumbnail:hover {
     height: 56px !important;
     width: auto !important;
     min-width: 50px;
-    border: 1px solid #ddd;
+    border: var(--bs-border-width) solid var(--bs-border-color);
     border-radius: 3px;
     padding: 2px;
 }
@@ -246,8 +227,8 @@ a.thumbnail:hover {
     margin: 10px 0 30px 0;
 }
 .cart table.sum tr:last-child {
-    border-top: 3px double #bbb;
-    border-bottom: 2px solid #bbb;
+    border-top: 3px double var(--bs-border-color);
+    border-bottom: 2px solid var(--bs-border-color);
     margin-bottom: 10px;
 }
 
@@ -312,7 +293,7 @@ a.thumbnail:hover {
 }
 .order h4 {
     padding-top: 20px;
-    border-top: 1px solid #eee;
+    border-top: var(--bs-border-width) solid var(--bs-border-color);
 }
 .mt1 {
     margin-top: 5px;
@@ -328,7 +309,7 @@ a.thumbnail:hover {
     overflow: hidden;
     position: absolute;
     top: -1px;
-    left: 14px;
+    left: 0px;
 }
 .cordon-wrapper .cordon {
     font-size: 15px;
@@ -368,4 +349,9 @@ a.thumbnail:hover {
 .cordon-wrapper .cordon.grey {
     color: #383d41;
     background-color: #e2e3e5;
+}
+
+.plus-btn {
+    border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
 }

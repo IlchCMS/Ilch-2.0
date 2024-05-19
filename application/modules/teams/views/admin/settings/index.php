@@ -3,13 +3,13 @@
 /** @var \Ilch\View $this */
 ?>
 <h1><?=$this->getTrans('settings') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('image_height') ? 'has-error' : '' ?>">
-        <label for="image_height" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('image_height') ? ' has-error' : '' ?>">
+        <label for="image_height" class="col-xl-2 col-form-label">
             <?=$this->getTrans('imageHeight') ?>
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <input type="number"
                    class="form-control required"
                    id="image_height"
@@ -19,11 +19,11 @@
                    required />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('image_width') ? 'has-error' : '' ?>">
-        <label for="image_width" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('image_width') ? ' has-error' : '' ?>">
+        <label for="image_width" class="col-xl-2 col-form-label">
             <?=$this->getTrans('imageWidth') ?>
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <input type="number"
                    class="form-control required"
                    id="image_width"
@@ -33,11 +33,11 @@
                    required />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('image_filetypes') ? 'has-error' : '' ?>">
-        <label for="image_filetypes" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('image_filetypes') ? ' has-error' : '' ?>">
+        <label for="image_filetypes" class="col-xl-2 col-form-label">
             <?=$this->getTrans('allowedFileExtensions') ?>
         </label>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <input type="text"
                    class="form-control required"
                    id="image_filetypes"

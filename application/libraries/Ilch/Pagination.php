@@ -101,30 +101,30 @@ class Pagination
 
         if ($this->page > 1) {
             $urlArray['page'] = $this->page - 1;
-            $html .= '<li><a href="' . $view->getUrl($urlArray) . '">&laquo;</a></li>';
+            $html .= '<li "page-item active"><a href="' . $view->getUrl($urlArray) . '" class="page-link">&laquo;</a></li>';
         }
 
         if ($start > 1) {
             $urlArray['page'] = 1;
-            $html .= '<li><a href="' . $view->getUrl($urlArray) . '">1</a></li>';
-            $html .= '<li class="disabled"><span>...</span></li>';
+            $html .= '<li class="page-item"><a href="' . $view->getUrl($urlArray) . '" class="page-link">1</a></li>';
+            $html .= '<li class="page-item disabled"><span>...</span></li>';
         }
 
         for ($i = $start; $i <= $end; $i++) {
             $class = ($this->page == $i) ? 'active' : '';
             $urlArray['page'] = $i;
-            $html .= '<li class="' . $class . '"><a href="' . $view->getUrl($urlArray) . '">' . $i . '</a></li>';
+            $html .= '<li class="page-item ' . $class . '"><a href="' . $view->getUrl($urlArray) . '" class="page-link">' . $i . '</a></li>';
         }
 
         if ($end < $last) {
             $urlArray['page'] = $last;
             $html .= '<li class="disabled"><span>...</span></li>';
-            $html .= '<li><a href="' . $view->getUrl($urlArray) . '">' . $last . '</a></li>';
+            $html .= '<li><a href="' . $view->getUrl($urlArray) . '" class="page-link">' . $last . '</a></li>';
         }
 
         if ($last > $this->page) {
             $urlArray['page'] = $this->page + 1;
-            $html .= '<li><a href="' . $view->getUrl($urlArray) . '">&raquo;</a></li>';
+            $html .= '<li><a href="' . $view->getUrl($urlArray) . '" class="page-link">&raquo;</a></li>';
         }
 
         $html .= '</ul>';

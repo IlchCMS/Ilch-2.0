@@ -31,8 +31,8 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-php${{ matrix.php-versions }}
       - name: Install dependencies
         run: composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
-      - name: Optimize vendor
-        run: php build/optimize_vendor.php
+      - name: Optimize vendor, static/js and some handpicked files
+        run: php build/optimize_build.php
       - name: Create archive
         run: |
           git archive --format=zip HEAD > Ilch-2.zip

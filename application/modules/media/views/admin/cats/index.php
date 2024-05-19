@@ -1,6 +1,6 @@
 <h1><?=$this->getTrans('cats') ?></h1>
 <?php if (!empty($this->get('cats'))): ?>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <table class="table table-hover">
         <colgroup>

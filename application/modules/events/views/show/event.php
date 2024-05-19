@@ -27,7 +27,7 @@ if (!empty($event)) {
     <h1>
         <?=$this->getTrans('event') ?>
         <?php if ($this->getUser() && ($event->getUserId() == $this->getUser()->getId() || $this->getUser()->hasAccess('module_events'))): ?>
-            <div class="pull-right">
+            <div class="float-end">
                 <?=$this->getEditIcon(['controller' => 'index', 'action' => 'treat', 'id' => $event->getId()]) ?>
                 <?=$this->getDeleteIcon(['controller' => 'index', 'action' => 'del', 'id' => $event->getId()]) ?>
             </div>
@@ -35,7 +35,7 @@ if (!empty($event)) {
     </h1>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="event-head">
                 <?php if ($this->escape($event->getImage()) != ''): ?>
                     <img src="<?=$this->getBaseUrl().$this->escape($event->getImage()) ?>" class="headPic" alt="<?=$this->getTrans('headpic') ?>">
@@ -56,7 +56,7 @@ if (!empty($event)) {
                 <?php endif; ?>
                 <div class="naviButtons">
                     <?php if ($this->getUser() && $event->getStart() > new \Ilch\Date()): ?>
-                        <form class="form-horizontal" method="POST" action="">
+                        <form method="POST" action="">
                             <?=$this->getTokenField() ?>
                             <input type="hidden" name="id" value="<?=$this->escape($event->getId()) ?>">
                             <?php if ($eventEntrants != ''): ?>
@@ -134,7 +134,7 @@ if (!empty($event)) {
                 ?>
                 <?php if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != ''): ?>
                     <div id="googleMap" style="display: none">
-                        <div id="map-canvas" data-toggle="modal" data-target="#showBigGoogleMapsModal"></div>
+                        <div id="map-canvas" data-bs-toggle="modal" data-bs-target="#showBigGoogleMapsModal"></div>
                     </div>
                 <?php endif; ?>
             </div>
@@ -207,7 +207,7 @@ if (!empty($event)) {
                     </div>
 
                     <div class="more-entrants">
-                        <a href="" data-toggle="modal" data-target="#entrantsModal"><?=$this->getTrans('showMore') ?></a>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#entrantsModal"><?=$this->getTrans('showMore') ?></a>
                     </div>
                 </div>
             <?php endif; ?>
@@ -222,55 +222,53 @@ if (!empty($event)) {
     </div>
     <br />
     <div class="row">
-        <div class="col-lg-12">
-            <div class="form-horizontal">
-                <?php if ($this->getUser() && (($eventEntrants != '' && $eventEntrants->getUserId() == $this->getUser()->getId()) || $event->getUserId() == $this->getUser()->getId())): ?>
-                    <div class="form-group eventCommentSubmit">
-                        <form action="" class="form-horizontal" method="POST">
-                            <?=$this->getTokenField() ?>
-                            <input type="hidden" name="id" value="<?= $this->escape($event->getId()) ?>">
-                            <div style="margin-bottom: 10px; margin-top: 10px;">
-                                <div class="col-lg-12">
-                                    <textarea class="eventTextarea"
-                                              name="commentEvent"
-                                              placeholder="<?=$this->getTrans('writeToEvent') ?>"
-                                              required></textarea>
-                                </div>
+        <div class="col-xl-12">
+            <?php if ($this->getUser() && (($eventEntrants != '' && $eventEntrants->getUserId() == $this->getUser()->getId()) || $event->getUserId() == $this->getUser()->getId())): ?>
+                <div class="row mb-3 eventCommentSubmit">
+                    <form action="" method="POST">
+                        <?=$this->getTokenField() ?>
+                        <input type="hidden" name="id" value="<?= $this->escape($event->getId()) ?>">
+                        <div style="margin-bottom: 10px; margin-top: 10px;">
+                            <div class="col-xl-12">
+                                <textarea class="eventTextarea"
+                                          name="commentEvent"
+                                          placeholder="<?=$this->getTrans('writeToEvent') ?>"
+                                          required></textarea>
                             </div>
-                            <div class="col-lg-12 eventSubmit">
-                                <button type="submit" class="pull-right btn btn-sm" name="saveEntry">
-                                    <?=$this->getTrans('write') ?>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                <?php endif; ?>
-
-                <?php if ($this->get('eventComments') != ''): ?>
-                    <div class="eventBoxHead">
-                        <strong><?=$this->getTrans('comments') ?></strong>
-                    </div>
-                    <?php foreach ($this->get('eventComments') as $eventComments): ?>
-                        <?php $commentUser = (isset($userDetails[$eventComments->getUserId()])) ? $userDetails[$eventComments->getUserId()] : $userMapper->getUserById($eventComments->getUserId()); ?>
-                        <?php $commentUser = (empty($commentUser)) ? $userMapper->getDummyUser() : $commentUser; ?>
-                        <?php $commentDate = new \Ilch\Date($eventComments->getDateCreated()); ?>
-                        <div class="eventBoxContent" id="<?=$eventComments->getId() ?>">
-                            <?php if ($this->getUser()): ?>
-                                <?php if ($event->getUserId() == $this->getUser()->getId() || $commentUser->getId() == $this->getUser()->getId()): ?>
-                                    <div class="pull-right" style="height: 40px; top: 0;"><?=$this->getDeleteIcon(['action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id')]) ?></div>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                            <div class="pull-left"><a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><img class="avatar" src="<?=$this->getUrl().'/'.$commentUser->getAvatar() ?>" alt="User Avatar"></a></div>
-                            <div class="userEventInfo">
-                                <a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a><br />
-                                <span class="small"><?=$commentDate->format('Y.m.d H:i', true) ?></span>
-                            </div>
-                            <div class="commentEventText"><?=nl2br($this->escape($eventComments->getText())) ?></div>
                         </div>
-                        <br />
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
+                        <div class="col-xl-12 eventSubmit">
+                            <button type="submit" class="float-end btn btn-secondary btn-sm" name="saveEntry">
+                                <?=$this->getTrans('write') ?>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($this->get('eventComments') != ''): ?>
+                <div class="eventBoxHead">
+                    <strong><?=$this->getTrans('comments') ?></strong>
+                </div>
+                <?php foreach ($this->get('eventComments') as $eventComments): ?>
+                    <?php $commentUser = (isset($userDetails[$eventComments->getUserId()])) ? $userDetails[$eventComments->getUserId()] : $userMapper->getUserById($eventComments->getUserId()); ?>
+                    <?php $commentUser = (empty($commentUser)) ? $userMapper->getDummyUser() : $commentUser; ?>
+                    <?php $commentDate = new \Ilch\Date($eventComments->getDateCreated()); ?>
+                    <div class="eventBoxContent" id="<?=$eventComments->getId() ?>">
+                        <?php if ($this->getUser()): ?>
+                            <?php if ($event->getUserId() == $this->getUser()->getId() || $commentUser->getId() == $this->getUser()->getId()): ?>
+                                <div class="float-end" style="height: 40px; top: 0;"><?=$this->getDeleteIcon(['action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id')]) ?></div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <div class="float-start"><a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><img class="avatar" src="<?=$this->getUrl().'/'.$commentUser->getAvatar() ?>" alt="User Avatar"></a></div>
+                        <div class="userEventInfo">
+                            <a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a><br />
+                            <span class="small"><?=$commentDate->format('Y.m.d H:i', true) ?></span>
+                        </div>
+                        <div class="commentEventText"><?=nl2br($this->escape($eventComments->getText())) ?></div>
+                    </div>
+                    <br />
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -280,8 +278,8 @@ if (!empty($event)) {
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title"><?=$this->getTrans('entrant') ?></h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?=$this->getTrans('close') ?>"></button>
                     </div>
                     <div class="modal-body">
                         <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
@@ -386,4 +384,3 @@ if (!empty($event)) {
     <?php endif; ?>
     </script>
 <?php endif; ?>
-

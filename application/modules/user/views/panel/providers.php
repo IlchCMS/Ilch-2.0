@@ -3,7 +3,7 @@
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
 <div class="row">
-    <div class="col-lg-12 profile">
+    <div class="col-xl-12 profile">
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
@@ -21,7 +21,7 @@
 ) ?>
                         </li>
                         <li class="list-group-item">
-                            <form method="POST" 
+                            <form method="POST"
                                 action="<?= $this->getUrl([
                                     'module' => $provider->getModule(),
                                     'controller' => $provider->getUnlinkController(),
@@ -29,7 +29,7 @@
                                 ]) ?>"
                             >
                                 <?=$this->getTokenField() ?>
-                                <button type="submit" class="btn btn-xs btn-default">
+                                <button type="submit" class="btn btn-sm btn-secondary">
                                     <i class="fa-solid fa-xmark fa-fw text-danger"></i> <?=$this->getTrans('providers.unlink') ?>
                                 </button>
                             </form>
@@ -39,7 +39,7 @@
                             <?=$this->getTrans('providers.notLinked') ?>
                         </li>
                         <li class="list-group-item">
-                            <a class="btn btn-xs btn-default" href="<?=$this->getUrl([
+                            <a class="btn btn-sm btn-secondary" href="<?=$this->getUrl([
                                 'module' => $provider->getModule(),
                                 'controller' => $provider->getAuthController(),
                                 'action' => $provider->getAuthAction()

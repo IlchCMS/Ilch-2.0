@@ -423,7 +423,7 @@ legend .forum.fa {
     margin-bottom: 12px;
     background-repeat: no-repeat;
     background-position: 100% 0;
-    border: solid 1px #E4E4E4;
+    border: solid 1px var(--bs-border-color);
     overflow: hidden;
 }
 
@@ -555,7 +555,6 @@ legend .forum.fa {
 
 #forum .topic-actions {
     margin-bottom: 10px;
-    height: 35px;
     min-height: 35px;
     overflow: hidden;
 }
@@ -585,20 +584,9 @@ legend .forum.fa {
 #forum .edit, .report, .remember {
     padding-right: 5px;
 }
-#forum .btn-xs .btn-label {
-    padding: 3px 5px 3px 7px;
-    left: -5px;
-}
 
 #forum .pagination > li > a, .pagination > li > span {
     padding: 2px 5px;
-}
-
-#forum .btn-label {
-    position: relative;
-    left: -12px;
-    padding: 8px;
-    background: rgba(0, 0, 0, 0.15);
 }
 
 #forum .new-post-head,
@@ -634,10 +622,8 @@ legend .forum.fa {
     direction: ltr;
     overflow-x: hidden;
 }
-#editRememberedPost .form-horizontal .form-group {
-    margin-left: 0;
-    margin-right: 0;
-}
-#editRememberedPost .form-horizontal .form-group .control-label {
-    text-align: left;
+
+#forum .statistics,
+#forum h5 {
+    font-size: .95rem !important;
 }

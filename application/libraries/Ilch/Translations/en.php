@@ -92,4 +92,8 @@ return [
     'Friday' => 'Friday',
     'Saturday' => 'Saturday',
     'Sunday' => 'Sunday',
+    
+    // Globally needed translations for media (often used for the media modal).
+    'media' => 'Media',
+    'noMedias' => 'No media',
 ];

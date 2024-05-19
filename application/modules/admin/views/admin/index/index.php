@@ -24,25 +24,25 @@ $accesses = $this->get('accesses');
 <?=$this->getTrans('welcomeBackDescripton') ?>
 <br /><br /><br />
 <?php if (!empty($notifications)) : ?>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
 <?php endif; ?>
 <div class="row">
-    <div class="col-lg-6 col-md-6">
+    <div class="col-xl-6 col-lg-6">
         <h1>
             <?=$this->getTrans('system') ?>
             <?php if ($this->get('foundNewVersions')) : ?>
-                <span class="label label-danger"><?=$this->getTrans('notUpToDate') ?></span>
+                <span class="badge bg-danger"><?=$this->getTrans('notUpToDate') ?></span>
             <?php elseif ($this->get('curlErrorOccured')) : ?>
-                <span class="label label-warning"><?=$this->getTrans('versionQueryFailed') ?></span>
+                <span class="badge bg-warning"><?=$this->getTrans('versionQueryFailed') ?></span>
             <?php else : ?>
-                <span class="label label-success"><?=$this->getTrans('upToDate') ?></span>
+                <span class="badge bg-success"><?=$this->getTrans('upToDate') ?></span>
             <?php endif; ?>
         </h1>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
-                    <col class="col-lg-2">
+                    <col class="col-xl-2">
                     <col />
                 </colgroup>
                 <thead>
@@ -82,7 +82,7 @@ $accesses = $this->get('accesses');
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
                     <colgroup>
-                        <col class="col-lg-2">
+                        <col class="col-xl-2">
                         <col>
                     </colgroup>
                     <thead>
@@ -109,8 +109,8 @@ $accesses = $this->get('accesses');
                         <col class="icon_width">
                         <col class="icon_width">
                         <col class="icon_width">
-                        <col class="col-lg-2">
-                        <col class="col-lg-2">
+                        <col class="col-xl-2">
+                        <col class="col-xl-2">
                         <col>
                     </colgroup>
                     <thead>

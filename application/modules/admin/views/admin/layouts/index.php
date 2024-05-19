@@ -14,16 +14,16 @@ $coreVersion = $this->get('coreVersion');
 $modulesNotInstalled = $this->get('modulesNotInstalled');
 ?>
 <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'index']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <?=(!empty($cacheFileDate)) ? '<span class="small">'.$this->getTrans('lastUpdateOn').' '.$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true).'</span>' : $this->getTrans('lastUpdateOn').': '.$this->getTrans('lastUpdateUnknown') ?></p>
-
+<div class="row">
 <?php foreach ($this->get('layouts') as $layout): ?>
-    <div id="layouts" class="col-lg-3 col-sm-6">
-        <div class="panel panel-ilch">
-            <div class="panel-heading">
+    <div id="layouts" class="col-xl-3 col-md-6">
+        <div class="card mb-3">
+            <div class="card-header">
                 <div class="clearfix">
-                    <div class="pull-left">
+                    <div class="float-start">
                         <b><?=$this->escape($layout->getName()) ?></b>
                     </div>
-                    <div class="pull-right">
+                    <div class="float-end">
                         <?php if ($layout->getLink() != ''): ?>
                             <a href="<?=$layout->getLink() ?>" alt="<?=$this->escape($layout->getAuthor()) ?>" title="<?=$this->escape($layout->getAuthor()) ?>" target="_blank" rel="noopener">
                                 <i><?=$this->escape($layout->getAuthor()) ?></i>
@@ -34,22 +34,25 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
-                <span data-toggle="modal"
-                      data-target="#infoModal<?=$layout->getKey() ?>"
+            <div class="card-body">
+                <span data-bs-toggle="modal"
+                      data-bs-target="#infoModal<?=$layout->getKey() ?>"
                       title="<?=$this->getTrans('info') ?>">
                     <img src="<?=$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png') ?>" alt="<?=$this->escape($layout->getName()) ?>" title="<?=$this->escape($layout->getName()) ?>" />
                 </span>
                 <?=($layout->getOfficial()) ? '<span class="ilch-official">ilch</span>' : '' ?>
             </div>
-            <div class="panel-footer">
+            <div class="card-footer">
                 <div class="clearfix">
-                    <div class="pull-left">
+                    <div class="float-start">
                         <?php
+                        // "layoutTooOld" was added to prevent the usage of old and likely with Ilch 2.2.0 and newer incompatible layouts.
                         if (empty($layout->getIlchCore())) {
                             $ilchCoreTooOld = false;
+                            $layoutTooOld = true;
                         } else {
                             $ilchCoreTooOld = version_compare($coreVersion, $layout->getIlchCore(), '<');
+                            $layoutTooOld = version_compare('2.2.0', $layout->getIlchCore(), '>');
                         }
 
                         $moduleNotInstalled = ($layout->getModulekey() != '' && isset($modulesNotInstalled[$layout->getModulekey()]));
@@ -68,11 +71,16 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                                         title="<?=$this->getTrans('ilchCoreError') ?>">
                                     <i class="fa-solid fa-arrows-rotate"></i>
                                 </button>
+                            <?php elseif ($layoutTooOld) : ?>
+                                <button class="btn disabled"
+                                        title="<?=$this->getTrans('layoutTooOld') ?>">
+                                    <i class="fa-solid fa-arrows-rotate"></i>
+                                </button>
                             <?php else: ?>
                                 <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $layoutOnUpdateServerFound->key, 'version' => $versionsOfLayouts[$layoutOnUpdateServerFound->key], 'newVersion' => $layoutOnUpdateServerFound->version, 'from' => 'index']) ?>">
                                     <?=$this->getTokenField() ?>
                                     <button type="submit"
-                                            class="btn btn-default"
+                                            class="btn btn-outline-secondary"
                                             title="<?=$this->getTrans('layoutUpdate') ?>">
                                         <i class="fa-solid fa-arrows-rotate"></i>
                                     </button>
@@ -85,17 +93,22 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                                 </span>
                             <?php else: ?>
                                 <?php if ($ilchCoreTooOld) : ?>
-                                    <button class="btn btn-default unchecked disabled"
+                                    <button class="btn btn-outline-secondary unchecked disabled"
                                             title="<?=$this->getTrans('ilchCoreError') ?>">
                                         <i class="fa"></i>
                                     </button>
+                                <?php elseif ($layoutTooOld) : ?>
+                                    <button class="btn btn-outline-secondary unchecked disabled"
+                                            title="<?=$this->getTrans('layoutTooOld') ?>">
+                                        <i class="fa"></i>
+                                    </button>
                                 <?php elseif ($moduleNotInstalled) : ?>
-                                    <button class="btn btn-default unchecked disabled"
+                                    <button class="btn btn-outline-secondary unchecked disabled"
                                             title="<?=$this->getTrans('layoutModuleNotInstalled') ?>">
                                         <i class="fa"></i>
                                     </button>
                                 <?php else: ?>
-                                    <a href="<?=$this->getUrl(['action' => 'default', 'key' => $layout->getKey()], null, true) ?>" class="btn btn-default unchecked" title="<?=$this->getTrans('setDefault') ?>">
+                                    <a href="<?=$this->getUrl(['action' => 'default', 'key' => $layout->getKey()], null, true) ?>" class="btn btn-outline-secondary unchecked" title="<?=$this->getTrans('setDefault') ?>">
                                         <i class="fa"></i>
                                     </a>
                                 <?php endif; ?>
@@ -103,39 +116,44 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                         <?php endif; ?>
 
                         <?php if ($ilchCoreTooOld) : ?>
-                            <button class="btn btn-default disabled"
+                            <button class="btn btn-outline-secondary disabled"
                                     title="<?=$this->getTrans('ilchCoreError') ?>">
                                 <i class="fa-solid fa-gears"></i>
                             </button>
+                        <?php elseif ($layoutTooOld) : ?>
+                            <button class="btn btn-outline-secondary disabled"
+                                    title="<?=$this->getTrans('layoutTooOld') ?>">
+                                <i class="fa-solid fa-gears"></i>
+                            </button>
                         <?php elseif ($moduleNotInstalled) : ?>
-                            <button class="btn btn-default disabled"
+                            <button class="btn btn-outline-secondary disabled"
                                     title="<?=$this->getTrans('layoutModuleNotInstalled') ?>">
                                 <i class="fa-solid fa-gears"></i>
                             </button>
                         <?php else: ?>
                             <?php if ($layout->getModulekey() != ''): ?>
-                                <a href="<?=$this->getUrl(['module' => $layout->getModulekey(),'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-default" title="<?=$this->getTrans('settings') ?>">
+                                <a href="<?=$this->getUrl(['module' => $layout->getModulekey(),'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-outline-secondary" title="<?=$this->getTrans('settings') ?>">
                                     <i class="fa-solid fa-gears"></i>
                                 </a>
                             <?php elseif (!empty($layout->getSettings())): ?>
-                                <a href="<?=$this->getUrl(['action' => 'advSettingsShow', 'layoutKey' => $layout->getKey()]) ?>" class="btn btn-default" title="<?=$this->getTrans('settings') ?>">
+                                <a href="<?=$this->getUrl(['action' => 'advSettingsShow', 'layoutKey' => $layout->getKey()]) ?>" class="btn btn-outline-secondary" title="<?=$this->getTrans('settings') ?>">
                                     <i class="fa-solid fa-gears"></i>
                                 </a>
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>
-                    <div class="pull-right">
-                        <span class="btn btn-default"
-                              data-toggle="modal"
-                              data-target="#infoModal<?=$layout->getKey() ?>"
+                    <div class="float-end">
+                        <span class="btn btn-outline-secondary"
+                              data-bs-toggle="modal"
+                              data-bs-target="#infoModal<?=$layout->getKey() ?>"
                               title="<?=$this->getTrans('info') ?>">
                             <i class="fa-solid fa-info text-info"></i>
                         </span>
                         <?php if ($this->get('defaultLayout') !== $layout->getKey()): ?>
-                            <span class="btn btn-default deleteLayout"
+                            <span class="btn btn-outline-secondary deleteLayout"
                                   data-clickurl="<?=$this->getUrl(['action' => 'delete', 'key' => $layout->getKey()], null, true) ?>"
-                                  data-toggle="modal"
-                                  data-target="#deleteModal"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#deleteModal"
                                   data-modaltext="<?=$this->escape($this->getTrans('askIfDeleteLayout', $layout->getKey())) ?>"
                                   title="<?=$this->getTrans('delete') ?>">
                                 <i class="fa-regular fa-trash-can text-danger"></i>
@@ -157,7 +175,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
         $screen = '<img src="'.$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png').'" alt="'.$this->escape($layout->getName()).'" title="'.$this->escape($layout->getName()).'" />';
         $author = $this->escape($layout->getAuthor());
     }
-    
+
     $layoutInfo = '<center>'.$screen.'</center><br />
                    <b>'.$this->getTrans('name').':</b> '.$this->escape($layout->getName()).'<br />
                    <b>'.$this->getTrans('version').':</b> '.$this->escape($layout->getVersion()).'<br />
@@ -168,7 +186,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
     ?>
     <?=$this->getDialog('infoModal'.$layout->getKey(), $this->getTrans('menuLayout').' '.$this->getTrans('info'), $layoutInfo) ?>
 <?php endforeach; ?>
-
+</div>
 <?=$this->getDialog('deleteModal', $this->getTrans('delete'), $this->getTrans('needAcknowledgement'), 1) ?>
 <script>
 $('.deleteLayout').on('click', function(event) {

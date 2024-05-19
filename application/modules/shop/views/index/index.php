@@ -56,25 +56,20 @@ if(!empty($_SESSION['shopping_cart'])) {
 </h1>
 
 <?php if (!empty($shopItems) && !empty($categories)) : ?>
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-expand-lg border rounded bg-body-tertiary mb-3">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand"><?=$this->getTrans('shopNavigation') ?></a>
-            </div>
+            <a class="navbar-brand"><?=$this->getTrans('shopNavigation') ?></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=$this->getTrans('menuCats') ?> <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle nav-link" id="navbarDropdown" data-bs-toggle="dropdown"><?=$this->getTrans('menuCats') ?></a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="navbarDropdown">
                             <li <?=($this->getRequest()->getParam('catId') == 'all') ? 'class="active"' : ''; ?>>
-                                <a href="<?=$this->getUrl('shop/index/index/catId/all')?>#shopAnker">
+                                <a href="<?=$this->getUrl('shop/index/index/catId/all')?>#shopAnker" class="dropdown-item">
                                     <?=$this->getTrans('allProducts') ?>
                                     <span class="countItems">[<?=$countAllItems ?>]</span>
                                 </a>
@@ -82,13 +77,13 @@ if(!empty($_SESSION['shopping_cart'])) {
                             <?php foreach ($categories as $category) :
                                 $countCat = (isset($countCats[$category->getId()])) ? $countCats[$category->getId()] : 0;
                                 if (($category->getId() == $this->get('firstCatId') && $this->getRequest()->getParam('catId') != 'all') || $category->getId() == $this->getRequest()->getParam('catId')) {
-                                    $active = 'class="active"';
+                                    $active = 'active';
                                 } else {
                                     $active = '';
                                 }
                                 if ($countCat > 0) : ?>
-                                    <li <?=$active ?>>
-                                        <a href="<?=$this->getUrl('shop/index/index/catId/' . $category->getId()) ?>#shopAnker">
+                                    <li>
+                                        <a href="<?=$this->getUrl('shop/index/index/catId/' . $category->getId()) ?>#shopAnker" class="dropdown-item <?=$active ?>">
                                             <?=$this->escape($category->getTitle()) ?>
                                             <span class="countItems">[<?=$countCat ?>]</span>
                                         </a>
@@ -97,10 +92,10 @@ if(!empty($_SESSION['shopping_cart'])) {
                             <?php endforeach; ?>
                         </ul>
                     </li>
-                    <li><a href="<?=$this->getUrl('shop/customerarea/index') ?>#shopAnker"><?=$this->getTrans('menuCustomerArea') ?></a></li>
-                    <li><a href="<?=$this->getUrl('shop/index/agb') ?>#shopAnker"><?=$this->getTrans('menuAGB') ?></a></li>
+                    <li class="nav-item"><a href="<?=$this->getUrl('shop/customerarea/index') ?>#shopAnker" class="nav-link"><?=$this->getTrans('menuCustomerArea') ?></a></li>
+                    <li class="nav-item"><a href="<?=$this->getUrl('shop/index/agb') ?>#shopAnker" class="nav-link"><?=$this->getTrans('menuAGB') ?></a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav ms-auto">
                     <li>
                         <input type="text" id="search-items" class="form-control" placeholder="<?=$this->getTrans('itemSearch') ?>">
                         <ul id="item-list" class="dropdown-menu">
@@ -114,7 +109,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                                     $img = BASE_URL . $shopImgPath . 'noimg.jpg';
                                 } ?>
                                 <li>
-                                    <a href="<?=$this->getUrl('shop/index/show/id/' . $listItem->getId()) ?>#shopAnker">
+                                    <a href="<?=$this->getUrl('shop/index/show/id/' . $listItem->getId()) ?>#shopAnker" class="dropdown-item">
                                         <img class="listImg" src="<?=$img ?>" alt="<?=$this->escape($listItem->getName()) ?>" />
                                         <span><?=$this->escape($listItem->getName()) ?></span>
                                     </a>
@@ -134,12 +129,13 @@ if(!empty($_SESSION['shopping_cart'])) {
 <div class="row">
     <?php foreach ($shopItems as $shopItem) : ?>
     <div class="col-xs-6 col-md-4">
+      <div class="card shop-card-index">
         <?php if ($shopItem->getCordon() && $shopItem->getCordon() == 1) { ?>
             <div class="cordon-wrapper">
                 <div class="cordon <?=$this->escape($shopItem->getCordonColor()) ?>"><?=$this->escape($shopItem->getCordonText()) ?></div>
             </div>
         <?php } ?>
-        <a class="thumbnail" href="<?=$this->getUrl('shop/index/show/id/' . $shopItem->getId()) ?>#shopAnker">
+        <a href="<?=$this->getUrl('shop/index/show/id/' . $shopItem->getId()) ?>#shopAnker" class="text-center">
             <?php $shopImgPath = '/application/modules/shop/static/img/';
             if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage())) {
                 $img = BASE_URL . '/' . $shopItem->getImage();
@@ -147,7 +143,7 @@ if(!empty($_SESSION['shopping_cart'])) {
                 $img = BASE_URL . $shopImgPath . 'noimg.jpg';
             } ?>
             <img src="<?=$img ?>" alt="<?=$this->escape($shopItem->getName()) ?>" />
-            <div class="caption">
+            <div class="caption text-center mb-3">
                 <h4><?=$this->escape($shopItem->getName()) ?></h4>
                 <p><?=$shopItem->getPrice() ?> <?=$this->escape($this->get('currency')) ?></p>
                 <?php if ($shopItem->getStock() >= 1) { ?>
@@ -160,12 +156,13 @@ if(!empty($_SESSION['shopping_cart'])) {
                         </button>
                     </form>
                 <?php } else { ?>
-                    <button class="btn btn-sm btn-default">
+                    <button class="btn btn-sm btn-outline-secondary">
                         <small><?=$this->getTrans('currentlySoldOut') ?> <i class="fa-solid fa-store-slash"></i></small>
                     </button>
                 <?php } ?>
             </div>
-        </a> 
+        </a>
+      </div>
     </div>
     <?php endforeach; ?>
 </div>
@@ -201,7 +198,7 @@ $(document).ready(function () {
             $("ul#item-list, ul#item-list span").removeClass("match").hide();
         }
     });
-    
+
 });
 </script>
 <?php else : ?>

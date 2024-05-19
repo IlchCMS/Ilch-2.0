@@ -1,4 +1,4 @@
-<?php 
+<?php
 $config = \Ilch\Registry::get('config');
 $translator = new \Ilch\Translator();
 $translator->load(APPLICATION_PATH.'/modules/admin/translations/');
@@ -29,12 +29,12 @@ $date = new \Ilch\Date();
         <!-- SCRIPTS -->
         <script src="<?=$this->getVendorUrl('npm-asset/jquery/dist/jquery.min.js') ?>"></script>
         <script src="<?=$this->getVendorUrl('npm-asset/jquery-ui/dist/jquery-ui.min.js') ?>"></script>
-        <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
+        <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.bundle.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/countdown/jquery.countdown.min.js') ?>"></script>
     </head>
     <body>
         <div class="container">
-            <div class="col-lg-offset-2 col-lg-8 col-md-12 col-sm-12 maintenance_container">
+            <div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 maintenance_container">
                 <div class="logo" title="<?=$translator->trans('ilchCMSVersion', $config->get('version')) ?>"></div>
                 <div class="maintenance_head"><?=$translator->trans('maintenanceMode') ?></div>
                 <div class="hidden-xs">
@@ -88,9 +88,8 @@ $date = new \Ilch\Date();
                     </div>
                 </div>
                 <b><?=$translator->trans('maintenanceStatus') ?></b>
-                <div class="progress progress-striped">
-                    <div class="progress-bar progress-bar-success active"
-                        role="progressbar"
+                <div class="progress" role="progressbar">
+                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
                         aria-valuenow="<?=$config->get('maintenance_status') ?>"
                         aria-valuemin="0"
                         aria-valuemax="100"
@@ -102,7 +101,7 @@ $date = new \Ilch\Date();
                 </div>
 
                 <div class="save_box">
-                    <a href="<?=$this->getUrl('admin/admin/login/index/') ?>" class="btn btn-primary pull-right">
+                    <a href="<?=$this->getUrl('admin/admin/login/index/') ?>" class="btn btn-primary float-end">
                         Admin Login
                     </a>
                 </div>

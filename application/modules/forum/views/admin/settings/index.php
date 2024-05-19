@@ -3,13 +3,13 @@
 /** @var \Ilch\View $this */
 ?>
 <h1><?=$this->getTrans('settings') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
-        <label for="threadsPerPageInput" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="threadsPerPageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('threadsPerPage') ?>:
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="threadsPerPageInput"
@@ -18,11 +18,11 @@
                    value="<?=$this->escape($this->get('threadsPerPage')) ?>" />
         </div>
     </div>
-    <div class="form-group">
-        <label for="postsPerPageInput" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="postsPerPageInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('postsPerPage') ?>:
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="postsPerPageInput"
@@ -31,11 +31,11 @@
                    value="<?=$this->escape($this->get('postsPerPage')) ?>" />
         </div>
     </div>
-    <div class="form-group">
-        <label for="floodIntervalInput" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="floodIntervalInput" class="col-xl-2 col-form-label">
             <?=$this->getTrans('floodInterval') ?>:
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="floodIntervalInput"
@@ -44,11 +44,11 @@
                    value="<?=$this->escape($this->get('floodInterval')) ?>" />
         </div>
     </div>
-    <div class="form-group">
-        <label for="excludeFloodProtection" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="excludeFloodProtection" class="col-xl-2 col-form-label">
             <?=$this->getTrans('excludeFloodProtection') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="chosen-select form-control"
                     id="excludeFloodProtection"
                     name="groups[]"
@@ -74,11 +74,11 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('postVoting') ?>:
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="postVoting-on" name="postVoting" value="1" <?=($this->get('postVoting') == '1') ? 'checked="checked"' : '' ?> />
                 <label for="postVoting-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -88,11 +88,11 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('topicSubscription') ?>:
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="topicSubscription-on" name="topicSubscription" value="1" <?=($this->get('topicSubscription') == '1') ? 'checked="checked"' : '' ?> />
                 <label for="topicSubscription-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -102,11 +102,11 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('DESCPostorder') ?>:
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="DESCPostorder-on" name="DESCPostorder" value="1" <?=($this->get('DESCPostorder') == '1') ? 'checked="checked"' : '' ?> />
                 <label for="DESCPostorder-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -117,11 +117,11 @@
         </div>
     </div>
     <h2><?=$this->getTrans('boxSettings') ?></h2>
-    <div class="form-group">
-        <label for="boxForumLimit" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="boxForumLimit" class="col-xl-2 col-form-label">
             <?=$this->getTrans('boxForumLimit') ?>
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="boxForumLimit"
@@ -131,11 +131,11 @@
         </div>
     </div>
     <h2><?=$this->getTrans('reportSettings') ?></h2>
-    <div class="form-group">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('reportingPosts') ?>:
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="reportingPosts-on" name="reportingPosts" value="1" <?=($this->get('reportingPosts') == '1') ? 'checked="checked"' : '' ?> />
                 <label for="reportingPosts-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -145,11 +145,11 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('reportNotificationEMail') ?>:
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="reportNotificationEMail-on" name="reportNotificationEMail" value="1" <?=($this->get('reportNotificationEMail') == '1') ? 'checked="checked"' : '' ?> />
                 <label for="reportNotificationEMail-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>

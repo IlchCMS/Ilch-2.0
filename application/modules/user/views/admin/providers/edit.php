@@ -1,4 +1,4 @@
-<form 
+<form
     action="<?=$this->getUrl([
         'module' => 'user',
         'controller' => 'providers',
@@ -6,19 +6,18 @@
         'key' => $this->get('provider')->getKey()
     ]) ?>"
     method="POST"
-    class="form-horizontal"
 >
     <h1><?= $this->getTrans('authProvider') ?> <?= $this->get('provider')->getName() ?></h1>
     <?=$this->getTokenField() ?>
-    <div class="form-group">
-        <label for="moduleInput" class="col-lg-3 control-label">
+    <div class="row mb-3">
+        <label for="moduleInput" class="col-xl-3 col-form-label">
             <?=$this->getTrans('module') ?>
         </label>
-        <div class="col-lg-9">
-            <select id="moduleInput" name="module" class="form-control">
+        <div class="col-xl-9">
+            <select id="moduleInput" name="module" class="form-select">
                 <option value=""><?= $this->getTrans('deactivateAuthProvider') ?></option>
                 <?php foreach ($this->get('modules') as $module): ?>
-                    <option 
+                    <option
                         value="<?= $module->getModule() ?>"
                         <?= $module->getModule() === $this->get('provider')->getModule() ? 'selected="selected"' : '' ?>
                     >
@@ -26,7 +25,7 @@
                     </option>
                 <?php endforeach; ?>
             </select>
-            <span class="help-block"><?= $this->getTrans('providersModuleHelpText') ?></span>
+            <span class="form-text"><?= $this->getTrans('providersModuleHelpText') ?></span>
         </div>
     </div>
     <?=$this->getSaveBar() ?>

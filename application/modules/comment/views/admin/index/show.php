@@ -6,16 +6,16 @@ $modules = $modulesMapper->getModulesByKey($this->getRequest()->getParam('key'),
 ?>
 
 <h1><?=$modules->getName() ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
                 <col class="icon_width" />
                 <col class="icon_width" />
-                <col class="col-lg-1" />
-                <col class="col-lg-1" />
-                <col class="col-lg-1" />
+                <col class="col-xl-1" />
+                <col class="col-xl-1" />
+                <col class="col-xl-1" />
                 <col />
             </colgroup>
             <thead>
@@ -31,7 +31,7 @@ $modules = $modulesMapper->getModulesByKey($this->getRequest()->getParam('key'),
             <tbody>
                 <?php if ($this->get('comments')): ?>
                     <?php foreach ($this->get('comments') as $comment): ?>
-                        <?php 
+                        <?php
                         $user = $userMapper->getUserById($comment->getUserId());
                         if (!$user) {
                             $user = $userMapper->getDummyUser();

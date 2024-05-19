@@ -366,7 +366,7 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
     box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
 }
 
-.text-left{
+.text-start{
     font-size: 15px;
 }
 
@@ -444,6 +444,7 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 .profile-sidebar .profile-usermenu ul li a {
     font-size: 14px;
     font-weight: 400;
+    color: #5b9bd1;
 }
 
 .profile-sidebar .profile-usermenu ul li i {
@@ -460,7 +461,7 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
     border-left: 2px solid #5b9bd1;
     margin-left: -2px;
     border-right: 2px solid #5b9bd1;
-    margin-right: -2px;
+    /*! margin-right: -2px; */
 }
 
 /* Profile Content */

@@ -9,14 +9,14 @@ $moduleMapper = $this->get('moduleMapper');
         <colgroup>
             <col />
             <?php if ($this->get('multilingual')): ?>
-                <col class="col-lg-1" />
+                <col class="col-xl-1" />
             <?php endif; ?>
         </colgroup>
         <thead>
             <tr>
                 <th><?=$this->getTrans('modules') ?></th>
                 <?php if ($this->get('multilingual')): ?>
-                    <th class="text-right">
+                    <th class="text-end">
                         <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
                             <?php if ($key == $this->get('contentLanguage')): ?>
                                 <?php continue; ?>
@@ -45,7 +45,7 @@ $moduleMapper = $this->get('moduleMapper');
                             </a>
                         </td>
                         <?php if ($this->get('multilingual')): ?>
-                            <td class="text-right">
+                            <td class="text-end">
                                 <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
                                     <?php if ($key == $this->get('contentLanguage')): ?>
                                         <?php continue; ?>

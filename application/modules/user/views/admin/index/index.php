@@ -1,38 +1,38 @@
 <h1><?=$this->getTrans('manage') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
-        <li <?php if (!$this->getRequest()->getParam('showsetfree') && !$this->getRequest()->getParam('showlocked') && !$this->getRequest()->getParam('showselectsdelete')) {
-    echo 'class="active"';
-} ?>>
-            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>">
+        <li class="nav-item">
+            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>" class="nav-link <?php if (!$this->getRequest()->getParam('showsetfree') && !$this->getRequest()->getParam('showlocked') && !$this->getRequest()->getParam('showselectsdelete')) {
+        echo 'active';
+    } ?>">
                 <?=$this->getTrans('users') ?>
             </a>
         </li>
         <?php if ($this->get('badge') > 0): ?>
-            <li <?php if ($this->getRequest()->getParam('showsetfree')) {
-    echo 'class="active"';
-} ?>>
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
+            <li class="nav-item">
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>" class="nav-link <?php if ($this->getRequest()->getParam('showsetfree')) {
+        echo 'active';
+    } ?>">
                     <?=$this->getTrans('setfree') ?> <span class="badge"><?=$this->get('badge') ?></span>
                 </a>
             </li>
         <?php endif; ?>
         <?php if ($this->get('badgeLocked') > 0): ?>
-            <li <?php if ($this->getRequest()->getParam('showlocked')) {
-    echo 'class="active"';
-} ?>>
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showlocked' => 1]) ?>">
+            <li class="nav-item">
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showlocked' => 1]) ?>" class="nav-link <?php if ($this->getRequest()->getParam('showlocked')) {
+        echo 'active';
+    } ?>">
                     <?=$this->getTrans('unlock') ?> <span class="badge"><?=$this->get('badgeLocked') ?></span>
                 </a>
             </li>
         <?php endif; ?>
         <?php if ($this->get('badgeSelectsDelete') > 0): ?>
-            <li <?php if ($this->getRequest()->getParam('showselectsdelete')) {
-    echo 'class="active"';
-} ?>>
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showselectsdelete' => 1]) ?>">
-                    <?=$this->getTrans('selectsdelete') ?> <span class="badge"><?=$this->get('badgeSelectsDelete') ?></span>
+            <li class="nav-item">
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showselectsdelete' => 1]) ?>" class="nav-link <?php if ($this->getRequest()->getParam('showselectsdelete')) {
+        echo 'active';
+    } ?>">
+                    <?=$this->getTrans('selectsdelete') ?> <span class="badge rounded-pill bg-secondary text-white"><?=$this->get('badgeSelectsDelete') ?></span>
                 </a>
             </li>
         <?php endif; ?>
@@ -44,11 +44,11 @@
                 <col class="icon_width">
                 <col class="icon_width">
                 <col class="icon_width">
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><col class="col-lg-2"><?php endif; ?>
-                <col class="col-lg-2">
+                <col class="col-xl-2">
+                <col class="col-xl-2">
+                <col class="col-xl-2">
+                <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><col class="col-xl-2"><?php endif; ?>
+                <col class="col-xl-2">
                 <col>
             </colgroup>
             <thead>
@@ -60,7 +60,7 @@
                     <th><?=$this->getTrans('userEmail') ?></th>
                     <th><?=$this->getTrans('userDateCreated') ?></th>
                     <th><?=$this->getTrans('userDateLastActivity') ?></th>
-                    <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><th><?=$this->getTrans('selectsdeletetime') ?> <a class="badge" data-toggle="modal" data-target="#infoModal"><i class="fa-solid fa-info"></i></a></th><?php endif; ?>
+                    <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><th><?=$this->getTrans('selectsdeletetime') ?> <a class="badge" data-bs-toggle="modal" data-bs-target="#infoModal"><i class="fa-solid fa-info"></i></a></th><?php endif; ?>
                     <th><?=$this->getTrans('userGroups') ?></th>
                 </tr>
             </thead>

@@ -25,16 +25,16 @@ $prefix = $this->get('prefix');
         <i class="fa-solid fa-chevron-right"></i> <?=$this->getTrans('newPost') ?>
     </h1>
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="new-post-head ilch-head">
                 <?=$this->getTrans('newPost') ?>
             </div>
         </div>
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="new-topic ilch-bg ilch-border">
-                <form class="form-horizontal" method="POST">
+                <form method="POST">
                     <?=$this->getTokenField() ?>
-                    <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+                    <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
                         <div class="col-lg-12">
                             <textarea class="form-control ckeditor"
                                       id="ck_1"
@@ -42,10 +42,10 @@ $prefix = $this->get('prefix');
                                       toolbar="ilch_html_frontend"><?=(!empty($postTextAsQuote)) ? $this->escape($postTextAsQuote) : $this->originalInput('text') ?></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-lg-12">
+                    <div class="row mb-3">
+                        <div class="col-xl-12">
                             <input type="submit"
-                                   class="btn btn-primary"
+                                   class="btn btn-sm btn-primary"
                                    name="saveNewPost"
                                    value="<?=$this->getTrans('add') ?>" />
                         </div>
@@ -55,3 +55,5 @@ $prefix = $this->get('prefix');
         </div>
     </div>
 </div>
+
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>

@@ -4,29 +4,29 @@ $errors = $this->get('errors');
 
 <?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
 
-<form id="registForm" name="registForm" class="form-horizontal" method="POST">
+<form id="registForm" name="registForm" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="regist panel panel-default">
-        <div class="panel-heading">
+    <div class="regist card panel-default">
+        <div class="card-header">
             <?=$this->getTrans('logindata') ?>
         </div>
-        <div class="panel-body">
-            <div class="form-group hidden">
-                <label class="col-lg-2 control-label">
+        <div class="card-body">
+            <div class="row mb-3 d-none">
+                <label class="col-xl-2 col-form-label">
                     <?=$this->getTrans('bot') ?>*
                 </label>
-                <div class="col-lg-8">
+                <div class="col-xl-8">
                     <input type="text"
                            class="form-control"
                            name="bot"
                            placeholder="Bot" />
                 </div>
             </div>
-            <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-                <label for="name" class="control-label col-lg-2">
+            <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
+                <label for="name" class="col-form-label col-xl-2">
                     <?=$this->getTrans('name') ?>:
                 </label>
-                <div class="col-lg-8">
+                <div class="col-xl-8">
                     <input type="text"
                            class="form-control"
                            id="name"
@@ -35,11 +35,11 @@ $errors = $this->get('errors');
                            autocomplete="username" />
                 </div>
             </div>
-            <div class="form-group <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
-                <label for="password" class="control-label col-lg-2">
+            <div class="row mb-3<?=$this->validation()->hasError('password') ? ' has-error' : '' ?>">
+                <label for="password" class="col-form-label col-xl-2">
                     <?=$this->getTrans('password') ?>:
                 </label>
-                <div class="col-lg-8">
+                <div class="col-xl-8">
                     <input type="password"
                            class="form-control"
                            id="password"
@@ -48,11 +48,11 @@ $errors = $this->get('errors');
                            autocomplete="new-password" />
                 </div>
             </div>
-            <div class="form-group <?=$this->validation()->hasError('password2') ? 'has-error' : '' ?>">
-                <label for="password2" class="control-label col-lg-2">
+            <div class="row mb-3<?=$this->validation()->hasError('password2') ? ' has-error' : '' ?>">
+                <label for="password2" class="col-form-label col-xl-2">
                     <?=$this->getTrans('password2') ?>:
                 </label>
-                <div class="col-lg-8">
+                <div class="col-xl-8">
                     <input type="password"
                            class="form-control"
                            id="password2"
@@ -61,11 +61,11 @@ $errors = $this->get('errors');
                            autocomplete="new-password" />
                 </div>
             </div>
-            <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
-                <label for="email" class="control-label col-lg-2">
+            <div class="row mb-3<?=$this->validation()->hasError('email') ? ' has-error' : '' ?>">
+                <label for="email" class="col-form-label col-xl-2">
                     <?=$this->getTrans('emailAdress') ?>:
                 </label>
-                <div class="col-lg-8">
+                <div class="col-xl-8">
                     <input type="text"
                            class="form-control"
                            id="email"
@@ -78,7 +78,7 @@ $errors = $this->get('errors');
             <?php endif; ?>
         </div>
         <div class="panel-footer clearfix">
-            <div class="pull-right">
+            <div class="float-end">
                 <?php
                     if ($this->get('captchaNeeded')) {
                         if ($this->get('googlecaptcha')) {

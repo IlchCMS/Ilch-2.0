@@ -3,7 +3,7 @@ $articleMapper = $this->get('articleMapper');
 ?>
 
 <h1><?=$this->getTrans('manage') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
@@ -25,7 +25,7 @@ $articleMapper = $this->get('articleMapper');
                     <th></th>
                     <th><?=$this->getTrans('title') ?></th>
                     <?php if ($this->get('multilingual')): ?>
-                        <th class="text-right">
+                        <th class="text-end">
                             <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
                                 <?php if ($key == $this->get('contentLanguage')): ?>
                                     <?php continue; ?>
@@ -44,19 +44,19 @@ $articleMapper = $this->get('articleMapper');
                             <td><?=$this->getDeleteCheckbox('check_articles', $article->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $article->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $article->getId()]) ?></td>
-                            <td><?=($article->getTopArticle()) ? '<i class="fa fa-star-o" title="'.$this->getTrans('topArticle').'"></i>' : '' ?></td>
+                            <td><?=($article->getTopArticle()) ? '<i class="fa-regular fa-star" title="'.$this->getTrans('topArticle').'"></i>' : '' ?></td>
                             <td><a target="_blank" href="<?=$this->getUrl().'/index.php/'.$this->escape($article->getPerma()) ?>"><?=$this->escape($article->getTitle()) ?></a></td>
                             <?php if ($this->get('multilingual')): ?>
-                                <td class="text-right">
+                                <td class="text-end">
                                     <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
                                         <?php if ($key == $this->get('contentLanguage')): ?>
                                             <?php continue; ?>
                                         <?php endif; ?>
 
                                         <?php if ($articleMapper->getArticleByIdLocale($article->getId(), $key)): ?>
-                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $article->getId(), 'locale' => $key]) ?>"><i class="fa fa-edit"></i></a>
+                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $article->getId(), 'locale' => $key]) ?>"><i class="fa-regular fa-pen-to-square"></i></a>
                                         <?php else: ?>
-                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $article->getId(), 'locale' => $key]) ?>"><i class="fa fa-plus-circle"></i></a>
+                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $article->getId(), 'locale' => $key]) ?>"><i class="fa-solid fa-circle-plus"></i></a>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </td>

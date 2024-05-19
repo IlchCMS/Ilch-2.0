@@ -1,5 +1,5 @@
 <h1><?=$this->getTrans('receiver') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <?php if ($this->get('emails') != ''): ?>
         <div class="table-responsive">
@@ -7,7 +7,7 @@
                 <colgroup>
                     <col class="icon_width">
                     <col class="icon_width">
-                    <col class="col-lg-2">
+                    <col class="col-xl-2">
                     <col>
                 </colgroup>
                 <thead>

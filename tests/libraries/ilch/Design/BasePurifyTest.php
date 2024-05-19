@@ -370,4 +370,105 @@ class BasePurifyTest extends TestCase
         $output = $this->view->alwaysPurify('<script>alert("XSS");</script>');
         self::assertEquals('', $output);
     }
+
+    /**
+     * italic (CKEditor 5)
+     *
+     * @return void
+     */
+    public function testPurifyItalicCK5()
+    {
+        $output = $this->view->purify('<p><i>italic</i></p>');
+        self::assertEquals('<p><i>italic</i></p>', $output);
+    }
+
+    /**
+     * Simple code (CKEditor 5)
+     *
+     * @return void
+     */
+    public function testPurifyCodeSimpleCK5()
+    {
+        $output = $this->view->purify('<code>&lt;script&gt;alert(\'test\');&lt;/script&gt;</code><p>&nbsp;</p>');
+        self::assertEquals('<code>&lt;script&gt;alert(\'test\');&lt;/script&gt;</code><p> </p>', $output);
+    }
+
+    /**
+     * Text size as one of the predefined classes text-tiny, text-small, text-big or text-huge. (CKEditor 5)
+     * Currently not used in Ilch.
+     *
+     * @return void
+     */
+    public function testPurifyTextTinyCK5()
+    {
+        $output = $this->view->purify('<p><span class="text-tiny">a</span></p>');
+        self::assertEquals('<p><span class="text-tiny">a</span></p>', $output);
+    }
+
+    /**
+     * Indent (CKEditor 5)
+     *
+     * @return void
+     */
+    public function testPurifyIndentCK5()
+    {
+        $output = $this->view->purify('<p style="margin-left:40px;">a</p>');
+        self::assertEquals('<p style="margin-left:40px;">a</p>', $output);
+    }
+
+    /**
+     * Table with various settings applied (CKEditor 5)
+     *
+     * @return void
+     */
+    public function testPurifyTableCK5()
+    {
+        $content = '<figure class="table" style="height:500px;width:1000px;"><table><tbody><tr><td style="border:5px dashed hsl(60,75%,60%);">a</td><td style="background-color:hsl(90,75%,60%);text-align:center;">b</td><td style="border:5px dotted hsl(0,75%,60%);text-align:right;">c</td></tr><tr><td style="padding:50px;">d</td><td><span style="background-color:hsl(150,75%,60%);">e</span></td><td><span class="text-huge">f</span></td></tr></tbody></table></figure>';
+        $output = $this->view->purify($content);
+        self::assertEquals($content, $output);
+    }
+
+    /**
+     * Media embed (CKEditor 5)
+     *
+     * @return void
+     */
+    public function testPurifyEmbedMediaCK5()
+    {
+        $output = $this->view->purify('<figure class="media"><div data-oembed-url="https://www.youtube.com/watch?v=H08tGjXNHO4"><div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;"><iframe src="https://www.youtube.com/embed/H08tGjXNHO4" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe></div></div></figure>');
+        self::assertEquals('<figure class="media"><div data-oembed-url="https://www.youtube.com/watch?v=H08tGjXNHO4"><div style="position:relative;padding-bottom:56.2493%;height:0;"><iframe src="https://www.youtube.com/embed/H08tGjXNHO4" style="position:absolute;width:100%;height:100%;top:0;left:0;" frameborder="0" allowfullscreen=""></iframe></div></div></figure>', $output);
+    }
+
+    /**
+     * Media embed, but with not allowed URL. Should get filtered out. (CKEditor 5)
+     *
+     * @return void
+     */
+    public function testPurifyEmbedMediaNotAllowedURLCK5()
+    {
+        $output = $this->view->purify('<figure class="media"><div data-oembed-url="https://www.bad.url/watch?v=H08tGjXNHO4"><div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;"><iframe src="https://www.bad.url/embed/H08tGjXNHO4" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe></div></div></figure>');
+        self::assertEquals('<figure class="media"><div><div style="position:relative;padding-bottom:56.2493%;height:0;"><iframe style="position:absolute;width:100%;height:100%;top:0;left:0;" frameborder="0" allowfullscreen=""></iframe></div></div></figure>', $output);
+    }
+
+    /**
+     * Making use of the media embed plugin in the ilchmedia plugin to embed locally hosted videos. (CKEditor 5)
+     *
+     * @return void
+     */
+    public function testPurifyLocalVideoCK5()
+    {
+        $output = $this->view->purify('<figure class="media"><div data-oembed-url="http://localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"><div style="position:relative; padding-bottom:100%; height:0"><video style="position:absolute; width:100%; height:100%; top:0; left:0" controls="" src="http://localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"></video></div></div></figure>');
+        self::assertEquals('<figure class="media"><div data-oembed-url="http://localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"><div style="position:relative;padding-bottom:100%;height:0;"><video style="position:absolute;width:100%;height:100%;top:0;left:0;" controls="" src="http://localhost/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"></video></div></div></figure>', $output);
+    }
+
+    /**
+     * Making use of the media embed plugin in the ilchmedia plugin to embed videos. In this with an not allowed URL. Should be filtered out. (CKEditor 5)
+     *
+     * @return void
+     */
+    public function testPurifyLocalVideoNotAllowedURLCK5()
+    {
+        $output = $this->view->purify('<figure class="media"><div data-oembed-url="http://bad.url/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"><div style="position:relative; padding-bottom:100%; height:0"><video style="position:absolute; width:100%; height:100%; top:0; left:0" controls="" src="http://bad.url/65e2c095300cdDSCN0918.mov"></video></div></div></figure>');
+        self::assertEquals('<figure class="media"><div><div style="position:relative;padding-bottom:100%;height:0;"><video style="position:absolute;width:100%;height:100%;top:0;left:0;" controls=""></video></div></div></figure>', $output);
+    }
 }

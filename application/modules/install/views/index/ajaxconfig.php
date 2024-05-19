@@ -6,10 +6,12 @@
 $modules = $this->get('modules');
 ?>
 <div class="row module-select">
+    <span class="clearfix"></span>
     <b><i><?=$this->getTrans('obligatoryModules') ?>:</i></b><br><br>
+    <span class="clearfix"></span>
     <?php foreach ($modules as $key => $module) : ?>
         <?php if (isset($module['config']->config['system_module'])) : ?>
-            <div class="col-lg-4 col-md-3 col-sm-3">
+            <div class="col-xl-4 col-lg-3 col-md-3">
                 <input type="checkbox" id="module_<?=$key ?>" name="modulesToInstall[]" disabled="disabled" checked="checked" value="<?=$key ?>">
                 <label for="module_<?=$key ?>">
                     <?=$module['config']->config['languages'][$this->getTranslator()->getLocale()]['name'] ?>
@@ -19,10 +21,11 @@ $modules = $this->get('modules');
     <?php endforeach; ?>
     <span class="clearfix"></span>
     <br><b><i><?=$this->getTrans('optionalModules') ?>:</i></b><br><br>
-    <div class="alert alert-info hidden" id="dependencyMessage"></div>
+    <div class="alert alert-danger d-none" role="alert" id="dependencyMessage"></div>
+    <span class="clearfix"></span>
     <?php foreach ($modules as $key => $module) : ?>
         <?php if (!isset($module['config']->config['system_module'])) : ?>
-            <div class="col-lg-4 col-md-3 col-sm-3">
+            <div class="col-xl-4 col-lg-3 col-md-3">
                 <input type="checkbox" id="module_<?=$key ?>" name="modulesToInstall[]" value="<?=$key ?>" <?=(isset($module['checked'])) ? 'checked="checked"' : '' ?>>
                 <label for="module_<?=$key ?>">
                     <?=$module['config']->config['languages'][$this->getTranslator()->getLocale()]['name'] ?>
@@ -51,7 +54,7 @@ $(function() {
 
         if (dependencyFound) {
             document.getElementById('dependencyMessage').innerHTML = "<?=$this->getTrans('dependencyMessage') ?>";
-            $("#dependencyMessage").removeClass("hidden");
+            $("#dependencyMessage").removeClass("d-none");
         }
     });
 });

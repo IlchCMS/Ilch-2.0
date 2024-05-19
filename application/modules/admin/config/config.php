@@ -954,6 +954,37 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.59":
                 break;
+            case "2.1.60":
+                // Update to Ilch 2.2.0, which marks the transition to Bootstrap 5 and CKEditor 5.
+                // Update vendor folder
+                replaceVendorDirectory();
+
+                // Delete jquery-loading-overlay as the Bootstrap 5 spinner is now used.
+                removeDir(APPLICATION_PATH . '/modules/admin/static/js/jquery-loading-overlay');
+
+                // Delete bootstrap-progressbar as the default Bootstrap 5 progressbar without animation is now used.
+                unlink(ROOT_PATH . '/static/css/bootstrap-progressbar-3.3.4.min.css');
+                unlink(ROOT_PATH . '/static/js/bootstrap-progressbar.js');
+
+                // Delete CKEditor 4 files from the static folder.
+                removeDir(ROOT_PATH . '/static/js/ckeditor');
+
+                // Delete CKEditor 4 plugins from the media module.
+                removeDir(APPLICATION_PATH . '/modules/media/static/js/ilchmedia');
+                removeDir(APPLICATION_PATH . '/modules/media/static/js/ilchps');
+                removeDir(APPLICATION_PATH . '/modules/media/static/js/ilchyoutube');
+                removeDir(APPLICATION_PATH . '/modules/media/static/js/ilchyoutubehtml');
+
+                // Remove bootstrap datetimepicker as we use "Tempus Dominus" now. datetimepicker was no longer compatible with Bootstrap 5.
+                removeDir(ROOT_PATH . '/static/js/datetimepicker');
+
+                // Delete no longer needed files of an older version of jscolor.
+                unlink(ROOT_PATH . '/static/js/jscolor/arrow.gif');
+                unlink(ROOT_PATH . '/static/js/jscolor/cross.gif');
+                unlink(ROOT_PATH . '/static/js/jscolor/hs.png');
+                unlink(ROOT_PATH . '/static/js/jscolor/hv.png');
+                unlink(ROOT_PATH . '/static/js/jscolor/jscolor.js');
+                break;
         }
 
         return 'Update function executed.';

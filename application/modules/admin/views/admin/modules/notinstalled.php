@@ -23,8 +23,8 @@
     <div id="modules" class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
-                <col class="col-lg-2" />
-                <col class="col-lg-1" />
+                <col class="col-xl-2" />
+                <col class="col-xl-1" />
                 <col />
             </colgroup>
             <thead>
@@ -109,6 +109,11 @@
                                         title="<?=$this->getTrans('ilchCoreError') ?>">
                                     <i class="fa-regular fa-floppy-disk"></i>
                                 </button>
+                            <?php elseif (version_compare('2.2.0', $module->getIlchCore(), '>')): ?>
+                                <button class="btn disabled"
+                                        title="<?=$this->getTrans('moduleTooOld') ?>">
+                                    <i class="fa-regular fa-floppy-disk"></i>
+                                </button>
                             <?php elseif (!checkOwnDependencies($this->get('versionsOfModules'), $this->get('dependencies')[$module->getKey()] ?? null)): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('dependencyError') ?>">
@@ -118,7 +123,7 @@
                                 <form method="POST" action="<?=$this->getUrl(['action' => 'install', 'key' => $module->getKey(), 'from' => 'notinstalled']) ?>">
                                     <?=$this->getTokenField() ?>
                                     <button type="submit"
-                                            class="btn btn-default showOverlay"
+                                            class="btn btn-outline-secondary showOverlay"
                                             title="<?=$this->getTrans('installModule') ?>">
                                         <i class="fa-regular fa-floppy-disk"></i>
                                     </button>
@@ -126,19 +131,18 @@
                             <?php endif; ?>
                             <?php if ($moduleOnUpdateServer && $module->getKey() == $moduleOnUpdateServer->key): ?>
                                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
-                                    <span class="btn btn-default">
+                                    <span class="btn btn-outline-secondary">
                                         <i class="fa-solid fa-info text-info"></i>
-                                    </span>
-                                </a>
+                                    </span></a>
                             <?php else: ?>
-                                <span class="btn btn-default"
-                                      data-toggle="modal"
-                                      data-target="#infoModal<?=$module->getKey() ?>"
+                                <span class="btn btn-outline-secondary"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#infoModal<?=$module->getKey() ?>"
                                       title="<?=$this->getTrans('info') ?>">
                                     <i class="fa-solid fa-info text-info"></i>
                                 </span>
                             <?php endif; ?>
-                            <a href="<?=$this->getUrl(['action' => 'delete', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('delete') ?>">
+                            <a href="<?=$this->getUrl(['action' => 'delete', 'key' => $module->getKey()], null, true) ?>" class="btn btn-outline-secondary" title="<?=$this->getTrans('delete') ?>">
                                 <i class="fa-regular fa-trash-can text-warning"></i>
                             </a>
                         </td>
@@ -180,17 +184,35 @@
             </tbody>
         </table>
     </div>
+
+    <div class="loadingoverlay" hidden>
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border" style="width: 6rem; height: 6rem;" role="status">
+            <span class="visually-hidden"><?=$this->getTrans('processingPleaseWait') ?></span>
+          </div>
+        </div>
+    </div>
 <?php else: ?>
     <?=$this->getTrans('noNotInstalledModules') ?>
 <?php endif; ?>
-<script src="<?=$this->getModuleUrl('static/js/jquery-loading-overlay/loadingoverlay.min.js') ?>"></script>
+
 <script>
+let delayedShow;
+
 $(document).ready(function() {
     $(".showOverlay").on('click', function(event){
-        $.LoadingOverlay("show");
+        $loadingOverlay = $(".loadingoverlay");
+
+        delayedShow = setTimeout(function(){
+            $loadingOverlay.removeAttr('hidden');
+        }, 200);
+
         setTimeout(function(){
-            $.LoadingOverlay("hide");
+            $loadingOverlay.attr('hidden', '');
         }, 30000);
     });
+
+    clearTimeout(delayedShow);
+    $(".loadingoverlay").attr('hidden', '');
 });
 </script>

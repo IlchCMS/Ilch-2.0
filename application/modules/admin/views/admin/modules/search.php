@@ -69,15 +69,17 @@ usort($modulesOnUpdateServer, 'custom_sort');
 ?>
 
 <div id="modules" class="table-responsive">
-    <div class="col-lg-12 input-group">
-        <span class="input-group-addon"><i class="fa-solid fa-magnifying-glass"></i></span>
+  <div class="row">
+    <div class="col-xl-12 input-group user-search">
+        <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
         <input class="form-control hasclear" id="user-search" placeholder="<?=$this->getTrans('search') ?>" required>
     </div>
+  </div>
     <br />
     <table class="table table-hover table-striped table-list-search">
         <colgroup>
-            <col class="col-lg-2" />
-            <col class="col-lg-1" />
+            <col class="col-xl-2" />
+            <col class="col-xl-1" />
             <col />
         </colgroup>
         <thead>
@@ -102,7 +104,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
                         <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>"><?=$this->escape($moduleOnUpdateServer->name) ?></a>
                         <br />
                         <small>
-                            <?=$this->getTrans('author') ?>: 
+                            <?=$this->getTrans('author') ?>:
                             <?php if ($moduleOnUpdateServer->link != ''): ?>
                                 <a href="<?=$moduleOnUpdateServer->link ?>" alt="<?=$this->escape($moduleOnUpdateServer->author) ?>" title="<?=$this->escape($moduleOnUpdateServer->author) ?>" target="_blank" rel="noopener"><i><?=$this->escape($moduleOnUpdateServer->author) ?></i></a>
                             <?php else: ?>
@@ -129,6 +131,11 @@ usort($modulesOnUpdateServer, 'custom_sort');
                                     title="<?=$this->getTrans('ilchCoreError') ?>">
                                 <i class="<?=$iconClass ?>"></i>
                             </button>
+                        <?php elseif (version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<') && version_compare('2.2.0', $moduleOnUpdateServer->ilchCore, '>')): ?>
+                            <button class="btn disabled"
+                                    title="<?=$this->getTrans('moduleTooOld') ?>">
+                                <i class="<?=$iconClass ?>"></i>
+                            </button>
                         <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '>=')): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('alreadyExists') ?>">
@@ -136,8 +143,8 @@ usort($modulesOnUpdateServer, 'custom_sort');
                             </button>
                         <?php elseif ($isInstalled && !empty(checkOthersDependencies([$moduleOnUpdateServer->key => $moduleOnUpdateServer->version], $dependencies))): ?>
                             <button class="btn disabled"
-                                    data-toggle="modal"
-                                    data-target="#infoModal<?=$moduleOnUpdateServer->key ?>"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#infoModal<?=$moduleOnUpdateServer->key ?>"
                                     title="<?=$this->getTrans('dependencyError') ?>">
                                 <i class="<?=$iconClass ?>"></i>
                             </button>
@@ -151,7 +158,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
                                 <?=$this->getTokenField() ?>
                                 <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')? '1' : '0' ?>" />
                                 <button type="submit"
-                                        class="btn btn-default showOverlay"
+                                        class="btn btn-outline-secondary showOverlay"
                                         title="<?=$this->getTrans('moduleUpdate') ?>">
                                     <i class="fa-solid fa-arrows-rotate"></i>
                                 </button>
@@ -161,7 +168,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
                                 <?=$this->getTokenField() ?>
                                 <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')? '1' : '0' ?>" />
                                 <button type="submit"
-                                        class="btn btn-default showOverlay"
+                                        class="btn btn-outline-secondary showOverlay"
                                         title="<?=$this->getTrans('moduleDownload') ?>">
                                     <i class="fa-solid fa-download"></i>
                                 </button>
@@ -169,7 +176,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
                         <?php endif; ?>
 
                         <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
-                            <span class="btn btn-default">
+                            <span class="btn btn-outline-secondary">
                                 <i class="fa-solid fa-info text-info"></i>
                             </span>
                         </a>
@@ -191,8 +198,18 @@ usort($modulesOnUpdateServer, 'custom_sort');
         </tbody>
     </table>
 </div>
-<script src="<?=$this->getModuleUrl('static/js/jquery-loading-overlay/loadingoverlay.min.js') ?>"></script>
+
+<div class="loadingoverlay" hidden>
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border" style="width: 6rem; height: 6rem;" role="status">
+        <span class="visually-hidden"><?=$this->getTrans('processingPleaseWait') ?></span>
+      </div>
+    </div>
+</div>
+
 <script>
+let delayedShow;
+
 function gotokeyAll() {
    $("[name='gotokey']").each(function() {
         if ($("[name='setgotokey']").prop('checked')) {
@@ -204,12 +221,20 @@ function gotokeyAll() {
 }
 // search
 $(document).ready(function() {
-        $(".showOverlay").on('click', function(event){
-        $.LoadingOverlay("show");
+    $(".showOverlay").on('click', function(event){
+        $loadingOverlay = $(".loadingoverlay");
+
+        delayedShow = setTimeout(function(){
+            $loadingOverlay.removeAttr('hidden');
+        }, 200);
+
         setTimeout(function(){
-            $.LoadingOverlay("hide");
+            $loadingOverlay.attr('hidden', '');
         }, 30000);
     });
+
+    clearTimeout(delayedShow);
+    $(".loadingoverlay").attr('hidden', '');
 
     // something is entered in search form
     $('#user-search').keyup( function() {

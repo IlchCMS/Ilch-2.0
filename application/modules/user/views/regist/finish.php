@@ -1,14 +1,14 @@
 <?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
 
-<div class="regist panel panel-default">
-    <div class="panel-heading">
+<div class="regist card panel-default">
+    <div class="card-header">
         <?=$this->getTrans('finish') ?>
     </div>
-    <div class="panel-body">
-        <div class="col-lg-2 fa-4x check">
+    <div class="card-body">
+        <div class="col-xl-2 fa-4x check">
             <i class="fa-solid fa-circle-check text-success" title="<?=$this->getTrans('finish') ?>"></i>
         </div>
-        <div class="col-lg-10">
+        <div class="col-xl-10">
             <?=$this->getTranslator()->trans('registerThanks', $this->escape($_SESSION['name'] ?? '')) ?>
             <br /><br />
         <?php if ($this->get('regist_confirm') == '1'): ?>
@@ -20,8 +20,8 @@
         <?php endif; ?>
         </div>
     </div>
-    <div class="panel-footer clearfix">
-        <div class="pull-right">
+    <div class="card-footer clearfix">
+        <div class="float-end">
             <a href="<?=$this->getUrl() ?>" class="btn btn-success" role="button"><?=$this->getTrans('back') ?></a>
         </div>
     </div>

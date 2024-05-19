@@ -19,7 +19,7 @@
     <script>$(document).ready(function(){
     $('.providers').on('click', function (e) {
         e.preventDefault();
-        
+
         var myForm = $(this).closest('form')[0];
         myForm.action = this.href;// the href of the link
         myForm.method = "POST";
@@ -27,16 +27,16 @@
         return false; // cancel the actual link
     });
     });</script>
-    <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="form-horizontal" method="post">
+    <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" method="post">
         <input type="hidden" name="login_redirect_url" value="<?=$this->escape($this->get('redirectUrl')) ?>" />
         <?php
         echo $this->getTokenField();
         $errors = $this->get('errors');
         ?>
-        <div class="form-group">
-            <div class="col-lg-12">
+        <div class="row mb-3">
+            <div class="col-xl-12">
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>
                     <input type="text"
                            class="form-control"
                            name="login_emailname"
@@ -45,10 +45,10 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-lg-12">
+        <div class="row mb-3">
+            <div class="col-xl-12">
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock"></i></span>
                     <input type="password"
                            class="form-control"
                            name="login_password"
@@ -57,8 +57,8 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-lg-12">
+        <div class="row mb-3">
+            <div class="col-xl-12">
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" name="rememberMe" value="rememberMe"> <?=$this->getTrans('rememberMe') ?>
@@ -66,9 +66,9 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-lg-12">
-                <button type="submit" class="btn" name="login">
+        <div class="row mb-3">
+            <div class="col-xl-12">
+                <button type="submit" class="btn btn-outline-secondary" name="login">
                     <?=$this->getTrans('login') ?>
                 </button>
                 <span class="social-logins">
@@ -76,7 +76,7 @@
                         <i class="fa-solid fa-fw fa-angle-right"></i>
                     <?php endif; ?>
                     <?php foreach ($this->get('providers') as $provider): ?>
-                        <a 
+                        <a
                             class="btn btn-link providers provider-<?= $provider->getKey() ?>"
                             href="<?= $this->getUrl([
                                 'module' => $provider->getModule(),

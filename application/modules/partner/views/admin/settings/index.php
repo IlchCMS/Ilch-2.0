@@ -8,13 +8,13 @@ if ($this->validation()->hasErrors()) {
     $slider = (bool)$this->get('slider') == '1';
 }
 ?>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('slider') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('slider') ? ' has-error' : '' ?>">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('slider') ?>:
         </div>
-        <div class="col-lg-2">
+        <div class="col-xl-2">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="slider-on" name="slider" value="1" <?=($slider) ? 'checked="checked"' : '' ?> />
                 <label for="slider-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -24,23 +24,23 @@ if ($this->validation()->hasErrors()) {
             </div>
         </div>
     </div>
-    <div id="contentHeight" class="<?=(!$slider) ? 'hidden' : '' ?>">
-        <div class="form-group <?=$this->validation()->hasError('boxSliderMode') ? 'has-error' : '' ?>">
-            <label for="boxSliderMode" class="col-lg-2 control-label">
+    <div id="contentHeight" <?=(!$slider) ? 'hidden' : '' ?>>
+        <div class="row mb-3<?=$this->validation()->hasError('boxSliderMode') ? ' has-error' : '' ?>">
+            <label for="boxSliderMode" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('boxSliderMode') ?>:
             </label>
-            <div class="col-lg-2">
-                <select class="form-control" name="boxSliderMode">
+            <div class="col-xl-2">
+                <select class="form-select" name="boxSliderMode">
                     <option <?=($this->get('boxSliderMode') === 'vertical') ? 'selected="selected"' : '' ?> value="vertical"><?=$this->getTrans('boxSliderModeVertical') ?></option>
                     <option <?=($this->get('boxSliderMode') === 'horizontal') ? 'selected="selected"' : '' ?> value="horizontal"><?=$this->getTrans('boxSliderModeHorizontal') ?></option>
                 </select>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('boxSliderHeight') ? 'has-error' : '' ?>">
-            <label for="boxSliderHeight" class="col-lg-2 control-label">
+        <div class="row mb-3<?=$this->validation()->hasError('boxSliderHeight') ? ' has-error' : '' ?>">
+            <label for="boxSliderHeight" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('boxSliderHeight') ?>:
             </label>
-            <div class="col-lg-1">
+            <div class="col-xl-1">
                 <input type="number"
                        class="form-control"
                        id="boxSliderHeight"
@@ -50,11 +50,11 @@ if ($this->validation()->hasErrors()) {
             </div>
         </div>
 
-        <div class="form-group <?=$this->validation()->hasError('boxSliderSpeed') ? 'has-error' : '' ?>">
-            <label for="boxSliderSpeed" class="col-lg-2 control-label">
+        <div class="row mb-3<?=$this->validation()->hasError('boxSliderSpeed') ? ' has-error' : '' ?>">
+            <label for="boxSliderSpeed" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('boxSliderSpeed') ?>:
             </label>
-            <div class="col-lg-1">
+            <div class="col-xl-1">
                 <input type="number"
                        class="form-control"
                        id="boxSliderSpeed"
@@ -70,9 +70,9 @@ if ($this->validation()->hasErrors()) {
 <script>
 $('[name="slider"]').click(function () {
     if ($(this).val() == "1") {
-        $('#contentHeight').removeClass('hidden');
+        $('#contentHeight').removeAttr('hidden');
     } else {
-        $('#contentHeight').addClass('hidden');
+        $('#contentHeight').attr('hidden', '');
     }
 });
 </script>

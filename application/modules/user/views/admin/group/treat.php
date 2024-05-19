@@ -10,16 +10,16 @@ if ($group->getId()) {
 ?>
 
 <h1><?=$fieldsetLegend ?></h1>
-<form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'group', 'action' => 'save']) ?>" method="POST" class="form-horizontal" id="groupForm">
+<form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'group', 'action' => 'save']) ?>" method="POST" id="groupForm">
     <?=$this->getTokenField() ?>
     <input type="hidden"
            name="group[id]"
            value="<?=$group->getId() ?>" />
-    <div class="form-group">
-        <label for="groupName" class="col-lg-3 control-label">
+    <div class="row mb-3">
+        <label for="groupName" class="col-xl-3 col-form-label">
             <?=$this->getTrans('groupName') ?>
         </label>
-        <div class="col-lg-9">
+        <div class="col-xl-9">
             <input type="text"
                    class="form-control required"
                    id="groupName"
@@ -28,16 +28,16 @@ if ($group->getId()) {
                    value="<?=$this->escape($group->getName()) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="row mb-3">
         <table class="table table-borderless">
-            <colgroup><col class="col-lg-6">
-                <col class="col-lg-6">
+            <colgroup><col class="col-xl-6">
+                <col class="col-xl-6">
                 <col>
             </colgroup>
             <thead>
                 <tr>
-                    <th class="th-lg"><?=$this->getTrans('users') ?></th>
-                    <th class="th-lg"><?=$this->getTrans('assignedUsers') ?></th>
+                    <th class="th-lg table-light"><?=$this->getTrans('users') ?></th>
+                    <th class="th-lg table-light"><?=$this->getTrans('assignedUsers') ?></th>
                 </tr>
             </thead>
             <tbody>

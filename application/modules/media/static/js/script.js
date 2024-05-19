@@ -70,7 +70,7 @@ $(function() {
             // Update the hidden input field and trigger a change
             // so that the jQuery knob plugin knows to update the dial
             data.context.find('input').val(progress).change();
-            data.context.find('span').addClass('fa fa-spinner');
+            data.context.find('span').addClass('fa-solid fa-spinner');
             if (progress == 100) {
                 data.context.removeClass('working');
                 
@@ -80,15 +80,15 @@ $(function() {
         fail:function(e, data) {
             // Something has gone wrong!
             data.context.addClass('error');
-            data.context.find('span').removeClass('fa fa-spinner');
-            data.context.find('span').addClass('fa fa-bolt');
+            data.context.find('span').removeClass('fa-solid fa-spinner');
+            data.context.find('span').addClass('fa-solid fa-bolt-lightning');
         },
         
         done:function(e, data) {
             // Success!
             data.context.addClass('finish');
-            data.context.find('span').removeClass('fa fa-spinner');
-            data.context.find('span').addClass('fa fa-check');
+            data.context.find('span').removeClass('fa-solid fa-spinner');
+            data.context.find('span').addClass('fa-solid fa-check');
             data.context.find('b').removeClass('suss-none');
             data.context.find('b').addClass('suss');
         }

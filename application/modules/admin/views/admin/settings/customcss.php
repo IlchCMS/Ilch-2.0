@@ -5,10 +5,10 @@
 <link href="<?=$this->getModuleUrl('static/js/codemirror/addon/hint/show-hint.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuCustomCSS') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
-        <div class="col-lg-6">
+    <div class="row mb-3">
+        <div class="col-xl-6">
             <textarea class="form-control"
                       id="customCSS"
                       name="customCSS"

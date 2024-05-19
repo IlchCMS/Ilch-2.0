@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.23.1',
+        'version' => '1.24.0',
         'icon_small' => 'fa-solid fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -28,7 +28,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'You can add or edit teams and manage applications for these teams.',
             ],
         ],
-        'ilchCore' => '2.1.52',
+        'ilchCore' => '2.2.0',
         'phpVersion' => '7.3'
     ];
 
@@ -245,6 +245,8 @@ class Config extends \Ilch\Config\Install
             case "1.22.0":
                 // no break
             case "1.23.0":
+                // no break
+            case "1.23.1":
                 // no break
         }
         return 'Update function executed.';

@@ -67,10 +67,10 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
 }
 ?>
 
-<form class="form-horizontal" id="galleryForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
+<form class="row" id="galleryForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <h1><?=$this->getTrans('gallery') ?></h1>
-    <div class="col-lg-6">
+    <div class="col-xl-6">
         <ol id="sortable" class="sortable">
             <?php
             if (!empty($galleryItems)) {
@@ -81,21 +81,21 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
             ?>
         </ol>
     </div>
-    <div class="col-lg-6 changeBox">
+    <div class="col-xl-6 changeBox">
         <input type="hidden" id="id" value="" />
-        <div class="form-group">
-            <label for="title" class="col-lg-3 control-label">
+        <div class="row mb-3">
+            <label for="title" class="col-xl-3 col-form-label">
                 <?=$this->getTrans('title') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input type="text" class="form-control" id="title" />
             </div>
         </div>
-        <div class="form-group">
-            <label for="desc" class="col-lg-3 control-label">
+        <div class="row mb-3">
+            <label for="desc" class="col-xl-3 col-form-label">
                 <?=$this->getTrans('description') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <textarea class="form-control"
                           id="desc"
                           name="desc"
@@ -103,20 +103,23 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
                           cols="45"></textarea>
             </div>
         </div>
-        <div class="form-group">
-            <label for="type" class="col-lg-3 control-label">
+        <div class="row mb-3">
+            <label for="type" class="col-xl-3 col-form-label">
                 <?=$this->getTrans('type') ?>
             </label>
-            <div class="col-lg-6">
-                <select class="form-control" id="type">
+            <div class="col-xl-6">
+                <select class="form-select" id="type">
                     <option value="0"><?=$this->getTrans('cat') ?></option>
                     <option value="1"><?=$this->getTrans('gallery') ?></option>
                 </select>
             </div>
         </div>
         <div class="dyn"></div>
-        <div class="col-lg-offset-3 actions">
-            <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
+        <div class="row mb-3">
+            <label class="col-xl-3 col-form-label"></label>
+            <div class="col-xl-6 actions">
+                <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
+            </div>
         </div>
     </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
@@ -202,8 +205,8 @@ $(document).ready (
                 return;
             }
 
-            let menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('cat') ?></label>\n\
-                        <div class="col-lg-6"><select class="form-control" id="menukey">'+options+'</select></div></div>';
+            let menuHtml = '<div class="row mb-3"><label for="href" class="col-xl-3 col-form-label"><?=$this->getTrans('cat') ?></label>\n\
+                        <div class="col-xl-6"><select class="form-select" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() === '0') {
                 $('.dyn').html('');
@@ -256,8 +259,8 @@ $(document).ready (
 
         $('.sortable').on('click', '.item_edit', function () {
             let parentId = $(this).parent().find('.hidden_parentid').val();
-            $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>">\n\
-                               <input type="button" class="btn" id="menuItemEditCancel" value="<?=$this->getTrans('cancel') ?>">');
+            $('.actions').html('<input type="button" class="btn btn-outline-secondary" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>">\n\
+                               <input type="button" class="btn btn-outline-secondary" id="menuItemEditCancel" value="<?=$this->getTrans('cancel') ?>">');
             $('#title').val($(this).parent().find('.hidden_title').val());
             $('#desc').val($(this).parent().find('.hidden_desc').val());
             $('#type').val($(this).parent().find('.hidden_type').val()).change();

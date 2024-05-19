@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'imprint',
-        'icon_small' => 'fa-solid fa-paragraph',
+        'icon_small' => 'fa-solid fa-section',
         'system_module' => true,
         'languages' => [
             'de_DE' => [
@@ -65,6 +65,9 @@ E-Mail: mustermann@musterfirma.de</p>
     {
         switch ($installedVersion) {
             case "2.1.52":
+                $this->db()->update('modules', ['icon_small' => $this->config['icon_small']], ['key' => $this->config['key']])->execute();
+                break;
+            case "2.1.60":
                 $this->db()->update('modules', ['icon_small' => $this->config['icon_small']], ['key' => $this->config['key']])->execute();
                 break;
         }

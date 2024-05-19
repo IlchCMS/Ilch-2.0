@@ -3,11 +3,11 @@
 /** @var \Ilch\View $this */
 ?>
 <h1><?=$this->getTrans('settings') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <p><?=$this->getTrans('doubleOptInInfo') ?></p>
-    <div class="form-group">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <div class="col-lg-2 col-form-label">
             <?=$this->getTrans('doubleOptIn') ?>:
         </div>
         <div class="col-lg-4">

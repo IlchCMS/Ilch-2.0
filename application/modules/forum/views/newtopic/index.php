@@ -26,26 +26,26 @@ if ($this->getUser()) {
             <i class="fa-solid fa-chevron-right"></i> <?=$this->getTrans('newTopicTitle') ?>
         </h1>
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-xl-12">
                 <div class="new-post-head ilch-head">
                     <?=$this->getTrans('createNewTopic') ?>
                 </div>
             </div>
-            <div class="col-lg-12">
+            <div class="col-xl-12">
                 <div class="new-topic ilch-bg ilch-border">
-                    <form class="form-horizontal" method="POST">
+                    <form method="POST">
                         <?=$this->getTokenField() ?>
                         <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">
-                                    <label for="topicTitle" class="col-lg-2 control-label">
+                            <div class="col-xl-12">
+                                <div class="row mb-3<?=$this->validation()->hasError('topicTitle') ? ' has-error' : '' ?>">
+                                    <label for="topicTitle" class="col-lg-2 col-form-label">
                                         <?=$this->getTrans('topicTitle') ?>
                                     </label>
                                     <?php if ($forum->getPrefixes() != '') : ?>
                                         <?php $prefixIds = explode(',', $forum->getPrefixes()); ?>
                                         <?php array_unshift($prefixIds, ''); ?>
-                                        <div class="col-lg-2 prefix">
-                                            <select class="form-control" id="topicPrefix" name="topicPrefix">
+                                        <div class="col-xl-2 prefix">
+                                            <select class="form-select" id="topicPrefix" name="topicPrefix">
                                                 <?php foreach ($prefixIds as $prefixId) : ?>
                                                     <?php $selected = ''; ?>
                                                     <?php if ($prefixId == $this->originalInput('topicPrefix')) : ?>
@@ -60,7 +60,7 @@ if ($this->getUser()) {
                                             </select>
                                         </div>
                                     <?php endif; ?>
-                                    <div class="col-lg-5">
+                                    <div class="col-xl-5">
                                         <input type="text"
                                                class="form-control"
                                                id="topicTitle"
@@ -68,11 +68,11 @@ if ($this->getUser()) {
                                                value="<?=$this->originalInput('topicTitle') ?>" />
                                     </div>
                                 </div>
-                                <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-                                    <label class="col-lg-2 control-label">
+                                <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
+                                    <label class="col-xl-2 col-form-label">
                                         <?=$this->getTrans('text') ?>
                                     </label>
-                                    <div class="col-lg-10">
+                                    <div class="col-xl-10">
                                     <textarea class="form-control ckeditor"
                                               id="ck_1"
                                               name="text"
@@ -80,11 +80,11 @@ if ($this->getUser()) {
                                     </div>
                                 </div>
                                 <?php if ($this->getUser()->isAdmin()) : ?>
-                                    <div class="form-group">
-                                        <div class="col-lg-2 control-label">
+                                    <div class="row mb-3">
+                                        <div class="col-xl-2 col-form-label">
                                             <?=$this->getTrans('forumOptions') ?>
                                         </div>
-                                        <div class="col-lg-10">
+                                        <div class="col-xl-10">
                                             <input type="checkbox"
                                                    id="fix"
                                                    name="fix"
@@ -96,10 +96,10 @@ if ($this->getUser()) {
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                                <div class="form-group">
-                                    <div class="col-lg-offset-2 col-lg-8">
+                                <div class="row mb-3">
+                                    <div class="offset-xl-2 col-xl-8">
                                         <input type="submit"
-                                               class="btn btn-primary"
+                                               class="btn btn-sm btn-primary"
                                                name="saveNewTopic"
                                                value="<?=$this->getTrans('add') ?>" />
                                     </div>
@@ -111,6 +111,8 @@ if ($this->getUser()) {
             </div>
         </div>
     </div>
+    
+    <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <?php else : ?>
     <?php
     header('location: ' . $this->getUrl(['controller' => 'index', 'action' => 'index', 'access' => 'noaccess']));

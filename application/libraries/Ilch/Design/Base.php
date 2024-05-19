@@ -7,6 +7,7 @@
 
 namespace Ilch\Design;
 
+use Ilch\HTMLPurifier\EmbedUrlDef;
 use Ilch\Layout\Helper\GetMedia;
 use Ilch\Request;
 use Ilch\Router;
@@ -166,26 +167,43 @@ abstract class Base
         }
         $this->baseUrl = $baseUrl;
 
+        // HTML Purifier configuration
         $this->purifierConfig = \HTMLPurifier_Config::createDefault();
+        // $this->purifierConfig->set('Cache.DefinitionImpl', null);
         $this->purifierConfig->set('Filter.YouTube', true);
         $this->purifierConfig->set('HTML.SafeIframe', true);
         $this->purifierConfig->set('URI.AllowedSchemes', ['data' => true, 'src' => true, 'http' => true, 'https' => true]);
-        $this->purifierConfig->set('URI.SafeIframeRegexp', '%^https://(www.youtube.com/embed/|www.youtube-nocookie.com/embed/|player.vimeo.com/video/|)%');
+        $this->purifierConfig->set('URI.SafeIframeRegexp', '%(?|(^(http://|https://)localhost)|(^https://(youtube.com/|www.youtube.com/|www.youtube.com/embed/|www.youtube-nocookie.com/embed/|youtu.be/|vimeo.com/|player.vimeo.com/video/|open.spotify.com/artist/|open.spotify.com/album/|open.spotify.com/track/|open.spotify.com/embed/|www.dailymotion.com/video/|www.dailymotion.com/embed/video/|dai.ly/)))%');
         $this->purifierConfig->set('Attr.AllowedFrameTargets', '_blank, _self, _target, _parent');
         $this->purifierConfig->set('Attr.EnableID', true);
         $this->purifierConfig->set('AutoFormat.Linkify', true);
+        // Had to be enabled to allow the output of the media embed plugin of CKEditor 5.
+        $this->purifierConfig->set('CSS.Trusted', true);
         $def = $this->purifierConfig->getHTMLDefinition(true);
         $def->addAttribute('iframe', 'allowfullscreen', 'Bool');
+        // Settings to allow (most of) the output of the media embed plugin of CKEditor 5.
+        // https://github.com/ckeditor/ckeditor5/blob/v41.1.0/packages/ckeditor5-media-embed/src/mediaembedediting.ts
+        // https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html#including-previews-in-data
+        $def->addAttribute('div', 'data-oembed-url', new EmbedUrlDef());
+        $def->addElement('oembed', 'Block', 'Inline', 'Common');
+        $def->addAttribute('oembed', 'url', new EmbedUrlDef());
+
+        $def->addElement('figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow', 'Common');
+        $def->addElement('figcaption', 'Inline', 'Flow', 'Common');
+
+        // https://github.com/ezyang/htmlpurifier/issues/152
+        $def->addAttribute('a', 'download', 'URI');
+
         $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', array(
             'autoplay' => 'Bool',
-            'src' => 'URI',
+            'src' => new EmbedUrlDef(),
             'width' => 'Length',
             'height' => 'Length',
             'preload' => 'Enum#auto,metadata,none',
             'controls' => 'Bool',
         ));
         $def->addElement('source', 'Block', 'Flow', 'Common', array(
-            'src' => 'URI',
+            'src' => new EmbedUrlDef(),
             'type' => 'Text',
         ));
         $this->purifier = new \HTMLPurifier($this->purifierConfig);
@@ -663,7 +681,7 @@ abstract class Base
      */
     public function getMedia(?string $mediaButton = null, ?string $actionButton = null, ?string $inputId = null): GetMedia
     {
-        return  new GetMedia($mediaButton, $actionButton, $inputId);
+        return new GetMedia($mediaButton, $actionButton, $inputId);
     }
 
     /**
@@ -766,12 +784,12 @@ abstract class Base
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button"
-                                class="close"
-                                data-dismiss="modal"
-                                aria-hidden="true">&times;
-                        </button>
                         <h4 class="modal-title" id="modalLabel">' . $name . '</h4>
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close">
+                        </button>
                     </div>
                     <div class="modal-body">
                         ' . $content . '
@@ -783,13 +801,13 @@ abstract class Base
                                  id="modalButton">' . $this->getTrans('ack') . '
                             </button>
                             <button type="button"
-                                    class="btn btn-default"
-                                    data-dismiss="modal">' . $this->getTrans('cancel') . '
+                                    class="btn btn-outline-secondary"
+                                    data-bs-dismiss="modal">' . $this->getTrans('cancel') . '
                             </button>';
         } else {
             $html .= '<button type="button"
                                 class="btn btn-primary"
-                                data-dismiss="modal">
+                                data-bs-dismiss="modal">
                             ' . $this->getTrans('close') . '
                             </button>';
         }

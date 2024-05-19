@@ -1,29 +1,29 @@
 <h1><?=$this->getTrans('manageWarOverview') ?></h1>
 <?php if ($this->get('war')): ?>
-    <?=$this->get('pagination')->getHtml($this, []) ?>
-    <form class="form-horizontal" method="POST" action="">
-        <?=$this->getTokenField() ?>
-        <div class="form-group">
-            <label class="col-lg-2 control-label" for="filterLastNext">
-                <?=$this->getTrans('showOnly') ?>
-            </label>
-            <div class="col-lg-2">
-                <select class="form-control" id="filterLastNext" name="filterLastNext">
-                    <option value="0" <?=($this->getRequest()->getParam('filterLastNext') == 0) ? 'selected=""' : '' ?>><?=$this->getTrans('all') ?></option>
-                    <option value="1" <?=($this->getRequest()->getParam('filterLastNext') == 1) ? 'selected=""' : '' ?>><?=$this->getTrans('warStatusOpen') ?></option>
-                    <option value="2" <?=($this->getRequest()->getParam('filterLastNext') == 2) ? 'selected=""' : '' ?>><?=$this->getTrans('warStatusClose') ?></option>
-                </select>
-            </div>
+    <div class="row mb-3">
+        <label class="col-lg-2 col-form-label" for="filterLastNext">
+            <?=$this->getTrans('showOnly') ?>
+        </label>
+        <div class="col-lg-2">
+            <select class="form-select" id="filterLastNext" name="filterLastNext">
+                <option value="0" <?=($this->getRequest()->getParam('filterLastNext') == 0) ? 'selected=""' : '' ?>><?=$this->getTrans('all') ?></option>
+                <option value="1" <?=($this->getRequest()->getParam('filterLastNext') == 1) ? 'selected=""' : '' ?>><?=$this->getTrans('warStatusOpen') ?></option>
+                <option value="2" <?=($this->getRequest()->getParam('filterLastNext') == 2) ? 'selected=""' : '' ?>><?=$this->getTrans('warStatusClose') ?></option>
+            </select>
         </div>
+    </div>
+    <?=$this->get('pagination')->getHtml($this, []) ?>
+    <form method="POST" action="">
+        <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <colgroup>
                     <col class="icon_width" />
                     <col class="icon_width" />
                     <col class="icon_width" />
-                    <col class="col-lg-2" />
-                    <col class="col-lg-2" />
-                    <col class="col-lg-2" />
+                    <col class="col-xl-2" />
+                    <col class="col-xl-2" />
+                    <col class="col-xl-2" />
                     <col />
                 </colgroup>
                 <thead>

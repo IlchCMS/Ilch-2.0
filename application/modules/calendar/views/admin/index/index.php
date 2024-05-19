@@ -20,7 +20,7 @@ $periodTypes = [
 
 <h1><?=$this->getTrans('manage') ?></h1>
 <?php if ($this->get('calendar') != ''): ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -28,10 +28,10 @@ $periodTypes = [
                     <col class="icon_width">
                     <col class="icon_width">
                     <col class="icon_width">
-                    <col class="col-lg-2">
-                    <col class="col-lg-2">
-                    <col class="col-lg-2">
-                    <col class="col-lg-2">
+                    <col class="col-xl-2">
+                    <col class="col-xl-2">
+                    <col class="col-xl-2">
+                    <col class="col-xl-2">
                     <col />
                 </colgroup>
                 <thead>

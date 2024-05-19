@@ -6,11 +6,11 @@
 
 <h1><?=$this->getTrans('menuNote') ?>
     <div class="input-group input-group-sm filter">
-        <span class="input-group-addon">
+        <span class="input-group-text">
             <i class="fa-solid fa-filter"></i>
         </span>
         <input type="text" id="filterInput" class="form-control" placeholder="<?=$this->getTrans('filterModules') ?>">
-        <span class="input-group-addon">
+        <span class="input-group-text">
             <span id="filterClear" class="fa-solid fa-xmark"></span>
         </span>
     </div>

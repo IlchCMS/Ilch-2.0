@@ -1,5 +1,5 @@
 <h1><?=$this->getTrans('manage') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
@@ -9,7 +9,7 @@
                 <col class="icon_width">
                 <col>
                 <?php if ($this->get('multilingual')) : ?>
-                    <col class="col-lg-1">
+                    <col class="col-xl-1">
                 <?php endif; ?>
             </colgroup>
             <thead>
@@ -23,7 +23,7 @@
                         <a href="<?=$this->getUrl($this->get('sorter')->getUrlArray('title')) ?>" title="<?=$this->getTrans('pageTitle') ?>"><?=$this->get('sorter')->getArrowHtml('title') ?> <?=$this->getTrans('pageTitle') ?></a>&nbsp;
                     </th>
                     <?php if ($this->get('multilingual')) : ?>
-                        <th class="text-right">
+                        <th class="text-end">
                             <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value) : ?>
                                 <?php if ($key == $this->get('contentLanguage')) : ?>
                                     <?php continue; ?>
@@ -46,7 +46,7 @@
                                 <a target="_blank" href="<?=$this->getUrl().'index.php/'.$this->escape($page->getPerma()) ?>"><?=$this->escape($page->getTitle()) ?></a>
                             </td>
                             <?php if ($this->get('multilingual')) : ?>
-                                <td class="text-right">
+                                <td class="text-end">
                                     <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value) : ?>
                                         <?php if ($key == $this->get('contentLanguage')) : ?>
                                             <?php continue; ?>

@@ -7,7 +7,7 @@ $training = $this->get('training');
 ?>
 <h1><?=$this->getTrans('manage') ?></h1>
 <?php if ($training) : ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -15,7 +15,7 @@ $training = $this->get('training');
                     <col class="icon_width">
                     <col class="icon_width">
                     <col class="icon_width">
-                    <col class="col-lg-2">
+                    <col class="col-xl-2">
                     <col>
                 </colgroup>
                 <thead>

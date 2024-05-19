@@ -65,7 +65,7 @@ class Index extends Admin
                 $oldItems = $galleryMapper->getGalleryItems() ?? [];
 
                 // Delete no longer existing items.
-                foreach ($oldItems as $oldItem) {
+                foreach ($oldItems ?? [] as $oldItem) {
                     if (!key_exists($oldItem->getId(), $items)) {
                         $galleryMapper->deleteItem($oldItem);
                     }

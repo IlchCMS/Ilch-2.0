@@ -30,12 +30,12 @@ $iconArray = [
 
 <h1>
     <?=($profileField->getId()) ? $this->getTrans('editProfileField') : $this->getTrans('addProfileField') ?>
-    <a class="badge" data-toggle="modal" data-target="#infoModal">
+    <a class="badge rounded-pill bg-secondary text-white" data-bs-toggle="modal" data-bs-target="#infoModal">
         <i class="fa-solid fa-info"></i>
     </a>
 </h1>
 
-<form action="" method="POST" class="form-horizontal" id="profileFieldForm">
+<form action="" method="POST" id="profileFieldForm">
     <?=$this->getTokenField() ?>
     <input type="hidden"
            name="profileField[id]"
@@ -45,13 +45,13 @@ $iconArray = [
            value="<?=($profileField->getId()) ? $profileField->getPosition() : $countOfProfileFields ?>" />
 
     <!-- select profilefield -->
-    <div class="form-group">
-        <label for="profileFieldType" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="profileFieldType" class="col-xl-2 col-form-label">
             <?=$this->getTrans('profileFieldType') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
-                <select class="form-control" id="profileFieldType" name="profileField[type]">
+                <select class="form-select" id="profileFieldType" name="profileField[type]">
                     <?php foreach ($type as $key => $value): ?>
                         <option value="<?=$key ?>"
                             <?=($profileField->getId() && $profileField->getType() == $key) ? ' selected' : '' ?>
@@ -61,7 +61,7 @@ $iconArray = [
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <span class="input-group-addon typeinfo">
+                <span class="input-group-text typeinfo">
                     <span class="<?=($profileField->getType()!==null) ? $iconArray[$profileField->getType()] : $iconArray[0] ?>"></span>
                 </span>
             </div>
@@ -69,27 +69,27 @@ $iconArray = [
     </div>
 
     <!-- field description -->
-    <div class="form-group">
-        <label for="profileFieldDescription" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="profileFieldDescription" class="col-lg-2 col-form-label">
             <?=$this->getTrans('profileFieldDescription') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <textarea class="form-control typedesc" id="profileFieldDescription" rows="2" readonly><?=($profileField->getType()!==null) ? $this->getTrans('profileFieldTypeDesc'.$profileField->getType()) : $this->getTrans('profileFieldTypeDesc0') ?></textarea>
         </div>
     </div>
-    
+
     <!-- icon selection -->
-    <div class="form-group <?=($profileField->getType() == 2) ? '' : 'hidden' ?>" id="profileFieldIcons">
+    <div class="row mb-3" id="profileFieldIcons" <?=($profileField->getType() == 2) ? '' : 'hidden' ?>>
         <?php $icon = '';
         if ($profileField->getType() == 2) {
             $icon = ($profileField->getIcon() !== '') ? $profileField->getIcon() : $this->get('post')['symbol'];
         }
         ?>
-        <label for="profileFieldIcon" class="col-lg-2 control-label">
+        <label for="profileFieldIcon" class="col-xl-2 col-form-label">
             <?=$this->getTrans('profileFieldIcon') ?>:
         </label>
-        <div class="col-lg-4 input-group ilch-date">
-            <span class="input-group-addon">
+        <div class="col-xl-4 input-group ilch-date">
+            <span class="input-group-text">
                 <span id="chosensymbol" class="<?=$icon ?>"></span>
             </span>
             <input type="text"
@@ -98,37 +98,37 @@ $iconArray = [
                    name="profileField[icon]"
                    value="<?=$icon ?>"
                    readonly />
-            <span class="input-group-addon">
-                <span class="fa-solid fa-arrow-pointer" data-toggle="modal" data-target="#symbolDialog"></span>
+            <span class="input-group-text">
+                <span class="fa-solid fa-arrow-pointer" data-bs-toggle="modal" data-bs-target="#symbolDialog"></span>
             </span>
         </div>
     </div>
 
     <!-- db key -->
-    <div class="form-group">
-        <label for="profileFieldKey" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="profileFieldKey" class="col-xl-2 col-form-label">
             <?=$this->getTrans('profileFieldKey') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
                 <input type="text"
                        class="form-control required"
                        id="profileFieldKey"
                        name="profileField[key]"
                        value="<?=$this->escape($profileField->getKey()) ?>" />
-                <span class="input-group-addon" data-toggle="event-popover" title="" data-content="<?=$this->getTrans('profileFieldKeyDesc') ?>" data-original-title="Info">
-                    <span class="fa-solid fa-info"></span>
+                <span class="input-group-text">
+                    <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-placement="right" data-bs-title="<?=$this->getTrans('profileFieldKeyDesc') ?>"></span>
                 </span>
             </div>
         </div>
     </div>
-    
+
     <!-- icon addition -->
-    <div class="form-group <?=($profileField->getType() == 2) ? '' : 'hidden' ?>" id="profileFieldAddition">
-        <label for="profileFieldLinkAddition" class="col-lg-2 control-label">
+    <div class="row mb-3" id="profileFieldAddition" <?=($profileField->getType() == 2) ? '' : 'hidden' ?>>
+        <label for="profileFieldLinkAddition" class="col-xl-2 col-form-label">
             <?=$this->getTrans('profileFieldLinkAddition') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="profileFieldLinkAddition"
@@ -141,26 +141,24 @@ $iconArray = [
     <div id="translations">
         <?php $i = 0; ?>
         <?php foreach ($profileFieldsTranslation as $profileFieldTranslation): ?>
-        <div class="form-group" id="profileFieldTrans<?=$i ?>">
+        <div class="row mb-3" id="profileFieldTrans<?=$i ?>">
             <input type="hidden" name="profileFieldTrans<?=$i ?>[field_id]" value="<?=$profileField->getId() ?>" />
             <input type="hidden" name="profileFieldTrans<?=$i ?>[locale]" value="<?=$profileFieldTranslation->getLocale() ?>" />
-            <label for="profileFieldName<?=$i ?>" class="col-lg-2 control-label">
+            <label for="profileFieldName<?=$i ?>" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('profileFieldName') ?>
             </label>
-            <div class="col-lg-4">
+            <div class="col-xl-4">
                 <div class="input-group">
-                    <select class="form-control input-group-addon" name="profileFieldTrans<?=$i ?>[locale]" id="profileFieldName<?=$i ?>" onchange="isDuplicate()">
+                    <select class="form-select" name="profileFieldTrans<?=$i ?>[locale]" id="profileFieldName<?=$i ?>" onchange="isDuplicate()">
                         <option selected="selected" disabled><?=$this->getTrans('pleaseSelect') ?></option>
                         <?php foreach ($localeList as $key => $locale) :?>
-                            <option value="<?=$key ?>" 
+                            <option value="<?=$key ?>"
                             <?=(($locale == $localeList[$profileFieldTranslation->getLocale()]) ? ' selected' : ''); ?>
                             ><?=$locale ?></option>
                         <?php next($localeList);
                         endforeach; ?>
                     </select>
-                    <span class="input-group-btn">
-                        <button type="button" class="btn" onclick="deleteTranslation(<?=$i ?>)">-</button>
-                    </span>
+                    <button type="button" class="btn btn-outline-secondary" onclick="deleteTranslation(<?=$i ?>)"><i class="fa-solid fa-minus"></i></button>
                     <input type="text"
                            class="form-control"
                            id="profileFieldName<?=$i ?>"
@@ -174,53 +172,47 @@ $iconArray = [
         </div>
         <?php endforeach; ?>
         <div id="addTranslations"></div>
-        <div class="form-group">
-            <label for="profileFieldTranslation" class="col-lg-2 control-label">
+        <div class="row mb-3">
+            <label for="profileFieldTranslation" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('addProfileFieldTranslation') ?>
             </label>
-            <div class="col-lg-4">
-                <button type="button" class="btn" onclick="addTranslations()">+</button>
+            <div class="col-xl-4">
+                <button type="button" class="btn btn-outline-secondary" onclick="addTranslations()"><i class="fa-solid fa-plus"></i></button>
             </div>
         </div>
     </div>
 
     <!-- multi options -->
     <?php $multiArr = [3, 4, 5]; ?>
-    <div class="profileFieldsMulti <?=(in_array($profileField->getType(), $multiArr)) ? '' : 'hidden' ?>">
+    <div class="profileFieldsMulti" <?=(in_array($profileField->getType(), $multiArr)) ? '' : 'hidden' ?>>
         <?php if ($profileField->getOptions()) : ?>
             <?php $options = json_decode($profileField->getOptions(), true); ?>
-            <div class="form-group">
-                <label for="profileFieldOptions" class="col-lg-2 control-label">
+            <div class="mb-3">
+                <label for="profileFieldOptions" class="col-lg-2 col-form-label">
                     <?=$this->getTrans('profileFieldOptions')  ?>
                 </label>
-                <div class="col-lg-4">
+                <div class="col-xl-4">
                     <?php foreach ($options as $key => $value): ?>
-                        <div class="form-group input-group">
+                        <div class="mb-3 input-group">
                             <input type="text" name="profileFieldOptions[<?=$key ?>]" class="form-control required" value="<?=$this->escape($value) ?>" />
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-danger btn-remove">-</button>
-                            </span>
+                            <button type="button" class="btn btn-danger btn-remove"><i class="fa-solid fa-minus"></i></button>
                         </div>
                     <?php endforeach; ?>
-                    <div class="form-group input-group">
+                    <div class="mb-3 input-group">
                         <input type="text" name="profileFieldOptions[]" class="form-control">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-success btn-add">+</button>
-                        </span>
+                        <button type="button" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></button>
                     </div>
-                </div>    
+                </div>
             </div>
         <?php else : ?>
-        <div class="form-group">
-            <label for="profileFieldOptions" class="col-lg-2 control-label">
+        <div class="row mb-3">
+            <label for="profileFieldOptions" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('profileFieldOptions') ?>
             </label>
-            <div class="col-lg-4">
-                <div class="form-group input-group">
+            <div class="col-xl-4">
+                <div class="mb-3 input-group">
                     <input type="text" name="profileFieldOptions[]" id="profileFieldOptions" class="form-control">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-success btn-add">+</button>
-                    </span>
+                    <button type="button" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></button>
                 </div>
             </div>
         </div>
@@ -236,15 +228,13 @@ $iconArray = [
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="symbolDialogTitle"><?=$this->getTrans('chooseIcon') ?></h5>
-                <button type="button" class="btn" id="noIcon" data-dismiss="modal"><?=$this->getTrans('noIcon') ?></button>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="col-6"><button type="button" class="btn btn-outline-secondary" id="noIcon" data-bs-dismiss="modal"><?=$this->getTrans('noIcon') ?></button></div>
             </div>
             <div class="modal-body">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal"><?=$this->getTrans('close') ?></button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><?=$this->getTrans('close') ?></button>
             </div>
         </div>
     </div>
@@ -260,16 +250,16 @@ $('[name="profileField[type]"]').click(function () {
     const keysArr = ['3', '4', '5'];
     const thisKey = $(this).val();
     if (thisKey == "2") {
-        $('#profileFieldIcons, #profileFieldAddition').removeClass('hidden');
+        $('#profileFieldIcons, #profileFieldAddition').removeAttr('hidden');
     } else {
-        $('#profileFieldIcons, #profileFieldAddition').addClass('hidden');
+        $('#profileFieldIcons, #profileFieldAddition').attr('hidden', '');
     }
     if (jQuery.inArray(thisKey, keysArr) !== -1) {
-        $('.profileFieldsSingle').addClass('hidden');
-        $('.profileFieldsMulti').removeClass('hidden');
+        $('.profileFieldsSingle').attr('hidden', '');
+        $('.profileFieldsMulti').removeAttr('hidden');
     } else {
-        $('.profileFieldsSingle').removeClass('hidden');
-        $('.profileFieldsMulti').addClass('hidden');
+        $('.profileFieldsSingle').removeAttr('hidden');
+        $('.profileFieldsMulti').attr('hidden', '');
     }
 });
 
@@ -318,14 +308,14 @@ function addTranslations() {
         return;
     }
 
-    const html = '<div class="form-group" id="profileFieldTrans' + index + '">' +
+    const html = '<div class="row mb-3" id="profileFieldTrans' + index + '">' +
         '<input type="hidden"' +
         'name="profileFieldTrans' + index + '[field_id]"' +
         'value="<?=$profileField->getId() ?>" />' +
-        '<label for="" class="col-lg-2 control-label"><?=$this->getTrans('profileFieldName') ?></label>' +
+        '<label for="" class="col-lg-2 col-form-label"><?=$this->getTrans('profileFieldName') ?></label>' +
         '<div class="col-lg-4">' +
         '<div class="input-group">' +
-        '<select class="form-control input-group-addon" name="profileFieldTrans' + index + '[locale]" onchange="isDuplicate()" required>' +
+        '<select class="form-select" name="profileFieldTrans' + index + '[locale]" onchange="isDuplicate()" required>' +
         '<option selected="true" disabled><?=$this->getTrans('pleaseSelect') ?></option>' +
         <?php
         foreach ($localeList as $key => $locale) :?>
@@ -333,9 +323,7 @@ function addTranslations() {
         <?php next($localeList);
         endforeach; ?>
         '</select>' +
-        '<span class="input-group-btn">' +
-        '<button type="button" class="btn" onclick="deleteTranslation(' + index + ')">-</button>' +
-        '</span>' +
+        '<button type="button" class="btn btn-outline-secondary" onclick="deleteTranslation(' + index + ')"><i class="fa-solid fa-minus"></i></button>' +
         '<input type="text"' +
         'class="form-control"' +
         'id="profileFieldName' + index + '"' +
@@ -404,23 +392,23 @@ $("#symbolDialog").on('shown.bs.modal', function (e) {
 (function ($) {
     $(function () {
         const countFormGroup = function ($form) {
-            return $form.find('.form-group').length;
+            return $form.find('.mb-3').length;
         };
         const addFormGroup = function (event) {
             event.preventDefault();
 
-            const $formGroup = $(this).closest('.form-group');
+            const $formGroup = $(this).closest('.mb-3');
             const $multipleFormGroup = $formGroup.closest('.multiple-form-group');
             const $formGroupClone = $formGroup.clone();
 
             $(this)
                 .toggleClass('btn-success btn-add btn-danger btn-remove')
-                .html('–');
+                .html('<i class="fa-solid fa-minus"></i>');
 
             $formGroupClone.find('input').val('');
             $formGroupClone.insertAfter($formGroup);
 
-            const $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+            const $lastFormGroupLast = $multipleFormGroup.find('.mb-3:last');
             if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
                 $lastFormGroupLast.find('.btn-add').attr('disabled', true);
             }
@@ -429,10 +417,10 @@ $("#symbolDialog").on('shown.bs.modal', function (e) {
         const removeFormGroup = function (event) {
             event.preventDefault();
 
-            const $formGroup = $(this).closest('.form-group');
+            const $formGroup = $(this).closest('.mb-3');
             const $multipleFormGroup = $formGroup.closest('.multiple-form-group');
 
-            const $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+            const $lastFormGroupLast = $multipleFormGroup.find('.mb-3:last');
             if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
                 $lastFormGroupLast.find('.btn-add').attr('disabled', false);
             }
@@ -443,15 +431,5 @@ $("#symbolDialog").on('shown.bs.modal', function (e) {
         $(document).on('click', '.btn-add', addFormGroup);
         $(document).on('click', '.btn-remove', removeFormGroup);
     });
-    
-    $(function () {
-        $('[data-toggle="event-popover"]').popover({
-            container: 'body',
-            trigger: 'hover',
-            placement: 'top',
-        });
-    });
-
 })(jQuery);
-
 </script>

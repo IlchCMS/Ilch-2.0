@@ -8,13 +8,13 @@ $privacy = $this->get('privacy');
 <h1>
     <?=($privacy->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
 </h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('show') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('show') ? ' has-error' : '' ?>">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('show') ?>
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="show-on" name="show" value="1" <?=($this->originalInput('show', $privacy->getShow())) ? 'checked="checked"' : '' ?> />
                 <label for="show-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
@@ -24,11 +24,11 @@ $privacy = $this->get('privacy');
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-        <label for="title" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+        <label for="title" class="col-xl-2 col-form-label">
             <?=$this->getTrans('title') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="title"
@@ -36,11 +36,11 @@ $privacy = $this->get('privacy');
                    value="<?=$this->escape($this->originalInput('title', $privacy->getTitle())) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-        <label for="ck_1" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
+        <label for="ck_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('text') ?>
         </label>
-        <div class="col-lg-10">
+        <div class="col-xl-10">
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="text"
@@ -48,11 +48,11 @@ $privacy = $this->get('privacy');
                       rows="5"><?=$this->originalInput('text', $privacy->getText()) ?></textarea>
         </div>
     </div>
-    <div class="form-group">
-        <label for="urltitle" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="urltitle" class="col-xl-2 col-form-label">
             <?=$this->getTrans('urlTitle') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="urltitle"
@@ -60,11 +60,11 @@ $privacy = $this->get('privacy');
                    value="<?=$this->escape($this->originalInput('urltitle', $privacy->getUrlTitle())) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('url') ? 'has-error' : '' ?>">
-        <label for="url" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('url') ? ' has-error' : '' ?>">
+        <label for="url" class="col-xl-2 col-form-label">
             <?=$this->getTrans('url') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="url"
@@ -75,3 +75,4 @@ $privacy = $this->get('privacy');
     </div>
     <?=($privacy) ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
 </form>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>

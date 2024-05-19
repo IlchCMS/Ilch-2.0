@@ -6,7 +6,7 @@ $recipientToDisplayLimit = 6;
 
 <h1><?=$this->getTrans('manage') ?></h1>
 <?php if (!empty($this->get('awards'))): ?>
-    <form class="form-horizontal" method="POST" action="">
+    <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -14,9 +14,9 @@ $recipientToDisplayLimit = 6;
                     <col class="icon_width">
                     <col class="icon_width">
                     <col class="icon_width">
-                    <col class="col-lg-1">
-                    <col class="col-lg-1">
-                    <col class="col-lg-3">
+                    <col class="col-xl-1">
+                    <col class="col-xl-1">
+                    <col class="col-xl-3">
                     <col>
                 </colgroup>
                 <thead>

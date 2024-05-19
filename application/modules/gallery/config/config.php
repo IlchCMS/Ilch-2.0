@@ -14,7 +14,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'gallery',
-        'version' => '1.22.2',
+        'version' => '1.23.0',
         'icon_small' => 'fa-regular fa-image',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -39,7 +39,7 @@ class Config extends Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.49',
+        'ilchCore' => '2.2.0',
         'phpVersion' => '7.3'
     ];
 
@@ -199,6 +199,8 @@ class Config extends Install
             case "1.21.0":
             case "1.21.1":
             case "1.22.0":
+            case "1.22.1":
+            case "1.22.2":
         }
     }
 }

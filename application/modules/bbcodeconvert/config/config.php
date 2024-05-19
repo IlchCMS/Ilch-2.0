@@ -13,7 +13,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'bbcodeconvert',
-        'version' => '1.0.8',
+        'version' => '1.1.0',
         'icon_small' => 'fa-solid fa-arrow-right-arrow-left',
         'author' => 'ilch.de',
         'link' => 'https://www.ilch.de',
@@ -28,7 +28,7 @@ class Config extends Install
                 'description' => 'Module to convert BBCode to HTML.',
             ],
         ],
-        'ilchCore' => '2.1.52',
+        'ilchCore' => '2.2.0',
         'phpVersion' => '7.3'
     ];
 

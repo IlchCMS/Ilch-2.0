@@ -56,13 +56,13 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
 <h1><?=$this->getTrans('updatesAvailable') ?></h1>
 <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'updates']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <?=(!empty($cacheFileDate)) ? '<span class="small">'.$this->getTrans('lastUpdateOn').' '.$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true).'</span>' : $this->getTrans('lastUpdateOn').': '.$this->getTrans('lastUpdateUnknown') ?></p>
 <div class="checkbox">
-  <label><input type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey') ? 'checked' : '' ?>/><?=$this->getTrans('gotokey') ?></label>
+  <label><input class="me-2" type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey') ? 'checked' : '' ?>/><?=$this->getTrans('gotokey') ?></label>
 </div>
 <div id="modules" class="table-responsive">
     <table class="table withEmptyCells table-hover table-striped">
         <colgroup>
-            <col class="col-lg-2" />
-            <col class="col-lg-1" />
+            <col class="col-xl-2" />
+            <col class="col-xl-1" />
             <col />
         </colgroup>
         <thead>
@@ -90,10 +90,11 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                 }
 
                 if (!$module->getSystemModule() && $this->getUser()->hasAccess('module_'.$module->getKey())):
-                    if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<'))): ?>
+                    // Skip if there are no updates available either locally or on the updateserver
+                    if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (empty($moduleUpdate['local']) && (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<')))) : ?>
                     <tr id="Module_<?=$module->getKey() ?>"></tr>
                     <?php continue; ?>
-                    <?php else: 
+                    <?php else:
                     $found = true;
                     ?>
                     <tr id="Module_<?=$module->getKey() ?>">
@@ -111,18 +112,18 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                                 <?php endif; ?>
                             </small>
                             <br /><br />
-                            <a href="<?=$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-default" title="<?=$this->getTrans('administrate') ?>">
+                            <a href="<?=$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-outline-secondary" title="<?=$this->getTrans('administrate') ?>">
                                 <i class="fa-solid fa-pencil text-success"></i>
                             </a>
                             <?php if ($moduleOnUpdateServer && $module->getKey() === $moduleOnUpdateServer->key): ?>
                                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $moduleOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
-                                    <span class="btn btn-default">
+                                    <span class="btn btn-outline-secondary">
                                         <i class="fa-solid fa-info text-info"></i>
                                     </span></a>
                             <?php else: ?>
-                                <span class="btn btn-default"
-                                      data-toggle="modal"
-                                      data-target="#infoModal<?=$module->getKey() ?>"
+                                <span class="btn btn-outline-secondary"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#infoModal<?=$module->getKey() ?>"
                                       title="<?=$this->getTrans('info') ?>">
                                     <i class="fa-solid fa-info text-info"></i>
                                 </span>
@@ -153,10 +154,15 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                                             title="<?=$this->getTrans('ilchCoreError') ?>">
                                         <i class="<?=$icon ?>"></i>
                                     </button>
+                                <?php elseif (version_compare('2.2.0', $moduleUpdateInformation->ilchCore, '>')): ?>
+                                    <button class="btn disabled"
+                                            title="<?=$this->getTrans('moduleTooOld') ?>">
+                                        <i class="<?=$icon ?>"></i>
+                                    </button>
                                 <?php elseif (!empty(checkOthersDependencies([$moduleUpdateInformation->key => $moduleUpdateInformation->version], $dependencies))): ?>
                                     <button class="btn disabled"
-                                            data-toggle="modal"
-                                            data-target="#dependencyInfoModal<?=$moduleUpdateInformation->key ?>"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#dependencyInfoModal<?=$moduleUpdateInformation->key ?>"
                                             title="<?=$this->getTrans('dependencyError') ?>">
                                         <i class="<?=$icon ?>"></i>
                                     </button>
@@ -170,7 +176,7 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                                         <?=$this->getTokenField() ?>
                                         <input type="hidden" name="gotokey" value="<?=$this->get('gotokey') ? '1' : '0' ?>" />
                                         <button type="submit"
-                                                class="btn btn-default showOverlay"
+                                                class="btn btn-outline-secondary showOverlay"
                                                 title="<?=$this->getTrans('localModuleUpdate') ?>">
                                             <i class="<?=$icon ?>"></i>
                                         </button>
@@ -180,7 +186,7 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                                         <?=$this->getTokenField() ?>
                                         <input type="hidden" name="gotokey" value="<?=$this->get('gotokey') ? '1' : '0' ?>" />
                                         <button type="submit"
-                                                class="btn btn-default showOverlay"
+                                                class="btn btn-outline-secondary showOverlay"
                                                 title="<?=$this->getTrans('moduleUpdate') ?>">
                                             <i class="<?=$icon ?>"></i>
                                         </button>
@@ -189,13 +195,13 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                             <?php } ?>
                             <?php if (!empty(checkOthersDependencies([$module->getKey() => $module->getVersion()], $dependencies))): ?>
                                 <button class="btn disabled"
-                                        data-toggle="modal"
-                                        data-target="#dependencyInfoModal<?=$module->getKey() ?>"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#dependencyInfoModal<?=$module->getKey() ?>"
                                         title="<?=$this->getTrans('dependencyError') ?>">
                                     <i class="fa-regular fa-trash-can text-warning"></i>
                                 </button>
                             <?php else: ?>
-                                <a href="<?=$this->getUrl(['action' => 'uninstall', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('uninstall') ?>">
+                                <a href="<?=$this->getUrl(['action' => 'uninstall', 'key' => $module->getKey()], null, true) ?>" class="btn btn-outline-secondary" title="<?=$this->getTrans('uninstall') ?>">
                                     <i class="fa-regular fa-trash-can text-warning"></i>
                                 </a>
                             <?php endif; ?>
@@ -245,8 +251,18 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
         </tbody>
     </table>
 </div>
-<script src="<?=$this->getModuleUrl('static/js/jquery-loading-overlay/loadingoverlay.min.js') ?>"></script>
+
+<div class="loadingoverlay" hidden>
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border" style="width: 6rem; height: 6rem;" role="status">
+        <span class="visually-hidden"><?=$this->getTrans('processingPleaseWait') ?></span>
+      </div>
+    </div>
+</div>
+
 <script>
+let delayedShow;
+
 function gotokeyAll() {
    $("[name='gotokey']").each(function() {
         if ($("[name='setgotokey']").prop('checked')) {
@@ -258,10 +274,18 @@ function gotokeyAll() {
 }
 $(document).ready(function() {
     $(".showOverlay").on('click', function(event){
-        $.LoadingOverlay("show");
+        $loadingOverlay = $(".loadingoverlay");
+
+        delayedShow = setTimeout(function(){
+            $loadingOverlay.removeAttr('hidden');
+        }, 200);
+
         setTimeout(function(){
-            $.LoadingOverlay("hide");
+            $loadingOverlay.attr('hidden', '');
         }, 30000);
     });
+
+    clearTimeout(delayedShow);
+    $(".loadingoverlay").attr('hidden', '');
 });
 </script>

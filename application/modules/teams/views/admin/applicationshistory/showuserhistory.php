@@ -17,11 +17,11 @@ $pagination = $this->get('pagination');
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
-                <col class="col-lg-3" />
-                <col class="col-lg-2" />
-                <col class="col-lg-2" />
-                <col class="col-lg-2" />
-                <col class="col-lg-2" />
+                <col class="col-xl-3" />
+                <col class="col-xl-2" />
+                <col class="col-xl-2" />
+                <col class="col-xl-2" />
+                <col class="col-xl-2" />
             </colgroup>
             <thead>
                 <tr>
@@ -59,4 +59,3 @@ $pagination = $this->get('pagination');
 <?php else : ?>
     <?=$this->getTrans('noApplications') ?>
 <?php endif; ?>
-

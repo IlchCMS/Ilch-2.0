@@ -7,13 +7,13 @@ $vote = $this->get('vote');
 ?>
 
 <h1><?=($vote->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
-<form role="form" class="form-horizontal" method="POST">
+<form role="form" method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('groups') ? 'has-error' : '' ?>">
-        <label for="group" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
+        <label for="group" class="col-xl-2 col-form-label">
             <?=$this->getTrans('participationGroup') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="chosen-select form-control"
                     id="group" name="groups[]"
                     data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
@@ -29,11 +29,11 @@ $vote = $this->get('vote');
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('access') ? 'has-error' : '' ?>">
-        <label for="access" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('access') ? ' has-error' : '' ?>">
+        <label for="access" class="col-xl-2 col-form-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="chosen-select form-control"
                     id="access" name="access[]"
                     data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
@@ -49,11 +49,11 @@ $vote = $this->get('vote');
             </select>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('question') ? 'has-error' : '' ?>">
-        <label for="question" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('question') ? ' has-error' : '' ?>">
+        <label for="question" class="col-xl-2 col-form-label">
             <?=$this->getTrans('question') ?>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input class="form-control"
                    type="text"
                    id="question"
@@ -61,11 +61,11 @@ $vote = $this->get('vote');
                    value="<?=$this->escape($this->originalInput('question', $vote->getQuestion())) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('multiplereply') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('multiplereply') ? ' has-error' : '' ?>">
+        <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('multiplereply') ?>
         </div>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="multiplereply-on" name="multiplereply" value="1" <?=($this->originalInput('multiplereply', $vote->getMultipleReply())) ? 'checked="checked"' : '' ?> />
                 <label for="multiplereply-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -75,8 +75,8 @@ $vote = $this->get('vote');
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('reply') ? 'has-error' : '' ?>">
-        <label for="reply" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('reply') ? ' has-error' : '' ?>">
+        <label for="reply" class="col-xl-2 col-form-label">
             <?=$this->getTrans('reply') ?>
         </label>
         <?php if ($vote->getId()) : ?>
@@ -84,28 +84,24 @@ $vote = $this->get('vote');
             <?php $voteRes = $resultMapper->getVoteRes($vote->getId()); ?>
             <?php $countRes = count($voteRes); ?>
             <?php $i = 0; ?>
-            <div class="col-lg-4">
+            <div class="col-xl-4">
                 <?php foreach ($voteRes as $voteResModel) : ?>
                     <?php $i++; ?>
-                    <div class="form-group input-group">
+                    <div class="mb-3 input-group">
                         <input type="text" name="reply[]" class="form-control" value="<?=$this->escape($voteResModel->getReply()) ?>">
-                        <span class="input-group-btn">
-                            <?php if ($i == $countRes) : ?>
-                                <button type="button" class="btn btn-success btn-add">+</button>
-                            <?php else : ?>
-                                <button type="button" class="btn btn-danger btn-remove">-</button>
-                            <?php endif; ?>
-                        </span>
+                        <?php if ($i == $countRes) : ?>
+                            <button type="button" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></button>
+                        <?php else : ?>
+                            <button type="button" class="btn btn-danger btn-remove"><i class="fa-solid fa-minus"></i></button>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             </div>
         <?php else : ?>
-            <div class="col-lg-4">
-                <div class="form-group input-group">
+            <div class="col-xl-4">
+                <div class="input-group">
                     <input type="text" name="reply[]" class="form-control">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-success btn-add">+</button>
-                    </span>
+                    <button type="button" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></button>
                 </div>
             </div>
         <?php endif; ?>
@@ -123,18 +119,18 @@ $('#group').chosen();
         let addFormGroup = function (event) {
             event.preventDefault();
 
-            let $formGroup = $(this).closest('.form-group');
+            let $formGroup = $(this).closest('.row');
             let $multipleFormGroup = $formGroup.closest('.multiple-form-group');
             let $formGroupClone = $formGroup.clone();
 
             $(this)
                 .toggleClass('btn-success btn-add btn-danger btn-remove')
-                .html('–');
+                .html('<i class="fa-solid fa-minus"></i>');
 
             $formGroupClone.find('input').val('');
             $formGroupClone.insertAfter($formGroup);
 
-            let $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+            let $lastFormGroupLast = $multipleFormGroup.find('.row:last');
             if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
                 $lastFormGroupLast.find('.btn-add').attr('disabled', true);
             }
@@ -143,10 +139,10 @@ $('#group').chosen();
         let removeFormGroup = function (event) {
             event.preventDefault();
 
-            let $formGroup = $(this).closest('.form-group');
+            let $formGroup = $(this).closest('.row');
             let $multipleFormGroup = $formGroup.closest('.multiple-form-group');
 
-            let $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+            let $lastFormGroupLast = $multipleFormGroup.find('.row:last');
             if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
                 $lastFormGroupLast.find('.btn-add').attr('disabled', false);
             }
@@ -155,7 +151,7 @@ $('#group').chosen();
         };
 
         let countFormGroup = function ($form) {
-            return $form.find('.form-group').length;
+            return $form.find('.row').length;
         };
 
         $(document).on('click', '.btn-add', addFormGroup);

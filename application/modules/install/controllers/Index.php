@@ -201,7 +201,7 @@ class Index extends \Ilch\Controller\Frontend
         $dbVersion = mysqli_get_server_info($dbLinkIdentifier);
         if (strpos($dbVersion, 'MariaDB') !== false) {
             $requiredVersion = $this::MARIADBVERSION;
-            $this->getView()->set('dbServerInfo', ' MariaDB');
+            $this->getView()->set('dbServerInfo', 'MariaDB');
         } else {
             $requiredVersion = $this::MYSQLVERSION;
             $this->getView()->set('dbServerInfo', 'MySQL');

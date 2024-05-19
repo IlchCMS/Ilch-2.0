@@ -6,13 +6,13 @@
 $cat = $this->get('category');
 ?>
 <h1><?=($cat->getId()) ? $this->getTrans('menuActionEditCategory') : $this->getTrans('menuActionNewCategory') ?></h1>
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-        <label for="name" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
+        <label for="name" class="col-xl-2 col-form-label">
             <?=$this->getTrans('name') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="name"
@@ -21,11 +21,11 @@ $cat = $this->get('category');
                    value="<?=$this->escape($this->originalInput('name', $cat->getName())) ?>" />
         </div>
     </div>
-    <div class="form-group">
-        <label for="desc" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="desc" class="col-xl-2 col-form-label">
             <?=$this->getTrans('description') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <textarea class="form-control"
                       id="desc"
                       name="desc"

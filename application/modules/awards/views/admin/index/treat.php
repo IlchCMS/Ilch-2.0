@@ -9,32 +9,32 @@ if ($awards != '') {
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/awards.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
 <h1><?=($awards != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
+<form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
-        <label for="date" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('date') ? ' has-error' : '' ?>">
+        <label for="date" class="col-xl-2 col-form-label">
             <?=$this->getTrans('date') ?>:
         </label>
-        <div class="col-lg-2 input-group ilch-date date form_datetime">
+        <div id="date" class="col-xl-2 input-group ilch-date date form_datetime">
             <input type="text"
                    class="form-control"
                    name="date"
                    id="date"
                    value="<?=($this->get('awards') != '') ? $this->escape($date) : $this->escape($this->originalInput('date')) ?>"
                    readonly>
-            <span class="input-group-addon">
+            <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('rank') ? 'has-error' : '' ?>">
-        <label for="rank" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('rank') ? ' has-error' : '' ?>">
+        <label for="rank" class="col-xl-2 col-form-label">
             <?=$this->getTrans('rank') ?>:
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="number"
                    class="form-control"
                    id="rank"
@@ -44,11 +44,11 @@ if ($awards != '') {
                    value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getRank()) : $this->escape($this->originalInput('rank')) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
-        <label for="selectedImage" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('image') ? ' has-error' : '' ?>">
+        <label for="selectedImage" class="col-xl-2 col-form-label">
             <?=$this->getTrans('image') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
                 <input type="text"
                        class="form-control"
@@ -56,21 +56,21 @@ if ($awards != '') {
                        name="image"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
                        value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getImage()) : $this->escape($this->originalInput('image')) ?>" />
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span id="clearImage" class="fa-solid fa-xmark"></span>
                 </span>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a>
                 </span>
             </div>
         </div>
     </div>
-    <div class="form-group <?=($this->validation()->hasError('typ') || $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
-        <label for="user" class="col-lg-2 control-label">
+    <div class="row mb-3<?=($this->validation()->hasError('typ') || $this->validation()->hasError('utId')) ? ' has-error' : '' ?>">
+        <label for="user" class="col-xl-2 col-form-label">
             <?=$this->getTrans('userTeam') ?>:
         </label>
-        <div class="col-lg-2">
-            <select class="form-control" id="user" name="utId[]" multiple>
+        <div class="col-xl-2">
+            <select class="form-select" id="user" name="utId[]" multiple>
                 <optgroup label="<?=$this->getTrans('user') ?>">
                     <?php foreach ($this->get('users') as $user) {
                             $selected = '';
@@ -112,11 +112,11 @@ if ($awards != '') {
             </select>
         </div>
     </div>
-    <div class="form-group <?=($this->validation()->hasError('event')) ? 'has-error' : '' ?>">
-        <label for="event" class="col-lg-2 control-label">
+    <div class="row mb-3<?=($this->validation()->hasError('event')) ? ' has-error' : '' ?>">
+        <label for="event" class="col-xl-2 col-form-label">
             <?=$this->getTrans('event') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    id="event"
@@ -124,11 +124,11 @@ if ($awards != '') {
                    value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getEvent()) : $this->escape($this->originalInput('event')) ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('page') ? 'has-error' : '' ?>">
-        <label for="page" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('page') ? ' has-error' : '' ?>">
+        <label for="page" class="col-xl-2 col-form-label">
             <?=$this->getTrans('page') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <input type="text"
                    class="form-control"
                    name="page"
@@ -145,18 +145,34 @@ if ($awards != '') {
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
 $(document).ready(function() {
-    $(".form_datetime").datetimepicker({
-        format: "dd.mm.yyyy",
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minView: 2,
-        todayHighlight: true
+    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
+        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
+        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
+    }
+
+    new tempusDominus.TempusDominus(document.getElementById('date'), {
+        display: {
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            },
+            components: {
+                clock: false
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy"
+        }
     });
 
     $("#clearImage").click(function(){

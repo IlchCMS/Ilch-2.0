@@ -3,28 +3,28 @@
 <h1><?=$this->getTrans('menuSettings') ?></h1>
 
 <ul class="nav nav-tabs">
-    <li>
-        <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'index']) ?>">
+    <li class="nav-item">
+        <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'index']) ?>" class="nav-link">
             <i class="fa-solid fa-store"></i> <?=$this->getTrans('menuSettingShop') ?>
         </a>
     </li>
-    <li>
-        <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'bank']) ?>">
+    <li class="nav-item">
+        <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'bank']) ?>" class="nav-link">
             <i class="fa-solid fa-university"></i> <?=$this->getTrans('menuSettingBank') ?>
         </a>
     </li>
-    <li>
-        <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'default']) ?>">
+    <li class="nav-item">
+        <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'default']) ?>" class="nav-link">
             <i class="fa-solid fa-tools"></i> <?=$this->getTrans('menuSettingDefault') ?>
         </a>
     </li>
-    <li>
-        <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'agb']) ?>">
+    <li class="nav-item">
+        <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'agb']) ?>" class="nav-link">
             <i class="fa-solid fa-gavel"></i> <?=$this->getTrans('menuSettingAGB') ?>
         </a>
     </li>
-    <li class="active">
-        <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'payment']) ?>">
+    <li class="nav-item">
+        <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'payment']) ?>" class="nav-link active">
             <i class="fa-solid fa-money-bill"></i> <b><?=$this->getTrans('menuSettingPayment') ?></b>
         </a>
     </li>
@@ -33,17 +33,17 @@
 
 <div class="alert alert-info"><?=$this->getTrans('infoPayPalBusiness') ?></div>
 
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
 
-    <div class="form-group">
-        <label for="clientID" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="clientID" class="col-xl-2 col-form-label">
             <?=$this->getTrans('clientID') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
-                <span class="input-group-addon">
-                    <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('clientIDInfo') ?>"></span>
+                <span class="input-group-text">
+                    <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="<?=$this->getTrans('clientIDInfo') ?>"></span>
                 </span>
                 <input type="text"
                        class="form-control"
@@ -56,14 +56,14 @@
     </div>
     <hr>
     <p><?=$this->getTrans('paypalMeDesc') ?></p>
-    <div class="form-group">
-        <label for="paypalMe" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="paypalMe" class="col-xl-2 col-form-label">
             <?=$this->getTrans('paypalMe') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="input-group">
-                <span class="input-group-addon">
-                    <span class="fa-solid fa-info" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('paypalMeInfo') ?>"></span>
+                <span class="input-group-text">
+                    <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="<?=$this->getTrans('paypalMeInfo') ?>"></span>
                 </span>
                 <input type="text"
                        class="form-control"
@@ -74,11 +74,11 @@
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('paypalMePresetAmount') ? 'has-error' : '' ?>">
-        <label for="paypalMePresetAmount" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('paypalMePresetAmount') ? ' has-error' : '' ?>">
+        <label for="paypalMePresetAmount" class="col-xl-2 col-form-label">
             <?=$this->getTrans('paypalMePresetAmount') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="paypalMePresetAmount-on" name="paypalMePresetAmount" value="1" <?=($this->get('settings') && $this->get('settings')->isPayPalMePresetAmount() == '1') ? 'checked="checked"' : '' ?> />
                 <label for="paypalMePresetAmount-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -90,13 +90,3 @@
     </div>
     <?=$this->getSaveBar('saveButton') ?>
 </form>
-
-<script>
-    $(function () {
-        $('[data-toggle="event-popover"]').popover({
-            container: 'body',
-            trigger: 'hover',
-            placement: 'top',
-        });
-    });
-</script>

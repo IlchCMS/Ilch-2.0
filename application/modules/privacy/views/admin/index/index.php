@@ -7,7 +7,7 @@ $privacies = $this->get('privacies');
 ?>
 <h1><?=$this->getTrans('manage') ?></h1>
 <?php if ($privacies) : ?>
-    <form class="form-horizontal" method="POST">
+    <form method="POST">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -51,14 +51,14 @@ $privacies = $this->get('privacies');
         <div class="content_savebox">
             <input type="hidden" class="content_savebox_hidden" name="action" value="" />
             <div class="btn-group dropup">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <?=$this->getTrans('selected') ?> <span class="caret"></span>
+                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                    <?=$this->getTrans('selected') ?>
                 </button>
                 <ul class="dropdown-menu listChooser" role="menu">
-                    <li><a href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
+                    <li><a class="dropdown-item" href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
                 </ul>
             </div>
-            <button type="submit" class="save_button btn btn-default" name="saveRules" value="save">
+            <button type="submit" class="save_button btn btn-outline-secondary" name="saveRules" value="save">
                 <?=$this->getTrans('saveButton') ?>
             </button>
         </div>

@@ -1,8 +1,8 @@
 <h1><?=$this->getTrans('settings') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=$this->validation()->hasError('articlesPerPage') ? 'has-error' : '' ?>">
-        <label for="articlesPerPageInput" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('articlesPerPage') ? ' has-error' : '' ?>">
+        <label for="articlesPerPageInput" class="col-lg-2 col-form-label">
             <?=$this->getTrans('articlesPerPage') ?>
         </label>
         <div class="col-lg-1">
@@ -14,8 +14,8 @@
                    value="<?=($this->get('articlesPerPage') != '') ? $this->escape($this->get('articlesPerPage')) : $this->originalInput('articlesPerPage') ?>" />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('articleRating') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('articleRating') ? ' has-error' : '' ?>">
+        <div class="col-lg-2 col-form-label">
             <?=$this->getTrans('articleRating') ?>
         </div>
         <div class="col-lg-4">
@@ -28,8 +28,8 @@
             </div>
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('disableComments') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('disableComments') ? ' has-error' : '' ?>">
+        <div class="col-lg-2 col-form-label">
             <?=$this->getTrans('disableComments') ?>
         </div>
         <div class="col-lg-4">
@@ -45,8 +45,8 @@
 
     <h2><?=$this->getTrans('boxSettings') ?></h2>
     <b><?=$this->getTrans('boxArticle') ?></b>
-    <div class="form-group <?=$this->validation()->hasError('boxArticleLimit') ? 'has-error' : '' ?>">
-        <label for="boxArticleLimit" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('boxArticleLimit') ? ' has-error' : '' ?>">
+        <label for="boxArticleLimit" class="col-lg-2 col-form-label">
             <?=$this->getTrans('boxArticleLimit') ?>
         </label>
         <div class="col-lg-1">
@@ -59,8 +59,8 @@
         </div>
     </div>
     <b><?=$this->getTrans('boxArchive') ?></b>
-    <div class="form-group <?=$this->validation()->hasError('boxArchiveLimit') ? 'has-error' : '' ?>">
-        <label for="boxArchiveLimit" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('boxArchiveLimit') ? ' has-error' : '' ?>">
+        <label for="boxArchiveLimit" class="col-lg-2 col-form-label">
             <?=$this->getTrans('boxArchiveLimit') ?>
         </label>
         <div class="col-lg-1">
@@ -73,8 +73,8 @@
         </div>
     </div>
     <b><?=$this->getTrans('boxKeywords') ?></b>
-    <div class="form-group <?=$this->validation()->hasError('boxKeywordsH2') ? 'has-error' : '' ?>">
-        <label for="boxKeywordsH2" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('boxKeywordsH2') ? ' has-error' : '' ?>">
+        <label for="boxKeywordsH2" class="col-lg-2 col-form-label">
             <?=$this->getTrans('boxKeywordsH2') ?>
         </label>
         <div class="col-lg-1">
@@ -87,8 +87,8 @@
                    required />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('boxKeywordsH3') ? 'has-error' : '' ?>">
-        <label for="boxKeywordsH3" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('boxKeywordsH3') ? ' has-error' : '' ?>">
+        <label for="boxKeywordsH3" class="col-lg-2 col-form-label">
             <?=$this->getTrans('boxKeywordsH3') ?>
         </label>
         <div class="col-lg-1">
@@ -101,8 +101,8 @@
                    required />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('boxKeywordsH4') ? 'has-error' : '' ?>">
-        <label for="boxKeywordsH4" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('boxKeywordsH4') ? ' has-error' : '' ?>">
+        <label for="boxKeywordsH4" class="col-lg-2 col-form-label">
             <?=$this->getTrans('boxKeywordsH4') ?>
         </label>
         <div class="col-lg-1">
@@ -115,8 +115,8 @@
                    required />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('boxKeywordsH5') ? 'has-error' : '' ?>">
-        <label for="boxKeywordsH5" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('boxKeywordsH5') ? ' has-error' : '' ?>">
+        <label for="boxKeywordsH5" class="col-lg-2 col-form-label">
             <?=$this->getTrans('boxKeywordsH5') ?>
         </label>
         <div class="col-lg-1">

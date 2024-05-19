@@ -7,7 +7,7 @@ $users = $userMapper->getUserList();
 $types = $this->get('types');
 ?>
 
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
 <link href="<?=$this->getVendorUrl('harvesthq/chosen/chosen.min.css') ?>" rel="stylesheet">
 
@@ -15,19 +15,19 @@ $types = $this->get('types');
 
 <h1><?=($this->get('event') != '' ? $this->getTrans('edit') : $this->getTrans('add')) ?></h1>
 <?php if ($this->getUser() && (in_array($this->getUser()->getId(), $groupAccesses) || $this->getUser()->hasAccess('module_events'))): ?>
-    <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="">
+    <form method="POST" enctype="multipart/form-data" action="">
         <?=$this->getTokenField() ?>
-        <div class="form-group">
-            <div class="col-lg-2 control-label"><?=$this->getTrans('image') ?></div>
-            <div class="col-lg-10">
+        <div class="row mb-3">
+            <div class="col-xl-2 col-form-label"><?=$this->getTrans('image') ?></div>
+            <div class="col-xl-10">
                 <?php if ($this->get('event') != '' && $this->escape($this->get('event')->getImage()) != ''): ?>
-                    <div class="col-lg-7 col-sm-7 col-7">
+                    <div class="col-xl-7 col-md-7 col-7">
                         <div class="row">
                             <img src="<?=$this->getBaseUrl().$this->escape($this->get('event')->getImage()) ?>" title="<?=$this->escape($this->get('event')->getTitle()) ?>" alt="<?=$this->escape($this->get('event')->getTitle()) ?>">
                         </div>
                     </div>
                 <?php endif; ?>
-                <div class="col-lg-7">
+                <div class="col-xl-7">
                     <div class="row">
                         <?php if ($this->get('event') != '' && $this->get('event')->getImage() != ''): ?>
                             <label style="margin-left: 10px; margin-top: 10px;">
@@ -42,11 +42,9 @@ $types = $this->get('types');
                         </p>
                     </div>
                 </div>
-                <div class="input-group col-lg-7">
-                    <span class="input-group-btn">
-                        <span class="btn btn-primary btn-file">
-                            <?=$this->getTrans('browse') ?>&hellip; <input type="file" name="image" accept="image/*">
-                        </span>
+                <div class="input-group col-xl-7">
+                    <span class="btn btn-outline-secondary btn-file">
+                        <?=$this->getTrans('browse') ?> <input type="file" name="image" accept="image/*">
                     </span>
                     <input type="text"
                            class="form-control"
@@ -54,12 +52,12 @@ $types = $this->get('types');
                 </div>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('creator') ? 'has-error' : '' ?>">
-            <label for="creator" class="col-lg-2 control-label">
+        <div class="row mb-3<?=$this->validation()->hasError('creator') ? ' has-error' : '' ?>">
+            <label for="creator" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('by') ?>
             </label>
-            <div class="col-lg-4">
-                <select class="form-control" name="creator" id="creator">
+            <div class="col-xl-4">
+                <select class="form-select" name="creator" id="creator">
                     <option selected="selected"><?=$this->getTrans('noSelection') ?></option>
                     <?php foreach ($users as $user): ?>
                         <option value="<?=$user->getId() ?>" <?php if (($this->get('event') != '' && $this->get('event')->getUserId() == $user->getId()) || $this->originalInput('creator') == $user->getId()) { echo 'selected="selected"'; } ?>><?=$user->getName() ?></option>
@@ -67,11 +65,11 @@ $types = $this->get('types');
                 </select>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('start') ? 'has-error' : '' ?>">
-            <label for="start" class="col-md-2 control-label">
+        <div class="row mb-3<?=$this->validation()->hasError('start') ? ' has-error' : '' ?>">
+            <label for="start" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('startTime') ?>
             </label>
-            <div class="col-lg-4 input-group ilch-date date form_datetime">
+            <div id="start" class="col-xl-4 input-group ilch-date date form_datetime">
                 <input type="text"
                        class="form-control"
                        id="start"
@@ -79,16 +77,16 @@ $types = $this->get('types');
                        size="16"
                        value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getStart())); } elseif ($this->originalInput('start') != '') { echo date('d.m.Y H:i', strtotime($this->originalInput('start'))); } ?>"
                        readonly>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-regular fa-calendar"></span>
                 </span>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('end') ? 'has-error' : '' ?>">
-            <label for="end" class="col-md-2 control-label">
+        <div class="row mb-3<?=$this->validation()->hasError('end') ? ' has-error' : '' ?>">
+            <label for="end" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('endTime') ?>
             </label>
-            <div class="col-lg-4 input-group ilch-date date form_datetime">
+            <div id="end" class="col-xl-4 input-group ilch-date date form_datetime">
                 <input type="text"
                        class="form-control"
                        id="end"
@@ -96,19 +94,19 @@ $types = $this->get('types');
                        size="16"
                        value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getEnd())); } elseif ($this->originalInput('end') != '') { echo date('d.m.Y H:i', strtotime($this->originalInput('end'))); } ?>"
                        readonly>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-solid fa-xmark"></span>
                 </span>
-                <span class="input-group-addon">
+                <span class="input-group-text">
                     <span class="fa-regular fa-calendar"></span>
                 </span>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
-            <label for="title" class="col-lg-2 control-label">
+        <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+            <label for="title" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('title') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input type="text"
                        class="form-control"
                        id="title"
@@ -116,11 +114,11 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getTitle()) : $this->escape($this->originalInput('title')) ?>" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
-            <label for="place" class="col-lg-2 control-label">
+        <div class="row mb-3<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
+            <label for="place" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('place') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input type="text"
                        class="form-control"
                        id="place"
@@ -128,12 +126,12 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPlace()) : $this->escape($this->originalInput('place')) ?>" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('type') ? 'has-error' : '' ?>">
-            <label for="place" class="col-lg-2 control-label">
+        <div class="row mb-3<?=$this->validation()->hasError('type') ? ' has-error' : '' ?>">
+            <label for="place" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('type') ?>
             </label>
-            <div class="col-lg-6">
-                <select class="form-control typeselection" name="typeselection" id="typeselection">
+            <div class="col-xl-6">
+                <select class="form-select typeselection mb-3" name="typeselection" id="typeselection">
                     <option value=""><?=$this->getTrans('otherOrNone') ?></option>
                     <?php foreach ($types as $type) : ?>
                         <?php if (empty($type)) {
@@ -150,11 +148,11 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getType()) : $this->escape($this->originalInput('type')) ?>" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('website') ? 'has-error' : '' ?>">
-            <label for="website" class="col-lg-2 control-label">
+        <div class="row mb-3<?=$this->validation()->hasError('website') ? ' has-error' : '' ?>">
+            <label for="website" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('website') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input type="text"
                        class="form-control"
                        id="website"
@@ -163,11 +161,11 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getWebsite()) : $this->escape($this->originalInput('website')) ?>" />
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
-            <label for="ck_1" class="col-lg-2 control-label">
+        <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
+            <label for="ck_1" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('text') ?>
             </label>
-            <div class="col-lg-10">
+            <div class="col-xl-10">
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="text"
@@ -175,18 +173,18 @@ $types = $this->get('types');
                           rows="5"><?=($this->get('event') != '') ? $this->escape($this->get('event')->getText()) : $this->escape($this->originalInput('text')) ?></textarea>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('price') ? 'has-error' : '' ?>">
-            <label for="price" class="col-lg-2 control-label">
+        <div class="row mb-3<?=$this->validation()->hasError('price') ? ' has-error' : '' ?>">
+            <label for="price" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('price') ?>
             </label>
-            <div class="col-lg-2">
-                <select class="form-control" id="priceArt" name="priceArt">
+            <div class="col-xl-2">
+                <select class="form-select" id="priceArt" name="priceArt">
                     <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 0) { echo 'selected="selected"'; } ?> value="0"><?=$this->getTrans('select') ?></option>
                     <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 1) { echo 'selected="selected"'; } ?> value="1"><?=$this->getTrans('ticket') ?></option>
                     <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 2) { echo 'selected="selected"'; } ?> value="2"><?=$this->getTrans('entry') ?></option>
                 </select>
             </div>
-            <div class="col-lg-4">
+            <div class="col-xl-4">
                 <input type="number"
                        class="form-control"
                        id="price"
@@ -195,8 +193,8 @@ $types = $this->get('types');
                        min="0"
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPrice()) : $this->originalInput('price') ?>" />
             </div>
-            <div class="col-lg-2">
-                <select class="form-control" id="currency" name="currency">
+            <div class="col-xl-2">
+                <select class="form-select" id="currency" name="currency">
                     <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 0) { echo 'selected="selected"'; } ?> value="0"><?=$this->getTrans('select') ?></option>
                     <?php foreach ($this->get('currencies') as $currency) {
                         if ($this->get('event') != '' && $this->get('event')->getCurrency() == $currency->getId()) {
@@ -209,11 +207,11 @@ $types = $this->get('types');
                 </select>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('userLimit') ? 'has-error' : '' ?>">
-            <label for="userLimit" class="col-lg-2 control-label">
-                <?=$this->getTrans('userLimit') ?> <div class="badge" data-toggle="event-popover" title="<?=$this->getTrans('popoverInfo') ?>" data-content="<?=$this->getTrans('userLimitInfo') ?>"><i class="fa-solid fa-info"></i></div>
+        <div class="row mb-3<?=$this->validation()->hasError('userLimit') ? ' has-error' : '' ?>">
+            <label for="userLimit" class="col-xl-2 col-form-label">
+                <?=$this->getTrans('userLimit') ?> <div class="badge rounded-pill bg-secondary" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="<?=$this->getTrans('userLimitInfo') ?>"><i class="fa-solid fa-info"></i></div>
             </label>
-            <div class="col-lg-2">
+            <div class="col-xl-2">
                 <input type="number"
                        class="form-control"
                        id="userLimit"
@@ -223,11 +221,11 @@ $types = $this->get('types');
                        value="<?=($this->get('event') != '') ? $this->get('event')->getUserLimit() : $this->originalInput('userLimit') ?>" />
             </div>
         </div>
-        <div class="form-group">
-            <label for="access" class="col-lg-2 control-label">
+        <div class="row mb-3">
+            <label for="access" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('visibleFor') ?>
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                     <?php foreach ($this->get('userGroupList') as $groupList): ?>
                         <?php if ($groupList->getId() != 1): ?>
@@ -238,8 +236,8 @@ $types = $this->get('types');
             </div>
         </div>
         <?php if ($this->get('calendarShow') == 1): ?>
-            <div class="form-group">
-                <div class="col-lg-offset-2 col-lg-10">
+            <div class="row mb-3">
+                <div class="offset-xl-2 col-xl-10">
                     <input type="checkbox"
                            id="calendarShow"
                            name="calendarShow"
@@ -251,7 +249,7 @@ $types = $this->get('types');
                 </div>
             </div>
         <?php endif; ?>
-        <div style="float: right;">
+        <div class="float-end">
             <?php
             if ($this->get('event') != '') {
                 echo $this->getSaveBar('edit');
@@ -265,27 +263,79 @@ $types = $this->get('types');
     <?=$this->getTrans('noAccess') ?>
 <?php endif; ?>
 
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script src="<?=$this->getVendorUrl('harvesthq/chosen/chosen.jquery.min.js') ?>"></script>
-<script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
-    <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
+<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
+    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
-<?php if ($this->get('event_google_maps_api_key') != ''): ?>
+<?php if ($this->get('event_google_maps_api_key') != '') : ?>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>&libraries=places&region=<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>"></script>
 <?php endif; ?>
 <script>
 $('#access').chosen();
 
 $(document).ready(function() {
-    $(".form_datetime").datetimepicker({
-        format: "dd.mm.yyyy hh:ii",
-        startDate: new Date(),
-        autoclose: true,
-        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
-        minuteStep: 15,
-        todayHighlight: true,
-        linkField: "end",
-        linkFormat: "dd.mm.yyyy hh:ii"
+    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
+        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
+        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
+    }
+
+    const start = new tempusDominus.TempusDominus(document.getElementById('start'), {
+        restrictions: {
+          minDate: new Date()
+        },
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        stepping: 15
+    });
+
+    const end = new tempusDominus.TempusDominus(document.getElementById('end'), {
+        restrictions: {
+          minDate: new Date()
+        },
+        display: {
+            sideBySide: true,
+            calendarWeeks: true,
+            buttons: {
+                today: true,
+                close: true
+            }
+        },
+        localization: {
+            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+            startOfTheWeek: 1,
+            format: "dd.MM.yyyy HH:mm"
+        },
+        stepping: 15
+    });
+
+    start.subscribe('change.td', (e) => {
+        end.updateOptions({
+            restrictions: {
+                minDate: e.date,
+            },
+        });
+    });
+
+    end.subscribe('change.td', (e) => {
+        start.updateOptions({
+            restrictions: {
+                maxDate: e.date,
+            },
+        });
     });
 });
 
@@ -307,13 +357,6 @@ $(document).ready(function() {
             if (log) alert(log);
         }
     });
-});
-
-$(function () {
-    $('[data-toggle="event-popover"]').popover({
-        container: 'body',
-        trigger: 'hover'
-    })
 });
 
 $(document).ready(function() {

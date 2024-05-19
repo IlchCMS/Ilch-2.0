@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'vote',
-        'version' => '1.12.1',
+        'version' => '1.13.0',
         'icon_small' => 'fa-solid fa-bars-progress',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -35,7 +35,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.1.48',
+        'ilchCore' => '2.2.0',
         'phpVersion' => '7.3'
     ];
 
@@ -218,6 +218,8 @@ class Config extends \Ilch\Config\Install
 
                 $this->db()->query('ALTER TABLE `[prefix]_poll_res` ADD INDEX `FK_[prefix]_poll_res_[prefix]_poll` (`poll_id`) USING BTREE;');
                 $this->db()->query('ALTER TABLE `[prefix]_poll_res` ADD CONSTRAINT `FK_[prefix]_poll_res_[prefix]_poll` FOREIGN KEY (`poll_id`) REFERENCES `[prefix]_poll` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+            case '1.12.0':
+            case '1.12.1':
         }
 
         return 'Update function executed.';

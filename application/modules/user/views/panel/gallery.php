@@ -56,16 +56,16 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
 <div class="row">
-    <div class="col-lg-12 profile">
+    <div class="col-xl-12 profile">
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('menuGallery') ?></h1>
             <?php if ($profil->getOptGallery() != 0 && $this->get('galleryAllowed') != 0): ?>
-                <form class="form-horizontal" id="galleryForm" method="POST">
+                <form id="galleryForm" method="POST">
                     <?=$this->getTokenField() ?>
                     <div class="row">
-                        <div class="col-lg-5">
+                        <div class="col-xl-5">
                             <ol id="sortable" class="sortable">
                                 <?php
                                 if (!empty($galleryItems)) {
@@ -76,48 +76,51 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                 ?>
                             </ol>
                         </div>
-                        <div class="col-lg-7 changeBox">
+                        <div class="col-xl-7 changeBox">
                             <input type="hidden" id="id" value="" />
-                            <div class="form-group">
-                                <label for="title" class="col-lg-4 control-label">
+                            <div class="row mb-3">
+                                <label for="title" class="col-xl-4 col-form-label">
                                     <?=$this->getTrans('title') ?>:
                                 </label>
-                                <div class="col-lg-8">
+                                <div class="col-xl-8">
                                     <input type="text"
                                            class="form-control"
                                            id="title"
                                            name="title" />
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="desc" class="col-lg-4 control-label">
+                            <div class="row mb-3">
+                                <label for="desc" class="col-xl-4 col-form-label">
                                     <?=$this->getTrans('description') ?>:
                                 </label>
-                                <div class="col-lg-8">
+                                <div class="col-xl-8">
                                     <textarea class="form-control"
                                               id="desc"
                                               name="desc"
                                               rows="8"></textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="type" class="col-lg-4 control-label">
+                            <div class="row mb-3">
+                                <label for="type" class="col-xl-4 col-form-label">
                                     <?=$this->getTrans('type') ?>:
                                 </label>
-                                <div class="col-lg-8">
-                                    <select class="form-control" id="type">
+                                <div class="col-xl-8">
+                                    <select class="form-select" id="type">
                                         <option value="0"><?=$this->getTrans('cat') ?></option>
                                         <option value="1"><?=$this->getTrans('gallery') ?></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="dyn"></div>
-                            <div class="col-lg-offset-4 actions">
-                                <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
+                            <div class="row mb-3">
+                                <label class="col-xl-4 col-form-label"></label>
+                                <div class="col-xl-8 actions">
+                                    <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
+                                </div>
                             </div>
                         </div>
                         <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
-                        <div class="col-lg-5">
+                        <div class="col-xl-5">
                             <?=$this->getSaveBar('saveButton', 'Gallery') ?>
                         </div>
                     </div>
@@ -189,8 +192,8 @@ $(document).ready (
                 return;
             }
 
-            menuHtml = '<div class="form-group"><label for="href" class="col-lg-4 control-label">Kategorie:</label>\n\
-                        <div class="col-lg-8"><select class="form-control" id="menukey">'+options+'</select></div></div>';
+            menuHtml = '<div class="row mb-3"><label for="href" class="col-lg-4 col-form-label">Kategorie:</label>\n\
+                        <div class="col-xl-8"><select class="form-select" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');
@@ -264,7 +267,7 @@ $(document).ready (
         });
 
         $('#galleryForm').on('click', '#menuItemEditCancel', function() {
-            $('.actions').html('<input type="button" class="btn" id="menuItemAdd" value="Menuitem hinzufügen">');
+            $('.actions').html('<input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="Menuitem hinzufügen">');
             resetBox();
         });
     }

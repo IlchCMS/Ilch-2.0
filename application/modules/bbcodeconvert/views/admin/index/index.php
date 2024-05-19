@@ -6,11 +6,11 @@
 
 <h1><?=$this->getTrans('menuOverview') ?>
     <div class="input-group input-group-sm filter">
-        <span class="input-group-addon">
+        <span class="input-group-text">
             <i class="fa-solid fa-filter"></i>
         </span>
         <input type="text" id="filterInput" class="form-control" placeholder="<?=$this->getTrans('filterModules') ?>">
-        <span class="input-group-addon">
+        <span class="input-group-text">
             <span id="filterClear" class="fa-solid fa-xmark"></span>
         </span>
     </div>
@@ -34,7 +34,7 @@
 
 <p><strong><?=$this->getTrans('infoMessage') ?></strong></p>
 
-<form class="form-horizontal" method="POST" action="">
+<form method="POST" action="">
     <?=$this->getTokenField() ?>
     <?php if (!empty($this->get('installedSupportedModules'))) : ?>
     <div class="table-responsive">
@@ -110,11 +110,11 @@
     <div class="content_savebox">
         <input type="hidden" class="content_savebox_hidden" name="action" value="convert" />
         <div class="btn-group dropup">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"<?=($this->get('getHtmlFromBBCodeExists')) ? '' : ' disabled' ?>>
-                <?=$this->getTrans('selected') ?> <span class="caret"></span>
+            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown"<?=($this->get('getHtmlFromBBCodeExists')) ? '' : ' disabled' ?>>
+                <?=$this->getTrans('selected') ?>
             </button>
             <ul class="dropdown-menu listConvert" role="menu">
-                <li><a href="#" data-hiddenkey="convert" id="convert"><?=$this->getTrans('convert') ?></a></li>
+                <li><a class="dropdown-item" href="#" data-hiddenkey="convert" id="convert"><?=$this->getTrans('convert') ?></a></li>
             </ul>
         </div>
     </div>

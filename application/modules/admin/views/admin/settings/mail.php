@@ -1,15 +1,15 @@
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField() ?>
     <legend><?=$this->getTrans('menuMail') ?></legend>
     <div id="infobox" class="mailSettingsInfobox alert alert-info">
         <p><?=$this->getTrans('standardMail') . ': ' . $this->get('standardMail') ?></p>
         <p id="smtpModeDescription"><?=($this->get('smtp_mode') === '1') ? $this->getTrans('smtpModeEnabledDescription') : $this->getTrans('smtpModeDisabledDescription') ?></p>
     </div>
-    <div class="form-group">
-        <label for="navbarFixed" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="navbarFixed" class="col-xl-2 col-form-label">
             <?=$this->getTrans('smtpMode') ?>:
         </label>
-        <div class="col-lg-8">
+        <div class="col-xl-8">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" name="smtp_mode" value="1" id="navbarFixed-on" <?php if ($this->get('smtp_mode') == '1') { echo 'checked="checked"'; } ?> />
                 <label for="navbarFixed-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -19,12 +19,12 @@
             </div>
         </div>
     </div>
-    <div id="smtpSettings" class="smtpSettings <?=($this->get('smtp_mode') !== '1') ? 'hidden' : '' ?>">
-        <div class="form-group">
-            <label for="smtp_server" class="col-lg-2 control-label">
+    <div id="smtpSettings" class="smtpSettings" <?=($this->get('smtp_mode') !== '1') ? 'hidden' : '' ?>>
+        <div class="row mb-3">
+            <label for="smtp_server" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('smtp_server') ?>:
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input class="form-control"
                        id="smtp_server"
                        name="smtp_server"
@@ -32,11 +32,11 @@
                        value="<?=$this->escape($this->get('smtp_server')) ?>" />
             </div>
         </div>
-        <div class="form-group">
-            <label for="smtp_port" class="col-lg-2 control-label">
+        <div class="row mb-3">
+            <label for="smtp_port" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('smtp_port') ?>:
             </label>
-            <div class="col-lg-2">
+            <div class="col-xl-2">
                 <input class="form-control"
                        id="smtp_port"
                        name="smtp_port"
@@ -44,12 +44,12 @@
                        value="<?=$this->escape($this->get('smtp_port')) ?>" />
             </div>
         </div>
-        <div class="form-group">
-            <label for="smtp_secure" class="col-lg-2 control-label">
+        <div class="row mb-3">
+            <label for="smtp_secure" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('smtp_secure') ?>:
             </label>
-            <div class="col-lg-2">
-                <select class="form-control" id="smtp_secure" name="smtp_secure">
+            <div class="col-xl-2">
+                <select class="form-select" id="smtp_secure" name="smtp_secure">
                     <optgroup label="<?=$this->getTrans('smtp_secure') ?>">
                         <?php
                         $values = ['', 'ssl', 'tsl'];
@@ -66,11 +66,11 @@
                 </select>
             </div>
         </div>
-        <div class="form-group">
-            <label for="smtp_user" class="col-lg-2 control-label">
+        <div class="row mb-3">
+            <label for="smtp_user" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('smtp_user') ?>:
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input class="form-control"
                        id="smtp_user"
                        name="smtp_user"
@@ -78,11 +78,11 @@
                        value="<?=$this->escape($this->get('smtp_user')) ?>" />
             </div>
         </div>
-        <div class="form-group">
-            <label for="smtp_pass" class="col-lg-2 control-label">
+        <div class="row mb-3">
+            <label for="smtp_pass" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('smtp_pass') ?>:
             </label>
-            <div class="col-lg-6">
+            <div class="col-xl-6">
                 <input class="form-control"
                        id="smtp_pass"
                        name="smtp_pass"
@@ -92,11 +92,11 @@
         </div>
     </div>
     <legend><?=$this->getTrans('emailBlacklist') ?></legend>
-    <div class="form-group">
-        <label for="emailBlacklist" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="emailBlacklist" class="col-xl-2 col-form-label">
             <?=$this->getTrans('emailBlacklist') ?>:
         </label>
-        <div class="col-lg-6">
+        <div class="col-xl-6">
             <textarea class="form-control"
                       id="emailBlacklist"
                       name="emailBlacklist"
@@ -110,10 +110,10 @@
 <script>
     $('[name="smtp_mode"]').click(function () {
         if ($(this).val() == "1") {
-            $('#smtpSettings').removeClass('hidden');
+            $('#smtpSettings').removeAttr('hidden');
             $('#smtpModeDescription').html("<?=$this->getTrans('smtpModeEnabledDescription') ?>");
         } else {
-            $('#smtpSettings').addClass('hidden');
+            $('#smtpSettings').attr('hidden', '');
             $('#smtpModeDescription').html("<?=$this->getTrans('smtpModeDisabledDescription') ?>");
         }
     });

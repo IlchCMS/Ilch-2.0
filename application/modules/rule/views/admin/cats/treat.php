@@ -12,13 +12,13 @@ $rulesparents = $this->get('rulesparents');
 $userGroupList = $this->get('userGroupList');
 ?>
 <h1><?=($cat) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
-<form class="form-horizontal" method="POST">
+<form method="POST">
     <?=$this->getTokenField(); ?>
-    <div class="form-group <?=$this->validation()->hasError('paragraph') ? 'has-error' : '' ?>">
-        <label for="paragraph" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('paragraph') ? ' has-error' : '' ?>">
+        <label for="paragraph" class="col-xl-2 col-form-label">
             <?=$this->getTrans('art') ?>
         </label>
-        <div class="col-lg-1">
+        <div class="col-xl-1">
             <input type="text"
                    class="form-control"
                    id="paragraph"
@@ -27,11 +27,11 @@ $userGroupList = $this->get('userGroupList');
                    required />
         </div>
     </div>
-    <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
-        <label for="name" class="col-lg-2 control-label">
+    <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
+        <label for="name" class="col-xl-2 col-form-label">
             <?=$this->getTrans('name') ?>:
         </label>
-        <div class="col-lg-3">
+        <div class="col-xl-3">
             <input type="text"
                    class="form-control"
                    id="name"
@@ -40,12 +40,12 @@ $userGroupList = $this->get('userGroupList');
                    required />
         </div>
     </div>
-    <div class="form-group">
-        <label for="assignedGroupsRead" class="col-lg-2 control-label">
+    <div class="row mb-3">
+        <label for="assignedGroupsRead" class="col-xl-2 col-form-label">
             <?=$this->getTrans('see') ?>
-            <a href="#" data-toggle="tooltip" title="<?=$this->getTrans('seetext') ?>"><i class="fa-solid fa-circle-info"></i></a>
+            <a href="#" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="<?=$this->getTrans('seetext') ?>"><i class="fa-solid fa-circle-info"></i></a>
         </label>
-        <div class="col-lg-4">
+        <div class="col-xl-4">
             <select class="chosen-select form-control" id="assignedGroupsRead" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <option value="all"<?=(in_array('all', $this->originalInput('groups', $this->get('groups')))) ? ' selected' : '' ?>><?=$this->getTrans('all') ?></option>
             <?php foreach ($userGroupList as $groupList) : ?>

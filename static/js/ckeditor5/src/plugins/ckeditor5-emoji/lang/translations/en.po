@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"Language-Team: English (https://www.transifex.com/ckeditor/teams/11143/sk/)\n"
+"Language: en\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
+
+msgctxt "Head title"
+msgid "Emoji"
+msgstr ""
+
+msgctxt "A label for a tooltip showing when the user hovers over the plugin icon."
+msgid "Emoji categories"
+msgstr "Emoji categories"
+
+msgctxt "A category name."
+msgid "Smileys & People"
+msgstr "Smileys & People"
+
+msgctxt "A category name."
+msgid "Animals & Nature"
+msgstr "Animals & Nature"
+
+msgctxt "A category name."
+msgid "Food & Drink"
+msgstr "Food & Drink"
+
+msgctxt "A category name."
+msgid "Activity"
+msgstr "Activity"
+
+msgctxt "A category name."
+msgid "Travel & Places"
+msgstr "Travel & Places"
+
+msgctxt "A category name."
+msgid "Objects"
+msgstr "Objects"
+
+msgctxt "A category name."
+msgid "Symbols"
+msgstr "Symbols"
+
+msgctxt "A category name."
+msgid "Flags"
+msgstr "Flags"
+
+msgctxt "A category name."
+msgid "All"
+msgstr "All"

@@ -13,7 +13,7 @@ $commentsClass = new Ilch\Comments();
 
 <div id="gallery">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-lg-6">
         <?php if ($image->getImageUrl()) : ?>
             <a class="venobox" href="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>">
                 <img src="<?= $this->getUrl() . '/' . $image->getImageUrl() ?>" alt="<?= $this->escape($image->getImageTitle()) ?>" />

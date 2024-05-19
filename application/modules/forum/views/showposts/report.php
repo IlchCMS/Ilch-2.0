@@ -6,21 +6,21 @@
 
 <div id="forum">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="new-post-head ilch-head">
                 <?=$this->getTrans('reportPost') ?>
             </div>
         </div>
-        <div class="col-lg-12">
+        <div class="col-xl-12">
             <div class="new-topic ilch-bg ilch-border">
-                <form class="form-horizontal" method="POST">
+                <form method="POST">
                     <?=$this->getTokenField() ?>
-                    <div class="form-group <?=$this->validation()->hasError('reason') ? 'has-error' : '' ?>">
-                        <label for="reason" class="col-lg-2 control-label">
+                    <div class="row mb-3<?=$this->validation()->hasError('reason') ? ' has-error' : '' ?>">
+                        <label for="reason" class="col-xl-2 col-form-label">
                             <?=$this->getTrans('reason') ?>
                         </label>
-                        <div class="col-lg-10">
-                            <select class="form-control" name="reason" id="reason">
+                        <div class="col-xl-10">
+                            <select class="form-select" name="reason" id="reason">
                                 <option value="1"><?=$this->getTrans('illegalContent') ?></option>
                                 <option value="2"><?=$this->getTrans('spam') ?></option>
                                 <option value="3"><?=$this->getTrans('wrongTopic') ?></option>
@@ -28,19 +28,19 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="details" class="col-lg-2 control-label">
+                    <div class="row mb-3">
+                        <label for="details" class="col-xl-2 col-form-label">
                             <?=$this->getTrans('details') ?>
                         </label>
-                        <div class="col-lg-10">
+                        <div class="col-xl-10">
                             <textarea class="form-control"
                                       id="details"
                                       name="details"
                                       rows="10"></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-lg-offset-2 col-lg-8">
+                    <div class="row mb-3">
+                        <div class="offset-xl-2 col-xl-8">
                             <input type="submit"
                                    class="btn btn-primary"
                                    name="reportPost"
