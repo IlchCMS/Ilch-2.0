@@ -22,12 +22,6 @@ function getInput(string $name, array $value, array $settingsValues, \Ilch\View 
                                data-jscolor=""
                                value="%s">', $name, $name, $settingsValue);
             break;
-        case 'ckeditorbbcode':
-            $input = sprintf('<textarea class="form-control ckeditor"
-                               name="%s"
-                               id="%s"
-                               toolbar="ilch_bbcode">%s</textarea>', $name, $name, $settingsValue);
-            break;
         case 'ckeditorhtml':
             $input = sprintf('<textarea class="form-control ckeditor"
                                name="%s"

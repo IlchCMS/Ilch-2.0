@@ -985,6 +985,13 @@ class Config extends \Ilch\Config\Install
                 unlink(ROOT_PATH . '/static/js/jscolor/hv.png');
                 unlink(ROOT_PATH . '/static/js/jscolor/jscolor.js');
                 break;
+            case "2.2.0":
+                // Removal of BBCode support.
+                // Update vendor folder
+                replaceVendorDirectory();
+
+                // Remove BBCode helper class.
+                removeDir(APPLICATION_PATH . '/libraries/Ilch/BBCode');
         }
 
         return 'Update function executed.';

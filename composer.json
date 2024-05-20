@@ -6,27 +6,26 @@
     "minimum-stability": "stable",
     "config": {
         "platform": {
-            "php": "7.3"
+            "php": "7.4"
         }
     },
     "require": {
-        "php": ">=7.3",
-        "jbbcode/jbbcode": "^1.4",
-        "ifsnop/mysqldump-php": "2.*",
-        "kartik-v/bootstrap-star-rating": "^4.0",
-        "twbs/bootstrap": "^5.3.2",
-        "fortawesome/font-awesome": "^6.2.1",
-        "npm-asset/jquery": "^3.5",
-        "npm-asset/jquery-ui": "^1.13",
-        "phpmailer/phpmailer": "~6.1",
-        "harvesthq/chosen": "^1.8",
-        "ezyang/htmlpurifier": "^4.12",
-        "blueimp/jquery-file-upload": "^10.30.0"
+        "php": ">=7.4",
+        "ifsnop/mysqldump-php": "^2.11",
+        "kartik-v/bootstrap-star-rating": "^4.1.2",
+        "twbs/bootstrap": "^5.3.3",
+        "fortawesome/font-awesome": "^6.5.2",
+        "npm-asset/jquery": "^3.7.1",
+        "npm-asset/jquery-ui": "^1.13.3",
+        "phpmailer/phpmailer": "^6.9.1",
+        "harvesthq/chosen": "^1.8.7",
+        "ezyang/htmlpurifier": "^4.17",
+        "blueimp/jquery-file-upload": "^10.32.0"
     },
     "require-dev": {
-        "maximebf/debugbar": "^1.15",
-        "phpunit/phpunit": "^9.5",
-        "symfony/yaml": "^3.3.6"
+        "maximebf/debugbar": "^1.22.3",
+        "phpunit/phpunit": "^9.6.19",
+        "symfony/yaml": "^5.4.39"
     },
     "autoload": {
         "psr-0": {

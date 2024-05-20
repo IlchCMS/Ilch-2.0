@@ -31,17 +31,6 @@ $directories = [
             'mysqldump-php/LICENSE',
         ]
     ],
-    'jbbcode'  => [
-        'remove' => [
-            'jbbcode/JBBCode/examples/',
-            'jbbcode/JBBCode/tests/',
-            'jbbcode/.gitignore',
-            'jbbcode/.coveralls.yml',
-            'jbbcode/composer.json',
-            'jbbcode/phpunit.xml.dist',
-            'jbbcode/README.md',
-        ]
-    ],
     'phpmailer' => [
         'remove' => [
             'phpmailer/docs/',
