@@ -36,7 +36,8 @@ jobs:
       - name: Create archive
         run: |
           git archive --format=zip HEAD > Ilch-2.zip
-          zip -q -r -FS Ilch-2.zip vendor static/js
+          zip -d Ilch-2.zip static/js/\*
+          zip -q -r Ilch-2.zip vendor static/js
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
         with:
