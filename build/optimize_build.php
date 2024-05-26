@@ -220,29 +220,8 @@ function optimizeDirectory(string $pathString, array $directories): string
     ).PHP_EOL;
 }
 
-
 // Optimize vendor directory
 echo optimizeDirectory('vendor', $directories);
 
-
 // Optimize static/js directory
 echo optimizeDirectory('static/js', $directoriesStaticJs);
-
-// Further delete some handpicked files
-$savedSpace = 0;
-$removedFiles = 0;
-$rootPath = realpath(__DIR__ . '/../');
-$otherFilesToDelete = ['composer.json', 'composer.lock', 'CONTRIBUTING.md', 'README.md'];
-foreach ($otherFilesToDelete as $file) {
-    $path = $rootPath.'/'.$file;
-    if (file_exists($path)) {
-        $savedSpace += filesize($path);
-        $removedFiles += 1;
-        unlink($path);
-    }
-}
-echo sprintf(
-    ' Further removed %d handpicked files saving %s kB.',
-    $removedFiles,
-    number_format($savedSpace / 1024, 2, '.', ' ')
-).PHP_EOL;
