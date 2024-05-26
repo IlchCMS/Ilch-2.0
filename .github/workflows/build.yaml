@@ -31,12 +31,12 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-php${{ matrix.php-versions }}
       - name: Install dependencies
         run: composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
-      - name: Optimize vendor, static/js and some handpicked files
+      - name: Optimize vendor and static/js
         run: php build/optimize_build.php
       - name: Create archive
         run: |
           git archive --format=zip HEAD > Ilch-2.zip
-          zip -q -d Ilch-2.zip static/js/\*
+          zip -q -d Ilch-2.zip static/js/\* composer.json composer.lock CONTRIBUTING.md README.md
           zip -q -r Ilch-2.zip vendor static/js
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
