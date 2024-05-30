@@ -60,11 +60,8 @@ $(document).ready(function(){
                 language: navigator.language.split("-")[0],
                 image: {
                     toolbar: [
-                        'imageTextAlternative',
-                        'toggleImageCaption',
-                        'imageStyle:inline',
-                        'imageStyle:block',
-                        'imageStyle:side'
+                        'imageTextAlternative', 'toggleImageCaption', '|',
+                        'imageStyle:inline', 'imageStyle:breakText', 'imageStyle:wrapText'
                     ]
                 },
                 table: {
@@ -160,11 +157,8 @@ $(document).ready(function(){
                 language: navigator.language.split("-")[0],
                 image: {
                     toolbar: [
-                        'imageTextAlternative',
-                        'toggleImageCaption',
-                        'imageStyle:inline',
-                        'imageStyle:block',
-                        'imageStyle:side'
+                        'imageTextAlternative', 'toggleImageCaption', '|',
+                        'imageStyle:inline', 'imageStyle:breakText', 'imageStyle:wrapText'
                     ]
                 },
                 table: {
