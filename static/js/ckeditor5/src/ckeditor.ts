@@ -43,6 +43,7 @@ import { PasteFromOffice } from '@ckeditor/ckeditor5-paste-from-office';
 import { RemoveFormat } from '@ckeditor/ckeditor5-remove-format';
 import { SelectAll } from '@ckeditor/ckeditor5-select-all';
 import { SourceEditing } from '@ckeditor/ckeditor5-source-editing';
+import { GeneralHtmlSupport } from '@ckeditor/ckeditor5-html-support';
 import {
     SpecialCharacters,
     SpecialCharactersArrows,
@@ -100,6 +101,7 @@ class Editor extends ClassicEditor {
         FontColor,
         FontFamily,
         FontSize,
+        GeneralHtmlSupport,
         Heading,
         HorizontalLine,
         IlchPs,
