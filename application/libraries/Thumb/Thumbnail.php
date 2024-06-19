@@ -1117,11 +1117,33 @@ class Thumbnail {
 		array_push($points_tr,$this->size[0]-$clipsize,0);
 		array_push($points_bl,$clipsize,$this->size[1]);
 		if ($this->Clipcorner[2]) {$random1=rand(0,1);$random2=rand(0,1);$random3=rand(0,1);$random4=rand(0,1);} else {$random1=1;$random2=1;$random3=1;$random4=1;}
-		if ($this->Clipcorner[3] && $random1) {imagefilledpolygon($this->im,$points_tl,count($points_tl)/2,$bgcolor);}
-		if ($this->Clipcorner[4] && $random2) {imagefilledpolygon($this->im,$points_bl,count($points_bl)/2,$bgcolor);}		
-		if ($this->Clipcorner[5] && $random3) {imagefilledpolygon($this->im,$points_tr,count($points_tr)/2,$bgcolor);}		
-		if ($this->Clipcorner[6] && $random4) {imagefilledpolygon($this->im,$points_br,count($points_br)/2,$bgcolor);}
-
+        if (version_compare(PHP_VERSION, '8.1.0', '>=') === -1) {
+            if ($this->Clipcorner[3] && $random1) {
+                imagefilledpolygon($this->im, $points_tl, $bgcolor);
+            }
+            if ($this->Clipcorner[4] && $random2) {
+                imagefilledpolygon($this->im, $points_bl, $bgcolor);
+            }
+            if ($this->Clipcorner[5] && $random3) {
+                imagefilledpolygon($this->im, $points_tr, $bgcolor);
+            }
+            if ($this->Clipcorner[6] && $random4) {
+                imagefilledpolygon($this->im, $points_br, $bgcolor);
+            }
+        } else {
+            if ($this->Clipcorner[3] && $random1) {
+                imagefilledpolygon($this->im, $points_tl, count($points_tl) / 2, $bgcolor);
+            }
+            if ($this->Clipcorner[4] && $random2) {
+                imagefilledpolygon($this->im, $points_bl, count($points_bl) / 2, $bgcolor);
+            }
+            if ($this->Clipcorner[5] && $random3) {
+                imagefilledpolygon($this->im, $points_tr, count($points_tr) / 2, $bgcolor);
+            }
+            if ($this->Clipcorner[6] && $random4) {
+                imagefilledpolygon($this->im, $points_br, count($points_br) / 2, $bgcolor);
+            }
+        }
 	}
 
 	/**

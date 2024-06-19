@@ -9,10 +9,10 @@ $userCache = [];
         <i class="fa-solid fa-filter"></i> <?=$this->getTrans('filter') ?>
     </a>
 </p>
-<div class="panel panel-default collapse" id="collapseExample">
+<div class="card card-default collapse" id="collapseExample">
     <form method="POST">
         <?=$this->getTokenField() ?>
-        <div class="panel-body">
+        <div class="card-body">
             <div class="row mb-3">
                 <label for="startDate" class="col-xl-2 col-form-label">
                     <?=$this->getTrans('startDate') ?>:

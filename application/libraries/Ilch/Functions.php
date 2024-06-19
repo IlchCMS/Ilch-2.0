@@ -469,13 +469,13 @@ function group($file)
  */
 function validateDate(?string $date, string $format = 'Y-m-d H:i:s'): bool
 {
-    if ((0 === substr_compare($date, "\0", - 1))) {
+    if ((0 === substr_compare($date ?? '', "\0", - 1))) {
         // Return false when $date contains null bytes.
         // This avoids "createFromFormat(): Argument must not contain any null bytes".
         return false;
     }
 
-    $d = DateTime::createFromFormat($format, $date);
+    $d = DateTime::createFromFormat($format, $date ?? '');
     return $d && $d->format($format) === $date;
 }
 
