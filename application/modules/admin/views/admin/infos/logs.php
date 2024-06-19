@@ -9,10 +9,10 @@ $userCache = [];
         <i class="fa-solid fa-filter"></i> <?=$this->getTrans('filter') ?>
     </a>
 </p>
-<div class="panel panel-default collapse" id="collapseExample">
+<div class="card card-default collapse" id="collapseExample">
     <form method="POST">
         <?=$this->getTokenField() ?>
-        <div class="panel-body">
+        <div class="card-body">
             <div class="row mb-3">
                 <label for="startDate" class="col-xl-2 col-form-label">
                     <?=$this->getTrans('startDate') ?>:
@@ -22,7 +22,7 @@ $userCache = [];
                            class="form-control"
                            id="startDate"
                            name="startDate"
-                           value="<?=date('d.m.Y 00:00', strtotime( '-7 days' )) ?>"
+                           value="<?=date('d.m.Y 00:00', strtotime('-7 days')) ?>"
                            readonly>
                     <span class="input-group-text">
                         <span class="fa-solid fa-calendar"></span>
@@ -51,8 +51,8 @@ $userCache = [];
     </form>
 </div>
 
-<?php if ($this->get('logsDate') != ''): ?>
-    <?php foreach ($this->get('logsDate') as $date => $logs): ?>
+<?php if ($this->get('logsDate') != '') : ?>
+    <?php foreach ($this->get('logsDate') as $date => $logs) : ?>
         <h4><?=$date ?></h4>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -69,9 +69,10 @@ $userCache = [];
                 </tr>
                 </thead>
                 <tbody>
-        <?php foreach($logs as $log) : ?>
+        <?php foreach ($logs as $log) : ?>
             <?php $time = new \Ilch\Date($log->getDate()); ?>
-            <?php if (!array_key_exists($log->getUserId(), $userCache)) {
+            <?php
+            if (!array_key_exists($log->getUserId(), $userCache)) {
                 $userCache[$log->getUserId()] = $userMapper->getUserById($log->getUserId());
             }
             $user = $userCache[$log->getUserId()];
