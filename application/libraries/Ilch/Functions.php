@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -47,7 +48,7 @@ function debug_backtrace_html(int $skipEntries = 1): string
         if ($key < $skipEntries) {
             continue;
         }
-        $r .= "\t".'@ ';
+        $r .= "\t" . '@ ';
 
         if (isset($t['file'])) {
             $r .= relativePath($t['file']) . ':' . $t['line'];
@@ -209,7 +210,7 @@ function array_dot_set(&$array, $key, $value)
  * @param array|Traversable $haystack
  * @return bool
  */
-function is_in_array($needle, $haystack)
+function is_in_array($needle, $haystack): bool
 {
     foreach ($needle as $stack) {
         if (in_array($stack, $haystack)) {
@@ -226,7 +227,7 @@ function is_in_array($needle, $haystack)
  * @param bool $write_cache Set this to false if you don't want to write a cache file.
  * @param bool $ignoreCache Set this to true to ignore the cache and fetch from server.
  * @param int $cache_time
- * @return mixed $data | FALSE
+ * @return bool|string|void $data
  */
 function url_get_contents(string $url, bool $write_cache = true, bool $ignoreCache = false, int $cache_time = 21600)
 {
@@ -242,7 +243,7 @@ function url_get_contents(string $url, bool $write_cache = true, bool $ignoreCac
     }
 
     $hash = md5($url);
-    $file = buildPath($where, $hash.'.cache');
+    $file = buildPath($where, $hash . '.cache');
 
     // check the bloody file.
     $mtime = 0;
@@ -382,11 +383,11 @@ function isEmailOnBlacklist(string $emailAddress): bool
  * @param int $flags
  * @return array|false
  */
-function glob_recursive($path, $flags = 0)
+function glob_recursive(string $path, int $flags = 0)
 {
     $files = glob($path, $flags);
 
-    foreach (glob(buildPath(dirname($path), '*'), GLOB_ONLYDIR|GLOB_NOSORT) as $dir){
+    foreach (glob(buildPath(dirname($path), '*'), GLOB_ONLYDIR | GLOB_NOSORT) as $dir) {
         $files = array_merge($files, glob_recursive(buildPath($dir, basename($path)), $flags));
     }
 
@@ -438,12 +439,12 @@ function getchmod(string $file): string
 /**
  * Gets the file's group.
  *
- * @since 2.1.22
- *
  * @param string $file Path to the file.
  * @return string|false The group on success, false on failure.
+ *@since 2.1.22
+ *
  */
-function group($file)
+function group(string $file)
 {
     $gid = @filegroup($file);
 
@@ -499,18 +500,18 @@ function replaceVendorDirectory(string $tmpName = '_vendor'): bool
 /**
  * SetCookie Handling.
  *
- * @since 2.1.43
- *
  * @param string $name
  * @param string $value
  * @param int $expires
- * @param array $params
+ * @param array|null $params
  * @return bool
+ *@since 2.1.43
+ *
  */
-function setcookieIlch(string $name, string $value = '', int $expires = 0, $params = null): bool
+function setcookieIlch(string $name, string $value = '', int $expires = 0, ?array $params = null): bool
 {
     $params = $params ?? session_get_cookie_params();
-    
+
     $params['expires'] = $expires;
 
     $allows = ['expires' => true, 'path' => true, 'domain' => true, 'secure' => true, 'httponly' => true, 'samesite' => true];
@@ -562,19 +563,19 @@ function invalidateOpcache(string $filepath, bool $force = false): bool
     $invalidatePossible = false;
 
     // Check if the function is available to call and if the host has restricted the ability to run the function.
-	if (function_exists('opcache_invalidate') && (!ini_get('opcache.restrict_api') || stripos(realpath($_SERVER['SCRIPT_FILENAME']), ini_get('opcache.restrict_api')) === 0)) {
-		$invalidatePossible = true;
-	}
+    if (function_exists('opcache_invalidate') && (!ini_get('opcache.restrict_api') || stripos(realpath($_SERVER['SCRIPT_FILENAME']), ini_get('opcache.restrict_api')) === 0)) {
+        $invalidatePossible = true;
+    }
 
-	// If invalidation is not available, return early.
-	if (!$invalidatePossible) {
-		return false;
-	}
+    // If invalidation is not available, return early.
+    if (!$invalidatePossible) {
+        return false;
+    }
 
-	// Verify that file to be invalidated has a PHP extension.
-	if ('.php' !== strtolower(substr($filepath, -4))) {
-		return false;
-	}
+    // Verify that file to be invalidated has a PHP extension.
+    if ('.php' !== strtolower(substr($filepath, -4))) {
+        return false;
+    }
 
     return opcache_invalidate($filepath, $force);
 }
