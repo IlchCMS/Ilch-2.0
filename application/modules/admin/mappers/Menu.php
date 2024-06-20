@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -6,7 +7,6 @@
 
 namespace Modules\Admin\Mappers;
 
-use Ilch\Database\Exception;
 use Ilch\Mapper;
 use Modules\Admin\Models\MenuItem;
 use Modules\Admin\Models\Menu as MenuModel;
@@ -18,7 +18,6 @@ class Menu extends Mapper
      *
      * @param int $position
      * @return false|string|null
-     * @throws Exception
      */
     public function getMenuIdForPosition(int $position)
     {
@@ -33,7 +32,7 @@ class Menu extends Mapper
 
     /**
      * Gets the menus.
-     * 
+     *
      * @return MenuModel[]
      */
     public function getMenus(): array
@@ -63,7 +62,7 @@ class Menu extends Mapper
     public function getMenu(int $menuId): MenuModel
     {
         $menu = new MenuModel();
-        
+
         $menuRow = $this->db()->select(['id','title'])
             ->from('menu')
             ->where(['id' => $menuId])
@@ -85,11 +84,11 @@ class Menu extends Mapper
     {
         $items = [];
         $itemRows = $this->db()->select('*')
-                ->from('menu_items')
-                ->where(['menu_id' => $menuId])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
+            ->from('menu_items')
+            ->where(['menu_id' => $menuId])
+            ->order(['sort' => 'ASC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($itemRows)) {
             return [];
@@ -125,11 +124,11 @@ class Menu extends Mapper
     {
         $items = [];
         $itemRows = $this->db()->select('*')
-                ->from('menu_items')
-                ->where(['menu_id' => $menuId, 'parent_id' => $itemId])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
+            ->from('menu_items')
+            ->where(['menu_id' => $menuId, 'parent_id' => $itemId])
+            ->order(['sort' => 'ASC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($itemRows)) {
             return null;
@@ -206,7 +205,6 @@ class Menu extends Mapper
      * Get last menu id.
      *
      * @return false|string|null
-     * @throws Exception
      */
     public function getLastMenuId()
     {
@@ -220,7 +218,6 @@ class Menu extends Mapper
      * Get last menu item id.
      *
      * @return false|string|null
-     * @throws Exception
      */
     public function getLastMenuItemId()
     {
@@ -283,14 +280,14 @@ class Menu extends Mapper
                 ->where(['parent_id' => $parentID])
                 ->execute()
                 ->fetchRows();
-         }
+        }
 
-         foreach ($itemRows as $item) {
-             $this->deleteItemsByModuleKey($moduleKey, $item['id']);
-             $this->db()->delete('menu_items')
+        foreach ($itemRows as $item) {
+            $this->deleteItemsByModuleKey($moduleKey, $item['id']);
+            $this->db()->delete('menu_items')
                 ->where(['id' => $item['id']])
                 ->execute();
-         }
+        }
     }
 
     /**
