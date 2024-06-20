@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -6,44 +7,46 @@
 
 namespace Modules\Admin\Mappers;
 
+use Ilch\Mapper;
 use Modules\Admin\Models\MenuItem;
 use Modules\Admin\Models\Menu as MenuModel;
 
-class Menu extends \Ilch\Mapper
+class Menu extends Mapper
 {
     /**
      * Gets the menu id for the menu position.
      *
-     * @param integer $position
-     * @return int|string
-     * @throws \Ilch\Database\Exception
+     * @param int $position
+     * @return false|string|null
      */
-    public function getMenuIdForPosition($position)
+    public function getMenuIdForPosition(int $position)
     {
         return $this->db()->select(['id'])
             ->from('menu')
             ->order(['id' => 'ASC'])
             ->limit(1)
-            ->offset((int)$position-1)
+            ->offset($position - 1)
             ->execute()
             ->fetchCell();
     }
 
     /**
      * Gets the menus.
-     * 
-     * @return \Modules\Admin\Models\Menu[]
+     *
+     * @return MenuModel[]
      */
-    public function getMenus()
+    public function getMenus(): array
     {
         $menus = [];
-        $menuRows = $this->db()->select(['id'])
+        $menuRows = $this->db()->select(['id','title'])
             ->from('menu')
             ->execute()
             ->fetchRows();
 
         foreach ($menuRows as $menuRow) {
-            $menu = $this->getMenu($menuRow['id']);
+            $menu = new MenuModel();
+            $menu->setId($menuRow['id']);
+            $menu->setTitle($menuRow['title']);
             $menus[] = $menu;
         }
 
@@ -53,13 +56,13 @@ class Menu extends \Ilch\Mapper
     /**
      * Gets the menu for the given id.
      *
-     * @param $menuId
-     * @return \Modules\Admin\Models\Menu
+     * @param int $menuId
+     * @return MenuModel
      */
-    public function getMenu($menuId)
+    public function getMenu(int $menuId): MenuModel
     {
         $menu = new MenuModel();
-        
+
         $menuRow = $this->db()->select(['id','title'])
             ->from('menu')
             ->where(['id' => $menuId])
@@ -74,18 +77,18 @@ class Menu extends \Ilch\Mapper
 
     /**
      * Gets all menu items by menu id.
-     * @param $menuId
+     * @param int $menuId
      * @return array|[]
      */
-    public function getMenuItems($menuId)
+    public function getMenuItems(int $menuId): array
     {
         $items = [];
         $itemRows = $this->db()->select('*')
-                ->from('menu_items')
-                ->where(['menu_id' => $menuId])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
+            ->from('menu_items')
+            ->where(['menu_id' => $menuId])
+            ->order(['sort' => 'ASC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($itemRows)) {
             return [];
@@ -113,19 +116,19 @@ class Menu extends \Ilch\Mapper
 
     /**
      * Gets all menu items by parent item id.
-     * @param $menuId
-     * @param $itemId
+     * @param int $menuId
+     * @param int $itemId
      * @return array|null
      */
-    public function getMenuItemsByParent($menuId, $itemId)
+    public function getMenuItemsByParent(int $menuId, int $itemId): ?array
     {
         $items = [];
         $itemRows = $this->db()->select('*')
-                ->from('menu_items')
-                ->where(['menu_id' => $menuId, 'parent_id' => $itemId])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
+            ->from('menu_items')
+            ->where(['menu_id' => $menuId, 'parent_id' => $itemId])
+            ->order(['sort' => 'ASC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($itemRows)) {
             return null;
@@ -155,9 +158,9 @@ class Menu extends \Ilch\Mapper
      * Save one menu item.
      *
      * @param MenuItem $menuItem
-     * @return integer
+     * @return int
      */
-    public function saveItem(MenuItem $menuItem)
+    public function saveItem(MenuItem $menuItem): int
     {
         $fields = [
             'href' => $menuItem->getHref(),
@@ -201,8 +204,7 @@ class Menu extends \Ilch\Mapper
     /**
      * Get last menu id.
      *
-     * @return int|string|null
-     * @throws \Ilch\Database\Exception
+     * @return false|string|null
      */
     public function getLastMenuId()
     {
@@ -215,8 +217,7 @@ class Menu extends \Ilch\Mapper
     /**
      * Get last menu item id.
      *
-     * @return int|string|null
-     * @throws \Ilch\Database\Exception
+     * @return false|string|null
      */
     public function getLastMenuItemId()
     {
@@ -230,9 +231,9 @@ class Menu extends \Ilch\Mapper
      * Save one menu.
      *
      * @param MenuModel $menu
-     * @return integer
+     * @return int
      */
-    public function save(MenuModel $menu)
+    public function save(MenuModel $menu): int
     {
         $menuId = (int)$this->db()->select('id', 'menu', ['id' => $menu->getId()])
             ->execute()
@@ -252,7 +253,7 @@ class Menu extends \Ilch\Mapper
      *
      * @param MenuItem $menuItem
      */
-    public function deleteItem($menuItem)
+    public function deleteItem(MenuItem $menuItem)
     {
         $this->db()->delete('menu_items')
             ->where(['id' => $menuItem->getId()])
@@ -263,9 +264,9 @@ class Menu extends \Ilch\Mapper
      * Delete items for the given modulkey.
      *
      * @param string $moduleKey
-     * @param int $parentID
+     * @param int|null $parentID
      */
-    public function deleteItemsByModuleKey($moduleKey, $parentID = null)
+    public function deleteItemsByModuleKey(string $moduleKey, int $parentID = null)
     {
         if ($parentID === null) {
             $itemRows = $this->db()->select('*')
@@ -279,22 +280,22 @@ class Menu extends \Ilch\Mapper
                 ->where(['parent_id' => $parentID])
                 ->execute()
                 ->fetchRows();
-         }
+        }
 
-         foreach ($itemRows as $item) {
-             $this->deleteItemsByModuleKey($moduleKey, $item['id']);
-             $this->db()->delete('menu_items')
+        foreach ($itemRows as $item) {
+            $this->deleteItemsByModuleKey($moduleKey, $item['id']);
+            $this->db()->delete('menu_items')
                 ->where(['id' => $item['id']])
                 ->execute();
-         }
+        }
     }
 
     /**
      * Delete the given menu.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->db()->delete('menu')
             ->where(['id' => $id])
@@ -304,9 +305,9 @@ class Menu extends \Ilch\Mapper
     /**
      * Delete all items with a specific menu id.
      *
-     * @param integer $menuId
+     * @param int $menuId
      */
-    public function deleteItemsByMenuId($menuId)
+    public function deleteItemsByMenuId(int $menuId)
     {
         $this->db()->delete('menu_items')
             ->where(['menu_id' => $menuId])
@@ -316,9 +317,9 @@ class Menu extends \Ilch\Mapper
     /**
      * Delete menu item by the box id.
      *
-     * @param integer $boxId
+     * @param int $boxId
      */
-    public function deleteItemByBoxId($boxId)
+    public function deleteItemByBoxId(int $boxId)
     {
         $this->db()->delete('menu_items')
             ->where(['box_id' => $boxId])
@@ -328,9 +329,9 @@ class Menu extends \Ilch\Mapper
     /**
      * Delete menu item by the page id.
      *
-     * @param integer $pageId
+     * @param int $pageId
      */
-    public function deleteItemByPageId($pageId)
+    public function deleteItemByPageId(int $pageId)
     {
         $this->db()->delete('menu_items')
             ->where(['page_id' => $pageId])
