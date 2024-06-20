@@ -257,7 +257,7 @@ class Layouts extends \Ilch\Controller\Admin
             ->set('pageTitleModuledataOrder', $this->getConfig()->get('page_title_moduledata_order') ?? '0')
             ->set('keywords', $this->getConfig()->get('keywords'))
             ->set('description', $this->getConfig()->get('description'))
-            ->set('showbreadcrumb', $this->getRequest()->getPost('showbreadcrumb') ?? '1');
+            ->set('showbreadcrumb', $this->getConfig()->get('showbreadcrumb') ?? '1');
     }
 
     public function advSettingsAction()
