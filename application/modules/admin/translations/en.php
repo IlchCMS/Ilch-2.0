@@ -123,7 +123,7 @@ return [
     'pageTitleModuledataSeparator' => 'Module data separator',
     'pageContent' => 'Content',
     'startPage' => 'Startpage',
-    'showbreadcrumb' => 'Show Content HMenu',
+    'showbreadcrumb' => 'Show Horizontal Menu',
     'locale' => 'Standard page locale',
     'pages' => 'Pages',
     'menuTitle' => 'Menutitle',
