@@ -17,16 +17,16 @@
   ],
   "main": "src/emoji.js",
   "devDependencies": {
-    "@ckeditor/ckeditor5-core": "^35.0.1",
-    "@ckeditor/ckeditor5-dev-utils": "^30.4.0",
-    "@ckeditor/ckeditor5-editor-classic": "^35.0.1",
-    "@ckeditor/ckeditor5-theme-lark": "^35.0.1",
-    "@ckeditor/ckeditor5-typing": "^35.0.1",
-    "@ckeditor/ckeditor5-ui": "^35.0.1",
-    "@ckeditor/ckeditor5-utils": "^35.0.1",
-    "css-loader": "^5.2.7",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0"
+    "@ckeditor/ckeditor5-core": "^41.4.2",
+    "@ckeditor/ckeditor5-dev-utils": "^40.2.2",
+    "@ckeditor/ckeditor5-editor-classic": "^41.4.2",
+    "@ckeditor/ckeditor5-theme-lark": "^41.4.2",
+    "@ckeditor/ckeditor5-typing": "^41.4.2",
+    "@ckeditor/ckeditor5-ui": "^41.4.2",
+    "@ckeditor/ckeditor5-utils": "^41.4.2",
+    "css-loader": "^7.1.2",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4"
   },
   "engines": {
     "node": ">=12.0.0",
