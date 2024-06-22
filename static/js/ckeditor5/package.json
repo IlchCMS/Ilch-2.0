@@ -34,8 +34,7 @@
     "@ckeditor/ckeditor5-table": "41.4.2",
     "@ckeditor/ckeditor5-typing": "41.4.2",
     "@ckeditor/ckeditor5-undo": "41.4.2",
-    "@ckeditor/ckeditor5-upload": "41.4.2",
-    "@phudak/ckeditor5-emoji": "^1.1.1"
+    "@ckeditor/ckeditor5-upload": "41.4.2"
   },
   "devDependencies": {
     "@ckeditor/ckeditor5-core": "41.4.2",
