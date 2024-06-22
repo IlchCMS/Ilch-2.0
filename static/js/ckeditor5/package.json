@@ -39,18 +39,18 @@
   },
   "devDependencies": {
     "@ckeditor/ckeditor5-core": "41.4.2",
-    "@ckeditor/ckeditor5-dev-translations": "^40.0.0",
-    "@ckeditor/ckeditor5-dev-utils": "^40.0.0",
+    "@ckeditor/ckeditor5-dev-translations": "^40.2.2",
+    "@ckeditor/ckeditor5-dev-utils": "^40.2.2",
     "@ckeditor/ckeditor5-theme-lark": "41.4.2",
-    "css-loader": "^7.1.1",
+    "css-loader": "^7.1.2",
     "postcss": "^8.4.38",
     "postcss-loader": "^8.1.1",
     "raw-loader": "^4.0.2",
     "style-loader": "^4.0.0",
     "terser-webpack-plugin": "^4.2.3",
     "ts-loader": "^9.5.1",
-    "typescript": "5.4.5",
-    "webpack": "^5.91.0",
+    "typescript": "5.5.2",
+    "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4"
   },
   "scripts": {
