@@ -128,6 +128,21 @@
                       name="description"><?=$this->escape($this->originalInput('description', $this->get('description'))) ?></textarea>
         </div>
     </div>
+
+    <div class="row mb-3<?=$this->validation()->hasError('showbreadcrumb') ? ' has-error' : '' ?>">
+        <label for="showbreadcrumb" class="col-xl-2 col-form-label">
+            <?=$this->getTrans('showbreadcrumb') ?>:
+        </label>
+        <div class="col-xl-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="showbreadcrumb-yes" name="showbreadcrumb" value="1" <?=($this->originalInput('showbreadcrumb', $this->get('showbreadcrumb'))) ? 'checked="checked"' : '' ?> />
+                <label for="showbreadcrumb-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="showbreadcrumb-no" name="showbreadcrumb" value="0"  <?=(!$this->originalInput('showbreadcrumb', $this->get('showbreadcrumb'))) ? 'checked="checked"' : '' ?> />
+                <label for="showbreadcrumb-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
     <?=$this->getSaveBar() ?>
 </form>
 

@@ -61,6 +61,9 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                         foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer) {
                             if ($layoutOnUpdateServer->key == $layout->getKey()) {
                                 $layoutOnUpdateServerFound = $layoutOnUpdateServer;
+
+                                $ilchCoreTooOld = version_compare($coreVersion, $layoutOnUpdateServer->ilchCore, '<');
+                                $layoutTooOld = version_compare('2.2.0', $layoutOnUpdateServer->ilchCore, '>');
                                 break;
                             }
                         }

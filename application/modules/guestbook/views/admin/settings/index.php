@@ -42,7 +42,7 @@
                    value="<?=($this->escape($this->get('entriesPerPage')) != '') ? $this->escape($this->get('entriesPerPage')) : $this->escape($this->originalInput('entriesPerPage')) ?>" />
         </div>
     </div>
-    <div class="row mb-3<?= $this->validation()->hasError('welcomeMessage') ? ' has-error' : '' ?>" data-bs-toggle="dropdown" aria-expanded="false">
+    <div class="row mb-3<?= $this->validation()->hasError('welcomeMessage') ? ' has-error' : '' ?>">
         <label for="ck_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('welcomeMessage') ?>:
         </label>
@@ -50,8 +50,7 @@
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="welcomeMessage"
-                      toolbar="ilch_html"
-                      required><?=($this->escape($this->get('welcomeMessage')) != '') ? $this->escape($this->get('welcomeMessage')) : $this->escape($this->originalInput('welcomeMessage')) ?></textarea>
+                      toolbar="ilch_html"><?=($this->escape($this->get('welcomeMessage')) != '') ? $this->escape($this->get('welcomeMessage')) : $this->escape($this->originalInput('welcomeMessage')) ?></textarea>
         </div>
     </div>
     <?=$this->getSaveBar() ?>

@@ -16,7 +16,7 @@ $config = \Ilch\Registry::get('config');
               <?php if ($config->get('linkus_html') == 1): ?>
                   <div class="col-xl-6 text-center">
                       <?=$this->getTrans('htmlForWebsite') ?>
-                      <textarea class="form-control bg-light"
+                      <textarea class="form-control bg-body-tertiary"
                                 style="resize: vertical"
                                 name="text"
                                 type="text"
@@ -28,7 +28,7 @@ $config = \Ilch\Registry::get('config');
               <?php if ($config->get('linkus_bbcode') == 1): ?>
                   <div class="col-xl-6 text-center">
                       <?=$this->getTrans('bbcodeForForum') ?>
-                      <textarea class="form-control bg-light"
+                      <textarea class="form-control bg-body-tertiary"
                                 style="resize: vertical"
                                 name="text"
                                 rows="4"

@@ -9,7 +9,6 @@ $(document).ready(function(){
         if (toolbar === 'ilch_html') {
             // ilch_html configuration
             config = {
-                allowedContent: true,
                 toolbar: {
                     items: [
                         'sourceEditing',
@@ -60,11 +59,8 @@ $(document).ready(function(){
                 language: navigator.language.split("-")[0],
                 image: {
                     toolbar: [
-                        'imageTextAlternative',
-                        'toggleImageCaption',
-                        'imageStyle:inline',
-                        'imageStyle:block',
-                        'imageStyle:side'
+                        'imageTextAlternative', 'toggleImageCaption', '|',
+                        'imageStyle:inline', 'imageStyle:breakText', 'imageStyle:wrapText'
                     ]
                 },
                 table: {
@@ -107,12 +103,21 @@ $(document).ready(function(){
                         48,
                         72
                     ]
+                },
+                htmlSupport: {
+                    allow: [
+                        {
+                            name: /.*/,
+                            attributes: true,
+                            classes: true,
+                            styles: true
+                        }
+                    ]
                 }
             };
         } else if(toolbar === 'ilch_html_frontend') {
             // ilch_html_frontend configuration
             config = {
-                allowedContent: true,
                 toolbar: {
                     items: [
                         'heading',
@@ -160,11 +165,8 @@ $(document).ready(function(){
                 language: navigator.language.split("-")[0],
                 image: {
                     toolbar: [
-                        'imageTextAlternative',
-                        'toggleImageCaption',
-                        'imageStyle:inline',
-                        'imageStyle:block',
-                        'imageStyle:side'
+                        'imageTextAlternative', 'toggleImageCaption', '|',
+                        'imageStyle:inline', 'imageStyle:breakText', 'imageStyle:wrapText'
                     ]
                 },
                 table: {

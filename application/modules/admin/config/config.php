@@ -60,7 +60,11 @@ class Config extends \Ilch\Config\Install
             ->set('multilingual_acp', '0')
             ->set('custom_css', '')
             ->set('emailBlacklist', '')
-            ->set('disable_purifier', '0');
+            ->set('disable_purifier', '0')
+            ->set('page_title_order', '%%moduledata%% | %%title%%')
+            ->set('page_title_moduledata_separator', ' | ')
+            ->set('page_title_moduledata_order', '0')
+            ->set('showbreadcrumb', '1');
     }
 
     public function getInstallSql(): string
@@ -986,12 +990,17 @@ class Config extends \Ilch\Config\Install
                 unlink(ROOT_PATH . '/static/js/jscolor/jscolor.js');
                 break;
             case "2.2.0":
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('showbreadcrumb', '1');
+                break;
+            case "2.2.1":
                 // Removal of BBCode support.
                 // Update vendor folder
                 replaceVendorDirectory();
 
                 // Remove BBCode helper class.
                 removeDir(APPLICATION_PATH . '/libraries/Ilch/BBCode');
+                break;
         }
 
         return 'Update function executed.';

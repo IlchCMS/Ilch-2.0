@@ -52,6 +52,10 @@ class Model
      */
     public function __toString()
     {
+        if (empty($this->layout->getConfigKey('showbreadcrumb'))) {
+            return '';
+        }
+
         if (empty($this->data)) {
             return '';
         }
