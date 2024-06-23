@@ -10,7 +10,6 @@
     <exclude-pattern>./modules/**/views/*.php</exclude-pattern>
 
     <exclude-pattern>./application/libraries/Captcha</exclude-pattern>
-    <exclude-pattern>./application/libraries/jbbcode</exclude-pattern>
     <exclude-pattern>./application/libraries/Thumb</exclude-pattern>
 
     <arg name="extensions" value="php" />

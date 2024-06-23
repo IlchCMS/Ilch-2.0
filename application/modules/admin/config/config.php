@@ -993,6 +993,14 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('showbreadcrumb', '1');
                 break;
+            case "2.2.1":
+                // Removal of BBCode support.
+                // Update vendor folder
+                replaceVendorDirectory();
+
+                // Remove BBCode helper class.
+                removeDir(APPLICATION_PATH . '/libraries/Ilch/BBCode');
+                break;
         }
 
         return 'Update function executed.';
