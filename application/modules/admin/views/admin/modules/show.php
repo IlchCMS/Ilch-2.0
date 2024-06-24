@@ -262,8 +262,6 @@ foreach ($modules as $module): ?>
         max: 5,
         step: 0.5,
         size: 'xs'
-    }).on('rating:change', function(event, value, caption) {
-        window.open("<?=$this->getUrl(['action' => 'vote', 'id' => $this->getRequest()->getParam('id')], null, true) ?>/rating/" + value, "_self")
     });
 
     $(document).ready(function(){
