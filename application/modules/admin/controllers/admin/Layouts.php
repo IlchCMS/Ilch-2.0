@@ -97,7 +97,7 @@ class Layouts extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver') . 'layouts2.php')
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver') . 'layouts.json')
             ->set('defaultLayout', $this->getConfig()->get('default_layout'))
             ->set('layouts', $layouts)
             ->set('modulesNotInstalled', $modulesNotInstalled)
@@ -415,7 +415,7 @@ class Layouts extends \Ilch\Controller\Admin
 
     public function refreshURLAction()
     {
-        if (!empty(url_get_contents($this->getConfig()->get('updateserver') . 'layouts2.php', true, true))) {
+        if (!empty(url_get_contents($this->getConfig()->get('updateserver') . 'layouts.json', true, true))) {
             $this->redirect()
                 ->withMessage('updateSuccess')
                 ->to(['action' => $this->getRequest()->getParam('from')]);

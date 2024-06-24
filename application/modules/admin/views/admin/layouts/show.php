@@ -1,5 +1,5 @@
 <?php
-$layoutsList = url_get_contents($this->get('updateserver').'layouts2.php');
+$layoutsList = url_get_contents($this->get('updateserver') . 'layouts.json');
 $layouts = json_decode($layoutsList);
 ?>
 

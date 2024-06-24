@@ -295,7 +295,7 @@ HTACCESS;
         $this->getView()->set('version', $version);
 
         $update = new IlchTransfer();
-        $update->setTransferUrl($this->getConfig()->get('updateserver').'updates2.php');
+        $update->setTransferUrl($this->getConfig()->get('updateserver') . 'updates.json');
         $update->setVersionNow($version);
         $update->setCurlOpt(CURLOPT_SSL_VERIFYPEER, TRUE);
         $update->setCurlOpt(CURLOPT_SSL_VERIFYHOST, 2); 

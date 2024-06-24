@@ -1,5 +1,5 @@
 <?php
-$modulesList = url_get_contents($this->get('updateserver').'modules.php');
+$modulesList = url_get_contents($this->get('updateserver') . 'modules.json');
 $modules = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');

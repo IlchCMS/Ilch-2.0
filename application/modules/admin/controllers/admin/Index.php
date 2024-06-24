@@ -37,7 +37,7 @@ class Index extends \Ilch\Controller\Admin
         $authTokenMapper->deleteExpiredAuthTokens();
         // Check if Ilch is up to date
         $update = new \Ilch\Transfer();
-        $update->setTransferUrl($this->getConfig()->get('updateserver') . 'updates2.php');
+        $update->setTransferUrl($this->getConfig()->get('updateserver') . 'updates.json');
         $update->setVersionNow($this->getConfig()->get('version'));
         $update->setCurlOpt(CURLOPT_SSL_VERIFYPEER, true);
         $update->setCurlOpt(CURLOPT_SSL_VERIFYHOST, 2);
@@ -53,7 +53,7 @@ class Index extends \Ilch\Controller\Admin
         } else {
             // If check for an ilch update didn't already failed then check for module updates
             $countOfUpdatesAvailable = 0;
-            $modulesList = url_get_contents($this->getConfig()->get('updateserver') . 'modules.php');
+            $modulesList = url_get_contents($this->getConfig()->get('updateserver') . 'modules.json');
             $modulesOnUpdateServer = json_decode($modulesList);
             $versionsOfModules = $moduleMapper->getVersionsOfModules();
             foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
@@ -91,7 +91,7 @@ class Index extends \Ilch\Controller\Admin
 
         // Check if there are notifications, which need to be shown
         $notificationsMapper = new NotificationsMapper();
-        $this->getView()->set('ilchNewsList', $this->getConfig()->get('updateserver') . 'ilchNews.php');
+        $this->getView()->set('ilchNewsList', $this->getConfig()->get('updateserver') . 'ilchNews.json');
         $this->getView()->set('version', $this->getConfig()->get('version'));
         $this->getView()->set('notifications', $notificationsMapper->getNotifications());
         $this->getView()->set('accesses', $this->getAccesses());
