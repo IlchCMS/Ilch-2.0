@@ -46,9 +46,11 @@ $directories = [
     'kartik-v' => [
         'keep' => [
             'bootstrap-star-rating/css/star-rating.min.css',
-            'bootstrap-star-rating/js/star-rating.min.js',
-            'bootstrap-star-rating/js/star-rating_locale_de.js',
             'bootstrap-star-rating/img/',
+            'bootstrap-star-rating/js/star-rating.min.js',
+            'bootstrap-star-rating/js/locales/',
+            'bootstrap-star-rating/themes/krajee-fas/theme.min.css',
+            'bootstrap-star-rating/themes/krajee-fas/theme.min.js',
             'bootstrap-star-rating/LICENSE.md',
         ],
     ],

@@ -89,7 +89,7 @@ class Modules extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver') . 'modules.json')
             ->set('modules', $moduleMapper->getModules())
             ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
             ->set('dependencies', $dependencies)
@@ -129,7 +129,7 @@ class Modules extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver') . 'modules.json')
             ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
             ->set('modulesNotInstalled', $modulesNotInstalled)
             ->set('dependencies', $dependencies)
@@ -207,7 +207,7 @@ class Modules extends \Ilch\Controller\Admin
                 }
             }
 
-            $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
+            $this->getView()->set('updateserver', $this->getConfig()->get('updateserver') . 'modules.json')
                 ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
                 ->set('modules', $modulesDir)
                 ->set('dependencies', $dependencies)
@@ -244,7 +244,7 @@ class Modules extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php')
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver') . 'modules.json')
             ->set('modules', $moduleMapper->getModules())
             ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
             ->set('dependencies', $dependencies)
@@ -452,7 +452,7 @@ class Modules extends \Ilch\Controller\Admin
 
     public function refreshURLAction()
     {
-        if (!empty(url_get_contents($this->getConfig()->get('updateserver').'modules.php', true, true))) {
+        if (!empty(url_get_contents($this->getConfig()->get('updateserver') . 'modules.json', true, true))) {
             $this->redirect()
                 ->withMessage('updateSuccess')
                 ->to(['action' => $this->getRequest()->getParam('from')]);

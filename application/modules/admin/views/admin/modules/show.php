@@ -1,5 +1,5 @@
 <?php
-$modulesList = url_get_contents($this->get('updateserver').'modules.php');
+$modulesList = url_get_contents($this->get('updateserver') . 'modules.json');
 $modules = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
@@ -7,6 +7,7 @@ $coreVersion = $this->get('coreVersion');
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 <link href="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/css/star-rating.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/themes/krajee-fas/theme.min.css') ?>" rel="stylesheet">
 
 <?php
 if (empty($modules)) {
@@ -17,6 +18,7 @@ if (empty($modules)) {
 foreach ($modules as $module): ?>
     <?php if ($module->id == $this->getRequest()->getParam('id')): ?>
         <?php
+        $phpExtension = [];
         if (!empty($module->phpExtensions)) {
             $extensionCheck = [];
             foreach ($module->phpExtensions as $extension) {
@@ -35,6 +37,7 @@ foreach ($modules as $module): ?>
             $phpExtension = implode(', ', $phpExtension);
         }
 
+        $dependency = [];
         if (!empty($module->depends)) {
             $dependencyCheck = [];
             foreach ($module->depends as $key => $value) {
@@ -136,26 +139,20 @@ foreach ($modules as $module): ?>
                             <b><?=$this->getTrans('hits') ?>:</b>
                         </div>
                         <div class="col-md-9 col-sm-6">
-                            <?=$module->hits ?>
+                            <?=$module->hits ?? '' ?>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('downloads') ?>:</b>
                         </div>
                         <div class="col-md-9 col-sm-6">
-                            <?=$module->downs ?>
+                            <?=$module->downs ?? '' ?>
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <b><?=$this->getTrans('rating') ?>:</b>
                         </div>
                         <div class="col-md-9 col-sm-6">
-                            <span title="<?=$module->rating ?> <?php if ($module->rating == 1) { echo $this->getTrans('star'); } else { echo $this->getTrans('stars'); } ?>">
-                                <input type="number"
-                                       class="rating"
-                                       value="<?=$module->rating ?>"
-                                       data-size="xs"
-                                       data-readonly="true"
-                                       data-show-clear="false"
-                                       data-show-caption="false">
+                            <span title="<?=$module->rating ?? 0 ?> <?=(($module->rating ?? 0) == 1) ? $this->getTrans('star') : $this->getTrans('stars') ?>">
+                                <input id="rating" name="rating" type="number" class="rating" value="<?=$module->rating ?? 0 ?>">
                             </span>
                         </div>
                     </div>
@@ -247,8 +244,29 @@ foreach ($modules as $module): ?>
 <?php endforeach; ?>
 
 <script src="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/js/star-rating.min.js') ?>"></script>
+<script src="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/themes/krajee-fas/theme.min.js') ?>"></script>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
+    <script src="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/js/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>"></script>
+<?php endif; ?>
 <script>
-$(document).ready(function(){
-    $('#module-search-carousel').carousel();
-});
+    $('#rating').rating({
+        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+        showCaptionAsTitle: 'true',
+        displayOnly: true,
+        showCaption: false,
+        theme: 'krajee-fas',
+        filledStar: '<i class="fa-solid fa-star"></i>',
+        emptyStar: '<i class="fa-regular fa-star"></i>',
+        stars: 5,
+        min: 0,
+        max: 5,
+        step: 0.5,
+        size: 'xs'
+    }).on('rating:change', function(event, value, caption) {
+        window.open("<?=$this->getUrl(['action' => 'vote', 'id' => $this->getRequest()->getParam('id')], null, true) ?>/rating/" + value, "_self")
+    });
+
+    $(document).ready(function(){
+        $('#module-search-carousel').carousel();
+    });
 </script>
