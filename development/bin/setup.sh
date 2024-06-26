@@ -19,7 +19,7 @@ cd ..
 echo "--- Update System Vendor"
 php development/bin/composer.phar install
 
-php build/optimize_vendor.php
+php build/optimize_build.php
 
 
 cd ${START_PWD}
