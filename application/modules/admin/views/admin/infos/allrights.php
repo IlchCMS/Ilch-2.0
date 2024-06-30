@@ -11,13 +11,13 @@
             <col class="col-xl-2">
         </colgroup>
         <thead>
-        <tr>
-            <th><?=$this->getTrans('path') ?></th>
-            <th><?=$this->getTrans('fileOwner') ?></th>
-            <th><?=$this->getTrans('fileGroup') ?></th>
-            <th><?=$this->getTrans('chmod') ?></th>
-            <th><?=$this->getTrans('available') ?></th>
-        </tr>
+            <tr>
+                <th><?=$this->getTrans('path') ?></th>
+                <th><?=$this->getTrans('fileOwner') ?></th>
+                <th><?=$this->getTrans('fileGroup') ?></th>
+                <th><?=$this->getTrans('chmod') ?></th>
+                <th><?=$this->getTrans('available') ?></th>
+            </tr>
         </thead>
         <tbody>
         <?php foreach ($this->get('results') as $result) : ?>

@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <label for="maintenanceDateTime" class="col-lg-2 col-form-label">
+        <label for="maintenanceEndDateTime" class="col-lg-2 col-form-label">
             <?=$this->getTrans('maintenanceEndDateTime') ?>:
         </label>
         <div id="maintenanceEndDateTime" class="col-xl-2 input-group ilch-date date form_datetime">
@@ -39,7 +39,7 @@
         </label>
         <div class="col-xl-4">
             <div class="range">
-                <input type="range" class="form-range" name="maintenanceStatus" min="0" max="100" value="<?=$this->escape($this->get('maintenanceStatus')) ?>" onchange="range.value=value">
+                <input type="range" class="form-range" id="maintenanceStatus" name="maintenanceStatus" min="0" max="100" value="<?=$this->escape($this->get('maintenanceStatus')) ?>" onchange="range.value=value">
                 <output id="range"><?=$this->escape($this->get('maintenanceStatus')) ?></output>
             </div>
         </div>
@@ -51,6 +51,7 @@
         <div class="col-xl-10">
             <textarea class="form-control ckeditor"
                       id="ck_1"
+                      id="maintenanceText"
                       name="maintenanceText"
                       toolbar="ilch_html"
                       rows="5"><?=$this->escape($this->get('maintenanceText')) ?></textarea>

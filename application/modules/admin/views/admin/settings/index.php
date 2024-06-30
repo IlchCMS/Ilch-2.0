@@ -16,7 +16,7 @@
                 <optgroup label="<?= $this->getTrans('pages') ?>">
                     <?php foreach ($pages as $page): ?>
                         <?php $selected = ''; ?>
-                        <?php if ($this->get('startPage') == 'page_'.$page->getID()): ?>
+                        <?php if ($this->get('startPage') == 'page_' . $page->getID()): ?>
                             <?php $selected = 'selected="selected"'; ?>
                         <?php endif; ?>
 
@@ -28,7 +28,7 @@
                     <?php foreach ($this->get('modules') as $module): ?>
                         <?php $content = $module->getContentForLocale($this->getTranslator()->getLocale()); ?>
                         <?php $selected = ''; ?>
-                        <?php if ($this->get('startPage') == 'module_'.$module->getKey()): ?>
+                        <?php if ($this->get('startPage') == 'module_' . $module->getKey()): ?>
                             <?php $selected = 'selected="selected"'; ?>
                         <?php endif; ?>
 
@@ -37,10 +37,10 @@
                 </optgroup>
                 <optgroup label="<?= $this->getTrans('layouts') ?>">
                 <?php $layouts = []; ?>
-                <?php foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath): ?>
+                <?php foreach (glob(APPLICATION_PATH . '/layouts/*') as $layoutPath): ?>
                     <?php if (is_dir($layoutPath)): ?>
                         <?php
-                        $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
+                        $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)) . '\\Config\\Config';
                         $config = new $configClass($this->getTranslator()); ?>
                         <?php if (empty($config->config['modulekey'])): ?>
                             <?php $config->config['modulekey'] = ''; ?>
@@ -48,7 +48,7 @@
 
                         <?php $module = $config->config['modulekey']; ?>
                         <?php $selected = ''; ?>
-                        <?php if ($this->get('startPage') == 'layouts_'.$module): ?>
+                        <?php if ($this->get('startPage') == 'layouts_' . $module): ?>
                             <?php $selected = 'selected="selected"'; ?>
                         <?php endif; ?>
 
@@ -156,9 +156,9 @@
 
     <h1><?= $this->getTrans('captcha') ?></h1>
     <div class="row mb-3">
-        <div for="captcha" class="col-xl-2 col-form-label">
+        <label for="captcha" class="col-xl-2 col-form-label">
             <?= $this->getTrans('captcha') ?>:
-        </div>
+        </label>
         <div class="col-xl-4">
             <select class="form-select" id="captcha" name="captcha">
                 <option <?= ($this->get('captcha') == 0 || !$this->get('captcha') ? 'selected="selected"' : '') ?> value="0"><?= $this->getTrans('default') ?></option>
@@ -275,11 +275,13 @@
                 <col>
             </colgroup>
             <thead>
-                <th></th>
-                <th></th>
-                <th><?= $this->getTrans('url') ?></th>
-                <th><?= $this->getTrans('operator') ?></th>
-                <th><?= $this->getTrans('country') ?></th>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th><?= $this->getTrans('url') ?></th>
+                    <th><?= $this->getTrans('operator') ?></th>
+                    <th><?= $this->getTrans('country') ?></th>
+                </tr>
             </thead>
             <tbody>
                 <?php foreach ($updateservers as $updateserver): ?>

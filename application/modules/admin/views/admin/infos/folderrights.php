@@ -29,7 +29,7 @@
                 <td>"/.htaccess"</td>
                 <td class="text-success"><?=$this->getTrans('writable') ?></td>
                 <td>
-                    <?php if (is_writable(ROOT_PATH.'/.htaccess')): ?>
+                    <?php if (is_writable(ROOT_PATH . '/.htaccess')): ?>
                         <span class="text-success"><?=$this->getTrans('writable') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>
@@ -40,7 +40,7 @@
                 <td>"/updates/"</td>
                 <td class="text-success"><?=$this->getTrans('writable') ?></td>
                 <td>
-                    <?php if (is_writable(ROOT_PATH.'/updates/')): ?>
+                    <?php if (is_writable(ROOT_PATH . '/updates/')): ?>
                         <span class="text-success"><?=$this->getTrans('writable') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>
@@ -51,7 +51,7 @@
                 <td>"/certificate/"</td>
                 <td class="text-success"><?=$this->getTrans('writable') ?></td>
                 <td>
-                    <?php if (is_writable(ROOT_PATH.'/certificate/')): ?>
+                    <?php if (is_writable(ROOT_PATH . '/certificate/')): ?>
                         <span class="text-success"><?=$this->getTrans('writable') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>
@@ -62,7 +62,7 @@
                 <td>"/backups/"</td>
                 <td class="text-success"><?=$this->getTrans('writable') ?></td>
                 <td>
-                    <?php if (is_writable(ROOT_PATH.'/backups/')): ?>
+                    <?php if (is_writable(ROOT_PATH . '/backups/')): ?>
                         <span class="text-success"><?=$this->getTrans('writable') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>
@@ -84,7 +84,7 @@
                 <td>"/application/modules/media/static/upload/"</td>
                 <td class="text-success"><?=$this->getTrans('writable') ?></td>
                 <td>
-                    <?php if (is_writable(APPLICATION_PATH.'/modules/media/static/upload/')): ?>
+                    <?php if (is_writable(APPLICATION_PATH . '/modules/media/static/upload/')): ?>
                         <span class="text-success"><?=$this->getTrans('writable') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>
@@ -95,7 +95,7 @@
                 <td>"/application/modules/user/static/upload/avatar/"</td>
                 <td class="text-success"><?=$this->getTrans('writable') ?></td>
                 <td>
-                    <?php if (is_writable(APPLICATION_PATH.'/modules/user/static/upload/avatar/')): ?>
+                    <?php if (is_writable(APPLICATION_PATH . '/modules/user/static/upload/avatar/')): ?>
                         <span class="text-success"><?=$this->getTrans('writable') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>
@@ -106,7 +106,7 @@
                 <td>"/application/modules/user/static/upload/gallery/"</td>
                 <td class="text-success"><?=$this->getTrans('writable') ?></td>
                 <td>
-                    <?php if (is_writable(APPLICATION_PATH.'/modules/user/static/upload/gallery/')): ?>
+                    <?php if (is_writable(APPLICATION_PATH . '/modules/user/static/upload/gallery/')): ?>
                         <span class="text-success"><?=$this->getTrans('writable') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>
@@ -119,7 +119,7 @@
                         <td>"/application/modules/<?=$folderright->getKey() ?>/<?=$folderright->getFolder() ?>/"</td>
                         <td class="text-success"><?=$this->getTrans('writable') ?></td>
                         <td>
-                            <?php if (is_writable(APPLICATION_PATH.'/modules/'.$folderright->getKey().'/'.$folderright->getFolder().'/')): ?>
+                            <?php if (is_writable(APPLICATION_PATH . '/modules/' . $folderright->getKey() . '/' . $folderright->getFolder() . '/')): ?>
                                 <span class="text-success"><?=$this->getTrans('writable') ?></span>
                             <?php else: ?>
                                 <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>

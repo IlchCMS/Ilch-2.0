@@ -52,22 +52,22 @@ function buildMenu($parentId, $menuData, View $view) {
                 $boxKey = $menuData['items'][$itemId]->getBoxKey();
             }
 
-            echo '<li id="list_'.$menuData['items'][$itemId]->getId().'" class="'.$class.'">';
+            echo '<li id="list_' . $menuData['items'][$itemId]->getId() . '" class="' . $class . '">';
             echo '<div>
                 <span class="disclose">
                     <i class="fa-solid fa-circle-minus"></i>
-                    <input type="hidden" class="hidden_id" name="items['.$menuData['items'][$itemId]->getId().'][id]" value="'.$menuData['items'][$itemId]->getId().'" />
-                    <input type="hidden" class="hidden_title" name="items['.$menuData['items'][$itemId]->getId().'][title]" value="'.$view->escape($menuData['items'][$itemId]->getTitle()).'" />
-                    <input type="hidden" class="hidden_href" name="items['.$menuData['items'][$itemId]->getId().'][href]" value="'.$menuData['items'][$itemId]->getHref().'" />
-                    <input type="hidden" class="hidden_target" name="items['.$menuData['items'][$itemId]->getId().'][target]" value="'.$menuData['items'][$itemId]->getTarget().'" />
-                    <input type="hidden" class="hidden_type" name="items['.$menuData['items'][$itemId]->getId().'][type]" value="'.$menuData['items'][$itemId]->getType().'" />
-                    <input type="hidden" class="hidden_siteid" name="items['.$menuData['items'][$itemId]->getId().'][siteid]" value="'.$menuData['items'][$itemId]->getSiteId().'" />
-                    <input type="hidden" class="hidden_boxkey" name="items['.$menuData['items'][$itemId]->getId().'][boxkey]" value="'.$boxKey.'" />
-                    <input type="hidden" class="hidden_modulekey" name="items['.$menuData['items'][$itemId]->getId().'][modulekey]" value="'.$menuData['items'][$itemId]->getModuleKey().'" />
-                    <input type="hidden" class="hidden_access" name="items['.$menuData['items'][$itemId]->getId().'][access]" value="'.$menuData['items'][$itemId]->getAccess().'" />
+                    <input type="hidden" class="hidden_id" name="items[' . $menuData['items'][$itemId]->getId() . '][id]" value="' . $menuData['items'][$itemId]->getId() . '" />
+                    <input type="hidden" class="hidden_title" name="items[' . $menuData['items'][$itemId]->getId() . '][title]" value="' . $view->escape($menuData['items'][$itemId]->getTitle()) . '" />
+                    <input type="hidden" class="hidden_href" name="items[' . $menuData['items'][$itemId]->getId() . '][href]" value="' . $menuData['items'][$itemId]->getHref() . '" />
+                    <input type="hidden" class="hidden_target" name="items[' . $menuData['items'][$itemId]->getId() . '][target]" value="' . $menuData['items'][$itemId]->getTarget() . '" />
+                    <input type="hidden" class="hidden_type" name="items[' . $menuData['items'][$itemId]->getId() . '][type]" value="' . $menuData['items'][$itemId]->getType() . '" />
+                    <input type="hidden" class="hidden_siteid" name="items[' . $menuData['items'][$itemId]->getId() . '][siteid]" value="' . $menuData['items'][$itemId]->getSiteId() . '" />
+                    <input type="hidden" class="hidden_boxkey" name="items[' . $menuData['items'][$itemId]->getId() . '][boxkey]" value="' . $boxKey . '" />
+                    <input type="hidden" class="hidden_modulekey" name="items[' . $menuData['items'][$itemId]->getId() . '][modulekey]" value="' . $menuData['items'][$itemId]->getModuleKey() . '" />
+                    <input type="hidden" class="hidden_access" name="items[' . $menuData['items'][$itemId]->getId() . '][access]" value="' . $menuData['items'][$itemId]->getAccess() . '" />
                     <span></span>
                 </span>
-                <span class="title">'.$view->escape($menuData['items'][$itemId]->getTitle()).'</span>
+                <span class="title">' . $view->escape($menuData['items'][$itemId]->getTitle()) . '</span>
                 <span class="item_delete"><i class="fa-solid fa-times-circle"></i></span>
                 <span class="item_edit"><i class="fa-regular fa-pen-to-square"></i></span>
             </div>';
@@ -379,17 +379,17 @@ $(document).ready
                 $('.dyn').html('<div class="row mb-3"><label for="href" class="col-xl-4 col-form-label"><?=$this->getTrans('address') ?></label>\n\
                                 <div class="col-xl-8"><input type="text" class="form-control" id="href" value="http://" /></div></div>\n\
                                 <div class="row mb-3"><label for="target" class="col-xl-4 col-form-label"><?=$this->getTrans('target') ?></label>\n\
-                                <div class="col-xl-8"><select class="form-select" id="target"><?php foreach ($targets as $target => $translation) { echo '<option value="'.$target.'">'.$this->getTrans($translation).'</option>';} ?></select></div></div>'+menuHtml);
+                                <div class="col-xl-8"><select class="form-select" id="target"><?php foreach ($targets as $target => $translation) { echo '<option value="' . $target . '">' . $this->getTrans($translation) . '</option>';} ?></select></div></div>'+menuHtml);
             } else if ($(this).val() == '2') {
                  $('.dyn').html('<div class="row mb-3"><label for="siteid" class="col-xl-4 col-form-label"><?=$this->getTrans('page') ?></label>\n\
-                                <div class="col-xl-8"><?php if (!empty($pages)) { echo '<select class="form-select" id="siteid">'; foreach ($pages as $page) { echo '<option value="'.$page->getId().'">'.$this->escape($page->getTitle()).'</option>';} echo '</select>'; } else { echo $this->getTrans('missingSite'); } ?></div></div>'+menuHtml);
+                                <div class="col-xl-8"><?php if (!empty($pages)) { echo '<select class="form-select" id="siteid">'; foreach ($pages as $page) { echo '<option value="' . $page->getId() . '">' . $this->escape($page->getTitle()) . '</option>';} echo '</select>'; } else { echo $this->getTrans('missingSite'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '3') {
                 $('.dyn').html('<div class="row mb-3"><label for="modulekey" class="col-xl-4 col-form-label"><?=$this->getTrans('module') ?></label>\n\
-                                <div class="col-lg-8"><?php if (!empty($modules)) { echo '<select class="form-select" id="modulekey">'; foreach ($modules as $module) { if ($module->getHideMenu() != true) { $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';}} echo '</select>'; } else { echo $this->getTrans('missingModule'); } ?></div></div>'+menuHtml);
+                                <div class="col-lg-8"><?php if (!empty($modules)) { echo '<select class="form-select" id="modulekey">'; foreach ($modules as $module) { if ($module->getHideMenu() != true) { $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="' . $module->getKey() . '">' . $content['name'] . '</option>';}} echo '</select>'; } else { echo $this->getTrans('missingModule'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '4') {
                 $('.dyn').html('<div class="row mb-3"><label for="boxkey" class="col-xl-4 col-form-label"><?=$this->getTrans('box') ?></label>\n\
                                 <div class="col-xl-8"><?='<select class="form-select" id="boxkey">';
-                    foreach ($boxes as $box) { echo '<option value="'.$box->getModule().'_'.$box->getKey().'">'.$box->getName().'</option>'; } foreach ($selfBoxes as $box) { echo '<option value="'.$box->getId().'">self_'.$this->escape($box->getTitle()).'</option>';} echo '</select>'; ?></div></div>');
+                    foreach ($boxes as $box) { echo '<option value="' . $box->getModule() . '_' . $box->getKey() . '">' . $box->getName() . '</option>'; } foreach ($selfBoxes as $box) { echo '<option value="' . $box->getId() . '">self_' . $this->escape($box->getTitle()) . '</option>';} echo '</select>'; ?></div></div>');
             }
         });
 

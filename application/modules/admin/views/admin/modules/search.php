@@ -4,7 +4,7 @@ $modulesOnUpdateServer = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
 $dependencies = $this->get('dependencies');
-$cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
+$cacheFilename = ROOT_PATH . '/cache/'.md5($this->get('updateserver')) . '.cache';
 $cacheFileDate = null;
 if (file_exists($cacheFilename)) {
     $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
@@ -54,7 +54,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer)
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('search') ?></h1>
-<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'search']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <?=(!empty($cacheFileDate)) ? '<span class="small">'.$this->getTrans('lastUpdateOn').' '.$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true).'</span>' : $this->getTrans('lastUpdateOn').': '.$this->getTrans('lastUpdateUnknown') ?></p>
+<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'search']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <?=(!empty($cacheFileDate)) ? '<span class="small">' . $this->getTrans('lastUpdateOn') . ' ' . $this->getTrans($cacheFileDate->format('l', true)) . $cacheFileDate->format(', d. ', true) . $this->getTrans($cacheFileDate->format('F', true)) . $cacheFileDate->format(' Y H:i', true) . '</span>' : $this->getTrans('lastUpdateOn') . ': ' . $this->getTrans('lastUpdateUnknown') ?></p>
 <div class="checkbox">
     <label><input type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey')? 'checked' : '' ?>/><?=$this->getTrans('gotokey') ?></label>
 </div>
@@ -188,12 +188,12 @@ usort($modulesOnUpdateServer, 'custom_sort');
                     </td>
                 </tr>
                 <?php
-                    $dependencyInfo = '<p>'.$this->getTrans('dependencyInfo').'</p>';
+                    $dependencyInfo = '<p>' . $this->getTrans('dependencyInfo') . '</p>';
                     foreach (checkOthersDependencies([$moduleOnUpdateServer->key => $moduleOnUpdateServer->version], $dependencies) as $key => $value) {
-                        $dependencyInfo .= '<b>'.$key.':</b> '.key($value).$value[key($value)].'<br />';
+                        $dependencyInfo .= '<b>' . $key . ':</b> '.key($value) . $value[key($value)] . '<br />';
                     }
                 ?>
-                <?=$this->getDialog('infoModal'.$moduleOnUpdateServer->key, $this->getTrans('dependencies').' '.$this->getTrans('info'), $dependencyInfo) ?>
+                <?=$this->getDialog('infoModal' . $moduleOnUpdateServer->key, $this->getTrans('dependencies') . ' ' . $this->getTrans('info'), $dependencyInfo) ?>
             <?php endforeach; ?>
         </tbody>
     </table>

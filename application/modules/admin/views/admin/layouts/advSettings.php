@@ -16,13 +16,13 @@
                     <col />
                 </colgroup>
                 <thead>
-                <tr>
-                    <th><?=$this->getCheckAllCheckbox('check_layouts') ?></th>
-                    <th></th>
-                    <th></th>
-                    <th><?=$this->getTrans('name') ?></th>
-                    <th><?=$this->getTrans('author') ?></th>
-                </tr>
+                    <tr>
+                        <th><?=$this->getCheckAllCheckbox('check_layouts') ?></th>
+                        <th></th>
+                        <th></th>
+                        <th><?=$this->getTrans('name') ?></th>
+                        <th><?=$this->getTrans('author') ?></th>
+                    </tr>
                 </thead>
                 <tbody>
                 <?php

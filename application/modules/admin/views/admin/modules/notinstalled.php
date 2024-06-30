@@ -4,7 +4,7 @@
     <?php
     $modulesList = url_get_contents($this->get('updateserver'));
     $modulesOnUpdateServer = json_decode($modulesList);
-    $cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
+    $cacheFilename = ROOT_PATH . '/cache/'.md5($this->get('updateserver')) . '.cache';
     $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
 
     function checkOwnDependencies(array $versionsOfModules, ?array $dependencies): bool
@@ -19,7 +19,7 @@
         return true;
     }
     ?>
-    <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'notinstalled']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true) ?></span></p>
+    <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'notinstalled']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <span class="small"><?=$this->getTrans('lastUpdateOn') ?> <?=$this->getTrans($cacheFileDate->format('l', true)) . $cacheFileDate->format(', d. ', true) . $this->getTrans($cacheFileDate->format('F', true)) . $cacheFileDate->format(' Y H:i', true) ?></span></p>
     <div id="modules" class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -58,9 +58,9 @@
                         $phpExtensions = array_combine($module->getPHPExtension(), $extensionCheck);
                         foreach ($phpExtensions as $key => $value) {
                             if ($value == true) {
-                                $phpExtension[] = '<font color="#3c763d">'.$key.'</font>';
+                                $phpExtension[] = '<font color="#3c763d">' . $key . '</font>';
                             } else {
-                                $phpExtension[] = '<font color="#a94442">'.$key.'</font>';
+                                $phpExtension[] = '<font color="#a94442">' . $key . '</font>';
                             }
                         }
 
@@ -68,15 +68,15 @@
                     }
 
                     if (version_compare(PHP_VERSION, $module->getPHPVersion(), '>=')) {
-                        $phpVersion = '<font color="#3c763d">'.$module->getPHPVersion().'</font>';
+                        $phpVersion = '<font color="#3c763d">' . $module->getPHPVersion() . '</font>';
                     } else {
-                        $phpVersion = '<font color="#a94442">'.$module->getPHPVersion().'</font>';
+                        $phpVersion = '<font color="#a94442">' . $module->getPHPVersion() . '</font>';
                     }
 
                     if (version_compare($this->get('coreVersion'), $module->getIlchCore(), '>=')) {
-                        $ilchCore = '<font color="#3c763d">'.$module->getIlchCore().'</font>';
+                        $ilchCore = '<font color="#3c763d">' . $module->getIlchCore() . '</font>';
                     } else {
-                        $ilchCore = '<font color="#a94442">'.$module->getIlchCore().'</font>';
+                        $ilchCore = '<font color="#a94442">' . $module->getIlchCore() . '</font>';
                     }
                     ?>
                     <tr id="Module_<?=$module->getKey() ?>">
@@ -157,29 +157,29 @@
 
                     <?php
                     if ($module->getLink() != '') {
-                        $author = '<a href="'.$module->getLink().'" alt="'.$this->escape($module->getAuthor()).'" title="'.$this->escape($module->getAuthor()).'" target="_blank" rel="noopener">'.$this->escape($module->getAuthor()).'</a>';
+                        $author = '<a href="' . $module->getLink() . '" alt="' . $this->escape($module->getAuthor()) . '" title="' . $this->escape($module->getAuthor()) . '" target="_blank" rel="noopener">' . $this->escape($module->getAuthor()) . '</a>';
                     } else {
                         $author = $this->escape($module->getAuthor());
                     }
-                    $moduleInfo = '<b>'.$this->getTrans('name').':</b> '.$this->escape($content['name']).'<br />
-                            <b>'.$this->getTrans('version').':</b> '.$this->escape($module->getVersion()).'<br />
-                            <b>'.$this->getTrans('author').':</b> '.$author.'<br /><br />
-                            <b>'.$this->getTrans('requirements').'</b><br />
-                            <b>'.$this->getTrans('ilchCoreVersion').':</b> '.$ilchCore.'<br />
-                            <b>'.$this->getTrans('phpVersion').':</b> '.$phpVersion.'<br />';
+                    $moduleInfo = '<b>' . $this->getTrans('name') . ':</b> ' . $this->escape($content['name']) . '<br />
+                            <b>' . $this->getTrans('version') . ':</b> ' . $this->escape($module->getVersion()) . '<br />
+                            <b>' . $this->getTrans('author') . ':</b> ' . $author . '<br /><br />
+                            <b>' . $this->getTrans('requirements') . '</b><br />
+                            <b>' . $this->getTrans('ilchCoreVersion') . ':</b> ' . $ilchCore . '<br />
+                            <b>' . $this->getTrans('phpVersion') . ':</b> ' . $phpVersion . '<br />';
                     if ($module->getPHPExtension()) {
-                        $moduleInfo .= '<b>'.$this->getTrans('phpExtensions').':</b> '.$phpExtension.'<br />';
+                        $moduleInfo .= '<b>' . $this->getTrans('phpExtensions') . ':</b> ' . $phpExtension . '<br />';
                     }
                     if ($module->getDepends()) {
-                        $moduleInfo .= '<b>'.$this->getTrans('dependencies').':</b><br />';
+                        $moduleInfo .= '<b>' . $this->getTrans('dependencies') . ':</b><br />';
 
                         foreach ($module->getDepends() as $key => $value) {
-                            $moduleInfo .= $key.' '. str_replace(',','', $value).'<br />';
+                            $moduleInfo .= $key . ' '. str_replace(',','', $value) . '<br />';
                         }
                     }
-                    $moduleInfo .= '<br /><b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
+                    $moduleInfo .= '<br /><b>' . $this->getTrans('desc') . ':</b><br />' . $content['description'];
                     ?>
-                    <?=$this->getDialog('infoModal'.$module->getKey(), $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo) ?>
+                    <?=$this->getDialog('infoModal' . $module->getKey(), $this->getTrans('menuModules') . ' ' . $this->getTrans('info'), $moduleInfo) ?>
                 <?php endforeach; ?>
             </tbody>
         </table>

@@ -6,7 +6,7 @@ $coreVersion = $this->get('coreVersion');
 $dependencies = $this->get('dependencies');
 $configurations = $this->get('configurations');
 $found = false;
-$cacheFilename = ROOT_PATH.'/cache/'.md5($this->get('updateserver')).'.cache';
+$cacheFilename = ROOT_PATH . '/cache/'.md5($this->get('updateserver')) . '.cache';
 $cacheFileDate = null;
 if (file_exists($cacheFilename)) {
     $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
@@ -54,7 +54,7 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('updatesAvailable') ?></h1>
-<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'updates']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <?=(!empty($cacheFileDate)) ? '<span class="small">'.$this->getTrans('lastUpdateOn').' '.$this->getTrans($cacheFileDate->format('l', true)).$cacheFileDate->format(', d. ', true).$this->getTrans($cacheFileDate->format('F', true)).$cacheFileDate->format(' Y H:i', true).'</span>' : $this->getTrans('lastUpdateOn').': '.$this->getTrans('lastUpdateUnknown') ?></p>
+<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'updates']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <?=(!empty($cacheFileDate)) ? '<span class="small">' . $this->getTrans('lastUpdateOn') . ' ' . $this->getTrans($cacheFileDate->format('l', true)) . $cacheFileDate->format(', d. ', true) . $this->getTrans($cacheFileDate->format('F', true)) . $cacheFileDate->format(' Y H:i', true) . '</span>' : $this->getTrans('lastUpdateOn') . ': ' . $this->getTrans('lastUpdateUnknown') ?></p>
 <div class="checkbox">
   <label><input class="me-2" type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey') ? 'checked' : '' ?>/><?=$this->getTrans('gotokey') ?></label>
 </div>
@@ -89,7 +89,7 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                     }
                 }
 
-                if (!$module->getSystemModule() && $this->getUser()->hasAccess('module_'.$module->getKey())):
+                if (!$module->getSystemModule() && $this->getUser()->hasAccess('module_' . $module->getKey())):
                     // Skip if there are no updates available either locally or on the updateserver
                     if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (empty($moduleUpdate['local']) && (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<')))) : ?>
                     <tr id="Module_<?=$module->getKey() ?>"></tr>
@@ -216,31 +216,31 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
 
                     <?php
                     if ($module->getLink() != '') {
-                        $author = '<a href="'.$module->getLink().'" title="'.$this->escape($module->getAuthor()).'" target="_blank" rel="noopener">'.$this->escape($module->getAuthor()).'</a>';
+                        $author = '<a href="' . $module->getLink() . '" title="' . $this->escape($module->getAuthor()) . '" target="_blank" rel="noopener">' . $this->escape($module->getAuthor()) . '</a>';
                     } else {
                         $author = $this->escape($module->getAuthor());
                     }
-                    $moduleInfo = '<b>'.$this->getTrans('name').':</b> '.$content['name'].'<br />
-                                   <b>'.$this->getTrans('version').':</b> '.$this->escape($module->getVersion()).'<br />
-                                   <b>'.$this->getTrans('author').':</b> '.$author.'<br />
-                                   <b>'.$this->getTrans('ilchCoreVersion').':</b> '.$configurations[$module->getKey()]['ilchCore'].'<br />
-                                   <b>'.$this->getTrans('phpVersion').':</b> '.$configurations[$module->getKey()]['phpVersion'].'<br />
-                                   <b>'.$this->getTrans('dependencies').':</b><br />';
+                    $moduleInfo = '<b>' . $this->getTrans('name') . ':</b> ' . $content['name'] . '<br />
+                                   <b>' . $this->getTrans('version') . ':</b> ' . $this->escape($module->getVersion()) . '<br />
+                                   <b>' . $this->getTrans('author') . ':</b> ' . $author . '<br />
+                                   <b>' . $this->getTrans('ilchCoreVersion') . ':</b> ' . $configurations[$module->getKey()]['ilchCore'] . '<br />
+                                   <b>' . $this->getTrans('phpVersion') . ':</b> ' . $configurations[$module->getKey()]['phpVersion'] . '<br />
+                                   <b>' . $this->getTrans('dependencies') . ':</b><br />';
                     $dependenciesForInfo = (!empty($configurations[$module->getKey()]['depends']) ? $configurations[$module->getKey()]['depends'] : []);
                     foreach ($dependenciesForInfo as $key => $value) {
-                        $moduleInfo .= $key.' '. str_replace(',','', $value).'<br />';
+                        $moduleInfo .= $key . ' '. str_replace(',','', $value) . '<br />';
                     }
 
-                    $moduleInfo .= '<br /><b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
+                    $moduleInfo .= '<br /><b>' . $this->getTrans('desc') . ':</b><br />' . $content['description'];
 
-                    $dependencyInfo = '<p>'.$this->getTrans('dependencyInfo').'</p>';
+                    $dependencyInfo = '<p>' . $this->getTrans('dependencyInfo') . '</p>';
                     foreach (checkOthersDependencies([$module->getKey() => $module->getVersion()], $dependencies) as $key => $value) {
-                        $dependencyInfo .= '<b>'.$key.':</b> '.key($value).$value[key($value)].'<br />';
+                        $dependencyInfo .= '<b>' . $key . ':</b> '.key($value) . $value[key($value)] . '<br />';
                     }
 
-                    echo $this->getDialog('dependencyInfoModal'.$module->getKey(), $this->getTrans('dependencies').' '.$this->getTrans('info'), $dependencyInfo);
+                    echo $this->getDialog('dependencyInfoModal' . $module->getKey(), $this->getTrans('dependencies') . ' ' . $this->getTrans('info'), $dependencyInfo);
                     ?>
-                    <?=$this->getDialog('infoModal'.$module->getKey(), $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo) ?>
+                    <?=$this->getDialog('infoModal' . $module->getKey(), $this->getTrans('menuModules') . ' ' . $this->getTrans('info'), $moduleInfo) ?>
                 <?php endif; ?>
             <?php endforeach; ?>
             <?php if (!$found) : ?>

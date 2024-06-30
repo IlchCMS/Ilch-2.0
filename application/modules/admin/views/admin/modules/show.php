@@ -28,9 +28,9 @@ foreach ($modules as $module): ?>
             $phpExtensions = array_combine($module->phpExtensions, $extensionCheck);
             foreach ($phpExtensions as $key => $value) {
                 if ($value == true) {
-                    $phpExtension[] = '<font color="#3c763d">'.$key.'</font>';
+                    $phpExtension[] = '<font color="#3c763d">' . $key . '</font>';
                 } else {
-                    $phpExtension[] = '<font color="#a94442">'.$key.'</font>';
+                    $phpExtension[] = '<font color="#a94442">' . $key . '</font>';
                 }
             }
 
@@ -47,9 +47,9 @@ foreach ($modules as $module): ?>
 
             foreach ($dependencyCheck as $key => $value) {
                 if ($value['result'] == true) {
-                    $dependency[] = '<font color="#3c763d">'.$key.' '.$value['condition'].'</font>';
+                    $dependency[] = '<font color="#3c763d">' . $key . ' ' . $value['condition'] . '</font>';
                 } else {
-                    $dependency[] = '<font color="#a94442">'.$key.' '.$value['condition'].'</font>';
+                    $dependency[] = '<font color="#a94442">' . $key . ' ' . $value['condition'] . '</font>';
                 }
             }
 
@@ -57,15 +57,15 @@ foreach ($modules as $module): ?>
         }
 
         if (version_compare(PHP_VERSION, $module->phpVersion, '>=')) {
-            $phpVersion = '<font color="#3c763d">'.$module->phpVersion.'</font>';
+            $phpVersion = '<font color="#3c763d">' . $module->phpVersion . '</font>';
         } else {
-            $phpVersion = '<font color="#a94442">'.$module->phpVersion.'</font>';
+            $phpVersion = '<font color="#a94442">' . $module->phpVersion . '</font>';
         }
 
         if (version_compare($coreVersion, $module->ilchCore, '>=')) {
-            $ilchCore = '<font color="#3c763d">'.$module->ilchCore.'</font>';
+            $ilchCore = '<font color="#3c763d">' . $module->ilchCore . '</font>';
         } else {
-            $ilchCore = '<font color="#a94442">'.$module->ilchCore.'</font>';
+            $ilchCore = '<font color="#a94442">' . $module->ilchCore . '</font>';
         }
         ?>
         <div id="module" class="tab-content">
@@ -76,7 +76,7 @@ foreach ($modules as $module): ?>
                         <?php $itemI = 0; ?>
                         <?php foreach ($module->thumbs as $thumb): ?>
                             <div class="item <?=$itemI == 0 ? 'active' : '' ?>">
-                                <img src="<?=$this->get('updateserver').'modules/images/'.$module->id.'/'.$thumb->img ?>" alt="<?=$this->escape($module->name) ?>">
+                                <img src="<?=$this->get('updateserver') . 'modules/images/' . $module->id . '/' . $thumb->img ?>" alt="<?=$this->escape($module->name) ?>">
                                 <div class="carousel-caption">
                                     <?php if ($thumb->desc != ''): ?>
                                         <?=$this->escape($thumb->desc) ?>

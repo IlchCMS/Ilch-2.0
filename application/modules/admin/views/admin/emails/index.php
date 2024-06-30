@@ -22,7 +22,7 @@ $moduleMapper = $this->get('moduleMapper');
                                 <?php continue; ?>
                             <?php endif; ?>
 
-                            <img src="<?=$this->getStaticUrl('img/lang/'.$key.'.png') ?>">
+                            <img src="<?=$this->getStaticUrl('img/lang/' . $key . '.png') ?>">
                         <?php endforeach; ?>
                     </th>
                 <?php endif; ?>
