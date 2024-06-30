@@ -2,6 +2,10 @@
 <h1><?=$this->getTrans('modulesNotInstalled') ?></h1>
 <?php if (!empty($this->get('modulesNotInstalled'))): ?>
     <?php
+
+    /** @var \Modules\Admin\Models\Module[] $modulesNotInstalled */
+    $modulesNotInstalled = $this->get('modulesNotInstalled');
+
     $modulesList = url_get_contents($this->get('updateserver'));
     $modulesOnUpdateServer = json_decode($modulesList);
     $cacheFilename = ROOT_PATH . '/cache/'.md5($this->get('updateserver')) . '.cache';
@@ -35,7 +39,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($this->get('modulesNotInstalled') as $module): ?>
+                <?php foreach ($modulesNotInstalled as $module): ?>
                     <?php
                     $content = $module->getContentForLocale($this->getTranslator()->getLocale());
 

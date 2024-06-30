@@ -1,4 +1,7 @@
 <?php
+
+/** @var \Modules\Admin\Models\Module[] $modules */
+$modules = $this->get('modules');
 $modulesList = url_get_contents($this->get('updateserver'));
 $modulesOnUpdateServer = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
@@ -54,7 +57,7 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('updatesAvailable') ?></h1>
-<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'updates']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <?=(!empty($cacheFileDate)) ? '<span class="small">' . $this->getTrans('lastUpdateOn') . ' ' . $this->getTrans($cacheFileDate->format('l', true)) . $cacheFileDate->format(', d. ', true) . $this->getTrans($cacheFileDate->format('F', true)) . $cacheFileDate->format(' Y H:i', true) . '</span>' : $this->getTrans('lastUpdateOn') . ': ' . $this->getTrans('lastUpdateUnknown') ?></p>
+<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'updates']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <span class="small"><?=(!empty($cacheFileDate)) ? $this->getTrans('lastUpdateOn') . ' ' . $this->getTrans($cacheFileDate->format('l', true)) . $cacheFileDate->format(', d. ', true) . $this->getTrans($cacheFileDate->format('F', true)) . $cacheFileDate->format(' Y H:i', true) : $this->getTrans('lastUpdateOn') . ': ' . $this->getTrans('lastUpdateUnknown') ?></span></p>
 <div class="checkbox">
   <label><input class="me-2" type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey') ? 'checked' : '' ?>/><?=$this->getTrans('gotokey') ?></label>
 </div>
@@ -73,7 +76,7 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->get('modules') as $module):
+            <?php foreach ($modules as $module):
                 $content = $module->getContentForLocale($this->getTranslator()->getLocale());
                 $moduleUpdate = [];
 

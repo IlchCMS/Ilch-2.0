@@ -1,7 +1,8 @@
-<link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
-
-<h1><?=$this->getTrans('manage') ?></h1>
 <?php
+
+/** @var \Modules\Admin\Models\Layout[] $layouts */
+$layouts = $this->get('layouts');
+
 $layoutsList = url_get_contents($this->get('updateserver'));
 $layoutsOnUpdateServer = json_decode($layoutsList);
 $versionsOfLayouts = $this->get('versionsOfLayouts');
@@ -13,9 +14,12 @@ if (file_exists($cacheFilename)) {
 $coreVersion = $this->get('coreVersion');
 $modulesNotInstalled = $this->get('modulesNotInstalled');
 ?>
-<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'index']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <?=(!empty($cacheFileDate)) ? '<span class="small">' . $this->getTrans('lastUpdateOn') . ' ' . $this->getTrans($cacheFileDate->format('l', true)) . $cacheFileDate->format(', d. ', true) . $this->getTrans($cacheFileDate->format('F', true)) . $cacheFileDate->format(' Y H:i', true) . '</span>' : $this->getTrans('lastUpdateOn') . ': ' . $this->getTrans('lastUpdateUnknown') ?></p>
+<link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
+
+<h1><?=$this->getTrans('manage') ?></h1>
+<p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'index']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <span class="small"><?=(!empty($cacheFileDate)) ? $this->getTrans('lastUpdateOn') . ' ' . $this->getTrans($cacheFileDate->format('l', true)) . $cacheFileDate->format(', d. ', true) . $this->getTrans($cacheFileDate->format('F', true)) . $cacheFileDate->format(' Y H:i', true) : $this->getTrans('lastUpdateOn') . ': ' . $this->getTrans('lastUpdateUnknown') ?></span></p>
 <div class="row">
-<?php foreach ($this->get('layouts') as $layout): ?>
+<?php foreach ($layouts as $layout): ?>
     <div id="layouts" class="col-xl-3 col-md-6">
         <div class="card mb-3">
             <div class="card-header">
