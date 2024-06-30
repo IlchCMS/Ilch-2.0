@@ -22,11 +22,13 @@
                     <col class="col-xl-1">
                 </colgroup>
                 <thead>
-                    <th><?=$this->getCheckAllCheckbox('check_notificationPermissions') ?></th>
-                    <th></th>
-                    <th></th>
-                    <th><?=$this->getTrans('module') ?></th>
-                    <th><?=$this->getTrans('limit') ?></th>
+                    <tr>
+                        <th><?=$this->getCheckAllCheckbox('check_notificationPermissions') ?></th>
+                        <th></th>
+                        <th></th>
+                        <th><?=$this->getTrans('module') ?></th>
+                        <th><?=$this->getTrans('limit') ?></th>
+                    </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($notificationPermissions as $notificationPermission): ?>

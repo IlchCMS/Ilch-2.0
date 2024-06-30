@@ -19,7 +19,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
         <p><?=$this->getTrans('foundNewVersions') ?><?=$newVersion ?></p>
         <?php if (!$missingRequirements) : ?>
             <?php if (!$doUpdate): ?>
-                <?php if (is_file(ROOT_PATH.'/updates/Master-'.$newVersion.'.zip')): ?>
+                <?php if (is_file(ROOT_PATH . '/updates/Master-' . $newVersion.'.zip')): ?>
                     <?php if (!$doSave): ?>
                         <p><?=$this->getTrans('isSave') ?>
                             <a class="btn btn-primary showOverlay"

@@ -46,8 +46,10 @@ $accesses = $this->get('accesses');
                     <col />
                 </colgroup>
                 <thead>
-                    <th></th>
-                    <th><?=$this->getTrans('version') ?></th>
+                    <tr>
+                        <th></th>
+                        <th><?=$this->getTrans('version') ?></th>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr>
@@ -86,8 +88,10 @@ $accesses = $this->get('accesses');
                         <col>
                     </colgroup>
                     <thead>
-                        <th><?=$this->getTrans('date') ?></th>
-                        <th><?=$this->getTrans('title') ?></th>
+                        <tr>
+                            <th><?=$this->getTrans('date') ?></th>
+                            <th><?=$this->getTrans('title') ?></th>
+                        </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($ilchNews as $news) : ?>

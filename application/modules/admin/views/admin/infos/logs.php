@@ -62,11 +62,11 @@ $userCache = [];
                     <col />
                 </colgroup>
                 <thead>
-                <tr>
-                    <th><?=$this->getTrans('time') ?></th>
-                    <th><?=$this->getTrans('users') ?></th>
-                    <th><?=$this->getTrans('info') ?></th>
-                </tr>
+                    <tr>
+                        <th><?=$this->getTrans('time') ?></th>
+                        <th><?=$this->getTrans('users') ?></th>
+                        <th><?=$this->getTrans('info') ?></th>
+                    </tr>
                 </thead>
                 <tbody>
         <?php foreach ($logs as $log) : ?>
