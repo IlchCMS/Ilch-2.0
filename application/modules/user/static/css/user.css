@@ -279,10 +279,6 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 
 .placeholder {
     outline: 1px dashed #4183C4;
-    /*-webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    margin: -1px;*/
 }
 
 #mediaModal {
@@ -369,9 +365,6 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 .text-start{
     font-size: 15px;
 }
-
-
-
 
 
 /* Profile sidebar */
@@ -461,7 +454,6 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
     border-left: 2px solid #5b9bd1;
     margin-left: -2px;
     border-right: 2px solid #5b9bd1;
-    /*! margin-right: -2px; */
 }
 
 /* Profile Content */
@@ -485,4 +477,43 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
     .profile-content .settings-stretch .col-md-4 .panel {
         width: 100%;
     }
+}
+
+
+/* sortable table rows and tables that can be filtered */
+#sortTable th.sort:after {
+    font-family: "Font Awesome 6 Free", sans-serif;
+    font-weight: 900;
+    display: inline;
+    content: ' \f0dc';
+    color: #ccc;
+}
+#sortTable th.sort:hover::after,
+#sortTable th.sort.asc:hover::after,
+#sortTable th.sort.desc:hover::after {
+    color: #f00;
+}
+#sortTable th.sort.asc:after {
+    font-family: "Font Awesome 6 Free", sans-serif;
+    font-weight: 900;
+    display: inline;
+    content: ' \f0dd';
+    color: #000;
+}
+#sortTable th.sort.desc:after {
+    font-family: "Font Awesome 6 Free", sans-serif;
+    font-weight: 900;
+    display: inline;
+    content: ' \f0de';
+    color: #000;
+}
+div.input-group.filter {
+    top: -3px;
+    width: 300px;
+    float: right;
+}
+div.input-group.filter input:not(:placeholder-shown) {
+    font-weight: bold;
+    color: #a94442;
+    background: #f2dede;
 }
