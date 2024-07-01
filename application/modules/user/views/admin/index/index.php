@@ -1,4 +1,17 @@
-<h1><?=$this->getTrans('manage') ?></h1>
+<link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
+
+<h1>
+    <?=$this->getTrans('manage') ?>
+    <div class="input-group input-group-sm filter">
+        <span class="input-group-text">
+            <i class="fa-solid fa-filter"></i>
+        </span>
+        <input type="text" id="filterInput" class="form-control" placeholder="<?=$this->getTrans('filter') ?>">
+        <span class="input-group-text">
+            <span id="filterClear" class="fa-solid fa-xmark"></span>
+        </span>
+    </div>
+</h1>
 <form method="POST">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
@@ -39,7 +52,7 @@
     </ul>
     <br />
     <div class="table-responsive">
-        <table class="table table-hover table-striped">
+        <table id="sortTable" class="table table-hover table-striped">
             <colgroup>
                 <col class="icon_width">
                 <col class="icon_width">
@@ -56,10 +69,10 @@
                     <th><?=$this->getCheckAllCheckbox('check_users') ?></th>
                     <th></th>
                     <th></th>
-                    <th><?=$this->getTrans('userName') ?></th>
-                    <th><?=$this->getTrans('userEmail') ?></th>
-                    <th><?=$this->getTrans('userDateCreated') ?></th>
-                    <th><?=$this->getTrans('userDateLastActivity') ?></th>
+                    <th class="sort"><?=$this->getTrans('userName') ?></th>
+                    <th class="sort"><?=$this->getTrans('userEmail') ?></th>
+                    <th class="sort"><?=$this->getTrans('userDateCreated') ?></th>
+                    <th class="sort"><?=$this->getTrans('userDateLastActivity') ?></th>
                     <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><th><?=$this->getTrans('selectsdeletetime') ?> <a class="badge" data-bs-toggle="modal" data-bs-target="#infoModal"><i class="fa-solid fa-info"></i></a></th><?php endif; ?>
                     <th><?=$this->getTrans('userGroups') ?></th>
                 </tr>
@@ -94,7 +107,7 @@
                             $dateLastActivity = $this->getTrans('neverLoggedIn');
                         }
                         ?>
-                        <tr>
+                        <tr class="filter">
                             <td><?=$this->getDeleteCheckbox('check_users', $user->getId()) ?></td>
                             <td>
                             <?php if ($this->getRequest()->getParam('showselectsdelete')): ?>
@@ -148,3 +161,38 @@
 <?php else: ?>
 <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
 <?php endif; ?>
+
+<script>
+    $("table").on("click", "th.sort", function () {
+        const index = $(this).index(),
+            rows = [],
+            thClass = $(this).hasClass("asc") ? "desc" : "asc";
+        $("#sortTable th.sort").removeClass("asc desc");
+        $(this).addClass(thClass);
+        $("#sortTable tbody tr").each(function (index, row) {
+            rows.push($(row).detach());
+        });
+        rows.sort(function (a, b) {
+            const aValue = $(a).find("td").eq(index).text(),
+                bValue = $(b).find("td").eq(index).text();
+            return aValue > bValue ? 1 : (aValue < bValue ? -1 : 0);
+        });
+        if ($(this).hasClass("desc")) {
+            rows.reverse();
+        }
+        $.each(rows, function (index, row) {
+            $("#sortTable tbody").append(row);
+        });
+    });
+    $("#filterInput").on("keyup", function() {
+        const value = $(this).val().toLowerCase();
+        $("#sortTable tr.filter").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+    $("#filterClear").click(function(){
+        $("#sortTable tr.filter").show(function() {
+            $("#filterInput").val('');
+        });
+    });
+</script>
