@@ -3,15 +3,15 @@
 <h1>
     <?=$this->getTrans('manage') ?>
 </h1>
-    <div class="input-group input-group-sm filter">
-        <span class="input-group-text">
-            <i class="fa-solid fa-filter"></i>
-        </span>
-        <input type="text" id="filterInput" class="form-control" placeholder="<?=$this->getTrans('filter') ?>">
-        <span class="input-group-text">
-            <span id="filterClear" class="fa-solid fa-xmark"></span>
-        </span>
-    </div>
+<div class="input-group input-group-sm filter">
+    <span class="input-group-text">
+        <i class="fa-solid fa-filter"></i>
+    </span>
+    <input type="text" id="filterInput" class="form-control" placeholder="<?=$this->getTrans('filter') ?>">
+    <span class="input-group-text">
+        <span id="filterClear" class="fa-solid fa-xmark"></span>
+    </span>
+</div>
 
 <form method="POST">
     <?=$this->getTokenField() ?>
@@ -69,17 +69,17 @@
                 <col>
             </colgroup>
             <thead>
-            <tr>
-                <th><?=$this->getCheckAllCheckbox('check_users') ?></th>
-                <th></th>
-                <th></th>
-                <th class="sort"><?=$this->getTrans('userName') ?></th>
-                <th class="sort"><?=$this->getTrans('userEmail') ?></th>
-                <th class="sort"><?=$this->getTrans('userDateCreated') ?></th>
-                <th class="sort"><?=$this->getTrans('userDateLastActivity') ?></th>
-                <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><th><?=$this->getTrans('selectsdeletetime') ?> <a class="badge" data-bs-toggle="modal" data-bs-target="#infoModal"><i class="fa-solid fa-info"></i></a></th><?php endif; ?>
-                <th><?=$this->getTrans('userGroups') ?></th>
-            </tr>
+                <tr>
+                    <th><?=$this->getCheckAllCheckbox('check_users') ?></th>
+                    <th></th>
+                    <th></th>
+                    <th class="sort"><?=$this->getTrans('userName') ?></th>
+                    <th class="sort"><?=$this->getTrans('userEmail') ?></th>
+                    <th class="sort"><?=$this->getTrans('userDateCreated') ?></th>
+                    <th class="sort"><?=$this->getTrans('userDateLastActivity') ?></th>
+                    <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><th><?=$this->getTrans('selectsdeletetime') ?> <a class="badge" data-bs-toggle="modal" data-bs-target="#infoModal"><i class="fa-solid fa-info"></i></a></th><?php endif; ?>
+                    <th><?=$this->getTrans('userGroups') ?></th>
+                </tr>
             </thead>
             <tbody>
             <?php
