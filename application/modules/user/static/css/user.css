@@ -389,11 +389,11 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 }
 
 .profile-sidebar.active > .profile-userpic{
-     height: 0;
-     -webkit-transition: height 0.8s;
-     -moz-transition: height 0.8s;
-     transition: height 0.8s;
- }
+    height: 0;
+    -webkit-transition: height 0.8s;
+    -moz-transition: height 0.8s;
+    transition: height 0.8s;
+}
 
 .profile-sidebar > .profile-userpic{
     height: 80px;
@@ -508,7 +508,6 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
     color: #000;
 }
 div.input-group.filter {
-    top: -3px;
     width: 300px;
     float: right;
 }
@@ -516,4 +515,23 @@ div.input-group.filter input:not(:placeholder-shown) {
     font-weight: bold;
     color: #a94442;
     background: #f2dede;
+}
+
+.full-width-container {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-tabs.full-width {
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: block;
+    box-sizing: border-box;
+}
+
+.nav-tabs .nav-link {
+    width: 100px;
 }
