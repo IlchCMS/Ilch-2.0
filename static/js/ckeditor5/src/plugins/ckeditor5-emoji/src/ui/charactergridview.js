@@ -1,4 +1,4 @@
-import { View, ButtonView } from '@ckeditor/ckeditor5-ui';
+import { View, ButtonView } from 'ckeditor5';
 
 import '../../theme/charactergrid.css';
 

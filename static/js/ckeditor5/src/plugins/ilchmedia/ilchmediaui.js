@@ -1,8 +1,4 @@
-import { Plugin } from '@ckeditor/ckeditor5-core';
-import ButtonView from '@ckeditor/ckeditor5-ui/src/model';
-import { createDropdown, addListToDropdown } from '@ckeditor/ckeditor5-ui/src/dropdown/utils';
-import ListSeparatorView from '@ckeditor/ckeditor5-ui/src//list/listseparatorview.js';
-import Collection from '@ckeditor/ckeditor5-utils/src/collection';
+import { addListToDropdown, ButtonView, Collection, createDropdown, ListSeparatorView, Plugin } from 'ckeditor5';
 import imageIcon from './icons/image.svg';
 import fileIcon from './icons/file.svg';
 import videoIcon from './icons/file-video.svg';

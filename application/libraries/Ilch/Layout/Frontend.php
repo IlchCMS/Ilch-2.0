@@ -536,6 +536,7 @@ class Frontend extends Base
         }
 
         $html .= '
+            <link href="' . $this->getStaticUrl('js/ckeditor5/build/ckeditor.css') . '" rel="stylesheet" type="text/css">
             <link href="' . $this->getStaticUrl('js/ckeditor5/styles.css') . '" rel="stylesheet" type="text/css">
             <link rel="apple-touch-icon" href="' . $this->getBaseUrl($this->escape($this->getAppleIcon())) . '">
             <link href="' . $this->getVendorUrl('fortawesome/font-awesome/css/all.min.css') . '" rel="stylesheet">

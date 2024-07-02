@@ -12,6 +12,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="<?=$this->getStaticUrl('img/favicon.ico') ?>">
 
         <!-- STYLES -->
+        <link href="<?=$this->getStaticUrl('js/ckeditor5/build/ckeditor.css') ?>" rel="stylesheet" type="text/css">
         <link href="<?=$this->getStaticUrl('js/ckeditor5/styles.css') ?>" rel="stylesheet" type="text/css">
         <link href="<?=$this->getVendorUrl('twbs/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
         <link href="<?=$this->getVendorUrl('fortawesome/font-awesome/css/all.min.css') ?>" rel="stylesheet">

@@ -1,5 +1,4 @@
-import { Collection } from '@ckeditor/ckeditor5-utils';
-import { ViewModel, FormHeaderView, createDropdown, addListToDropdown } from '@ckeditor/ckeditor5-ui';
+import { addListToDropdown, Collection, createDropdown, FormHeaderView, ViewModel } from 'ckeditor5';
 
 export default class EmojiCharactersNavigationView extends FormHeaderView {
 
