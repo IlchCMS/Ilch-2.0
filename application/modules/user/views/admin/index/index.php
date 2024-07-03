@@ -1,8 +1,10 @@
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
-<h1>
-    <?=$this->getTrans('manage') ?>
-    <div class="input-group input-group-sm filter">
+<div class="d-flex align-items-start">
+    <h1>
+        <?=$this->getTrans('manage') ?>
+    </h1>
+    <div class="input-group input-group-sm filter d-flex justify-content-end">
         <span class="input-group-text">
             <i class="fa-solid fa-filter"></i>
         </span>
@@ -11,45 +13,48 @@
             <span id="filterClear" class="fa-solid fa-xmark"></span>
         </span>
     </div>
-</h1>
+</div>
+
 <form method="POST">
     <?=$this->getTokenField() ?>
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>" class="nav-link <?php if (!$this->getRequest()->getParam('showsetfree') && !$this->getRequest()->getParam('showlocked') && !$this->getRequest()->getParam('showselectsdelete')) {
-        echo 'active';
-    } ?>">
-                <?=$this->getTrans('users') ?>
-            </a>
-        </li>
-        <?php if ($this->get('badge') > 0): ?>
+    <div class="full-width-container">
+        <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>" class="nav-link <?php if ($this->getRequest()->getParam('showsetfree')) {
-        echo 'active';
-    } ?>">
-                    <?=$this->getTrans('setfree') ?> <span class="badge"><?=$this->get('badge') ?></span>
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>" class="nav-link <?php if (!$this->getRequest()->getParam('showsetfree') && !$this->getRequest()->getParam('showlocked') && !$this->getRequest()->getParam('showselectsdelete')) {
+                    echo 'active';
+                } ?>">
+                    <?=$this->getTrans('users') ?>
                 </a>
             </li>
-        <?php endif; ?>
-        <?php if ($this->get('badgeLocked') > 0): ?>
-            <li class="nav-item">
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showlocked' => 1]) ?>" class="nav-link <?php if ($this->getRequest()->getParam('showlocked')) {
-        echo 'active';
-    } ?>">
-                    <?=$this->getTrans('unlock') ?> <span class="badge"><?=$this->get('badgeLocked') ?></span>
-                </a>
-            </li>
-        <?php endif; ?>
-        <?php if ($this->get('badgeSelectsDelete') > 0): ?>
-            <li class="nav-item">
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showselectsdelete' => 1]) ?>" class="nav-link <?php if ($this->getRequest()->getParam('showselectsdelete')) {
-        echo 'active';
-    } ?>">
-                    <?=$this->getTrans('selectsdelete') ?> <span class="badge rounded-pill bg-secondary text-white"><?=$this->get('badgeSelectsDelete') ?></span>
-                </a>
-            </li>
-        <?php endif; ?>
-    </ul>
+            <?php if ($this->get('badge') > 0): ?>
+                <li class="nav-item">
+                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>" class="nav-link <?php if ($this->getRequest()->getParam('showsetfree')) {
+                        echo 'active';
+                    } ?>">
+                        <?=$this->getTrans('setfree') ?> <span class="badge bg-primary"><?=$this->get('badge') ?></span>
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php if ($this->get('badgeLocked') > 0): ?>
+                <li class="nav-item">
+                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showlocked' => 1]) ?>" class="nav-link <?php if ($this->getRequest()->getParam('showlocked')) {
+                        echo 'active';
+                    } ?>">
+                        <?=$this->getTrans('unlock') ?> <span class="badge bg-primary"><?=$this->get('badgeLocked') ?></span>
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php if ($this->get('badgeSelectsDelete') > 0): ?>
+                <li class="nav-item">
+                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showselectsdelete' => 1]) ?>" class="nav-link <?php if ($this->getRequest()->getParam('showselectsdelete')) {
+                        echo 'active';
+                    } ?>">
+                        <?=$this->getTrans('selectsdelete') ?> <span class="badge bg-secondary"><?=$this->get('badgeSelectsDelete') ?></span>
+                    </a>
+                </li>
+            <?php endif; ?>
+        </ul>
+
     <br />
     <div class="table-responsive">
         <table id="sortTable" class="table table-hover table-striped">
