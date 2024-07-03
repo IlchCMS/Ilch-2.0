@@ -388,14 +388,14 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
     transition: margin-left 0.5s;
 }
 
-.profile-sidebar.active > .profile-userpic{
-     height: 0;
-     -webkit-transition: height 0.8s;
-     -moz-transition: height 0.8s;
-     transition: height 0.8s;
- }
+.profile-sidebar.active > .profile-userpic {
+    height: 0;
+    -webkit-transition: height 0.8s;
+    -moz-transition: height 0.8s;
+    transition: height 0.8s;
+}
 
-.profile-sidebar > .profile-userpic{
+.profile-sidebar > .profile-userpic {
     height: 80px;
     -webkit-transition: height 0.8s;
     -moz-transition: height 0.8s;
@@ -510,7 +510,8 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 div.input-group.filter {
     top: -3px;
     width: 300px;
-    float: right;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e5e5e5;
 }
 div.input-group.filter input:not(:placeholder-shown) {
     font-weight: bold;
