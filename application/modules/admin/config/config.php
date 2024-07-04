@@ -217,7 +217,8 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
             
-            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://www.ilch.de/ilch2_updates/stable/", "ilch", "Germany");';
+            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://www.ilch.de/ilch2_updates/stable/", "ilch", "Germany");
+            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://ilch.blackcoder.de/stable/", "ilch", "Germany");';
     }
 
     public function getUpdate(string $installedVersion): string
@@ -1000,6 +1001,11 @@ class Config extends \Ilch\Config\Install
 
                 // Remove BBCode helper class.
                 removeDir(APPLICATION_PATH . '/libraries/Ilch/BBCode');
+                
+                // Add second updateserver.
+                $this->db()->insert('updateservers')
+                    ->values(['url' => 'https://ilch.blackcoder.de/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
+                    ->execute();
                 break;
         }
 
