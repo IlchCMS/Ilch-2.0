@@ -177,3 +177,48 @@ img {
     border-radius: 5px !important;
     box-shadow: rgba(60, 80, 100, 0.5) 0px 1px 3px !important;
 }
+
+/* sortable table rows and tables that can be filtered */
+#sortTable th.sort:after {
+    font-family: "Font Awesome 6 Free", sans-serif;
+    font-weight: 900;
+    display: inline;
+    content: ' \f0dc';
+    color: #ccc;
+}
+#sortTable th.sort:hover::after,
+#sortTable th.sort.asc:hover::after,
+#sortTable th.sort.desc:hover::after {
+    color: #f00;
+}
+#sortTable th.sort.asc:after {
+    font-family: "Font Awesome 6 Free", sans-serif;
+    font-weight: 900;
+    display: inline;
+    content: ' \f0dd';
+    color: #000;
+}
+#sortTable th.sort.desc:after {
+    font-family: "Font Awesome 6 Free", sans-serif;
+    font-weight: 900;
+    display: inline;
+    content: ' \f0de';
+    color: #000;
+}
+div.heading-filter-wrapper {
+    height: 32px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+div.heading-filter-wrapper h1 {
+    border-bottom: none;
+}
+div.input-group.filter {
+    top: -4px;
+    width: 300px;
+}
+div.input-group.filter input:not(:placeholder-shown) {
+    font-weight: bold;
+    color: #a94442;
+    background: #f2dede;
+}
