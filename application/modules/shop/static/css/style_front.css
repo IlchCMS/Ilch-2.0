@@ -26,46 +26,6 @@ li em {
     font-style: normal;
 }
 
-/* sort table */
-#sortable td:hover {
-	cursor:move;
-}
-#sortable .placeholder {
-    outline: 0;
-    border: 0;
-	background-image: linear-gradient(135deg, #eeeeee 8.33%, #ffffff 8.33%, #ffffff 50%, #eeeeee 50%, #eeeeee 58.33%, #ffffff 58.33%, #ffffff 100%);
-	background-size: 12.00px 12.00px;
-}
-#sortTable th.sort {
-    cursor: pointer;
-}
-#sortTable th.sort:after {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    display: inline;
-    content: ' \f0dc';
-    color: #ccc;
-}
-#sortTable th.sort:hover::after,
-#sortTable th.sort.asc:hover::after,
-#sortTable th.sort.desc:hover::after {
-    color: #f00;
-}
-#sortTable th.sort.asc:after {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    display: inline;
-    content: ' \f0dd';
-    color: #000;
-}
-#sortTable th.sort.desc:after {
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    display: inline;
-    content: ' \f0de';
-    color: #000;
-}
-
 h1 a.activecart {
     float: right;
     text-decoration: none;
