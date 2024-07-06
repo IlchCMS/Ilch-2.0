@@ -1,8 +1,9 @@
 <?php $categoryMapper = $this->get('categoryMapper'); ?>
 <link href="<?=$this->getModuleUrl('static/css/shop_admin.css') ?>" rel="stylesheet">
 
-<h1><?=$this->getTrans('manage') ?>
-    <div class="input-group input-group-sm filter">
+<div class="d-flex align-items-start heading-filter-wrapper">
+    <h1><?=$this->getTrans('manage') ?></h1>
+    <div class="input-group input-group-sm filter d-flex justify-content-end">
         <span class="input-group-text">
             <i class="fa-solid fa-filter"></i>
         </span>
@@ -11,7 +12,7 @@
             <span id="filterClear" class="fa-solid fa-xmark"></span>
         </span>
     </div>
-</h1>
+</div>
 
 <?php if (!empty($this->get('shopItems'))) : ?>
     <form method="POST" action="">
