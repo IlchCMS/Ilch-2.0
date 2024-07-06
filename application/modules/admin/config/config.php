@@ -1006,6 +1006,22 @@ class Config extends \Ilch\Config\Install
                 $this->db()->insert('updateservers')
                     ->values(['url' => 'https://ilch.blackcoder.de/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
                     ->execute();
+
+                // Randomly pick one of the official servers if the previously only existing updateserver is currently chosen.
+                // This should evenly distribute the chosen official updateserver over time.
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $currentUpdateserver = $databaseConfig->get('updateserver');
+
+                if ($currentUpdateserver === 'https://www.ilch.de/ilch2_updates/stable/') {
+                    $updateservers = ['https://www.ilch.de/ilch2_updates/stable/', 'https://ilch.blackcoder.de/stable/'];
+                    $databaseConfig->set('updateserver', $updateservers[random_int(0, count($updateservers) - 1)]);
+                }
+
+                // Fix server information. There have been cases "in the wild" where this was altered.
+                $this->db()->update('updateservers')
+                    ->values(['operator' => 'ilch', 'country' => 'Germany'])
+                    ->where(['url' => 'https://www.ilch.de/ilch2_updates/stable/'])
+                    ->execute();
                 break;
         }
 
