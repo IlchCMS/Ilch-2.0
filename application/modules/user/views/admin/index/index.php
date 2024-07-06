@@ -1,9 +1,7 @@
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
-<div class="d-flex align-items-start">
-    <h1>
-        <?=$this->getTrans('manage') ?>
-    </h1>
+<div class="d-flex align-items-start heading-filter-wrapper">
+    <h1><?=$this->getTrans('manage') ?></h1>
     <div class="input-group input-group-sm filter d-flex justify-content-end">
         <span class="input-group-text">
             <i class="fa-solid fa-filter"></i>
