@@ -273,6 +273,17 @@ class BasePurifyTest extends TestCase
     }
 
     /**
+     * hyperlink with href mailto
+     *
+     * @return void
+     */
+    public function testPurifyHyperLinkMailto()
+    {
+        $output = $this->view->purify('<p><a href="mailto:test@test.test">mailto:test@test.test</a></p>');
+        self::assertEquals('<p><a href="mailto:test@test.test">mailto:test@test.test</a></p>', $output);
+    }
+
+    /**
      * anchor
      *
      * @return void

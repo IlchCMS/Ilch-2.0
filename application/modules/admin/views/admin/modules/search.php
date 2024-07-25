@@ -53,7 +53,18 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer)
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
-<h1><?=$this->getTrans('search') ?></h1>
+<div class="d-flex align-items-start heading-filter-wrapper">
+    <h1><?=$this->getTrans('search') ?></h1>
+    <div class="input-group input-group-sm filter d-flex justify-content-end">
+        <span class="input-group-text">
+            <i class="fa-solid fa-filter"></i>
+        </span>
+        <input type="text" id="filterInput" class="form-control" placeholder="<?=$this->getTrans('search') ?>">
+        <span class="input-group-text">
+            <span id="filterClear" class="fa-solid fa-xmark"></span>
+        </span>
+    </div>
+</div>
 <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'search']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <span class="small"><?=(!empty($cacheFileDate)) ? $this->getTrans('lastUpdateOn') . ' ' . $this->getTrans($cacheFileDate->format('l', true)) . $cacheFileDate->format(', d. ', true) . $this->getTrans($cacheFileDate->format('F', true)) . $cacheFileDate->format(' Y H:i', true) : $this->getTrans('lastUpdateOn') . ': ' . $this->getTrans('lastUpdateUnknown') ?></span></p>
 <div class="checkbox">
     <label><input type="checkbox" name="setgotokey" onclick="gotokeyAll();" <?=$this->get('gotokey')? 'checked' : '' ?>/><?=$this->getTrans('gotokey') ?></label>
@@ -69,13 +80,6 @@ usort($modulesOnUpdateServer, 'custom_sort');
 ?>
 
 <div id="modules" class="table-responsive">
-  <div class="row">
-    <div class="col-xl-12 input-group user-search">
-        <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-        <input class="form-control hasclear" id="user-search" placeholder="<?=$this->getTrans('search') ?>" required>
-    </div>
-  </div>
-    <br />
     <table class="table table-hover table-striped table-list-search">
         <colgroup>
             <col class="col-xl-2" />

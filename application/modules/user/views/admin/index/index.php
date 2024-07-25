@@ -1,8 +1,8 @@
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
-<h1>
-    <?=$this->getTrans('manage') ?>
-    <div class="input-group input-group-sm filter">
+<div class="d-flex align-items-start heading-filter-wrapper">
+    <h1><?=$this->getTrans('manage') ?></h1>
+    <div class="input-group input-group-sm filter d-flex justify-content-end">
         <span class="input-group-text">
             <i class="fa-solid fa-filter"></i>
         </span>
@@ -11,40 +11,33 @@
             <span id="filterClear" class="fa-solid fa-xmark"></span>
         </span>
     </div>
-</h1>
+</div>
+
 <form method="POST">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>" class="nav-link <?php if (!$this->getRequest()->getParam('showsetfree') && !$this->getRequest()->getParam('showlocked') && !$this->getRequest()->getParam('showselectsdelete')) {
-        echo 'active';
-    } ?>">
+            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>" class="nav-link<?=(!$this->getRequest()->getParam('showsetfree') && !$this->getRequest()->getParam('showlocked') && !$this->getRequest()->getParam('showselectsdelete')) ? ' active' : '' ?>">
                 <?=$this->getTrans('users') ?>
             </a>
         </li>
         <?php if ($this->get('badge') > 0): ?>
             <li class="nav-item">
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>" class="nav-link <?php if ($this->getRequest()->getParam('showsetfree')) {
-        echo 'active';
-    } ?>">
-                    <?=$this->getTrans('setfree') ?> <span class="badge"><?=$this->get('badge') ?></span>
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>" class="nav-link<?=($this->getRequest()->getParam('showsetfree')) ? ' active' : '' ?>">
+                    <?=$this->getTrans('setfree') ?> <span class="badge rounded-pill bg-secondary text-white"><?=$this->get('badge') ?></span>
                 </a>
             </li>
         <?php endif; ?>
         <?php if ($this->get('badgeLocked') > 0): ?>
             <li class="nav-item">
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showlocked' => 1]) ?>" class="nav-link <?php if ($this->getRequest()->getParam('showlocked')) {
-        echo 'active';
-    } ?>">
-                    <?=$this->getTrans('unlock') ?> <span class="badge"><?=$this->get('badgeLocked') ?></span>
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showlocked' => 1]) ?>" class="nav-link<?=($this->getRequest()->getParam('showlocked')) ? ' active' : '' ?>">
+                    <?=$this->getTrans('unlock') ?> <span class="badge rounded-pill bg-secondary text-white"><?=$this->get('badgeLocked') ?></span>
                 </a>
             </li>
         <?php endif; ?>
         <?php if ($this->get('badgeSelectsDelete') > 0): ?>
             <li class="nav-item">
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showselectsdelete' => 1]) ?>" class="nav-link <?php if ($this->getRequest()->getParam('showselectsdelete')) {
-        echo 'active';
-    } ?>">
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showselectsdelete' => 1]) ?>" class="nav-link<?=($this->getRequest()->getParam('showselectsdelete')) ? ' active' : '' ?>">
                     <?=$this->getTrans('selectsdelete') ?> <span class="badge rounded-pill bg-secondary text-white"><?=$this->get('badgeSelectsDelete') ?></span>
                 </a>
             </li>
@@ -78,38 +71,38 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                if ($this->get('userList') != ''):
-                    foreach ($this->get('userList') as $user):
-                        $groups = '';
+            <?php
+            if ($this->get('userList') != ''):
+                foreach ($this->get('userList') as $user):
+                    $groups = '';
 
-                        foreach ($user->getGroups() as $group) {
-                            if ($groups != '') {
-                                $groups .= ', ';
-                            }
-
-                            $groups .= $group->getName();
+                    foreach ($user->getGroups() as $group) {
+                        if ($groups != '') {
+                            $groups .= ', ';
                         }
 
-                        if ($groups === '') {
-                            $groups = $this->getTrans('noGroupsAssigned');
-                        }
+                        $groups .= $group->getName();
+                    }
 
-                        $dateConfirmed = $user->getDateConfirmed();
+                    if ($groups === '') {
+                        $groups = $this->getTrans('noGroupsAssigned');
+                    }
 
-                        if ($dateConfirmed == '') {
-                            $dateConfirmed = $this->getTrans('notConfirmedYet');
-                        }
+                    $dateConfirmed = $user->getDateConfirmed();
 
-                        $dateLastActivity = $user->getDateLastActivity();
+                    if ($dateConfirmed == '') {
+                        $dateConfirmed = $this->getTrans('notConfirmedYet');
+                    }
 
-                        if ($dateLastActivity !== null && $dateLastActivity->getTimestamp() == 0) {
-                            $dateLastActivity = $this->getTrans('neverLoggedIn');
-                        }
-                        ?>
-                        <tr class="filter">
-                            <td><?=$this->getDeleteCheckbox('check_users', $user->getId()) ?></td>
-                            <td>
+                    $dateLastActivity = $user->getDateLastActivity();
+
+                    if ($dateLastActivity !== null && $dateLastActivity->getTimestamp() == 0) {
+                        $dateLastActivity = $this->getTrans('neverLoggedIn');
+                    }
+                    ?>
+                    <tr class="filter">
+                        <td><?=$this->getDeleteCheckbox('check_users', $user->getId()) ?></td>
+                        <td>
                             <?php if ($this->getRequest()->getParam('showselectsdelete')): ?>
                                 <a href="<?=$this->getUrl(['action' => 'selectsdelete', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('deleteaccountreset') ?>"><i class="fa-solid fa-check text-success"></i></a>
                             <?php elseif ($this->getRequest()->getParam('showsetfree')): ?>
@@ -119,13 +112,13 @@
                             <?php else: ?>
                                 <?=((($user->isAdmin() and $this->getUser()->isAdmin()) or !$user->isAdmin())?$this->getEditIcon(['action' => 'treat', 'id' => $user->getId()]):'') ?>
                             <?php endif; ?>
-                            </td>
-                            <td><?=((($user->isAdmin() and $this->getUser()->isAdmin()) or !$user->isAdmin())?$this->getDeleteIcon(['action' => 'delete', 'id' => $user->getId()]):'') ?></td>
-                            <td><?=$this->escape($user->getName()) ?></td>
-                            <td><?=$this->escape($user->getEmail()) ?></td>
-                            <td><?=$this->escape($user->getDateCreated()) ?></td>
-                            <td><?=$this->escape($user->getDateLastActivity()) ?></td>
-                            <?php if ($this->getRequest()->getParam('showselectsdelete')): ?>
+                        </td>
+                        <td><?=((($user->isAdmin() and $this->getUser()->isAdmin()) or !$user->isAdmin())?$this->getDeleteIcon(['action' => 'delete', 'id' => $user->getId()]):'') ?></td>
+                        <td><?=$this->escape($user->getName()) ?></td>
+                        <td><?=$this->escape($user->getEmail()) ?></td>
+                        <td><?=$this->escape($user->getDateCreated()) ?></td>
+                        <td><?=$this->escape($user->getDateLastActivity()) ?></td>
+                        <?php if ($this->getRequest()->getParam('showselectsdelete')): ?>
                             <?php
                             if ($this->get('timetodelete') > 0) {
                                 $date = new \Ilch\Date();
@@ -137,15 +130,15 @@
                             }
                             ?>
                             <td><p class="text-<?=$classadd ?>"><?=$this->escape($user->getSelectsDelete()) ?></p></td>
-                            <?php endif; ?>
-                            <td><?=$this->escape($groups) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="7"><?=$this->getTrans('noUsersExist') ?></td>
+                        <?php endif; ?>
+                        <td><?=$this->escape($groups) ?></td>
                     </tr>
-                <?php endif; ?>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="7"><?=$this->getTrans('noUsersExist') ?></td>
+                </tr>
+            <?php endif; ?>
             </tbody>
         </table>
     </div>
@@ -153,13 +146,13 @@
 </form>
 <?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('selectsdeletetimeInfoText')) ?>
 <?php if ($this->getRequest()->getParam('showselectsdelete')): ?>
-<?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'showselectsdelete' => 1]) ?>
+    <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'showselectsdelete' => 1]) ?>
 <?php elseif ($this->getRequest()->getParam('showsetfree')): ?>
-<?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'showsetfree' => 1]) ?>
+    <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'showsetfree' => 1]) ?>
 <?php elseif ($this->getRequest()->getParam('showlocked')): ?>
-<?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'showlocked' => 1]) ?>
+    <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'showlocked' => 1]) ?>
 <?php else: ?>
-<?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
+    <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
 <?php endif; ?>
 
 <script>

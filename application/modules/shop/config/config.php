@@ -14,7 +14,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'shop',
-        'version' => '1.3.0',
+        'version' => '1.3.1',
         'icon_small' => 'fa-solid fa-cart-shopping',
         'author' => 'blackcoder & LordSchirmer',
         'link' => 'https://ilch.de',
@@ -29,8 +29,8 @@ class Config extends Install
                 'description' => 'A small shop can be created here.',
             ],
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'ilchCore' => '2.2.2',
+        'phpVersion' => '7.4'
     ];
 
     public function install()
