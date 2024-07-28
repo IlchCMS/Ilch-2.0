@@ -6,6 +6,7 @@ const path = require( 'path' );
 const TerserWebpackPlugin = require( 'terser-webpack-plugin' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const CssMinimizerPlugin = require( 'css-minimizer-webpack-plugin' );
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
 devtool: false,
@@ -20,7 +21,8 @@ output: {
     path: path.resolve( __dirname, 'build' ),
     filename: 'ckeditor.js',
     libraryTarget: 'umd',
-    libraryExport: 'default'
+    libraryExport: 'default',
+    clean: true,
 },
 
 optimization: {
@@ -43,6 +45,11 @@ plugins: [
     new MiniCssExtractPlugin( {
         filename: 'ckeditor.css'
     } ),
+    new CopyPlugin({
+      patterns: [
+        { from: path.resolve( __dirname, 'node_modules', 'ckeditor5', 'dist', 'translations' ) , to: path.resolve( __dirname, 'build', 'translations' ) },
+      ],
+    }),
 ],
 
 resolve: {
