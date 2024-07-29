@@ -1003,7 +1003,7 @@ class Config extends \Ilch\Config\Install
                 removeDir(APPLICATION_PATH . '/libraries/Ilch/BBCode');
                 
                 // Add second updateserver.
-                $this->db()->insert('updateservers')
+                $this->db()->insert('admin_updateservers')
                     ->values(['url' => 'https://ilch.blackcoder.de/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
                     ->execute();
 
@@ -1018,7 +1018,7 @@ class Config extends \Ilch\Config\Install
                 }
 
                 // Fix server information. There have been cases "in the wild" where this was altered.
-                $this->db()->update('updateservers')
+                $this->db()->update('admin_updateservers')
                     ->values(['operator' => 'ilch', 'country' => 'Germany'])
                     ->where(['url' => 'https://www.ilch.de/ilch2_updates/stable/'])
                     ->execute();
