@@ -245,7 +245,7 @@ function url_get_contents(string $url, bool $write_cache = true, bool $ignoreCac
     $hash = md5($url);
     $file = buildPath($where, $hash . '.cache');
 
-    // check the bloody file.
+    // check the file.
     $mtime = 0;
     if (file_exists($file)) {
         $mtime = filemtime($file);
@@ -257,10 +257,9 @@ function url_get_contents(string $url, bool $write_cache = true, bool $ignoreCac
         $ch = curl_init($url);
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_USERAGENT      => 'Ilch 2 (+https://www.ilch.de)',
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS      => 5,
-            CURLOPT_CONNECTTIMEOUT => 15,
+            CURLOPT_CONNECTTIMEOUT => 10,
             CURLOPT_TIMEOUT        => 30,
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_SSL_VERIFYHOST => 2,

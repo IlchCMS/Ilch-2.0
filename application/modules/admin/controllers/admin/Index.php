@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -35,7 +35,7 @@ class Index extends \Ilch\Controller\Admin
         // Delete all expired authTokens of the remember-me-feature
         $authTokenMapper = new \Modules\User\Mappers\AuthToken();
         $authTokenMapper->deleteExpiredAuthTokens();
-        // Check if Ilch is up to date
+        // Check if Ilch is up-to-date
         $update = new \Ilch\Transfer();
         $update->setTransferUrl($this->getConfig()->get('updateserver') . 'updates.json');
         $update->setVersionNow($this->getConfig()->get('version'));
@@ -43,15 +43,15 @@ class Index extends \Ilch\Controller\Admin
         $update->setCurlOpt(CURLOPT_SSL_VERIFYHOST, 2);
         $update->setCurlOpt(CURLOPT_CAINFO, ROOT_PATH . '/certificate/cacert.pem');
         $update->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
-        $update->setCurlOpt(CURLOPT_TIMEOUT, 20);
         $update->setCurlOpt(CURLOPT_CONNECTTIMEOUT, 10);
+        $update->setCurlOpt(CURLOPT_TIMEOUT, 30);
         $update->setCurlOpt(CURLOPT_FAILONERROR, true);
 
         if ($update->getVersions() == '') {
-            $this->getView()->set('curlErrorOccured', true);
+            $this->getView()->set('curlErrorOccurred', true);
             $this->addMessage($this->getTranslator()->trans('versionQueryFailedWith', curl_error($update->getTransferUrl())), 'danger');
         } else {
-            // If check for an ilch update didn't already failed then check for module updates
+            // If a check for an ilch update was successfull then check for module updates and the latest news as well.
             $countOfUpdatesAvailable = 0;
             $modulesList = url_get_contents($this->getConfig()->get('updateserver') . 'modules.json');
             $modulesOnUpdateServer = json_decode($modulesList);
@@ -81,6 +81,9 @@ class Index extends \Ilch\Controller\Admin
                 // There are no module updates available. Delete notifications.
                 $notificationsMapper->deleteNotificationsByType('adminModuleUpdatesAvailable');
             }
+
+            // Load the latest news.
+            $ilchNewsList = url_get_contents($this->getConfig()->get('updateserver') . 'ilchNews.json', true, false, 120);
         }
 
         if ($update->newVersionFound()) {
@@ -91,7 +94,7 @@ class Index extends \Ilch\Controller\Admin
 
         // Check if there are notifications, which need to be shown
         $notificationsMapper = new NotificationsMapper();
-        $this->getView()->set('ilchNewsList', $this->getConfig()->get('updateserver') . 'ilchNews.json');
+        $this->getView()->set('ilchNews', json_decode($ilchNewsList ?? ''));
         $this->getView()->set('version', $this->getConfig()->get('version'));
         $this->getView()->set('notifications', $notificationsMapper->getNotifications());
         $this->getView()->set('accesses', $this->getAccesses());
