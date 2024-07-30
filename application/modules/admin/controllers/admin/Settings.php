@@ -303,6 +303,7 @@ HTACCESS;
         $update->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
         $update->setCurlOpt(CURLOPT_FAILONERROR, true);
         $update->setCurlOpt(CURLOPT_CONNECTTIMEOUT, 10);
+        $update->setCurlOpt(CURLOPT_TIMEOUT, 30);
         $update->setZipSavePath(ROOT_PATH.'/updates/');
 
         $result = $update->getVersions();
