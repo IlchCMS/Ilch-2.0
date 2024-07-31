@@ -376,7 +376,7 @@ class Statistic extends \Ilch\Mapper
      * @param string|null $os
      * @return null|StatisticModel[]
      */
-    public function getVisitsOS(?int $year = null, int $month = null, ?string $os = null): ?array
+    public function getVisitsOS(?int $year = null, ?int $month = null, ?string $os = null): ?array
     {
         $os = $this->db()->escape($os);
         $sql = 'SELECT 

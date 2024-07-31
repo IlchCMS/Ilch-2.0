@@ -31,7 +31,7 @@ class Calendar extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['c.id' => 'DESC'], \Ilch\Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['c.id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
     {
         $read_access = '';
         if (isset($where['ra.group_id'])) {

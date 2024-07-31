@@ -223,7 +223,7 @@ class Mysql
      * @param array|int|null $limit
      * @return Mysql\Select
      */
-    public function select($fields = null, $table = null, $where = null, array $orderBy = null, $limit = null)
+    public function select($fields = null, $table = null, $where = null, ?array $orderBy = null, $limit = null)
     {
         return new Mysql\Select($this, $fields, $table, $where, $orderBy, $limit);
     }

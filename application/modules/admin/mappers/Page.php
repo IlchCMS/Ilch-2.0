@@ -33,7 +33,7 @@ class Page extends \Ilch\Mapper
      * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['p.id' => 'DESC'], Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['p.id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['p.id', 'p.date_created'])

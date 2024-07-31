@@ -455,7 +455,7 @@ class Article extends \Ilch\Mapper
      * @throws \Ilch\Database\Exception
      * @since 2.1.44
      */
-    public function getCountArticlesByMonthYearAccess(string $date = null, $groupIds = '3'): int
+    public function getCountArticlesByMonthYearAccess(?string $date = null, $groupIds = '3'): int
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -523,7 +523,7 @@ class Article extends \Ilch\Mapper
      * @todo: Remove the group (aggregate) function MAX() workaround, which avoids duplicated entries in the archive-box if possible.
      * @since 2.1.44
      */
-    public function getArticleDateListAccess($groupIds = '3', int $limit = null): array
+    public function getArticleDateListAccess($groupIds = '3', ?int $limit = null): array
     {
         $sql = 'SELECT MAX(`date_created`) AS `date_created`
                 FROM `[prefix]_articles`
@@ -609,7 +609,7 @@ class Article extends \Ilch\Mapper
      * @return array|null
      * @since 2.1.44
      */
-    public function getArticleListAccess($groupIds = '3', string $locale = '', int $limit = null)
+    public function getArticleListAccess($groupIds = '3', string $locale = '', ?int $limit = null)
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -714,7 +714,7 @@ class Article extends \Ilch\Mapper
      * @return array
      * @since 2.1.44
      */
-    public function getKeywordsListAccess($groupIds = '3', int $limit = null): array
+    public function getKeywordsListAccess($groupIds = '3', ?int $limit = null): array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -1049,7 +1049,7 @@ class Article extends \Ilch\Mapper
      * @param int $id
      * @param CommentMapper|null $commentsMapper
      */
-    public function deleteWithComments($id, CommentMapper $commentsMapper = null)
+    public function deleteWithComments($id, ?CommentMapper $commentsMapper = null)
     {
         $this->delete($id);
         // An instance of the comments mapper can be passed as argument to this
