@@ -8,7 +8,7 @@
 
     $modulesList = url_get_contents($this->get('updateserver'));
     $modulesOnUpdateServer = json_decode($modulesList);
-    $cacheFilename = ROOT_PATH . '/cache/'.md5($this->get('updateserver')) . '.cache';
+    $cacheFilename = ROOT_PATH . '/cache/' . md5($this->get('updateserver')) . '.cache';
     $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));
 
     function checkOwnDependencies(array $versionsOfModules, ?array $dependencies): bool

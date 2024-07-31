@@ -251,7 +251,7 @@ HTACCESS;
 
                 $htaccess = explode(PHP_EOL, $htaccess);
                 // Writing the htaccess file and removing the mod rewrite default lines if necessary
-                $filePointer = fopen(ROOT_PATH.'/.htaccess', 'wb');
+                $filePointer = fopen(ROOT_PATH . '/.htaccess', 'wb');
                 foreach($htaccess as $line) {
                     if ($removeModRewrite && (strpos($line, '# Begin Mod Rewrite default lines') !== false)) {
                         $this->addMessage('modrewriteLinesRemoved', 'info');
@@ -278,7 +278,7 @@ HTACCESS;
         }
 
         $this->getView()->set('modRewrite', $this->getConfig()->get('mod_rewrite'));
-        $this->getView()->set('htaccess', file_get_contents(ROOT_PATH.'/.htaccess'));
+        $this->getView()->set('htaccess', file_get_contents(ROOT_PATH . '/.htaccess'));
     }
 
     public function updateAction()
@@ -299,12 +299,12 @@ HTACCESS;
         $update->setVersionNow($version);
         $update->setCurlOpt(CURLOPT_SSL_VERIFYPEER, TRUE);
         $update->setCurlOpt(CURLOPT_SSL_VERIFYHOST, 2); 
-        $update->setCurlOpt(CURLOPT_CAINFO, ROOT_PATH.'/certificate/cacert.pem');
+        $update->setCurlOpt(CURLOPT_CAINFO, ROOT_PATH . '/certificate/cacert.pem');
         $update->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
         $update->setCurlOpt(CURLOPT_FAILONERROR, true);
         $update->setCurlOpt(CURLOPT_CONNECTTIMEOUT, 10);
         $update->setCurlOpt(CURLOPT_TIMEOUT, 30);
-        $update->setZipSavePath(ROOT_PATH.'/updates/');
+        $update->setZipSavePath(ROOT_PATH . '/updates/');
 
         $result = $update->getVersions();
         if ($result == '') {
@@ -314,8 +314,8 @@ HTACCESS;
         $this->getView()->set('versions', $result);
 
         if ($update->newVersionFound() == true) {
-            $update->setDownloadUrl($this->getConfig()->get('updateserver').'updates/Master-'.$update->getNewVersion().'.zip');
-            $update->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'updates/Master-'.$update->getNewVersion().'.zip-signature.sig');
+            $update->setDownloadUrl($this->getConfig()->get('updateserver') . 'updates/Master-' . $update->getNewVersion() . '.zip');
+            $update->setDownloadSignatureUrl($this->getConfig()->get('updateserver') . 'updates/Master-' . $update->getNewVersion() . '.zip-signature.sig');
             $newVersion = $update->getNewVersion();
             $this->getView()->set('foundNewVersions', true);
             $this->getView()->set('newVersion', $newVersion);
@@ -324,17 +324,17 @@ HTACCESS;
                 // Add details of missingRequirements to the error message.
                 $missingRequirementsMessages = [];
                 if (!empty($update->getMissingRequirements()['phpVersion'])) {
-                    $missingRequirementsMessages[] = $this->getTranslator()->trans('phpVersionError').' (<'.$update->getMissingRequirements()['phpVersion'].')';
+                    $missingRequirementsMessages[] = $this->getTranslator()->trans('phpVersionError') . ' (<' . $update->getMissingRequirements()['phpVersion'] . ')';
                 }
                 if (!empty($update->getMissingRequirements()['mysqlVersion'])) {
-                    $missingRequirementsMessages[] = $this->getTranslator()->trans('dbVersionError').' (<'.$update->getMissingRequirements()['mysqlVersion'].')';
+                    $missingRequirementsMessages[] = $this->getTranslator()->trans('dbVersionError') . ' (<' . $update->getMissingRequirements()['mysqlVersion'] . ')';
                 }
                 if (!empty($update->getMissingRequirements()['mariadbVersion'])) {
-                    $missingRequirementsMessages[] = $this->getTranslator()->trans('dbVersionError').' (<'.$update->getMissingRequirements()['mariadbVersion'].')';
+                    $missingRequirementsMessages[] = $this->getTranslator()->trans('dbVersionError') . ' (<' . $update->getMissingRequirements()['mariadbVersion'] . ')';
                 }
                 if (!empty($update->getMissingRequirements()['phpExtensions'])) {
                     $messageString = $this->getTranslator()->trans('phpExtensionError');
-                    $messageString .= ' ('.implode(', ', $update->getMissingRequirements()['phpExtensions']).')';
+                    $messageString .= ' ('.implode(', ', $update->getMissingRequirements()['phpExtensions']) . ')';
                     $missingRequirementsMessages[] = $messageString;
                 }
                 $this->getView()->set('missingRequirements', true);
@@ -343,7 +343,7 @@ HTACCESS;
             }
 
             if ($doSave == true) {
-                if (!$update->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                if (!$update->validateCert(ROOT_PATH . '/certificate/Certificate.crt')) {
                     // Certificate is missing or expired.
                     $this->getView()->set('certMissingOrExpired', true);
                     return false;

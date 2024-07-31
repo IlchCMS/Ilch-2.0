@@ -52,7 +52,7 @@ class Module extends \Ilch\Mapper
      */
     public function getModulesNotInstalled()
     {
-        foreach (glob(APPLICATION_PATH.'/modules/*') as $modulePath) {
+        foreach (glob(APPLICATION_PATH . '/modules/*') as $modulePath) {
             if (is_dir($modulePath)) {
                 $moduleModel = new ModuleModel();
                 $moduleModel->setKey(basename($modulePath));
@@ -78,7 +78,7 @@ class Module extends \Ilch\Mapper
 
         foreach ($modulesNotInstalled as $module) {
             $moduleModel = new ModuleModel();
-            $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\Config';
+            $configClass = '\\Modules\\' . ucfirst($module) . '\\Config\\Config';
             $config = new $configClass();
 
             $moduleModel->setKey($config->config['key']);

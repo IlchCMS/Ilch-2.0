@@ -10,7 +10,7 @@ $verificationFailed = $this->get('verificationFailed');
 $updateSuccessfull = $this->get('updateSuccessfull');
 ?>
 
-<h1><?=$this->getTrans('updateProcess') ?></h1>
+<h1><?=$this->getTrans('ilchUpdate') ?></h1>
 <?php if ($getVersions != ''): ?>
     <div id="update">
     <p><?=$this->getTrans('versionNow') ?><?=$this->get('version') ?></p>
@@ -19,7 +19,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
         <p><?=$this->getTrans('foundNewVersions') ?><?=$newVersion ?></p>
         <?php if (!$missingRequirements) : ?>
             <?php if (!$doUpdate): ?>
-                <?php if (is_file(ROOT_PATH . '/updates/Master-' . $newVersion.'.zip')): ?>
+                <?php if (is_file(ROOT_PATH . '/updates/Master-' . $newVersion . '.zip')): ?>
                     <?php if (!$doSave): ?>
                         <p><?=$this->getTrans('isSave') ?>
                             <a class="btn btn-primary showOverlay"
