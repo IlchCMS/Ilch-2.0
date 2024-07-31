@@ -266,7 +266,7 @@ class Menu extends Mapper
      * @param string $moduleKey
      * @param int|null $parentID
      */
-    public function deleteItemsByModuleKey(string $moduleKey, int $parentID = null)
+    public function deleteItemsByModuleKey(string $moduleKey, ?int $parentID = null)
     {
         if ($parentID === null) {
             $itemRows = $this->db()->select('*')
