@@ -9,7 +9,7 @@ $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
 $dependencies = $this->get('dependencies');
 $configurations = $this->get('configurations');
-$cacheFilename = ROOT_PATH . '/cache/'.md5($this->get('updateserver')) . '.cache';
+$cacheFilename = ROOT_PATH . '/cache/' . md5($this->get('updateserver')) . '.cache';
 $cacheFileDate = null;
 if (file_exists($cacheFilename)) {
     $cacheFileDate = new \Ilch\Date(date('Y-m-d H:i:s.', filemtime($cacheFilename)));

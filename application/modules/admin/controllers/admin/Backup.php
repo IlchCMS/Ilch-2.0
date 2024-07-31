@@ -118,10 +118,10 @@ class Backup extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $date = new \Ilch\Date();
             $dbDate = $date->format('Y-m-d H-i-s', true);
-            $filename = $date->format('Y-m-d_H-i-s', true).'_'.bin2hex(random_bytes(32));
+            $filename = $date->format('Y-m-d_H-i-s', true) . '_'.bin2hex(random_bytes(32));
 
             $fileConfig = new File();
-            $fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
+            $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
             $dbhost = $fileConfig->get('dbHost');
             $dbuser = $fileConfig->get('dbUser');
             $dbpassword = $fileConfig->get('dbPassword');
@@ -133,7 +133,7 @@ class Backup extends \Ilch\Controller\Admin
             } else {
                 $compress = 'NONE';
             }
-            $dumpfile = ROOT_PATH.'/backups/'.$dbname.'_'.$filename.$compressFile;
+            $dumpfile = ROOT_PATH . '/backups/' . $dbname . '_' . $filename . $compressFile;
             if ($this->getRequest()->getPost('addDatabases') == 1) {
                 $addDatabases = true;
             } else {
@@ -161,13 +161,13 @@ class Backup extends \Ilch\Controller\Admin
                     'skip-comments' => $skipComments
                 ];
 
-                $dump = new IMysqldump\Mysqldump('mysql:host='.$dbhost.';dbname='.$dbname,$dbuser,$dbpassword,$dumpSettings);
+                $dump = new IMysqldump\Mysqldump('mysql:host=' . $dbhost . ';dbname=' . $dbname,$dbuser,$dbpassword,$dumpSettings);
                 $dump->start($dumpfile);
 
                 $backupMapper = new BackupMapper();
                 $backupModel = new BackupModel();
 
-                $backupModel->setName($dbname.'_'.$filename.$compressFile);
+                $backupModel->setName($dbname . '_' . $filename . $compressFile);
                 $backupModel->setDate($dbDate);
                 $backupMapper->save($backupModel);
 
@@ -186,7 +186,7 @@ class Backup extends \Ilch\Controller\Admin
         }
 
         set_time_limit(0); 
-        $path = ROOT_PATH.'/backups/';
+        $path = ROOT_PATH . '/backups/';
 
         $id = $this->getRequest()->getParam('id');
 
@@ -195,18 +195,18 @@ class Backup extends \Ilch\Controller\Admin
             $backup = $backupMapper->getBackupById($id);
 
             if ($backup !== null) {
-                $fullPath = $path.$backup->getName();
+                $fullPath = $path . $backup->getName();
                 if ($fd = fopen($fullPath, 'rb')) {
                     $path_parts = pathinfo($fullPath);
                     // Remove the random part of the filename as it should not end in e.g. the browser history.
-                    $publicFileName = preg_replace('/_[^_.]*\./', '.', $path_parts['basename']);
+                    $publicFileName = preg_replace('/_[^_.]*\./', ' . ', $path_parts['basename']);
 
                     if (strtolower($path_parts['extension']) === 'gz') {
                         header('Content-type: application/x-gzip');
                     } else {
                         header('Content-type: application/x-sql');
                     }
-                    header('Content-Disposition: filename="' .$publicFileName. '"');
+                    header('Content-Disposition: filename="' . $publicFileName. '"');
                     header('Content-length: ' .filesize($fullPath));
                     // RFC2616 section 14.9.1: Indicates that all or part of the response message is intended for a single user and MUST NOT be cached by a shared cache, such as a proxy server.
                     header('Cache-control: private');
@@ -229,7 +229,7 @@ class Backup extends \Ilch\Controller\Admin
         if ($this->getRequest()->isSecure()) {
             $backupMapper = new BackupMapper();
             $backup = $backupMapper->getBackupById($this->getRequest()->getParam('id'));
-            unlink(ROOT_PATH.'/backups/'.$backup->getName());
+            unlink(ROOT_PATH . '/backups/' . $backup->getName());
             $backupMapper->delete($this->getRequest()->getParam('id'));
 
             $this->addMessage('deleteSuccess');

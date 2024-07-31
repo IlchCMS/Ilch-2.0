@@ -186,12 +186,12 @@ class Infos extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('hmenuCertificate'), ['action' => 'certificate']);
 
-        if (!is_file(ROOT_PATH.'/certificate/Certificate.crt')) {
+        if (!is_file(ROOT_PATH . '/certificate/Certificate.crt')) {
             $this->getView()->set('certificateMissing', true);
             return;
         }
 
-        $certificate = file_get_contents(ROOT_PATH.'/certificate/Certificate.crt');
+        $certificate = file_get_contents(ROOT_PATH . '/certificate/Certificate.crt');
         $pubkey = openssl_pkey_get_public($certificate);
         $publicKeyArray = openssl_pkey_get_details($pubkey);
         $keyType = '';
