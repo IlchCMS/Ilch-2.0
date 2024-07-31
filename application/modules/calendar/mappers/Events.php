@@ -30,7 +30,7 @@ class Events extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], \Ilch\Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['*'])

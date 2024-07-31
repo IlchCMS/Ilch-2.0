@@ -55,7 +55,7 @@ class Translator
      *
      * @param string|null $locale
      */
-    public function __construct(string $locale = null)
+    public function __construct(?string $locale = null)
     {
         // If a setting is given, set the locale to the given one.
         if ($locale !== null) {

@@ -109,7 +109,7 @@ class Result
      * @param array $params
      * @return object|\stdClass
      */
-    public function fetchObject($className = null, array $params = null)
+    public function fetchObject($className = null, ?array $params = null)
     {
         return $this->dbResult->fetch_object($className, $params);
     }

@@ -150,7 +150,7 @@ class Comment extends \Ilch\Mapper
      * @param int|null $limit
      * @return CommentModel[]
      */
-    public function getComments(int $limit = null): array
+    public function getComments(?int $limit = null): array
     {
         $select = $this->db()->select('*')
             ->from('comments')

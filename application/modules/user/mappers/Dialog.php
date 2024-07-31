@@ -451,7 +451,7 @@ class Dialog extends \Ilch\Mapper
      * @return bool
      * @since $includePermanent since 2.1.43
      */
-    public function hasHiddenDialog(int $userId, bool $includePermanent = null): bool
+    public function hasHiddenDialog(int $userId, ?bool $includePermanent = null): bool
     {
         $dialogHiddenRow = $this->db()->select('user_id')
             ->from('users_dialog_hidden')

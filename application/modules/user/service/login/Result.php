@@ -40,7 +40,7 @@ class Result
      * @param UserModel|null $user
      * @param string|null $error
      */
-    public function __construct($success, UserModel $user = null, $error = null)
+    public function __construct($success, ?UserModel $user = null, $error = null)
     {
         $this->success = $success;
         $this->user = $user;

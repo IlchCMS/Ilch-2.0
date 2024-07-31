@@ -81,7 +81,7 @@ abstract class Box extends Controller\Base
      * @param string|null $route
      * @throws \LogicException
      */
-    public function redirect($url = [], string $route = null): Redirect
+    public function redirect($url = [], ?string $route = null): Redirect
     {
         throw new \LogicException('php redirect is not possible in boxes');
     }

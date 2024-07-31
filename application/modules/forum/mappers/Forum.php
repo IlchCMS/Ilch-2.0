@@ -24,7 +24,7 @@ class Forum extends Mapper
      * @return ForumItem[]|[]
      * @throws Exception
      */
-    public function getForumItemsByParent(int $itemId, int $userId = null): array
+    public function getForumItemsByParent(int $itemId, ?int $userId = null): array
     {
         return $this->getForumItemsByParentIds([$itemId], $userId);
     }
@@ -39,7 +39,7 @@ class Forum extends Mapper
      * @return array|ForumItem[]
      * @throws Exception
      */
-    public function getForumItemsByParentIds(array $itemIds, int $userId = null): array
+    public function getForumItemsByParentIds(array $itemIds, ?int $userId = null): array
     {
         $itemRows = $this->db()->select(['i.id', 'i.parent_id', 'i.type', 'i.title', 'i.description'])
             ->from(['i' => 'forum_items'])
@@ -183,7 +183,7 @@ class Forum extends Mapper
      * @return array|ForumItem[]
      * @throws Exception
      */
-    public function getForumItemsByParentIdsUser(array $itemIds, User $user = null): array
+    public function getForumItemsByParentIdsUser(array $itemIds, ?User $user = null): array
     {
         $groupIds = [3];
         foreach ($user ? $user->getGroups() : [] as $group) {
@@ -306,7 +306,7 @@ class Forum extends Mapper
      * @param User|null $user
      * @return ForumItem|null
      */
-    public function getForumByIdUser(int $id, User $user = null): ?ForumItem
+    public function getForumByIdUser(int $id, ?User $user = null): ?ForumItem
     {
         $forums = $this->getForumsByIdsUser([$id], $user);
 
@@ -326,7 +326,7 @@ class Forum extends Mapper
      * @param User|null $user
      * @return ForumItem[]|null
      */
-    public function getForumsByIdsUser(array $ids, User $user = null): ?array
+    public function getForumsByIdsUser(array $ids, ?User $user = null): ?array
     {
         if (empty($ids)) {
             return null;
@@ -419,7 +419,7 @@ class Forum extends Mapper
      * @param User|null $user
      * @return ForumItem|null
      */
-    public function getForumByTopicIdUser(int $topicId, User $user = null): ?ForumItem
+    public function getForumByTopicIdUser(int $topicId, ?User $user = null): ?ForumItem
     {
         $groupIds = [3];
         foreach ($user ? $user->getGroups() : [] as $group) {
@@ -466,7 +466,7 @@ class Forum extends Mapper
      * @return PostModel|null
      * @throws Exception
      */
-    public function getLastPostByForumId(int $forumId, int $userId = null): ?PostModel
+    public function getLastPostByForumId(int $forumId, ?int $userId = null): ?PostModel
     {
         $select = $this->db()->select(['p.id', 'p.topic_id', 'p.user_id', 'p.date_created', 'p.forum_id'])
             ->from(['p' => 'forum_posts'])
@@ -517,7 +517,7 @@ class Forum extends Mapper
      * @return array|PostModel[]|null
      * @throws Exception
      */
-    public function getLastPostsByForumIds(array $forumId, int $userId = null): ?array
+    public function getLastPostsByForumIds(array $forumId, ?int $userId = null): ?array
     {
         $select = $this->db()->select(['postId' => 'MAX(p.id)', 'p.topic_id', 'p.user_id', 'date_created' => 'MAX(p.date_created)', 'p.forum_id'])
             ->from(['p' => 'forum_posts'])
@@ -646,7 +646,7 @@ class Forum extends Mapper
      * @param User|null $user
      * @return array|ForumItem[]|null
      */
-    public function getForumItemsUser(User $user = null): ?array
+    public function getForumItemsUser(?User $user = null): ?array
     {
         $groupIds = [3];
         foreach ($user ? $user->getGroups() : [] as $group) {
