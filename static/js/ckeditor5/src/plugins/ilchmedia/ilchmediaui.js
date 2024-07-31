@@ -1,4 +1,4 @@
-import { addListToDropdown, ButtonView, Collection, createDropdown, ListSeparatorView, Plugin } from 'ckeditor5';
+import { addListToDropdown, Collection, createDropdown, ListSeparatorView, Plugin, ViewModel } from 'ckeditor5';
 import imageIcon from './icons/image.svg';
 import fileIcon from './icons/file.svg';
 import videoIcon from './icons/file-video.svg';
@@ -33,7 +33,7 @@ export default class IlchMediaUI extends Plugin {
             if (typeof iframeUrlImageCkeditor !== 'undefined' && iframeUrlImageCkeditor) {
                 items.add( {
                     type: 'button',
-                    model: new ButtonView( {
+                    model: new ViewModel( {
                         id: 'pickImage',
                         label: 'Pick image',
                         icon: imageIcon,
@@ -45,7 +45,7 @@ export default class IlchMediaUI extends Plugin {
             if (typeof iframeUrlFileCkeditor !== 'undefined' && iframeUrlFileCkeditor) {
                 items.add( {
                     type: 'button',
-                    model: new ButtonView( {
+                    model: new ViewModel( {
                         id: 'pickFile',
                         label: 'Pick file',
                         icon: fileIcon,
@@ -57,7 +57,7 @@ export default class IlchMediaUI extends Plugin {
             if (typeof iframeUrlVideoCkeditor !== 'undefined' && iframeUrlVideoCkeditor) {
                 items.add( {
                     type: 'button',
-                    model: new ButtonView( {
+                    model: new ViewModel( {
                         id: 'pickVideo',
                         label: 'Pick video',
                         icon: videoIcon,
@@ -71,7 +71,7 @@ export default class IlchMediaUI extends Plugin {
                 
                 items.add( {
                     type: 'button',
-                    model: new ButtonView( {
+                    model: new ViewModel( {
                         id: 'uploadImage',
                         label: 'Upload image',
                         icon: imageIcon,
@@ -81,7 +81,7 @@ export default class IlchMediaUI extends Plugin {
 
                 items.add( {
                     type: 'button',
-                    model: new ButtonView( {
+                    model: new ViewModel( {
                         id: 'uploadFile',
                         label: 'Upload file',
                         icon: fileIcon,
@@ -91,7 +91,7 @@ export default class IlchMediaUI extends Plugin {
 
                 items.add( {
                     type: 'button',
-                    model: new ButtonView( {
+                    model: new ViewModel( {
                         id: 'uploadVideo',
                         label: 'Upload video',
                         icon: videoIcon,
@@ -105,7 +105,7 @@ export default class IlchMediaUI extends Plugin {
 
                 items.add( {
                     type: 'button',
-                    model: new ButtonView( {
+                    model: new ViewModel( {
                         id: 'pickUserGallery',
                         label: 'Pick image from user gallery',
                         icon: imageIcon,
