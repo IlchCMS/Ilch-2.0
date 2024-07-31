@@ -23,7 +23,7 @@ class Topic extends Mapper
      * @return array|TopicModel[]
      * @throws Exception
      */
-    public function getTopicsByForumId(int $id, Pagination $pagination = null): array
+    public function getTopicsByForumId(int $id, ?Pagination $pagination = null): array
     {
         return $this->getTopicsByForumIds([$id], $pagination);
     }
@@ -34,7 +34,7 @@ class Topic extends Mapper
      * @return array|TopicModel[]
      * @throws Exception
      */
-    public function getTopicsByForumIds(array $ids, Pagination $pagination = null): array
+    public function getTopicsByForumIds(array $ids, ?Pagination $pagination = null): array
     {
         if (empty($ids)) {
             return [];
@@ -124,7 +124,7 @@ class Topic extends Mapper
      * @return array|TopicModel[]
      * @throws Exception
      */
-    public function getTopics(Pagination $pagination = null, array $limit = null): array
+    public function getTopics(?Pagination $pagination = null, ?array $limit = null): array
     {
         $sql = $this->db()->select(['topics.type', 'topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
             ->from(['topics' => 'forum_topics'])
@@ -232,7 +232,7 @@ class Topic extends Mapper
      * @return PostModel|null
      * @throws Exception
      */
-    public function getLastPostByTopicId(int $id, int $userId = null): ?PostModel
+    public function getLastPostByTopicId(int $id, ?int $userId = null): ?PostModel
     {
         $lastPost = $this->getLastPostsByTopicIds([$id], $userId);
         if (!empty($lastPost)) {
@@ -250,7 +250,7 @@ class Topic extends Mapper
      * @return PostModel[]|null
      * @throws Exception
      */
-    public function getLastPostsByTopicIds(array $ids, int $userId = null): ?array
+    public function getLastPostsByTopicIds(array $ids, ?int $userId = null): ?array
     {
         if (empty($ids)) {
             return null;
@@ -381,7 +381,7 @@ class Topic extends Mapper
      * @param int|null $limit
      * @return array[]
      */
-    public function getLastActiveTopics(int $limit = null): array
+    public function getLastActiveTopics(?int $limit = null): array
     {
         $sql = 'SELECT * 
                 FROM 

@@ -287,7 +287,7 @@ class War extends Mapper
      * @param int|null $groupId
      * @return array|null
      */
-    public function getWarList($pagination = null, $readAccess = '3', int $groupId = null): ?array
+    public function getWarList($pagination = null, $readAccess = '3', ?int $groupId = null): ?array
     {
         if (is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);

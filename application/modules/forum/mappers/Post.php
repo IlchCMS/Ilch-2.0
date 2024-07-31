@@ -24,7 +24,7 @@ class Post extends Mapper
      * @return PostModel|null
      * @throws Exception
      */
-    public function getPostById(int $id, int $userId = null): ?PostModel
+    public function getPostById(int $id, ?int $userId = null): ?PostModel
     {
         $postRow = $this->db()->select(['p.id', 'p.text', 'p.date_created', 'p.forum_id', 'p.user_id'])
             ->from(['p' => 'forum_posts'])
@@ -88,7 +88,7 @@ class Post extends Mapper
      * @return array
      * @throws Exception
      */
-    public function getPostsByTopicId(int $topicId, Pagination $pagination = null, int $descorder = 0, int $userId = null): array
+    public function getPostsByTopicId(int $topicId, ?Pagination $pagination = null, int $descorder = 0, ?int $userId = null): array
     {
         $select = $this->db()->select(['p.id', 'p.topic_id', 'p.text', 'p.date_created', 'p.forum_id', 'p.user_id'])
             ->from(['p' => 'forum_posts'])

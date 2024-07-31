@@ -17,7 +17,7 @@ class Template extends \Ilch\Mapper
      * @param null $pagination
      * @return ArticleModel[]|[]
      */
-    public function getTemplates(string $locale = null, $pagination = null): array
+    public function getTemplates(?string $locale = null, $pagination = null): array
     {
         $select = $this->db()->select()
             ->fields(['id', 'author_id', 'description', 'keywords', 'title', 'teaser', 'perma', 'content', 'locale', 'img', 'img_source'])

@@ -12,9 +12,9 @@ class Layoutswitch extends \Ilch\Box
     {
         $layouts = [];
         
-        foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
+        foreach (glob(APPLICATION_PATH . '/layouts/*') as $layoutPath) {
             if (is_dir($layoutPath)){
-                $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
+                $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
                 $config = new $configClass($this->getTranslator());
                 $layouts[basename($layoutPath)] = $config->config['name'];
             }

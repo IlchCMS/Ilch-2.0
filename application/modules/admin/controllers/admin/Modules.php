@@ -78,10 +78,10 @@ class Modules extends \Ilch\Controller\Admin
         $dependencies = [];
         $configurations = [];
 
-        foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
+        foreach (glob(ROOT_PATH . '/application/modules/*') as $modulesPath) {
             $key = basename($modulesPath);
 
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+            $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
             if (class_exists($configClass)) {
                 $config = new $configClass($this->getTranslator());
                 $dependencies[$key] = (!empty($config->config['depends']) ? $config->config['depends'] : []);
@@ -120,9 +120,9 @@ class Modules extends \Ilch\Controller\Admin
 
         $dependencies = [];
 
-        foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
+        foreach (glob(ROOT_PATH . '/application/modules/*') as $modulesPath) {
             $key = basename($modulesPath);
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+            $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
             if (class_exists($configClass)) {
                 $config = new $configClass($this->getTranslator());
                 $dependencies[$key] = (!empty($config->config['depends']) ? $config->config['depends'] : []);
@@ -155,14 +155,14 @@ class Modules extends \Ilch\Controller\Admin
 
         try {
             if ($this->getRequest()->isSecure()) {
-                $moduleFilename = $this->getRequest()->getParam('key').'-v'.$this->getRequest()->getParam('version');
+                $moduleFilename = $this->getRequest()->getParam('key') . '-v' . $this->getRequest()->getParam('version');
 
                 $transfer = new \Ilch\Transfer();
-                $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'modules/'.$moduleFilename.'.zip');
-                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'modules/'.$moduleFilename.'.zip-signature.sig');
+                $transfer->setZipSavePath(ROOT_PATH . '/updates/');
+                $transfer->setDownloadUrl($this->getConfig()->get('updateserver') . 'modules/' . $moduleFilename . '.zip');
+                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver') . 'modules/' . $moduleFilename . '.zip-signature.sig');
 
-                if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                if (!$transfer->validateCert(ROOT_PATH . '/certificate/Certificate.crt')) {
                     // Certificate is missing or expired.
                     $this->addMessage('certMissingOrExpired', 'danger');
                     return;
@@ -196,11 +196,11 @@ class Modules extends \Ilch\Controller\Admin
             }
             $dependencies = [];
             $modulesDir = [];
-            foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
+            foreach (glob(ROOT_PATH . '/application/modules/*') as $modulesPath) {
                 $key = basename($modulesPath);
                 $modulesDir[] = $key;
 
-                $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+                $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
                 if (class_exists($configClass)) {
                     $config = new $configClass($this->getTranslator());
                     $dependencies[$key] = (!empty($config->config['depends']) ? $config->config['depends'] : []);
@@ -232,11 +232,11 @@ class Modules extends \Ilch\Controller\Admin
         $dependencies = [];
         $configurations = [];
 
-        foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
+        foreach (glob(ROOT_PATH . '/application/modules/*') as $modulesPath) {
             $key = basename($modulesPath);
             $modulesDir[] = $key;
 
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+            $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
             if (class_exists($configClass)) {
                 $config = new $configClass($this->getTranslator());
                 $dependencies[$key] = (!empty($config->config['depends']) ? $config->config['depends'] : []);
@@ -258,14 +258,14 @@ class Modules extends \Ilch\Controller\Admin
         if ($this->getRequest()->isSecure()) {
             try {
                 $key = $this->getRequest()->getParam('key');
-                $moduleFilename = $key.'-v'.$this->getRequest()->getParam('version');
+                $moduleFilename = $key . '-v' . $this->getRequest()->getParam('version');
 
                 $transfer = new \Ilch\Transfer();
-                $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'modules/'.$moduleFilename.'.zip');
-                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'modules/'.$moduleFilename.'.zip-signature.sig');
+                $transfer->setZipSavePath(ROOT_PATH . '/updates/');
+                $transfer->setDownloadUrl($this->getConfig()->get('updateserver') . 'modules/' . $moduleFilename . '.zip');
+                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver') . 'modules/' . $moduleFilename . '.zip-signature.sig');
 
-                if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                if (!$transfer->validateCert(ROOT_PATH . '/certificate/Certificate.crt')) {
                     // Certificate is missing or expired.
                     $this->addMessage('certMissingOrExpired', 'danger');
                     return;
@@ -284,7 +284,7 @@ class Modules extends \Ilch\Controller\Admin
                     return;
                 }
 
-                $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+                $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
                 $config = new $configClass($this->getTranslator());
                 $moduleMapper->updateVersion($key, $config->config['version']);
                 $this->addMessage('updateSuccess');
@@ -305,7 +305,7 @@ class Modules extends \Ilch\Controller\Admin
 
             $key = $this->getRequest()->getParam('key');
             $moduleModel = $moduleMapper->getModuleByKey($key);
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+            $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
             $config = new $configClass($this->getTranslator());
             // TODO: Check if update failed to display moduleUpdateFailed etc.
             $config->getUpdate($moduleModel->getVersion());
@@ -329,10 +329,10 @@ class Modules extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search'])
-            ->add($this->getTranslator()->trans('menuModules').' '.$this->getTranslator()->trans('info'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
+            ->add($this->getTranslator()->trans('menuModules') . ' ' . $this->getTranslator()->trans('info'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
         $modulesDir = [];
-        foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
+        foreach (glob(ROOT_PATH . '/application/modules/*') as $modulesPath) {
             $modulesDir[] = basename($modulesPath);
         }
 
@@ -353,7 +353,7 @@ class Modules extends \Ilch\Controller\Admin
         $key = $this->getRequest()->getParam('key');
 
         if ($this->getRequest()->isSecure()) {
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+            $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
             $config = new $configClass($this->getTranslator());
             $config->install();
 
@@ -422,7 +422,7 @@ class Modules extends \Ilch\Controller\Admin
         $key = $this->getRequest()->getParam('key');
 
         if ($this->getRequest()->isSecure()) {
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+            $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
             $config = new $configClass($this->getTranslator());
             $config->uninstall();
             $moduleMapper->delete($key);
@@ -439,7 +439,7 @@ class Modules extends \Ilch\Controller\Admin
             $notificationPermissionMapper = new NotificationPermissionMapper();
             $notificationsMapper = new NotificationsMapper();
 
-            removeDir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'));
+            removeDir(APPLICATION_PATH . '/modules/' . $this->getRequest()->getParam('key'));
 
             $notificationPermissionMapper->deletePermissionOfModule($this->getRequest()->getParam('key'));
             $notificationsMapper->deleteNotificationsByModule($this->getRequest()->getParam('key'));

@@ -61,9 +61,9 @@ class Select extends QueryBuilder
     public function __construct(
         DB     $db,
                $fields = null,
-        string $table = null,
-        array  $where = null,
-        array  $orderBy = null,
+        ?string $table = null,
+        ?array  $where = null,
+        ?array  $orderBy = null,
                $limit = null
     ) {
         parent::__construct($db);
@@ -214,7 +214,7 @@ class Select extends QueryBuilder
      * @param array|null $fields
      * @return Select
      */
-    public function join($table, $conditions, string $type = Expression\Join::INNER, array $fields = null): Select
+    public function join($table, $conditions, string $type = Expression\Join::INNER, ?array $fields = null): Select
     {
         $join = $this->createJoin($table, $type);
         if (\is_string($conditions)) {

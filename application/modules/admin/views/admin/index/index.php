@@ -8,8 +8,7 @@ if ($this->getUser()->getFirstName() != '') {
     $name = $this->getUser()->getName();
 }
 
-$ilchNewsList = url_get_contents($this->get('ilchNewsList'), true, false, 120);
-$ilchNews = json_decode($ilchNewsList);
+$ilchNews = $this->get('ilchNews');
 
 /** @var \Modules\Admin\Models\Notification[] $notifications */
 $notifications = $this->get('notifications');
@@ -33,7 +32,7 @@ $accesses = $this->get('accesses');
             <?=$this->getTrans('system') ?>
             <?php if ($this->get('foundNewVersions')) : ?>
                 <span class="badge bg-danger"><?=$this->getTrans('notUpToDate') ?></span>
-            <?php elseif ($this->get('curlErrorOccured')) : ?>
+            <?php elseif ($this->get('curlErrorOccurred')) : ?>
                 <span class="badge bg-warning"><?=$this->getTrans('versionQueryFailed') ?></span>
             <?php else : ?>
                 <span class="badge bg-success"><?=$this->getTrans('upToDate') ?></span>
@@ -61,7 +60,7 @@ $accesses = $this->get('accesses');
                         <td>
                             <?php if ($this->get('newVersion')) : ?>
                                 <?=$this->get('newVersion') ?>
-                            <?php elseif ($this->get('curlErrorOccured')) : ?>
+                            <?php elseif ($this->get('curlErrorOccurred')) : ?>
                                 <?=$this->getTrans('versionNA') ?>
                             <?php else : ?>
                                 <?=$version ?>
@@ -134,7 +133,7 @@ $accesses = $this->get('accesses');
                             <tr>
                                 <td><?=$this->getDeleteCheckbox('check_notifications', $notification->getId()) ?></td>
                                 <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $notification->getId()]) ?></td>
-                                <td><a href="<?=$this->getUrl(['action' => 'revokePermission', 'key' => $notification->getModule()], null, true) ?>" title="<?=$this->getTrans('revokePermission') ?>"><i class="fa-solid fa-check text-success"></i></a></td>
+                                <td><a href="<?=$this->getUrl(['action' => 'revokePermission', 'key' => $notification->getModule()], null, true) ?>" title="<?=$this->getTrans('revokePermission') ?>"><i class="fa-solid fa-bell-slash"></i></a></td>
                                 <td><?=$date->format('d.m.Y', true) ?></td>
                                 <td><a href="<?=$notification->getURL() ?>" target="_blank" rel="noopener" title="<?=$this->escape($notification->getModule()) ?>"><?=$this->escape($notification->getModule()) ?></a></td>
                                 <td><?=$this->escape($notification->getMessage()) ?></td>

@@ -1,7 +1,7 @@
 <?php
 $config = \Ilch\Registry::get('config');
 $translator = new \Ilch\Translator();
-$translator->load(APPLICATION_PATH.'/modules/admin/translations/');
+$translator->load(APPLICATION_PATH . '/modules/admin/translations/');
 $maintenanceTime = $config->get('maintenance_date');
 $date = new \Ilch\Date();
 ?>

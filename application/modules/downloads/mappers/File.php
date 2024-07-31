@@ -118,7 +118,7 @@ class File extends Mapper
      * @param Pagination|null $pagination
      * @return array
      */
-    public function getFileByDownloadsId(int $id, Pagination $pagination = NULL): array
+    public function getFileByDownloadsId(int $id, ?Pagination $pagination = null): array
     {
         $sql = $this->db()->select(['g.cat', 'fileid' => 'g.id', 'g.file_title', 'g.file_image', 'g.file_description', 'g.visits', 'm.url', 'm.url_thumb'])
             ->from(['g' => 'downloads_files'])

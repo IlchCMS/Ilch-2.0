@@ -40,7 +40,7 @@
                 <?php foreach (glob(APPLICATION_PATH . '/layouts/*') as $layoutPath): ?>
                     <?php if (is_dir($layoutPath)): ?>
                         <?php
-                        $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)) . '\\Config\\Config';
+                        $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
                         $config = new $configClass($this->getTranslator()); ?>
                         <?php if (empty($config->config['modulekey'])): ?>
                             <?php $config->config['modulekey'] = ''; ?>

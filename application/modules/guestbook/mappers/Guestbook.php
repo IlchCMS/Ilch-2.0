@@ -18,7 +18,7 @@ class Guestbook extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return GuestbookModel[]|array
      */
-    public function getEntries(array $where = [], \Ilch\Pagination $pagination = null): array
+    public function getEntries(array $where = [], ?\Ilch\Pagination $pagination = null): array
     {
         $select = $this->db()->select('*')
             ->from('gbook')
@@ -101,7 +101,7 @@ class Guestbook extends \Ilch\Mapper
      * @throws \Ilch\Database\Exception
      * @since 1.11.0
      */
-    public function reset(int $setfree = null): bool
+    public function reset(?int $setfree = null): bool
     {
         if ($setfree == null) {
             $this->db()->truncate('[prefix]_gbook');

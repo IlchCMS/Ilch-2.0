@@ -36,11 +36,11 @@
                         if ($notificationPermission->getGranted()) {
                             $value = 'true';
                             $translation = 'revokePermission';
-                            $icon = 'fa-solid fa-check text-success';
+                            $icon = 'fa-solid fa-bell';
                         } else {
                             $value = 'false';
                             $translation = 'grantPermission';
-                            $icon = 'fa-regular fa-square';
+                            $icon = 'fa-solid fa-bell-slash';
                         }
                         ?>
                         <tr>

@@ -1023,6 +1023,14 @@ class Config extends \Ilch\Config\Install
                     ->where(['url' => 'https://www.ilch.de/ilch2_updates/stable/'])
                     ->execute();
                 break;
+            case "2.2.2":
+                // Grant permission for notifications of the admin module. This is for example a notification of the
+                // type 'adminModuleUpdatesAvailable', which notifies the admin of available module updates.
+                // Doing this now as some users might have unintentionally disabled these important notifications.
+                $this->db()->delete('admin_notifications_permission')
+                    ->where(['module' => 'admin'])
+                    ->execute();
+                break;
         }
 
         return 'Update function executed.';

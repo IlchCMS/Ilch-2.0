@@ -336,7 +336,7 @@ return [
 
     'menuUpdate' => 'Update',
     'backupBeforeUpdate' => 'Es wird empfohlen eine Sicherheitskopie der Installation und der Datenbank anzulegen, bevor ein Update durchgeführt wird.',
-    'updateProcess' => 'Ilch 2 UPDATE PROCESS',
+    'ilchUpdate' => 'Ilch 2 Update',
     'versionNow' => 'Aktuelle Version: ',
     'searchUpdate' => 'Suche nach einem Update...',
     'foundNewVersions' => 'Neue Version gefunden: ',
