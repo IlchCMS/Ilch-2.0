@@ -1030,6 +1030,9 @@ class Config extends \Ilch\Config\Install
                 $this->db()->delete('admin_notifications_permission')
                     ->where(['module' => 'admin'])
                     ->execute();
+
+                // Update vendor folder
+                replaceVendorDirectory();
                 break;
         }
 
