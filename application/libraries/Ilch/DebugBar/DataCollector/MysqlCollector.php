@@ -24,7 +24,7 @@ class MysqlCollector extends DataCollector implements Renderable, AssetProvider
      */
     private $timeCollector;
 
-    public function __construct(MysqlDebug $mysqlDebug, TimeDataCollector $timeCollector = null)
+    public function __construct(MysqlDebug $mysqlDebug, ?TimeDataCollector $timeCollector = null)
     {
         $this->mysqlDebug = $mysqlDebug;
         $this->timeCollector = $timeCollector;
