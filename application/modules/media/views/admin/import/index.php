@@ -36,7 +36,7 @@
                             <td><?=$this->getDeleteCheckbox('check_medias', $media) ?></td>
                             <td><?=$this->escape($upload->getEnding()) ?></td>
                             <td>
-                                <?php if (in_array($upload->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
+                                <?php if (in_array($upload->getEnding(), explode(' ', $this->get('media_ext_img')))): ?>
                                     <img class="img-preview" src="<?=$this->getBaseUrl($media) ?>" alt="">
                                 <?php else: ?>
                                     <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"

@@ -101,7 +101,7 @@
                             <td><a href="<?=$this->getUrl(['action' => 'refresh', 'id' => $media->getId()]) ?>"><i class="fa-solid fa-arrows-rotate" title="<?=$this->getTrans('refreshThumbnail') ?>"></i></a></td>
                             <td><?=$this->escape($media->getEnding()) ?></td>
                             <td>
-                                <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
+                                <?php if (in_array($media->getEnding(), explode(' ', $this->get('media_ext_img')))): ?>
                                     <a href="<?=$this->getBaseUrl($media->getUrl()) ?>" title="<?=$this->escape($media->getName()) ?>">
                                         <?php if (file_exists($media->getUrlThumb())): ?>
                                             <img class="img-preview" src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>" alt="<?=$this->escape($media->getName()) ?>">
@@ -129,7 +129,7 @@
                                         <?php if ($this->get('catnames') != ''): ?>
                                             <?php foreach ($this->get('catnames') as $name): ?>
                                                 <li>
-                                                    <a class="dropdown-item" href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId()]) ?>"><?=$this->escape($name->getCatName()) ?></a>
+                                                    <a class="dropdown-item" data-hiddenkey="assignCategory" href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId()]) ?>"><?=$this->escape($name->getCatName()) ?></a>
                                                 </li>
                                             <?php endforeach; ?>
                                         <?php endif; ?>
@@ -178,7 +178,7 @@
         {
             let dialog = $('#modalDialogAssignCategory');
             dialog.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop()) + "px");
-            dialog.modal()
+            dialog.modal('show')
         }
     );
 </script>

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -37,20 +38,19 @@ class Settings extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuMedia',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('media'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('media'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
-        if ($this->getRequest()->isPost('save')) {
+        if ($this->getRequest()->isPost()) {
             // Don't allow adding forbidden file extensions.
             $forbiddenExtensionFound = false;
             $extensionLists = ['allowedImages', 'allowedFiles', 'allowedVideos'];

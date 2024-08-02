@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -53,17 +54,16 @@ class Index extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuMedia',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('media'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('media'), ['action' => 'index']);
 
         $mediaMapper = new MediaMapper();
 
@@ -108,8 +108,9 @@ class Index extends \Ilch\Controller\Admin
                 $sortOrder = 'ASC';
             }
 
+            $type = '';
             if ($this->getRequest()->getPost('orderbytype')) {
-                switch($this->getRequest()->getPost('orderbytype')) {
+                switch ($this->getRequest()->getPost('orderbytype')) {
                     case 'image':
                         $type = $this->getConfig()->get('media_ext_img');
                         break;
@@ -138,20 +139,20 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('media_ext_video', $this->getConfig()->get('media_ext_video'));
     }
 
-    public function uploadAction() 
+    public function uploadAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('media'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('mediaUpload'), ['action' => 'upload']);
+            ->add($this->getTranslator()->trans('media'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('mediaUpload'), ['action' => 'upload']);
 
-        $allowedExtensions = $this->getConfig()->get('media_ext_img').' '.$this->getConfig()->get('media_ext_file').' '.$this->getConfig()->get('media_ext_video');
+        $allowedExtensions = $this->getConfig()->get('media_ext_img') . ' ' . $this->getConfig()->get('media_ext_file') . ' ' . $this->getConfig()->get('media_ext_video');
         $this->getView()->set('allowedExtensions', $allowedExtensions);
 
-        if (!is_writable(ROOT_PATH.'/'.$this->getConfig()->get('media_uploadpath'))) {
+        if (!is_writable(ROOT_PATH . '/' . $this->getConfig()->get('media_uploadpath'))) {
             $this->addMessage('writableMedia', 'danger');
         }
 
-        $ilchdate = new IlchDate;
+        $ilchdate = new IlchDate();
         $mediaMapper = new MediaMapper();
 
         if ($this->getRequest()->isPost()) {
@@ -166,7 +167,7 @@ class Index extends \Ilch\Controller\Admin
             }
             $upload->upload();
 
-            $model = new \Modules\Media\Models\Media();
+            $model = new MediaModel();
             $model->setUrl($upload->getUrl());
             $model->setUrlThumb($upload->getUrlThumb());
             $model->setEnding($upload->getEnding());
@@ -199,7 +200,7 @@ class Index extends \Ilch\Controller\Admin
                 $this->addMessage('refreshFailure');
             }
 
-            $model = new \Modules\Media\Models\Media();
+            $model = new MediaModel();
             $model->setId($image->getId());
             $model->setUrl($image->getUrl());
             $model->setUrlThumb($upload->getUrlThumb());

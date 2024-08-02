@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -10,7 +11,7 @@ use Modules\Media\Mappers\Media as MediaMapper;
 
 class Ajax extends \Ilch\Controller\Admin
 {
-    public function indexAction() 
+    public function indexAction()
     {
         $this->getLayout()->setFile('modules/admin/layouts/ajax');
         $mediaMapper = new MediaMapper();
@@ -57,7 +58,7 @@ class Ajax extends \Ilch\Controller\Admin
         $this->getView()->set('media_ext_video', $this->getConfig()->get('media_ext_video'));
     }
 
-    public function uploadAction() 
+    public function uploadAction()
     {
         $this->getLayout()->setFile('modules/admin/layouts/iframe');
     }
