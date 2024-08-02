@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -51,18 +52,17 @@ class Cats extends \Ilch\Controller\Admin
             $items[1]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuMedia',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('media'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('cats'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('media'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('cats'), ['action' => 'index']);
 
         $mediaMapper = new MediaMapper();
 
@@ -77,14 +77,14 @@ class Cats extends \Ilch\Controller\Admin
         $this->getView()->set('cats', $mediaMapper->getCatList());
     }
 
-    public function newAction() 
+    public function newAction()
     {
         $mediaMapper = new MediaMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('media'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('cats'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('add'), ['action' => 'new']);
+            ->add($this->getTranslator()->trans('media'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('cats'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('add'), ['action' => 'new']);
 
         if ($this->getRequest()->getPost('save')) {
             foreach ($this->getRequest()->getPost('title_option') as $catTitle) {
@@ -110,7 +110,7 @@ class Cats extends \Ilch\Controller\Admin
         }
     }
 
-    public function setCatAction() 
+    public function setCatAction()
     {
         $mediaMapper = new MediaMapper();
 
@@ -125,15 +125,15 @@ class Cats extends \Ilch\Controller\Admin
         $this->redirect(['controller' => 'index', 'action' => 'index']);
     }
 
-    public function treatAction() 
+    public function treatAction()
     {
         $mediaMapper = new MediaMapper();
         $catId = (int)$this->getRequest()->getParam('id');
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('media'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('cats'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $catId]);
+            ->add($this->getTranslator()->trans('media'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('cats'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $catId]);
 
         if ($this->getRequest()->getPost('save') && $this->getRequest()->getPost('title_treat')) {
             $model = new \Modules\Media\Models\Media();
@@ -145,6 +145,6 @@ class Cats extends \Ilch\Controller\Admin
             $this->redirect(['action' => 'index']);
         }
 
-       $this->getView()->set('cat', $mediaMapper->getCatById($catId));
+        $this->getView()->set('cat', $mediaMapper->getCatById($catId));
     }
 }

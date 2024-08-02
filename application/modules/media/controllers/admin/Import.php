@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -41,30 +42,29 @@ class Import extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuMedia',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
-        $ilchdate = new IlchDate;
+        $ilchdate = new IlchDate();
         $mediaMapper = new MediaMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('media'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('import'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('media'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('import'), ['action' => 'index']);
 
         $directory = $this->getConfig()->get('media_uploadpath');
         $filetypes = $this->getConfig()->get('media_ext_img');
         $directoriesAsCategories = $this->getConfig()->get('media_directoriesAsCategories');
-        $globMediaArray = glob_recursive($directory.'*');
+        $globMediaArray = glob_recursive($directory . '*');
 
         if ($this->getRequest()->getPost('save') && $this->getRequest()->getPost('check_medias')) {
             $createdCategories = [];
-            foreach($mediaMapper->getCatList() as $cat) {
+            foreach ($mediaMapper->getCatList() as $cat) {
                 $createdCategories[] = $cat->getCatName();
             }
 
@@ -90,7 +90,7 @@ class Import extends \Ilch\Controller\Admin
                 $upload = new \Ilch\Upload();
                 $upload->setFile($media);
                 $upload->setTypes($filetypes);
-                $upload->setPath(\dirname($media).'/');
+                $upload->setPath(\dirname($media) . '/');
                 $upload->save();
 
                 $model = new MediaModel();
@@ -113,7 +113,7 @@ class Import extends \Ilch\Controller\Admin
         $existsMediaArray = [];
         if (!empty($mediaListAll)) {
             foreach ($mediaListAll as $existsMedia) {
-                $existsMediaArray[] = $directory.$existsMedia->getName().'.'.$existsMedia->getEnding();
+                $existsMediaArray[] = $directory . $existsMedia->getName() . '.' . $existsMedia->getEnding();
             }
         }
 

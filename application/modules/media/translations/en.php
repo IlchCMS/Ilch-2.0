@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -46,7 +47,7 @@ return [
     'refreshThumbnail' => 'Refresh thumbnail',
     'refreshSuccess' => 'Thumbnail refreshed.',
     'refreshFailure' => 'Failure. No thumbnail generated.',
-    
+
     'post_max_size' => 'post_max_size',
     'post_max_size_desc' => 'The "post_max_size" sets the maximum size for a single upload to the server. This value can be changed in php.ini.',
     'max_execution_time' => 'max_execution_time',
