@@ -102,6 +102,8 @@ $directories = [
 $directoriesStaticJs = [
     'ckeditor5' => [
         'keep' => [
+            'build/translations/',
+            'build/ckeditor.css',
             'build/ckeditor.js',
             'LICENSE.md',
             'styles.css',

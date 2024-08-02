@@ -536,6 +536,7 @@ class Frontend extends Base
         }
 
         $html .= '
+            <link href="' . $this->getStaticUrl('js/ckeditor5/build/ckeditor.css') . '" rel="stylesheet" type="text/css">
             <link href="' . $this->getStaticUrl('js/ckeditor5/styles.css') . '" rel="stylesheet" type="text/css">
             <link rel="apple-touch-icon" href="' . $this->getBaseUrl($this->escape($this->getAppleIcon())) . '">
             <link href="' . $this->getVendorUrl('fortawesome/font-awesome/css/all.min.css') . '" rel="stylesheet">
@@ -569,8 +570,8 @@ class Frontend extends Base
                 </script>';
         }
 
-        if (strncmp($this->getTranslator()->getLocale(), 'de', 2) !== 0) {
-            $html .= '<script src="' . $this->getStaticUrl('js/ckeditor5/build/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') . '" charset="UTF-8"></script>';
+        if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) {
+            $html .= '<script src="' . $this->getStaticUrl('js/ckeditor5/build/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.umd.js') . '" charset="UTF-8"></script>';
         }
 
         if (is_array($this->get('scriptTags'))) {

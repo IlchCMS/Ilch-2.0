@@ -1,4 +1,4 @@
-import { View } from '@ckeditor/ckeditor5-ui';
+import { View } from 'ckeditor5';
 
 import '../../theme/characterinfo.css';
 

@@ -1,5 +1,4 @@
-import { Command } from 'ckeditor5/src/core';
-import { ButtonView } from 'ckeditor5/src/ui';
+import { ButtonView, Command } from 'ckeditor5';
 import ilchpsIcon from '/src/plugins/ilchps/icons/ilchps.svg';
 
 export function IlchPs( editor ) {

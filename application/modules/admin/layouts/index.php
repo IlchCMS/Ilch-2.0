@@ -21,6 +21,7 @@ $accesses = $this->get('accesses');
     <link rel="shortcut icon" type="image/x-icon" href="<?=$this->getStaticUrl('img/favicon.ico') ?>">
 
     <!-- STYLES -->
+    <link href="<?=$this->getStaticUrl('js/ckeditor5/build/ckeditor.css') ?>" rel="stylesheet" type="text/css">
     <link href="<?=$this->getStaticUrl('js/ckeditor5/styles.css') ?>" rel="stylesheet" type="text/css">
     <link href="<?=$this->getVendorUrl('twbs/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
     <link href="<?=$this->getVendorUrl('fortawesome/font-awesome/css/all.min.css') ?>" rel="stylesheet">
@@ -53,8 +54,8 @@ $accesses = $this->get('accesses');
     <script src="<?=$this->getStaticUrl('js/validate/additional-methods.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/validate/ilch-validate.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/ckeditor5/build/ckeditor.js') ?>"></script>
-    <?php if (strncmp($this->getTranslator()->getLocale(), 'de', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/ckeditor5/build/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>"></script>
+    <?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
+    <script src="<?=$this->getStaticUrl('js/ckeditor5/build/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.umd.js') ?>"></script>
     <?php endif; ?>
     <script src="<?=$this->getStaticUrl('js/highlight/highlight.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/jquery.key.js') ?>"></script>
