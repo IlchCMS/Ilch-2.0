@@ -9,48 +9,50 @@ namespace Ilch;
 use Ilch\Config\File;
 use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Models\Box as BoxModel;
+use Modules\Admin\Mappers\Module as ModuleMapper;
+use Modules\Admin\Models\Module as ModuleModel;
 
 class Transfer
 {
-    protected $transferUrl = '';
+    protected $transferUrl;
 
-    protected $curlOpt = [];
+    protected string $versionNow;
 
-    protected $versionNow;
+    protected string $newVersion;
 
-    protected $newVersion;
+    protected string $zipSavePath;
 
-    protected $zipSavePath;
+    protected string $zipFile;
 
-    protected $zipFile;
+    protected string $zipFileName;
 
-    protected $zipFileName;
+    protected string $zipSigFile;
 
-    protected $zipSigFile;
+    protected string $zipSigFileName;
 
-    protected $zipSigFileName;
+    protected string $downloadUrl;
 
-    protected $downloadUrl;
+    protected string $downloadSignatureUrl;
 
-    protected $downloadSignatureUrl;
+    protected array $content = [];
 
-    protected $content;
-
-    protected $missingRequirements = [];
+    protected array $missingRequirements = [];
 
     /**
      * Sets the TransferUrl.
-     * @var string $url
-     * @return resource
+     *
+     * @param string $url
+     * @return false|resource
      */
-    public function setTransferUrl($url)
+    public function setTransferUrl(string $url)
     {
         return $this->transferUrl = curl_init($url);
     }
 
     /**
      * Gets the TransferUrl.
-     * @return string
+     *
+     * @return false|resource
      */
     public function getTransferUrl()
     {
@@ -59,119 +61,129 @@ class Transfer
 
     /**
      * Sets the ZipFile.
-     * @var string $path
+     *
      * @return string
+     * @param string $path
      */
-    public function setZipFile($path)
+    public function setZipFile(string $path): string
     {
         return $this->zipFile = $path;
     }
 
     /**
      * Gets the ZipFile.
+     *
      * @return string
      */
-    public function getZipFile()
+    public function getZipFile(): string
     {
         return $this->zipFile;
     }
 
     /**
      * Sets the ZipFileName.
-     * @var string $name
+     *
      * @return string
+     * @param string $name
      */
-    public function setZipFileName($name)
+    public function setZipFileName(string $name): string
     {
         return $this->zipFileName = $name;
     }
 
     /**
      * Gets the ZipFileName.
+     *
      * @return string
      */
-    public function getZipFileName()
+    public function getZipFileName(): string
     {
         return $this->zipFileName;
     }
 
     /**
      * Sets the ZipFilePath.
-     * @var string $path
+     *
      * @return string
+     * @param string $path
      */
-    public function setZipSavePath($path)
+    public function setZipSavePath(string $path): string
     {
         return $this->zipSavePath = $path;
     }
 
     /**
      * Gets the ZipSavePath.
+     *
      * @return string
      */
-    public function getZipSavePath()
+    public function getZipSavePath(): string
     {
         return $this->zipSavePath;
     }
 
     /**
      * USE IT AFTER newVersionFound()
-     *
      * Sets the DownloadUrl.
-     * @var $url
+     *
+     * @param $url
      * @return mixed
      */
     public function setDownloadUrl($url)
     {
         $this->zipFileName = basename($url);
-        $this->zipFile = $this->zipSavePath.$this->zipFileName;
+        $this->zipFile = $this->zipSavePath . $this->zipFileName;
         $path_parts = pathinfo($url);
-        $this->setDownloadSignatureUrl($path_parts['dirname'].'/'.$path_parts['filename'].'-signature.sig');
+        $this->setDownloadSignatureUrl($path_parts['dirname'] . '/' . $path_parts['filename'] . '-signature.sig');
         return $this->downloadUrl = $url;
     }
 
     /**
      * USE IT AFTER newVersionFound()
-     *
      * Gets the DownloadUrl.
+     *
      * @return string
      */
-    public function getDownloadUrl()
+    public function getDownloadUrl(): string
     {
         return $this->downloadUrl;
     }
 
     /**
      * USE IT AFTER newVersionFound()
-     *
      * Sets the DownloadSignatureUrl.
-     * @var $url
+     *
+     * @param $url
      * @return mixed
      */
     public function setDownloadSignatureUrl($url)
     {
         $this->zipSigFileName = basename($url);
-        $this->zipSigFile = $this->zipSavePath.$this->zipSigFileName;
+        $this->zipSigFile = $this->zipSavePath . $this->zipSigFileName;
         return $this->downloadSignatureUrl = $url;
     }
 
     /**
      * USE IT AFTER newVersionFound()
-     *
      * Gets the DownloadSignatureUrl.
+     *
      * @return string
      */
-    public function getDownloadSignatureUrl()
+    public function getDownloadSignatureUrl(): string
     {
         return $this->downloadSignatureUrl;
     }
 
     /**
      * Gets the Version.
-     * @return string
+     *
+     * @return string|true (depending on CURLOPT_RETURNTRANSFER)
      */
     public function getVersions()
     {
+        // curl_exec
+        // Returns true on success or false on failure. However, if the CURLOPT_RETURNTRANSFER option is set, it will return the result on success, false on failure.
+        // This function may return Boolean false, but may also return a non-Boolean value which evaluates to false.
         $result = curl_exec($this->transferUrl);
         if ($result == false) {
             return '';
@@ -180,93 +192,90 @@ class Transfer
     }
 
     /**
-     * Gets the VersionList.
-     * @return string[]
-     */
-    public function getVersionsList()
-    {
-        return json_decode($this->getVersions(), true);
-    }
-
-    /**
      * Gets the VersionNow.
+     *
      * @return string
      */
-    public function getVersionNow()
+    public function getVersionNow(): string
     {
         return $this->versionNow;
     }
 
     /**
      * Gets the NewVersion.
+     *
      * @return string
      */
-    public function getNewVersion()
+    public function getNewVersion(): string
     {
         return $this->newVersion;
     }
 
     /**
      * Sets the Content.
-     * @var string $content
-     * @return string
+     *
+     * @return string[]
+     * @param string[] $content
      */
-    public function setContent($content)
+    public function setContent(array $content): array
     {
         return $this->content = $content;
     }
 
     /**
      * Gets the Content.
-     * @return string
+     *
+     * @return string[]
      */
-    public function getContent()
+    public function getContent(): array
     {
         return $this->content;
     }
 
     /**
      * Gets the content of missingRequirements.
+     *
      * @return array
      */
-    public function getMissingRequirements()
+    public function getMissingRequirements(): array
     {
         return $this->missingRequirements;
     }
 
     /**
      * Sets the NewVersion.
-     * @var string $version
+     *
      * @return string
+     * @param string $version
      */
-    public function setNewVersion($version)
+    public function setNewVersion(string $version): string
     {
         return $this->newVersion = $version;
     }
 
     /**
      * Sets the VersionNow.
-     * @var string $versionNow
+     *
      * @return string
+     * @param string $versionNow
      */
-    public function setVersionNow($versionNow)
+    public function setVersionNow(string $versionNow): string
     {
         return $this->versionNow = $versionNow;
     }
 
     /**
-     * Gets the versionslist and checks if there is a new version available.
+     * Gets all versions and checks if there is a new version available.
      *
      * @return bool
      */
-    public function newVersionFound()
+    public function newVersionFound(): bool
     {
-        $versionsList = $this->getVersionsList();
+        $versionsList = json_decode($this->getVersions(), true);
         if ($versionsList !== null) {
-            foreach ($this->getVersionsList() as $version => $requirements) {
+            foreach ($versionsList as $version => $requirements) {
                 if (version_compare(preg_replace('/\s+/', '', $version), $this->getVersionNow(), '>')) {
                     $this->setNewVersion(trim(preg_replace('/\s\s+/', '', $version)));
-                    $this->zipFile = $this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip';
                     $this->checkRequirements($requirements);
                     return true;
                 }
@@ -283,7 +292,7 @@ class Transfer
      * @param $requirements
      * @return bool
      */
-    public function checkRequirements($requirements)
+    public function checkRequirements($requirements): bool
     {
         if (!empty($requirements['phpVersion']) && !version_compare(PHP_VERSION, $requirements['phpVersion'], '>=')) {
             $this->missingRequirements['phpVersion'] = $requirements['phpVersion'];
@@ -291,7 +300,7 @@ class Transfer
 
         if (!empty($requirements['mysqlVersion']) || !empty($requirements['mariadbVersion'])) {
             $fileConfig = new File();
-            $fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
+            $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
             $hostParts = explode(':', $fileConfig->get('dbHost'));
             $port = (!empty($hostParts[1])) ? $hostParts[1] : null;
             $dbLinkIdentifier = mysqli_connect($fileConfig->get('dbHost'), $fileConfig->get('dbUser'), $fileConfig->get('dbPassword'), null, $port);
@@ -318,22 +327,26 @@ class Transfer
     }
 
     /**
+     * Sets an cURL option for the current cURL transfer (transferUrl).
+     *
      * @param string $opt
-     * @param string $param
+     * @param mixed $param
      * @return $this
      */
-    public function setCurlOpt($opt, $param)
+    public function setCurlOpt(string $opt, $param): Transfer
     {
         if (!empty($this->transferUrl)) {
-            $this->curlOpt[] = curl_setopt($this->transferUrl, $opt, $param);
-            return $this;
+            curl_setopt($this->transferUrl, $opt, $param);
         }
+        return $this;
     }
 
     /**
-     * @return false
+     * Download ilch update, module or layout and the signature file for that file.
+     *
+     * @return bool
      */
-    public function save()
+    public function save(): bool
     {
         try {
             $newUpdate = url_get_contents($this->getDownloadUrl(), false, true);
@@ -349,12 +362,12 @@ class Transfer
             fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
         } finally {
-            $signature = file_get_contents($this->getZipFile().'-signature.sig');
-            $pubKeyfile = ROOT_PATH.'/certificate/Certificate.crt';
+            $signature = file_get_contents($this->getZipFile() . '-signature.sig');
+            $pubKeyfile = ROOT_PATH . '/certificate/Certificate.crt';
             if (!$this->verifyFile($pubKeyfile, $this->getZipFile(), $signature)) {
                 // Verification failed. Drop the potentially bad files.
                 unlink($this->getZipFile());
-                unlink($this->getZipFile().'-signature.sig');
+                unlink($this->getZipFile() . '-signature.sig');
                 return false;
             }
             return true;
@@ -362,12 +375,14 @@ class Transfer
     }
 
     /**
+     * Verify file.
+     *
      * @param string $pubKeyfile
      * @param string $file
      * @param string $signature
-     * @return true
+     * @return bool
      */
-    public function verifyFile($pubKeyfile, $file, $signature)
+    public function verifyFile(string $pubKeyfile, string $file, string $signature): bool
     {
         $digest = hash_file('sha512', $file);
 
@@ -378,10 +393,12 @@ class Transfer
     }
 
     /**
+     * Validate certificate.
+     *
      * @param string $certificate
-     * @return true
+     * @return bool
      */
-    public function validateCert($certificate)
+    public function validateCert(string $certificate): bool
     {
         if (!is_file($certificate)) {
             return false;
@@ -401,7 +418,7 @@ class Transfer
      * @param string $pathZipFile
      * @return array|bool
      */
-    public function checkIfDestinationIsWritable($pathZipFile)
+    public function checkIfDestinationIsWritable(string $pathZipFile)
     {
         $zip = new \ZipArchive();
 
@@ -411,7 +428,7 @@ class Transfer
 
         $notWritable = [];
         for ($i = 0; $i < $zip->numFiles; $i++) {
-            $path = ROOT_PATH.'/'.$zip->getNameIndex($i);
+            $path = ROOT_PATH . '/' . $zip->getNameIndex($i);
 
             if (file_exists($path) && !is_writable($path)) {
                 $notWritable[] = $path;
@@ -423,10 +440,12 @@ class Transfer
     }
 
     /**
+     * Update ilch, a module or a layout.
+     *
      * @param string $installedVersion
-     * @return true|false
+     * @return bool
      */
-    public function update($installedVersion)
+    public function update(string $installedVersion): bool
     {
         @set_time_limit(300);
         $zip = new \ZipArchive();
@@ -460,22 +479,22 @@ class Transfer
                 $thisFileName = $zip->getNameIndex($i);
                 $thisFileDir = \dirname($thisFileName);
 
-                if (!is_dir(ROOT_PATH.'/'.$thisFileDir)) {
-                    $content[] = 'New directory: '.$thisFileDir;
+                if (!is_dir(ROOT_PATH . '/' . $thisFileDir)) {
+                    $content[] = 'New directory: ' . $thisFileDir;
                 }
 
-                if (!is_dir(ROOT_PATH.'/'.$thisFileName)) {
+                if (!is_dir(ROOT_PATH . '/' . $thisFileName)) {
                     $content[] = 'New file: ' . $thisFileName;
                 }
                 $success = $zip->extractTo(ROOT_PATH, [$thisFileName]);
 
                 if (!$success) {
-                    $content[] = 'Error writing new file: '.$thisFileName;
+                    $content[] = 'Error writing new file: ' . $thisFileName;
                     return false;
                 }
 
                 // Execute getUpdate() in config.php if needed.
-                if ($thisFileName == $thisFileDir.'/config.php') {
+                if ($thisFileName == $thisFileDir . '/config.php') {
                     invalidateOpcache($thisFileName, true);
                     include $thisFileName;
 
@@ -495,15 +514,17 @@ class Transfer
             $this->setContent($content);
             $zip->close();
             unlink($this->zipFile);
-            unlink($this->zipFile.'-signature.sig');
+            unlink($this->zipFile . '-signature.sig');
             $this->curlClose();
         }
     }
 
     /**
-     * @return true|false
+     * Install a module or layout.
+     *
+     * @return bool
      */
-    public function install()
+    public function install(): bool
     {
         $zip = new \ZipArchive();
 
@@ -517,7 +538,7 @@ class Transfer
                 $thisFileName = $zip->getNameIndex($i);
                 $thisFileDir = dirname($thisFileName);
                 //If we need to run commands, then do it.
-                if ($thisFileName == $thisFileDir.'/config.php') {
+                if ($thisFileName == $thisFileDir . '/config.php') {
                     invalidateOpcache($thisFileName, true);
                     include $thisFileName;
                     $configClass = str_replace(array('.php', 'application', '/'), array('', '', "\\"), $thisFileName);
@@ -531,8 +552,8 @@ class Transfer
                                 continue;
                             }
 
-                            $moduleMapper = new \Modules\Admin\Mappers\Module();
-                            $moduleModel = new \Modules\Admin\Models\Module();
+                            $moduleMapper = new ModuleMapper();
+                            $moduleModel = new ModuleModel();
                             $moduleModel->setKey($config->config['key']);
 
                             if (isset($config->config['author'])) {
@@ -579,7 +600,7 @@ class Transfer
         } finally {
             $zip->close();
             unlink($this->zipFile);
-            unlink($this->zipFile.'-signature.sig');
+            unlink($this->zipFile . '-signature.sig');
             $this->curlClose();
         }
     }
