@@ -126,15 +126,13 @@ class Transfer
      * USE IT AFTER newVersionFound()
      * Sets the DownloadUrl.
      *
-     * @param $url
-     * @return mixed
+     * @param string $url
+     * @return string
      */
-    public function setDownloadUrl($url)
+    public function setDownloadUrl(string $url): string
     {
         $this->zipFileName = basename($url);
         $this->zipFile = $this->zipSavePath . $this->zipFileName;
-        $path_parts = pathinfo($url);
-        $this->setDownloadSignatureUrl($path_parts['dirname'] . '/' . $path_parts['filename'] . '-signature.sig');
         return $this->downloadUrl = $url;
     }
 
@@ -153,10 +151,10 @@ class Transfer
      * USE IT AFTER newVersionFound()
      * Sets the DownloadSignatureUrl.
      *
-     * @param $url
-     * @return mixed
+     * @param string $url
+     * @return string
      */
-    public function setDownloadSignatureUrl($url)
+    public function setDownloadSignatureUrl(string $url): string
     {
         $this->zipSigFileName = basename($url);
         $this->zipSigFile = $this->zipSavePath . $this->zipSigFileName;
@@ -273,10 +271,10 @@ class Transfer
     {
         $versionsList = json_decode($this->getVersions(), true);
         if ($versionsList !== null) {
-            foreach ($versionsList as $version => $requirements) {
-                if (version_compare(preg_replace('/\s+/', '', $version), $this->getVersionNow(), '>')) {
-                    $this->setNewVersion(trim(preg_replace('/\s\s+/', '', $version)));
-                    $this->checkRequirements($requirements);
+            foreach ($versionsList as $version => $details) {
+                if (version_compare(preg_replace('/\s+/', '', $version), $this->versionNow, '>')) {
+                    $this->newVersion = trim(preg_replace('/\s\s+/', '', $version));
+                    $this->checkRequirements($details);
                     return true;
                 }
             }
@@ -289,7 +287,7 @@ class Transfer
      * Check the requirements for the update.
      * Writes missing requirements to the 'missingRequirements' property.
      *
-     * @param $requirements
+     * @param mixed $requirements
      * @return bool
      */
     public function checkRequirements($requirements): bool
@@ -349,25 +347,25 @@ class Transfer
     public function save(): bool
     {
         try {
-            $newUpdate = url_get_contents($this->getDownloadUrl(), false, true);
-            if (!is_dir($this->getZipSavePath())) {
-                mkdir($this->getZipSavePath());
+            $newUpdate = url_get_contents($this->downloadUrl, false, true);
+            if (!is_dir($this->zipSavePath)) {
+                mkdir($this->zipSavePath);
             }
             $dlHandler = fopen($this->zipFile, 'wb');
             fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
 
-            $newUpdate = url_get_contents($this->getDownloadSignatureUrl(), false, true);
+            $newUpdate = url_get_contents($this->downloadSignatureUrl, false, true);
             $dlHandler = fopen($this->zipSigFile, 'wb');
             fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
         } finally {
-            $signature = file_get_contents($this->getZipFile() . '-signature.sig');
+            $signature = file_get_contents($this->zipSigFile);
             $pubKeyfile = ROOT_PATH . '/certificate/Certificate.crt';
-            if (!$this->verifyFile($pubKeyfile, $this->getZipFile(), $signature)) {
+            if (!$this->verifyFile($pubKeyfile, $this->zipFile, $signature)) {
                 // Verification failed. Drop the potentially bad files.
-                unlink($this->getZipFile());
-                unlink($this->getZipFile() . '-signature.sig');
+                unlink($this->zipFile);
+                unlink($this->zipSigFile);
                 return false;
             }
             return true;
@@ -514,7 +512,7 @@ class Transfer
             $this->setContent($content);
             $zip->close();
             unlink($this->zipFile);
-            unlink($this->zipFile . '-signature.sig');
+            unlink($this->zipSigFile);
             $this->curlClose();
         }
     }
@@ -600,11 +598,16 @@ class Transfer
         } finally {
             $zip->close();
             unlink($this->zipFile);
-            unlink($this->zipFile . '-signature.sig');
+            unlink($this->zipSigFile);
             $this->curlClose();
         }
     }
 
+    /**
+     * Close a cURL session.
+     *
+     * @return void
+     */
     private function curlClose()
     {
         if (is_resource($this->transferUrl)) {
