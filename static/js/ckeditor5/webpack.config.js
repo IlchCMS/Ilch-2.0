@@ -59,9 +59,9 @@ resolve: {
 module: {
     rules: [
         {
-			test: /\.svg$/,
-			use: [ 'raw-loader' ]
-		},
+            test: /\.svg$/,
+            use: [ 'raw-loader' ]
+        },
         {
             test: /\.ts$/,
             use: 'ts-loader'
