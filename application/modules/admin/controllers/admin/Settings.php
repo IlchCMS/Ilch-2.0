@@ -287,7 +287,7 @@ HTACCESS;
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuUpdate'), ['action' => 'update']);
 
-        $this->addMessage('backupBeforeUpdate', 'danger');
+        $this->addMessage('backupBeforeUpdate', 'info');
 
         $doUpdate = $this->getRequest()->getParam('doupdate');
         $doSave = $this->getRequest()->getParam('dosave');
@@ -313,12 +313,13 @@ HTACCESS;
 
         $this->getView()->set('versions', $result);
 
-        if ($update->newVersionFound() == true) {
+        if ($update->newVersionFound()) {
             $update->setDownloadUrl($this->getConfig()->get('updateserver') . 'updates/Master-' . $update->getNewVersion() . '.zip');
             $update->setDownloadSignatureUrl($this->getConfig()->get('updateserver') . 'updates/Master-' . $update->getNewVersion() . '.zip-signature.sig');
             $newVersion = $update->getNewVersion();
             $this->getView()->set('foundNewVersions', true);
             $this->getView()->set('newVersion', $newVersion);
+            $this->getView()->set('zipFileOfUpdate', $update->getZipFile());
 
             if (!empty($update->getMissingRequirements())) {
                 // Add details of missingRequirements to the error message.
@@ -339,26 +340,30 @@ HTACCESS;
                 }
                 $this->getView()->set('missingRequirements', true);
                 $this->getView()->set('missingRequirementsMessages', $missingRequirementsMessages);
-                return false;
+                return;
             }
 
-            if ($doSave == true) {
-                if (!$update->validateCert(ROOT_PATH . '/certificate/Certificate.crt')) {
-                    // Certificate is missing or expired.
-                    $this->getView()->set('certMissingOrExpired', true);
-                    return false;
+            if ($this->getRequest()->isSecure()) {
+                if ($doSave) {
+                    if (!$update->validateCert(ROOT_PATH . '/certificate/Certificate.crt')) {
+                        // Certificate is missing or expired.
+                        $this->getView()->set('certMissingOrExpired', true);
+                        return;
+                    }
+                    if (!$update->save()) {
+                        $this->getView()->set('verificationFailed', true);
+                        return;
+                    }
                 }
-                if (!$update->save()) {
-                    $this->getView()->set('verificationFailed', true);
-                    return;
+                if ($doUpdate) {
+                    if ($update->update($version)) {
+                        $this->getConfig()->set('version', $newVersion);
+                        $this->getView()->set('updateSuccessfull', true);
+                    }
+                    $this->getView()->set('content', $update->getContent());
                 }
-            }
-            if ($doUpdate == true) {
-                if ($update->update($version)) {
-                    $this->getConfig()->set('version', $newVersion);
-                    $this->getView()->set('updateSuccessfull', true);
-                }
-                $this->getView()->set('content', $update->getContent());
+            } elseif ($doSave || $doUpdate) {
+                $this->addMessage('downloadOrInstallDenied', 'danger');
             }
         } else {
             $this->getView()->set('versions', '');
@@ -367,12 +372,18 @@ HTACCESS;
 
     public function clearCacheAction()
     {
-        // Delete downloaded updates
-        $files = glob('updates/*');
-        foreach($files as $file) {
-            if (is_file($file)) {
-                unlink($file);
+        if ($this->getRequest()->isSecure()) {
+            // Delete downloaded updates
+            $files = glob('updates/*');
+            foreach($files as $file) {
+                if (is_file($file)) {
+                    unlink($file);
+                }
             }
+
+            $this->addMessage('deleteDownloadedUpdatesSuccess');
+        } else {
+            $this->addMessage('deleteDownloadedUpdatesFailure', 'danger');
         }
 
         $this->redirect()
