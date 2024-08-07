@@ -19,11 +19,11 @@ $updateSuccessfull = $this->get('updateSuccessfull');
         <p><?=$this->getTrans('foundNewVersions') ?><?=$newVersion ?></p>
         <?php if (!$missingRequirements) : ?>
             <?php if (!$doUpdate): ?>
-                <?php if (is_file(ROOT_PATH . '/updates/Master-' . $newVersion . '.zip')): ?>
+                <?php if (is_file($this->get('zipFileOfUpdate'))): ?>
                     <?php if (!$doSave): ?>
                         <p><?=$this->getTrans('isSave') ?>
                             <a class="btn btn-primary showOverlay"
-                               href="<?=$this->getUrl(['action' => 'clearCache']) ?>"><?=$this->getTrans('clearCache') ?>
+                               href="<?=$this->getUrl(['action' => 'clearCache'], null, true) ?>"><?=$this->getTrans('clearCache') ?>
                             </a>
                         </p>
                     <?php else: ?>
@@ -31,7 +31,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
                     <?php endif; ?>
                     <p><?=$this->getTrans('updateReady') ?>
                         <a class="btn btn-primary showOverlay"
-                           href="<?=$this->getUrl(['action' => 'update', 'doupdate' => 'true']) ?>"><?=$this->getTrans('installNow') ?>
+                           href="<?=$this->getUrl(['action' => 'update', 'doupdate' => 'true'], null, true) ?>"><?=$this->getTrans('installNow') ?>
                         </a>
                     </p>
                 <?php else: ?>
@@ -43,7 +43,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
                     <?php endif; ?>
                     <p><?=$this->getTrans('doSave') ?>
                         <a class="btn btn-primary showOverlay"
-                           href="<?=$this->getUrl(['action' => 'update', 'dosave' => 'true']) ?>"><?=$this->getTrans('doSaveNow') ?>
+                           href="<?=$this->getUrl(['action' => 'update', 'dosave' => 'true'], null, true) ?>"><?=$this->getTrans('doSaveNow') ?>
                         </a>
                     </p>
                 <?php endif; ?>
@@ -84,15 +84,15 @@ $updateSuccessfull = $this->get('updateSuccessfull');
 let delayedShow;
 
 $(document).ready(function() {
-    $(".showOverlay").on('click', function(event){
-        $loadingOverlay = $(".loadingoverlay");
+    $(".showOverlay").on('click', function(){
+        let loadingOverlay = $(".loadingoverlay");
 
         delayedShow = setTimeout(function(){
-            $loadingOverlay.removeAttr('hidden');
+            loadingOverlay.removeAttr('hidden');
         }, 200);
 
         setTimeout(function(){
-            $loadingOverlay.attr('hidden', '');
+            loadingOverlay.attr('hidden', '');
         }, 30000);
     });
 

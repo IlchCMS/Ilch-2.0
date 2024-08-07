@@ -344,6 +344,8 @@ return [
     'doSave' => 'Update herunterladen',
     'isSave' => 'Update bereits heruntergeladen.',
     'clearCache' => 'Update löschen',
+    'deleteDownloadedUpdatesSuccess' => 'Heruntergeladenes Update wurde erfolgreich gelöscht.',
+    'deleteDownloadedUpdatesFailure' => 'Heruntergeladenes Update konnte nicht gelöscht werden.',
     'updateSaveSuccess' => 'Update erfolgreich heruntergeladen.',
     'doSaveNow' => 'Jetzt herunterladen',
     'updateReady' => 'Update bereit zum Installieren.',
@@ -359,6 +361,7 @@ return [
     'moduleInstallationFailed' => 'Modul konnte nicht installiert werden.',
     'layoutUpdateFailed' => 'Layout konnte nicht aktualisiert werden.',
     'moduleUpdateFailed' => 'Modul konnte nicht aktualisiert werden.',
+    'downloadOrInstallDenied' => 'Aufgrund einer ungültigen Internetadresse wurde das Herunterladen oder Installieren des Updates nicht durchgeführt.',
     'processingPleaseWait' => 'Verarbeite. Bitte warten.',
 
     'enableSelectedEntries' => 'Sollen die markierten Einträge wirklich freigeschaltet werden?',

@@ -345,6 +345,8 @@ return [
     'isSave' => 'Update already downloaded.',
     'updateSaveSuccess' => 'Update successfully downloaded.',
     'clearCache' => 'Delete update',
+    'deleteDownloadedUpdatesSuccess' => 'Downloaded update successfully deleted.',
+    'deleteDownloadedUpdatesFailure' => 'Downloaded update could not be deleted.',
     'doSaveNow' => 'Download now',
     'updateReady' => 'Update ready to install.',
     'installNow' => 'Install now',
@@ -359,6 +361,7 @@ return [
     'moduleInstallationFailed' => 'The installation of the module failed.',
     'layoutUpdateFailed' => 'The update of the layout failed.',
     'moduleUpdateFailed' => 'The update of the module failed.',
+    'downloadOrInstallDenied' => 'Due to an invalid web address the update was not downloaded or installed.',
     'processingPleaseWait' => 'Processing. Please wait.',
 
     'enableSelectedEntries' => 'Enable the selected entries?',
