@@ -190,6 +190,17 @@ class Transfer
     }
 
     /**
+     * Sets the VersionNow.
+     *
+     * @return string
+     * @param string $versionNow
+     */
+    public function setVersionNow(string $versionNow): string
+    {
+        return $this->versionNow = $versionNow;
+    }
+
+    /**
      * Gets the VersionNow.
      *
      * @return string
@@ -197,6 +208,17 @@ class Transfer
     public function getVersionNow(): string
     {
         return $this->versionNow;
+    }
+
+    /**
+     * Sets the NewVersion.
+     *
+     * @return string
+     * @param string $version
+     */
+    public function setNewVersion(string $version): string
+    {
+        return $this->newVersion = $version;
     }
 
     /**
@@ -238,28 +260,6 @@ class Transfer
     public function getMissingRequirements(): array
     {
         return $this->missingRequirements;
-    }
-
-    /**
-     * Sets the NewVersion.
-     *
-     * @return string
-     * @param string $version
-     */
-    public function setNewVersion(string $version): string
-    {
-        return $this->newVersion = $version;
-    }
-
-    /**
-     * Sets the VersionNow.
-     *
-     * @return string
-     * @param string $versionNow
-     */
-    public function setVersionNow(string $versionNow): string
-    {
-        return $this->versionNow = $versionNow;
     }
 
     /**
@@ -450,6 +450,12 @@ class Transfer
         $content = [];
 
         try {
+            // Check if file is potentially damaged or manipulated.
+            if (!$this->verifyFile(ROOT_PATH . '/certificate/Certificate.crt', $this->zipFile, file_get_contents($this->zipSigFile))) {
+                $content[] = 'Verification failed. Dropped the potentially damaged or manipulated files.';
+                return false;
+            }
+
             $res = $zip->open($this->zipFile);
 
             if ($res !== true) {
