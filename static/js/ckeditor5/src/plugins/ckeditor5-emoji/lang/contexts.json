@@ -1,1 +1,5 @@
-{}
+{
+	"Emoji": "Name of the emoji plugin, visible in a dropdown and as a button tooltip.",
+	"Category": "A label for a emoji dropdown with emoji categories.",
+	"All": "A category name is displayed in a emoji dropdown representing all available emoji.",
+}
