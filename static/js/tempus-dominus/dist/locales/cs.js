@@ -1,5 +1,5 @@
 /*!
-  * Tempus Dominus v6.9.4 (https://getdatepicker.com/)
+  * Tempus Dominus v6.9.10 (https://getdatepicker.com/)
   * Copyright 2013-2024 Jonathan Peterson
   * Licensed under MIT (https://github.com/Eonasdan/tempus-dominus/blob/master/LICENSE)
   */
@@ -32,7 +32,7 @@ const localization = {
     selectTime: 'Vybrat čas',
     selectDate: 'Vybrat datum',
     dayViewHeaderFormat: { month: 'long', year: '2-digit' },
-    locale: 'de',
+    locale: 'cs',
     startOfTheWeek: 1,
     dateFormats: {
         LTS: 'HH:mm:ss',
