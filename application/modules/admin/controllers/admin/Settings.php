@@ -319,6 +319,7 @@ HTACCESS;
             $newVersion = $update->getNewVersion();
             $this->getView()->set('foundNewVersions', true);
             $this->getView()->set('newVersion', $newVersion);
+            $this->getView()->set('newestVersion', array_key_last($result));
             $this->getView()->set('zipFileOfUpdate', $update->getZipFile());
 
             if (!empty($update->getMissingRequirements())) {
