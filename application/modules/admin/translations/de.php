@@ -207,7 +207,7 @@ return [
     'versionQueryFailed' => 'Versionsabfrage fehlgeschlagen',
     'versionNA' => 'nicht verfügbar',
     'installedVersion' => 'Installierte Version',
-    'serverVersion' => 'Server Version',
+    'newestVersion' => 'Neueste Version',
     'description' => 'Beschreibung',
     'admincenter' => 'Admincenter',
     'info' => 'Info',

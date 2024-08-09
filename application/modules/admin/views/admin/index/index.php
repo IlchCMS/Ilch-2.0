@@ -56,7 +56,7 @@ $accesses = $this->get('accesses');
                         <td><?=$version ?></td>
                     </tr>
                     <tr>
-                        <td><?=$this->getTrans('serverVersion') ?></td>
+                        <td><?=$this->getTrans('newestVersion') ?></td>
                         <td>
                             <?php if ($this->get('newVersion')) : ?>
                                 <?=$this->get('newVersion') ?>

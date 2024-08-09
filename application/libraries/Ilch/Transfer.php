@@ -16,6 +16,8 @@ class Transfer
 {
     protected $transferUrl;
 
+    protected array $curlOpt = [];
+
     protected string $versionNow;
 
     protected string $newVersion;
@@ -173,23 +175,6 @@ class Transfer
     }
 
     /**
-     * Gets the Version.
-     *
-     * @return string|true (depending on CURLOPT_RETURNTRANSFER)
-     */
-    public function getVersions()
-    {
-        // curl_exec
-        // Returns true on success or false on failure. However, if the CURLOPT_RETURNTRANSFER option is set, it will return the result on success, false on failure.
-        // This function may return Boolean false, but may also return a non-Boolean value which evaluates to false.
-        $result = curl_exec($this->transferUrl);
-        if ($result == false) {
-            return '';
-        }
-        return $result;
-    }
-
-    /**
      * Sets the VersionNow.
      *
      * @return string
@@ -263,20 +248,52 @@ class Transfer
     }
 
     /**
+     * Gets the ilch versions.
+     *
+     * @return array|null associative array or null on failure.
+     * @since 2.0.0
+     * @since 2.2.3 Returns an associative array or null on failure.
+     */
+    public function getVersions(): ?array
+    {
+        // curl_exec: Returns true on success or false on failure. However, if the CURLOPT_RETURNTRANSFER option is set, it will return the result on success, false on failure.
+        // This function may return Boolean false, but may also return a non-Boolean value which evaluates to false.
+
+        // Set CURLOPT_RETURNTRANSFER to 1 as this is required for this function.
+        $previousValue = $this->curlOpt['CURLOPT_RETURNTRANSFER'] ?? 0;
+
+        if (!$previousValue) {
+            $this->setCurlOpt('CURLOPT_RETURNTRANSFER', 1);
+        }
+
+        $result = curl_exec($this->transferUrl);
+
+        // Restore previous value of CURLOPT_RETURNTRANSFER.
+        if (!$previousValue) {
+            $this->setCurlOpt('CURLOPT_RETURNTRANSFER', 0);
+        }
+
+        if ($result === false) {
+            return null;
+        }
+
+        return json_decode($result, true);
+    }
+
+    /**
      * Gets all versions and checks if there is a new version available.
      *
      * @return bool
      */
     public function newVersionFound(): bool
     {
-        $versionsList = json_decode($this->getVersions(), true);
-        if ($versionsList !== null) {
-            foreach ($versionsList as $version => $details) {
-                if (version_compare(preg_replace('/\s+/', '', $version), $this->versionNow, '>')) {
-                    $this->newVersion = trim(preg_replace('/\s\s+/', '', $version));
-                    $this->checkRequirements($details);
-                    return true;
-                }
+        $versionsList = $this->getVersions();
+
+        foreach ($versionsList ?? [] as $version => $details) {
+            if (version_compare(preg_replace('/\s+/', '', $version), $this->versionNow, '>')) {
+                $this->newVersion = trim(preg_replace('/\s\s+/', '', $version));
+                $this->checkRequirements($details);
+                return true;
             }
         }
 
@@ -334,7 +351,7 @@ class Transfer
     public function setCurlOpt(string $opt, $param): Transfer
     {
         if (!empty($this->transferUrl)) {
-            curl_setopt($this->transferUrl, $opt, $param);
+            $this->curlOpt[] = curl_setopt($this->transferUrl, $opt, $param);
         }
         return $this;
     }
