@@ -307,7 +307,7 @@ HTACCESS;
         $update->setZipSavePath(ROOT_PATH . '/updates/');
 
         $result = $update->getVersions();
-        if ($result == '') {
+        if (!$result) {
             $this->addMessage(curl_error($update->getTransferUrl()), 'danger');
         }
 

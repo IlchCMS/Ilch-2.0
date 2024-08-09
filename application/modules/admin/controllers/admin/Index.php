@@ -46,8 +46,9 @@ class Index extends \Ilch\Controller\Admin
         $update->setCurlOpt(CURLOPT_CONNECTTIMEOUT, 10);
         $update->setCurlOpt(CURLOPT_TIMEOUT, 30);
         $update->setCurlOpt(CURLOPT_FAILONERROR, true);
+        $versions = $update->getVersions();
 
-        if ($update->getVersions() == '') {
+        if (!$versions) {
             $this->getView()->set('curlErrorOccurred', true);
             $this->addMessage($this->getTranslator()->trans('versionQueryFailedWith', curl_error($update->getTransferUrl())), 'danger');
         } else {
@@ -87,9 +88,8 @@ class Index extends \Ilch\Controller\Admin
         }
 
         if ($update->newVersionFound()) {
-            $newVersion = $update->getNewVersion();
             $this->getView()->set('foundNewVersions', true);
-            $this->getView()->set('newVersion', $newVersion);
+            $this->getView()->set('newestVersion', array_key_last($versions));
         }
 
         // Check if there are notifications, which need to be shown
