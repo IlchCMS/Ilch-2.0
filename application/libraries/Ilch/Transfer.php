@@ -263,14 +263,14 @@ class Transfer
         $previousValue = $this->curlOpt['CURLOPT_RETURNTRANSFER'] ?? 0;
 
         if (!$previousValue) {
-            $this->setCurlOpt('CURLOPT_RETURNTRANSFER', 1);
+            $this->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
         }
 
         $result = curl_exec($this->transferUrl);
 
         // Restore previous value of CURLOPT_RETURNTRANSFER.
         if (!$previousValue) {
-            $this->setCurlOpt('CURLOPT_RETURNTRANSFER', 0);
+            $this->setCurlOpt(CURLOPT_RETURNTRANSFER, 0);
         }
 
         if ($result === false) {
@@ -344,11 +344,11 @@ class Transfer
     /**
      * Sets an cURL option for the current cURL transfer (transferUrl).
      *
-     * @param string $opt
+     * @param int $opt
      * @param mixed $param
      * @return $this
      */
-    public function setCurlOpt(string $opt, $param): Transfer
+    public function setCurlOpt(int $opt, $param): Transfer
     {
         if (!empty($this->transferUrl)) {
             $this->curlOpt[] = curl_setopt($this->transferUrl, $opt, $param);
