@@ -259,8 +259,8 @@ class Transfer
         // curl_exec: Returns true on success or false on failure. However, if the CURLOPT_RETURNTRANSFER option is set, it will return the result on success, false on failure.
         // This function may return Boolean false, but may also return a non-Boolean value which evaluates to false.
 
-        // Set CURLOPT_RETURNTRANSFER to 1 as this is required for this function.
-        $previousValue = $this->curlOpt['CURLOPT_RETURNTRANSFER'] ?? 0;
+        // Set CURLOPT_RETURNTRANSFER as this is required for this function.
+        $previousValue = $this->curlOpt[CURLOPT_RETURNTRANSFER] ?? 0;
 
         if (!$previousValue) {
             $this->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
@@ -351,7 +351,9 @@ class Transfer
     public function setCurlOpt(int $opt, $param): Transfer
     {
         if (!empty($this->transferUrl)) {
-            $this->curlOpt[] = curl_setopt($this->transferUrl, $opt, $param);
+            if (curl_setopt($this->transferUrl, $opt, $param)) {
+                $this->curlOpt[$opt] = $param;
+            }
         }
         return $this;
     }
