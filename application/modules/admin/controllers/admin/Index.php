@@ -89,7 +89,7 @@ class Index extends \Ilch\Controller\Admin
 
         if ($update->newVersionFound()) {
             $this->getView()->set('foundNewVersions', true);
-            $this->getView()->set('newVersion', array_key_last($versions));
+            $this->getView()->set('newestVersion', array_key_last($versions));
         }
 
         // Check if there are notifications, which need to be shown
