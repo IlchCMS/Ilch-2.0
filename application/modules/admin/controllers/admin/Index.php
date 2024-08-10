@@ -84,7 +84,7 @@ class Index extends \Ilch\Controller\Admin
             }
 
             // Load the latest news.
-            $ilchNewsList = url_get_contents($this->getConfig()->get('updateserver') . 'ilchNews.json', true, false, 120);
+            $ilchNewsList = url_get_contents($this->getConfig()->get('updateserver') . 'ilchNews.json');
         }
 
         if ($update->newVersionFound()) {
@@ -123,5 +123,18 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->redirect(['action' => 'index']);
+    }
+
+    public function refreshNewsAction()
+    {
+        if (!empty(url_get_contents($this->getConfig()->get('updateserver') . 'ilchNews.json', true, true))) {
+            $this->redirect()
+                ->withMessage('updateSuccess')
+                ->to(['action' => 'index']);
+        }
+
+        $this->redirect()
+            ->withMessage('lastUpdateError', 'danger')
+            ->to(['action' => 'index']);
     }
 }
