@@ -79,7 +79,7 @@ $accesses = $this->get('accesses');
             </table>
         </div>
         <?php if (!empty($ilchNews)) : ?>
-            <h1>ilch <?=$this->getTrans('news') ?></h1>
+            <h1>ilch <?=$this->getTrans('news') ?> <i id="refreshNews" class="fa-solid fa-arrows-rotate"></i></h1>
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
                     <colgroup>
@@ -150,3 +150,9 @@ $accesses = $this->get('accesses');
     <?=$this->getListBar(['delete' => 'delete']) ?>
 </form>
 <?php endif; ?>
+
+<script>
+    $("#refreshNews").click(function(){
+        location.href="<?=$this->getUrl(['action' => 'refreshnews', 'from' => 'index']) ?>";
+    });
+</script>

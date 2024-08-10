@@ -1558,3 +1558,7 @@ table tbody i.fa.fa-sort {
     z-index: 2147483647;
     opacity: 1;
 }
+
+#refreshNews {
+    cursor: pointer;
+}
