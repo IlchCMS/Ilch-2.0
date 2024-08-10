@@ -29,7 +29,7 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                     </div>
                     <div class="float-end">
                         <?php if ($layout->getLink() != ''): ?>
-                            <a href="<?=$layout->getLink() ?>" alt="<?=$this->escape($layout->getAuthor()) ?>" title="<?=$this->escape($layout->getAuthor()) ?>" target="_blank" rel="noopener">
+                            <a href="<?=$layout->getLink() ?>" title="<?=$this->escape($layout->getAuthor()) ?>" target="_blank" rel="noopener">
                                 <i><?=$this->escape($layout->getAuthor()) ?></i>
                             </a>
                         <?php else: ?>
@@ -174,10 +174,10 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
 
     <?php
     if ($layout->getLink() != '') {
-        $screen = '<a href="' . $layout->getLink() . '" alt="' . $this->escape($layout->getAuthor()) . '" title="' . $this->escape($layout->getAuthor()) . '" target="_blank" rel="noopener">
+        $screen = '<a href="' . $layout->getLink() . '" title="' . $this->escape($layout->getAuthor()) . '" target="_blank" rel="noopener">
                    <img src="' . $this->getStaticUrl('../application/layouts/' . $layout->getKey() . '/config/screen.png') . '" class="img-thumbnail" alt="' . $this->escape($layout->getName()) . '" title="' . $this->escape($layout->getName()) . '" />
                    </a>';
-        $author = '<a href="' . $layout->getLink() . '" alt="' . $this->escape($layout->getAuthor()) . '" title="' . $this->escape($layout->getAuthor()) . '" target="_blank" rel="noopener">' . $this->escape($layout->getAuthor()) . '</a>';
+        $author = '<a href="' . $layout->getLink() . '" title="' . $this->escape($layout->getAuthor()) . '" target="_blank" rel="noopener">' . $this->escape($layout->getAuthor()) . '</a>';
     } else {
         $screen = '<img src="' . $this->getStaticUrl('../application/layouts/' . $layout->getKey() . '/config/screen.png') . '" alt="' . $this->escape($layout->getName()) . '" title="' . $this->escape($layout->getName()) . '" />';
         $author = $this->escape($layout->getAuthor());
@@ -196,12 +196,12 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
 </div>
 <?=$this->getDialog('deleteModal', $this->getTrans('delete'), $this->getTrans('needAcknowledgement'), 1) ?>
 <script>
-$('.deleteLayout').on('click', function(event) {
+$('.deleteLayout').on('click', function() {
     $('#modalButton').data('clickurl', $(this).data('clickurl'));
     $('#modalText').html($(this).data('modaltext'));
 });
 
-$('#modalButton').on('click', function(event) {
+$('#modalButton').on('click', function() {
     window.location = $(this).data('clickurl');
 });
 </script>

@@ -110,7 +110,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
                         <small>
                             <?=$this->getTrans('author') ?>:
                             <?php if ($moduleOnUpdateServer->link != ''): ?>
-                                <a href="<?=$moduleOnUpdateServer->link ?>" alt="<?=$this->escape($moduleOnUpdateServer->author) ?>" title="<?=$this->escape($moduleOnUpdateServer->author) ?>" target="_blank" rel="noopener"><i><?=$this->escape($moduleOnUpdateServer->author) ?></i></a>
+                                <a href="<?=$moduleOnUpdateServer->link ?>" title="<?=$this->escape($moduleOnUpdateServer->author) ?>" target="_blank" rel="noopener"><i><?=$this->escape($moduleOnUpdateServer->author) ?></i></a>
                             <?php else: ?>
                                 <i><?=$this->escape($moduleOnUpdateServer->author) ?></i>
                             <?php endif; ?>
@@ -225,15 +225,15 @@ function gotokeyAll() {
 }
 // search
 $(document).ready(function() {
-    $(".showOverlay").on('click', function(event){
-        $loadingOverlay = $(".loadingoverlay");
+    $(".showOverlay").on('click', function(){
+        let loadingOverlay = $(".loadingoverlay");
 
         delayedShow = setTimeout(function(){
-            $loadingOverlay.removeAttr('hidden');
+            loadingOverlay.removeAttr('hidden');
         }, 200);
 
         setTimeout(function(){
-            $loadingOverlay.attr('hidden', '');
+            loadingOverlay.attr('hidden', '');
         }, 30000);
     });
 

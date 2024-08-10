@@ -90,7 +90,7 @@
                             <small>
                                 <?=$this->getTrans('author') ?>:
                                 <?php if ($module->getLink() != ''): ?>
-                                    <a href="<?=$module->getLink() ?>" alt="<?=$this->escape($module->getAuthor()) ?>" title="<?=$this->escape($module->getAuthor()) ?>" target="_blank" rel="noopener">
+                                    <a href="<?=$module->getLink() ?>" title="<?=$this->escape($module->getAuthor()) ?>" target="_blank" rel="noopener">
                                         <i><?=$this->escape($module->getAuthor()) ?></i>
                                     </a>
                                 <?php else: ?>
@@ -161,7 +161,7 @@
 
                     <?php
                     if ($module->getLink() != '') {
-                        $author = '<a href="' . $module->getLink() . '" alt="' . $this->escape($module->getAuthor()) . '" title="' . $this->escape($module->getAuthor()) . '" target="_blank" rel="noopener">' . $this->escape($module->getAuthor()) . '</a>';
+                        $author = '<a href="' . $module->getLink() . '" title="' . $this->escape($module->getAuthor()) . '" target="_blank" rel="noopener">' . $this->escape($module->getAuthor()) . '</a>';
                     } else {
                         $author = $this->escape($module->getAuthor());
                     }
@@ -204,15 +204,15 @@
 let delayedShow;
 
 $(document).ready(function() {
-    $(".showOverlay").on('click', function(event){
-        $loadingOverlay = $(".loadingoverlay");
+    $(".showOverlay").on('click', function(){
+        let loadingOverlay = $(".loadingoverlay");
 
         delayedShow = setTimeout(function(){
-            $loadingOverlay.removeAttr('hidden');
+            loadingOverlay.removeAttr('hidden');
         }, 200);
 
         setTimeout(function(){
-            $loadingOverlay.attr('hidden', '');
+            loadingOverlay.attr('hidden', '');
         }, 30000);
     });
 
