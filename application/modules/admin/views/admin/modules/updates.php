@@ -276,15 +276,15 @@ function gotokeyAll() {
    });
 }
 $(document).ready(function() {
-    $(".showOverlay").on('click', function(event){
-        $loadingOverlay = $(".loadingoverlay");
+    $(".showOverlay").on('click', function(){
+        let loadingOverlay = $(".loadingoverlay");
 
         delayedShow = setTimeout(function(){
-            $loadingOverlay.removeAttr('hidden');
+            loadingOverlay.removeAttr('hidden');
         }, 200);
 
         setTimeout(function(){
-            $loadingOverlay.attr('hidden', '');
+            loadingOverlay.attr('hidden', '');
         }, 30000);
     });
 

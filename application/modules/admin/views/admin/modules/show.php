@@ -128,7 +128,7 @@ foreach ($modules as $module): ?>
                         </div>
                         <div class="col-md-9 col-sm-6">
                             <?php if ($module->link != ''): ?>
-                                <a href="<?=$module->link ?>" alt="<?=$this->escape($module->author) ?>" title="<?=$this->escape($module->author) ?>" target="_blank" rel="noopener">
+                                <a href="<?=$module->link ?>" title="<?=$this->escape($module->author) ?>" target="_blank" rel="noopener">
                                     <i><?=$this->escape($module->author) ?></i>
                                 </a>
                             <?php else: ?>

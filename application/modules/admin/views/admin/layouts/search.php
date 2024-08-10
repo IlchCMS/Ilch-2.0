@@ -29,7 +29,7 @@ if (empty($layoutsOnUpdateServer)) {
                     </div>
                     <div class="float-end">
                         <?php if ($layoutOnUpdateServer->link != ''): ?>
-                            <a href="<?=$layoutOnUpdateServer->link ?>" alt="<?=$this->escape($layoutOnUpdateServer->author) ?>" title="<?=$this->escape($layoutOnUpdateServer->author) ?>" target="_blank" rel="noopener"><i><?=$this->escape($layoutOnUpdateServer->author) ?></i></a>
+                            <a href="<?=$layoutOnUpdateServer->link ?>" title="<?=$this->escape($layoutOnUpdateServer->author) ?>" target="_blank" rel="noopener"><i><?=$this->escape($layoutOnUpdateServer->author) ?></i></a>
                         <?php else: ?>
                             <i><?=$this->escape($layoutOnUpdateServer->author) ?></i>
                         <?php endif; ?>

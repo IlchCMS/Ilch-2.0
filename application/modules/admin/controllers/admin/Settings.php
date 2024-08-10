@@ -308,6 +308,7 @@ HTACCESS;
 
         $result = $update->getVersions();
         if (!$result) {
+            $this->getView()->set('curlErrorOccurred', true);
             $this->addMessage(curl_error($update->getTransferUrl()), 'danger');
         }
 
