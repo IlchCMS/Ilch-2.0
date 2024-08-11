@@ -56,7 +56,11 @@ class Factory
         $db->setPrefix($dbData['dbPrefix']);
 
         if ($addDebugCollector) {
-            DebugBar::getInstance()->addCollector(new DebugBar\DataCollector\MysqlCollector($db));
+            $collector = new DebugBar\DataCollector\MysqlCollector($db);
+
+            if (!DebugBar::getInstance()->hasCollector($collector->getName())) {
+                DebugBar::getInstance()->addCollector($collector);
+            }
         }
 
         return $db;
