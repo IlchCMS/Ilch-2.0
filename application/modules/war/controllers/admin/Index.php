@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -150,7 +151,7 @@ class Index extends Admin
             if ($this->getRequest()->getPost('warMatchtype') === 'neu') {
                 $_POST['warMatchtype'] = $this->getRequest()->getPost('warMatchtypeNew');
             }
-            
+
             $validator = [
                 'warXonx'           => 'required',
                 'warGame'           => 'required',
@@ -162,7 +163,7 @@ class Index extends Admin
                 'warServer'         => 'required',
                 'lastAcceptTime'    => 'numeric|integer'
             ];
-            
+
             if ($warMapper->existsTable('calendar')) {
                 $validator['calendarShow'] = 'required|numeric|min:0|max:1';
             }
@@ -229,7 +230,7 @@ class Index extends Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(array_merge(['action' => 'treat'], ($warModel->getId()?['id' => $warModel->getId()]:[])));
+                ->to(array_merge(['action' => 'treat'], ($warModel->getId() ? ['id' => $warModel->getId()] : [])));
         }
 
         if ($warMapper->existsTable('calendar')) {

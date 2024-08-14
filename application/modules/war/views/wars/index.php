@@ -1,11 +1,15 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 $wars = [];
 
 // war entries
 if ($this->get('warList')) {
+    /** @var \Modules\War\Models\War $war */
     foreach ($this->get('warList') as $war) {
         $e = [];
-        $e['title'] = $this->escape('War: '.$war->getWarGroupTag().' vs. '.$war->getWarEnemyTag());
+        $e['title'] = $this->escape('War: ' . $war->getWarGroupTag() . ' vs. ' . $war->getWarEnemyTag());
         $e['start'] = $war->getWarTime();
         $e['end'] = date("Y-m-d H:i:s", strtotime('+1 hour', strtotime($war->getWarTime())));
         $e['color'] = '#C52C66';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -128,7 +129,7 @@ class Enemy extends Admin
                 'enemyContactName' => $this->getRequest()->getPost('enemyContactName'),
                 'enemyContactEmail' => $this->getRequest()->getPost('enemyContactEmail')
             ];
-            
+
             $validator = [
                 'enemyName' => 'required|unique:war_enemy,name',
                 'enemyTag' => 'required|unique:war_enemy,tag',
@@ -136,7 +137,7 @@ class Enemy extends Admin
                 'enemyImage' => 'url',
                 'enemyContactEmail' => 'email'
             ];
-            
+
             if ($enemyModel->getId()) {
                 $validator['enemyName'] = 'required';
                 $validator['enemyTag'] = 'required';
@@ -162,7 +163,7 @@ class Enemy extends Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(array_merge(['action' => 'treat'], ($enemyModel->getId()?['id' => $enemyModel->getId()]:[])));
+                ->to(array_merge(['action' => 'treat'], ($enemyModel->getId() ? ['id' => $enemyModel->getId()] : [])));
         }
 
         $this->getView()->set('enemy', $enemyModel);

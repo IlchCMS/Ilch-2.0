@@ -1,16 +1,22 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/jquery-editable-select.min.css') ?>" rel="stylesheet">
 <script src="<?=$this->getBaseUrl('application/modules/war/static/js/jquery-editable-select.min.js') ?>"></script>
 <div id="dup">
 <?php $index = 0; ?>
-<?php foreach ($this->get('games') as $game): ?>
+<?php
+/** @var \Modules\War\Models\Games $game */
+foreach ($this->get('games') as $game) : ?>
     <div id="duplicator<?=$index++ ?>">
-        <?php if ($game->getId()): ?>
+        <?php if ($game->getId()) : ?>
         <input type="hidden" name="warGameIds[]" value="<?=$game->getId() ?>">
         <?php endif; ?>
         <div class=" row mb-3 ">
             <label class="col-xl-2 col-form-label" for="warMapPlayed[]">
                 <?=$this->getTrans('warMapName') ?>
-                <?php if ($game->getId()): ?>
+                <?php if ($game->getId()) : ?>
                 <a id="<?=$game->getId() ?>"
                    class="btn btn-danger btn-sm"
                    href="javascript:void(0)"
@@ -24,15 +30,19 @@
                         id="warMapPlayed[]"
                         name="warMapPlayed[]"
                         data-placeholder="<?=$this->getTrans('warMapName') ?>">
-                    <?php foreach ($this->get('gamesmaps') ?? [] as $maps): ?>
+                    <?php
+                    /** @var \Modules\War\Models\Maps $maps */
+                    foreach ($this->get('gamesmaps') ?? [] as $maps) : ?>
                         <option value="<?=$maps->getId() ?>" <?=$game->getMap() == $maps->getId() ? 'selected=""' : '' ?>><?=$this->escape($maps->getName()) ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
         </div>
         <div class="row mb-3 ">
-            <label class="col-xl-2 col-form-label" for="warErgebnis[]">
-                <?=$this->getTrans('warResult') ?>
+            <label class="col-xl-2 col-form-label" for="warErgebnisGroup[]">
+                <label for="warErgebnisEnemy[]">
+                    <?=$this->getTrans('warResult') ?>
+                </label>
             </label>
             <div class="col-xl-2">
                 <input type="number"

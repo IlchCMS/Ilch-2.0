@@ -1,16 +1,22 @@
+<?php
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getBoxUrl('static/css/style.css') ?>" rel="stylesheet">
 
-<?php if ($this->get('war') != ''):
+<?php if ($this->get('war') != '') :
     $displayed = 0;
     $adminAccess = null;
     if ($this->getUser()) {
         $adminAccess = $this->getUser()->isAdmin();
     }
 
-    foreach ($this->get('war') as $war):
+    /** @var \Modules\War\Models\War $war */
+    foreach ($this->get('war') as $war) :
         $displayed++;
 
+        /** @var \Modules\War\Mappers\Games $gamesMapper */
         $gamesMapper = $this->get('gamesMapper');
+        /** @var \Modules\War\Mappers\War $warMapper */
         $warMapper = $this->get('warMapper');
         $games = $gamesMapper->getGamesByWarId($war->getId());
         $enemyPoints = 0;
@@ -32,16 +38,16 @@
             }
         }
 
-        $gameImg = $this->getBoxUrl('static/img/'.$war->getWarGame().'.png');
-        if (file_exists(APPLICATION_PATH.'/modules/war/static/img/'.$war->getWarGame().'.png')) {
-            $gameImg = '<img src="'.$this->getBoxUrl('static/img/'.urlencode($war->getWarGame()).'.png').'" title="'.$this->escape($war->getWarGame()).'" width="16" height="16">';
+        $gameImg = $this->getBoxUrl('static/img/' . $war->getWarGame() . '.png');
+        if (file_exists(APPLICATION_PATH . '/modules/war/static/img/' . $war->getWarGame() . '.png')) {
+            $gameImg = '<img src="' . $this->getBoxUrl('static/img/' . urlencode($war->getWarGame()) . '.png') . '" title="' . $this->escape($war->getWarGame()) . '" width="16" height="16">';
         } else {
-            $gameImg = '<i class="fa-solid fa-question-circle text-muted" title="'.$this->escape($war->getWarGame()).'"></i>';
+            $gameImg = '<i class="fa-solid fa-question-circle text-muted" title="' . $this->escape($war->getWarGame()) . '"></i>';
         }
         ?>
         <div class="lastwar-box">
             <div class="row">
-                <a href="<?=$this->getUrl('war/index/show/id/' . $war->getId()) ?>" title="<?=$this->escape($war->getWarGroupTag()).' '.$this->getTrans('vs').' '.$this->escape($war->getWarEnemyTag()) ?>">
+                <a href="<?=$this->getUrl('war/index/show/id/' . $war->getId()) ?>" title="<?=$this->escape($war->getWarGroupTag()) . ' ' . $this->getTrans('vs') . ' ' . $this->escape($war->getWarEnemyTag()) ?>">
                     <div class="col-4 ellipsis">
                         <?=$gameImg ?>
                         <div class="ellipsis-item">
@@ -66,6 +72,6 @@
     <?php if (!$displayed) : ?>
         <?=$this->getTrans('noWars') ?>
     <?php endif; ?>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noWars') ?>
 <?php endif; ?>

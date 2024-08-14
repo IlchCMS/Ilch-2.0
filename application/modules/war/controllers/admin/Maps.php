@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -133,7 +134,7 @@ class Maps extends Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(array_merge(['action' => 'treat'], ($mapsModel->getId()?['id' => $mapsModel->getId()]:[])));
+                ->to(array_merge(['action' => 'treat'], ($mapsModel->getId() ? ['id' => $mapsModel->getId()] : [])));
         }
 
         $this->getView()->set('maps', $mapsModel);

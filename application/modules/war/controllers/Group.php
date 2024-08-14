@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -49,7 +50,7 @@ class Group extends Frontend
         if ($group) {
             $pagination->setRowsPerPage(!$this->getConfig()->get('war_warsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_warsPerPage'));
             $pagination->setPage($this->getRequest()->getParam('page'));
-            
+
             $user = null;
             if ($this->getUser()) {
                 $user = $userMapper->getUserById($this->getUser()->getId());

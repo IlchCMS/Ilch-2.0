@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -312,7 +313,7 @@ class Enemy extends Model
 
         return $this;
     }
-    
+
     /**
      * Gets the Array of Model.
      *

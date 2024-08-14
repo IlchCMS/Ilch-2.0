@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -168,7 +169,7 @@ class Enemy extends Mapper
                 $entrys[] = $entryModel->getArray(false);
             }
         }
-        
+
         return json_encode($entrys, $options);
     }
 }

@@ -1,4 +1,10 @@
-<?php $entrie = $this->get('maps'); ?>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\War\Models\Maps $entrie */
+$entrie = $this->get('maps');
+?>
 <h1><?=(!$entrie->getId()) ? $this->getTrans('manageNewMaps') : $this->getTrans('treatMaps') ?></h1>
 <form id="article_form" method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -11,7 +17,7 @@
                    class="form-control"
                    id="mapsNameInput"
                    name="mapsName"
-                   value="<?=$this->escape($this->originalInput('mapsName', ($entrie->getId()?$entrie->getName():''))) ?>" />
+                   value="<?=$this->escape($this->originalInput('mapsName', ($entrie->getId() ? $entrie->getName() : ''))) ?>" />
         </div>
     </div>
     <?=($entrie->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
