@@ -51,7 +51,7 @@ class Accept extends Model
      *
      * @var string
      */
-    protected $dateCreated;
+    protected $dateCreated = '';
 
     /**
      * Sets Model by Array.
