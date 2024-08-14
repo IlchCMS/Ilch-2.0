@@ -1,3 +1,15 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+
+/** @var \Captcha\DefaultCaptcha $defaultcaptcha */
+$defaultcaptcha = $this->get('defaultcaptcha');
+/** @var \Captcha\GoogleCaptcha $googlecaptcha */
+$googlecaptcha = $this->get('googlecaptcha');
+?>
 <h1><?=$this->getTrans('menuGuestbook') ?></h1>
 
 <form id="guestbookForm" name="guestbookForm" method="POST">
@@ -65,21 +77,21 @@
                       toolbar="ilch_html_frontend"><?=$this->escape($this->originalInput('text')) ?></textarea>
         </div>
     </div>
-    <?php if ($this->get('captchaNeeded') && $this->get('defaultcaptcha')) : ?>
-        <?=$this->get('defaultcaptcha')->getCaptcha($this) ?>
+    <?php if ($this->get('captchaNeeded') && $defaultcaptcha) : ?>
+        <?=$defaultcaptcha->getCaptcha($this) ?>
     <?php endif; ?>
     <div class="row mb-3">
         <div class="offset-xl-2 col-xl-8">
             <?php
-                if ($this->get('captchaNeeded')) {
-                    if ($this->get('googlecaptcha')) {
-                        echo $this->get('googlecaptcha')->setForm('guestbookForm')->getCaptcha($this, 'addButton', 'Guestbook');
-                    } else {
-                        echo $this->getSaveBar('addButton', 'Guestbook');
-                    }
+            if ($this->get('captchaNeeded')) {
+                if ($googlecaptcha) {
+                    echo $googlecaptcha->setForm('guestbookForm')->getCaptcha($this, 'addButton', 'Guestbook');
                 } else {
                     echo $this->getSaveBar('addButton', 'Guestbook');
                 }
+            } else {
+                echo $this->getSaveBar('addButton', 'Guestbook');
+            }
             ?>
         </div>
     </div>

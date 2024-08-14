@@ -1,3 +1,10 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+?>
 <h1>
     <?=$this->getTrans('menuGuestbook') ?>
     <div class="float-end">
@@ -9,7 +16,9 @@
     <div class="card-body welcomeMessage"><?=$this->purify($this->get('welcomeMessage')) ?></div>
 </div>
 <?php endif; ?>
-<?php foreach ($this->get('entries') as $entry): ?>
+<?php
+/** @var \Modules\Guestbook\Models\Entry $entry */
+foreach ($this->get('entries') as $entry): ?>
     <?php $date = new \Ilch\Date($entry->getDatetime()); ?>
     <div class="card card-default">
         <div class="card-header">
@@ -42,4 +51,4 @@
 <?php if (empty($this->get('entries'))) : ?>
     <?=$this->getTrans('noEntries') ?>
 <?php endif; ?>
-<?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
+<?=$pagination->getHtml($this, ['action' => 'index']) ?>
