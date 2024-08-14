@@ -141,11 +141,11 @@ return [
     'groupNotFound' => 'Group not found',
     'visibleFor' => 'Visible for',
     'calendarShow' => 'Show war in calendar?',
-    
+
     'modificationtime' => 'Modification Time',
     'lastAcceptTime' => 'x minutes until login is blocked',
     'groupAll' => 'All',
-    
+
     'menuMaps' => 'Maps',
     'manageMaps' => 'Manage Maps',
     'mapsName' => 'Name',
