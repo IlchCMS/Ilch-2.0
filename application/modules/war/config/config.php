@@ -166,7 +166,7 @@ class Config extends Install
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -398,5 +398,7 @@ class Config extends Install
             case "1.15.4":
             case "1.15.5":
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
