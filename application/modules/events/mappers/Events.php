@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -6,6 +7,7 @@
 
 namespace Modules\Events\Mappers;
 
+use Ilch\Database\Exception;
 use Modules\Events\Models\Events as EventModel;
 use Modules\Events\Mappers\Events as EventMapper;
 
@@ -17,7 +19,7 @@ class Events extends \Ilch\Mapper
      * @param array $where
      * @return EventModel[]|array
      */
-    public function getEntries($where = [])
+    public function getEntries(array $where = []): ?array
     {
         $entryArray = $this->db()->select('*')
             ->from('events')
@@ -63,7 +65,7 @@ class Events extends \Ilch\Mapper
      *
      * @return EventModel|null
      */
-    public function getEventById($id)
+    public function getEventById(int $id): ?EventModel
     {
         $eventRow = $this->db()->select('*')
             ->from('events')
@@ -100,22 +102,26 @@ class Events extends \Ilch\Mapper
     /**
      * Get list of upcoming events.
      *
-     * @param null $limit
+     * @param int|null $limit
      * @return EventMapper[]|array
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
-    public function getEventListUpcoming($limit = null)
+    public function getEventListUpcoming(?int $limit = null): ?array
     {
         $eventMapper = new EventMapper();
 
-        $sql = 'SELECT *
-                FROM `[prefix]_events`
-                WHERE start > NOW()
-                ORDER BY start ASC';
+        $select = $this->db()->select()
+            ->fields('*')
+            ->from('events')
+            ->where([new \Ilch\Database\Mysql\Expression\Comparison('`start`', '>', 'NOW()')])
+            ->order(['start' => 'ASC']);
 
-        if ($limit !== null) { $sql .= ' LIMIT '.(int)$limit; }
+        if ($limit) {
+            $select->limit($limit);
+        }
 
-        $rows = $this->db()->queryArray($sql);
+        $rows = $select->execute()
+            ->fetchRows();
 
         if (empty($rows)) {
             return null;
@@ -132,10 +138,10 @@ class Events extends \Ilch\Mapper
     /**
      * Get list of events a user participates in.
      *
-     * @param $userId
+     * @param int $userId
      * @return EventMapper[]|array
      */
-    public function getEventListParticipation($userId)
+    public function getEventListParticipation(int $userId): ?array
     {
         $eventMapper = new EventMapper();
 
@@ -160,22 +166,26 @@ class Events extends \Ilch\Mapper
     /**
      * Get list of past events.
      *
-     * @param null $limit
+     * @param int|null $limit
      * @return EventMapper[]|array
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
-    public function getEventListPast($limit = null)
+    public function getEventListPast(?int $limit = null): ?array
     {
         $eventMapper = new EventMapper();
 
-        $sql = 'SELECT *
-                FROM `[prefix]_events`
-                WHERE end < NOW()
-                ORDER BY start DESC';
+        $select = $this->db()->select()
+            ->fields('*')
+            ->from('events')
+            ->where([new \Ilch\Database\Mysql\Expression\Comparison('`end`', '<', 'NOW()')])
+            ->order(['start' => 'DESC']);
 
-        if ($limit !== null) { $sql .= ' LIMIT '.(int)$limit; }
+        if ($limit) {
+            $select->limit($limit);
+        }
 
-        $rows = $this->db()->queryArray($sql);
+        $rows = $select->execute()
+            ->fetchRows();
 
         if (empty($rows)) {
             return null;
@@ -192,22 +202,29 @@ class Events extends \Ilch\Mapper
     /**
      * Get a list of the current events.
      *
-     * @param null $limit
+     * @param int|null $limit
      * @return array|null
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
-    public function getEventListCurrent($limit = null)
+    public function getEventListCurrent(?int $limit = null): ?array
     {
         $eventMapper = new EventMapper();
 
-        $sql = 'SELECT *
-                FROM `[prefix]_events`
-                WHERE start < NOW() AND end > NOW()
-                ORDER BY start DESC';
+        $select = $this->db()->select()
+            ->fields('*')
+            ->from('events')
+            ->where([
+                new \Ilch\Database\Mysql\Expression\Comparison('`start`', '<', 'NOW()'),
+                new \Ilch\Database\Mysql\Expression\Comparison('`end`', '>', 'NOW()'),
+                ])
+            ->order(['start' => 'DESC']);
 
-        if ($limit !== null) { $sql .= ' LIMIT '.(int)$limit; }
+        if ($limit) {
+            $select->limit($limit);
+        }
 
-        $rows = $this->db()->queryArray($sql);
+        $rows = $select->execute()
+            ->fetchRows();
 
         if (empty($rows)) {
             return null;
@@ -224,36 +241,40 @@ class Events extends \Ilch\Mapper
     /**
      * Check if table exists.
      *
-     * @param $table
+     * @param string $table
      * @return false|true
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
-    public function existsTable($table)
+    public function existsTable(string $table): bool
     {
-        return $this->db()->ifTableExists('[prefix]_'.$table);
+        return $this->db()->ifTableExists('[prefix]_' . $table);
     }
 
     /**
      * Gets the Events by start and end.
      *
-     * @param int $start
-     * @param int $end
+     * @param string $start
+     * @param string $end
      *
      * @return EventModel[]|array|null
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
-    public function getEntriesForJson($start, $end)
+    public function getEntriesForJson(string $start, string $end): ?array
     {
         if ($start && $end) {
             $start = new \Ilch\Date($start);
             $end = new \Ilch\Date($end);
 
-            $sql = sprintf("SELECT * FROM `[prefix]_events` WHERE start >= '%s' AND end <= '%s' AND `show` = 1 ORDER BY start ASC;", $start, $end);
+            $entryArray = $this->db()->select()
+                ->fields('*')
+                ->from('events')
+                ->where(['start >=' => $start, 'end <=' => $end, 'show' => 1])
+                ->order(['start' => 'ASC'])
+                ->execute()
+                ->fetchRows();
         } else {
             return null;
         }
-
-        $entryArray = $this->db()->queryArray($sql);
 
         if (empty($entryArray)) {
             return null;
@@ -282,9 +303,9 @@ class Events extends \Ilch\Mapper
      *
      * @return string $latlongitude
      */
-    public function getLatLongFromAddress($address, $googleMapsKey) 
+    public function getLatLongFromAddress(string $address, string $googleMapsKey): ?string
     {
-        $geocode = url_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($address).'&key='.urlencode($googleMapsKey));
+        $geocode = url_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&key=' . urlencode($googleMapsKey));
         $output = json_decode($geocode);
 
         // "OK" indicates that no errors occurred; the address was successfully parsed and at least one geocode was returned.
@@ -294,7 +315,7 @@ class Events extends \Ilch\Mapper
 
         $latitude = $output->results[0]->geometry->location->lat;
         $longitude = $output->results[0]->geometry->location->lng;
-        return $latitude.','.$longitude;
+        return $latitude . ',' . $longitude;
     }
 
     /**
@@ -302,7 +323,7 @@ class Events extends \Ilch\Mapper
      *
      * @return string[]
      */
-    public function getListOfTypes()
+    public function getListOfTypes(): array
     {
         return $this->db()->select('type')
             ->from('events')
@@ -353,7 +374,7 @@ class Events extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         $imageRow = $this->db()->select('*')
             ->from('events')
@@ -374,7 +395,7 @@ class Events extends \Ilch\Mapper
             ->execute();
 
         $this->db()->delete('comments')
-            ->where(['key' => 'events/show/event/id/'.$id])
+            ->where(['key' => 'events/show/event/id/' . $id])
             ->execute();
     }
 
@@ -383,7 +404,7 @@ class Events extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function delImageById($id) 
+    public function delImageById(int $id)
     {
         $imageRow = $this->db()->select('*')
             ->from('events')

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -45,8 +46,7 @@ class Index extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuEvents',
             $items
         );
@@ -65,7 +65,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('event', $eventMapper->getEntries());
+        $this->getView()->set('events', $eventMapper->getEntries());
     }
 
     public function delAction()

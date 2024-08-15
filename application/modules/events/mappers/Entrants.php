@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -18,7 +19,7 @@ class Entrants extends \Ilch\Mapper
      *
      * @return EntrantsModel|null
      */
-    public function getEventEntrants($eventId, $userId)
+    public function getEventEntrants(int $eventId, int $userId): ?EntrantsModel
     {
         $entryRow = $this->db()->select('*')
             ->from('events_entrants')
@@ -45,7 +46,7 @@ class Entrants extends \Ilch\Mapper
      *
      * @return int
      */
-    public function getCountOfEventEntrans($eventId)
+    public function getCountOfEventEntrans(int $eventId): int
     {
         return $this->db()->select('COUNT(*)', 'events_entrants')
             ->where(['event_id' => $eventId])
@@ -60,7 +61,7 @@ class Entrants extends \Ilch\Mapper
      *
      * @return EntrantsModel[]|array
      */
-    public function getEventEntrantsById($eventId)
+    public function getEventEntrantsById(int $eventId): array
     {
         $entryArray = $this->db()->select('*')
             ->from('events_entrants')
@@ -126,7 +127,7 @@ class Entrants extends \Ilch\Mapper
      * @param int $eventId
      * @param int $userId
      */
-    public function deleteUserFromEvent($eventId, $userId)
+    public function deleteUserFromEvent(int $eventId, int $userId)
     {
         $this->db()->delete('events_entrants')
             ->where(['user_id' => $userId, 'event_id' => $eventId])

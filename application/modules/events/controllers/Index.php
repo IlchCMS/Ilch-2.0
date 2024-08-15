@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -21,7 +22,7 @@ class Index extends \Ilch\Controller\Frontend
     {
         $eventMapper = new EventMapper();
         $entrantsMapper = new EntrantsMapper();
-        $userMapper = new UserMapper;
+        $userMapper = new UserMapper();
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuEvents'));
@@ -45,10 +46,9 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('entrantsMapper', $entrantsMapper)
-            ->set('eventList', $eventMapper->getEntries())
-            ->set('eventListUpcoming', $eventMapper->getEventListUpcoming($upcomingLimit))
-            ->set('eventListCurrent', $eventMapper->getEventListCurrent($currentLimit))
-            ->set('eventListPast', $eventMapper->getEventListPast($pastLimit))
+            ->set('eventListUpcomings', $eventMapper->getEventListUpcoming($upcomingLimit))
+            ->set('eventListCurrents', $eventMapper->getEventListCurrent($currentLimit))
+            ->set('eventListPasts', $eventMapper->getEventListPast($pastLimit))
             ->set('readAccess', $readAccess);
     }
 
@@ -87,6 +87,7 @@ class Index extends \Ilch\Controller\Frontend
         $imageSize = $this->getConfig()->get('event_size');
 
         if ($this->getRequest()->isPost()) {
+            $image = '';
             if ($this->getRequest()->getParam('id')) {
                 $eventModel->setId($this->getRequest()->getParam('id'));
                 $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
@@ -123,7 +124,7 @@ class Index extends \Ilch\Controller\Frontend
                         $height = $size[1];
 
                         if ($file_size <= $imageSize) {
-                            $image = $path.time().'.'.$endung;
+                            $image = $path . time() . '.' . $endung;
 
                             if ($this->getRequest()->getParam('id') && $event->getImage() != '') {
                                 $eventMapper->delImageById($this->getRequest()->getParam('id'));

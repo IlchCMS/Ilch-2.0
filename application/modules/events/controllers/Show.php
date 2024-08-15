@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -22,9 +23,9 @@ class Show extends \Ilch\Controller\Frontend
         $entrantsMapper = new EntrantsMapper();
         $entrantsModel = new EntrantsModel();
         $currencyMapper = new CurrencyMapper();
-        $commentMapper = new CommentMapper;
+        $commentMapper = new CommentMapper();
         $commentModel = new CommentModel();
-        $userMapper = new UserMapper;
+        $userMapper = new UserMapper();
 
         $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
 
@@ -51,7 +52,7 @@ class Show extends \Ilch\Controller\Frontend
                 }
             }
             if ($this->getRequest()->getPost('commentEvent')) {
-                $commentModel->setKey('events/show/event/id/'.$this->getRequest()->getParam('id'))
+                $commentModel->setKey('events/show/event/id/' . $this->getRequest()->getParam('id'))
                     ->setText($this->getRequest()->getPost('commentEvent'))
                     ->setDateCreated($date)
                     ->setUserId($this->getUser()->getId());
@@ -118,10 +119,10 @@ class Show extends \Ilch\Controller\Frontend
         $this->getView()->set('userMapper', $userMapper)
             ->set('currencyMapper', $currencyMapper)
             ->set('event', $event)
-            ->set('eventEntrantsUser', $eventEntrantsUser)
+            ->set('eventEntrantsUsers', $eventEntrantsUser)
             ->set('eventEntrantsCount', count($eventEntrantsUser))
             ->set('userDetails', $userDetails)
-            ->set('eventComments', $commentMapper->getCommentsByKey('events/show/event/id/'.$this->getRequest()->getParam('id')))
+            ->set('eventComments', $commentMapper->getCommentsByKey('events/show/event/id/' . $this->getRequest()->getParam('id')))
             ->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'))
             ->set('event_google_maps_map_typ', $this->getConfig()->get('event_google_maps_map_typ'))
             ->set('event_google_maps_zoom', $this->getConfig()->get('event_google_maps_zoom'))
@@ -134,7 +135,7 @@ class Show extends \Ilch\Controller\Frontend
     {
         $eventMapper = new EventMapper();
         $entrantsMapper = new EntrantsMapper();
-        $userMapper = new UserMapper;
+        $userMapper = new UserMapper();
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuEvents'))
@@ -156,15 +157,15 @@ class Show extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('entrantsMapper', $entrantsMapper)
-            ->set('eventListUpcoming', $eventMapper->getEventListUpcoming())
+            ->set('eventListUpcomings', $eventMapper->getEventListUpcoming())
             ->set('readAccess', $readAccess);
     }
 
-    public function CurrentAction()
+    public function currentAction()
     {
         $eventMapper = new EventMapper();
         $entrantsMapper = new EntrantsMapper();
-        $userMapper = new UserMapper;
+        $userMapper = new UserMapper();
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuEvents'))
@@ -186,7 +187,7 @@ class Show extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('entrantsMapper', $entrantsMapper)
-            ->set('eventListCurrent', $eventMapper->getEventListCurrent())
+            ->set('eventListCurrents', $eventMapper->getEventListCurrent())
             ->set('readAccess', $readAccess);
     }
 
@@ -194,7 +195,7 @@ class Show extends \Ilch\Controller\Frontend
     {
         $eventMapper = new EventMapper();
         $entrantsMapper = new EntrantsMapper();
-        $userMapper = new UserMapper;
+        $userMapper = new UserMapper();
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuEvents'))
@@ -216,7 +217,7 @@ class Show extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('entrantsMapper', $entrantsMapper)
-            ->set('eventListPast', $eventMapper->getEventListPast())
+            ->set('eventListPasts', $eventMapper->getEventListPast())
             ->set('readAccess', $readAccess);
     }
 
@@ -246,7 +247,7 @@ class Show extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('entrantsMapper', $entrantsMapper)
-            ->set('eventListParticipation', ($this->getUser()) ? $eventMapper->getEventListParticipation($this->getUser()->getId()) : null)
+            ->set('eventListParticipations', ($this->getUser()) ? $eventMapper->getEventListParticipation($this->getUser()->getId()) : null)
             ->set('readAccess', $readAccess);
     }
 

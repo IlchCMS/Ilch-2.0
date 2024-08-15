@@ -1,35 +1,47 @@
 <?php
-$settingMapper = $this->get('settingMapper');
-$userMapper = $this->get('userMapper');
+
+/** @var \Ilch\View $this */
+
+/** @var \Ilch\Config\Database $config */
 $config = \Ilch\Registry::get('config');
-$groupAccesses = explode(',', $config->get('event_add_entries_accesses'));
+
+/** @var \Modules\User\Mappers\Setting $settingMapper */
+$settingMapper = $this->get('settingMapper');
+/** @var \Modules\User\Mappers\User $userMapper */
+$userMapper = $this->get('userMapper');
 $users = $userMapper->getUserList();
+
+$groupAccesses = explode(',', $config->get('event_add_entries_accesses'));
+/** @var string[] $types */
 $types = $this->get('types');
+
+/** @var \Modules\Events\Models\Events|null $event */
+$event = $this->get('event');
 ?>
 
 <link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
 <link href="<?=$this->getVendorUrl('harvesthq/chosen/chosen.min.css') ?>" rel="stylesheet">
 
-<?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
+<?php include APPLICATION_PATH . '/modules/events/views/index/navi.php'; ?>
 
-<h1><?=($this->get('event') != '' ? $this->getTrans('edit') : $this->getTrans('add')) ?></h1>
-<?php if ($this->getUser() && (in_array($this->getUser()->getId(), $groupAccesses) || $this->getUser()->hasAccess('module_events'))): ?>
+<h1><?=($event != '' ? $this->getTrans('edit') : $this->getTrans('add')) ?></h1>
+<?php if ($this->getUser() && (in_array($this->getUser()->getId(), $groupAccesses) || $this->getUser()->hasAccess('module_events'))) : ?>
     <form method="POST" enctype="multipart/form-data" action="">
         <?=$this->getTokenField() ?>
         <div class="row mb-3">
             <div class="col-xl-2 col-form-label"><?=$this->getTrans('image') ?></div>
             <div class="col-xl-10">
-                <?php if ($this->get('event') != '' && $this->escape($this->get('event')->getImage()) != ''): ?>
+                <?php if ($event != '' && $this->escape($event->getImage()) != '') : ?>
                     <div class="col-xl-7 col-md-7 col-7">
                         <div class="row">
-                            <img src="<?=$this->getBaseUrl().$this->escape($this->get('event')->getImage()) ?>" title="<?=$this->escape($this->get('event')->getTitle()) ?>" alt="<?=$this->escape($this->get('event')->getTitle()) ?>">
+                            <img src="<?=$this->getBaseUrl() . $this->escape($event->getImage()) ?>" title="<?=$this->escape($event->getTitle()) ?>" alt="<?=$this->escape($event->getTitle()) ?>">
                         </div>
                     </div>
                 <?php endif; ?>
                 <div class="col-xl-7">
                     <div class="row">
-                        <?php if ($this->get('event') != '' && $this->get('event')->getImage() != ''): ?>
+                        <?php if ($event != '' && $event->getImage() != '') : ?>
                             <label style="margin-left: 10px; margin-top: 10px;">
                                 <input type="checkbox" id="image_delete" name="image_delete"> <?=$this->getTrans('deleteImage') ?>
                             </label>
@@ -59,8 +71,10 @@ $types = $this->get('types');
             <div class="col-xl-4">
                 <select class="form-select" name="creator" id="creator">
                     <option selected="selected"><?=$this->getTrans('noSelection') ?></option>
-                    <?php foreach ($users as $user): ?>
-                        <option value="<?=$user->getId() ?>" <?php if (($this->get('event') != '' && $this->get('event')->getUserId() == $user->getId()) || $this->originalInput('creator') == $user->getId()) { echo 'selected="selected"'; } ?>><?=$user->getName() ?></option>
+                    <?php foreach ($users as $user) : ?>
+                        <option value="<?=$user->getId() ?>" <?php if (($event != '' && $event->getUserId() == $user->getId()) || $this->originalInput('creator') == $user->getId()) {
+                            echo 'selected="selected"';
+                                       } ?>><?=$user->getName() ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -75,7 +89,11 @@ $types = $this->get('types');
                        id="start"
                        name="start"
                        size="16"
-                       value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getStart())); } elseif ($this->originalInput('start') != '') { echo date('d.m.Y H:i', strtotime($this->originalInput('start'))); } ?>"
+                       value="<?php if ($event != '') {
+                            echo date('d.m.Y H:i', strtotime($event->getStart()));
+                              } elseif ($this->originalInput('start') != '') {
+                                  echo date('d.m.Y H:i', strtotime($this->originalInput('start')));
+                              } ?>"
                        readonly>
                 <span class="input-group-text">
                     <span class="fa-regular fa-calendar"></span>
@@ -92,7 +110,11 @@ $types = $this->get('types');
                        id="end"
                        name="end"
                        size="16"
-                       value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getEnd())); } elseif ($this->originalInput('end') != '') { echo date('d.m.Y H:i', strtotime($this->originalInput('end'))); } ?>"
+                       value="<?php if ($event != '') {
+                            echo date('d.m.Y H:i', strtotime($event->getEnd()));
+                              } elseif ($this->originalInput('end') != '') {
+                                  echo date('d.m.Y H:i', strtotime($this->originalInput('end')));
+                              } ?>"
                        readonly>
                 <span class="input-group-text">
                     <span class="fa-solid fa-xmark"></span>
@@ -111,7 +133,7 @@ $types = $this->get('types');
                        class="form-control"
                        id="title"
                        name="title"
-                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getTitle()) : $this->escape($this->originalInput('title')) ?>" />
+                       value="<?=($event != '') ? $this->escape($event->getTitle()) : $this->escape($this->originalInput('title')) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
@@ -123,12 +145,14 @@ $types = $this->get('types');
                        class="form-control"
                        id="place"
                        name="place"
-                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPlace()) : $this->escape($this->originalInput('place')) ?>" />
+                       value="<?=($event != '') ? $this->escape($event->getPlace()) : $this->escape($this->originalInput('place')) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('type') ? ' has-error' : '' ?>">
-            <label for="place" class="col-xl-2 col-form-label">
-                <?=$this->getTrans('type') ?>
+            <label for="type" class="col-xl-2 col-form-label">
+                <label for="typeselection">
+                    <?=$this->getTrans('type') ?>
+                </label>
             </label>
             <div class="col-xl-6">
                 <select class="form-select typeselection mb-3" name="typeselection" id="typeselection">
@@ -137,7 +161,7 @@ $types = $this->get('types');
                         <?php if (empty($type)) {
                             continue;
                         } ?>
-                        <option value="<?=$this->escape($type) ?>"<?=(($this->get('event') != '' && $this->get('event')->getType() == $type) || $this->originalInput('type') == $type) ? ' selected="selected"' : '' ?>><?=$this->escape($type) ?></option>
+                        <option value="<?=$this->escape($type) ?>"<?=(($event != '' && $event->getType() == $type) || $this->originalInput('type') == $type) ? ' selected="selected"' : '' ?>><?=$this->escape($type) ?></option>
                     <?php endforeach; ?>
                 </select>
                 <input type="text"
@@ -145,7 +169,7 @@ $types = $this->get('types');
                        id="type"
                        name="type"
                        placeholder="<?=$this->getTrans('typePlaceholder') ?>"
-                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getType()) : $this->escape($this->originalInput('type')) ?>" />
+                       value="<?=($event != '') ? $this->escape($event->getType()) : $this->escape($this->originalInput('type')) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('website') ? ' has-error' : '' ?>">
@@ -158,7 +182,7 @@ $types = $this->get('types');
                        id="website"
                        name="website"
                        placeholder="https://"
-                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getWebsite()) : $this->escape($this->originalInput('website')) ?>" />
+                       value="<?=($event != '') ? $this->escape($event->getWebsite()) : $this->escape($this->originalInput('website')) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
@@ -170,18 +194,28 @@ $types = $this->get('types');
                           id="ck_1"
                           name="text"
                           toolbar="ilch_html_frontend"
-                          rows="5"><?=($this->get('event') != '') ? $this->escape($this->get('event')->getText()) : $this->escape($this->originalInput('text')) ?></textarea>
+                          rows="5"><?=($event != '') ? $this->escape($event->getText()) : $this->escape($this->originalInput('text')) ?></textarea>
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('price') ? ' has-error' : '' ?>">
             <label for="price" class="col-xl-2 col-form-label">
-                <?=$this->getTrans('price') ?>
+                <label for="priceArt">
+                    <label for="currency">
+                        <?=$this->getTrans('price') ?>
+                    </label>
+                </label>
             </label>
             <div class="col-xl-2">
                 <select class="form-select" id="priceArt" name="priceArt">
-                    <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 0) { echo 'selected="selected"'; } ?> value="0"><?=$this->getTrans('select') ?></option>
-                    <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 1) { echo 'selected="selected"'; } ?> value="1"><?=$this->getTrans('ticket') ?></option>
-                    <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 2) { echo 'selected="selected"'; } ?> value="2"><?=$this->getTrans('entry') ?></option>
+                    <option <?php if ($event != '' && $event->getPriceArt() == 0) {
+                        echo 'selected="selected"';
+                            } ?> value="0"><?=$this->getTrans('select') ?></option>
+                    <option <?php if ($event != '' && $event->getPriceArt() == 1) {
+                        echo 'selected="selected"';
+                            } ?> value="1"><?=$this->getTrans('ticket') ?></option>
+                    <option <?php if ($event != '' && $event->getPriceArt() == 2) {
+                        echo 'selected="selected"';
+                            } ?> value="2"><?=$this->getTrans('entry') ?></option>
                 </select>
             </div>
             <div class="col-xl-4">
@@ -191,16 +225,18 @@ $types = $this->get('types');
                        name="price"
                        step="0.01"
                        min="0"
-                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPrice()) : $this->originalInput('price') ?>" />
+                       value="<?=($event != '') ? $this->escape($event->getPrice()) : $this->originalInput('price') ?>" />
             </div>
             <div class="col-xl-2">
                 <select class="form-select" id="currency" name="currency">
-                    <option <?php if ($this->get('event') != '' && $this->get('event')->getPriceArt() == 0) { echo 'selected="selected"'; } ?> value="0"><?=$this->getTrans('select') ?></option>
+                    <option <?php if ($event != '' && $event->getPriceArt() == 0) {
+                        echo 'selected="selected"';
+                            } ?> value="0"><?=$this->getTrans('select') ?></option>
                     <?php foreach ($this->get('currencies') as $currency) {
-                        if ($this->get('event') != '' && $this->get('event')->getCurrency() == $currency->getId()) {
-                            echo '<option value="'.$currency->getId().'" selected="selected">'.$this->escape($currency->getName()).'</option>';
+                        if ($event != '' && $event->getCurrency() == $currency->getId()) {
+                            echo '<option value="' . $currency->getId() . '" selected="selected">' . $this->escape($currency->getName()) . '</option>';
                         } else {
-                            echo '<option value="'.$currency->getId().'">'.$this->escape($currency->getName()).'</option>';
+                            echo '<option value="' . $currency->getId() . '">' . $this->escape($currency->getName()) . '</option>';
                         }
                     }
                     ?>
@@ -218,7 +254,7 @@ $types = $this->get('types');
                        name="userLimit"
                        step="1"
                        min="0"
-                       value="<?=($this->get('event') != '') ? $this->get('event')->getUserLimit() : $this->originalInput('userLimit') ?>" />
+                       value="<?=($event != '') ? $event->getUserLimit() : $this->originalInput('userLimit') ?>" />
             </div>
         </div>
         <div class="row mb-3">
@@ -227,22 +263,24 @@ $types = $this->get('types');
             </label>
             <div class="col-xl-6">
                 <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
-                    <?php foreach ($this->get('userGroupList') as $groupList): ?>
-                        <?php if ($groupList->getId() != 1): ?>
+                    <?php foreach ($this->get('userGroupList') as $groupList) : ?>
+                        <?php if ($groupList->getId() != 1) : ?>
                             <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </select>
             </div>
         </div>
-        <?php if ($this->get('calendarShow') == 1): ?>
+        <?php if ($this->get('calendarShow') == 1) : ?>
             <div class="row mb-3">
                 <div class="offset-xl-2 col-xl-10">
                     <input type="checkbox"
                            id="calendarShow"
                            name="calendarShow"
                            value="1"
-                           <?php if (($this->get('event') != '' && $this->get('event')->getShow() == 1) || $this->originalInput('calendarShow') == 1) { echo 'checked'; } ?> />
+                           <?php if (($event != '' && $event->getShow() == 1) || $this->originalInput('calendarShow') == 1) {
+                                echo 'checked';
+                           } ?> />
                     <label for="calendarShow">
                         <?=$this->getTrans('calendarShow') ?>
                     </label>
@@ -251,7 +289,7 @@ $types = $this->get('types');
         <?php endif; ?>
         <div class="float-end">
             <?php
-            if ($this->get('event') != '') {
+            if ($event != '') {
                 echo $this->getSaveBar('edit');
             } else {
                 echo $this->getSaveBar('add');
@@ -259,7 +297,7 @@ $types = $this->get('types');
             ?>
         </div>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noAccess') ?>
 <?php endif; ?>
 
@@ -382,7 +420,7 @@ $(document).ready(function() {
     });
 });
 
-<?php if ($this->get('event_google_maps_api_key') != ''): ?>
+<?php if ($this->get('event_google_maps_api_key') != '') : ?>
     // Google Maps Place
     var pac_input = document.getElementById('place');
 

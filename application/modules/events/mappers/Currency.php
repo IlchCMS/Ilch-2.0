@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -17,7 +18,7 @@ class Currency extends \Ilch\Mapper
      *
      * @return CurrencyModel[]|array
      */
-    public function getCurrencies($where = [])
+    public function getCurrencies(array $where = []): array
     {
         $currenciesArray = $this->db()->select('*')
             ->from('events_currencies')
@@ -49,7 +50,7 @@ class Currency extends \Ilch\Mapper
      *
      * @return CurrencyModel[]|array
      */
-    public function getCurrencyById($id)
+    public function getCurrencyById(int $id): array
     {
         return $this->getCurrencies(['id' => $id]);
     }
@@ -78,7 +79,7 @@ class Currency extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function deleteCurrencyById($id)
+    public function deleteCurrencyById(int $id)
     {
         $this->db()->delete('events_currencies')
             ->where(['id' => $id])

@@ -1,5 +1,9 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if ($this->get('event') != ''): ?>
+<?php if ($this->get('events') != '') : ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -23,7 +27,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('event') as $event): ?>
+                    <?php
+                    /** @var \Modules\Events\Models\Events $event */
+                    foreach ($this->get('events') as $event) : ?>
                         <?php
                         $userMapper = new \Modules\User\Mappers\User();
                         $user = $userMapper->getUserById($event->getUserId());
@@ -33,20 +39,20 @@
                         ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_entries', $event->getId()) ?></td>
-                            <td><a href="<?=$this->getURL('events/index/treat/id/'.$event->getId()) ?>" target="_blank" title="<?=$this->getTrans('edit') ?>"><i class="fa-solid fa-pen-to-square text-success"></i></a></td>
+                            <td><a href="<?=$this->getURL('events/index/treat/id/' . $event->getId()) ?>" target="_blank" title="<?=$this->getTrans('edit') ?>"><i class="fa-solid fa-pen-to-square text-success"></i></a></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $event->getId()]) ?></td>
                             <td>
                                 <?=date('d.m.Y H:i', strtotime($event->getStart())) ?>
-                                <?php if ($event->getEnd() !== '0000-00-00 00:00:00'): ?>
+                                <?php if ($event->getEnd() !== '0000-00-00 00:00:00') : ?>
                                     - <?=date('H:i', strtotime($event->getEnd())) ?>
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <?php if ($event->getUserId()): ?>
-                                    <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a>
+                                <?php if ($event->getUserId()) : ?>
+                                    <a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>" target="_blank"><?=$user->getName() ?></a>
                                 <?php endif; ?>
                             </td>
-                            <td><a href="<?=$this->getUrl('events/show/event/id/'.$event->getId()) ?>" target="_blank"><?=$this->escape($event->getTitle()) ?></a></td>
+                            <td><a href="<?=$this->getUrl('events/show/event/id/' . $event->getId()) ?>" target="_blank"><?=$this->escape($event->getTitle()) ?></a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -54,6 +60,6 @@
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noEvent') ?>
 <?php endif; ?>

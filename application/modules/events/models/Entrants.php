@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,28 +14,28 @@ class Entrants extends \Ilch\Model
      *
      * @var int
      */
-    protected $eventId;
+    protected $eventId = 0;
 
     /**
      * The userId of the event entrants.
      *
      * @var int
      */
-    protected $userId;
+    protected $userId = 0;
 
     /**
      * The user status of the event entrants.
      *
      * @var int
      */
-    protected $status;
+    protected $status = 0;
 
     /**
      * Gets the eventid of the event entrants.
      *
      * @return int
      */
-    public function getEventId()
+    public function getEventId(): int
     {
         return $this->eventId;
     }
@@ -46,9 +47,9 @@ class Entrants extends \Ilch\Model
      *
      * @return $this
      */
-    public function setEventId($eventId)
+    public function setEventId(int $eventId): Entrants
     {
-        $this->eventId = (int)$eventId;
+        $this->eventId = $eventId;
 
         return $this;
     }
@@ -56,9 +57,9 @@ class Entrants extends \Ilch\Model
     /**
      * Gets the user of the event entrants.
      *
-     * @return integer
+     * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -66,13 +67,13 @@ class Entrants extends \Ilch\Model
     /**
      * Sets the userid of the event entrants.
      *
-     * @param integer $userId
+     * @param int $userId
      *
      * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): Entrants
     {
-        $this->userId = (int)$userId;
+        $this->userId = $userId;
 
         return $this;
     }
@@ -80,9 +81,9 @@ class Entrants extends \Ilch\Model
     /**
      * Gets the status from user of the event entrants.
      *
-     * @return integer
+     * @return int
      */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -90,13 +91,13 @@ class Entrants extends \Ilch\Model
     /**
      * Sets the status from user of the event entrants.
      *
-     * @param integer $status
+     * @param int $status
      *
      * @return $this
      */
-    public function setStatus($status)
+    public function setStatus(int $status): Entrants
     {
-        $this->status = (int)$status;
+        $this->status = $status;
 
         return $this;
     }

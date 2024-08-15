@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('currencies') ?></h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -17,8 +21,10 @@
             </tr>
         </thead>
         <tbody>
-            <?php if (count($this->get('currencies')) > 0): ?>
-                <?php foreach ($this->get('currencies') as $currency) : ?>
+            <?php if (count($this->get('currencies')) > 0) : ?>
+                <?php
+                /** @var \Modules\Events\Models\Currency $currency */
+                foreach ($this->get('currencies') as $currency) : ?>
                     <tr>
                         <td><?=$this->getDeleteCheckbox('check_currencies', $currency->getId()) ?></td>
                         <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $currency->getId()]) ?></td>
@@ -26,7 +32,7 @@
                         <td><?=$this->escape($currency->getName()) ?></td>
                     </tr>
                 <?php endforeach; ?>
-            <?php else: ?>
+            <?php else : ?>
                 <tr>
                     <td colspan="4"><?=$this->getTrans('noCurrenciesExist') ?></td>
                 </tr>

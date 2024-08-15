@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -14,7 +15,7 @@ class Events extends \Ilch\Box
     public function render()
     {
         $eventMapper = new EventMapper();
-        $userMapper = new UserMapper;
+        $userMapper = new UserMapper();
 
         $config = \Ilch\Registry::get('config');
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -64,23 +65,27 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_events`;
-            DROP TABLE `[prefix]_events_entrants`;
-            DROP TABLE `[prefix]_events_currencies`');
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_add_entries_accesses';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'event_show_members_accesses';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'event_box_event_limit';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'event_upcoming_event_limit';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'event_current_event_limit';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'event_past_event_limit';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'event_uploadpath';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'event_height';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'event_width';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'event_size';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'event_filetypes';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_api_key';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_map_typ';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_zoom';
+        $this->db()->drop('events', true);
+        $this->db()->drop('events_entrants', true);
+        $this->db()->drop('events_currencies', true);
+
+        $databaseConfig = new IlchDatabase($this->db());
+        $databaseConfig->delete('event_add_entries_accesses');
+        $databaseConfig->delete('event_show_members_accesses');
+        $databaseConfig->delete('event_box_event_limit');
+        $databaseConfig->delete('event_upcoming_event_limit');
+        $databaseConfig->delete('event_current_event_limit');
+        $databaseConfig->delete('event_past_event_limit');
+        $databaseConfig->delete('event_uploadpath');
+        $databaseConfig->delete('event_height');
+        $databaseConfig->delete('event_width');
+        $databaseConfig->delete('event_size');
+        $databaseConfig->delete('event_filetypes');
+        $databaseConfig->delete('event_google_maps_api_key');
+        $databaseConfig->delete('event_google_maps_map_typ');
+        $databaseConfig->delete('event_google_maps_zoom');
+
+        $this->db()->queryMulti("
             DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'events';
             DELETE FROM `[prefix]_comments` WHERE `key` LIKE 'events/%';");
 
@@ -89,7 +94,7 @@ class Config extends \Ilch\Config\Install
         }
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         $installSql =
             'CREATE TABLE IF NOT EXISTS `[prefix]_events` (
@@ -135,18 +140,18 @@ class Config extends \Ilch\Config\Install
             INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES ("events", "static/upload/image");';
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
-            $installSql.='INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("events/events/index/");';
+            $installSql .= 'INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("events/events/index/");';
         }
         return $installSql;
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
                 $this->db()->query('ALTER TABLE `[prefix]_events` ADD `website` VARCHAR(255) NOT NULL AFTER `place`;');
                 $this->db()->query('ALTER TABLE `[prefix]_events` ADD `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\' AFTER `show`;');
-                unlink(APPLICATION_PATH.'/modules/events/views/show/my.php');
+                unlink(APPLICATION_PATH . '/modules/events/views/show/my.php');
                 // no break
             case "1.1":
             case "1.2":
@@ -196,7 +201,7 @@ class Config extends \Ilch\Config\Install
             case "1.21.0":
             case "1.21.1":
                 // Update description
-                foreach($this->config['languages'] as $key => $value) {
+                foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'events' AND `locale` = '%s';", $value['description'], $key));
                 }
                 // no break
@@ -206,7 +211,10 @@ class Config extends \Ilch\Config\Install
             case "1.22.0":
             case "1.22.1":
             case "1.22.2":
+            case "1.23.0":
                 // no break
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
