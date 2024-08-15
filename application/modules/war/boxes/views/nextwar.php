@@ -1,9 +1,12 @@
 <?php
 /** @var \Ilch\View $this */
+
+/** @var \Modules\War\Mappers\War $warMapper */
+$warMapper = $this->get('warMapper');
 ?>
 <link href="<?=$this->getBoxUrl('static/css/style.css') ?>" rel="stylesheet">
 
-<?php if ($this->get('war') != '') :
+<?php if ($this->get('wars') != '') :
     $displayed = 0;
     $adminAccess = null;
     if ($this->getUser()) {
@@ -11,11 +14,9 @@
     }
 
     /** @var \Modules\War\Models\War $war */
-    foreach ($this->get('war') as $war) :
+    foreach ($this->get('wars') as $war) :
         $displayed++;
 
-        /** @var \Modules\War\Mappers\War $warMapper */
-        $warMapper = $this->get('warMapper');
         $gameImg = $this->getBoxUrl('static/img/' . $war->getWarGame() . '.png');
         if (file_exists(APPLICATION_PATH . '/modules/war/static/img/' . $war->getWarGame() . '.png')) {
             $gameImg = '<img src="' . $this->getBoxUrl('static/img/' . urlencode($war->getWarGame()) . '.png') . '" title="' . $this->escape($war->getWarGame()) . '" width="16" height="16">';

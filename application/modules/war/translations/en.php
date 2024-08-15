@@ -139,6 +139,8 @@ return [
     'is' => 'is',
     'warNotFound' => 'War not found',
     'groupNotFound' => 'Group not found',
+    'enemyNotFound' => 'Enemy not found',
+    'mapNotFound' => 'Map not found',
     'visibleFor' => 'Visible for',
     'calendarShow' => 'Show war in calendar?',
 

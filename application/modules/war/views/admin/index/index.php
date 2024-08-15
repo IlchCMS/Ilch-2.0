@@ -11,7 +11,7 @@ $enemyMapper = $this->get('enemyMapper');
 $groupMapper = $this->get('groupMapper');
 ?>
 <h1><?=$this->getTrans('manageWarOverview') ?></h1>
-<?php if ($this->get('war')) : ?>
+<?php if ($this->get('wars')) : ?>
     <div class="row mb-3">
         <label class="col-lg-2 col-form-label" for="filterLastNext">
             <?=$this->getTrans('showOnly') ?>
@@ -52,7 +52,7 @@ $groupMapper = $this->get('groupMapper');
                 <tbody>
                     <?php
                     /** @var \Modules\War\Models\War $war */
-                    foreach ($this->get('war') as $war) : ?>
+                    foreach ($this->get('wars') as $war) : ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_war', $war->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $war->getId()]) ?></td>

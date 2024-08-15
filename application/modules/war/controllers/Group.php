@@ -71,7 +71,7 @@ class Group extends Frontend
             $this->getView()->set('wars', $warMapper->getWars(['group' => $group->getId()]))
                 ->set('gamesMapper', $gamesMapper)
                 ->set('group', $group)
-                ->set('war', $warMapper->getWarList($pagination, $readAccess, $group->getId()))
+                ->set('warList', $warMapper->getWarList($pagination, $readAccess, $group->getId()))
                 ->set('pagination', $pagination)
                 ->set('groupMapper', $groupMapper)
                 ->set('enemyMapper', $enemyMapper);

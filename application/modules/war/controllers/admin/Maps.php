@@ -110,6 +110,12 @@ class Maps extends Admin
                 ->add($this->getTranslator()->trans('treatMaps'), ['action' => 'treat']);
 
             $mapsModel = $mapsMapper->getEntryById((int)$this->getRequest()->getParam('id'));
+
+            if (!$mapsModel) {
+                $this->redirect()
+                    ->withMessage('mapNotFound')
+                    ->to(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageMaps'), ['action' => 'index'])
@@ -137,7 +143,7 @@ class Maps extends Admin
                 ->to(array_merge(['action' => 'treat'], ($mapsModel->getId() ? ['id' => $mapsModel->getId()] : [])));
         }
 
-        $this->getView()->set('maps', $mapsModel);
+        $this->getView()->set('map', $mapsModel);
     }
 
     public function delAction()

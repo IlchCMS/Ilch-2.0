@@ -1,9 +1,14 @@
 <?php
 /** @var \Ilch\View $this */
+
+/** @var \Modules\War\Mappers\Games $gamesMapper */
+$gamesMapper = $this->get('gamesMapper');
+/** @var \Modules\War\Mappers\War $warMapper */
+$warMapper = $this->get('warMapper');
 ?>
 <link href="<?=$this->getBoxUrl('static/css/style.css') ?>" rel="stylesheet">
 
-<?php if ($this->get('war') != '') :
+<?php if ($this->get('wars') != '') :
     $displayed = 0;
     $adminAccess = null;
     if ($this->getUser()) {
@@ -11,13 +16,9 @@
     }
 
     /** @var \Modules\War\Models\War $war */
-    foreach ($this->get('war') as $war) :
+    foreach ($this->get('wars') as $war) :
         $displayed++;
 
-        /** @var \Modules\War\Mappers\Games $gamesMapper */
-        $gamesMapper = $this->get('gamesMapper');
-        /** @var \Modules\War\Mappers\War $warMapper */
-        $warMapper = $this->get('warMapper');
         $games = $gamesMapper->getGamesByWarId($war->getId());
         $enemyPoints = 0;
         $groupPoints = 0;

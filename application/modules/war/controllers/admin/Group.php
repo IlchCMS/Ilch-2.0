@@ -111,6 +111,12 @@ class Group extends Admin
                 ->add($this->getTranslator()->trans('treatGroup'), ['action' => 'treat']);
 
             $groupModel = $groupMapper->getGroupById($this->getRequest()->getParam('id'));
+
+            if (!$groupModel) {
+                $this->redirect()
+                    ->withMessage('groupNotFound')
+                    ->to(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageGroups'), ['action' => 'index'])
@@ -164,7 +170,7 @@ class Group extends Admin
                 ->to(array_merge(['action' => 'treat'], ($groupModel->getId() ? ['id' => $groupModel->getId()] : [])));
         }
 
-        $this->getView()->set('groups', $groupModel)
+        $this->getView()->set('group', $groupModel)
             ->set('userGroupList', $userGroupMapper->getGroupList());
     }
 

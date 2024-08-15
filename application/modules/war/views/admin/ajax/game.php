@@ -39,25 +39,25 @@ foreach ($this->get('games') as $game) : ?>
             </div>
         </div>
         <div class="row mb-3 ">
-            <label class="col-xl-2 col-form-label" for="warErgebnisGroup[]">
-                <label for="warErgebnisEnemy[]">
+            <label class="col-xl-2 col-form-label" for="warResultGroups[]">
+                <label for="warResultEnemys[]">
                     <?=$this->getTrans('warResult') ?>
                 </label>
             </label>
             <div class="col-xl-2">
                 <input type="number"
                        class="form-control"
-                       id="warErgebnisGroup[]"
-                       name="warErgebnisGroup[]"
+                       id="warResultGroups[]"
+                       name="warResultGroups[]"
                        placeholder="<?=$this->getTrans('warResultWe') ?>"
                        value="<?=$game->getGroupPoints() ?>">
             </div>
             <div class="col-xl-2">
                 <input type="number"
                        class="form-control"
-                       id="warErgebnisEnemy[]"
-                       name="warErgebnisEnemy[]"
-                       placeholder="<?=$this->getTrans('warResultEnemy') ?>"
+                       id="warResultEnemys[]"
+                       name="warResultEnemys[]"
+                       placeholder="<?=$this->getTrans('warResultEnemys') ?>"
                        value="<?=$game->getEnemyPoints() ?>">
             </div>
         </div>
@@ -112,14 +112,14 @@ foreach ($this->get('games') as $game) : ?>
             //warMapPlayed[warMapPlayed.length - 1].editableSelect();
         }
 
-        let warErgebnisGroup = document.getElementsByName('warErgebnisGroup[]');
-        if (warErgebnisGroup.length !== 0) {
-            warErgebnisGroup[warErgebnisGroup.length - 1].value = '';
+        let warResultGroups = document.getElementsByName('warResultGroups[]');
+        if (warResultGroups.length !== 0) {
+            warResultGroups[warResultGroups.length - 1].value = '';
         }
 
-        let warErgebnisEnemy = document.getElementsByName('warErgebnisEnemy[]');
-        if (warErgebnisEnemy.length !== 0) {
-            warErgebnisEnemy[warErgebnisEnemy.length - 1].value = '';
+        let warResultEnemys = document.getElementsByName('warResultEnemys[]');
+        if (warResultEnemys.length !== 0) {
+            warResultEnemys[warResultEnemys.length - 1].value = '';
         }
     }
 

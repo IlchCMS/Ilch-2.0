@@ -4,12 +4,12 @@
 
 use Ilch\Date;
 
-/** @var \Modules\War\Models\War $entrie */
-$entrie = $this->get('war');
+/** @var \Modules\War\Models\War $entry */
+$entry = $this->get('war');
 ?>
 <link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
-<h1><?=(!$entrie->getId()) ? $this->getTrans('menuActionNewWar') : $this->getTrans('manageWar') ?></h1>
-<?php if ($this->get('group') != '' && $this->get('enemy') != '') : ?>
+<h1><?=(!$entry->getId()) ? $this->getTrans('menuActionNewWar') : $this->getTrans('manageWar') ?></h1>
+<?php if ($this->get('groups') != '' && $this->get('enemys') != '') : ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="row mb-3<?=$this->validation()->hasError('warEnemy') ? ' has-error' : '' ?>">
@@ -21,8 +21,8 @@ $entrie = $this->get('war');
                     <optgroup label="<?=$this->getTrans('enemysName') ?>">
                         <?php
                         /** @var \Modules\War\Models\Enemy $enemy */
-                        foreach ($this->get('enemy') as $enemy) : ?>
-                            <option value="<?=$enemy->getId() ?>" <?=($this->originalInput('warEnemy', ($entrie->getId() ? $entrie->getWarEnemy() : 0))) == $enemy->getId() ? 'selected=""' : '' ?>><?=$this->escape($enemy->getEnemyName()) ?></option>
+                        foreach ($this->get('enemys') as $enemy) : ?>
+                            <option value="<?=$enemy->getId() ?>" <?=($this->originalInput('warEnemy', ($entry->getId() ? $entry->getWarEnemy() : 0))) == $enemy->getId() ? 'selected=""' : '' ?>><?=$this->escape($enemy->getEnemyName()) ?></option>
                         <?php endforeach; ?>
                     </optgroup>
                 </select>
@@ -37,8 +37,8 @@ $entrie = $this->get('war');
                     <optgroup label="<?=$this->getTrans('groupsName') ?>">
                         <?php
                         /** @var \Modules\War\Models\Group $group */
-                        foreach ($this->get('group') as $group) : ?>
-                            <option value="<?=$group->getId() ?>" <?=($this->originalInput('warGroup', ($entrie->getId() ? $entrie->getWarGroup() : 0))) == $group->getId() ? 'selected=""' : '' ?>><?=$this->escape($group->getGroupName()) ?></option>
+                        foreach ($this->get('groups') as $group) : ?>
+                            <option value="<?=$group->getId() ?>" <?=($this->originalInput('warGroup', ($entry->getId() ? $entry->getWarGroup() : 0))) == $group->getId() ? 'selected=""' : '' ?>><?=$this->escape($group->getGroupName()) ?></option>
                         <?php endforeach; ?>
                     </optgroup>
                 </select>
@@ -54,7 +54,7 @@ $entrie = $this->get('war');
                        id="warTimeInput"
                        name="warTime"
                        size="16"
-                       value="<?=$this->escape($this->originalInput('warTime', ($entrie->getId() ? (new Date($entrie->getWarTime()))->format("d.m.Y H:i") : ''))) ?>"
+                       value="<?=$this->escape($this->originalInput('warTime', ($entry->getId() ? (new Date($entry->getWarTime()))->format("d.m.Y H:i") : ''))) ?>"
                        readonly />
                 <span class="input-group-text">
                     <span class="fa-solid fa-calendar"></span>
@@ -67,8 +67,10 @@ $entrie = $this->get('war');
             </label>
             <div class="col-xl-4">
                 <select class="chosen-select form-control" id="warMapInput" name="warMap[]" data-placeholder="<?=$this->getTrans('selectAssignedMaps') ?>" multiple>
-                    <?php foreach ($this->get('mapsList') ?? [] as $mapsList) : ?>
-                        <option value="<?=$mapsList->getId() ?>" <?=in_array($mapsList->getId(), $this->originalInput('warMap', $this->get('warMap'))) ? 'selected=""' : '' ?>><?=$mapsList->getName() ?></option>
+                    <?php
+                    /** @var \Modules\War\Models\Maps $mapsList */
+                    foreach ($this->get('mapsList') ?? [] as $mapsList) : ?>
+                        <option value="<?=$mapsList->getId() ?>" <?=in_array($mapsList->getId(), $this->originalInput('warMap', $this->get('warMaps'))) ? 'selected=""' : '' ?>><?=$mapsList->getName() ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -82,7 +84,7 @@ $entrie = $this->get('war');
                        class="form-control"
                        id="warServerInput"
                        name="warServer"
-                       value="<?=$this->escape($this->originalInput('warServer', ($entrie->getId() ? $entrie->getWarServer() : ''))) ?>" />
+                       value="<?=$this->escape($this->originalInput('warServer', ($entry->getId() ? $entry->getWarServer() : ''))) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('warPassword') ? ' has-error' : '' ?>">
@@ -94,7 +96,7 @@ $entrie = $this->get('war');
                        class="form-control"
                        id="warPasswordInput"
                        name="warPassword"
-                       value="<?=$this->escape($this->originalInput('warPassword', ($entrie->getId() ? $entrie->getWarPassword() : ''))) ?>" />
+                       value="<?=$this->escape($this->originalInput('warPassword', ($entry->getId() ? $entry->getWarPassword() : ''))) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('warXonx') ? ' has-error' : '' ?>">
@@ -106,10 +108,12 @@ $entrie = $this->get('war');
             <div class="col-xl-2">
                 <select class="form-select" id="warXonx" name="warXonx">
                     <optgroup label="<?=$this->getTrans('warXonx') ?>">
-                        <option value="neu" <?=($this->originalInput('warXonx', ($entrie->getId() ? $entrie->getWarXonx() : 'neu'))) == 'neu' ? 'selected=""' : '' ?>><?=$this->getTrans('new') ?></option>
-                        <?php if ($this->get('warOptXonx') != '') : ?>
-                            <?php foreach ($this->get('warOptXonx') as $opt) : ?>
-                                <option value="<?=$opt->getWarXonx() ?>" <?=($this->originalInput('warXonx', ($entrie->getId() ? $entrie->getWarXonx() : 'neu'))) == $opt->getWarXonx() ? 'selected=""' : '' ?>><?=$this->escape($opt->getWarXonx()) ?></option>
+                        <option value="new" <?=($this->originalInput('warXonx', ($entry->getId() ? $entry->getWarXonx() : 'new'))) == 'new' ? 'selected=""' : '' ?>><?=$this->getTrans('new') ?></option>
+                        <?php if ($this->get('warOptXonxs') != '') : ?>
+                            <?php
+                            /** @var \Modules\War\Models\War $opt */
+                            foreach ($this->get('warOptXonxs') as $opt) : ?>
+                                <option value="<?=$opt->getWarXonx() ?>" <?=($this->originalInput('warXonx', ($entry->getId() ? $entry->getWarXonx() : 'new'))) == $opt->getWarXonx() ? 'selected=""' : '' ?>><?=$this->escape($opt->getWarXonx()) ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </optgroup>
@@ -133,10 +137,12 @@ $entrie = $this->get('war');
             <div class="col-xl-2">
                 <select class="form-select" id="warGame" name="warGame">
                     <optgroup label="<?=$this->getTrans('warGame') ?>">
-                        <option value="neu" <?=($this->originalInput('warGame', ($entrie->getId() ? $entrie->getWarGame() : 'neu'))) == 'neu' ? 'selected=""' : '' ?>><?=$this->getTrans('warNew') ?></option>
-                        <?php if ($this->get('warOptGame') != '') : ?>
-                            <?php foreach ($this->get('warOptGame') as $opt) : ?>
-                                <option value="<?=$opt->getWarGame() ?>" <?=($this->originalInput('warGame', ($entrie->getId() ? $entrie->getWarGame() : 'neu'))) == $opt->getWarGame() ? 'selected=""' : '' ?>><?=$this->escape($opt->getWarGame()) ?></option>
+                        <option value="new" <?=($this->originalInput('warGame', ($entry->getId() ? $entry->getWarGame() : 'new'))) == 'new' ? 'selected=""' : '' ?>><?=$this->getTrans('warNew') ?></option>
+                        <?php if ($this->get('warOptGames') != '') : ?>
+                            <?php
+                            /** @var \Modules\War\Models\War $opt */
+                            foreach ($this->get('warOptGames') as $opt) : ?>
+                                <option value="<?=$opt->getWarGame() ?>" <?=($this->originalInput('warGame', ($entry->getId() ? $entry->getWarGame() : 'new'))) == $opt->getWarGame() ? 'selected=""' : '' ?>><?=$this->escape($opt->getWarGame()) ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </optgroup>
@@ -160,10 +166,12 @@ $entrie = $this->get('war');
             <div class="col-xl-2">
                 <select class="form-select" id="warMatchtype" name="warMatchtype">
                     <optgroup label="<?=$this->getTrans('warMatchtype') ?>">
-                        <option value="neu" <?=($this->originalInput('warMatchtype', ($entrie->getId() ? $entrie->getWarMatchtype() : 'neu'))) == 'neu' ? 'selected=""' : '' ?>><?=$this->getTrans('new') ?></option>
-                        <?php if ($this->get('warOptMatchtype') != '') : ?>
-                            <?php foreach ($this->get('warOptMatchtype') as $opt) : ?>
-                                <option value="<?=$opt->getWarMatchtype() ?>" <?=($this->originalInput('warMatchtype', ($entrie->getId() ? $entrie->getWarMatchtype() : 'neu'))) == $opt->getWarMatchtype() ? 'selected=""' : '' ?>><?=$this->escape($opt->getWarMatchtype()) ?></option>
+                        <option value="new" <?=($this->originalInput('warMatchtype', ($entry->getId() ? $entry->getWarMatchtype() : 'new'))) == 'new' ? 'selected=""' : '' ?>><?=$this->getTrans('new') ?></option>
+                        <?php if ($this->get('warOptMatchtypes') != '') : ?>
+                            <?php
+                            /** @var \Modules\War\Models\War $opt */
+                            foreach ($this->get('warOptMatchtypes') as $opt) : ?>
+                                <option value="<?=$opt->getWarMatchtype() ?>" <?=($this->originalInput('warMatchtype', ($entry->getId() ? $entry->getWarMatchtype() : 'new'))) == $opt->getWarMatchtype() ? 'selected=""' : '' ?>><?=$this->escape($opt->getWarMatchtype()) ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </optgroup>
@@ -187,10 +195,10 @@ $entrie = $this->get('war');
                        class="form-control"
                        id="lastAcceptTimeInput"
                        name="lastAcceptTime"
-                       value="<?=$this->escape($this->originalInput('lastAcceptTime', ($entrie->getId() ? $entrie->getLastAcceptTime() : 0))) ?>" />
+                       value="<?=$this->escape($this->originalInput('lastAcceptTime', ($entry->getId() ? $entry->getLastAcceptTime() : 0))) ?>" />
             </div>
         </div>
-        <?php if ($entrie->getId()) : ?>
+        <?php if ($entry->getId()) : ?>
             <h1><?=$this->getTrans('warResult') ?></h1>
             <div id="games"></div>
         <?php else : ?>
@@ -204,13 +212,13 @@ $entrie = $this->get('war');
                 </div>
             </div>
         <?php endif; ?>
-        <h1><?=$this->getTrans('warReport') ?></h1>
+        <h1><label for="ck_1"><?=$this->getTrans('warReport') ?></label></h1>
         <div class="row mb-3<?=$this->validation()->hasError('warReport') ? ' has-error' : '' ?>">
             <div class="offset-xl-2 col-xl-8">
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="warReport"
-                          toolbar="ilch_html"><?=$this->escape($this->originalInput('warReport', ($entrie->getId() ? $entrie->getWarReport() : ''))) ?></textarea>
+                          toolbar="ilch_html"><?=$this->escape($this->originalInput('warReport', ($entry->getId() ? $entry->getWarReport() : ''))) ?></textarea>
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
@@ -235,9 +243,9 @@ $entrie = $this->get('war');
             </label>
             <div class="col-xl-4">
                 <div class="flipswitch">
-                    <input type="radio" class="flipswitch-input" id="calendarShow-yes" name="calendarShow" value="1" <?=($this->originalInput('calendarShow', ($entrie->getId() ? $entrie->getShow() : true))) ? 'checked="checked"' : '' ?> />
+                    <input type="radio" class="flipswitch-input" id="calendarShow-yes" name="calendarShow" value="1" <?=($this->originalInput('calendarShow', ($entry->getId() ? $entry->getShow() : true))) ? 'checked="checked"' : '' ?> />
                     <label for="calendarShow-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                    <input type="radio" class="flipswitch-input" id="calendarShow-no" name="calendarShow" value="0"  <?=(!$this->originalInput('calendarShow', ($entrie->getId() ? $entrie->getShow() : true))) ? 'checked="checked"' : '' ?> />
+                    <input type="radio" class="flipswitch-input" id="calendarShow-no" name="calendarShow" value="0"  <?=(!$this->originalInput('calendarShow', ($entry->getId() ? $entry->getShow() : true))) ? 'checked="checked"' : '' ?> />
                     <label for="calendarShow-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                     <span class="flipswitch-selection"></span>
                 </div>
@@ -251,15 +259,15 @@ $entrie = $this->get('war');
             </label>
             <div class="col-xl-4">
                 <div class="flipswitch">
-                    <input type="radio" class="flipswitch-input" id="warStatus-open" name="warStatus" value="1" <?=($this->originalInput('warStatus', ($entrie->getId() ? $entrie->getWarStatus() : 1)) == 1) ? 'checked="checked"' : '' ?> />
+                    <input type="radio" class="flipswitch-input" id="warStatus-open" name="warStatus" value="1" <?=($this->originalInput('warStatus', ($entry->getId() ? $entry->getWarStatus() : 1)) == 1) ? 'checked="checked"' : '' ?> />
                     <label for="warStatus-open" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('warStatusOpen') ?></label>
-                    <input type="radio" class="flipswitch-input" id="warStatus-close" name="warStatus" value="2"  <?=($this->originalInput('warStatus', ($entrie->getId() ? $entrie->getWarStatus() : 1)) == 2) ? 'checked="checked"' : '' ?> />
+                    <input type="radio" class="flipswitch-input" id="warStatus-close" name="warStatus" value="2"  <?=($this->originalInput('warStatus', ($entry->getId() ? $entry->getWarStatus() : 1)) == 2) ? 'checked="checked"' : '' ?> />
                     <label for="warStatus-close" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('warStatusClose') ?></label>
                     <span class="flipswitch-selection"></span>
                 </div>
             </div>
         </div>
-        <?=($entrie->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+        <?=($entry->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
     </form>
 <?php else : ?>
     <?=$this->getTranslator()->trans('firstGroupEnemy') ?>
@@ -307,7 +315,7 @@ $(document).ready(function () {
     document.getElementById('warMatchtype').onchange = diasableMatchtype;
 
     function diasableXonx() {
-        if (document.getElementById('warXonx').value === 'neu') {
+        if (document.getElementById('warXonx').value === 'new') {
             document.getElementById("warXonxNew").style.display = "block";
             document.getElementById("warXonx").style.margin = "0 0 5px";
         } else {
@@ -317,7 +325,7 @@ $(document).ready(function () {
     }
 
     function diasableGame() {
-        if (document.getElementById('warGame').value === 'neu') {
+        if (document.getElementById('warGame').value === 'new') {
             document.getElementById("warGameNew").style.display = "block";
             document.getElementById("warGame").style.margin = "0 0 5px";
         } else {
@@ -337,7 +345,7 @@ $(document).ready(function () {
     }
 
     function loadGames() {
-        $('#games').load('<?=$this->getUrl(array_merge(['controller' => 'ajax', 'action' => 'game'], ($entrie->getId() ? ['id' => $entrie->getId()] : []))) ?>');
+        $('#games').load('<?=$this->getUrl(array_merge(['controller' => 'ajax', 'action' => 'game'], ($entry->getId() ? ['id' => $entry->getId()] : []))) ?>');
     }
 });
 </script>

@@ -2,15 +2,13 @@
 
 /** @var \Ilch\View $this */
 
+use Ilch\Date;
+
 /** @var \Ilch\Pagination $pagination */
 $pagination = $this->get('pagination');
 
-use Ilch\Date;
-
 /** @var \Modules\War\Mappers\Games $gamesMapper */
 $gamesMapper = $this->get('gamesMapper');
-
-
 /** @var \Modules\War\Mappers\Enemy $enemyMapper */
 $enemyMapper = $this->get('enemyMapper');
 /** @var \Modules\War\Mappers\Group $groupMapper */
@@ -23,7 +21,7 @@ $groupMapper = $this->get('groupMapper');
 <h4><a class="btn btn-outline-secondary" href="<?=$this->getUrl(['controller' => 'group', 'action' => 'index']) ?>"><?=$this->getTrans('toGroups') ?></a></h4>
 
 <h1><?=$this->getTrans('warsOverview') ?></h1>
-<?php if ($this->get('war')) : ?>
+<?php if ($this->get('wars')) : ?>
     <?=$pagination->getHtml($this, []) ?>
     <div class="table-responsive">
         <table class="table table-striped table-hover">
@@ -48,7 +46,7 @@ $groupMapper = $this->get('groupMapper');
             <tbody>
                 <?php
                 /** @var \Modules\War\Models\War $war */
-                foreach ($this->get('war') as $war) : ?>
+                foreach ($this->get('wars') as $war) : ?>
                     <?php
                     $date = new Date($war->getWarTime())
                     ?>

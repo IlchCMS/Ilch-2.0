@@ -3,6 +3,7 @@
 /** @var \Ilch\View $this */
 
 use Ilch\Date;
+$commentsClass = new Ilch\Comments();
 
 /** @var \Modules\War\Models\War $war */
 $war = $this->get('war');
@@ -12,16 +13,15 @@ $group = $this->get('group');
 $enemy = $this->get('enemy');
 /** @var int[]|null $userGroupIds */
 $userGroupIds = $this->get('userGroupIds');
-/** @var \Modules\User\Mappers\User $userMapper */
-$userMapper = $this->get('userMapper');
 /** @var \Modules\War\Models\Accept $acceptArray */
 $acceptArray = $this->get('accept');
 /** @var \Modules\War\Models\Accept[]|null $acceptCheckArray */
 $acceptCheckArray = $this->get('acceptCheck');
 /** @var \Modules\War\Models\Games[]|null $games */
 $games = $this->get('games');
-$commentsClass = new Ilch\Comments();
 
+/** @var \Modules\User\Mappers\User $userMapper */
+$userMapper = $this->get('userMapper');
 /** @var \Modules\War\Mappers\Maps $mapsMapper */
 $mapsMapper = $this->get('mapsMapper');
 

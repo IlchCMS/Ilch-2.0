@@ -106,9 +106,9 @@ class Index extends Admin
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         if ($this->getRequest()->getParam('filterLastNext')) {
-            $this->getView()->set('war', $warMapper->getWarListByStatus($this->getRequest()->getParam('filterLastNext'), $pagination));
+            $this->getView()->set('wars', $warMapper->getWarListByStatus($this->getRequest()->getParam('filterLastNext'), $pagination));
         } else {
-            $this->getView()->set('war', $warMapper->getWarList($pagination, '1'));
+            $this->getView()->set('wars', $warMapper->getWarList($pagination, '1'));
         }
 
         $this->getView()->set('pagination', $pagination)
@@ -133,6 +133,12 @@ class Index extends Admin
                 ->add($this->getTranslator()->trans('manageWar'), ['action' => 'treat']);
 
             $warModel = $warMapper->getWarById($this->getRequest()->getParam('id'));
+
+            if (!$warModel) {
+                $this->redirect()
+                    ->withMessage('warNotFound')
+                    ->to(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageWarOverview'), ['action' => 'index'])
@@ -140,15 +146,15 @@ class Index extends Admin
         }
 
         if ($this->getRequest()->isPost()) {
-            if ($this->getRequest()->getPost('warXonx') === 'neu') {
+            if ($this->getRequest()->getPost('warXonx') === 'new') {
                 $_POST['warXonx'] = $this->getRequest()->getPost('warXonxNew');
             }
 
-            if ($this->getRequest()->getPost('warGame') === 'neu') {
+            if ($this->getRequest()->getPost('warGame') === 'new') {
                 $_POST['warGame'] = $this->getRequest()->getPost('warGameNew');
             }
 
-            if ($this->getRequest()->getPost('warMatchtype') === 'neu') {
+            if ($this->getRequest()->getPost('warMatchtype') === 'new') {
                 $_POST['warMatchtype'] = $this->getRequest()->getPost('warMatchtypeNew');
             }
 
@@ -187,8 +193,8 @@ class Index extends Admin
                 if ($warModel->getId() && $this->getRequest()->getPost('warMapPlayed')) {
                     $ids = $this->getRequest()->getPost('warGameIds');
                     $maps = $this->getRequest()->getPost('warMapPlayed');
-                    $groupPoints = $this->getRequest()->getPost('warErgebnisGroup');
-                    $enemyPoints = $this->getRequest()->getPost('warErgebnisEnemy');
+                    $groupPoints = $this->getRequest()->getPost('warResultGroups');
+                    $enemyPoints = $this->getRequest()->getPost('warResultEnemys');
 
                     for ($i = 0; $i < count($maps); $i++) {
                         if (!empty($ids[$i])) {
@@ -250,14 +256,14 @@ class Index extends Admin
         }
 
         $this->getView()->set('war', $warModel)
-            ->set('group', $groupMapper->getGroups())
-            ->set('enemy', $enemyMapper->getEnemy())
-            ->set('warOptXonx', $warMapper->getWarOptDistinctXonx())
-            ->set('warOptGame', $warMapper->getWarOptDistinctGame())
-            ->set('warOptMatchtype', $warMapper->getWarOptDistinctMatchtype())
+            ->set('groups', $groupMapper->getGroups())
+            ->set('enemys', $enemyMapper->getEnemy())
+            ->set('warOptXonxs', $warMapper->getWarOptDistinctXonx())
+            ->set('warOptGames', $warMapper->getWarOptDistinctGame())
+            ->set('warOptMatchtypes', $warMapper->getWarOptDistinctMatchtype())
             ->set('userGroupList', $userGroupMapper->getGroupList())
             ->set('groups', $groups)
-            ->set('warMap', $maps)
+            ->set('warMaps', $maps)
             ->set('mapsList', $mapsMapper->getList());
     }
 

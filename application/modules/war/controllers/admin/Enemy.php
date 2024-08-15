@@ -94,7 +94,7 @@ class Enemy extends Admin
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_enemiesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_enemiesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('enemy', $enemyMapper->getEnemyList($pagination))
+        $this->getView()->set('enemys', $enemyMapper->getEnemyList($pagination))
             ->set('pagination', $pagination);
     }
 
@@ -109,6 +109,12 @@ class Enemy extends Admin
                 ->add($this->getTranslator()->trans('treatEnemy'), ['action' => 'treat']);
 
             $enemyModel = $enemyMapper->getEnemyById($this->getRequest()->getParam('id'));
+
+            if (!$enemyModel) {
+                $this->redirect()
+                    ->withMessage('enemyNotFound')
+                    ->to(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageEnemy'), ['action' => 'index'])

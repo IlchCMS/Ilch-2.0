@@ -397,6 +397,7 @@ class Config extends Install
             case "1.15.3":
             case "1.15.4":
             case "1.15.5":
+            case "1.16.0":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

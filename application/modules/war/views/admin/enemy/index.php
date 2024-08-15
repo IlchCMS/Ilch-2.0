@@ -6,8 +6,8 @@
 $pagination = $this->get('pagination');
 ?>
 <h1><?=$this->getTrans('manageEnemy') ?></h1>
-<?php if ($this->get('enemy')) : ?>
-    <?=$this->get('pagination')->getHtml($this, []) ?>
+<?php if ($this->get('enemys')) : ?>
+    <?=$pagination->getHtml($this, []) ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -37,7 +37,7 @@ $pagination = $this->get('pagination');
                 <tbody>
                     <?php
                     /** @var \Modules\War\Models\Enemy $enemy */
-                    foreach ($this->get('enemy') as $enemy) : ?>
+                    foreach ($this->get('enemys') as $enemy) : ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_enemy', $enemy->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $enemy->getId()]) ?></td>

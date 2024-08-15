@@ -8,10 +8,9 @@ use Ilch\Date;
 $group = $this->get('group');
 /** @var \Modules\War\Mappers\War[]|null $wars */
 $wars = $this->get('wars');
+
 /** @var \Modules\War\Mappers\Games $gamesMapper */
 $gamesMapper = $this->get('gamesMapper');
-
-
 /** @var \Modules\War\Mappers\Enemy $enemyMapper */
 $enemyMapper = $this->get('enemyMapper');
 /** @var \Modules\War\Mappers\Group $groupMapper */
@@ -79,7 +78,7 @@ foreach ($wars ?? [] as $war) {
 </div>
 
 <h1><?=$this->getTrans('warsOverview') ?></h1>
-<?php if ($this->get('war')) : ?>
+<?php if ($this->get('warList')) : ?>
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <colgroup>
@@ -103,7 +102,7 @@ foreach ($wars ?? [] as $war) {
             <tbody>
                 <?php
                 /** @var \Modules\War\Models\War $war */
-                foreach ($this->get('war') as $war) : ?>
+                foreach ($this->get('warList') as $war) : ?>
                     <?php $date = new Date($war->getWarTime()) ?>
                     <tr>
                         <td><?php

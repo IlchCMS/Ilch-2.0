@@ -8,7 +8,6 @@
 namespace Modules\War\Boxes;
 
 use Ilch\Box;
-use Ilch\Date;
 use Ilch\Registry;
 use Modules\War\Mappers\War as WarMapper;
 use Modules\User\Mappers\User as UserMapper;
@@ -19,7 +18,6 @@ class Nextwar extends Box
     {
         $warMapper = new WarMapper();
         $userMapper = new UserMapper();
-        $date = new Date();
         $config = Registry::get('config');
 
         $user = null;
@@ -35,7 +33,6 @@ class Nextwar extends Box
         }
 
         $this->getView()->set('warMapper', $warMapper)
-            ->set('date', $date->format(null, true))
-            ->set('war', $warMapper->getWarListByStatusAndLimt(1, $config->get('war_boxNextWarLimit'), $readAccess));
+            ->set('wars', $warMapper->getWarListByStatusAndLimt(1, $config->get('war_boxNextWarLimit'), $readAccess));
     }
 }

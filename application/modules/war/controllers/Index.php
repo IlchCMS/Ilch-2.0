@@ -52,7 +52,7 @@ class Index extends Frontend
         }
 
         $this->getView()->set('gamesMapper', $gamesMapper)
-            ->set('war', $warMapper->getWarList($pagination, $readAccess))
+            ->set('wars', $warMapper->getWarList($pagination, $readAccess))
             ->set('pagination', $pagination)
             ->set('groupMapper', $groupMapper)
             ->set('enemyMapper', $enemyMapper);
