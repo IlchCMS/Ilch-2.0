@@ -1,4 +1,7 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 $periodDays = [
     '1' => $this->getTranslator()->trans('Monday'),
     '2' => $this->getTranslator()->trans('Tuesday'),
@@ -26,8 +29,9 @@ $periodAppendix = [
     'days' => $this->getTranslator()->trans('days'),
 ];
 
+/** @var \Modules\Calendar\Models\Calendar $entry */
 $entry = $this->get('calendar');
- ?>
+?>
 
 <link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
@@ -45,7 +49,7 @@ $entry = $this->get('calendar');
                    class="form-control"
                    id="start"
                    name="start"
-                   value="<?=$this->escape($this->originalInput('start', ($entry->getId()?(new \Ilch\Date($entry->getStart()))->format('d.m.Y H:i'):''))) ?>"
+                   value="<?=$this->escape($this->originalInput('start', ($entry->getId() ? (new \Ilch\Date($entry->getStart()))->format('d.m.Y H:i') : ''))) ?>"
                    readonly>
             <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
@@ -61,7 +65,7 @@ $entry = $this->get('calendar');
                    class="form-control"
                    id="end"
                    name="end"
-                   value="<?=$this->escape($this->originalInput('end', ($entry->getId()?($entry->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getEnd()))->format('d.m.Y H:i') : ''):''))) ?>">
+                   value="<?=$this->escape($this->originalInput('end', ($entry->getId() ? ($entry->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getEnd()))->format('d.m.Y H:i') : '') : ''))) ?>">
             <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
@@ -76,7 +80,7 @@ $entry = $this->get('calendar');
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=$this->escape($this->originalInput('title', ($entry->getId()?$entry->getTitle():''))) ?>" />
+                   value="<?=$this->escape($this->originalInput('title', ($entry->getId() ? $entry->getTitle() : ''))) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
@@ -88,7 +92,7 @@ $entry = $this->get('calendar');
                    class="form-control"
                    id="place"
                    name="place"
-                   value="<?=$this->escape($this->originalInput('place', ($entry->getId()?$entry->getPlace():''))) ?>" />
+                   value="<?=$this->escape($this->originalInput('place', ($entry->getId() ? $entry->getPlace() : ''))) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('periodType') ? ' has-error' : '' ?>">
@@ -97,9 +101,9 @@ $entry = $this->get('calendar');
         </label>
         <div class="col-xl-4">
             <select class="form-select" name="periodType" id="periodType">
-                <option value="" <?=($this->originalInput('periodType', ($entry->getId()?$entry->getPeriodType():''))) == '' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
-                <?php foreach ($periodTypes as $key => $value): ?>
-                    <option value="<?=$key ?>" <?=($this->originalInput('periodType', ($entry->getId()?$entry->getPeriodType():''))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
+                <option value="" <?=($this->originalInput('periodType', ($entry->getId() ? $entry->getPeriodType() : ''))) == '' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
+                <?php foreach ($periodTypes as $key => $value) : ?>
+                    <option value="<?=$key ?>" <?=($this->originalInput('periodType', ($entry->getId() ? $entry->getPeriodType() : ''))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -109,9 +113,9 @@ $entry = $this->get('calendar');
         <label for="periodDays" class="col-xl-2 col-form-label"></label>
         <div class="col-xl-4">
             <select class="form-select" name="periodDays" id="periodDays">
-                <option value="0" <?=($this->originalInput('periodDay', ($entry->getId()?$entry->getPeriodDay():'0'))) == '0' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
-                <?php foreach ($periodDays as $key => $value): ?>
-                    <option value="<?=$key ?>" <?=($this->originalInput('periodDay', ($entry->getId()?$entry->getPeriodDay():'0'))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
+                <option value="0" <?=($this->originalInput('periodDay', ($entry->getId() ? $entry->getPeriodDay() : '0'))) == '0' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
+                <?php foreach ($periodDays as $key => $value) : ?>
+                    <option value="<?=$key ?>" <?=($this->originalInput('periodDay', ($entry->getId() ? $entry->getPeriodDay() : '0'))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -126,7 +130,7 @@ $entry = $this->get('calendar');
                    class="form-control"
                    id="periodDay"
                    name="periodDay"
-                   value="<?=$this->escape($this->originalInput('periodDay', ($this->originalInput('periodType', ($entry->getId()?$entry->getPeriodType():'')) == 'days'?'0':($entry->getId()?$entry->getPeriodDay():'1')))) ?>" />
+                   value="<?=$this->escape($this->originalInput('periodDay', ($this->originalInput('periodType', ($entry->getId() ? $entry->getPeriodType() : '')) == 'days' ? '0' : ($entry->getId() ? $entry->getPeriodDay() : '1')))) ?>" />
             <span class="input-group-text" id="periodDayAppendix"><?=(!empty($entry->getPeriodType())) ? $this->getTrans($periodAppendix[$entry->getPeriodType()]) : '' ?></span>
         </div>
       </div>
@@ -142,7 +146,7 @@ $entry = $this->get('calendar');
                    class="form-control"
                    id="repeatUntil"
                    name="repeatUntil"
-                   value="<?=$this->escape($this->originalInput('repeatUntil', ($entry->getId()?($entry->getRepeatUntil() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getRepeatUntil()))->format('d.m.Y H:i') : ''):''))) ?>"
+                   value="<?=$this->escape($this->originalInput('repeatUntil', ($entry->getId() ? ($entry->getRepeatUntil() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getRepeatUntil()))->format('d.m.Y H:i') : '') : ''))) ?>"
                    readonly>
             <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
@@ -160,7 +164,7 @@ $entry = $this->get('calendar');
                    id="color"
                    name="color"
                    data-jscolor=""
-                   value="<?=$this->escape($this->originalInput('color', ($entry->getId()?$entry->getColor():'#32333B'))) ?>">
+                   value="<?=$this->escape($this->originalInput('color', ($entry->getId() ? $entry->getColor() : '#32333B'))) ?>">
             <span class="input-group-text">
                 <span class="fa-solid fa-arrow-rotate-left" onclick="document.getElementById('color').jscolor.fromString('32333B')"></span>
             </span>
@@ -173,9 +177,11 @@ $entry = $this->get('calendar');
         <div class="col-xl-4">
             <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <option value="all" <?=in_array('all', $this->originalInput('groups', $this->get('groups'))) ? 'selected="selected"' : '' ?>><?=$this->getTrans('groupAll') ?></option>
-                <?php foreach ($this->get('userGroupList') as $groupList): ?>
-                    <?php if ($groupList->getId() != 1): ?>
-                        <option value="<?=$groupList->getId() ?>" <?=in_array($groupList->getId(), $this->originalInput('groups', $this->get('groups'))) ? 'selected=""' : '' ?>><?=$groupList->getName() ?></option>
+                <?php
+                /** @var \Modules\Calendar\Models\Calendar $entry */
+                foreach ($this->get('userGroupList') as $group) : ?>
+                    <?php if ($group->getId() != 1) : ?>
+                        <option value="<?=$group->getId() ?>" <?=in_array($group->getId(), $this->originalInput('groups', $this->get('groups'))) ? 'selected=""' : '' ?>><?=$group->getName() ?></option>
                     <?php endif; ?>
                 <?php endforeach; ?>
             </select>
@@ -190,7 +196,7 @@ $entry = $this->get('calendar');
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?=$this->escape($this->originalInput('text', ($entry->getId()?$entry->getText():''))) ?></textarea>
+                      rows="5"><?=$this->escape($this->originalInput('text', ($entry->getId() ? $entry->getText() : ''))) ?></textarea>
         </div>
     </div>
     <?=($entry->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>

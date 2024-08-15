@@ -38,7 +38,7 @@
             nowIndicator: true,
             height: 450,
             eventSources: [
-                <?php foreach ($this->get('events') ?? [] as $url): ?>
+                <?php foreach ($this->get('events') ?? [] as $url) : ?>
                 {
                     url: '<?=$this->getUrl($url->getUrl()) ?>'
                 },

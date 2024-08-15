@@ -1,4 +1,7 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 $periodDays = [
     '1' => $this->getTranslator()->trans('Monday'),
     '2' => $this->getTranslator()->trans('Tuesday'),
@@ -19,7 +22,7 @@ $periodTypes = [
 ?>
 
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if ($this->get('calendar') != ''): ?>
+<?php if ($this->get('calendars') != '') : ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -47,8 +50,10 @@ $periodTypes = [
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('calendar') as $calendar): ?>
                     <?php
+                    /** @var \Modules\Calendar\Models\Calendar $calendar */
+                    foreach ($this->get('calendars') as $calendar) : ?>
+                        <?php
                         $startDate = new \Ilch\Date($calendar->getStart());
                         $endDate = $calendar->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($calendar->getEnd()) : 1;
                         $endDate = is_numeric($endDate) ? null : $endDate;
@@ -63,10 +68,10 @@ $periodTypes = [
                                 <?php
                                 if ($calendar->getPeriodType()) {
                                     echo $periodTypes[$calendar->getPeriodType()];
-                                    if ($calendar->getPeriodType() != 'days'){
-                                        echo ' (x '.$calendar->getPeriodDay().')';
+                                    if ($calendar->getPeriodType() != 'days') {
+                                        echo ' (x ' . $calendar->getPeriodDay() . ')';
                                     } else {
-                                        echo ' ('.$periodDays[$calendar->getPeriodDay()].')';
+                                        echo ' (' . $periodDays[$calendar->getPeriodDay()] . ')';
                                     }
                                 }
                                 ?>
@@ -80,6 +85,6 @@ $periodTypes = [
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noCalendar') ?>
 <?php endif; ?>

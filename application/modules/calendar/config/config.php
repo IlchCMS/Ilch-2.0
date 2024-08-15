@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -115,7 +116,7 @@ class Config extends \Ilch\Config\Install
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -234,10 +235,10 @@ class Config extends \Ilch\Config\Install
                 $boxModel->addContent('calendar', $this->config['boxes']['calendar']);
                 $boxMapper->install($boxModel);
 
-                removeDir(APPLICATION_PATH.'/modules/calendar/static/js/fullcalendar/');
+                removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar/');
                 // no break
             case "1.7.0":
-                removeDir(APPLICATION_PATH.'/modules/calendar/static/js/fullcalendar_5_11_0/');
+                removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar_5_11_0/');
                 // no break
             case "1.8.0":
                 // Add the uid column. This property defines the persistent, globally unique identifier for the calendar component.
@@ -254,10 +255,13 @@ class Config extends \Ilch\Config\Install
                 // no break
             case "1.9.2":
                 // Remove old version of fullcalendar as this version comes with version 6.1.10.
-                removeDir(APPLICATION_PATH.'/modules/calendar/static/js/fullcalendar_5_11_3/');
+                removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar_5_11_3/');
                 // no break
             case "1.10.0":
                 // no break
+            case "1.11.0":
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

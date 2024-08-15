@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getModuleUrl('static/css/calendar.css') ?>" rel="stylesheet">
 
 <div class="calendar">
@@ -34,7 +38,7 @@
                 icalButton: {
                     text: 'iCal',
                     click: function() {
-                        window.location = '<?=BASE_URL.'/index.php/calendar/events/iCal/' ?>';
+                        window.location = '<?=BASE_URL . '/index.php/calendar/events/iCal/' ?>';
                     }
                 }
             },
@@ -59,7 +63,9 @@
             weekNumbers: true,
             weekNumberCalculation: 'ISO',
             eventSources: [
-                <?php foreach ($this->get('events') ?? [] as $url): ?>
+                <?php
+                /** @var \Modules\Calendar\Models\Events $url */
+                foreach ($this->get('events') ?? [] as $url) : ?>
                 {
                     url: '<?=$this->getUrl($url->getUrl()) ?>'
                 },
