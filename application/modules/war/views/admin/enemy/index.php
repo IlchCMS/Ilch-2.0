@@ -1,6 +1,13 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+?>
 <h1><?=$this->getTrans('manageEnemy') ?></h1>
-<?php if ($this->get('enemy')): ?>
-    <?=$this->get('pagination')->getHtml($this, []) ?>
+<?php if ($this->get('enemies')) : ?>
+    <?=$pagination->getHtml($this, []) ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -28,14 +35,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('enemy') as $enemy): ?>
+                    <?php
+                    /** @var \Modules\War\Models\Enemy $enemy */
+                    foreach ($this->get('enemies') as $enemy) : ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_enemy', $enemy->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $enemy->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $enemy->getId()]) ?></td>
-                            <td><?=(empty($enemy->getEnemyHomepage()) ? $this->escape($enemy->getEnemyName()) : '<a href="'.$this->escape($enemy->getEnemyHomepage()).'">'.$this->escape($enemy->getEnemyName()).'</a>') ?></td>
+                            <td><?=(empty($enemy->getEnemyHomepage()) ? $this->escape($enemy->getEnemyName()) : '<a href="' . $this->escape($enemy->getEnemyHomepage()) . '">' . $this->escape($enemy->getEnemyName()) . '</a>') ?></td>
                             <td><?=$this->escape($enemy->getEnemyTag()) ?></td>
-                            <td><?=(empty($enemy->getEnemyImage())) ? '' : '<img class="group-image" src="'.$this->getBaseUrl($enemy->getEnemyImage()).'" />' ?></td>
+                            <td><?=(empty($enemy->getEnemyImage())) ? '' : '<img class="group-image" src="' . $this->getBaseUrl($enemy->getEnemyImage()) . '" />' ?></td>
                             <td><?=$this->escape($enemy->getEnemyContactName()) ?></td>
                             <td><?=$this->escape($enemy->getEnemyContactEmail()) ?></td>
                         </tr>
@@ -43,9 +52,9 @@
                 </tbody>
             </table>
         </div>
-        <?=$this->get('pagination')->getHtml($this, []) ?>
+        <?=$pagination->getHtml($this, []) ?>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTranslator()->trans('noEnemy') ?>
 <?php endif; ?>

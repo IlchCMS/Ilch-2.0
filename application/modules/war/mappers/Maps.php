@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -77,7 +78,7 @@ class Maps extends Mapper
     {
         return $this->getEntriesBy($where, ['id' => 'ASC'], $pagination);
     }
-    
+
     /**
      * Gets the List by status.
      *
@@ -168,7 +169,7 @@ class Maps extends Mapper
                 $entrys[] = $entryModel->getArray(false);
             }
         }
-        
+
         return json_encode($entrys, $options);
     }
 }

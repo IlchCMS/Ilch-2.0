@@ -1,4 +1,10 @@
-<?php $icon = $this->get('icon'); ?>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var string $icon */
+$icon = $this->get('icon');
+?>
 <h1><?=(!$icon) ? $this->getTrans('createNewGameIcon') : $this->getTrans('treatGameIcon') ?></h1>
 <form id="warIcon_form" method="POST" action="" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
@@ -27,9 +33,9 @@
                        name="gameIcon"
                        aria-describedby="iconHelpBlock"
                        readonly />
-                <?php if ($icon && file_exists(APPLICATION_PATH.'/modules/war/static/img/'.$icon.'.png')): ?>
+                <?php if ($icon && file_exists(APPLICATION_PATH . '/modules/war/static/img/' . $icon . '.png')) : ?>
                     <span class="input-group-text">
-                        <img src="<?=$this->getBaseUrl().'application/modules/war/static/img/'.$icon.'.png' ?>" title="<?=$this->escape($icon) ?>" alt="<?=$this->escape($icon) ?>">
+                        <img src="<?=$this->getBaseUrl() . 'application/modules/war/static/img/' . $icon . '.png' ?>" title="<?=$this->escape($icon) ?>" alt="<?=$this->escape($icon) ?>">
                     </span>
                 <?php endif; ?>
             </div>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -165,11 +166,10 @@ class Config extends Install
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
-                // no break
             case "1.1":
                 $this->db()->query('ALTER TABLE `[prefix]_war` ADD `show` TINYINT(1) NOT NULL DEFAULT 0 AFTER `status`;');
                 $this->db()->query('ALTER TABLE `[prefix]_war` ADD `read_access` VARCHAR(255) NOT NULL AFTER `show`;');
@@ -191,18 +191,13 @@ class Config extends Install
                 $this->db()->query('ALTER TABLE `[prefix]_war_accept` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 // no break
             case "1.4.0":
-                // no break
             case "1.5.0":
-                // no break
             case "1.6.0":
-                // no break
             case "1.7.0":
                 $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD COLUMN `comment` MEDIUMTEXT;');
                 // no break
             case "1.8.0":
-                // no break
             case "1.9.0":
-                // no break
             case "1.10.0":
                 // Update description
                 foreach ($this->config['languages'] as $key => $value) {
@@ -210,13 +205,10 @@ class Config extends Install
                 }
                 // no break
             case "1.11.0":
-                // no break
             case "1.12.0":
-                // no break
             case "1.13.0":
-                // no break
             case "1.14.0":
-            // update zu 1.15.0
+                // update zu 1.15.0
                 /*
                 Update ilchCore
                 Maps Tabelle hinzugefügt
@@ -327,69 +319,69 @@ class Config extends Install
                     }
                 }
 
-            // Delete old read_access column of table war.
-            $this->db()->query('ALTER TABLE `[prefix]_war` DROP COLUMN `read_access`;');
+                // Delete old read_access column of table war.
+                $this->db()->query('ALTER TABLE `[prefix]_war` DROP COLUMN `read_access`;');
 
-            // Deleting all old ID's
-            $idswar = $this->db()->select('id')
+                // Deleting all old ID's
+                $idswar = $this->db()->select('id')
                 ->from('war')
                 ->execute()
                 ->fetchList();
 
-            $idswar_played = $this->db()->select('war_id')
+                $idswar_played = $this->db()->select('war_id')
                 ->from('war_played')
                 ->execute()
                 ->fetchList();
 
-            $idswar_accept = $this->db()->select('war_id')
+                $idswar_accept = $this->db()->select('war_id')
                 ->from('war_accept')
                 ->execute()
                 ->fetchList();
 
-            $orphanedRowswar_played = array_diff($idswar_played ?? [], $idswar ?? []);
-            if (count($orphanedRowswar_played) > 0) {
-                $this->db()->delete()->from('war_played')
+                $orphanedRowswar_played = array_diff($idswar_played ?? [], $idswar ?? []);
+                if (count($orphanedRowswar_played) > 0) {
+                    $this->db()->delete()->from('war_played')
                     ->where(['war_id' => $orphanedRowswar_played])
                     ->execute();
-            }
+                }
 
-            $orphanedRowswar_accept = array_diff($idswar_accept ?? [], $idswar ?? []);
-            if (count($orphanedRowswar_accept) > 0) {
-                $this->db()->delete()->from('war_accept')
+                $orphanedRowswar_accept = array_diff($idswar_accept ?? [], $idswar ?? []);
+                if (count($orphanedRowswar_accept) > 0) {
+                    $this->db()->delete()->from('war_accept')
                     ->where(['war_id' => $orphanedRowswar_accept])
                     ->execute();
-            }
+                }
 
-            $commentsArray = $this->db()->select('*')
+                $commentsArray = $this->db()->select('*')
                 ->from('comments')
                 ->where(['key LIKE' => 'war/index/show/id/%'])
                 ->execute()
                 ->fetchRows();
 
-            $idswar_comments = [];
-            foreach ($commentsArray ?? [] as $comments) {
-                $warid = explode('/', $comments['key']);
-                if (isset($warid[4]) and !in_array($warid[4], $idswar_comments)) {
-                    $idswar_comments[] = $warid[4];
+                $idswar_comments = [];
+                foreach ($commentsArray ?? [] as $comments) {
+                    $warid = explode('/', $comments['key']);
+                    if (isset($warid[4]) and !in_array($warid[4], $idswar_comments)) {
+                        $idswar_comments[] = $warid[4];
+                    }
                 }
-            }
-            $orphanedRowswar_comments = array_diff($idswar_comments ?? [], $idswar ?? []);
-            if (count($orphanedRowswar_comments) > 0) {
-                foreach ($orphanedRowswar_comments as $warid) {
-                    $this->db()->delete()->from('comments')
-                        ->where(['key LIKE' => 'war/index/show/id/'.$warid.'%'])
+                $orphanedRowswar_comments = array_diff($idswar_comments ?? [], $idswar ?? []);
+                if (count($orphanedRowswar_comments) > 0) {
+                    foreach ($orphanedRowswar_comments as $warid) {
+                        $this->db()->delete()->from('comments')
+                        ->where(['key LIKE' => 'war/index/show/id/' . $warid . '%'])
                         ->execute();
+                    }
                 }
-            }
 
-            // Change TABLE
-            $this->db()->query('ALTER TABLE `[prefix]_war_played` ADD INDEX `FK_[prefix]_war_played_[prefix]_war` (`war_id`) USING BTREE;');
-            $this->db()->query('ALTER TABLE `[prefix]_war_played` ADD CONSTRAINT `FK_[prefix]_war_played_[prefix]_war` FOREIGN KEY (`war_id`) REFERENCES `[prefix]_war` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
-            $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD INDEX `FK_[prefix]_war_accept_[prefix]_war` (`war_id`) USING BTREE;');
-            $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD CONSTRAINT `FK_[prefix]_war_accept_[prefix]_war` FOREIGN KEY (`war_id`) REFERENCES `[prefix]_war` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
-            $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD `date_created` DATETIME NOT NULL AFTER `comment`;');
-            $this->db()->query('ALTER TABLE `[prefix]_war` ADD `lastaccepttime` INT(11) NOT NULL AFTER `show`;');
-            // no break
+                // Change TABLE
+                $this->db()->query('ALTER TABLE `[prefix]_war_played` ADD INDEX `FK_[prefix]_war_played_[prefix]_war` (`war_id`) USING BTREE;');
+                $this->db()->query('ALTER TABLE `[prefix]_war_played` ADD CONSTRAINT `FK_[prefix]_war_played_[prefix]_war` FOREIGN KEY (`war_id`) REFERENCES `[prefix]_war` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD INDEX `FK_[prefix]_war_accept_[prefix]_war` (`war_id`) USING BTREE;');
+                $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD CONSTRAINT `FK_[prefix]_war_accept_[prefix]_war` FOREIGN KEY (`war_id`) REFERENCES `[prefix]_war` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                $this->db()->query('ALTER TABLE `[prefix]_war_accept` ADD `date_created` DATETIME NOT NULL AFTER `comment`;');
+                $this->db()->query('ALTER TABLE `[prefix]_war` ADD `lastaccepttime` INT(11) NOT NULL AFTER `show`;');
+                // no break
             case "1.15.0":
                 // update zu 1.15.1
                 /*
@@ -399,14 +391,15 @@ class Config extends Install
                 $this->db()->query('ALTER TABLE `[prefix]_war` ADD `read_access_all` TINYINT(1) NOT NULL AFTER `lastaccepttime`;');
                 // no break
             case "1.15.1":
-                // no break
             case "1.15.2":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-shield' WHERE `key` = 'war';");
                 // no break
-            case "1.15.2":
             case "1.15.3":
             case "1.15.4":
             case "1.15.5":
+            case "1.16.0":
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

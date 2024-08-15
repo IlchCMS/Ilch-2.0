@@ -1,16 +1,32 @@
 <?php
 
-use Ilch\Date;
+/** @var \Ilch\View $this */
 
-$war = $this->get('war');
-$group = $this->get('group');
-$enemy = $this->get('enemy');
-$userGroupIds = $this->get('userGroupIds');
-$userMapper = $this->get('userMapper');
-$acceptArray = $this->get('accept');
-$acceptCheckArray = $this->get('acceptCheck');
-$games = $this->get('games');
+use Ilch\Date;
 $commentsClass = new Ilch\Comments();
+
+/** @var \Modules\War\Models\War $war */
+$war = $this->get('war');
+/** @var \Modules\War\Models\Group $group */
+$group = $this->get('group');
+/** @var \Modules\War\Models\Enemy $enemy */
+$enemy = $this->get('enemy');
+/** @var int[]|null $userGroupIds */
+$userGroupIds = $this->get('userGroupIds');
+/** @var \Modules\War\Models\Accept $acceptArray */
+$acceptArray = $this->get('accept');
+/** @var \Modules\War\Models\Accept[]|null $acceptCheckArray */
+$acceptCheckArray = $this->get('acceptCheck');
+/** @var \Modules\War\Models\Games[]|null $games */
+$games = $this->get('games');
+
+/** @var \Modules\User\Mappers\User $userMapper */
+$userMapper = $this->get('userMapper');
+/** @var \Modules\War\Mappers\Maps $mapsMapper */
+$mapsMapper = $this->get('mapsMapper');
+
+/** @var \Ilch\Date $datenow */
+$datenow = $this->get('datenow');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/style.css') ?>" rel="stylesheet">
@@ -89,9 +105,9 @@ $commentsClass = new Ilch\Comments();
                 <h6 class="card-title"><?=$this->getTrans('warMap') ?></h6>
             </div>
             <div class="card-body">
-            <?php foreach ($games ?? [] as $game): ?>
+            <?php foreach ($games ?? [] as $game) : ?>
                 <?php
-                $mapModel = $this->get('mapsMapper')->getEntryById($game->getMap());
+                $mapModel = $mapsMapper->getEntryById($game->getMap());
                 ?>
                 <ul class="list-group">
                     <li class="list-group-item">
@@ -111,7 +127,7 @@ $commentsClass = new Ilch\Comments();
             </div>
             <div class="card-body">
                 <ul class="list-group">
-                <?php foreach ($userGroupIds ?? [] as $userGroupId): ?>
+                <?php foreach ($userGroupIds ?? [] as $userGroupId) : ?>
                     <?php
                     $user = $userMapper->getUserById($userGroupId);
                     if (!$user) {
@@ -130,11 +146,11 @@ $commentsClass = new Ilch\Comments();
                 <h6 class="card-title"><?=$this->getTrans('warAccept') ?></h6>
             </div>
             <div class="card-body">
-            <?php if ($userGroupIds): ?>
+            <?php if ($userGroupIds) : ?>
                 <form id="accept_form" method="POST" action="">
                     <?=$this->getTokenField() ?>
                     <ul class="list-group">
-                    <?php foreach ($acceptCheckArray ?? [] as $acceptCheck): ?>
+                    <?php foreach ($acceptCheckArray ?? [] as $acceptCheck) : ?>
                         <?php
                         $user = $userMapper->getUserById($acceptCheck->getUserId());
                         if (!$user) {
@@ -144,19 +160,19 @@ $commentsClass = new Ilch\Comments();
                         $class = '';
                         if ($acceptCheck->getAccept() == '1') {
                             $class = ' war_win';
-                            $text = $this->getTrans('has').' '.$this->getTrans('accepted');
+                            $text = $this->getTrans('has') . ' ' . $this->getTrans('accepted');
                         }
                         if ($acceptCheck->getAccept() == '2') {
                             $class = ' war_lost';
-                            $text = $this->getTrans('has').' '.$this->getTrans('declined');
+                            $text = $this->getTrans('has') . ' ' . $this->getTrans('declined');
                         }
                         if ($acceptCheck->getAccept() == '3') {
                             $class = ' war_drawn';
-                            $text = $this->getTrans('is').' '.$this->getTrans('undecided');
+                            $text = $this->getTrans('is') . ' ' . $this->getTrans('undecided');
                         }
                         $comment = '';
                         if ($acceptCheck->getComment()) {
-                            $comment = ' -> '.$this->escape($acceptCheck->getComment());
+                            $comment = ' -> ' . $this->escape($acceptCheck->getComment());
                         }
                         ?>
                         <li class="list-group-item<?=$class ?>">
@@ -166,19 +182,19 @@ $commentsClass = new Ilch\Comments();
                     <?php endforeach; ?>
                     </ul>
                     <?php
-                    $datenow = $this->get('datenow')->getTimestamp();
+                    $datenow = $datenow->getTimestamp();
                     $wartime = (new Date($war->getWarTime()))->getTimestamp();
                     ?>
-                    <?php if (($war->getLastAcceptTime() == 0 || ((($wartime - $datenow) / 60) >= $war->getLastAcceptTime())) && $war->getWarStatus() == 1):?>
-                        <?php foreach ($userGroupIds as $userGroupId): ?>
+                    <?php if (($war->getLastAcceptTime() == 0 || ((($wartime - $datenow) / 60) >= $war->getLastAcceptTime())) && $war->getWarStatus() == 1) :?>
+                        <?php foreach ($userGroupIds as $userGroupId) : ?>
                             <?php
                             $user = $userMapper->getUserById($userGroupId);
                             if (!$user) {
                                 $user = $userMapper->getDummyUser();
                             }
                             ?>
-                            <?php if ($this->getUser()): ?>
-                                <?php if ($user->getId() == $this->getUser()->getId()): ?>
+                            <?php if ($this->getUser()) : ?>
+                                <?php if ($user->getId() == $this->getUser()->getId()) : ?>
                                     <select class="form-select col-lg-3 mb-3<?=$this->validation()->hasError('warAccept') ? ' has-error' : '' ?>" id="warAccept" name="warAccept">
                                         <optgroup label="<?=$this->getTrans('choose') ?>">
                                             <option value="1" <?=($acceptArray ? $acceptArray->getAccept() : '') == 1 ? 'selected=""' : '' ?>><?=$this->getTrans('accept') ?></option>

@@ -1,13 +1,25 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+
+/** @var \Modules\War\Mappers\War $warMapper */
+$warMapper = $this->get('warMapper');
+/** @var \Modules\War\Mappers\Games $gamesMapper */
+$gamesMapper = $this->get('gamesMapper');
+?>
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuGroups') ?></h1>
-<?php if ($this->get('groups')): ?>
-    <?=$this->get('pagination')->getHtml($this, []) ?>
+<?php if ($this->get('groups')) : ?>
+    <?=$pagination->getHtml($this, []) ?>
     <div id="war_index">
-        <?php foreach ($this->get('groups') as $group): ?>
+        <?php
+        /** @var \Modules\War\Models\Group $group */
+        foreach ($this->get('groups') as $group) : ?>
             <?php
-            $warMapper = $this->get('warMapper');
-            $gamesMapper = $this->get('gamesMapper');
 
             $win = 0;
             $lost = 0;
@@ -23,7 +35,7 @@
                 $groupPoints = 0;
                 $games = $gamesMapper->getGamesByWhere(['war_id' => $war->getId()]);
 
-                if($games) {
+                if ($games) {
                     foreach ($games as $game) {
                         $groupPoints += $game->getGroupPoints();
                         $enemyPoints += $game->getEnemyPoints();
@@ -72,7 +84,7 @@
           </div>
         <?php endforeach; ?>
     </div>
-    <?=$this->get('pagination')->getHtml($this, []) ?>
-<?php else: ?>
+    <?=$pagination->getHtml($this, []) ?>
+<?php else : ?>
     <?=$this->getTranslator()->trans('noGroup') ?>
 <?php endif; ?>

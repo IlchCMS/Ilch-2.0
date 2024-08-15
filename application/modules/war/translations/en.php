@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -138,13 +139,15 @@ return [
     'is' => 'is',
     'warNotFound' => 'War not found',
     'groupNotFound' => 'Group not found',
+    'enemyNotFound' => 'Enemy not found',
+    'mapNotFound' => 'Map not found',
     'visibleFor' => 'Visible for',
     'calendarShow' => 'Show war in calendar?',
-    
+
     'modificationtime' => 'Modification Time',
     'lastAcceptTime' => 'x minutes until login is blocked',
     'groupAll' => 'All',
-    
+
     'menuMaps' => 'Maps',
     'manageMaps' => 'Manage Maps',
     'mapsName' => 'Name',

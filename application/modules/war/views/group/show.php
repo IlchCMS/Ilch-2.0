@@ -1,10 +1,20 @@
 <?php
 
+/** @var \Ilch\View $this */
+
 use Ilch\Date;
 
+/** @var \Modules\War\Models\Group $group */
 $group = $this->get('group');
+/** @var \Modules\War\Mappers\War[]|null $wars */
 $wars = $this->get('wars');
+
+/** @var \Modules\War\Mappers\Games $gamesMapper */
 $gamesMapper = $this->get('gamesMapper');
+/** @var \Modules\War\Mappers\Enemy $enemyMapper */
+$enemyMapper = $this->get('enemyMapper');
+/** @var \Modules\War\Mappers\Group $groupMapper */
+$groupMapper = $this->get('groupMapper');
 
 $win = 0;
 $lost = 0;
@@ -68,7 +78,7 @@ foreach ($wars ?? [] as $war) {
 </div>
 
 <h1><?=$this->getTrans('warsOverview') ?></h1>
-<?php if ($this->get('war')): ?>
+<?php if ($this->get('warList')) : ?>
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <colgroup>
@@ -90,15 +100,17 @@ foreach ($wars ?? [] as $war) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($this->get('war') as $war): ?>
+                <?php
+                /** @var \Modules\War\Models\War $war */
+                foreach ($this->get('warList') as $war) : ?>
                     <?php $date = new Date($war->getWarTime()) ?>
                     <tr>
                         <td><?php
-                        $enemy = $this->get('enemyMapper')->getEnemyById($war->getWarEnemy());
+                        $enemy = $enemyMapper->getEnemyById($war->getWarEnemy());
                         echo $this->escape($enemy ? $enemy->getEnemyName() : '');
                         ?></td>
                         <td><?php
-                        $group = $this->get('groupMapper')->getGroupById($war->getWarGroup());
+                        $group = $groupMapper->getGroupById($war->getWarGroup());
                         echo $this->escape($group ? $group->getGroupName() : '');
                         ?></td>
                         <td><?=$date->format("d.m.Y H:i", true) ?></td>
@@ -137,9 +149,9 @@ foreach ($wars ?? [] as $war) {
                         ?>
                         <td <?=$class ?>><?=$groupPoints ?>:<?=$enemyPoints ?></td>
                         <td>
-                            <?php if ($games): ?>
+                            <?php if ($games) : ?>
                                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $war->getId()]) ?>"><?=$this->getTrans('warReportShow') ?></a>
-                            <?php else: ?>
+                            <?php else : ?>
                                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $war->getId()]) ?>"><?=$this->getTrans('warPlay') ?></a>
                             <?php endif; ?>
                         </td>
@@ -148,6 +160,6 @@ foreach ($wars ?? [] as $war) {
             </tbody>
         </table>
     </div>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTranslator()->trans('noWars') ?>
 <?php endif; ?>

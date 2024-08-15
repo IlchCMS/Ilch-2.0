@@ -1,6 +1,13 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+?>
 <h1><?=$this->getTrans('manageMaps') ?></h1>
-<?php if ($this->get('maps')): ?>
-    <?=$this->get('pagination')->getHtml($this, []) ?>
+<?php if ($this->get('maps')) : ?>
+    <?=$pagination->getHtml($this, []) ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -20,7 +27,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('maps') as $map): ?>
+                    <?php
+                    /** @var \Modules\War\Models\Maps $map */
+                    foreach ($this->get('maps') as $map) : ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_maps', $map->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $map->getId()]) ?></td>
@@ -31,9 +40,9 @@
                 </tbody>
             </table>
         </div>
-        <?=$this->get('pagination')->getHtml($this, []) ?>
+        <?=$pagination->getHtml($this, []) ?>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTranslator()->trans('noMaps') ?>
 <?php endif; ?>

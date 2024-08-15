@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -73,7 +74,7 @@ class Icons extends Admin
         );
 
         $this->icons = [];
-        foreach (glob(ROOT_PATH.'/application/modules/war/static/img/*') as $iconfile) {
+        foreach (glob(ROOT_PATH . '/application/modules/war/static/img/*') as $iconfile) {
             $icon = basename($iconfile);
             if (strtolower(substr($icon, -4)) == '.png') {
                 $this->icons[] = substr($icon, 0, -4);
@@ -89,7 +90,7 @@ class Icons extends Admin
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_icons')) {
             foreach ($this->getRequest()->getPost('check_icons') as $game) {
                 if (in_array($game, $this->icons)) {
-                    unlink(ROOT_PATH.'/application/modules/war/static/img/'.$game.'.png');
+                    unlink(ROOT_PATH . '/application/modules/war/static/img/' . $game . '.png');
                 }
             }
             $this->redirect()
@@ -139,9 +140,9 @@ class Icons extends Admin
             if ($validation->isValid()) {
                 $_POST['gameName'] = strtolower($this->getRequest()->getPost('gameName'));
                 if (!empty($_FILES['icon']['name']) && file_exists($_FILES['icon']['tmp_name'])) {
-                    move_uploaded_file($_FILES['icon']['tmp_name'], ROOT_PATH.'/application/modules/war/static/img/'.$this->getRequest()->getPost('gameName').'.png');
+                    move_uploaded_file($_FILES['icon']['tmp_name'], ROOT_PATH . '/application/modules/war/static/img/' . $this->getRequest()->getPost('gameName') . '.png');
                 } elseif ($this->getRequest()->getParam('key')) {
-                    rename(ROOT_PATH.'/application/modules/war/static/img/'.$this->getRequest()->getParam('key').'.png', ROOT_PATH.'/application/modules/war/static/img/'.$this->getRequest()->getPost('gameName').'.png');
+                    rename(ROOT_PATH . '/application/modules/war/static/img/' . $this->getRequest()->getParam('key') . '.png', ROOT_PATH . '/application/modules/war/static/img/' . $this->getRequest()->getPost('gameName') . '.png');
                 }
 
                 $this->redirect()
@@ -153,7 +154,7 @@ class Icons extends Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(array_merge(['action' => 'treat'], ($this->getRequest()->getParam('key') ?['key' => $this->getRequest()->getParam('key')]:[])));
+                ->to(array_merge(['action' => 'treat'], ($this->getRequest()->getParam('key') ? ['key' => $this->getRequest()->getParam('key')] : [])));
         }
 
         $this->getView()->set('icon', $icon);
@@ -163,7 +164,7 @@ class Icons extends Admin
     {
         if ($this->getRequest()->isSecure()) {
             if (in_array($this->getRequest()->getParam('key'), $this->icons)) {
-                unlink(ROOT_PATH.'/application/modules/war/static/img/'.$this->getRequest()->getParam('key').'.png');
+                unlink(ROOT_PATH . '/application/modules/war/static/img/' . $this->getRequest()->getParam('key') . '.png');
             }
             $this->addMessage('deleteSuccess');
         }

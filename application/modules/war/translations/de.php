@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -138,6 +139,8 @@ return [
     'is' => 'ist',
     'warNotFound' => 'War wurde nicht gefunden',
     'groupNotFound' => 'Gruppe wurde nicht gefunden',
+    'enemyNotFound' => 'Gegner wurde nicht gefunden',
+    'mapNotFound' => 'Karte wurde nicht gefunden',
     'visibleFor' => 'Sichtbar für',
     'calendarShow' => 'War im Kalender anzeigen?',
 

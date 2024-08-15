@@ -1,5 +1,17 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+
+/** @var \Modules\War\Mappers\Enemy $enemyMapper */
+$enemyMapper = $this->get('enemyMapper');
+/** @var \Modules\War\Mappers\Group $groupMapper */
+$groupMapper = $this->get('groupMapper');
+?>
 <h1><?=$this->getTrans('manageWarOverview') ?></h1>
-<?php if ($this->get('war')): ?>
+<?php if ($this->get('wars')) : ?>
     <div class="row mb-3">
         <label class="col-lg-2 col-form-label" for="filterLastNext">
             <?=$this->getTrans('showOnly') ?>
@@ -12,7 +24,7 @@
             </select>
         </div>
     </div>
-    <?=$this->get('pagination')->getHtml($this, []) ?>
+    <?=$pagination->getHtml($this, []) ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -38,17 +50,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('war') as $war): ?>
+                    <?php
+                    /** @var \Modules\War\Models\War $war */
+                    foreach ($this->get('wars') as $war) : ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_war', $war->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $war->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $war->getId()]) ?></td>
                             <td><?php
-                            $enemy = $this->get('enemyMapper')->getEnemyById($war->getWarEnemy());
+                            $enemy = $enemyMapper->getEnemyById($war->getWarEnemy());
                             echo $this->escape($enemy ? $enemy->getEnemyName() : '');
                             ?></td>
                             <td><?php
-                            $group = $this->get('groupMapper')->getGroupById($war->getWarGroup());
+                            $group = $groupMapper->getGroupById($war->getWarGroup());
                             echo $this->escape($group ? $group->getGroupName() : '');
                             ?></td>
                             <td><?=date('d.m.Y H:i', strtotime($war->getWarTime())) ?></td>
@@ -66,10 +80,10 @@
                 </tbody>
             </table>
         </div>
-        <?=$this->get('pagination')->getHtml($this, []) ?>
+        <?=$pagination->getHtml($this, []) ?>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTranslator()->trans('noWars') ?>
 <?php endif; ?>
 <script>

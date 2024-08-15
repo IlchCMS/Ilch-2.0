@@ -1,5 +1,9 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('menuGameIcons') ?></h1>
-<?php if ($this->get('icons')): ?>
+<?php if ($this->get('icons')) : ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -19,7 +23,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('icons') as $game): ?>
+                    <?php
+                    /** @var string $game */
+                    foreach ($this->get('icons') as $game) : ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_icons', $game) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'key' => $game]) ?></td>
@@ -32,6 +38,6 @@
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTranslator()->trans('noMaps') ?>
 <?php endif; ?>

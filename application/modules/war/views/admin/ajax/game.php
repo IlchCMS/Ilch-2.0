@@ -1,16 +1,22 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/jquery-editable-select.min.css') ?>" rel="stylesheet">
 <script src="<?=$this->getBaseUrl('application/modules/war/static/js/jquery-editable-select.min.js') ?>"></script>
 <div id="dup">
 <?php $index = 0; ?>
-<?php foreach ($this->get('games') as $game): ?>
+<?php
+/** @var \Modules\War\Models\Games $game */
+foreach ($this->get('games') as $game) : ?>
     <div id="duplicator<?=$index++ ?>">
-        <?php if ($game->getId()): ?>
+        <?php if ($game->getId()) : ?>
         <input type="hidden" name="warGameIds[]" value="<?=$game->getId() ?>">
         <?php endif; ?>
         <div class=" row mb-3 ">
             <label class="col-xl-2 col-form-label" for="warMapPlayed[]">
                 <?=$this->getTrans('warMapName') ?>
-                <?php if ($game->getId()): ?>
+                <?php if ($game->getId()) : ?>
                 <a id="<?=$game->getId() ?>"
                    class="btn btn-danger btn-sm"
                    href="javascript:void(0)"
@@ -24,30 +30,34 @@
                         id="warMapPlayed[]"
                         name="warMapPlayed[]"
                         data-placeholder="<?=$this->getTrans('warMapName') ?>">
-                    <?php foreach ($this->get('gamesmaps') ?? [] as $maps): ?>
+                    <?php
+                    /** @var \Modules\War\Models\Maps $maps */
+                    foreach ($this->get('gamesmaps') ?? [] as $maps) : ?>
                         <option value="<?=$maps->getId() ?>" <?=$game->getMap() == $maps->getId() ? 'selected=""' : '' ?>><?=$this->escape($maps->getName()) ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
         </div>
         <div class="row mb-3 ">
-            <label class="col-xl-2 col-form-label" for="warErgebnis[]">
-                <?=$this->getTrans('warResult') ?>
+            <label class="col-xl-2 col-form-label" for="warResultGroups[]">
+                <label for="warResultEnemys[]">
+                    <?=$this->getTrans('warResult') ?>
+                </label>
             </label>
             <div class="col-xl-2">
                 <input type="number"
                        class="form-control"
-                       id="warErgebnisGroup[]"
-                       name="warErgebnisGroup[]"
+                       id="warResultGroups[]"
+                       name="warResultGroups[]"
                        placeholder="<?=$this->getTrans('warResultWe') ?>"
                        value="<?=$game->getGroupPoints() ?>">
             </div>
             <div class="col-xl-2">
                 <input type="number"
                        class="form-control"
-                       id="warErgebnisEnemy[]"
-                       name="warErgebnisEnemy[]"
-                       placeholder="<?=$this->getTrans('warResultEnemy') ?>"
+                       id="warResultEnemys[]"
+                       name="warResultEnemys[]"
+                       placeholder="<?=$this->getTrans('warResultEnemys') ?>"
                        value="<?=$game->getEnemyPoints() ?>">
             </div>
         </div>
@@ -102,14 +112,14 @@
             //warMapPlayed[warMapPlayed.length - 1].editableSelect();
         }
 
-        let warErgebnisGroup = document.getElementsByName('warErgebnisGroup[]');
-        if (warErgebnisGroup.length !== 0) {
-            warErgebnisGroup[warErgebnisGroup.length - 1].value = '';
+        let warResultGroups = document.getElementsByName('warResultGroups[]');
+        if (warResultGroups.length !== 0) {
+            warResultGroups[warResultGroups.length - 1].value = '';
         }
 
-        let warErgebnisEnemy = document.getElementsByName('warErgebnisEnemy[]');
-        if (warErgebnisEnemy.length !== 0) {
-            warErgebnisEnemy[warErgebnisEnemy.length - 1].value = '';
+        let warResultEnemys = document.getElementsByName('warResultEnemys[]');
+        if (warResultEnemys.length !== 0) {
+            warResultEnemys[warResultEnemys.length - 1].value = '';
         }
     }
 

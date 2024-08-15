@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -585,7 +586,7 @@ class War extends Model
 
         return $this;
     }
-    
+
     /**
      * Gets the Array of Model.
      *

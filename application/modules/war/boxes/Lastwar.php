@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -35,6 +36,6 @@ class Lastwar extends Box
 
         $this->getView()->set('warMapper', $warMapper)
             ->set('gamesMapper', $gamesMapper)
-            ->set('war', $warMapper->getWarListByStatusAndLimt(2, $config->get('war_boxLastWarLimit'), $readAccess, 'DESC'));
+            ->set('wars', $warMapper->getWarListByStatusAndLimt(2, $config->get('war_boxLastWarLimit'), $readAccess, 'DESC'));
     }
 }

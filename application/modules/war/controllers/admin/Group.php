@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -110,6 +111,12 @@ class Group extends Admin
                 ->add($this->getTranslator()->trans('treatGroup'), ['action' => 'treat']);
 
             $groupModel = $groupMapper->getGroupById($this->getRequest()->getParam('id'));
+
+            if (!$groupModel) {
+                $this->redirect()
+                    ->withMessage('groupNotFound')
+                    ->to(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageGroups'), ['action' => 'index'])
@@ -121,21 +128,21 @@ class Group extends Admin
             if (!empty($groupImage)) {
                 $groupImage = BASE_URL . '/' . $groupImage;
             }
-            
+
             $post = [
                 'groupName' => $this->getRequest()->getPost('groupName'),
                 'groupTag' => $this->getRequest()->getPost('groupTag'),
                 'groupImage' => $groupImage,
                 'userGroup' => $this->getRequest()->getPost('userGroup')
             ];
-            
+
             $validator = [
                 'groupName' => 'required|unique:war_groups,name',
                 'groupTag' => 'required|unique:war_groups,tag',
                 'groupImage' => 'required|url',
                 'userGroup' => 'required|numeric|integer|min:1|exists:groups'
             ];
-            
+
             if ($groupModel->getId()) {
                 $validator['groupName'] = 'required';
                 $validator['groupTag'] = 'required';
@@ -160,10 +167,10 @@ class Group extends Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(array_merge(['action' => 'treat'], ($groupModel->getId()?['id' => $groupModel->getId()]:[])));
+                ->to(array_merge(['action' => 'treat'], ($groupModel->getId() ? ['id' => $groupModel->getId()] : [])));
         }
 
-        $this->getView()->set('groups', $groupModel)
+        $this->getView()->set('group', $groupModel)
             ->set('userGroupList', $userGroupMapper->getGroupList());
     }
 

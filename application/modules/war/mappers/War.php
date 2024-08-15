@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -145,7 +146,7 @@ class War extends Mapper
                 $end = new Date($end);
             }
 
-            $entryArray = $this->getEntriesBy(['show' => 1, 'time >=' => $start->format('Y-m-d').' 00:00:00', 'time <=' => $end->format('Y-m-d').' 23:59:59', 'ra.group_id' => $groupIds], []);
+            $entryArray = $this->getEntriesBy(['show' => 1, 'time >=' => $start->format('Y-m-d') . ' 00:00:00', 'time <=' => $end->format('Y-m-d') . ' 23:59:59', 'ra.group_id' => $groupIds], []);
 
             if (empty($entryArray)) {
                 return [];
@@ -209,7 +210,7 @@ class War extends Mapper
         if (is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
         }
-        
+
         // Delete possible old entries to later insert the new ones.
         $this->db()->delete('war_access')
             ->where(['war_id' => $warId])
@@ -258,9 +259,9 @@ class War extends Mapper
         if (is_a($id, EntriesModel::class)) {
             $id = $id->getId();
         }
-        
+
         $comments = new Comments();
-        $comments->deleteByKey('war/index/show/id/'.(int)$id);
+        $comments->deleteByKey('war/index/show/id/' . (int)$id);
 
         return $this->db()->delete($this->tablename)
             ->where(['id' => (int)$id])
@@ -396,7 +397,7 @@ class War extends Mapper
     {
         $datenow = new Date();
         $datenow = $datenow->format(null, true);
-        
+
         if (is_a($datum, Date::class)) {
             $date = $datum;
         } else {
@@ -458,7 +459,7 @@ class War extends Mapper
             $statusNow = $status;
         } else {
             if (is_a($id, EntriesModel::class)) {
-                $status = $id->getStatus();
+                $status = $id->getWarStatus();
             } else {
                 $status = (int) $this->db()->select('status')
                                 ->from($this->tablename)
@@ -496,7 +497,7 @@ class War extends Mapper
             $showNow = $show;
         } else {
             if (is_a($id, EntriesModel::class)) {
-                $show = $id->getStatus();
+                $show = $id->getShow();
             } else {
                 $show = (int) $this->db()->select('show')
                                 ->from($this->tablename)

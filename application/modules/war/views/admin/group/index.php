@@ -1,3 +1,10 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+?>
 <style>
     .group-image {
         max-width: 100px;
@@ -7,8 +14,8 @@
 </style>
 
 <h1><?=$this->getTrans('manageGroups') ?></h1>
-<?php if ($this->get('groups')): ?>
-    <?=$this->get('pagination')->getHtml($this, []) ?>
+<?php if ($this->get('groups')) : ?>
+    <?=$pagination->getHtml($this, []) ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -32,7 +39,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('groups') as $group): ?>
+                    <?php
+                    /** @var \Modules\War\Models\Group $group */
+                    foreach ($this->get('groups') as $group) : ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_groups', $group->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $group->getId()]) ?></td>
@@ -45,9 +54,9 @@
                 </tbody>
             </table>
         </div>
-        <?=$this->get('pagination')->getHtml($this, []) ?>
+        <?=$pagination->getHtml($this, []) ?>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTranslator()->trans('noGroup') ?>
 <?php endif; ?>

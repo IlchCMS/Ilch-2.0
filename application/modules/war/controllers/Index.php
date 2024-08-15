@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -51,7 +52,7 @@ class Index extends Frontend
         }
 
         $this->getView()->set('gamesMapper', $gamesMapper)
-            ->set('war', $warMapper->getWarList($pagination, $readAccess))
+            ->set('wars', $warMapper->getWarList($pagination, $readAccess))
             ->set('pagination', $pagination)
             ->set('groupMapper', $groupMapper)
             ->set('enemyMapper', $enemyMapper);
@@ -67,14 +68,14 @@ class Index extends Frontend
         $userGroupMapper = new UserGroupMapper();
         $acceptMapper = new AcceptMapper();
         $mapsMapper = new MapsMapper();
-        
+
         $date = new Date();
         $datenow = new Date($date->format("Y-m-d H:i:s", true));
 
         $war = $warMapper->getWarById($this->getRequest()->getParam('id'));
 
         if ($war) {
-            $commentsKey = 'war/index/show/id/'.$war->getId();
+            $commentsKey = 'war/index/show/id/' . $war->getId();
 
             $user = null;
             $adminAccess = null;
@@ -98,7 +99,7 @@ class Index extends Frontend
 
                 return;
             }
-            
+
             $group = $groupMapper->getGroupById($war->getWarGroup());
             $checkAccept = [];
             $accept = null;
@@ -148,7 +149,7 @@ class Index extends Frontend
                         $comments = new Comments();
 
                         if ($this->getRequest()->getPost('fkId')) {
-                            $commentsKey .= '/id_c/'.$this->getRequest()->getPost('fkId');
+                            $commentsKey .= '/id_c/' . $this->getRequest()->getPost('fkId');
                         }
 
                         $comments->saveComment($commentsKey, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
@@ -161,7 +162,7 @@ class Index extends Frontend
                     $comments = new Comments();
 
                     $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
-                    $this->redirect(['action' => 'show', 'id' => $war->getId().'#comment_'.$commentId]);
+                    $this->redirect(['action' => 'show', 'id' => $war->getId() . '#comment_' . $commentId]);
                 }
             }
 
@@ -179,7 +180,7 @@ class Index extends Frontend
                 ->set('war', $war)
                 ->set('accept', $accept)
                 ->set('acceptCheck', $checkAccept)
-                ->set('commentsKey', 'war/index/show/id/'.$war->getId())
+                ->set('commentsKey', 'war/index/show/id/' . $war->getId())
                 ->set('datenow', $datenow)
                 ->set('mapsMapper', $mapsMapper);
         } else {

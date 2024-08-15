@@ -1,8 +1,18 @@
 <?php
 
+/** @var \Ilch\View $this */
+
 use Ilch\Date;
 
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+
+/** @var \Modules\War\Mappers\Games $gamesMapper */
 $gamesMapper = $this->get('gamesMapper');
+/** @var \Modules\War\Mappers\Enemy $enemyMapper */
+$enemyMapper = $this->get('enemyMapper');
+/** @var \Modules\War\Mappers\Group $groupMapper */
+$groupMapper = $this->get('groupMapper');
 ?>
 
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
@@ -11,8 +21,8 @@ $gamesMapper = $this->get('gamesMapper');
 <h4><a class="btn btn-outline-secondary" href="<?=$this->getUrl(['controller' => 'group', 'action' => 'index']) ?>"><?=$this->getTrans('toGroups') ?></a></h4>
 
 <h1><?=$this->getTrans('warsOverview') ?></h1>
-<?php if ($this->get('war')): ?>
-    <?=$this->get('pagination')->getHtml($this, []) ?>
+<?php if ($this->get('wars')) : ?>
+    <?=$pagination->getHtml($this, []) ?>
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <colgroup>
@@ -34,17 +44,19 @@ $gamesMapper = $this->get('gamesMapper');
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($this->get('war') as $war): ?>
+                <?php
+                /** @var \Modules\War\Models\War $war */
+                foreach ($this->get('wars') as $war) : ?>
                     <?php
                     $date = new Date($war->getWarTime())
                     ?>
                     <tr>
                         <td><?php
-                        $enemy = $this->get('enemyMapper')->getEnemyById($war->getWarEnemy());
+                        $enemy = $enemyMapper->getEnemyById($war->getWarEnemy());
                         echo $this->escape($enemy ? $enemy->getEnemyName() : '');
                         ?></td>
                         <td><?php
-                        $group = $this->get('groupMapper')->getGroupById($war->getWarGroup());
+                        $group = $groupMapper->getGroupById($war->getWarGroup());
                         echo $this->escape($group ? $group->getGroupName() : '');
                         ?></td>
                         <td><?=$date->format("d.m.Y H:i", true) ?></td>
@@ -85,7 +97,7 @@ $gamesMapper = $this->get('gamesMapper');
             </tbody>
         </table>
     </div>
-    <?=$this->get('pagination')->getHtml($this, []) ?>
-<?php else: ?>
+    <?=$pagination->getHtml($this, []) ?>
+<?php else : ?>
     <?=$this->getTranslator()->trans('noWars') ?>
 <?php endif; ?>
