@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -107,8 +108,8 @@ class Calendar extends \Ilch\Mapper
     /**
      * Gets the Calendar entries by start and end.
      *
-     * @param \Ilch\Date|string $start
-     * @param \Ilch\Date|string $end
+     * @param Date|string $start
+     * @param Date|string $end
      * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return array|null
      */
@@ -119,24 +120,24 @@ class Calendar extends \Ilch\Mapper
         }
 
         if ($start && $end) {
-            if (!is_a($start, \Ilch\Date::class)) {
-                $start = new \Ilch\Date($start);
+            if (!is_a($start, Date::class)) {
+                $start = new Date($start);
             }
-            if (!is_a($end, \Ilch\Date::class)) {
-                $end = new \Ilch\Date($end);
+            if (!is_a($end, Date::class)) {
+                $end = new Date($end);
             }
             $select = $this->db()->select();
             return $this->getEntriesBy(
                 [
                     $select->orX(
                         [
-                            $select->andX(['c.end <=' => $end->format('Y-m-d').' 23:59:59']),
-                            $select->andX(['c.start >=' => $start->format('Y-m-d').' 00:00:00', 'c.end <=' => $end->format('Y-m-d').' 23:59:59']),
+                            $select->andX(['c.end <=' => $end->format('Y-m-d') . ' 23:59:59']),
+                            $select->andX(['c.start >=' => $start->format('Y-m-d') . ' 00:00:00', 'c.end <=' => $end->format('Y-m-d') . ' 23:59:59']),
                             $select->andX(
                                 [
                                     'c.period_type !=' => '',
-                                    'c.start <=' => $end->format('Y-m-d').' 00:00:00',
-                                    $select->orX(['c.end >=' => $start->format('Y-m-d').' 23:59:59', 'c.end =' => '1000-01-01 00:00:00'])
+                                    'c.start <=' => $end->format('Y-m-d') . ' 00:00:00',
+                                    $select->orX(['c.end >=' => $start->format('Y-m-d') . ' 23:59:59', 'c.end =' => '1000-01-01 00:00:00'])
                                 ]
                             )
                         ]
@@ -192,11 +193,11 @@ class Calendar extends \Ilch\Mapper
         }
 
         // Delete possible old entries to later insert the new ones.
-        $this->db()->delete($this->tablename.'_access')
+        $this->db()->delete($this->tablename . '_access')
             ->where(['calendar_id' => $calendarId])
             ->execute();
 
-        $sql = 'INSERT INTO [prefix]_'.$this->tablename.'_access (calendar_id, group_id) VALUES';
+        $sql = 'INSERT INTO [prefix]_' . $this->tablename . '_access (calendar_id, group_id) VALUES';
         $sqlWithValues = $sql;
         $rowCount = 0;
         $groupIds = [];
@@ -253,13 +254,13 @@ class Calendar extends \Ilch\Mapper
      * @param int $factor
      * @return array
      */
-    public function repeat(string $type, \Ilch\Date $startdate, \Ilch\Date $enddate, \Ilch\Date $untilDate, int $factor = 1): array
+    public function repeat(string $type, Date $startdate, Date $enddate, Date $untilDate, int $factor = 1): array
     {
         $recurrences = [];
         $startdateRecurrence = clone $startdate;
         $enddateRecurrence = clone $enddate;
 
-        while($startdateRecurrence <= $untilDate) {
+        while ($startdateRecurrence <= $untilDate) {
             $event = [];
             switch ($type) {
                 case 'monthly':
@@ -276,8 +277,8 @@ class Calendar extends \Ilch\Mapper
                     break;
                 case 'quarterly':
                     // work with a factor and 3 months as a quarter of a year is 3 months?
-                    $startdateRecurrence->modify(($factor * 3). ' months');
-                    $enddateRecurrence->modify(($factor * 3). ' months');
+                    $startdateRecurrence->modify(($factor * 3) . ' months');
+                    $enddateRecurrence->modify(($factor * 3) . ' months');
                     break;
                 case 'yearly':
                     $startdateRecurrence->modify($factor . ' years');

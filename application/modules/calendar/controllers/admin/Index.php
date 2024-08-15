@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -61,7 +62,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('calendar', $calendarMapper->getEntries())
+        $this->getView()->set('calendars', $calendarMapper->getEntries())
             ->set('calendarMapper', $calendarMapper);
     }
 
@@ -70,7 +71,7 @@ class Index extends \Ilch\Controller\Admin
         $calendarMapper = new CalendarMapper();
         $calendarModel = new CalendarModel();
         $groupMapper = new GroupMapper();
-        
+
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuCalendar'), ['action' => 'index'])
@@ -108,7 +109,7 @@ class Index extends \Ilch\Controller\Admin
             }
 
             if ($this->getRequest()->getPost('end')) {
-                $validator['end']= 'required|date:d.m.Y H\:i';
+                $validator['end'] = 'required|date:d.m.Y H\:i';
             }
 
             $validation = Validation::create(
@@ -147,7 +148,7 @@ class Index extends \Ilch\Controller\Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(array_merge(['action' => 'treat'], ($calendarModel->getId()?['id' => $calendarModel->getId()]:[])));
+                ->to(array_merge(['action' => 'treat'], ($calendarModel->getId() ? ['id' => $calendarModel->getId()] : [])));
         }
 
         if ($calendarModel->getId()) {
