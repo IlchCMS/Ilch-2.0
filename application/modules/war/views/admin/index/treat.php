@@ -9,7 +9,7 @@ $entry = $this->get('war');
 ?>
 <link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 <h1><?=(!$entry->getId()) ? $this->getTrans('menuActionNewWar') : $this->getTrans('manageWar') ?></h1>
-<?php if ($this->get('groups') != '' && $this->get('enemys') != '') : ?>
+<?php if ($this->get('groups') != '' && $this->get('enemies') != '') : ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="row mb-3<?=$this->validation()->hasError('warEnemy') ? ' has-error' : '' ?>">
@@ -21,7 +21,7 @@ $entry = $this->get('war');
                     <optgroup label="<?=$this->getTrans('enemysName') ?>">
                         <?php
                         /** @var \Modules\War\Models\Enemy $enemy */
-                        foreach ($this->get('enemys') as $enemy) : ?>
+                        foreach ($this->get('enemies') as $enemy) : ?>
                             <option value="<?=$enemy->getId() ?>" <?=($this->originalInput('warEnemy', ($entry->getId() ? $entry->getWarEnemy() : 0))) == $enemy->getId() ? 'selected=""' : '' ?>><?=$this->escape($enemy->getEnemyName()) ?></option>
                         <?php endforeach; ?>
                     </optgroup>

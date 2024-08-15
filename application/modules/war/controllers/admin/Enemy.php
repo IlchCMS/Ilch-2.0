@@ -94,7 +94,7 @@ class Enemy extends Admin
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_enemiesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_enemiesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('enemys', $enemyMapper->getEnemyList($pagination))
+        $this->getView()->set('enemies', $enemyMapper->getEnemyList($pagination))
             ->set('pagination', $pagination);
     }
 

@@ -257,7 +257,7 @@ class Index extends Admin
 
         $this->getView()->set('war', $warModel)
             ->set('groups', $groupMapper->getGroups())
-            ->set('enemys', $enemyMapper->getEnemy())
+            ->set('enemies', $enemyMapper->getEnemy())
             ->set('warOptXonxs', $warMapper->getWarOptDistinctXonx())
             ->set('warOptGames', $warMapper->getWarOptDistinctGame())
             ->set('warOptMatchtypes', $warMapper->getWarOptDistinctMatchtype())
