@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -24,7 +25,7 @@ class Guestbook extends \Ilch\Mapper
             ->from('gbook')
             ->where($where)
             ->order(['id' => 'DESC']);
-        
+
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
                 ->useFoundRows();

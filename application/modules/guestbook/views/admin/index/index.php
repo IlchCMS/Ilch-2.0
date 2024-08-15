@@ -1,5 +1,12 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<?=$this->get('pagination')->getHtml($this, array_merge(['action' => 'index'], ($this->getRequest()->getParam('showsetfree') ? ['showsetfree' => 1] : []))) ?>
+<?=$pagination->getHtml($this, array_merge(['action' => 'index'], ($this->getRequest()->getParam('showsetfree') ? ['showsetfree' => 1] : []))) ?>
 <form method="POST">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
@@ -8,7 +15,7 @@
                 <?=$this->getTrans('entrys') ?>
             </a>
         </li>
-        <?php if ($this->get('badge') > 0): ?>
+        <?php if ($this->get('badge') > 0) : ?>
             <li <?=($this->getRequest()->getParam('showsetfree')) ? 'class="active"' : '' ?>>
                 <a class="nav-link" href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
                     <?=$this->getTrans('setfree') ?><span class="badge rounded-pill bg-secondary"><?=$this->get('badge') ?></span>
@@ -48,7 +55,9 @@
                     <th><?=$this->getTrans('message') ?></th>
                 </tr>
                 </thead>
-                <?php foreach ($this->get('entries') as $entry): ?>
+                <?php
+                /** @var \Modules\Guestbook\Models\Entry $entry */
+                foreach ($this->get('entries') as $entry) : ?>
                     <tbody>
                     <tr>
                         <td><?=$this->getDeleteCheckbox('check_entries', $entry->getId()) ?></td>
@@ -61,7 +70,7 @@
                                 $freeArray = ['action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1];
                             }
 
-                            echo '<a href="'.$this->getUrl($freeArray, null, true).'" title="'.$this->getTrans('setfree').'"><span class="fa-regular fa-square-check text-success"></span></a>';
+                            echo '<a href="' . $this->getUrl($freeArray, null, true) . '" title="' . $this->getTrans('setfree') . '"><span class="fa-regular fa-square-check text-success"></span></a>';
                             echo '</td>';
                         }
 
@@ -105,4 +114,4 @@
     echo $this->getListBar($actions);
     ?>
 </form>
-<?=$this->get('pagination')->getHtml($this, array_merge(['action' => 'index'], ($this->getRequest()->getParam('showsetfree') ? ['showsetfree' => 1] : []))) ?>
+<?=$pagination->getHtml($this, array_merge(['action' => 'index'], ($this->getRequest()->getParam('showsetfree') ? ['showsetfree' => 1] : []))) ?>

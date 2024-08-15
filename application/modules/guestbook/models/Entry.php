@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,56 +14,56 @@ class Entry extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The email of the entry.
      *
      * @var string
      */
-    protected $email;
+    protected $email = '';
 
     /**
      * The text of the entry.
      *
      * @var string
      */
-    protected $text;
+    protected $text = '';
 
     /**
      * The name of the entry.
      *
      * @var string
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * The homepage of the entry.
      *
      * @var string
      */
-    protected $homepage;
+    protected $homepage = '';
 
     /**
      * The datetime of the entry.
      *
      * @var string
      */
-    protected $datetime;
+    protected $datetime = '';
 
     /**
      * The setfee of the entry.
      *
-     * @var int
+     * @var bool
      */
-    protected $setFree;
+    protected $setFree = false;
 
     /**
      * Gets the id of the entry.
      *
-     * @return int|null
+     * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -70,9 +71,9 @@ class Entry extends \Ilch\Model
     /**
      * Gets the email of the entry.
      *
-     * @return string|null
+     * @return string
      */
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -80,9 +81,9 @@ class Entry extends \Ilch\Model
     /**
      * Gets the text of the entry.
      *
-     * @return string|null
+     * @return string
      */
-    public function getText(): ?string
+    public function getText(): string
     {
         return $this->text;
     }
@@ -90,7 +91,7 @@ class Entry extends \Ilch\Model
     /**
      * Gets the name of the entry.
      *
-     * @return string|null
+     * @return string
      */
     public function getName(): ?string
     {
@@ -100,9 +101,9 @@ class Entry extends \Ilch\Model
     /**
      * Gets the homepage of the entry.
      *
-     * @return string|null
+     * @return string
      */
-    public function getHomepage(): ?string
+    public function getHomepage(): string
     {
         return $this->homepage;
     }
@@ -110,9 +111,9 @@ class Entry extends \Ilch\Model
     /**
      * Gets the datetime of the entry.
      *
-     * @return string|null
+     * @return string
      */
-    public function getDatetime(): ?string
+    public function getDatetime(): string
     {
         return $this->datetime;
     }
@@ -120,9 +121,9 @@ class Entry extends \Ilch\Model
     /**
      * Gets the setfree of the entry.
      *
-     * @return int
+     * @return bool
      */
-    public function getFree(): int
+    public function getFree(): bool
     {
         return $this->setFree;
     }
@@ -208,10 +209,10 @@ class Entry extends \Ilch\Model
     /**
      * Sets the free of the entry.
      *
-     * @param int $free
+     * @param bool $free
      * @return Entry
      */
-    public function setFree(int $free): Entry
+    public function setFree(bool $free): Entry
     {
         $this->setFree = $free;
 

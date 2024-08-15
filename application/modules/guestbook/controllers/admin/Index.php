@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -34,7 +35,7 @@ class Index extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
-        
+
         if ($this->getRequest()->getActionName() == 'reset') {
             $items[0][0]['active'] = true;
         } else {
@@ -58,7 +59,7 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
-        
+
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') === 'delete') {
                 foreach ($this->getRequest()->getPost('check_entries') as $entryId) {

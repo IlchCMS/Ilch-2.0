@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('reset') ?></h1>
 <div class="row mb-3">
     <div class="container">

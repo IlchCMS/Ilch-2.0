@@ -1,10 +1,13 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Guestbook\Config;
+
+use Ilch\Config\Database;
 
 class Config extends \Ilch\Config\Install
 {
@@ -32,20 +35,22 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
-        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig = new Database($this->db());
         $databaseConfig->set('gbook_autosetfree', '1');
     }
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_gbook`');
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'gbook_autosetfree'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'gbook_notificationOnNewEntry'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'gbook_welcomeMessage'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'gbook_entriesPerPage'");
+        $databaseConfig = new Database($this->db());
+        $databaseConfig->delete('gbook_autosetfree');
+        $databaseConfig->delete('gbook_notificationOnNewEntry');
+        $databaseConfig->delete('gbook_welcomeMessage');
+        $databaseConfig->delete('gbook_entriesPerPage');
+
+        $this->db()->drop('gbook', true);
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_gbook` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -59,7 +64,7 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -88,5 +93,7 @@ class Config extends \Ilch\Config\Install
             case "1.13.0":
             case "1.13.1":
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

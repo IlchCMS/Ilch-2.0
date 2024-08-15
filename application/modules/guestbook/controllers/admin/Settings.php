@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -32,7 +33,7 @@ class Settings extends \Ilch\Controller\Admin
             $items
         );
     }
-    
+
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
