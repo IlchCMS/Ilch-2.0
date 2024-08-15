@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -15,7 +16,7 @@ use Modules\Downloads\Models\File as FileModel;
 
 class Index extends Frontend
 {
-    public function indexAction() 
+    public function indexAction()
     {
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
@@ -33,7 +34,7 @@ class Index extends Frontend
         $this->getView()->set('fileMapper', $fileMapper);
     }
 
-    public function showAction() 
+    public function showAction()
     {
         $fileMapper = new FileMapper();
         $pagination = new Pagination();
@@ -51,19 +52,19 @@ class Index extends Frontend
         if ($downloads !== null) {
             $this->getLayout()->getTitle()
                     ->add($downloads->getTitle());
-            $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads').' - '.$downloads->getDesc());
+            $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads') . ' - ' . $downloads->getDesc());
             $this->getLayout()->getHmenu()
                     ->add($downloads->getTitle(), ['action' => 'show', 'id' => $id]);
         }
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('downloads_downloadsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('downloads_downloadsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
-        
-        $this->getView()->set('file', $fileMapper->getFileByDownloadsId($id, $pagination));
+
+        $this->getView()->set('files', $fileMapper->getFileByDownloadsId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
     }
 
-    public function showFileAction() 
+    public function showFileAction()
     {
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
@@ -83,7 +84,7 @@ class Index extends Frontend
             $this->getLayout()->getTitle()
                     ->add($download->getTitle())
                     ->add($file->getFileTitle());
-            $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads').' - '.$file->getFileDesc());
+            $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads') . ' - ' . $file->getFileDesc());
             $this->getLayout()->getHmenu()
                     ->add($download->getTitle(), ['action' => 'show', 'id' => $download->getId()])
                     ->add($file->getFileTitle(), ['action' => 'showfile', 'id' => $id]);
@@ -97,10 +98,10 @@ class Index extends Frontend
         if ($this->getUser()) {
             if ($this->getRequest()->getPost('saveComment')) {
                 $comments = new Comments();
-                $key = 'downloads/index/showfile/id/'.$id;
+                $key = 'downloads/index/showfile/id/' . $id;
 
                 if ($this->getRequest()->getPost('fkId')) {
-                    $key .= '/id_c/'.$this->getRequest()->getPost('fkId');
+                    $key .= '/id_c/' . $this->getRequest()->getPost('fkId');
                 }
 
                 $comments->saveComment($key, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
@@ -111,11 +112,11 @@ class Index extends Frontend
                 $comments = new Comments();
 
                 $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
-                $this->redirect(['action' => 'showFile', 'id' => $id.'#comment_'.$commentId]);
+                $this->redirect(['action' => 'showFile', 'id' => $id . '#comment_' . $commentId]);
             }
         }
 
         $this->getView()->set('file', $file);
-        $this->getView()->set('commentsKey', 'downloads/index/showfile/id/'.$id);
+        $this->getView()->set('commentsKey', 'downloads/index/showfile/id/' . $id);
     }
 }

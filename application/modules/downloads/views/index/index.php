@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <style>
 .lib-panel {
     margin-bottom: 20Px;
@@ -53,18 +57,26 @@
 
 <h1><?=$this->getTrans('downloads') ?></h1>
 <?php
-$downloadsMapper = $this->get('downloadsMapper');
+/** @var \Modules\Downloads\Models\DownloadsItem[]|null $downloadsItems */
 $downloadsItems = $this->get('downloadsItems');
-$fileMapper = $this->get('fileMapper');
 
-function rec($item, $downloadsMapper, $obj, $fileMapper)
+/**
+ * @param \Modules\Downloads\Models\DownloadsItem $item
+ * @param \Ilch\View $obj
+ */
+function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
 {
+    /** @var \Modules\Downloads\Mappers\Downloads $downloadsMapper */
+    $downloadsMapper = $obj->get('downloadsMapper');
+    /** @var \Modules\Downloads\Mappers\File $fileMapper */
+    $fileMapper = $obj->get('fileMapper');
+
     $subItems = $downloadsMapper->getDownloadsItemsByParent('1', $item->getId());
     $fileCount = $fileMapper->getCountOfFilesByCategory($item->getId());
 
     if ($item->getType() === 0) {
         echo '<div class="page-header">
-              <h4>'.$obj->getTrans('cat').': '.$obj->escape($item->getTitle()).'  <small>'.$obj->escape($item->getDesc()).'</small>
+              <h4>' . $obj->getTrans('cat') . ': ' . $obj->escape($item->getTitle()) . '  <small>' . $obj->escape($item->getDesc()) . '</small>
               </h4><hr>';
     }
     if ($item->getType() != 0) {
@@ -77,31 +89,30 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
                 <div class="lib-panel">
                     <div class="row box-shadow">
                         <div class="col-lg-4">
-                            <a href="'.$obj->getUrl(['controller' => 'index', 'action' => 'show','id' => $item->getId()]).'" >
-                                <img class="lib-img-show" src="'.$image.'">
+                            <a href="' . $obj->getUrl(['controller' => 'index', 'action' => 'show','id' => $item->getId()]) . '" >
+                                <img class="lib-img-show" src="' . $image . '">
                             </a>
                         </div>
                         <div class="col-lg-8">
                             <div class="lib-row lib-header">
-                                <a href="'.$obj->getUrl(['controller' => 'index', 'action' => 'show','id' => $item->getId()]).'" >
-                                    '.$obj->escape($item->getTitle()).'
+                                <a href="' . $obj->getUrl(['controller' => 'index', 'action' => 'show','id' => $item->getId()]) . '" >
+                                    ' . $obj->escape($item->getTitle()) . '
                                 </a>
-                                <p class="text-start">'.$obj->getTrans('files').': '.$fileCount.'</p>
+                                <p class="text-start">' . $obj->getTrans('files') . ': ' . $fileCount . '</p>
                                 <div class="lib-header-seperator"></div>
 
                             </div>
                             <div class="lib-row lib-desc">
-                                '.$obj->escape($item->getDesc()).'
+                                ' . $obj->escape($item->getDesc()) . '
                             </div>
                         </div>
                     </div>
                 </div>
             </div>';
-
     }
     if (!empty($subItems)) {
         foreach ($subItems as $subItem) {
-            rec($subItem, $downloadsMapper, $obj, $fileMapper);
+            rec($subItem, $obj);
         }
     }
 }
@@ -112,7 +123,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
             <?php
             if (!empty($downloadsItems)) {
                 foreach ($downloadsItems as $item) {
-                    rec($item, $downloadsMapper, $this, $fileMapper);
+                    rec($item, $this);
                 }
             } else {
                 echo $this->getTrans('noDownloads');

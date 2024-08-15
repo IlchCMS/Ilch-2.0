@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -35,8 +36,8 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_downloads_files`');
-        $this->db()->queryMulti('DROP TABLE `[prefix]_downloads_items`');
+        $this->db()->drop('downloads_files', true);
+        $this->db()->drop('downloads_items', true);
     }
 
     public function getInstallSql(): string
@@ -64,7 +65,7 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
-    public function getUpdate(string $installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -81,7 +82,7 @@ class Config extends \Ilch\Config\Install
             case "1.7.0":
             case "1.8.0":
                 // Update description
-                foreach($this->config['languages'] as $key => $value) {
+                foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'downloads' AND `locale` = '%s';", $value['description'], $key));
                 }
                 // no break
@@ -97,6 +98,9 @@ class Config extends \Ilch\Config\Install
             case "1.13.3":
             case "1.13.4":
             case "1.13.5":
+            case "1.14.0":
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

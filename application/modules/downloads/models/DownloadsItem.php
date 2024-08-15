@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -20,56 +21,56 @@ class DownloadsItem extends Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * Sort of the item.
      *
      * @var int
      */
-    protected $sort;
+    protected $sort = 0;
 
     /**
      * Type of the item.
      *
      * @var int
      */
-    protected $type;
+    protected $type = 0;
 
     /**
      * DownloadsId of the item.
      *
      * @var int
      */
-    protected $downloadsId;
+    protected $downloadsId = 0;
 
     /**
      * ParentId of the item.
      *
      * @var int
      */
-    protected $parentId;
+    protected $parentId = 0;
 
     /**
      * Title of the item.
      *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * Description of the item.
      *
      * @var string
      */
-    protected $desc;
+    protected $desc = '';
 
     /**
      * Gets the id.
      *
-     * @return int|null
+     * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -87,9 +88,9 @@ class DownloadsItem extends Model
     /**
      * Gets the sort.
      *
-     * @return int|null
+     * @return int
      */
-    public function getSort(): ?int
+    public function getSort(): int
     {
         return $this->sort;
     }
@@ -107,9 +108,9 @@ class DownloadsItem extends Model
     /**
      * Gets the type.
      *
-     * @return int|null
+     * @return int
      */
-    public function getType(): ?int
+    public function getType(): int
     {
         return $this->type;
     }
@@ -127,9 +128,9 @@ class DownloadsItem extends Model
     /**
      * Gets the Downloads id.
      *
-     * @return int|null
+     * @return int
      */
-    public function getDownloadsId(): ?int
+    public function getDownloadsId(): int
     {
         return $this->downloadsId;
     }
@@ -147,9 +148,9 @@ class DownloadsItem extends Model
     /**
      * Gets the parent id.
      *
-     * @return int|null
+     * @return int
      */
-    public function getParentId(): ?int
+    public function getParentId(): int
     {
         return $this->parentId;
     }
@@ -167,9 +168,9 @@ class DownloadsItem extends Model
     /**
      * Gets the title.
      *
-     * @return string|null
+     * @return string
      */
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -187,9 +188,9 @@ class DownloadsItem extends Model
     /**
      * Gets the desc.
      *
-     * @return string|null
+     * @return string
      */
-    public function getDesc(): ?string
+    public function getDesc(): string
     {
         return $this->desc;
     }

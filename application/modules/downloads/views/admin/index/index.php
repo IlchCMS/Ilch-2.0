@@ -1,10 +1,21 @@
 <?php
-$downloadsMapper = $this->get('downloadsMapper');
-$downloadsItems = $this->get('downloadsItems');
-$fileMapper = $this->get('fileMapper');
 
-function rec($item, $downloadsMapper, $obj, $fileMapper)
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Downloads\Models\DownloadsItem[]|null $downloadsItems */
+$downloadsItems = $this->get('downloadsItems');
+
+/**
+ * @param \Modules\Downloads\Models\DownloadsItem $item
+ * @param \Ilch\View $obj
+ */
+function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
 {
+    /** @var \Modules\Downloads\Mappers\Downloads $downloadsMapper */
+    $downloadsMapper = $obj->get('downloadsMapper');
+    /** @var \Modules\Downloads\Mappers\File $fileMapper */
+    $fileMapper = $obj->get('fileMapper');
+
     $subItems = $downloadsMapper->getDownloadsItemsByParent('1', $item->getId());
     $fileCount = $fileMapper->getCountOfFilesByCategory($item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
@@ -13,38 +24,38 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
         $class = 'mjs-nestedSortable-leaf';
     }
 
-    echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
+    echo '<li id="list_' . $item->getId() . '" class="' . $class . '">';
     echo '<div><span class="disclose"><i class="fa-solid fa-circle-minus"></i>
-                    <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
-                    <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$item->getTitle().'" />
-                    <input type="hidden" class="hidden_desc" name="items['.$item->getId().'][desc]" value="'.$item->getDesc().'" />
-                    <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
+                    <input type="hidden" class="hidden_id" name="items[' . $item->getId() . '][id]" value="' . $item->getId() . '" />
+                    <input type="hidden" class="hidden_title" name="items[' . $item->getId() . '][title]" value="' . $item->getTitle() . '" />
+                    <input type="hidden" class="hidden_desc" name="items[' . $item->getId() . '][desc]" value="' . $item->getDesc() . '" />
+                    <input type="hidden" class="hidden_type" name="items[' . $item->getId() . '][type]" value="' . $item->getType() . '" />
                     <span></span>
                 </span>
-                <span class="title">'.$item->getTitle().'</span>
+                <span class="title">' . $item->getTitle() . '</span>
                 <span class="item_delete">
                     <i class="fa-solid fa-circle-xmark"></i>
                 </span><span class="item_edit">
                     <i class="fa-solid fa-edit"></i>
                 </span>
                 <span class="upload" style="float:right; margin-right: 6px;">
-                    <a href="javascript:media('.$item->getId().')">
+                    <a href="javascript:media(' . $item->getId() . ')">
                         <i class="fa-solid fa-cloud-upload"></i>
                     </a>
                 </span>
                 <span class="view" style="float:right; margin-right: 6px;">
-                    <a href="'.$obj->getUrl(['controller' => 'downloads', 'action' => 'treatdownloads','id' => $item->getId()]).'">
+                    <a href="' . $obj->getUrl(['controller' => 'downloads', 'action' => 'treatdownloads','id' => $item->getId()]) . '">
                         <i class="fa-solid fa-eye"></i>
                     </a>
                 </span>
-                <span class="count" style="float:right; margin-right: 6px;">'.$fileCount.'</span>
+                <span class="count" style="float:right; margin-right: 6px;">' . $fileCount . '</span>
             </div>';
 
     if (!empty($subItems)) {
         echo '<ol>';
 
         foreach ($subItems as $subItem) {
-            rec($subItem, $downloadsMapper, $obj, $fileMapper);
+            rec($subItem, $obj);
         }
 
         echo '</ol>';
@@ -63,7 +74,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
                 <?php
                 if (!empty($downloadsItems)) {
                     foreach ($downloadsItems as $item) {
-                        rec($item, $downloadsMapper, $this, $fileMapper);
+                        rec($item, $this);
                     }
                 }
                 ?>
@@ -262,8 +273,8 @@ $(document).ready (
 </script>
 <script>
 <?=$this->getMedia()
-        ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/file/id/'.$this->getRequest()->getParam('id')))
-        ->addActionButton($this->getUrl('admin/downloads/downloads/treatdownloads/id/'.$this->getRequest()->getParam('id')))
+        ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/file/id/' . $this->getRequest()->getParam('id')))
+        ->addActionButton($this->getUrl('admin/downloads/downloads/treatdownloads/id/' . $this->getRequest()->getParam('id')))
         ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -30,14 +31,13 @@ class Index extends Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuDownloads',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('downloads'), ['action' => 'index']);
