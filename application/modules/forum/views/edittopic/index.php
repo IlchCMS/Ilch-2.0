@@ -10,8 +10,14 @@ use Modules\Forum\Models\ForumItem;
 <?php
 /** @var ForumItem[]|null $forumItems */
 $forumItems = $this->get('forumItems');
+/** @var int[] $editTopicItems */
 $editTopicItems = $this->get('editTopicItems');
 
+/**
+ * @param ForumItem $item
+ * @param View $obj
+ * @param int|null $i
+ */
 function rec(ForumItem $item, View $obj, ?int $i)
 {
     $subItems = $item->getSubItems();

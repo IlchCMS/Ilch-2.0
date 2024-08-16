@@ -21,8 +21,13 @@ $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
 }
+/** @var bool $DESCPostorder */
 $DESCPostorder = $this->get('DESCPostorder');
+/** @var int $postsPerPage */
 $postsPerPage = $this->get('postsPerPage');
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
 ?>
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
@@ -48,7 +53,7 @@ $postsPerPage = $this->get('postsPerPage');
                     </span><?=$this->getTrans('loginTopic') ?>
                 </a>
             <?php endif; ?>
-            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]) ?>
+            <?=$pagination->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]) ?>
         </div>
         <?php if ($forumEdit) : ?>
             <form name="editForm" method="POST">
@@ -177,7 +182,7 @@ $postsPerPage = $this->get('postsPerPage');
                     </span><?=$this->getTrans('loginTopic') ?>
                 </a>
             <?php endif; ?>
-            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]) ?>
+            <?=$pagination->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]) ?>
         </div>
         <div class="topic-actions">
             <?php if ($adminAccess || ($this->getUser() && $this->getUser()->hasAccess('module_forum'))) : ?>

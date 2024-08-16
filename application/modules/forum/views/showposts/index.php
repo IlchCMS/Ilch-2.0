@@ -24,6 +24,9 @@ $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
 }
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
@@ -77,7 +80,7 @@ if ($this->getUser()) {
                         </span><?=$this->getTrans('lockPost') ?>
                     </div>
                 <?php endif; ?>
-                <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>
+                <?=$pagination->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>
             </div>
             <div class="col-xl-12">
                 <div class="posts-head ilch-head">
@@ -262,7 +265,7 @@ if ($this->getUser()) {
                     </span><?=$this->getTrans('lockPost') ?>
                 </div>
             <?php endif; ?>
-            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>
+            <?=$pagination->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>
         </div>
     </div>
 

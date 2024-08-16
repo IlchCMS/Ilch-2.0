@@ -1,8 +1,11 @@
 <?php
 
 /** @var \Ilch\View $this */
+
+/** @var \Modules\Forum\Models\Rank|null $rank */
+$rank = $this->get('rank');
 ?>
-<h1><?=($this->get('rank')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
+<h1><?=($rank) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
@@ -14,7 +17,7 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=($this->get('rank')) ? $this->escape($this->get('rank')->getTitle()) : '' ?>"
+                   value="<?=($rank) ? $this->escape($rank->getTitle()) : '' ?>"
                    required />
         </div>
     </div>
@@ -28,7 +31,7 @@
                    id="posts"
                    name="posts"
                    min="0"
-                   value="<?=($this->get('rank')) ? $this->escape($this->get('rank')->getPosts()) : '' ?>"
+                   value="<?=($rank) ? $this->escape($rank->getPosts()) : '' ?>"
                    required />
         </div>
     </div>

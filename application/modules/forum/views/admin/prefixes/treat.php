@@ -1,8 +1,11 @@
 <?php
 
 /** @var \Ilch\View $this */
+
+/** @var \Modules\Forum\Models\Prefix|null $prefix */
+$prefix = $this->get('prefix');
 ?>
-<h1><?=($this->get('prefix')) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
+<h1><?=($prefix) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('prefix') ? ' has-error' : '' ?>">
@@ -14,7 +17,7 @@
                    class="form-control"
                    id="prefix"
                    name="prefix"
-                   value="<?=($this->get('prefix')) ? $this->escape($this->get('prefix')->getPrefix()) : '' ?>"
+                   value="<?=($prefix) ? $this->escape($prefix->getPrefix()) : '' ?>"
                    required />
         </div>
     </div>

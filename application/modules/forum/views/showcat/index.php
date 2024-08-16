@@ -10,12 +10,18 @@ $forumItems = $this->get('forumItems');
 /** @var \Modules\Forum\Models\ForumItem $cat */
 $cat = $this->get('cat');
 
-function rec($item, \Ilch\View $obj)
+/**
+ * @param \Modules\Forum\Models\ForumItem $item
+ * @param \Ilch\View $obj
+ */
+function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj)
 {
     /** @var Forum $forumMapper */
     $forumMapper = $obj->get('forumMapper');
 
+    /** @var bool $DESCPostorder */
     $DESCPostorder = $obj->get('DESCPostorder');
+    /** @var int $postsPerPage */
     $postsPerPage = $obj->get('postsPerPage');
     $subItems = $item->getSubItems();
     $topics = $item->getTopics();

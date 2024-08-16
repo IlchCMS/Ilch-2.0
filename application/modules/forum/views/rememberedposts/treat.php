@@ -1,6 +1,9 @@
 <?php
 
 /** @var \Ilch\View $this */
+
+/** @var \Modules\Forum\Models\Remember|null $rememberedPost */
+$rememberedPost = $this->get('rememberedPost');
 ?>
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
@@ -19,7 +22,7 @@
                        id="note"
                        name="note"
                        maxlength="255"
-                       value="<?=($this->originalInput('note') == '') ? $this->escape($this->get('rememberedPost')->getNote()) : $this->originalInput('note') ?>" />
+                       value="<?=($this->originalInput('note') == '') ? $this->escape($rememberedPost->getNote()) : $this->originalInput('note') ?>" />
             </div>
         </div>
         <button type="submit" class="btn btn-sm btn-primary"><?=$this->getTrans('saveNoteRememberedPost') ?></button>

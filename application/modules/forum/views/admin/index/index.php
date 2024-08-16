@@ -7,6 +7,10 @@ use Modules\Forum\Models\ForumItem;
 /** @var ForumItem|null $forumItems */
 $forumItems = $this->get('forumItems');
 
+/**
+ * @param ForumItem $item
+ * @param \Ilch\View $obj
+ */
 function rec(ForumItem $item, \Ilch\View $obj)
 {
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
@@ -173,22 +177,28 @@ $(document).ready (
                         <div class="row mb-3"><label for="assignedGroupsRead" class="col-xl-3 col-form-label"><?=$this->getTrans('see') ?></label>\n\
                         <div class="col-xl-6"><select class="chosen-select form-control" id="assignedGroupsRead" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
-                        <?php foreach ($this->get('userGroupList') as $groupList) : ?>\n\
-                        <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>\n\
+                        <?php
+                        /** @var \Modules\User\Models\Group $group */
+                        foreach ($this->get('userGroupList') as $group) : ?>\n\
+                        <option value="<?=$group->getId() ?>"><?=$this->escape($group->getName()) ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
                         <div class="row mb-3"><label for="assignedGroupsReply" class="col-xl-3 col-form-label"><?=$this->getTrans('answer') ?></label>\n\
                         <div class="col-xl-6"><select class="chosen-select form-control" id="assignedGroupsReply" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
-                        <?php foreach ($this->get('userGroupList') as $groupList) : ?>\n\
-                        <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>\n\
+                        <?php
+                        /** @var \Modules\User\Models\Group $group */
+                        foreach ($this->get('userGroupList') as $group) : ?>\n\
+                        <option value="<?=$group->getId() ?>"><?=$this->escape($group->getName()) ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
                         <div class="row mb-3"><label for="assignedGroupsCreate" class="col-xl-3 col-form-label"><?=$this->getTrans('create') ?></label>\n\
                         <div class="col-xl-6"><select class="chosen-select form-control" id="assignedGroupsCreate" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
-                        <?php foreach ($this->get('userGroupList') as $groupList) : ?>\n\
-                        <option value="<?=$groupList->getId() ?>"><?=$this->escape($groupList->getName()) ?></option>\n\
+                        <?php
+                        /** @var \Modules\User\Models\Group $group */
+                        foreach ($this->get('userGroupList') as $group) : ?>\n\
+                        <option value="<?=$group->getId() ?>"><?=$this->escape($group->getName()) ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>';
 
@@ -198,6 +208,7 @@ $(document).ready (
                 $('.dyn').html(menuHtml);
                 <?php
                 $prefixes = [];
+                /** @var \Modules\Forum\Models\Prefix $prefix */
                 foreach ($this->get('prefixes') ?? [] as $prefix) {
                     $prefixes[] = ['value' => $prefix->getId(), 'label' => $prefix->getPrefix()];
                 }
