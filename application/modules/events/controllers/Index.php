@@ -66,7 +66,7 @@ class Index extends \Ilch\Controller\Frontend
 
             if (!$eventModel) {
                 $this->redirect()
-                    ->withMessage('entrynotfound')
+                    ->withMessage('entryNotFound')
                     ->to(['controller' => 'index', 'action' => 'index']);
             }
 
@@ -233,10 +233,10 @@ class Index extends \Ilch\Controller\Frontend
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id')) {
             $eventMapper = new EventMapper();
 
-            $eventMapper->delete($this->getRequest()->getParam('id', 0));
+            $eventMapper->delete($this->getRequest()->getParam('id'));
 
             $this->addMessage('deleteSuccess');
         }

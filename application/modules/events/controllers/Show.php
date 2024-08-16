@@ -31,7 +31,7 @@ class Show extends \Ilch\Controller\Frontend
 
         if ($event === null) {
             $this->redirect()
-                ->withMessage('entrynotfound')
+                ->withMessage('entryNotFound')
                 ->to(['controller' => 'index', 'action' => 'index']);
         }
 
@@ -259,10 +259,10 @@ class Show extends \Ilch\Controller\Frontend
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id')) {
             $commentMapper = new CommentMapper();
 
-            $commentMapper->delete($this->getRequest()->getParam('id', 0));
+            $commentMapper->delete($this->getRequest()->getParam('id'));
 
             $this->addMessage('deleteSuccess');
         }

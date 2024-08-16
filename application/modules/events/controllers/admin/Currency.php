@@ -96,7 +96,7 @@ class Currency extends \Ilch\Controller\Admin
                 $currencyModel = reset($currencyModel);
             } else {
                 $this->redirect()
-                    ->withMessage('entrynotfound')
+                    ->withMessage('entryNotFound')
                     ->to(['controller' => 'index', 'action' => 'index']);
             }
         } else {
@@ -131,7 +131,7 @@ class Currency extends \Ilch\Controller\Admin
 
     public function deleteAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id')) {
             $eventMapper = new EventMapper();
             $currencyMapper = new CurrencyMapper();
 
@@ -141,7 +141,7 @@ class Currency extends \Ilch\Controller\Admin
                     ->to(['action' => 'index']);
             }
 
-            $currencyMapper->deleteCurrencyById($this->getRequest()->getParam('id', 0));
+            $currencyMapper->deleteCurrencyById($this->getRequest()->getParam('id'));
 
             $this->redirect()
                 ->withMessage('deleteSuccess')
