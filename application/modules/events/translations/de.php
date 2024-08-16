@@ -106,5 +106,5 @@ return [
     'userLimitInfo' => 'Feld leer lassen oder 0 für unbegrenzte Teilnehmerzahl',
     'maximumEntrantsReached' => 'Die Veranstaltung hat inzwischen die maximale Teilnehmerzahl erreicht.',
 
-    'entryNotFound' => 'Eintag nicht gefunden.',
+    'entryNotFound' => 'Eintrag nicht gefunden.',
 ];
