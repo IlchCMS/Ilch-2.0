@@ -31,7 +31,7 @@ class Events extends \Ilch\Controller\Frontend
             }
         }
 
-        $this->getView()->set('eventList', $eventsMapper->getEntriesForJson($this->getRequest()->getQuery('start'), $this->getRequest()->getQuery('end')))
+        $this->getView()->set('eventList', $eventsMapper->getEntriesForJson($this->getRequest()->getQuery('start') ?? '', $this->getRequest()->getQuery('end') ?? ''))
             ->set('readAccess', $readAccess);
     }
 }

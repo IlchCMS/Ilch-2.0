@@ -105,4 +105,6 @@ return [
     'userLimit' => 'Participants limit',
     'userLimitInfo' => 'Leave field empty or 0 for unlimited number of participants',
     'maximumEntrantsReached' => 'The event already reached the maximum number of participants.',
+
+    'entrynotfound' => 'Entry not found',
 ];

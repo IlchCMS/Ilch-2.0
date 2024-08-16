@@ -61,18 +61,24 @@ class Index extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper();
         $groupMapper = new GroupMapper();
 
-        $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
+        if ($this->getRequest()->getParam('id')) {
+            $eventModel = $eventMapper->getEventById($this->getRequest()->getParam('id'));
 
-        if ($event !== null && $this->getRequest()->getParam('id')) {
+            if (!$eventModel) {
+                $this->redirect()
+                    ->withMessage('entrynotfound')
+                    ->to(['controller' => 'index', 'action' => 'index']);
+            }
+
             $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('menuEvents'))
-                ->add($event->getTitle())
+                ->add($eventModel->getTitle())
                 ->add($this->getTranslator()->trans('edit'));
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
-                ->add($event->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $event->getId()])
-                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $event->getId()]);
+                ->add($eventModel->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $eventModel->getId()])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $eventModel->getId()]);
 
-            $this->getView()->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')));
+            $this->getView()->set('event', $eventModel);
         } else {
             $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('menuEvents'))
@@ -88,10 +94,6 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($this->getRequest()->isPost()) {
             $image = '';
-            if ($this->getRequest()->getParam('id')) {
-                $eventModel->setId($this->getRequest()->getParam('id'));
-                $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
-            }
 
             Validation::setCustomFieldAliases([
                 'start' => 'startTime',
@@ -126,8 +128,8 @@ class Index extends \Ilch\Controller\Frontend
                         if ($file_size <= $imageSize) {
                             $image = $path . time() . '.' . $endung;
 
-                            if ($this->getRequest()->getParam('id') && $event->getImage() != '') {
-                                $eventMapper->delImageById($this->getRequest()->getParam('id'));
+                            if ($eventModel->getImage() != '') {
+                                $eventMapper->delImageById($eventModel->getId());
                             }
 
                             $eventModel->setImage($image);
@@ -161,9 +163,6 @@ class Index extends \Ilch\Controller\Frontend
                 }
 
                 if (!$imageError) {
-                    if (!empty($_FILES['image']['name'])) {
-                        $eventModel->setImage($image);
-                    }
                     if ($this->getConfig()->get('event_google_maps_api_key') != '') {
                         $eventModel->setLatLong($eventMapper->getLatLongFromAddress($this->getRequest()->getPost('place'), $this->getConfig()->get('event_google_maps_api_key')));
                     }
@@ -184,28 +183,22 @@ class Index extends \Ilch\Controller\Frontend
                         ->setCurrency($this->getRequest()->getPost('currency'))
                         ->setPrice($this->getRequest()->getPost('price'))
                         ->setPriceArt($this->getRequest()->getPost('priceArt'))
-                        ->setShow($this->getRequest()->getPost('calendarShow'))
-                        ->setUserLimit($this->getRequest()->getPost('userLimit'))
+                        ->setShow((int)$this->getRequest()->getPost('calendarShow', 0))
+                        ->setUserLimit((int)$this->getRequest()->getPost('userLimit', 0))
                         ->setReadAccess($groups);
                     $eventMapper->save($eventModel);
 
-                    if ($this->getRequest()->getPost('image_delete') != '') {
-                        $eventMapper->delImageById($this->getRequest()->getParam('id'));
+                    if ($this->getRequest()->getPost('image_delete') != '' && $eventModel->getId()) {
+                        $eventMapper->delImageById($eventModel->getId());
 
                         $this->redirect()
                             ->withMessage('saveSuccess')
-                            ->to(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
+                            ->to(['action' => 'treat', 'id' => $eventModel->getId()]);
                     }
 
-                    if ($this->getRequest()->getParam('id')) {
-                        $this->redirect()
-                            ->withMessage('saveSuccess')
-                            ->to(['controller' => 'show', 'action' => 'event', 'id' => $this->getRequest()->getParam('id')]);
-                    } else {
-                        $this->redirect()
-                            ->withMessage('saveSuccess')
-                            ->to(['controller' => 'index', 'action' => 'index']);
-                    }
+                    $this->redirect()
+                        ->withMessage('saveSuccess')
+                        ->to(array_merge(['controller' => 'index', 'action' => 'index'], $eventModel->getId() ? ['id' => $eventModel->getId()] : []));
                 }
             }
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
@@ -219,8 +212,8 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('calendarShow', 1);
         }
 
-        if ($this->getRequest()->getParam('id')) {
-            $groups = explode(',', $eventMapper->getEventById($this->getRequest()->getParam('id'))->getReadAccess());
+        if ($eventModel->getId()) {
+            $groups = explode(',', $eventModel->getReadAccess());
         } else {
             $groups = [2,3];
         }
@@ -243,7 +236,7 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->isSecure()) {
             $eventMapper = new EventMapper();
 
-            $eventMapper->delete($this->getRequest()->getParam('id'));
+            $eventMapper->delete($this->getRequest()->getParam('id', 0));
 
             $this->addMessage('deleteSuccess');
         }

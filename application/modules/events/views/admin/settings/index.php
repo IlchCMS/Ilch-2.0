@@ -187,18 +187,9 @@
         </label>
         <div class="col-xl-2">
             <select class="form-select" id="event_google_maps_map_typ" name="event_google_maps_map_typ">
-                <option <?php if ($this->get('event_google_maps_map_typ') === 'ROADMAP') {
-                    echo 'selected="selected"';
-                        } ?> value="ROADMAP">ROADMAP</option>
-                <option <?php if ($this->get('event_google_maps_map_typ') === 'SATELLITE') {
-                    echo 'selected="selected"';
-                        } ?> value="SATELLITE">SATELLITE</option>
-                <option <?php if ($this->get('event_google_maps_map_typ') === 'HYBRID') {
-                    echo 'selected="selected"';
-                        } ?> value="HYBRID">HYBRID</option>
-                <option <?php if ($this->get('event_google_maps_map_typ') === 'TERRAIN') {
-                    echo 'selected="selected"';
-                        } ?> value="TERRAIN">TERRAIN</option>
+                <?php foreach (['ROADMAP', 'SATELLITE', 'HYBRID', 'TERRAIN'] as $type) : ?>
+                <option<?=($this->get('event_google_maps_map_typ') === $type) ? ' selected="selected"' : '' ?> value="<?=$type ?>>"><?=$type ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
     </div>

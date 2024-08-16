@@ -27,10 +27,12 @@ class Show extends \Ilch\Controller\Frontend
         $commentModel = new CommentModel();
         $userMapper = new UserMapper();
 
-        $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
+        $event = $eventMapper->getEventById($this->getRequest()->getParam('id', 0));
 
         if ($event === null) {
-            return;
+            $this->redirect()
+                ->withMessage('entrynotfound')
+                ->to(['controller' => 'index', 'action' => 'index']);
         }
 
         $this->getLayout()->getTitle()
@@ -41,30 +43,34 @@ class Show extends \Ilch\Controller\Frontend
         if ($this->getRequest()->isPost()) {
             $date = new \Ilch\Date();
 
-            if ($this->getRequest()->getPost('save')) {
-                if (empty($event->getUserLimit()) || ($entrantsMapper->getCountOfEventEntrans($this->getRequest()->getParam('id')) < $event->getUserLimit())) {
-                    $entrantsModel->setEventId($this->getRequest()->getParam('id'))
+            if ($this->getRequest()->getPost('save') && $this->getUser()) {
+                if (empty($event->getUserLimit()) || ($entrantsMapper->getCountOfEventEntrans($event->getId()) < $event->getUserLimit()) || $entrantsMapper->getEventEntrants($event->getId(), $this->getUser()->getId())) {
+                    $entrantsModel->setEventId($event->getId())
                         ->setUserId($this->getUser()->getId())
                         ->setStatus($this->getRequest()->getPost('save'));
                     $entrantsMapper->saveUserOnEvent($entrantsModel);
                 } else {
                     $this->addMessage('maximumEntrantsReached', 'warning');
                 }
+                $this->redirect(['action' => 'event', 'id' => $event->getId()]);
             }
-            if ($this->getRequest()->getPost('commentEvent')) {
-                $commentModel->setKey('events/show/event/id/' . $this->getRequest()->getParam('id'))
+            if ($this->getRequest()->getPost('commentEvent') && $this->getUser()) {
+                $commentModel->setKey('events/show/event/id/' . $event->getId())
                     ->setText($this->getRequest()->getPost('commentEvent'))
                     ->setDateCreated($date)
                     ->setUserId($this->getUser()->getId());
                 $commentMapper->save($commentModel);
 
                 $this->addMessage('saveSuccess');
+                $this->redirect(['action' => 'event', 'id' => $event->getId()]);
             }
-            if ($this->getRequest()->getPost('deleteUser')) {
-                $entrantsMapper->deleteUserFromEvent($this->getRequest()->getParam('id'), $this->getUser()->getId());
+            if ($this->getRequest()->getPost('deleteUser') && $this->getUser()) {
+                $entrantsMapper->deleteUserFromEvent($event->getId(), $this->getUser()->getId());
+
+                $this->redirect(['action' => 'event', 'id' => $event->getId()]);
             }
             if ($this->getRequest()->getPost('deleteEvent')) {
-                $eventMapper->delete($this->getRequest()->getParam('id'));
+                $eventMapper->delete($event->getId());
 
                 $this->addMessage('deleteSuccess');
 
@@ -73,10 +79,10 @@ class Show extends \Ilch\Controller\Frontend
         }
 
         if ($this->getUser()) {
-            $this->getView()->set('eventEntrants', $entrantsMapper->getEventEntrants($this->getRequest()->getParam('id'), $this->getUser()->getId()));
+            $this->getView()->set('eventEntrants', $entrantsMapper->getEventEntrants($event->getId(), $this->getUser()->getId()));
         }
 
-        $eventEntrantsUser = $entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id'));
+        $eventEntrantsUser = $entrantsMapper->getEventEntrantsById($event->getId());
         $userDetails = [];
         foreach ($eventEntrantsUser as $entrant) {
             $entrantUserId = $entrant->getUserId();
@@ -122,7 +128,7 @@ class Show extends \Ilch\Controller\Frontend
             ->set('eventEntrantsUsers', $eventEntrantsUser)
             ->set('eventEntrantsCount', count($eventEntrantsUser))
             ->set('userDetails', $userDetails)
-            ->set('eventComments', $commentMapper->getCommentsByKey('events/show/event/id/' . $this->getRequest()->getParam('id')))
+            ->set('eventComments', $commentMapper->getCommentsByKey('events/show/event/id/' . $event->getId()))
             ->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'))
             ->set('event_google_maps_map_typ', $this->getConfig()->get('event_google_maps_map_typ'))
             ->set('event_google_maps_zoom', $this->getConfig()->get('event_google_maps_zoom'))
@@ -256,7 +262,7 @@ class Show extends \Ilch\Controller\Frontend
         if ($this->getRequest()->isSecure()) {
             $commentMapper = new CommentMapper();
 
-            $commentMapper->delete($this->getRequest()->getParam('id'));
+            $commentMapper->delete($this->getRequest()->getParam('id', 0));
 
             $this->addMessage('deleteSuccess');
         }

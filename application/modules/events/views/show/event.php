@@ -184,7 +184,7 @@ if (!empty($event)) {
                 <div style="width: 10%; float: left;">
                     <strong><?=$this->getTrans('entrant') ?></strong>
                 </div>
-                <div style="width: 45%; float: left;" align="right">
+                <div style="width: 45%; float: left;" class="text-center">
                     <?php $agree = 0;
                     $maybe = 0; ?>
                     <?php if ($eventEntrantsCount != '') : ?>
@@ -200,7 +200,7 @@ if (!empty($event)) {
                     <?php endif; ?>
                     <?=$agree ?> <?=$this->getTrans('agree') ?>
                 </div>
-                <div style="width: 45%; float: left;" align="right">
+                <div style="width: 45%; float: left;" class="text-center">
                     <?=$maybe ?> <?=$this->getTrans('maybe') ?>
                 </div>
                 <div style="clear: both;"></div>

@@ -72,7 +72,7 @@ class Index extends \Ilch\Controller\Admin
     {
         if ($this->getRequest()->isSecure()) {
             $eventMapper = new EventMapper();
-            $eventMapper->delete($this->getRequest()->getParam('id'));
+            $eventMapper->delete($this->getRequest()->getParam('id', 0));
 
             $this->redirect()
                 ->withMessage('deleteSuccess')
