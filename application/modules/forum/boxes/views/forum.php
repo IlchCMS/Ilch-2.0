@@ -4,13 +4,17 @@
 
 use Ilch\Date;
 
+/** @var bool $DESCPostorder */
 $DESCPostorder = $this->get('DESCPostorder');
+/** @var int $postsPerPage */
 $postsPerPage = $this->get('postsPerPage');
 ?>
 
 <?php if (!empty($this->get('lastActiveTopicsToShow'))) : ?>
     <ul class="list-unstyled">
-        <?php foreach ($this->get('lastActiveTopicsToShow') as $topic) : ?>
+        <?php
+        /** @var \Modules\Forum\Models\ForumTopic $topic */
+        foreach ($this->get('lastActiveTopicsToShow') as $topic) : ?>
             <li style="line-height: 15px;">
                 <?php if ($this->getUser()) : ?>
                     <?php if ($topic['lastPost']->getRead()) : ?>

@@ -2,10 +2,9 @@
 
 /** @var \Ilch\View $this */
 
-/** @var \Modules\Forum\Models\ForumPost[]|null $rememberedPosts */
-
 use Ilch\Date;
 
+/** @var \Modules\Forum\Models\Remember[]|null $rememberedPosts */
 $rememberedPosts = $this->get('rememberedPosts');
 ?>
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">

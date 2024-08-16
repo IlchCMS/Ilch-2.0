@@ -23,6 +23,14 @@ $forumStatistics = $this->get('forumStatics');
 /** @var array $onlineUsersHighestRankedGroup */
 $onlineUsersHighestRankedGroup = $this->get('onlineUsersHighestRankedGroup');
 
+/** @var \Modules\User\Models\User $registNewUser */
+$registNewUser = $this->get('registNewUser');
+
+/**
+ * @param ForumItem $item
+ * @param View $obj
+ * @param int|null $i
+ */
 function rec(ForumItem $item, View $obj, ?int $i)
 {
     $DESCPostorder = $obj->get('DESCPostorder');
@@ -190,7 +198,9 @@ function rec(ForumItem $item, View $obj, ?int $i)
                 <div class="small">
                     <ul class="group-legend">
                         <li><i class="fa-solid fa-bars"></i> <?=$this->getTrans('legend') ?>:</li>
-                        <?php foreach ($this->get('listGroups') as $group) : ?>
+                        <?php
+                        /** @var \Modules\User\Models\Group $group */
+                        foreach ($this->get('listGroups') as $group) : ?>
                             <?php if ($group->getName() !== 'Guest') : ?>
                                 <li class="group"><span class="forum appearance<?=$group->getId() ?>"><?=$group->getName() ?></span></li>
                             <?php endif; ?>
@@ -214,7 +224,7 @@ function rec(ForumItem $item, View $obj, ?int $i)
                     <li><?=$this->getTrans('totalPosts') ?>: <?=$forumStatistics->getCountPosts() ?></li>
                     <li><?=$this->getTrans('totalTopics') ?>: <?=$forumStatistics->getCountTopics() ?></li>
                     <li><?=$this->getTrans('totalMembers') ?>: <?=$forumStatistics->getCountUsers() ?></li>
-                    <li><?=$this->getTrans('newMember') ?> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $this->get('registNewUser')->getId()]) ?>" class="ilch-link" title="<?=$this->escape($this->get('registNewUser')->getName()) ?>"><?=$this->escape($this->get('registNewUser')->getName()) ?></a></li>
+                    <li><?=$this->getTrans('newMember') ?> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $registNewUser->getId()]) ?>" class="ilch-link" title="<?=$this->escape($registNewUser->getName()) ?>"><?=$this->escape($registNewUser->getName()) ?></a></li>
                 </ul>
             </div>
             <hr />

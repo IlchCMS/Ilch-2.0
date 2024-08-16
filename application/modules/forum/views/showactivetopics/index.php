@@ -2,12 +2,13 @@
 
 /** @var \Ilch\View $this */
 
-/** @var array $topics */
-
 use Ilch\Date;
 
+/** @var array $topics */
 $topics = $this->get('topics');
+/** @var bool $DESCPostorder */
 $DESCPostorder = $this->get('DESCPostorder');
+/** @var int $postsPerPage */
 $postsPerPage = $this->get('postsPerPage');
 ?>
 

@@ -39,7 +39,9 @@ if ($this->getUser()) {
                             <div class="col-xl-12">
                                 <div class="row mb-3<?=$this->validation()->hasError('topicTitle') ? ' has-error' : '' ?>">
                                     <label for="topicTitle" class="col-lg-2 col-form-label">
-                                        <?=$this->getTrans('topicTitle') ?>
+                                        <label for="topicPrefix">
+                                         <?=$this->getTrans('topicTitle') ?>
+                                        </label>
                                     </label>
                                     <?php if ($forum->getPrefixes() != '') : ?>
                                         <?php $prefixIds = explode(',', $forum->getPrefixes()); ?>
@@ -69,7 +71,7 @@ if ($this->getUser()) {
                                     </div>
                                 </div>
                                 <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
-                                    <label class="col-xl-2 col-form-label">
+                                    <label class="col-xl-2 col-form-label" for="ck_1">
                                         <?=$this->getTrans('text') ?>
                                     </label>
                                     <div class="col-xl-10">

@@ -6,8 +6,11 @@
 
 use Ilch\Date;
 
+/** @var \Modules\Forum\Models\ForumTopic[] $topics */
 $topics = $this->get('topics');
+/** @var bool $DESCPostorder */
 $DESCPostorder = $this->get('DESCPostorder');
+/** @var int $postsPerPage */
 $postsPerPage = $this->get('postsPerPage');
 ?>
 
