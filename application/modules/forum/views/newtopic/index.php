@@ -39,9 +39,7 @@ if ($this->getUser()) {
                             <div class="col-xl-12">
                                 <div class="row mb-3<?=$this->validation()->hasError('topicTitle') ? ' has-error' : '' ?>">
                                     <label for="topicTitle" class="col-lg-2 col-form-label">
-                                        <label for="topicPrefix">
                                          <?=$this->getTrans('topicTitle') ?>
-                                        </label>
                                     </label>
                                     <?php if ($forum->getPrefixes() != '') : ?>
                                         <?php $prefixIds = explode(',', $forum->getPrefixes()); ?>
