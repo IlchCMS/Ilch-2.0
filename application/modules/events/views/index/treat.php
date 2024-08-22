@@ -25,7 +25,7 @@ $event = $this->get('event');
 
 <?php include APPLICATION_PATH . '/modules/events/views/index/navi.php'; ?>
 
-<h1><?=($event != '' ? $this->getTrans('edit') : $this->getTrans('add')) ?></h1>
+<h1><?=$this->getTrans($event != '' ? 'edit' : 'add') ?></h1>
 <?php if ($this->getUser() && (in_array($this->getUser()->getId(), $groupAccesses) || $this->getUser()->hasAccess('module_events'))) : ?>
     <form method="POST" enctype="multipart/form-data" action="">
         <?=$this->getTokenField() ?>
@@ -72,9 +72,7 @@ $event = $this->get('event');
                 <select class="form-select" name="creator" id="creator">
                     <option selected="selected"><?=$this->getTrans('noSelection') ?></option>
                     <?php foreach ($users as $user) : ?>
-                        <option value="<?=$user->getId() ?>" <?php if (($event != '' && $event->getUserId() == $user->getId()) || $this->originalInput('creator') == $user->getId()) {
-                            echo 'selected="selected"';
-                                       } ?>><?=$user->getName() ?></option>
+                        <option value="<?=$user->getId() ?>" <?=(($event != '' && $event->getUserId() == $user->getId()) || $this->originalInput('creator') == $user->getId()) ? 'selected="selected"' : '' ?>><?=$user->getName() ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -89,11 +87,7 @@ $event = $this->get('event');
                        id="start"
                        name="start"
                        size="16"
-                       value="<?php if ($event != '') {
-                            echo date('d.m.Y H:i', strtotime($event->getStart()));
-                              } elseif ($this->originalInput('start') != '') {
-                                  echo date('d.m.Y H:i', strtotime($this->originalInput('start')));
-                              } ?>"
+                       value="<?=$event != '' ? date('d.m.Y H:i', strtotime($event->getStart())) : ($this->originalInput('start') != '' ? date('d.m.Y H:i', strtotime($this->originalInput('start'))) : '') ?>"
                        readonly>
                 <span class="input-group-text">
                     <span class="fa-regular fa-calendar"></span>
@@ -110,11 +104,7 @@ $event = $this->get('event');
                        id="end"
                        name="end"
                        size="16"
-                       value="<?php if ($event != '') {
-                            echo date('d.m.Y H:i', strtotime($event->getEnd()));
-                              } elseif ($this->originalInput('end') != '') {
-                                  echo date('d.m.Y H:i', strtotime($this->originalInput('end')));
-                              } ?>"
+                       value="<?=($event != '') ? date('d.m.Y H:i', strtotime($event->getEnd())) : ($this->originalInput('end') != '' ? date('d.m.Y H:i', strtotime($this->originalInput('end'))) : '') ?>"
                        readonly>
                 <span class="input-group-text">
                     <span class="fa-solid fa-xmark"></span>
@@ -207,15 +197,9 @@ $event = $this->get('event');
             </label>
             <div class="col-xl-2">
                 <select class="form-select" id="priceArt" name="priceArt">
-                    <option <?php if ($event != '' && $event->getPriceArt() == 0) {
-                        echo 'selected="selected"';
-                            } ?> value="0"><?=$this->getTrans('select') ?></option>
-                    <option <?php if ($event != '' && $event->getPriceArt() == 1) {
-                        echo 'selected="selected"';
-                            } ?> value="1"><?=$this->getTrans('ticket') ?></option>
-                    <option <?php if ($event != '' && $event->getPriceArt() == 2) {
-                        echo 'selected="selected"';
-                            } ?> value="2"><?=$this->getTrans('entry') ?></option>
+                    <option <?=($event != '' && $event->getPriceArt() == 0) ? 'selected="selected"' : '' ?> value="0"><?=$this->getTrans('select') ?></option>
+                    <option <?=($event != '' && $event->getPriceArt() == 1) ? 'selected="selected"' : '' ?> value="1"><?=$this->getTrans('ticket') ?></option>
+                    <option <?=($event != '' && $event->getPriceArt() == 2) ? 'selected="selected"' : '' ?> value="2"><?=$this->getTrans('entry') ?></option>
                 </select>
             </div>
             <div class="col-xl-4">
@@ -229,9 +213,7 @@ $event = $this->get('event');
             </div>
             <div class="col-xl-2">
                 <select class="form-select" id="currency" name="currency">
-                    <option <?php if ($event != '' && $event->getPriceArt() == 0) {
-                        echo 'selected="selected"';
-                            } ?> value="0"><?=$this->getTrans('select') ?></option>
+                    <option <?=($event != '' && $event->getPriceArt() == 0) ? 'selected="selected"' : '' ?> value="0"><?=$this->getTrans('select') ?></option>
                     <?php foreach ($this->get('currencies') as $currency) {
                         if ($event != '' && $event->getCurrency() == $currency->getId()) {
                             echo '<option value="' . $currency->getId() . '" selected="selected">' . $this->escape($currency->getName()) . '</option>';
@@ -278,9 +260,7 @@ $event = $this->get('event');
                            id="calendarShow"
                            name="calendarShow"
                            value="1"
-                           <?php if (($event != '' && $event->getShow() == 1) || $this->originalInput('calendarShow') == 1) {
-                                echo 'checked';
-                           } ?> />
+                           <?=(($event != '' && $event->getShow() == 1) || $this->originalInput('calendarShow') == 1) ? 'checked' : '' ?> />
                     <label for="calendarShow">
                         <?=$this->getTrans('calendarShow') ?>
                     </label>
@@ -288,13 +268,7 @@ $event = $this->get('event');
             </div>
         <?php endif; ?>
         <div class="float-end">
-            <?php
-            if ($event != '') {
-                echo $this->getSaveBar('edit');
-            } else {
-                echo $this->getSaveBar('add');
-            }
-            ?>
+            <?=$this->getSaveBar(($event != '') ? 'edit' : 'add') ?>
         </div>
     </form>
 <?php else : ?>

@@ -27,7 +27,13 @@ class Show extends \Ilch\Controller\Frontend
         $commentModel = new CommentModel();
         $userMapper = new UserMapper();
 
-        $event = $eventMapper->getEventById($this->getRequest()->getParam('id', 0));
+        if (empty($this->getRequest()->getParam('id'))) {
+            $this->redirect()
+                ->withMessage('entryNotFound')
+                ->to(['controller' => 'index', 'action' => 'index']);
+        }
+
+        $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
 
         if ($event === null) {
             $this->redirect()
