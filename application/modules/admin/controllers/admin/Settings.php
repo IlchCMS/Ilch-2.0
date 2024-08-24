@@ -359,7 +359,10 @@ HTACCESS;
                 }
                 if ($doUpdate) {
                     if ($update->update($version)) {
+                        // Success. Update some details for the view as the update check done above is by now outdated and show success message.
                         $this->getConfig()->set('version', $newVersion);
+                        $this->getView()->set('version', $newVersion);
+                        $this->getView()->set('newVersion', $newVersion);
                         $this->getView()->set('updateSuccessfull', true);
                     }
                     $this->getView()->set('content', $update->getContent());

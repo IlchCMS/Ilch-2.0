@@ -348,6 +348,7 @@ return [
     'doSaveNow' => 'Jetzt herunterladen',
     'updateReady' => 'Update bereit zum Installieren.',
     'installNow' => 'Jetzt installieren',
+    'checkForUpdate' => 'Jetzt nach weiteren Updates suchen',
     'viewUpdateInstallLog' => 'Protokoll der Installation des Updates anzeigen',
     'updateComplied' => 'Erfolgreich installiert',
     'updateFailed' => 'Installation fehlgeschlagen',

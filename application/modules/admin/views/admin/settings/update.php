@@ -2,6 +2,7 @@
 $getVersions = $this->get('versions');
 $doUpdate = $this->getRequest()->getParam('doupdate');
 $doSave = $this->getRequest()->getParam('dosave');
+$version = $this->get('version');
 $newVersion = $this->get('newVersion');
 $missingRequirements = $this->get('missingRequirements');
 $missingRequirementsMessages = $this->get('missingRequirementsMessages');
@@ -30,9 +31,9 @@ $updateSuccessfull = $this->get('updateSuccessfull');
                     <tbody>
                     <tr>
                         <td><?=$this->getTrans('installedVersion') ?></td>
-                        <td><?=$this->get('version') ?></td>
+                        <td><?=$version ?></td>
                     </tr>
-                    <?php if ($newVersion !== $this->get('newestVersion')) : ?>
+                    <?php if ($newVersion !== $version && $newVersion !== $this->get('newestVersion')) : ?>
                         <tr>
                             <td><?=$this->getTrans('nextVersion') ?></td>
                             <td>
@@ -91,6 +92,13 @@ $updateSuccessfull = $this->get('updateSuccessfull');
                                 <?php if ($doUpdate): ?>
                                     <?php if ($updateSuccessfull) : ?>
                                         <p><?=$this->getTrans('updateComplied') ?></p>
+                                        <?php if ($version !== $this->get('newestVersion')) : ?>
+                                            <p>
+                                                <a class="btn btn-primary showOverlay"
+                                                   href="<?=$this->getUrl(['action' => 'update']) ?>"><?=$this->getTrans('checkForUpdate') ?>
+                                                </a>
+                                            </p>
+                                        <?php endif; ?>
                                     <?php else: ?>
                                         <p><?=$this->getTrans('updateFailed') ?></p>
                                     <?php endif; ?>
@@ -118,7 +126,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
                         <div id="collapseLog" class="accordion-collapse collapse">
                             <div class="accordion-body">
                                 <div class="list-files" id="list-files">
-                                    <?php foreach ($this->get('content') as $row): ?>
+                                    <?php foreach ($this->get('content') ?? [] as $row): ?>
                                         <p><?=$row ?></p>
                                     <?php endforeach; ?>
                                 </div>

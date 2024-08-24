@@ -348,6 +348,7 @@ return [
     'doSaveNow' => 'Download now',
     'updateReady' => 'Update ready to install.',
     'installNow' => 'Install now',
+    'checkForUpdate' => 'Check for further updates',
     'viewUpdateInstallLog' => 'Show log of update installation',
     'updateComplied' => 'Successfully installed',
     'updateFailed' => 'Installation failed',
