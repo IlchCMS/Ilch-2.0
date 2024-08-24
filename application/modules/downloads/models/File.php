@@ -16,68 +16,68 @@ class File extends Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected $id;
 
     /**
      * The fileId of the file.
      *
      * @var string
      */
-    protected $file_id = 0;
+    protected $file_id;
 
     /**
      * Title of the file.
      *
      * @var string
      */
-    protected $file_title = '';
+    protected $file_title;
 
     /**
      * Description of the file.
      *
      * @var string
      */
-    protected $file_desc = '';
+    protected $file_desc;
 
     /**
      * Image of the file.
      *
      * @var string
      */
-    protected $file_image = '';
+    protected $file_image;
 
     /**
      * The cat of the file.
      *
      * @var string
      */
-    protected $cat = '';
+    protected $cat;
 
     /**
      * The visits of the file.
      *
-     * @var int
+     * @var string
      */
-    protected $visits = 0;
+    protected $visits;
 
     /**
      * The imageUrl of the file.
      *
      * @var string
      */
-    protected $file_url = '';
+    protected $file_url;
 
     /**
      * @var string
      */
-    private $filethumb = '';
+    private $filethumb;
 
     /**
      * Gets the id of the file.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
