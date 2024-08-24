@@ -59,7 +59,7 @@ $accesses = $this->get('accesses');
                         <td><?=$this->getTrans('newestVersion') ?></td>
                         <td>
                             <?php if ($this->get('newestVersion')) : ?>
-                                <?=$this->get('newestVersion') ?>
+                                <?=$this->escape($this->get('newestVersion')) ?>
                             <?php elseif ($this->get('curlErrorOccurred')) : ?>
                                 <?=$this->getTrans('versionNA') ?>
                             <?php else : ?>
