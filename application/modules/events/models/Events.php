@@ -14,10 +14,10 @@ class Events extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected $id;
 
     /**
-     * The user of the event.
+     * The user id of the host of the event.
      *
      * @var int
      */
@@ -70,14 +70,14 @@ class Events extends \Ilch\Model
      *
      * @var string
      */
-    protected $latLong = '';
+    protected $latLong;
 
     /**
      * The image of the event.
      *
      * @var string
      */
-    protected $image = '';
+    protected $image;
 
     /**
      * The text of the event.
@@ -131,9 +131,9 @@ class Events extends \Ilch\Model
     /**
      * Gets the id of the event.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -153,7 +153,7 @@ class Events extends \Ilch\Model
     }
 
     /**
-     * Gets the user of the event.
+     * Gets the user id of the host of the event.
      *
      * @return int
      */
@@ -163,7 +163,7 @@ class Events extends \Ilch\Model
     }
 
     /**
-     * Sets the userid of the event.
+     * Sets the user id of the host of the event.
      *
      * @param int $userId
      *
@@ -321,9 +321,9 @@ class Events extends \Ilch\Model
     /**
      * Gets the lat and long from the place.
      *
-     * @return string
+     * @return string|null
      */
-    public function getLatLong(): string
+    public function getLatLong(): ?string
     {
         return $this->latLong;
     }
@@ -331,11 +331,11 @@ class Events extends \Ilch\Model
     /**
      * Sets the lat and long of the place.
      *
-     * @param string $latLong
+     * @param string|null $latLong
      *
      * @return $this
      */
-    public function setLatLong(string $latLong): Events
+    public function setLatLong(?string $latLong): Events
     {
         $this->latLong = $latLong;
 
@@ -345,9 +345,9 @@ class Events extends \Ilch\Model
     /**
      * Gets the image of the event.
      *
-     * @return string
+     * @return string|null
      */
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -355,11 +355,11 @@ class Events extends \Ilch\Model
     /**
      * Sets the image of the event.
      *
-     * @param string $image
+     * @param string|null $image
      *
      * @return $this
      */
-    public function setImage(string $image): Events
+    public function setImage(?string $image): Events
     {
         $this->image = $image;
 
