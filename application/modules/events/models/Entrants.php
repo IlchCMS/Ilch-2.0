@@ -14,28 +14,28 @@ class Entrants extends \Ilch\Model
      *
      * @var int
      */
-    protected $eventId = 0;
+    protected $eventId;
 
     /**
      * The userId of the event entrants.
      *
      * @var int
      */
-    protected $userId = 0;
+    protected $userId;
 
     /**
      * The user status of the event entrants.
      *
      * @var int
      */
-    protected $status = 0;
+    protected $status;
 
     /**
      * Gets the eventid of the event entrants.
      *
-     * @return int
+     * @return int|null
      */
-    public function getEventId(): int
+    public function getEventId(): ?int
     {
         return $this->eventId;
     }
@@ -57,9 +57,9 @@ class Entrants extends \Ilch\Model
     /**
      * Gets the user of the event entrants.
      *
-     * @return int
+     * @return int|null
      */
-    public function getUserId(): int
+    public function getUserId(): ?int
     {
         return $this->userId;
     }
@@ -81,9 +81,9 @@ class Entrants extends \Ilch\Model
     /**
      * Gets the status from user of the event entrants.
      *
-     * @return int
+     * @return int|null
      */
-    public function getStatus(): int
+    public function getStatus(): ?int
     {
         return $this->status;
     }
@@ -91,7 +91,7 @@ class Entrants extends \Ilch\Model
     /**
      * Sets the status from user of the event entrants.
      *
-     * @param int $status
+     * @param int $status value 1 (agree) or 2 (maybe).
      *
      * @return $this
      */
