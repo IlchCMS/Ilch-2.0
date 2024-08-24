@@ -1,3 +1,10 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+?>
 <style>
 tbody tr td {
     padding-bottom: 0 !important;
@@ -10,8 +17,8 @@ tbody tr td {
 </style>
 
 <h1><?=$this->getTrans('downloads') ?>: <?=$this->get('downloadsTitle') ?></h1>
-<?php if ($this->get('file') != ''): ?>
-    <?=$this->get('pagination')->getHtml($this, ['action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('id')]) ?>
+<?php if ($this->get('files') != '') : ?>
+    <?=$pagination->getHtml($this, ['action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('id')]) ?>
     <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -35,11 +42,13 @@ tbody tr td {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('file') as $file): ?>
+                    <?php
+                    /** @var \Modules\Downloads\Models\File $file */
+                    foreach ($this->get('files') as $file) : ?>
                         <?php $image = '' ?>
-                        <?php if ($file->getFileImage() != ''): ?>
+                        <?php if ($file->getFileImage() != '') : ?>
                             <?php $image = $this->getBaseUrl($file->getFileImage()) ?>
-                        <?php else: ?>
+                        <?php else : ?>
                             <?php $image = $this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>
                         <?php endif; ?>
                         <tr>
@@ -51,21 +60,21 @@ tbody tr td {
                             <td><?=$this->escape($file->getFileTitle()) ?></td>
                             <td><?=$this->escape($file->getFileDesc()) ?></td>
                         </tr>
-                     <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noFile') ?>
 <?php endif; ?>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
 <?=$this->getMedia()
-        ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/file/id/'.$this->getRequest()->getParam('id').'/'))
-        ->addActionButton($this->getUrl('admin/downloads/downloads/treatdownloads/id/'.$this->getRequest()->getParam('id').'/'))
+        ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/file/id/' . $this->getRequest()->getParam('id') . '/'))
+        ->addActionButton($this->getUrl('admin/downloads/downloads/treatdownloads/id/' . $this->getRequest()->getParam('id') . '/'))
         ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>
 

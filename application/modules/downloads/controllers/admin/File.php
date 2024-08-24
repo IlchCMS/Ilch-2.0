@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -42,19 +43,17 @@ class File extends Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuDownloads',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
-        
     }
 
-    public function treatFileAction() 
+    public function treatFileAction()
     {
         $fileMapper = new FileMapper();
         $id = (int)$this->getRequest()->getParam('id');
@@ -62,7 +61,7 @@ class File extends Admin
         if ($this->getRequest()->getPost()) {
             $fileImage = '';
             if (!empty($this->getRequest()->getPost('fileImage'))) {
-                $fileImage = BASE_URL.'/'.$this->getRequest()->getPost('fileImage');
+                $fileImage = BASE_URL . '/' . $this->getRequest()->getPost('fileImage');
             }
 
             $post = [

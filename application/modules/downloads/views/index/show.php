@@ -1,4 +1,11 @@
-<?php $commentMapper = new \Modules\Comment\Mappers\Comment();?>
+<?php
+
+/** @var \Ilch\View $this */
+$commentMapper = new \Modules\Comment\Mappers\Comment();
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+?>
 
 <style>
 @media (max-width: 990px) {
@@ -38,15 +45,16 @@
 
 <div id="gallery">
     <?php
-    foreach ($this->get('file') as $file):
-    $commentsCount = $commentMapper->getCountComments('downloads/index/showfile/id/'.$file->getId());
-    $image = '';
-    if ($file->getFileImage() != '') {
-        $image = $this->getBaseUrl($file->getFileImage());
-    }else {
-        $image = $this->getBaseUrl('application/modules/media/static/img/nomedia.png');
-    }
-    ?>
+    /** @var \Modules\Downloads\Models\File $file */
+    foreach ($this->get('files') as $file) :
+        $commentsCount = $commentMapper->getCountComments('downloads/index/showfile/id/' . $file->getId());
+        $image = '';
+        if ($file->getFileImage() != '') {
+            $image = $this->getBaseUrl($file->getFileImage());
+        } else {
+            $image = $this->getBaseUrl('application/modules/media/static/img/nomedia.png');
+        }
+        ?>
         <div class="col-6 col-lg-4 col-xl-3 col-md-4">
             <div class="card card-default">
                 <div class="card-image me-auto ms-auto thumbnail">
@@ -62,8 +70,8 @@
             </div>
         </div>
     <?php endforeach; ?>
-    <?php if (empty($this->get('file'))) : ?>
+    <?php if (empty($this->get('files'))) : ?>
         <?=$this->getTrans('downloadNotFound') ?>
     <?php endif; ?>
 </div>
-<?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>
+<?=$pagination->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>

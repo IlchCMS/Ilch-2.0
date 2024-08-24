@@ -1,8 +1,11 @@
 <?php
 
+/** @var \Ilch\View $this */
+
 use Ilch\Comments;
 use Ilch\Date;
 
+/** @var \Modules\Downloads\Models\File $file */
 $file = $this->get('file');
 $nowDate = new Date();
 $commentsClass = new Comments();
@@ -44,7 +47,7 @@ if (!empty($file)) {
     </div>
 </div>
 
-<?= $commentsClass->getComments($this->get('commentsKey'), $file, $this) ?>
+    <?= $commentsClass->getComments($this->get('commentsKey'), $file, $this) ?>
 
 <?php else : ?>
     <?=$this->getTrans('downloadNotFound') ?>

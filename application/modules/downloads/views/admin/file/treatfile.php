@@ -1,4 +1,8 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Downloads\Models\File $file */
 $file = $this->get('file');
 $image = '';
 if ($file->getFileImage() != '') {
@@ -9,7 +13,7 @@ if ($file->getFileImage() != '') {
 ?>
 
 <h1><?=$this->getTrans('treatFile') ?></h1>
-<?php if ($file != ''): ?>
+<?php if ($file != '') : ?>
     <form method="POST" action="">
         <div id="gallery">
             <div class="row">
@@ -62,9 +66,9 @@ if ($file->getFileImage() != '') {
                 </div>
             </div>
         </div>
-        <?=$this->getSaveBar('saveButton') ?>
+        <?=$this->getSaveBar() ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noFile') ?>
 <?php endif; ?>
 

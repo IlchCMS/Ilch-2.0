@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -152,7 +153,7 @@ class Downloads extends Mapper
 
         return $itemId;
     }
- 
+
     /**
      * Delete the given Downloads item.
      *

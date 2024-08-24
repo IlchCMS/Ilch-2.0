@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -38,19 +39,17 @@ class Downloads extends Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuDownloads',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
-        
     }
 
-    public function treatDownloadsAction() 
+    public function treatDownloadsAction()
     {
         $fileMapper = new FileMapper();
         $pagination = new Pagination();
@@ -63,15 +62,15 @@ class Downloads extends Admin
                 ->add($this->getTranslator()->trans($downloadsTitle->getTitle()), ['action' => 'treatdownloads', 'id' => $id]);
 
         if ($this->getRequest()->getPost('action') === 'delete') {
-                foreach ($this->getRequest()->getPost('check_downloads') as $fileId) {
-                    $fileMapper->deleteById($fileId);
-                }
-                $this->addMessage('deleteSuccess');
-                $this->redirect(['action' => 'treatdownloads','id' => $id]);
+            foreach ($this->getRequest()->getPost('check_downloads') as $fileId) {
+                $fileMapper->deleteById($fileId);
+            }
+            $this->addMessage('deleteSuccess');
+            $this->redirect(['action' => 'treatdownloads','id' => $id]);
         }
 
         if ($this->getRequest()->getPost()) {
-            foreach ($this->getRequest()->getPost('check_image') as $fileId ) {
+            foreach ($this->getRequest()->getPost('check_image') as $fileId) {
                 $mediaMapper = new MediaMapper();
                 $file = $mediaMapper->getByWhere(['id' => $fileId]);
                 $catId = $this->getRequest()->getParam('id');
@@ -85,12 +84,12 @@ class Downloads extends Admin
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('downloads_downloadsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('downloads_downloadsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
-        $this->getView()->set('file', $fileMapper->getFileByDownloadsId($id, $pagination));
+        $this->getView()->set('files', $fileMapper->getFileByDownloadsId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
         $this->getView()->set('downloadsTitle', $downloadsTitle->getTitle());
     }
 
-    public function treatFileAction() 
+    public function treatFileAction()
     {
         $fileMapper = new FileMapper();
         $id = $this->getRequest()->getParam('id');
