@@ -70,7 +70,7 @@ $event = $this->get('event');
             </label>
             <div class="col-xl-4">
                 <select class="form-select" name="creator" id="creator">
-                    <option selected="selected"><?=$this->getTrans('noSelection') ?></option>
+                    <option selected="selected" value="0"><?=$this->getTrans('noSelection') ?></option>
                     <?php foreach ($users as $user) : ?>
                         <option value="<?=$user->getId() ?>" <?=(($event != '' && $event->getUserId() == $user->getId()) || $this->originalInput('creator') == $user->getId()) ? 'selected="selected"' : '' ?>><?=$user->getName() ?></option>
                     <?php endforeach; ?>
