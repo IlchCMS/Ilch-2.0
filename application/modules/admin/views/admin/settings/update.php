@@ -37,7 +37,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
                             <td><?=$this->getTrans('nextVersion') ?></td>
                             <td>
                                 <?php if ($newVersion) : ?>
-                                    <?=$newVersion ?>
+                                    <?=$this->escape($newVersion) ?>
                                 <?php elseif ($this->get('curlErrorOccurred')) : ?>
                                     <?=$this->getTrans('versionNA') ?>
                                 <?php endif; ?>
@@ -48,7 +48,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
                         <td><?=$this->getTrans('newestVersion') ?></td>
                         <td>
                             <?php if ($this->get('newestVersion')) : ?>
-                                <?=$this->get('newestVersion') ?>
+                                <?=$this->escape($this->get('newestVersion')) ?>
                             <?php elseif ($this->get('curlErrorOccurred')) : ?>
                                 <?=$this->getTrans('versionNA') ?>
                             <?php endif; ?>
@@ -129,7 +129,7 @@ $updateSuccessfull = $this->get('updateSuccessfull');
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseChangelog" aria-expanded="false" aria-controls="collapseChangelog">
-                            <?=$this->getTrans('version') . ' ' . $newVersion ?>
+                            <?=$this->getTrans('version') . ' ' . $this->escape($newVersion) ?>
                         </button>
                     </h2>
                     <div id="collapseChangelog" class="accordion-collapse collapse">
