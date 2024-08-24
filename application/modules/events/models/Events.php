@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -16,53 +17,53 @@ class Events extends \Ilch\Model
     protected $id;
 
     /**
-     * The user of the event.
+     * The user id of the host of the event.
      *
      * @var int
      */
-    protected $userId;
+    protected $userId = 0;
 
     /**
      * The start date of the event.
      *
      * @var string
      */
-    protected $start;
+    protected $start = '';
 
     /**
      * The end date of the event.
      *
      * @var string
      */
-    protected $end;
+    protected $end = '';
 
     /**
      * The title of the event.
      *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * The place of the event.
      *
      * @var string
      */
-    protected $place;
+    protected $place = '';
 
     /**
      * The type of the event like concert, karaoke evening, ...
      *
      * @var string
      */
-    protected $type;
+    protected $type = '';
 
     /**
      * The website of the event.
      *
      * @var string
      */
-    protected $website;
+    protected $website = '';
 
     /**
      * The lat and long of the event.
@@ -83,56 +84,56 @@ class Events extends \Ilch\Model
      *
      * @var string
      */
-    protected $text;
+    protected $text = '';
 
     /**
      * The currency of the event.
      *
      * @var int
      */
-    protected $currency;
+    protected $currency = 0;
 
     /**
      * The price of the event.
      *
      * @var string
      */
-    protected $price;
+    protected $price = '';
 
     /**
      * The price art of the event.
      *
      * @var int
      */
-    protected $priceArt;
+    protected $priceArt = 0;
 
     /**
      * The show of the event.
      *
      * @var int
      */
-    protected $show;
+    protected $show = 0;
 
     /**
      * The user limit of the event.
      *
      * @var int
      */
-    protected $userLimit;
+    protected $userLimit = 0;
 
     /**
      * The read access of the event.
      *
      * @var string
      */
-    protected $readAccess;
+    protected $readAccess = '';
 
     /**
      * Gets the id of the event.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -144,33 +145,33 @@ class Events extends \Ilch\Model
      *
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Events
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
 
     /**
-     * Gets the user of the event.
+     * Gets the user id of the host of the event.
      *
      * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
     /**
-     * Sets the userid of the event.
+     * Sets the user id of the host of the event.
      *
      * @param int $userId
      *
      * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): Events
     {
-        $this->userId = (int)$userId;
+        $this->userId = $userId;
 
         return $this;
     }
@@ -178,9 +179,9 @@ class Events extends \Ilch\Model
     /**
      * Gets the start date of the event.
      *
-     * @return DateTime
+     * @return string
      */
-    public function getStart()
+    public function getStart(): string
     {
         return $this->start;
     }
@@ -188,13 +189,13 @@ class Events extends \Ilch\Model
     /**
      * Sets the start date of the event.
      *
-     * @param DateTime $start
+     * @param string $start
      *
      * @return $this
      */
-    public function setStart($start)
+    public function setStart(string $start): Events
     {
-        $this->start = (string)$start;
+        $this->start = $start;
 
         return $this;
     }
@@ -202,9 +203,9 @@ class Events extends \Ilch\Model
     /**
      * Gets the end date of the event.
      *
-     * @return DateTime
+     * @return string
      */
-    public function getEnd()
+    public function getEnd(): string
     {
         return $this->end;
     }
@@ -212,13 +213,13 @@ class Events extends \Ilch\Model
     /**
      * Sets the end date of the event.
      *
-     * @param DateTime $end
+     * @param string $end
      *
      * @return $this
      */
-    public function setEnd($end)
+    public function setEnd(string $end): Events
     {
-        $this->end = (string)$end;
+        $this->end = $end;
 
         return $this;
     }
@@ -228,7 +229,7 @@ class Events extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -240,9 +241,9 @@ class Events extends \Ilch\Model
      *
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Events
     {
-        $this->title = (string)$title;
+        $this->title = $title;
 
         return $this;
     }
@@ -252,7 +253,7 @@ class Events extends \Ilch\Model
      *
      * @return string
      */
-    public function getPlace()
+    public function getPlace(): string
     {
         return $this->place;
     }
@@ -264,9 +265,9 @@ class Events extends \Ilch\Model
      *
      * @return $this
      */
-    public function setPlace($place)
+    public function setPlace(string $place): Events
     {
-        $this->place = (string)$place;
+        $this->place = $place;
 
         return $this;
     }
@@ -276,7 +277,7 @@ class Events extends \Ilch\Model
      *
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -287,7 +288,7 @@ class Events extends \Ilch\Model
      * @param string $type
      * @return Events
      */
-    public function setType($type)
+    public function setType(string $type): Events
     {
         $this->type = $type;
         return $this;
@@ -298,7 +299,7 @@ class Events extends \Ilch\Model
      *
      * @return string
      */
-    public function getWebsite()
+    public function getWebsite(): string
     {
         return $this->website;
     }
@@ -310,9 +311,9 @@ class Events extends \Ilch\Model
      *
      * @return $this
      */
-    public function setWebsite($website)
+    public function setWebsite(string $website): Events
     {
-        $this->website = (string)$website;
+        $this->website = $website;
 
         return $this;
     }
@@ -320,9 +321,9 @@ class Events extends \Ilch\Model
     /**
      * Gets the lat and long from the place.
      *
-     * @return string
+     * @return string|null
      */
-    public function getLatLong()
+    public function getLatLong(): ?string
     {
         return $this->latLong;
     }
@@ -330,13 +331,13 @@ class Events extends \Ilch\Model
     /**
      * Sets the lat and long of the place.
      *
-     * @param string $latLong
+     * @param string|null $latLong
      *
      * @return $this
      */
-    public function setLatLong($latLong)
+    public function setLatLong(?string $latLong): Events
     {
-        $this->latLong = (string)$latLong;
+        $this->latLong = $latLong;
 
         return $this;
     }
@@ -344,9 +345,9 @@ class Events extends \Ilch\Model
     /**
      * Gets the image of the event.
      *
-     * @return string
+     * @return string|null
      */
-    public function getImage()
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -354,13 +355,13 @@ class Events extends \Ilch\Model
     /**
      * Sets the image of the event.
      *
-     * @param string $image
+     * @param string|null $image
      *
      * @return $this
      */
-    public function setImage($image)
+    public function setImage(?string $image): Events
     {
-        $this->image = (string)$image;
+        $this->image = $image;
 
         return $this;
     }
@@ -370,7 +371,7 @@ class Events extends \Ilch\Model
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -382,9 +383,9 @@ class Events extends \Ilch\Model
      *
      * @return $this
      */
-    public function setText($text)
+    public function setText(string $text): Events
     {
-        $this->text = (string)$text;
+        $this->text = $text;
 
         return $this;
     }
@@ -394,7 +395,7 @@ class Events extends \Ilch\Model
      *
      * @return int
      */
-    public function getCurrency()
+    public function getCurrency(): int
     {
         return $this->currency;
     }
@@ -402,13 +403,13 @@ class Events extends \Ilch\Model
     /**
      * Sets the currency of the event.
      *
-     * @param string $currency
+     * @param int $currency
      *
      * @return $this
      */
-    public function setCurrency($currency)
+    public function setCurrency(int $currency): Events
     {
-        $this->currency = (int)$currency;
+        $this->currency = $currency;
 
         return $this;
     }
@@ -418,7 +419,7 @@ class Events extends \Ilch\Model
      *
      * @return string
      */
-    public function getPrice()
+    public function getPrice(): string
     {
         return $this->price;
     }
@@ -430,9 +431,9 @@ class Events extends \Ilch\Model
      *
      * @return $this
      */
-    public function setPrice($price)
+    public function setPrice(string $price): Events
     {
-        $this->price = (string)$price;
+        $this->price = $price;
 
         return $this;
     }
@@ -442,7 +443,7 @@ class Events extends \Ilch\Model
      *
      * @return int
      */
-    public function getPriceArt()
+    public function getPriceArt(): int
     {
         return $this->priceArt;
     }
@@ -450,13 +451,13 @@ class Events extends \Ilch\Model
     /**
      * Sets the price art of the event.
      *
-     * @param string $priceArt
+     * @param int $priceArt
      *
      * @return $this
      */
-    public function setPriceArt($priceArt)
+    public function setPriceArt(int $priceArt): Events
     {
-        $this->priceArt = (int)$priceArt;
+        $this->priceArt = $priceArt;
 
         return $this;
     }
@@ -466,7 +467,7 @@ class Events extends \Ilch\Model
      *
      * @return int
      */
-    public function getShow()
+    public function getShow(): int
     {
         return $this->show;
     }
@@ -478,9 +479,9 @@ class Events extends \Ilch\Model
      *
      * @return $this
      */
-    public function setShow($show)
+    public function setShow(int $show): Events
     {
-        $this->show = (int)$show;
+        $this->show = $show;
 
         return $this;
     }
@@ -490,7 +491,7 @@ class Events extends \Ilch\Model
      *
      * @return int
      */
-    public function getUserLimit()
+    public function getUserLimit(): int
     {
         return $this->userLimit;
     }
@@ -502,9 +503,9 @@ class Events extends \Ilch\Model
      *
      * @return $this
      */
-    public function setUserLimit($userLimit)
+    public function setUserLimit(int $userLimit): Events
     {
-        $this->userLimit = (int)$userLimit;
+        $this->userLimit = $userLimit;
 
         return $this;
     }
@@ -512,9 +513,9 @@ class Events extends \Ilch\Model
     /**
      * Gets the read access of the event.
      *
-     * @return int
+     * @return string
      */
-    public function getReadAccess()
+    public function getReadAccess(): string
     {
         return $this->readAccess;
     }
@@ -526,9 +527,9 @@ class Events extends \Ilch\Model
      *
      * @return $this
      */
-    public function setReadAccess($readAccess)
+    public function setReadAccess(string $readAccess): Events
     {
-        $this->readAccess = (string)$readAccess;
+        $this->readAccess = $readAccess;
 
         return $this;
     }

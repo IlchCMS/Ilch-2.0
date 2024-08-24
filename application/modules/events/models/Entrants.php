@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -32,9 +33,9 @@ class Entrants extends \Ilch\Model
     /**
      * Gets the eventid of the event entrants.
      *
-     * @return int
+     * @return int|null
      */
-    public function getEventId()
+    public function getEventId(): ?int
     {
         return $this->eventId;
     }
@@ -46,9 +47,9 @@ class Entrants extends \Ilch\Model
      *
      * @return $this
      */
-    public function setEventId($eventId)
+    public function setEventId(int $eventId): Entrants
     {
-        $this->eventId = (int)$eventId;
+        $this->eventId = $eventId;
 
         return $this;
     }
@@ -56,9 +57,9 @@ class Entrants extends \Ilch\Model
     /**
      * Gets the user of the event entrants.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getUserId()
+    public function getUserId(): ?int
     {
         return $this->userId;
     }
@@ -66,13 +67,13 @@ class Entrants extends \Ilch\Model
     /**
      * Sets the userid of the event entrants.
      *
-     * @param integer $userId
+     * @param int $userId
      *
      * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): Entrants
     {
-        $this->userId = (int)$userId;
+        $this->userId = $userId;
 
         return $this;
     }
@@ -80,9 +81,9 @@ class Entrants extends \Ilch\Model
     /**
      * Gets the status from user of the event entrants.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getStatus()
+    public function getStatus(): ?int
     {
         return $this->status;
     }
@@ -90,13 +91,13 @@ class Entrants extends \Ilch\Model
     /**
      * Sets the status from user of the event entrants.
      *
-     * @param integer $status
+     * @param int $status value 1 (agree) or 2 (maybe).
      *
      * @return $this
      */
-    public function setStatus($status)
+    public function setStatus(int $status): Entrants
     {
-        $this->status = (int)$status;
+        $this->status = $status;
 
         return $this;
     }

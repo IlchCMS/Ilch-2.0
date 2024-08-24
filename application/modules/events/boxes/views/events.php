@@ -1,4 +1,9 @@
-<?php if ($this->get('eventList') != ''): ?>
+<?php
+
+/** @var \Ilch\View $this */
+?>
+
+<?php if ($this->get('eventList') != '') : ?>
     <style>
     .eventbox-title-ellipsis {
         text-overflow:ellipsis;
@@ -9,14 +14,16 @@
     }
     </style>
     <ul class="list-unstyled">
-        <?php foreach ($this->get('eventList') as $eventlist): ?>
-            <?php $date = new \Ilch\Date($eventlist->getStart()); ?>
-            <?php if (($this->getUser() && $this->getUser()->hasAccess('module_events')) || is_in_array($this->get('readAccess'), explode(',', $eventlist->getReadAccess()))): ?>
+        <?php
+        /** @var \Modules\Events\Models\Events $event */
+        foreach ($this->get('eventList') as $event) : ?>
+            <?php $date = new \Ilch\Date($event->getStart()); ?>
+            <?php if (($this->getUser() && $this->getUser()->hasAccess('module_events')) || is_in_array($this->get('readAccess'), explode(',', $event->getReadAccess()))) : ?>
                 <li>
                     <span class="eventbox-title-ellipsis">
                         <i class="fa-regular fa-calendar"></i>
-                        <a href="<?=$this->getUrl('events/show/event/id/' . $eventlist->getId()) ?>">
-                            <?=$this->escape($eventlist->getTitle()) ?>
+                        <a href="<?=$this->getUrl('events/show/event/id/' . $event->getId()) ?>">
+                            <?=$this->escape($event->getTitle()) ?>
                         </a>
                     </span>
                     <span class="small float-end"><?=$date->format('d.m.y', true) ?></span>
@@ -24,7 +31,7 @@
             <?php endif; ?>
         <?php endforeach; ?>
     </ul>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noEvent') ?>
 <?php endif; ?>
 <div align="center"><a href="<?=$this->getUrl('events/show/upcoming/') ?>"><?=$this->getTrans('otherEvents') ?></a></div>

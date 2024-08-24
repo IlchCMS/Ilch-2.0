@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -48,8 +49,7 @@ class Currency extends \Ilch\Controller\Admin
             $items[1]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuEvents',
             $items
         );
@@ -83,11 +83,22 @@ class Currency extends \Ilch\Controller\Admin
     {
         $currencyMapper = new CurrencyMapper();
 
+        $currencyModel = new CurrencyModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('currencies'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => 'treat']);
+
+            $currencyModel = $currencyMapper->getCurrencyById($this->getRequest()->getParam('id'));
+
+            if ($currencyModel) {
+                $currencyModel = reset($currencyModel);
+            } else {
+                $this->redirect()
+                    ->withMessage('entryNotFound')
+                    ->to(['controller' => 'index', 'action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
@@ -97,14 +108,10 @@ class Currency extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'name' => 'required|unique:events_currencies,name'
+                'name' => 'required|unique:events_currencies,name,' . $this->getRequest()->getParam('id') . ',id'
             ]);
 
             if ($validation->isValid()) {
-                $currencyModel = new CurrencyModel();
-                if ($this->getRequest()->getParam('id')) {
-                    $currencyModel->setId($this->getRequest()->getParam('id'));
-                }
                 $currencyModel->setName($this->getRequest()->getPost('name'));
                 $currencyMapper->save($currencyModel);
 
@@ -119,19 +126,12 @@ class Currency extends \Ilch\Controller\Admin
                 ->to(['action' => 'treat']);
         }
 
-        $currency = $currencyMapper->getCurrencyById($this->getRequest()->getParam('id'));
-        if (count($currency) > 0) {
-            $currency = $currency[0];
-        } else {
-            $currency = new CurrencyModel();
-        }
-
-        $this->getView()->set('currency', $currency);
+        $this->getView()->set('currency', $currencyModel);
     }
 
     public function deleteAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id')) {
             $eventMapper = new EventMapper();
             $currencyMapper = new CurrencyMapper();
 

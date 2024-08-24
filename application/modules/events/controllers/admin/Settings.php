@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -34,14 +35,13 @@ class Settings extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuEvents',
             $items
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $userGroupMapper = new UserGroupMapper();
 
@@ -60,16 +60,16 @@ class Settings extends \Ilch\Controller\Admin
             ]);
 
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'event_box_event_limit'     => 'required|numeric|min:1',
-                'event_upcoming_event_limit'=> 'required|numeric|min:1',
-                'event_current_event_limit' => 'required|numeric|min:1',
-                'event_past_event_limit'    => 'required|numeric|min:1',
-                'event_height'              => 'required|numeric|min:1',
-                'event_width'               => 'required|numeric|min:1',
-                'event_size'                => 'required|numeric|min:1',
-                'event_filetypes'           => 'required',
-                'event_google_maps_map_typ' => 'required',
-                'event_google_maps_zoom'    => 'required|numeric|min:1'
+                'event_box_event_limit'         => 'required|numeric|min:1',
+                'event_upcoming_event_limit'    => 'required|numeric|min:1',
+                'event_current_event_limit'     => 'required|numeric|min:1',
+                'event_past_event_limit'        => 'required|numeric|min:1',
+                'event_height'                  => 'required|numeric|min:1',
+                'event_width'                   => 'required|numeric|min:1',
+                'event_size'                    => 'required|numeric|min:1',
+                'event_filetypes'               => 'required',
+                'event_google_maps_map_typ'     => 'required',
+                'event_google_maps_zoom'        => 'required|numeric|min:1'
             ]);
 
             if ($validation->isValid()) {
@@ -124,5 +124,5 @@ class Settings extends \Ilch\Controller\Admin
             ->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'))
             ->set('event_google_maps_map_typ', $this->getConfig()->get('event_google_maps_map_typ'))
             ->set('event_google_maps_zoom', $this->getConfig()->get('event_google_maps_zoom'));
-        }
+    }
 }

@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuSettings') ?></h1>
@@ -13,18 +17,20 @@
                     name="event_add_entries_accesses[]"
                     data-placeholder="<?=$this->getTrans('selectGroupAccesses') ?>"
                     multiple>
-                <?php foreach ($this->get('userGroupList') as $groupList): ?>
-                    <?php if ($groupList->getId() != 1 && $groupList->getId() != 3): ?>
-                        <option value="<?=$groupList->getId() ?>"
+                <?php
+                /** @var \Modules\User\Models\Group $group */
+                foreach ($this->get('userGroupList') as $group) : ?>
+                    <?php if ($group->getId() != 1 && $group->getId() != 3) : ?>
+                        <option value="<?=$group->getId() ?>"
                             <?php $addEntriesAccessesIds = explode(',', $this->get('event_add_entries_accesses'));
                             foreach ($addEntriesAccessesIds as $addEntriesAccessesId) {
-                                if ($groupList->getId() == $addEntriesAccessesId) {
+                                if ($group->getId() == $addEntriesAccessesId) {
                                     echo 'selected="selected"';
                                     break;
                                 }
                             }
                             ?>>
-                            <?=$groupList->getName() ?>
+                            <?=$group->getName() ?>
                         </option>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -41,18 +47,20 @@
                     name="event_show_members_accesses[]"
                     data-placeholder="<?=$this->getTrans('selectGroupAccesses') ?>"
                     multiple>
-                <?php foreach ($this->get('userGroupList') as $groupList): ?>
-                    <?php if ($groupList->getId() != 1): ?>
-                        <option value="<?=$groupList->getId() ?>"
+                <?php
+                /** @var \Modules\User\Models\Group $group */
+                foreach ($this->get('userGroupList') as $group) : ?>
+                    <?php if ($group->getId() != 1) : ?>
+                        <option value="<?=$group->getId() ?>"
                             <?php $addEntriesAccessesIds = explode(',', $this->get('event_show_members_accesses'));
                             foreach ($addEntriesAccessesIds as $addEntriesAccessesId) {
-                                if ($groupList->getId() == $addEntriesAccessesId) {
+                                if ($group->getId() == $addEntriesAccessesId) {
                                     echo 'selected="selected"';
                                     break;
                                 }
                             }
                             ?>>
-                            <?=$groupList->getName() ?>
+                            <?=$group->getName() ?>
                         </option>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -179,10 +187,9 @@
         </label>
         <div class="col-xl-2">
             <select class="form-select" id="event_google_maps_map_typ" name="event_google_maps_map_typ">
-                <option <?php if ($this->get('event_google_maps_map_typ') === 'ROADMAP') { echo 'selected="selected"'; } ?> value="ROADMAP">ROADMAP</option>
-                <option <?php if ($this->get('event_google_maps_map_typ') === 'SATELLITE') { echo 'selected="selected"'; } ?> value="SATELLITE">SATELLITE</option>
-                <option <?php if ($this->get('event_google_maps_map_typ') === 'HYBRID') { echo 'selected="selected"'; } ?> value="HYBRID">HYBRID</option>
-                <option <?php if ($this->get('event_google_maps_map_typ') === 'TERRAIN') { echo 'selected="selected"'; } ?> value="TERRAIN">TERRAIN</option>
+                <?php foreach (['ROADMAP', 'SATELLITE', 'HYBRID', 'TERRAIN'] as $type) : ?>
+                <option<?=($this->get('event_google_maps_map_typ') === $type) ? ' selected="selected"' : '' ?> value="<?=$type ?>>"><?=$type ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
     </div>

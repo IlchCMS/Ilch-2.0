@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -11,7 +12,7 @@ class Currency extends \Ilch\Model
     /**
      * The id of the currency.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -20,14 +21,14 @@ class Currency extends \Ilch\Model
      *
      * @var string
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * Gets the id of the currency.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -35,13 +36,13 @@ class Currency extends \Ilch\Model
     /**
      * Sets the id of the currency.
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Currency
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -51,7 +52,7 @@ class Currency extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -63,9 +64,9 @@ class Currency extends \Ilch\Model
      *
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): Currency
     {
-        $this->name = (string)$name;
+        $this->name = $name;
 
         return $this;
     }
