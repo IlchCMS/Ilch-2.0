@@ -57,14 +57,14 @@ $entrantsMapper = $this->get('entrantsMapper');
                                     <?php endif; ?>
                                     <ul>
                                         <?php if ($event->getUserLimit() > 0) : ?>
-                                            <li style="width:25%;"><?=$this->getTrans('guest') ?></li>
-                                            <li style="width:25%;"><?=$agree ?> <i class="fa-solid fa-check"></i></li>
-                                            <li style="width:25%;"><?=$maybe ?> <i class="fa-solid fa-question"></i></li>
-                                            <li style="width:25%;"><?=$event->getUserLimit() ?> <i class="fa-solid fa-users"></i></li>
+                                            <li class="col-3"><?=$this->getTrans('guest') ?></li>
+                                            <li class="col-3""><?=$agree ?> <i class="fa-solid fa-check"></i></li>
+                                            <li class="col-3""><?=$maybe ?> <i class="fa-solid fa-question"></i></li>
+                                            <li class="col-3""><?=$event->getUserLimit() ?> <i class="fa-solid fa-users"></i></li>
                                         <?php else : ?>
-                                            <li style="width:33%;"><?=$this->getTrans('guest') ?></li>
-                                            <li style="width:33%;"><?=$agree ?> <i class="fa-solid fa-check"></i></li>
-                                            <li style="width:33%;"><?=$maybe ?> <i class="fa-solid fa-question"></i></li>
+                                            <li class="col-4"><?=$this->getTrans('guest') ?></li>
+                                            <li class="col-4"><?=$agree ?> <i class="fa-solid fa-check"></i></li>
+                                            <li class="col-4"><?=$maybe ?> <i class="fa-solid fa-question"></i></li>
                                         <?php endif; ?>
                                     </ul>
                                 </div>
@@ -120,14 +120,14 @@ $entrantsMapper = $this->get('entrantsMapper');
                                 <?php endif; ?>
                                 <ul>
                                     <?php if ($event->getUserLimit() > 0) : ?>
-                                        <li style="width:25%;"><?=$this->getTrans('guest') ?></li>
-                                        <li style="width:25%;"><?=$agree ?> <i class="fa-solid fa-check"></i></li>
-                                        <li style="width:25%;"><?=$maybe ?> <i class="fa-solid fa-question"></i></li>
-                                        <li style="width:25%;"><?=$event->getUserLimit() ?> <i class="fa-solid fa-users"></i></li>
+                                        <li class="col-3"><?=$this->getTrans('guest') ?></li>
+                                        <li class="col-3"><?=$agree ?> <i class="fa-solid fa-check"></i></li>
+                                        <li class="col-3"><?=$maybe ?> <i class="fa-solid fa-question"></i></li>
+                                        <li class="col-3"><?=$event->getUserLimit() ?> <i class="fa-solid fa-users"></i></li>
                                     <?php else : ?>
-                                        <li style="width:33%;"><?=$this->getTrans('guest') ?></li>
-                                        <li style="width:33%;"><?=$agree ?> <i class="fa-solid fa-check"></i></li>
-                                        <li style="width:33%;"><?=$maybe ?> <i class="fa-solid fa-question"></i></li>
+                                        <li class="col-4"><?=$this->getTrans('guest') ?></li>
+                                        <li class="col-4"><?=$agree ?> <i class="fa-solid fa-check"></i></li>
+                                        <li class="col-4"><?=$maybe ?> <i class="fa-solid fa-question"></i></li>
                                     <?php endif; ?>
                                 </ul>
                             </div>
@@ -180,14 +180,14 @@ $entrantsMapper = $this->get('entrantsMapper');
                                 <?php endif; ?>
                                 <ul>
                                     <?php if ($event->getUserLimit() > 0) : ?>
-                                        <li style="width:25%;"><?=$this->getTrans('guest') ?></li>
-                                        <li style="width:25%;"><?=$agree ?> <i class="fa-solid fa-check"></i></li>
-                                        <li style="width:25%;"><?=$maybe ?> <i class="fa-solid fa-question"></i></li>
-                                        <li style="width:25%;"><?=$event->getUserLimit() ?> <i class="fa-solid fa-users"></i></li>
+                                        <li class="col-3"><?=$this->getTrans('guest') ?></li>
+                                        <li class="col-3"><?=$agree ?> <i class="fa-solid fa-check"></i></li>
+                                        <li class="col-3"><?=$maybe ?> <i class="fa-solid fa-question"></i></li>
+                                        <li class="col-3"><?=$event->getUserLimit() ?> <i class="fa-solid fa-users"></i></li>
                                     <?php else : ?>
-                                        <li style="width:33%;"><?=$this->getTrans('guest') ?></li>
-                                        <li style="width:33%;"><?=$agree ?> <i class="fa-solid fa-check"></i></li>
-                                        <li style="width:33%;"><?=$maybe ?> <i class="fa-solid fa-question"></i></li>
+                                        <li class="col-4"><?=$this->getTrans('guest') ?></li>
+                                        <li class="col-4"><?=$agree ?> <i class="fa-solid fa-check"></i></li>
+                                        <li class="col-4"><?=$maybe ?> <i class="fa-solid fa-question"></i></li>
                                     <?php endif; ?>
                                 </ul>
                             </div>
