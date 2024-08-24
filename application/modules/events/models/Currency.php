@@ -14,7 +14,7 @@ class Currency extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected $id;
 
     /**
      * The name of the currency.
@@ -26,9 +26,9 @@ class Currency extends \Ilch\Model
     /**
      * Gets the id of the currency.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
