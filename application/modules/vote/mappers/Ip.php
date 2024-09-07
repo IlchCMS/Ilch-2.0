@@ -15,7 +15,7 @@ class Ip extends \Ilch\Mapper
      * @var string
      * @since 1.12.0
      */
-    public $tablename = 'poll_ip';
+    public string $tablename = 'poll_ip';
 
     /**
      * returns if the module is installed.

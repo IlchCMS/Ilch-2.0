@@ -14,21 +14,21 @@ class Ip extends \Ilch\Model
      *
      * @var int
      */
-    protected $pollId = 0;
+    protected int $pollId = 0;
 
     /**
      * The ip of the Vote.
      *
      * @var string
      */
-    protected $ip = '';
+    protected string $ip = '';
 
     /**
      * The user id of the Vote.
      *
      * @var int
      */
-    protected $userId = 0;
+    protected int $userId = 0;
 
     /**
      * @param array $entries
@@ -129,9 +129,9 @@ class Ip extends \Ilch\Model
     public function getArray(): array
     {
         return [
-            'poll_id' => $this->getPollId(),
-            'ip' => $this->getIP(),
-            'user_id' => $this->getUserId()
+            'poll_id'   => $this->getPollId(),
+            'ip'        => $this->getIP(),
+            'user_id'   => $this->getUserId()
         ];
     }
 }

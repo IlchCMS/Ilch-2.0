@@ -9,7 +9,6 @@ namespace Modules\Vote\Boxes;
 
 use Modules\Vote\Mappers\Vote as VoteMapper;
 use Modules\Vote\Mappers\Result as ResultMapper;
-use Modules\Vote\Mappers\Ip as IpMapper;
 use Modules\User\Mappers\User as UserMapper;
 
 class Vote extends \Ilch\Box
@@ -18,7 +17,6 @@ class Vote extends \Ilch\Box
     {
         $voteMapper = new VoteMapper();
         $resultMapper = new ResultMapper();
-        $ipMapper = new IpMapper();
         $userMapper = new UserMapper();
 
         $readAccess = [3];
@@ -31,11 +29,15 @@ class Vote extends \Ilch\Box
             }
         }
 
-        $this->getView()->set('voteMapper', $voteMapper)
-            ->set('resultMapper', $resultMapper)
-            ->set('ipMapper', $ipMapper)
-            ->set('userMapper', $userMapper)
+        if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $clientIP = $_SERVER['REMOTE_ADDR'];
+        } else {
+            $clientIP = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+
+        $this->getView()->set('resultMapper', $resultMapper)
             ->set('votes', $voteMapper->getVotes(['status' => 0], $readAccess))
-            ->set('readAccess', $readAccess);
+            ->set('readAccess', $readAccess)
+            ->set('clientIP', $clientIP);
     }
 }

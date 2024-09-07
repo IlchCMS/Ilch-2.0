@@ -7,6 +7,9 @@
 
 namespace Modules\Vote\Models;
 
+use Modules\User\Models\User;
+use Modules\Vote\Mappers\Ip as IpMapper;
+
 class Vote extends \Ilch\Model
 {
     /**
@@ -14,56 +17,49 @@ class Vote extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The question of the vote.
      *
      * @var string
      */
-    protected $question = '';
+    protected string $question = '';
 
     /**
      * The key of the vote.
      *
      * @var string
      */
-    protected $key = '';
+    protected string $key = '';
 
     /**
      * The groups of the vote.
      *
      * @var string
      */
-    protected $groups = '';
+    protected string $groups = '';
 
     /**
      * The read access of the vote.
      *
      * @var string
      */
-    protected $readAccess = '2,3';
+    protected string $readAccess = '2,3';
 
     /**
      * The status of the vote.
      *
      * @var bool
      */
-    protected $status = false;
-
-    /**
-     * The read access all of the vote.
-     *
-     * @var int
-     */
-    protected $read_access_all = 0;
+    protected bool $status = false;
 
     /**
      * The multiple reply of the vote.
      *
-     * @var int
+     * @var bool
      */
-    protected $multiple_reply = 0;
+    protected bool $multiple_reply = false;
 
     /**
      * @param array $entries
@@ -273,6 +269,31 @@ class Vote extends \Ilch\Model
     }
 
     /**
+     * check User can Vote
+     *
+     * @param string $clientIP
+     * @param User|null $user
+     * @param $groupIds
+     * @return bool
+     * @since 1.14.0
+     */
+    public function canVote(string $clientIP, ?User $user, $groupIds): bool
+    {
+        $userId = null;
+
+        if ($user) {
+            $userId = $user->getId();
+        }
+
+        $ipMapper = new IpMapper();
+
+        $ip = $ipMapper->getIP($this->getId(), $clientIP);
+        $votedUser = $ipMapper->getVotedUser($this->getId(), $userId);
+
+        return !($ip || $votedUser || $this->getStatus() != 0 || !is_in_array(explode(',', $this->getGroups()), array_merge($groupIds, ($this->getGroups() == 'all' ? ['all'] : []))));
+    }
+
+    /**
      * @param bool $withId
      * @return array
      * @since 1.12.0
@@ -282,12 +303,12 @@ class Vote extends \Ilch\Model
         return array_merge(
             ($withId ? ['id' => $this->getId()] : []),
             [
-                'question' => $this->getQuestion(),
-                'key' => $this->getKey(),
-                'status' => $this->getStatus(),
-                'groups' => $this->getGroups(),
+                'question'          => $this->getQuestion(),
+                'key'               => $this->getKey(),
+                'status'            => $this->getStatus(),
+                'groups'            => $this->getGroups(),
                 'read_access_all'   => ($this->getReadAccess() === 'all' ? 1 : 0),
-                'multiple_reply' => $this->getMultipleReply(),
+                'multiple_reply'    => $this->getMultipleReply(),
             ]
         );
     }

@@ -4,6 +4,9 @@
 
 /** @var Modules\Vote\Models\Vote|null $vote */
 $vote = $this->get('vote');
+
+/** @var Modules\Vote\Models\Result[] $voteRes */
+$voteRes = $this->get('voteRes');
 ?>
 
 <h1><?=($vote->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
@@ -21,11 +24,11 @@ $vote = $this->get('vote');
                 <option value="all" <?=in_array('all', $this->originalInput('group', explode(',', $vote->getGroups()))) ? 'selected="selected"' : '' ?>>
                     <?=$this->getTrans('groupAll') ?>
                 </option>
-            <?php foreach ($this->get('userGroupList') as $group) : ?>
-                <option value="<?=$group->getId() ?>" <?=in_array($group->getId(), $this->originalInput('group', explode(',', $vote->getGroups()))) ? ' selected' : '' ?>>
-                    <?=$this->escape($group->getName()) ?>
-                </option>
-            <?php endforeach; ?>
+                <?php foreach ($this->get('userGroupList') as $group) : ?>
+                    <option value="<?=$group->getId() ?>" <?=in_array($group->getId(), $this->originalInput('group', explode(',', $vote->getGroups()))) ? ' selected' : '' ?>>
+                        <?=$this->escape($group->getName()) ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
         </div>
     </div>
@@ -41,11 +44,11 @@ $vote = $this->get('vote');
                 <option value="all" <?=in_array('all', $this->originalInput('access', explode(',', $vote->getReadAccess()))) ? 'selected="selected"' : '' ?>>
                     <?=$this->getTrans('groupAll') ?>
                 </option>
-            <?php foreach ($this->get('userGroupList') as $groupList) : ?>
-                <?php if ($groupList->getId() != 1) : ?>
-                    <option value="<?=$groupList->getId() ?>"<?=in_array($groupList->getId(), $this->originalInput('access', explode(',', $vote->getReadAccess()))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
-                <?php endif; ?>
-            <?php endforeach; ?>
+                <?php foreach ($this->get('userGroupList') as $groupList) : ?>
+                    <?php if ($groupList->getId() != 1) : ?>
+                        <option value="<?=$groupList->getId() ?>"<?=in_array($groupList->getId(), $this->originalInput('access', explode(',', $vote->getReadAccess()))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </select>
         </div>
     </div>
@@ -75,87 +78,67 @@ $vote = $this->get('vote');
             </div>
         </div>
     </div>
+
     <div class="row mb-3<?=$this->validation()->hasError('reply') ? ' has-error' : '' ?>">
         <label for="reply" class="col-xl-2 col-form-label">
             <?=$this->getTrans('reply') ?>
         </label>
-        <?php if ($vote->getId()) : ?>
-            <?php $resultMapper = new \Modules\Vote\Mappers\Result(); ?>
-            <?php $voteRes = $resultMapper->getVoteRes($vote->getId()); ?>
-            <?php $countRes = count($voteRes); ?>
-            <?php $i = 0; ?>
-            <div class="col-xl-4">
-                <?php foreach ($voteRes as $voteResModel) : ?>
-                    <?php $i++; ?>
-                    <div class="mb-3 input-group">
-                        <input type="text" name="reply[]" class="form-control" value="<?=$this->escape($voteResModel->getReply()) ?>">
-                        <?php if ($i == $countRes) : ?>
-                            <button type="button" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></button>
-                        <?php else : ?>
-                            <button type="button" class="btn btn-danger btn-remove"><i class="fa-solid fa-minus"></i></button>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php else : ?>
-            <div class="col-xl-4">
-                <div class="input-group">
-                    <input type="text" name="reply[]" class="form-control">
-                    <button type="button" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></button>
+        <div id="reply-container" class="col-xl-4">
+            <?php foreach ($voteRes as $counter => $voteResModel) : ?>
+                <div class="mb-3 input-group">
+                    <input type="text" name="reply[]" class="form-control" value="<?=$this->escape($voteResModel->getReply()) ?>">
+                    <button type="button" class="btn btn-outline-success btn-add"><i class="fa-solid fa-plus"></i></button>
+                    <button type="button" class="btn btn-outline-danger btn-remove"><i class="fa-solid fa-minus"></i></button>
                 </div>
-            </div>
-        <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
 
     <?=($vote->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>
 
 <script>
-$('#access').chosen();
-$('#group').chosen();
+    $('#access').chosen();
+    $('#group').chosen();
 
-(function ($) {
-    $(function () {
-        let addFormGroup = function (event) {
-            event.preventDefault();
+    $(document).ready(function() {
+        // Funktion zum Hinzufügen eines neuen Reply-Feldes
+        $(document).on('click', '.btn-add', function() {
+            let $currentGroup = $(this).closest('.input-group');
+            let $newGroup = $currentGroup.clone();
 
-            let $formGroup = $(this).closest('.row');
-            let $multipleFormGroup = $formGroup.closest('.multiple-form-group');
-            let $formGroupClone = $formGroup.clone();
+            // Setze den Wert des neuen Feldes auf leer
+            $newGroup.find('input').val('');
 
-            $(this)
-                .toggleClass('btn-success btn-add btn-danger btn-remove')
-                .html('<i class="fa-solid fa-minus"></i>');
+            // Füge den neuen Reply-Feld-Block nach dem aktuellen Block hinzu
+            $currentGroup.after($newGroup);
 
-            $formGroupClone.find('input').val('');
-            $formGroupClone.insertAfter($formGroup);
+            // Überprüfe die Anzahl der Reply-Felder und aktualisiere den Löschen-Button
+            updateRemoveButtons();
+        });
 
-            let $lastFormGroupLast = $multipleFormGroup.find('.row:last');
-            if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
-                $lastFormGroupLast.find('.btn-add').attr('disabled', true);
+        // Funktion zum Entfernen eines Reply-Feldes
+        $(document).on('click', '.btn-remove', function() {
+            let $currentGroup = $(this).closest('.input-group');
+
+            // Entferne das aktuelle Reply-Feld
+            $currentGroup.remove();
+
+            // Überprüfe die Anzahl der Reply-Felder und aktualisiere den Löschen-Button
+            updateRemoveButtons();
+        });
+
+        // Funktion zur Aktualisierung des Löschen-Buttons
+        function updateRemoveButtons() {
+            let $replyContainers = $('#reply-container .input-group');
+            if ($replyContainers.length > 1) {
+                $replyContainers.find('.btn-remove').show();
+            } else {
+                $replyContainers.find('.btn-remove').hide();
             }
-        };
+        }
 
-        let removeFormGroup = function (event) {
-            event.preventDefault();
-
-            let $formGroup = $(this).closest('.row');
-            let $multipleFormGroup = $formGroup.closest('.multiple-form-group');
-
-            let $lastFormGroupLast = $multipleFormGroup.find('.row:last');
-            if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
-                $lastFormGroupLast.find('.btn-add').attr('disabled', false);
-            }
-
-            $formGroup.remove();
-        };
-
-        let countFormGroup = function ($form) {
-            return $form.find('.row').length;
-        };
-
-        $(document).on('click', '.btn-add', addFormGroup);
-        $(document).on('click', '.btn-remove', removeFormGroup);
+        // Initiale Überprüfung der Anzahl der Reply-Felder beim Laden der Seite
+        updateRemoveButtons();
     });
-})(jQuery);
 </script>
