@@ -1,8 +1,20 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var int $countOfProfileFields */
 $countOfProfileFields = $this->get('countOfProfileFields');
+/** @var \Modules\User\Models\ProfileField $profileField */
 $profileField = $this->get('profileField');
+/** @var \Modules\User\Models\ProfileFieldTranslation[] $profileFieldsTranslation */
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
+/** @var string[] $localeList */
 $localeList = $this->get('localeList');
+
+/** @var int[] $localeList */
+$multiArr = $this->get('multiTypes');
+
+/** @var array $type */
 $type = [
     0 => 'profileFieldField',
     1 => 'profileFieldCat',
@@ -12,6 +24,7 @@ $type = [
     5 => 'profileFieldDrop',
     6 => 'profileFieldDate'
 ];
+/** @var array $iconArray */
 $iconArray = [
     0 => 'fa-regular fa-pen-to-square',
     1 => 'fa-solid fa-heading',
@@ -52,7 +65,7 @@ $iconArray = [
         <div class="col-xl-4">
             <div class="input-group">
                 <select class="form-select" id="profileFieldType" name="profileField[type]">
-                    <?php foreach ($type as $key => $value): ?>
+                    <?php foreach ($type as $key => $value) : ?>
                         <option value="<?=$key ?>"
                             <?=($profileField->getId() && $profileField->getType() == $key) ? ' selected' : '' ?>
                             <?=($profileField->getId() && $profileField->getType() != $key) ? ' disabled' : '' ?>
@@ -62,7 +75,7 @@ $iconArray = [
                     <?php endforeach; ?>
                 </select>
                 <span class="input-group-text typeinfo">
-                    <span class="<?=($profileField->getType()!==null) ? $iconArray[$profileField->getType()] : $iconArray[0] ?>"></span>
+                    <span class="<?=($profileField->getType() !== null) ? $iconArray[$profileField->getType()] : $iconArray[0] ?>"></span>
                 </span>
             </div>
         </div>
@@ -74,13 +87,14 @@ $iconArray = [
             <?=$this->getTrans('profileFieldDescription') ?>
         </label>
         <div class="col-xl-4">
-            <textarea class="form-control typedesc" id="profileFieldDescription" rows="2" readonly><?=($profileField->getType()!==null) ? $this->getTrans('profileFieldTypeDesc'.$profileField->getType()) : $this->getTrans('profileFieldTypeDesc0') ?></textarea>
+            <textarea class="form-control typedesc" id="profileFieldDescription" rows="2" readonly><?=($profileField->getType() !== null) ? $this->getTrans('profileFieldTypeDesc' . $profileField->getType()) : $this->getTrans('profileFieldTypeDesc0') ?></textarea>
         </div>
     </div>
 
     <!-- icon selection -->
     <div class="row mb-3" id="profileFieldIcons" <?=($profileField->getType() == 2) ? '' : 'hidden' ?>>
-        <?php $icon = '';
+        <?php
+        $icon = '';
         if ($profileField->getType() == 2) {
             $icon = ($profileField->getIcon() !== '') ? $profileField->getIcon() : $this->get('post')['symbol'];
         }
@@ -139,84 +153,56 @@ $iconArray = [
 
     <!-- translation fiels -->
     <div id="translations">
-        <?php $i = 0; ?>
-        <?php foreach ($profileFieldsTranslation as $profileFieldTranslation): ?>
-        <div class="row mb-3" id="profileFieldTrans<?=$i ?>">
-            <input type="hidden" name="profileFieldTrans<?=$i ?>[field_id]" value="<?=$profileField->getId() ?>" />
-            <input type="hidden" name="profileFieldTrans<?=$i ?>[locale]" value="<?=$profileFieldTranslation->getLocale() ?>" />
-            <label for="profileFieldName<?=$i ?>" class="col-lg-2 col-form-label">
+        <div class="row mb-3" id="profileFieldTrans">
+            <label for="profileFieldTrans_name" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('profileFieldName') ?>
             </label>
-            <div class="col-xl-4">
-                <div class="input-group">
-                    <select class="form-select" name="profileFieldTrans<?=$i ?>[locale]" id="profileFieldName<?=$i ?>" onchange="isDuplicate()">
+            <div id="trans-container" class="col-xl-4">
+                <?php foreach ($profileFieldsTranslation as $profileFieldTranslation) : ?>
+                <div class="mb-3 input-group">
+                    <input type="hidden" name="profileFieldTrans_field_id[]" value="<?=$profileField->getId() ?>" />
+                    <input type="hidden" name="profileFieldTrans_oldLocale[]" value="<?=$profileFieldTranslation->getLocale() ?>" />
+
+                    <select class="form-select selectTrans" name="profileFieldTrans_locale[]">
                         <option selected="selected" disabled><?=$this->getTrans('pleaseSelect') ?></option>
-                        <?php foreach ($localeList as $key => $locale) :?>
+                        <?php foreach ($localeList as $key => $locale) : ?>
                             <option value="<?=$key ?>"
                             <?=(($locale == $localeList[$profileFieldTranslation->getLocale()]) ? ' selected' : ''); ?>
                             ><?=$locale ?></option>
-                        <?php next($localeList);
+                            <?php next($localeList);
                         endforeach; ?>
                     </select>
-                    <button type="button" class="btn btn-outline-secondary" onclick="deleteTranslation(<?=$i ?>)"><i class="fa-solid fa-minus"></i></button>
                     <input type="text"
                            class="form-control"
-                           id="profileFieldName<?=$i ?>"
-                           name="profileFieldTrans<?=$i ?>[name]"
+                           name="profileFieldTrans_name[]"
                            placeholder="<?=$this->getTrans('profileFieldName') ?>"
                            value="<?=$this->escape($profileFieldTranslation->getName()) ?>" />
+                    <button type="button" class="btn btn-outline-success btn-addTrans"><i class="fa-solid fa-plus"></i></button>
+                    <button type="button" class="btn btn-outline-secondary btn-removeTrans"><i class="fa-solid fa-minus"></i></button>
                 </div>
-            </div>
-            <script>indexList.push(<?=$i ?>)</script>
-            <?php $i++; ?>
-        </div>
-        <?php endforeach; ?>
-        <div id="addTranslations"></div>
-        <div class="row mb-3">
-            <label for="profileFieldTranslation" class="col-xl-2 col-form-label">
-                <?=$this->getTrans('addProfileFieldTranslation') ?>
-            </label>
-            <div class="col-xl-4">
-                <button type="button" class="btn btn-outline-secondary" onclick="addTranslations()"><i class="fa-solid fa-plus"></i></button>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
 
     <!-- multi options -->
-    <?php $multiArr = [3, 4, 5]; ?>
-    <div class="profileFieldsMulti" <?=(in_array($profileField->getType(), $multiArr)) ? '' : 'hidden' ?>>
-        <?php if ($profileField->getOptions()) : ?>
-            <?php $options = json_decode($profileField->getOptions(), true); ?>
-            <div class="mb-3">
-                <label for="profileFieldOptions" class="col-lg-2 col-form-label">
-                    <?=$this->getTrans('profileFieldOptions')  ?>
-                </label>
-                <div class="col-xl-4">
-                    <?php foreach ($options as $key => $value): ?>
-                        <div class="mb-3 input-group">
-                            <input type="text" name="profileFieldOptions[<?=$key ?>]" class="form-control required" value="<?=$this->escape($value) ?>" />
-                            <button type="button" class="btn btn-danger btn-remove"><i class="fa-solid fa-minus"></i></button>
-                        </div>
-                    <?php endforeach; ?>
-                    <div class="mb-3 input-group">
-                        <input type="text" name="profileFieldOptions[]" class="form-control">
-                        <button type="button" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></button>
-                    </div>
-                </div>
-            </div>
-        <?php else : ?>
-        <div class="row mb-3">
-            <label for="profileFieldOptions" class="col-lg-2 col-form-label">
-                <?=$this->getTrans('profileFieldOptions') ?>
-            </label>
-            <div class="col-xl-4">
-                <div class="mb-3 input-group">
-                    <input type="text" name="profileFieldOptions[]" id="profileFieldOptions" class="form-control">
-                    <button type="button" class="btn btn-success btn-add"><i class="fa-solid fa-plus"></i></button>
-                </div>
-            </div>
-        </div>
+    <div class="row mb-3 profileFieldsMulti" <?=(in_array($profileField->getType(), $multiArr)) ? '' : 'hidden' ?>>
+        <?php if (empty($profileField->getOptions())) : ?>
+            <?php $profileField->setOptions('[""]');?>
         <?php endif; ?>
+        <?php $options = json_decode($profileField->getOptions(), true); ?>
+        <label for="profileFieldOptions" class="col-lg-2 col-form-label">
+            <?=$this->getTrans('profileFieldOptions')  ?>
+        </label>
+        <div id="options-container" class="col-xl-4">
+            <?php foreach ($options as $key => $value) : ?>
+                <div class="mb-3 input-group">
+                    <input type="text" name="profileFieldOptions[]" class="form-control required" value="<?=$this->escape($value) ?>" />
+                    <button type="button" class="btn btn-outline-success btn-add"><i class="fa-solid fa-plus"></i></button>
+                    <button type="button" class="btn btn-outline-danger btn-remove"><i class="fa-solid fa-minus"></i></button>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
 
     <!-- save -->
@@ -243,193 +229,169 @@ $iconArray = [
 <?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('profileFieldTransInfoText')) ?>
 
 <script>
-    let index = <?=$i ?>;
     $('#profileFieldForm').validate();
 
-$('[name="profileField[type]"]').click(function () {
-    const keysArr = ['3', '4', '5'];
-    const thisKey = $(this).val();
-    if (thisKey == "2") {
-        $('#profileFieldIcons, #profileFieldAddition').removeAttr('hidden');
-    } else {
-        $('#profileFieldIcons, #profileFieldAddition').attr('hidden', '');
-    }
-    if (jQuery.inArray(thisKey, keysArr) !== -1) {
-        $('.profileFieldsSingle').attr('hidden', '');
-        $('.profileFieldsMulti').removeAttr('hidden');
-    } else {
-        $('.profileFieldsSingle').removeAttr('hidden');
-        $('.profileFieldsMulti').attr('hidden', '');
-    }
-});
-
-$('select#profileFieldType').change(function() {
-    const typeKey = $('#profileFieldType').find(':selected').val();
-    const typeDesc0 = '<?=$this->getTrans('profileFieldTypeDesc0') ?>';
-    const typeDesc1 = '<?=$this->getTrans('profileFieldTypeDesc1') ?>';
-    const typeDesc2 = '<?=$this->getTrans('profileFieldTypeDesc2') ?>';
-    const typeDesc3 = '<?=$this->getTrans('profileFieldTypeDesc3') ?>';
-    const typeDesc4 = '<?=$this->getTrans('profileFieldTypeDesc4') ?>';
-    const typeDesc5 = '<?=$this->getTrans('profileFieldTypeDesc5') ?>';
-    const typeDesc6 = '<?=$this->getTrans('profileFieldTypeDesc6') ?>';
-    const typeDesc7 = '<?=$this->getTrans('profileFieldTypeDesc7') ?>';
-    const iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa-icons', 'fa-regular fa-circle-check', 'fa-regular fa-square-check', 'fa-regular fa-square-caret-down', 'fa-regular fa-calendar-days'];
-    $('.typeinfo').html('<span class="'+iconArray[typeKey]+'"></span>');
-    $('.typedesc').val(eval("typeDesc"+typeKey));
-});
-
-function isDuplicate(test) {
-    let allElements;
-    let select_id;
-
-    // indexList is undefined after deleting the last element with array.splice().
-    if (indexList == undefined) {
-        indexList = [];
-    }
-
-    for(let x = 0; x < indexList.length; x++) {
-        allElements = document.getElementsByName('profileFieldTrans'+indexList[x]+'[locale]')[0];
-        for(let y = x+1; y < indexList.length; y++) {
-            select_id = document.getElementsByName('profileFieldTrans'+indexList[y]+'[locale]')[0];
-
-            if (select_id.options && select_id.options[select_id.selectedIndex].value != "" && select_id.options[select_id.selectedIndex].value == allElements.value) {
-                alert('<?=$this->getTrans('translationAlreadyExisting') ?>');
-                deleteTranslation(indexList[y],1);
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
-function addTranslations() {
-    if (isDuplicate()) {
-        return;
-    }
-
-    const html = '<div class="row mb-3" id="profileFieldTrans' + index + '">' +
-        '<input type="hidden"' +
-        'name="profileFieldTrans' + index + '[field_id]"' +
-        'value="<?=$profileField->getId() ?>" />' +
-        '<label for="" class="col-lg-2 col-form-label"><?=$this->getTrans('profileFieldName') ?></label>' +
-        '<div class="col-lg-4">' +
-        '<div class="input-group">' +
-        '<select class="form-select" name="profileFieldTrans' + index + '[locale]" onchange="isDuplicate()" required>' +
-        '<option selected="true" disabled><?=$this->getTrans('pleaseSelect') ?></option>' +
-        <?php
-        foreach ($localeList as $key => $locale) :?>
-        '<option value="<?=$key ?>"><?=$locale ?></option>' +
-        <?php next($localeList);
-        endforeach; ?>
-        '</select>' +
-        '<button type="button" class="btn btn-outline-secondary" onclick="deleteTranslation(' + index + ')"><i class="fa-solid fa-minus"></i></button>' +
-        '<input type="text"' +
-        'class="form-control"' +
-        'id="profileFieldName' + index + '"' +
-        'name="profileFieldTrans' + index + '[name]"' +
-        'placeholder="<?=$this->getTrans('profileFieldName') ?>"' +
-        'value="" />' +
-        '</div>' +
-        '</div>' +
-        '</div>';
-    const d1 = document.getElementById('addTranslations');
-    d1.insertAdjacentHTML('beforeend', html);
-    indexList.push(index)
-    index++;
-}
-
-function deleteTranslation(a, x=0) {
-    if (x == 1) {
-        document.getElementById('profileFieldTrans'+a).remove();
-        indexList.splice(indexList.indexOf(a), 1);
-    } else {
-        document.getElementById('profileFieldName'+a).value = '';
-    }
-}
-
-$("#symbolDialog").on('shown.bs.modal', function (e) {
-    let content = JSON.parse(<?=json_encode(file_get_contents(ROOT_PATH.'/vendor/fortawesome/font-awesome/metadata/icons.json')) ?>);
-    let icons = [];
-
-    $.each(content, function(index, icon) {
-        if (~icon.styles.indexOf('brands')) {
-            icons.push('fa-brands fa-' + index);
+    $('[name="profileField[type]"]').click(function () {
+        const keysArr = [<?php foreach ($multiArr as $key => $value) {
+            echo ($key > 0 ? ', ' : '') . '\'' . $value . '\'';
+                         } ?>];
+        const thisKey = $(this).val();
+        if (thisKey === "2") {
+            $('#profileFieldIcons, #profileFieldAddition').removeAttr('hidden');
         } else {
-            if (~icon.styles.indexOf('solid')) {
-                icons.push('fa-solid fa-' + index);
-            }
-            if (~icon.styles.indexOf('regular')) {
-                icons.push('fa-regular fa-' + index);
+            $('#profileFieldIcons, #profileFieldAddition').attr('hidden', '');
+        }
+        if (jQuery.inArray(thisKey, keysArr) !== -1) {
+            $('.profileFieldsSingle').attr('hidden', '');
+            $('.profileFieldsMulti').removeAttr('hidden');
+        } else {
+            $('.profileFieldsSingle').removeAttr('hidden');
+            $('.profileFieldsMulti').attr('hidden', '');
+        }
+    });
+
+    $('select#profileFieldType').change(function() {
+        const typeKey = $('#profileFieldType').find(':selected').val();
+        const typeDesc0 = '<?=$this->getTrans('profileFieldTypeDesc0') ?>';
+        const typeDesc1 = '<?=$this->getTrans('profileFieldTypeDesc1') ?>';
+        const typeDesc2 = '<?=$this->getTrans('profileFieldTypeDesc2') ?>';
+        const typeDesc3 = '<?=$this->getTrans('profileFieldTypeDesc3') ?>';
+        const typeDesc4 = '<?=$this->getTrans('profileFieldTypeDesc4') ?>';
+        const typeDesc5 = '<?=$this->getTrans('profileFieldTypeDesc5') ?>';
+        const typeDesc6 = '<?=$this->getTrans('profileFieldTypeDesc6') ?>';
+        const typeDesc7 = '<?=$this->getTrans('profileFieldTypeDesc7') ?>';
+        const iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa-icons', 'fa-regular fa-circle-check', 'fa-regular fa-square-check', 'fa-regular fa-square-caret-down', 'fa-regular fa-calendar-days'];
+        $('.typeinfo').html('<span class="'+iconArray[typeKey]+'"></span>');
+        $('.typedesc').val(eval("typeDesc"+typeKey));
+    });
+
+    $(document).ready(function() {
+        $(document).on('click', '.btn-addTrans', function() {
+            let $currentGroup = $(this).closest('.input-group');
+            let $newGroup = $currentGroup.clone();
+
+            $newGroup.find('hidden').val('');
+            $newGroup.find('input').val('');
+            $newGroup.find('select').prop('selectedIndex', 0);
+
+            $currentGroup.after($newGroup);
+
+            updateRemoveTransButtons();
+
+            attachChangeEvent();
+        });
+
+        function attachChangeEvent() {
+            $('.selectTrans').off('change').on('change', function () {
+                let selectedValue = $(this).val();
+                let isDuplicate = false;
+
+                $('.selectTrans').not(this).each(function () {
+                    if ($(this).val() === selectedValue) {
+                        isDuplicate = true;
+                        return false;
+                    }
+                });
+
+                if (isDuplicate) {
+                    alert('<?=$this->getTrans('translationAlreadyExisting') ?>');
+                    $(this).prop('selectedIndex', 0);
+                }
+            });
+        }
+
+        $(document).on('click', '.btn-removeTrans', function() {
+            let $currentGroup = $(this).closest('.input-group');
+
+            $currentGroup.remove();
+
+            updateRemoveTransButtons();
+        });
+
+        function updateRemoveTransButtons() {
+            let $replyContainers = $('#trans-container .input-group');
+            if ($replyContainers.length > 1) {
+                $replyContainers.find('.btn-removeTrans').show();
+            } else {
+                $replyContainers.find('.btn-removeTrans').hide();
             }
         }
-    })
 
-    let div;
-    for (let x = 0; x < icons.length;) {
-        let y;
-        div = '<div class="row">';
-        for (y = x; y < x + 6; y++) {
-            div += '<div class="icon col-lg-2"><i id="' + icons[y] + '" class="faicon ' + icons[y] + ' fa-2x"></i></div>';
+        updateRemoveTransButtons();
+
+        attachChangeEvent();
+    });
+
+    $("#symbolDialog").on('shown.bs.modal', function () {
+        let content = JSON.parse(<?=json_encode(file_get_contents(ROOT_PATH . '/vendor/fortawesome/font-awesome/metadata/icons.json')) ?>);
+        let icons = [];
+
+        $.each(content, function(index, icon) {
+            if (~icon.styles.indexOf('brands')) {
+                icons.push('fa-brands fa-' + index);
+            } else {
+                if (~icon.styles.indexOf('solid')) {
+                    icons.push('fa-solid fa-' + index);
+                }
+                if (~icon.styles.indexOf('regular')) {
+                    icons.push('fa-regular fa-' + index);
+                }
+            }
+        })
+
+        let div;
+        for (let x = 0; x < icons.length;) {
+            let y;
+            div = '<div class="row">';
+            for (y = x; y < x + 6; y++) {
+                div += '<div class="icon col-lg-2"><i id="' + icons[y] + '" class="faicon ' + icons[y] + ' fa-2x"></i></div>';
+            }
+            div += '</div>';
+            x = y;
+
+            $("#symbolDialog .modal-content .modal-body").append(div);
         }
-        div += '</div>';
-        x = y;
 
-        $("#symbolDialog .modal-content .modal-body").append(div);
-    }
+        $(".faicon").click(function () {
+            $("#profileFieldIcon").val($(this).closest("i").attr('id'));
+            $("#chosensymbol").attr("class", $(this).closest("i").attr('id'));
+            $("#symbolDialog").modal('hide')
+        });
 
-    $(".faicon").click(function (e) {
-        $("#profileFieldIcon").val($(this).closest("i").attr('id'));
-        $("#chosensymbol").attr("class", $(this).closest("i").attr('id'));
-        $("#symbolDialog").modal('hide')
+        $("#noIcon").click(function () {
+            $("#profileFieldIcon").val("");
+        });
     });
 
-    $("#noIcon").click(function (e) {
-        $("#profileFieldIcon").val("");
-    });
-});
+    $(document).ready(function() {
+        $(document).on('click', '.btn-add', function() {
+            let $currentGroup = $(this).closest('.input-group');
+            let $newGroup = $currentGroup.clone();
 
-(function ($) {
-    $(function () {
-        const countFormGroup = function ($form) {
-            return $form.find('.mb-3').length;
-        };
-        const addFormGroup = function (event) {
-            event.preventDefault();
+            $newGroup.find('input').val('');
 
-            const $formGroup = $(this).closest('.mb-3');
-            const $multipleFormGroup = $formGroup.closest('.multiple-form-group');
-            const $formGroupClone = $formGroup.clone();
+            $currentGroup.after($newGroup);
 
-            $(this)
-                .toggleClass('btn-success btn-add btn-danger btn-remove')
-                .html('<i class="fa-solid fa-minus"></i>');
+            updateRemoveButtons();
+        });
 
-            $formGroupClone.find('input').val('');
-            $formGroupClone.insertAfter($formGroup);
+        $(document).on('click', '.btn-remove', function() {
+            let $currentGroup = $(this).closest('.input-group');
 
-            const $lastFormGroupLast = $multipleFormGroup.find('.mb-3:last');
-            if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
-                $lastFormGroupLast.find('.btn-add').attr('disabled', true);
+            $currentGroup.remove();
+
+            updateRemoveButtons();
+        });
+
+        function updateRemoveButtons() {
+            let $replyContainers = $('#reply-container .input-group');
+            if ($replyContainers.length > 1) {
+                $replyContainers.find('.btn-remove').show();
+            } else {
+                $replyContainers.find('.btn-remove').hide();
             }
-        };
+        }
 
-        const removeFormGroup = function (event) {
-            event.preventDefault();
-
-            const $formGroup = $(this).closest('.mb-3');
-            const $multipleFormGroup = $formGroup.closest('.multiple-form-group');
-
-            const $lastFormGroupLast = $multipleFormGroup.find('.mb-3:last');
-            if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
-                $lastFormGroupLast.find('.btn-add').attr('disabled', false);
-            }
-
-            $formGroup.remove();
-        };
-
-        $(document).on('click', '.btn-add', addFormGroup);
-        $(document).on('click', '.btn-remove', removeFormGroup);
+        updateRemoveButtons();
     });
-})(jQuery);
 </script>

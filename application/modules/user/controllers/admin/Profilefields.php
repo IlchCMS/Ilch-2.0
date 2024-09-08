@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -104,6 +105,7 @@ class ProfileFields extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuProfileFields'), ['action' => 'index']);
 
         $profileFieldId = $this->getRequest()->getParam('id');
+        $multiTypes = [3, 4, 5];
 
         if (!empty($profileFieldId)) {
             $this->getLayout()->getAdminHmenu()
@@ -130,8 +132,8 @@ class ProfileFields extends \Ilch\Controller\Admin
                 $profileFieldData['addition'] = '';
             }
 
-            $multiTypes = [3, 4, 5];
             if (in_array($profileFieldData['type'], $multiTypes)) {
+
                 $profileFieldData['options'] = json_encode(array_filter($postData['profileFieldOptions']));
             } else {
                 $profileFieldData['options'] = '';
@@ -140,21 +142,23 @@ class ProfileFields extends \Ilch\Controller\Admin
             $profileField = $profileFieldsMapper->loadFromArray($profileFieldData);
             $profileFieldId = $profileFieldsMapper->save($profileField);
 
-            for ($i = 0, $iMax = \count($postData); $i < $iMax; $i++) {
-                if (isset($postData['profileFieldTrans'.$i])) {
-                    $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
+            foreach ($postData['profileFieldTrans_field_id'] as $i => $field_id) {
+                $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
-                    $profileFieldTransData = $postData['profileFieldTrans'.$i];
-                    if (empty($profileFieldTransData['field_id'])) {
-                        $profileFieldTransData['field_id'] = $profileFieldId;
-                    }
+                if (empty($field_id)) {
+                    $field_id = $profileFieldId;
+                }
+                $profileFieldTransData = [
+                    'field_id' => $field_id,
+                    'locale' => $postData['profileFieldTrans_locale'][$i],
+                    'name' => $postData['profileFieldTrans_name'][$i],
+                ];
 
-                    $profileFieldTrans = $profileFieldsTranslationMapper->loadFromArray($profileFieldTransData);
-                    if ($profileFieldTrans->getName() != '') {
-                        $profileFieldsTranslationMapper->save($profileFieldTrans);
-                    } else {
-                        $profileFieldsTranslationMapper->deleteProfileFieldTranslation($profileFieldTransData['locale'], $profileFieldTransData['field_id']);
-                    }
+                $profileFieldTrans = $profileFieldsTranslationMapper->loadFromArray($profileFieldTransData);
+                if ($profileFieldTrans->getName() != '' && $profileFieldTrans->getLocale() != '') {
+                    $profileFieldsTranslationMapper->save($profileFieldTrans);
+                } else {
+                    $profileFieldsTranslationMapper->deleteProfileFieldTranslation($postData['profileFieldTrans_oldLocale'][$i], $profileFieldTransData['field_id']);
                 }
             }
 
@@ -173,10 +177,16 @@ class ProfileFields extends \Ilch\Controller\Admin
             $this->redirect(['action' => 'treat', 'id' => $profileFieldId]);
         }
 
+        $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByFieldId($profileFieldId);
+        if (count($profileFieldsTranslation) == 0) {
+            $profileFieldsTranslation[] = $profileFieldsTranslationMapper->loadFromArray();
+        }
+
         $this->getView()->set('countOfProfileFields', $profileFieldsMapper->getCountOfProfileFields())
             ->set('profileField', $profileField)
-            ->set('profileFieldsTranslation', $profileFieldsTranslationMapper->getProfileFieldTranslationByFieldId($profileFieldId))
-            ->set('localeList', $this->getTranslator()->getLocaleList());
+            ->set('profileFieldsTranslation', $profileFieldsTranslation)
+            ->set('localeList', $this->getTranslator()->getLocaleList())
+            ->set('multiTypes', $multiTypes);
     }
 
     public function updateAction()

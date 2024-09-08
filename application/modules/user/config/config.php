@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -79,7 +80,7 @@ class Config extends \Ilch\Config\Install
         $userMapper->save($userModel);
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_groups` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -432,7 +433,7 @@ class Config extends \Ilch\Config\Install
                     <p>Administrator</p>", "en_EN");';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "2.1.1":
@@ -664,5 +665,7 @@ class Config extends \Ilch\Config\Install
                 }
                 break;
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
