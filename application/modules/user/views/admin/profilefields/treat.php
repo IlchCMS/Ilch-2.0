@@ -266,60 +266,49 @@ $iconArray = [
     });
 
     $(document).ready(function() {
-        // Funktion zum Hinzufügen eines neuen Reply-Feldes
         $(document).on('click', '.btn-addTrans', function() {
             let $currentGroup = $(this).closest('.input-group');
             let $newGroup = $currentGroup.clone();
 
-            // Setze den Wert des neuen Feldes auf leer
             $newGroup.find('hidden').val('');
             $newGroup.find('input').val('');
             $newGroup.find('select').prop('selectedIndex', 0);
 
-            // Füge den neuen Reply-Feld-Block nach dem aktuellen Block hinzu
             $currentGroup.after($newGroup);
 
-            // Überprüfe die Anzahl der Reply-Felder und aktualisiere den Löschen-Button
-            updateRemoveButtons();
+            updateRemoveTransButtons();
 
-            // Überprüfe die Event-Listener für neue Elemente
             attachChangeEvent();
         });
 
-        // Funktion zum Anhängen des 'onchange'-Events an die Select-Elemente
         function attachChangeEvent() {
             $('.selectTrans').off('change').on('change', function () {
                 let selectedValue = $(this).val();
                 let isDuplicate = false;
 
-                // Überprüfen, ob der ausgewählte Wert bereits in anderen Select-Feldern existiert
                 $('.selectTrans').not(this).each(function () {
                     if ($(this).val() === selectedValue) {
                         isDuplicate = true;
-                        return false; // Beendet die Schleife
+                        return false;
                     }
                 });
 
                 if (isDuplicate) {
                     alert('<?=$this->getTrans('translationAlreadyExisting') ?>');
-                    $(this).prop('selectedIndex', 0); // Zurücksetzen auf den Standardwert
+                    $(this).prop('selectedIndex', 0);
                 }
             });
         }
 
-        // Funktion zum Entfernen eines Reply-Feldes
         $(document).on('click', '.btn-removeTrans', function() {
             let $currentGroup = $(this).closest('.input-group');
 
-            // Entferne das aktuelle Reply-Feld
             $currentGroup.remove();
 
-            // Überprüfe die Anzahl der Reply-Felder und aktualisiere den Löschen-Button
-            updateRemoveButtons();
+            updateRemoveTransButtons();
         });
 
-        // Funktion zur Aktualisierung des Löschen-Buttons
-        function updateRemoveButtons() {
+        function updateRemoveTransButtons() {
             let $replyContainers = $('#trans-container .input-group');
             if ($replyContainers.length > 1) {
                 $replyContainers.find('.btn-removeTrans').show();
@@ -328,10 +317,8 @@ $iconArray = [
             }
         }
 
-        // Initiale Überprüfung der Anzahl der Reply-Felder beim Laden der Seite
-        updateRemoveButtons();
+        updateRemoveTransButtons();
 
-        // Initiales Anhängen der Events
         attachChangeEvent();
     });
 
@@ -377,33 +364,25 @@ $iconArray = [
     });
 
     $(document).ready(function() {
-        // Funktion zum Hinzufügen eines neuen Reply-Feldes
         $(document).on('click', '.btn-add', function() {
             let $currentGroup = $(this).closest('.input-group');
             let $newGroup = $currentGroup.clone();
 
-            // Setze den Wert des neuen Feldes auf leer
             $newGroup.find('input').val('');
 
-            // Füge den neuen Reply-Feld-Block nach dem aktuellen Block hinzu
             $currentGroup.after($newGroup);
 
-            // Überprüfe die Anzahl der Reply-Felder und aktualisiere den Löschen-Button
             updateRemoveButtons();
         });
 
-        // Funktion zum Entfernen eines Reply-Feldes
         $(document).on('click', '.btn-remove', function() {
             let $currentGroup = $(this).closest('.input-group');
 
-            // Entferne das aktuelle Reply-Feld
             $currentGroup.remove();
 
-            // Überprüfe die Anzahl der Reply-Felder und aktualisiere den Löschen-Button
             updateRemoveButtons();
         });
 
-        // Funktion zur Aktualisierung des Löschen-Buttons
         function updateRemoveButtons() {
             let $replyContainers = $('#reply-container .input-group');
             if ($replyContainers.length > 1) {
@@ -413,7 +392,6 @@ $iconArray = [
             }
         }
 
-        // Initiale Überprüfung der Anzahl der Reply-Felder beim Laden der Seite
         updateRemoveButtons();
     });
 </script>
