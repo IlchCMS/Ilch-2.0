@@ -102,33 +102,25 @@ $voteRes = $this->get('voteRes');
     $('#group').chosen();
 
     $(document).ready(function() {
-        // Funktion zum Hinzufügen eines neuen Reply-Feldes
         $(document).on('click', '.btn-add', function() {
             let $currentGroup = $(this).closest('.input-group');
             let $newGroup = $currentGroup.clone();
 
-            // Setze den Wert des neuen Feldes auf leer
             $newGroup.find('input').val('');
 
-            // Füge den neuen Reply-Feld-Block nach dem aktuellen Block hinzu
             $currentGroup.after($newGroup);
 
-            // Überprüfe die Anzahl der Reply-Felder und aktualisiere den Löschen-Button
             updateRemoveButtons();
         });
 
-        // Funktion zum Entfernen eines Reply-Feldes
         $(document).on('click', '.btn-remove', function() {
             let $currentGroup = $(this).closest('.input-group');
 
-            // Entferne das aktuelle Reply-Feld
             $currentGroup.remove();
 
-            // Überprüfe die Anzahl der Reply-Felder und aktualisiere den Löschen-Button
             updateRemoveButtons();
         });
 
-        // Funktion zur Aktualisierung des Löschen-Buttons
         function updateRemoveButtons() {
             let $replyContainers = $('#reply-container .input-group');
             if ($replyContainers.length > 1) {
@@ -138,7 +130,6 @@ $voteRes = $this->get('voteRes');
             }
         }
 
-        // Initiale Überprüfung der Anzahl der Reply-Felder beim Laden der Seite
         updateRemoveButtons();
     });
 </script>

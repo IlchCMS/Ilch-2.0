@@ -19,5 +19,5 @@ return [
     'unlock' => 'Umfrage öffnen',
     'reset' => 'Zurücksetzen',
     'multiplereply' => 'Mehrfachauswahl',
-    'voteNotFound' => 'Vote wurde nicht gefunden',
+    'voteNotFound' => 'Umfrage wurde nicht gefunden',
 ];

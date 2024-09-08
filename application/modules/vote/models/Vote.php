@@ -269,7 +269,7 @@ class Vote extends \Ilch\Model
     }
 
     /**
-     * check User can Vote
+     * Check if user is allowed to vote
      *
      * @param string $clientIP
      * @param User|null $user
