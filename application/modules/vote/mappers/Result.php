@@ -15,7 +15,7 @@ class Result extends \Ilch\Mapper
      * @var string
      * @since 1.12.0
      */
-    public $tablename = 'poll_res';
+    public string $tablename = 'poll_res';
 
     /**
      * returns if the module is installed.
@@ -90,7 +90,7 @@ class Result extends \Ilch\Mapper
             ->where(['poll_id' => $pollId])
             ->group(['poll_id'])
             ->execute()
-            ->fetchCell();
+            ->fetchCell() ?? 0;
     }
 
     /**
@@ -106,7 +106,7 @@ class Result extends \Ilch\Mapper
             ->execute()
             ->fetchAssoc();
 
-        return $result['result'];
+        return $result['result'] ?? 0;
     }
 
     /**
@@ -125,16 +125,6 @@ class Result extends \Ilch\Mapper
         return $this->db()->delete($ipMapper->tablename)
             ->where(['poll_id' => $pollId])
             ->execute();
-    }
-
-    /**
-     * @param int $count
-     * @param int $totalcount
-     * @return float
-     */
-    public function getPercent(int $count, int $totalcount): float
-    {
-        return round(($count / $totalcount) * 100);
     }
 
     /**

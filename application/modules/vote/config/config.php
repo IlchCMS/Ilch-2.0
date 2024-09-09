@@ -9,9 +9,12 @@ namespace Modules\Vote\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = [
+    /**
+     * @var array
+     */
+    public array $config = [
         'key' => 'vote',
-        'version' => '1.13.0',
+        'version' => '1.14.0',
         'icon_small' => 'fa-solid fa-bars-progress',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -36,7 +39,7 @@ class Config extends \Ilch\Config\Install
             ]
         ],
         'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'phpVersion' => '7.4'
     ];
 
     public function install()
@@ -144,7 +147,7 @@ class Config extends \Ilch\Config\Install
                     ->execute()
                     ->fetchList();
 
-                $sql = 'INSERT INTO [prefix]_poll_access (poll_id, group_id) VALUES';
+                $sql = /** @lang text*/'INSERT INTO [prefix]_poll_access (poll_id, group_id) VALUES';
                 $sqlWithValues = $sql;
                 $rowCount = 0;
 
@@ -218,10 +221,12 @@ class Config extends \Ilch\Config\Install
 
                 $this->db()->query('ALTER TABLE `[prefix]_poll_res` ADD INDEX `FK_[prefix]_poll_res_[prefix]_poll` (`poll_id`) USING BTREE;');
                 $this->db()->query('ALTER TABLE `[prefix]_poll_res` ADD CONSTRAINT `FK_[prefix]_poll_res_[prefix]_poll` FOREIGN KEY (`poll_id`) REFERENCES `[prefix]_poll` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                // no break
             case '1.12.0':
             case '1.12.1':
+            case '1.13.0':
         }
 
-        return 'Update function executed.';
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

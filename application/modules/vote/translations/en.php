@@ -18,5 +18,6 @@ return [
     'lock' => 'Close vote',
     'unlock' => 'Open vote',
     'reset' => 'Reset',
-    'multiplereply' => 'Multiple choice'
+    'multiplereply' => 'Multiple choice',
+    'voteNotFound' => 'Vote not found',
 ];

@@ -48,6 +48,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $voteMapper = new VoteMapper();
+        $resultMapper = new ResultMapper();
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuVote'), ['action' => 'index']);
@@ -61,7 +62,8 @@ class Index extends \Ilch\Controller\Admin
                 ->to(['action' => 'index']);
         }
 
-        $this->getView()->set('votes', $voteMapper->getVotes([], null));
+        $this->getView()->set('votes', $voteMapper->getVotes([], null))
+            ->set('resultMapper', $resultMapper);
     }
 
     public function treatAction()
@@ -70,25 +72,33 @@ class Index extends \Ilch\Controller\Admin
         $resultMapper = new ResultMapper();
         $groupMapper = new GroupMapper();
 
+
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('menuVote'), ['action' => 'index']);
+
         $voteModel = new VoteModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuVote'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
             $voteModel = $voteMapper->getVoteById($this->getRequest()->getParam('id'));
+
+            if (!$voteModel) {
+                $this->redirect()
+                    ->withMessage('voteNotFound')
+                    ->to(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuVote'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
         $this->getView()->set('vote', $voteModel);
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'question' => 'required',
-                'reply'    => 'required',
-                'groups'    => 'required',
-                'access'    => 'required',
+                'question'      => 'required',
+                'reply'         => 'required',
+                'groups'        => 'required',
+                'access'        => 'required',
                 'multiplereply' => 'required|numeric|integer|min:0|max:1'
             ]);
 
@@ -114,15 +124,20 @@ class Index extends \Ilch\Controller\Admin
                     ->setMultipleReply($this->getRequest()->getPost('multiplereply'));
                 $id = $voteMapper->save($voteModel);
 
-                $voteModel->setId($id);
+                if ($voteModel->getId()) {
+                    $resultMapper->delete($voteModel->getId());
+                } else {
+                    $voteModel->setId($id);
+                }
 
-                $resultMapper->delete($voteModel->getId());
-
-                foreach ($this->getRequest()->getPost('reply') as $reply) {
-                    $resultModel = new ResultModel();
-                    $resultModel->setPollId($voteModel->getId())
-                        ->setReply($reply);
-                    $resultMapper->saveReply($resultModel);
+                foreach ($this->getRequest()->getPost('reply') ?? [] as $reply) {
+                    $reply = trim($reply);
+                    if (!empty($reply)) {
+                        $resultModel = new ResultModel();
+                        $resultModel->setPollId($voteModel->getId())
+                            ->setReply($reply);
+                        $resultMapper->saveReply($resultModel);
+                    }
                 }
 
                 $this->redirect()
@@ -134,21 +149,27 @@ class Index extends \Ilch\Controller\Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
+                ->to(array_merge(['action' => 'treat'], $voteModel->getId() ? ['id' => $voteModel->getId()] : []));
         }
 
-        $this->getView()->set('userGroupList', $groupMapper->getGroupList());
+        $voteRes = null;
+        if ($voteModel->getId()) {
+            $voteRes = $resultMapper->getVoteRes($voteModel->getId());
+        }
+        if (!$voteRes) {
+            $voteRes = [(new ResultModel())->setPollId($voteModel->getId())];
+        }
+        $this->getView()->set('userGroupList', $groupMapper->getGroupList())
+            ->set('voteRes', $voteRes);
     }
 
     public function lockAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id')) {
             $voteMapper = new VoteMapper();
             $voteMapper->lock($this->getRequest()->getParam('id'));
 
-            $this->redirect()
-                ->withMessage('saveSuccess')
-                ->to(['action' => 'index']);
+            $this->addMessage('saveSuccess');
         }
 
         $this->redirect(['action' => 'index']);
@@ -156,13 +177,11 @@ class Index extends \Ilch\Controller\Admin
 
     public function resetAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id')) {
             $resultMapper = new ResultMapper();
             $resultMapper->resetResult($this->getRequest()->getParam('id'));
 
-            $this->redirect()
-                ->withMessage('saveSuccess')
-                ->to(['action' => 'index']);
+            $this->addMessage('saveSuccess');
         }
 
         $this->redirect(['action' => 'index']);
@@ -170,13 +189,11 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id')) {
             $voteMapper = new VoteMapper();
             $voteMapper->delete($this->getRequest()->getParam('id'));
 
-            $this->redirect()
-                ->withMessage('deleteSuccess')
-                ->to(['action' => 'index']);
+            $this->addMessage('saveSuccess');
         }
 
         $this->redirect(['action' => 'index']);

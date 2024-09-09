@@ -15,13 +15,13 @@ class Vote extends \Ilch\Mapper
      * @var string
      * @since 1.12.0
      */
-    public $tablename = 'poll';
+    public string $tablename = 'poll';
 
     /**
      * @var string
      * @since 1.12.0
      */
-    public $tablenameReadAcces = 'poll_access';
+    public string $tablenameReadAcces = 'poll_access';
 
     /**
      * returns if the module is installed.
@@ -194,6 +194,7 @@ class Vote extends \Ilch\Mapper
      * @param int $voteId
      * @param string|array $readAccess example: "1,2,3"
      * @param bool $addAdmin
+     * @return array
      * @since 1.12.0
      */
     public function saveReadAccess(int $voteId, $readAccess, bool $addAdmin = true)
@@ -207,9 +208,6 @@ class Vote extends \Ilch\Mapper
             ->where(['poll_id' => $voteId])
             ->execute();
 
-        $sql = 'INSERT INTO [prefix]_' . $this->tablenameReadAcces . ' (poll_id, group_id) VALUES';
-        $sqlWithValues = $sql;
-        $rowCount = 0;
         $groupIds = [];
         if (!empty($readAccess)) {
             if (!in_array('all', $readAccess)) {
@@ -220,25 +218,23 @@ class Vote extends \Ilch\Mapper
             $groupIds[] = '1';
         }
 
+        $preparedRows = [];
         foreach ($groupIds as $groupId) {
-            // There is a limit of 1000 rows per insert, but according to some benchmarks found online
-            // the sweet spot seams to be around 25 rows per insert. So aim for that.
-            if ($rowCount >= 25) {
-                $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-                $this->db()->queryMulti($sqlWithValues);
-                $rowCount = 0;
-                $sqlWithValues = $sql;
+            $preparedRows[] = [$voteId, (int)$groupId];
+        }
+
+        if (count($preparedRows)) {
+            // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows
+            $chunks = array_chunk($preparedRows, 25);
+            foreach ($chunks as $chunk) {
+                $this->db()->insert($this->tablenameReadAcces)
+                    ->columns(['poll_id', 'group_id'])
+                    ->values($chunk)
+                    ->execute();
             }
-
-            $rowCount++;
-            $sqlWithValues .= '(' . $voteId . ',' . (int)$groupId . '),';
         }
 
-        if ($sqlWithValues != $sql) {
-            // Insert remaining rows.
-            $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-            $this->db()->queryMulti($sqlWithValues);
-        }
+        return $groupIds;
     }
 
     /**

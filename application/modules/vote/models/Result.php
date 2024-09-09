@@ -14,21 +14,21 @@ class Result extends \Ilch\Model
      *
      * @var int
      */
-    protected $pollId = 0;
+    protected int $pollId = 0;
 
     /**
      * The reply of the Vote.
      *
      * @var string
      */
-    protected $reply = '';
+    protected string $reply = '';
 
     /**
      * The result of the Vote.
      *
      * @var int
      */
-    protected $result = 0;
+    protected int $result = 0;
 
     /**
      * @param array $entries
@@ -123,15 +123,28 @@ class Result extends \Ilch\Model
     }
 
     /**
+     * @param int $totalcount
+     * @return float
+     * @since 1.14.0
+     */
+    public function getPercent(int $totalcount): float
+    {
+        if ($this->getResult() != 0 && $totalcount != 0) {
+            return round(($this->getResult() / $totalcount) * 100);
+        }
+        return 0;
+    }
+
+    /**
      * @return array
      * @since 1.12.0
      */
     public function getArray(): array
     {
         return [
-            'poll_id' => $this->getPollId(),
-            'reply' => $this->getReply(),
-            'result' => $this->getResult(),
+            'poll_id'   => $this->getPollId(),
+            'reply'     => $this->getReply(),
+            'result'    => $this->getResult(),
         ];
     }
 }

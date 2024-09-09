@@ -40,41 +40,41 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
-        if ($this->getRequest()->getPost('saveVote')) {
-            $resultModel = new ResultModel();
-            $ipModel = new IpModel();
-            $resultMapper = new ResultMapper();
-            $ipMapper = new IpMapper();
-
-            foreach ($this->getRequest()->getPost('reply') as $reply) {
-                $result = $resultMapper->getResultByIdAndReply($this->getRequest()->getPost('id'), $reply);
-                $resultModel->setPollId($this->getRequest()->getPost('id'))
-                    ->setReply($reply)
-                    ->setResult($result + 1);
-                $resultMapper->saveResult($resultModel);
-            }
-
-            if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-                $clientIP = $_SERVER['REMOTE_ADDR'];
-            } else {
-                $clientIP = $_SERVER['HTTP_X_FORWARDED_FOR'];
-            }
-
-            $ipModel->setPollId($this->getRequest()->getPost('id'))
-                ->setIP($clientIP)
-                ->setUserId($userId);
-            $ipMapper->saveIP($ipModel);
-
-            $this->redirect()
-                ->withMessage('saveSuccess')
-                ->to(['action' => 'index']);
+        if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $clientIP = $_SERVER['REMOTE_ADDR'];
+        } else {
+            $clientIP = $_SERVER['HTTP_X_FORWARDED_FOR'];
         }
 
-        $this->getView()->set('voteMapper', $voteMapper)
-            ->set('resultMapper', $resultMapper)
-            ->set('ipMapper', $ipMapper)
-            ->set('userMapper', $userMapper)
+        if ($this->getRequest()->getPost('saveVote') && $this->getRequest()->getPost('id')) {
+            $voteModel = $voteMapper->getVoteById($this->getRequest()->getPost('id'));
+
+            if ($voteModel) {
+                $resultModel = new ResultModel();
+                $ipModel = new IpModel();
+
+                foreach ($this->getRequest()->getPost('reply', []) as $reply) {
+                    $result = $resultMapper->getResultByIdAndReply($voteModel->getId(), $reply);
+                    $resultModel->setPollId($voteModel->getId())
+                        ->setReply($reply)
+                        ->setResult($result + 1);
+                    $resultMapper->saveResult($resultModel);
+                }
+
+                $ipModel->setPollId($voteModel->getId())
+                    ->setIP($clientIP)
+                    ->setUserId($userId);
+                $ipMapper->saveIP($ipModel);
+
+                $this->addMessage('saveSuccess');
+            }
+
+            $this->redirect(['action' => 'index']);
+        }
+
+        $this->getView()->set('resultMapper', $resultMapper)
             ->set('votes', $voteMapper->getVotes([], $readAccess))
-            ->set('readAccess', $readAccess);
+            ->set('readAccess', $readAccess)
+            ->set('clientIP', $clientIP);
     }
 }
