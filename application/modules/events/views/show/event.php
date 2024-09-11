@@ -20,7 +20,7 @@ $user = null;
 if (!empty($event)) {
     $start = new \Ilch\Date($event->getStart());
     $end = new \Ilch\Date($event->getEnd());
-    $latLong = explode(',', $event->getLatLong());
+    $latLong = $event->getLatLong() ? explode(',', $event->getLatLong()) : '';
 
     if ($event->getUserId()) {
         $user = $userDetails[$event->getUserId()] ?? $userMapper->getUserById($event->getUserId());
