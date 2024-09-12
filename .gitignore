@@ -4,6 +4,8 @@
 /updates/
 /vendor/
 
+/static/js/choices/node_modules/
+
 /static/js/ckeditor5/build/ckeditor.d.ts
 /static/js/ckeditor5/build/plugins/
 /static/js/ckeditor5/node_modules/

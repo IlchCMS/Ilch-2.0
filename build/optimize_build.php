@@ -109,6 +109,13 @@ $directoriesStaticJs = [
             'styles.css',
         ]
     ],
+    'choices' => [
+        'keep' => [
+            'build/choices.min.css',
+            'build/choices.min.js',
+            'LICENSE.md',
+        ]
+    ],
 ];
 
 /**
