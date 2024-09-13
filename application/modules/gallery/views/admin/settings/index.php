@@ -24,7 +24,7 @@
             <?=$this->getTrans('pictureOfXSource') ?>:
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control"
+            <select class="choices-select form-control"
                     id="pictureOfXSource"
                     name="pictureOfXSource[]"
                     data-placeholder="<?=$this->getTrans('selectGalleries') ?>"
@@ -167,5 +167,12 @@
 </form>
 <script src="<?=$this->getStaticUrl('js/jscolor/jscolor.min.js') ?>"></script>
 <script>
-    $('#pictureOfXSource').chosen();
+    $(document).ready(function() {
+        new Choices('#pictureOfXSource', {
+            removeItemButton: true,
+            searchEnabled: true,
+            shouldSort: false,
+            itemSelectText: ''
+        })
+    });
 </script>

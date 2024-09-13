@@ -48,7 +48,7 @@ $userGroupList = $this->get('userGroupList');
             <?=$this->getTrans('cat') ?>
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control" id="cat" name="cat">
+            <select class="choices-select form-control" id="cat" name="cat">
                 <?php foreach ($rulesparents as $item) : ?>
                     <option value="<?=$item->getId() ?>"<?=($this->originalInput('cat', $rule->getParentId()) == $item->getId()) ? ' selected' : '' ?>><?=$this->escape($item->getParagraph() . '. ' . $item->getTitle()) ?></option>
                 <?php endforeach; ?>
@@ -61,7 +61,7 @@ $userGroupList = $this->get('userGroupList');
             <a href="#" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="<?=$this->getTrans('seetext') ?>"><i class="fa-solid fa-circle-info"></i></a>
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control" id="assignedGroupsRead" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+            <select class="choices-select form-control" id="assignedGroupsRead" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <option value="all"<?=(in_array('all', $this->originalInput('groups', $this->get('groups')))) ? ' selected' : '' ?>><?=$this->getTrans('all') ?></option>
             <?php foreach ($userGroupList as $groupList) : ?>
                 <?php if ($groupList->getId() != 1) : ?>
@@ -88,6 +88,20 @@ $userGroupList = $this->get('userGroupList');
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
 <script>
-    $('#cat').chosen();
-    $('#assignedGroupsRead').chosen();
+    $(document).ready(function() {
+        new Choices('#cat', {
+            removeItemButton: true,
+            searchEnabled: true,
+            shouldSort: false,
+            itemSelectText: ''
+        })
+    });
+    $(document).ready(function() {
+        new Choices('#assignedGroupsRead', {
+            removeItemButton: true,
+            searchEnabled: true,
+            shouldSort: false,
+            itemSelectText: ''
+        })
+    });
 </script>

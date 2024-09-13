@@ -55,7 +55,7 @@ $userGroupList = $this->get('userGroupList');
             <?=$this->getTrans('leader') ?>
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control"
+            <select class="choices-select form-control"
                     id="leader"
                     name="leader[]"
                     data-placeholder="<?=$this->getTrans('selectLeader') ?>"
@@ -77,7 +77,7 @@ $userGroupList = $this->get('userGroupList');
             <?=$this->getTrans('coLeader') ?>
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control"
+            <select class="choices-select form-control"
                     id="coLeader"
                     name="coLeader[]"
                     data-placeholder="<?=$this->getTrans('selectCoLeader') ?>"
@@ -161,8 +161,22 @@ $userGroupList = $this->get('userGroupList');
 <?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('teamUsersInfoText')) ?>
 
 <script>
-$('#leader').chosen();
-$('#coLeader').chosen();
+    $(document).ready(function() {
+        new Choices('#leader', {
+            removeItemButton: true,
+            searchEnabled: true,
+            shouldSort: false,
+            itemSelectText: ''
+        })
+    });
+    $(document).ready(function() {
+        new Choices('#coLeader', {
+            removeItemButton: true,
+            searchEnabled: true,
+            shouldSort: false,
+            itemSelectText: ''
+        })
+    });
 
 $(document).on('change', '.btn-file :file', function() {
     let input = $(this),

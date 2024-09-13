@@ -208,7 +208,7 @@ $training = $this->get('training');
             <?=$this->getTrans('visibleFor') ?>
         </label>
         <div class="col-xl-6">
-            <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+            <select class="choices-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <?php foreach ($this->get('userGroupList') as $groupList) : ?>
                     <?php if ($groupList->getId() != 1) : ?>
                         <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
@@ -243,7 +243,14 @@ $training = $this->get('training');
     <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
-    $('#access').chosen();
+    $(document).ready(function() {
+        new Choices('#access', {
+            removeItemButton: true,
+            searchEnabled: true,
+            shouldSort: false,
+            itemSelectText: ''
+        })
+    });
 
     if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
         tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);

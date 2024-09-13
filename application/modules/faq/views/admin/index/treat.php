@@ -15,7 +15,7 @@ $cats = $this->get('cats');
 <?php if ($cats) : ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="chosen-select row mb-3<?=$this->validation()->hasError('catId') ? ' has-error' : '' ?>">
+        <div class="choices-select row mb-3<?=$this->validation()->hasError('catId') ? ' has-error' : '' ?>">
             <label for="catId" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('cat') ?>:
             </label>
@@ -60,5 +60,12 @@ $cats = $this->get('cats');
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script>
-    $('#catId').chosen();
+    $(document).ready(function() {
+        new Choices('#catId', {
+            removeItemButton: true,
+            searchEnabled: true,
+            shouldSort: false,
+            itemSelectText: ''
+        })
+    });
 </script>

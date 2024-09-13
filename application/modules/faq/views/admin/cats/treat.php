@@ -28,7 +28,7 @@ $cat = $this->get('cat');
             <?=$this->getTrans('visibleFor') ?>:
         </label>
         <div class="col-xl-3">
-            <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+            <select class="choices-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <option value="all" <?=in_array('all', $this->originalInput('groups', $this->get('groups'))) ? 'selected="selected"' : '' ?>><?=$this->getTrans('groupAll') ?></option>
                 <?php foreach ($this->get('userGroupList') as $groupList) : ?>
                     <?php if ($groupList->getId() != 1) : ?>
@@ -42,5 +42,12 @@ $cat = $this->get('cat');
 </form>
 
 <script>
-    $('#access').chosen();
+    $(document).ready(function() {
+        new Choices('#access', {
+            removeItemButton: true,
+            searchEnabled: true,
+            shouldSort: false,
+            itemSelectText: ''
+        })
+    });
 </script>

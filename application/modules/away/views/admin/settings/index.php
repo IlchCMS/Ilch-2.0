@@ -34,7 +34,7 @@
             <?=$this->getTrans('notifyGroups') ?>
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control" id="notifyGroups" name="notifyGroups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+            <select class="choices-select form-control" id="notifyGroups" name="notifyGroups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <?php foreach ($this->get('userGroupList') as $groupList): ?>
                     <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
                 <?php endforeach; ?>
@@ -45,7 +45,14 @@
 </form>
 
 <script>
-    $('#notifyGroups').chosen();
+    $(document).ready(function() {
+        new Choices('#notifyGroups', {
+            removeItemButton: true,
+            searchEnabled: true,
+            shouldSort: false,
+            itemSelectText: ''
+        })
+    });
 
     $('[name="userNotification"]').click(function () {
         if ($(this).val() == "1") {

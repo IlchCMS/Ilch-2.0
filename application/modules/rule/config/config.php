@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'rule',
-        'version' => '1.9.0',
+        'version' => '1.9.1',
         'icon_small' => 'fa-solid fa-gavel',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
