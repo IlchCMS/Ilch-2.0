@@ -34,6 +34,7 @@
         <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.bundle.min.js') ?>"></script>
         <script src="<?=$this->getVendorUrl('harvesthq/chosen/chosen.jquery.min.js') ?>"></script><!-- can be deleted after a change time -->
         <script src="<?=$this->getStaticUrl('js/choices/build/choices.min.js') ?>"></script>
+        <script src="<?=$this->getStaticUrl('js/choices.Tokenfield.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/validate/jquery.validate.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/validate/additional-methods.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/validate/ilch-validate.js') ?>"></script>
