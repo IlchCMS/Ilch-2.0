@@ -101,7 +101,7 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('template')) {
             $this->getView()->set('template', $this->getRequest()->getParam('template'));
-            $this->getView()->set('article', $templateMapper->getTemplateById($this->getRequest()->getParam('template')));
+            $this->getView()->set('article', $templateMapper->getTemplateById((int)$this->getRequest()->getParam('template')));
         } elseif ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])

@@ -13,12 +13,11 @@ if ($this->get('article')) {
             <?=$this->getTrans('template') ?>:
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control"
+            <select class="choices-select form-control"
                     id="template"
                     name="template"
                     data-placeholder="<?=$this->getTrans('selectTemplate') ?>"
                     <?=(empty($this->get('templates'))) ? 'disabled' : '' ?> >
-                    <option value="0"><?=$this->getTrans('selectTemplate') ?></option>
                 <?php foreach ($this->get('templates') as $template): ?>
                     <option value="<?=$template->getId() ?>" <?=($this->get('template') == $template->getId()) ? 'selected="selected"' : '' ?>>
                         <?=$this->escape($template->getTitle() . ($template->getLocale() ? ' (' . $template->getLocale() . ')' : '')) ?>
@@ -72,7 +71,7 @@ if ($this->get('article')) {
             <?=$this->getTrans('cats') ?>:
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control"
+            <select class="choices-select form-control"
                     id="cats"
                     name="cats[]"
                     data-placeholder="<?=$this->getTrans('selectCategories') ?>"
@@ -134,7 +133,7 @@ if ($this->get('article')) {
             <?=$this->getTrans('visibleFor') ?>
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+            <select class="choices-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <?php foreach ($this->get('userGroupList') as $groupList): ?>
                     <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
                 <?php endforeach; ?>
@@ -228,9 +227,12 @@ if ($this->get('article')) {
             <?=$this->getTrans('seoKeywords') ?>:
         </label>
         <div class="col-xl-4">
-            <textarea class="form-control"
-                      id="keywords"
-                      name="keywords"><?=($this->get('article')) ? $this->escape($this->get('article')->getKeywords()) : $this->originalInput('keywords')?></textarea>
+            <input type="text"
+                   class="choices-select form-control"
+                   name="keywords"
+                   id="keywords"
+                   data-placeholder="<?=$this->getTrans('seoKeywords') ?>"
+                   value="<?=($this->get('article')) ? $this->escape($this->get('article')->getKeywords()) : $this->originalInput('keywords') ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('permaLink') ? ' has-error' : '' ?>">
@@ -258,8 +260,32 @@ if ($this->get('article')) {
     <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
-$('#access').chosen();
 $(document).ready(function() {
+    new Choices('#access', {
+        removeItemButton: true,
+        searchEnabled: true,
+        shouldSort: false,
+        itemSelectText: ''
+    });
+    new Choices('#cats', {
+        removeItemButton: true,
+        searchEnabled: true,
+        shouldSort: false,
+        itemSelectText: ''
+    });
+    new Choices('#template', {
+        searchEnabled: true,
+        shouldSort: false,
+        itemSelectText: ''
+    });
+
+    new Tokenfield('keywords', {
+        removeItemButton: true,
+        shouldSort: false,
+        duplicateItemsAllowed: false,
+    });
+
+
     if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
         tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
         tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
@@ -285,7 +311,6 @@ $(document).ready(function() {
         stepping: 15
     });
 });
-$('#cats').chosen();
 
 $('#title').change(
     function () {
@@ -322,22 +347,6 @@ $('#preview').click(
     }
 );
 
-$('#keywords').tokenfield();
-$('#keywords').on('tokenfield:createtoken', function (event) {
-    var existingTokens = $(this).tokenfield('getTokens');
-    $.each(existingTokens, function(index, token) {
-        if (token.value === event.attrs.value)
-            event.preventDefault();
-    });
-});
-$('#tags').tokenfield();
-$('#tags').on('tokenfield:createtoken', function (event) {
-    var existingTokens = $(this).tokenfield('getTokens');
-    $.each(existingTokens, function(index, token) {
-        if (token.value === event.attrs.value)
-            event.preventDefault();
-    });
-});
 $('#template').change(function() {
     if (<?=($articleID) ? json_encode($articleID) : '""' ?>) {
         window.location = '<?=$this->getCurrentUrl(['id' => $articleID], false) ?>/template/'+$(this).val();
