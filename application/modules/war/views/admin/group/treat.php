@@ -70,7 +70,7 @@ $entry = $this->get('group');
             <?=$this->getTrans('assignedMember') ?>
         </label>
         <div class="col-xl-4">
-            <select class="form-select" id="warGroup" name="userGroup">
+            <select class="choices-select form-select" id="warGroup" name="userGroup">
                 <optgroup label="<?=$this->getTrans('groupsName') ?>">
                     <?php
                     /** @var \Modules\User\Models\Group $group */
@@ -95,5 +95,17 @@ $entry = $this->get('group');
         ->addUploadController($this->getUrl('admin/media/index/upload'))
     ?>
 
-    $('#assignedMember').chosen();
+    $(document).ready(function() {
+        new Choices('#warGroup', {
+            removeItemButton: true,
+            searchEnabled: true,
+            shouldSort: false,
+            loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
+            noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
+            noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
+            itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
+            uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
+            customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>'
+        })
+    });
 </script>

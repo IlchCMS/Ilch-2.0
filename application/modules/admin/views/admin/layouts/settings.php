@@ -170,5 +170,11 @@ new Tokenfield('keywords', {
     removeItemButton: true,
     shouldSort: false,
     duplicateItemsAllowed: false,
+    loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
+    noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
+    noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
+    itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
+    uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
+    customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>'
 });
 </script>

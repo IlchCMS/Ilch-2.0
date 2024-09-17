@@ -26,7 +26,7 @@ foreach ($this->get('games') as $game) : ?>
                 <?php endif; ?>
             </label>
             <div class="col-xl-4">
-                <select class="chosen-select form-control"
+                <select class="form-control"
                         id="warMapPlayed[]"
                         name="warMapPlayed[]"
                         data-placeholder="<?=$this->getTrans('warMapName') ?>">

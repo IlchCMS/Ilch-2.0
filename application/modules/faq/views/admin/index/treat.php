@@ -65,7 +65,12 @@ $cats = $this->get('cats');
             removeItemButton: true,
             searchEnabled: true,
             shouldSort: false,
-            itemSelectText: ''
+            loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
+            noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
+            noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
+            itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
+            uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
+            customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>'
         })
     });
 </script>

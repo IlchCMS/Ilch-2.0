@@ -66,7 +66,7 @@ $entry = $this->get('war');
                 <?=$this->getTrans('warMap') ?>
             </label>
             <div class="col-xl-4">
-                <select class="chosen-select form-control" id="warMapInput" name="warMap[]" data-placeholder="<?=$this->getTrans('selectAssignedMaps') ?>" multiple>
+                <select class="choices-select form-control" id="warMapInput" name="warMap[]" data-placeholder="<?=$this->getTrans('selectAssignedMaps') ?>" multiple>
                     <?php
                     /** @var \Modules\War\Models\Maps $mapsList */
                     foreach ($this->get('mapsList') ?? [] as $mapsList) : ?>
@@ -226,11 +226,11 @@ $entry = $this->get('war');
                 <?=$this->getTrans('visibleFor') ?>
             </label>
             <div class="col-xl-6">
-                <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
-                    <option value="all" <?=in_array('all', $this->originalInput('groups', $this->get('groups'))) ? 'selected="selected"' : '' ?>><?=$this->getTrans('groupAll') ?></option>
+                <select class="choices-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+                    <option value="all" <?=in_array('all', $this->originalInput('groups', $this->get('wargroups'))) ? 'selected="selected"' : '' ?>><?=$this->getTrans('groupAll') ?></option>
                     <?php foreach ($this->get('userGroupList') as $groupList) : ?>
                         <?php if ($groupList->getId() != 1) : ?>
-                            <option value="<?=$groupList->getId() ?>" <?=in_array($groupList->getId(), $this->originalInput('groups', $this->get('groups'))) ? 'selected=""' : '' ?>><?=$groupList->getName() ?></option>
+                            <option value="<?=$groupList->getId() ?>" <?=in_array($groupList->getId(), $this->originalInput('groups', $this->get('wargroups'))) ? 'selected=""' : '' ?>><?=$groupList->getName() ?></option>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </select>
@@ -280,9 +280,30 @@ $entry = $this->get('war');
     <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
-$('#warMapInput').chosen();
-$('#access').chosen();
 $(document).ready(function () {
+    new Choices('#warMapInput', {
+        removeItemButton: true,
+        searchEnabled: true,
+        shouldSort: false,
+        loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
+        noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
+        noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
+        itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
+        uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
+        customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>'
+    })
+    new Choices('#access', {
+        removeItemButton: true,
+        searchEnabled: true,
+        shouldSort: false,
+        loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
+        noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
+        noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
+        itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
+        uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
+        customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>'
+    })
+
     if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
         tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
         tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);

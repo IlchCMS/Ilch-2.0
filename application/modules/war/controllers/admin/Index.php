@@ -262,7 +262,7 @@ class Index extends Admin
             ->set('warOptGames', $warMapper->getWarOptDistinctGame())
             ->set('warOptMatchtypes', $warMapper->getWarOptDistinctMatchtype())
             ->set('userGroupList', $userGroupMapper->getGroupList())
-            ->set('groups', $groups)
+            ->set('wargroups', $groups)
             ->set('warMaps', $maps)
             ->set('mapsList', $mapsMapper->getList());
     }

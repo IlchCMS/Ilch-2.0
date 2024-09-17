@@ -265,24 +265,45 @@ $(document).ready(function() {
         removeItemButton: true,
         searchEnabled: true,
         shouldSort: false,
-        itemSelectText: ''
+        loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
+        noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
+        noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
+        itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
+        uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
+        customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>'
     });
     new Choices('#cats', {
         removeItemButton: true,
         searchEnabled: true,
         shouldSort: false,
-        itemSelectText: ''
+        loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
+        noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
+        noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
+        itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
+        uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
+        customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>'
     });
     new Choices('#template', {
         searchEnabled: true,
         shouldSort: false,
-        itemSelectText: ''
+        loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
+        noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
+        noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
+        itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
+        uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
+        customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>'
     });
 
     new Tokenfield('keywords', {
         removeItemButton: true,
         shouldSort: false,
         duplicateItemsAllowed: false,
+        loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
+        noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
+        noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
+        itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
+        uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
+        customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>'
     });
 
 
