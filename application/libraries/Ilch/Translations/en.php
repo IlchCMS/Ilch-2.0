@@ -96,4 +96,12 @@ return [
     // Globally needed translations for media (often used for the media modal).
     'media' => 'Media',
     'noMedias' => 'No media',
+
+    // Globally needed translations for Choices.
+    'choicesLoadingText' => 'Loading...',
+    'choicesNoResultsText' => 'No results found',
+    'choicesNoChoicesText' => 'No choices to choose from',
+    'choicesItemSelectText' => 'Press to select',
+    'choicesUniqueItemText' => 'Only unique values can be added',
+    'choicesCustomAddItemText' => 'Only values matching specific conditions can be added',
 ];
