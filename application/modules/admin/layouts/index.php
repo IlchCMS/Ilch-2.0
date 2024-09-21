@@ -29,9 +29,9 @@ $accesses = $this->get('accesses');
     <link href="<?=$this->getStaticUrl('css/ilch.css') ?>" rel="stylesheet">
     <link href="<?=$this->getStaticUrl('../application/modules/admin/static/css/main.css') ?>" rel="stylesheet">
     <link href="<?=$this->getVendorUrl('npm-asset/jquery-ui/dist/themes/ui-lightness/jquery-ui.min.css') ?>" rel="stylesheet">
-    <link href="<?=$this->getStaticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet"><!-- can be deleted after a change time -->
-    <link href="<?=$this->getVendorUrl('harvesthq/chosen/chosen.min.css') ?>" rel="stylesheet"><!-- can be deleted after a change time -->
-    <link href="<?=$this->getStaticUrl('js/tokenfield/css/bootstrap-tokenfield.min.css') ?>" rel="stylesheet"><!-- can be deleted after a change time -->
+    <link href="<?=$this->getStaticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
+    <link href="<?=$this->getVendorUrl('harvesthq/chosen/chosen.min.css') ?>" rel="stylesheet">
+    <link href="<?=$this->getStaticUrl('js/tokenfield/css/bootstrap-tokenfield.min.css') ?>" rel="stylesheet">
     <link href="<?=$this->getStaticUrl('css/bootstrap-choices.css') ?>" rel="stylesheet">
     <link href="<?=$this->getStaticUrl('js/choices/build/choices.min.css') ?>" rel="stylesheet">
     <link href="<?=$this->getStaticUrl('../application/modules/admin/static/css/admin.css') ?>" rel="stylesheet">
@@ -50,8 +50,8 @@ $accesses = $this->get('accesses');
     <script src="<?=$this->getStaticUrl('js/jquery.mjs.nestedSortable.js') ?>"></script>
     <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.bundle.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('../application/modules/admin/static/js/functions.js') ?>"></script>
-    <script src="<?=$this->getVendorUrl('harvesthq/chosen/chosen.jquery.min.js') ?>"></script><!-- can be deleted after a change time -->
-    <script src="<?=$this->getStaticUrl('js/tokenfield/bootstrap-tokenfield.min.js') ?>"></script><!-- can be deleted after a change time -->
+    <script src="<?=$this->getVendorUrl('harvesthq/chosen/chosen.jquery.min.js') ?>"></script>
+    <script src="<?=$this->getStaticUrl('js/tokenfield/bootstrap-tokenfield.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/choices/build/choices.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/choices.Tokenfield.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/validate/jquery.validate.min.js') ?>"></script>
