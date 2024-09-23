@@ -25,6 +25,7 @@ class Tokenfield {
         this.element.value = '';
 
         this.choices = new Choices(this.element, {
+            duplicateItemsAllowed: false,
             items: choicesItems,
             ...this.options
         });
