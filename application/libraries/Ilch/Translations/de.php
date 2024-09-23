@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  */
@@ -118,4 +119,8 @@ return [
     'choicesItemSelectText' => 'Zum Auswählen drücken',
     'choicesUniqueItemText' => 'Es können nur eindeutige Werte hinzugefügt werden',
     'choicesCustomAddItemText' => 'Es können nur Werte hinzugefügt werden, die bestimmten Bedingungen entsprechen',
+    'choicesAddItemText' => 'Drücken Sie die Eingabetaste, um <b>"${value}"</b> hinzuzufügen',
+    'choicesRemoveItemIconText' => 'Element entfernen',
+    'choicesRemoveItemLabelText' => 'Element entfernen: ${value}',
+    'choicesMaxItemText' => 'Es können nur ${maxItemCount} Werte hinzugefügt werden',
 ];

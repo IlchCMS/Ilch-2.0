@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  */
@@ -92,7 +93,7 @@ return [
     'Friday' => 'Friday',
     'Saturday' => 'Saturday',
     'Sunday' => 'Sunday',
-    
+
     // Globally needed translations for media (often used for the media modal).
     'media' => 'Media',
     'noMedias' => 'No media',
@@ -104,4 +105,8 @@ return [
     'choicesItemSelectText' => 'Press to select',
     'choicesUniqueItemText' => 'Only unique values can be added',
     'choicesCustomAddItemText' => 'Only values matching specific conditions can be added',
+    'choicesAddItemText' => 'Press Enter to add <b>"${value}"</b>',
+    'choicesRemoveItemIconText' => 'Remove item',
+    'choicesRemoveItemLabelText' => 'Remove item: ${value}',
+    'choicesMaxItemText' => 'Only ${maxItemCount} values can be added',
 ];
