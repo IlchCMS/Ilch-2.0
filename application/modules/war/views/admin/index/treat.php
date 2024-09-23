@@ -282,26 +282,12 @@ $entry = $this->get('war');
 <script>
 $(document).ready(function () {
     new Choices('#warMapInput', {
-        removeItemButton: true,
-        searchEnabled: true,
-        shouldSort: false,
-        loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
-        noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
-        noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
-        itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
-        uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
-        customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>'
+        ...choicesOptions,
+        searchEnabled: true
     })
     new Choices('#access', {
-        removeItemButton: true,
-        searchEnabled: true,
-        shouldSort: false,
-        loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
-        noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
-        noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
-        itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
-        uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
-        customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>'
+        ...choicesOptions,
+        searchEnabled: true
     })
 
     if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {

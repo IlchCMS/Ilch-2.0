@@ -1,3 +1,6 @@
+<?php
+/** @var \Ilch\Layout\Admin $this */
+?>
 <!DOCTYPE html>
 <html lang="de">
     <head>
@@ -49,6 +52,17 @@
                 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
                 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
             });
+
+            let choicesOptions = {
+                removeItemButton: true,
+                shouldSort: false,
+                loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
+                noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
+                noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
+                itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
+                uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
+                customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>'
+            };
         </script>
     </head>
     <body>

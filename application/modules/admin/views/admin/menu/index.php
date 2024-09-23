@@ -90,10 +90,10 @@ function buildMenu($parentId, $menuData, View $view) {
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
         <?php $iMenu = 1; ?>
-        <?php foreach ($this->get('menus') as $menu): ?>
+        <?php foreach ($this->get('menus') as $menu) : ?>
             <?php $active = ''; ?>
 
-            <?php if ($menu->getId() == $this->get('menu')->getId()): ?>
+            <?php if ($menu->getId() == $this->get('menu')->getId()) : ?>
                 <?php $active = 'active'; ?>
             <?php endif; ?>
             <li class="<?=$active ?> nav-item">
@@ -108,7 +108,7 @@ function buildMenu($parentId, $menuData, View $view) {
     <div class="row mb-3">
         <div class="col-md-7 col-xl-7">
             <ol id="sortable" class="sortable">
-                <?php if (!empty($menuItems)): ?>
+                <?php if (!empty($menuItems)) : ?>
                     <?php rec($menuMapper, $this) ?>
                 <?php endif; ?>
             </ol>
@@ -146,7 +146,7 @@ function buildMenu($parentId, $menuData, View $view) {
                 </label>
                 <div class="col-xl-8">
                     <select class="choices-select form-control" id="access" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
-                        <?php foreach ($this->get('userGroupList') as $groupList): ?>
+                        <?php foreach ($this->get('userGroupList') as $groupList) : ?>
                             <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>
                         <?php endforeach; ?>
                     </select>
@@ -168,15 +168,8 @@ function buildMenu($parentId, $menuData, View $view) {
     let accessElement = '#access';
     $(document).ready(function() {
         let accessChoices = new Choices(accessElement, {
-            removeItemButton: true,
-            searchEnabled: true,
-            shouldSort: false,
-            loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
-            noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
-            noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
-            itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
-            uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
-            customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>'
+            ...choicesOptions,
+            searchEnabled: true
         });
 
         function setChoices(selectedValues) {
@@ -251,11 +244,11 @@ function buildMenu($parentId, $menuData, View $view) {
                 let val = ui.item.find('input.hidden_type').val();
 
                 if ((val == 4 || val == 0)) {
-                    if (ui.item.closest('ol').closest('li').find('input.hidden_type:first').val() != undefined) {
+                    if (ui.item.closest('ol').closest('li').find('input.hidden_type:first').val() !== undefined) {
                         event.preventDefault();
                     }
                 } else {
-                    if (ui.item.closest('ol').closest('li').find('input.hidden_type:first').val() == undefined) {
+                    if (ui.item.closest('ol').closest('li').find('input.hidden_type:first').val() === undefined) {
                         event.preventDefault();
                     }
                 }
@@ -316,11 +309,11 @@ function buildMenu($parentId, $menuData, View $view) {
                     if (!isNaN(id)) {
                         append = '#sortable #list_' + id + ' ol';
 
-                        if ($(append).length == 0) {
+                        if ($(append).length === 0) {
                             $('<ol></ol>').appendTo('#sortable #list_' + id);
                         }
                     } else {
-                        if ($(append).length == 0) {
+                        if ($(append).length === 0) {
                             $('<ol></ol>').appendTo('#sortable #' + id);
                         }
                         append = '#sortable #' + id + ' ol';

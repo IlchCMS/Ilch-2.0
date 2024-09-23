@@ -2,8 +2,6 @@
 
 /** @var \Ilch\View $this */
 ?>
-<link href="<?=$this->getBaseUrl('application/modules/war/static/css/jquery-editable-select.min.css') ?>" rel="stylesheet">
-<script src="<?=$this->getBaseUrl('application/modules/war/static/js/jquery-editable-select.min.js') ?>"></script>
 <div id="dup">
 <?php $index = 0; ?>
 <?php
@@ -109,7 +107,6 @@ foreach ($this->get('games') as $game) : ?>
 
         let warMapPlayed = document.getElementsByName('warMapPlayed[]');
         if (warMapPlayed.length !== 0) {
-            //warMapPlayed[warMapPlayed.length - 1].editableSelect();
         }
 
         let warResultGroups = document.getElementsByName('warResultGroups[]');
