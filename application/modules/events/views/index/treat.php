@@ -296,7 +296,17 @@ $event = $this->get('event');
             noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
             itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
             uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
-            customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>'
+            customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>',
+            addItemText: (value) => {
+                return '<?=$this->getTranslator()->trans('choicesAddItemText') ?>'.replace(/\${value}/g, value);
+            },
+            removeItemIconText: '<?=$this->getTranslator()->trans('choicesRemoveItemIconText') ?>',
+            removeItemLabelText: (value) => {
+                return '<?=$this->getTranslator()->trans('choicesRemoveItemLabelText') ?>'.replace(/\${value}/g, value);
+            },
+            maxItemCount: (maxItemCount) => {
+                return '<?=$this->getTranslator()->trans('choicesMaxItemText') ?>'.replace(/\${maxItemCount}/g, maxItemCount);
+            },
         });
     });
 
