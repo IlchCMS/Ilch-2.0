@@ -20,8 +20,8 @@ $event = $this->get('event');
 ?>
 
 <link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
-<link href="<?=$this->getVendorUrl('harvesthq/chosen/chosen.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('css/bootstrap-choices.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/choices/build/choices.min.css') ?>" rel="stylesheet">
 
 <?php include APPLICATION_PATH . '/modules/events/views/index/navi.php'; ?>
 
@@ -244,7 +244,7 @@ $event = $this->get('event');
                 <?=$this->getTrans('visibleFor') ?>
             </label>
             <div class="col-xl-6">
-                <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+                <select class="choices-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                     <?php foreach ($this->get('userGroupList') as $groupList) : ?>
                         <?php if ($groupList->getId() != 1) : ?>
                             <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
@@ -276,7 +276,7 @@ $event = $this->get('event');
 <?php endif; ?>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
-<script src="<?=$this->getVendorUrl('harvesthq/chosen/chosen.jquery.min.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/choices/build/choices.min.js') ?>"></script>
 <script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
 <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
 <?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
@@ -286,7 +286,29 @@ $event = $this->get('event');
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>&libraries=places&region=<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>"></script>
 <?php endif; ?>
 <script>
-$('#access').chosen();
+    $(document).ready(function() {
+        new Choices('#access', {
+            removeItemButton: true,
+            searchEnabled: true,
+            shouldSort: false,
+            loadingText: '<?=$this->getTranslator()->trans('choicesLoadingText') ?>',
+            noResultsText: '<?=$this->getTranslator()->trans('choicesNoResultsText') ?>',
+            noChoicesText: '<?=$this->getTranslator()->trans('choicesNoChoicesText') ?>',
+            itemSelectText: '<?=$this->getTranslator()->trans('choicesItemSelectText') ?>',
+            uniqueItemText: '<?=$this->getTranslator()->trans('choicesUniqueItemText') ?>',
+            customAddItemText: '<?=$this->getTranslator()->trans('choicesCustomAddItemText') ?>',
+            addItemText: (value) => {
+                return '<?=$this->getTranslator()->trans('choicesAddItemText') ?>'.replace(/\${value}/g, value);
+            },
+            removeItemIconText: '<?=$this->getTranslator()->trans('choicesRemoveItemIconText') ?>',
+            removeItemLabelText: (value) => {
+                return '<?=$this->getTranslator()->trans('choicesRemoveItemLabelText') ?>'.replace(/\${value}/g, value);
+            },
+            maxItemCount: (maxItemCount) => {
+                return '<?=$this->getTranslator()->trans('choicesMaxItemText') ?>'.replace(/\${maxItemCount}/g, maxItemCount);
+            },
+        });
+    });
 
 $(document).ready(function() {
     if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {

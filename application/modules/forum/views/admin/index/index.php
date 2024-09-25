@@ -142,6 +142,10 @@ $(document).ready (
             protectRoot: true
         });
 
+        let choicesAssignedGroupsRead;
+        let choicesAssignedGroupsReply;
+        let choicesAssignedGroupsCreate;
+
         $('.disclose').on('click', function () {
             $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
             $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-plus-circle');
@@ -175,7 +179,7 @@ $(document).ready (
                         <div class="row mb-3"><label for="prefixes" class="col-xl-3 col-form-label"><?=$this->getTrans('prefixes') ?></label>\n\
                         <div class="col-xl-6"><input type="text" class="form-control" id="prefixes" placeholder="<?=$this->getTrans('selectPrefixes') ?>"></div></div>\n\
                         <div class="row mb-3"><label for="assignedGroupsRead" class="col-xl-3 col-form-label"><?=$this->getTrans('see') ?></label>\n\
-                        <div class="col-xl-6"><select class="chosen-select form-control" id="assignedGroupsRead" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
+                        <div class="col-xl-6"><select class="choices-select form-control" id="assignedGroupsRead" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php
                         /** @var \Modules\User\Models\Group $group */
@@ -184,7 +188,7 @@ $(document).ready (
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
                         <div class="row mb-3"><label for="assignedGroupsReply" class="col-xl-3 col-form-label"><?=$this->getTrans('answer') ?></label>\n\
-                        <div class="col-xl-6"><select class="chosen-select form-control" id="assignedGroupsReply" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
+                        <div class="col-xl-6"><select class="choices-select form-control" id="assignedGroupsReply" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php
                         /** @var \Modules\User\Models\Group $group */
@@ -193,7 +197,7 @@ $(document).ready (
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
                         <div class="row mb-3"><label for="assignedGroupsCreate" class="col-xl-3 col-form-label"><?=$this->getTrans('create') ?></label>\n\
-                        <div class="col-xl-6"><select class="chosen-select form-control" id="assignedGroupsCreate" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
+                        <div class="col-xl-6"><select class="choices-select form-control" id="assignedGroupsCreate" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php
                         /** @var \Modules\User\Models\Group $group */
@@ -246,9 +250,18 @@ $(document).ready (
                     return false;
                 });
 
-                $('#assignedGroupsRead').chosen();
-                $('#assignedGroupsReply').chosen();
-                $('#assignedGroupsCreate').chosen();
+                choicesAssignedGroupsRead = new Choices('#assignedGroupsRead', {
+                    ...choicesOptions,
+                    searchEnabled: true
+                });
+                choicesAssignedGroupsReply = new Choices('#assignedGroupsReply', {
+                    ...choicesOptions,
+                    searchEnabled: true
+                });
+                choicesAssignedGroupsCreate = new Choices('#assignedGroupsCreate', {
+                    ...choicesOptions,
+                    searchEnabled: true
+                });
             }
         });
 
@@ -303,26 +316,35 @@ $(document).ready (
             $('#prefixes').val($(this).parent().find('.hidden_prefixes').val());
             $('#prefixes').tokenfield('setTokens', $(this).parent().find('.hidden_prefixes').val());
 
-            $.each($(this).parent().find('.hidden_read_access').val().split(","), function(index, element) {
-                if (element) {
-                    $('#assignedGroupsRead > option[value=' + element + ']').prop("selected", true);
-                }
-             });
-            $('#assignedGroupsRead').trigger("chosen:updated");
+            let hidden_read_access_Element = $('#assignedGroupsRead');
+            hidden_read_access_values = $(this).parent().find('.hidden_read_access').val().split(',').map(value => value.trim());
+            hidden_read_access_Element.val(null).trigger('change');
+            hidden_read_access_Element.val(hidden_read_access_values).trigger('change');
+            choicesAssignedGroupsRead.setValue(hidden_read_access_values);
 
-            $.each($(this).parent().find('.hidden_reply_access').val().split(","), function(index, element) {
-                if (element) {
-                    $('#assignedGroupsReply > option[value=' + element + ']').prop("selected", true);
-                }
-             });
-            $('#assignedGroupsReply').trigger("chosen:updated");
+            hidden_read_access_values.forEach(value => {
+                choicesAssignedGroupsRead.setChoiceByValue(value);
+            });
 
-            $.each($(this).parent().find('.hidden_create_access').val().split(","), function(index, element) {
-                if (element) {
-                    $('#assignedGroupsCreate > option[value=' + element + ']').prop("selected", true);
-                }
-             });
-            $('#assignedGroupsCreate').trigger("chosen:updated");
+            let hidden_reply_access_Element = $('#assignedGroupsReply');
+            hidden_reply_access_values = $(this).parent().find('.hidden_reply_access').val().split(',').map(value => value.trim());
+            hidden_reply_access_Element.val(null).trigger('change');
+            hidden_reply_access_Element.val(hidden_reply_access_values).trigger('change');
+            choicesAssignedGroupsReply.setValue(hidden_reply_access_values);
+
+            hidden_reply_access_values.forEach(value => {
+                choicesAssignedGroupsReply.setChoiceByValue(value);
+            });
+
+            let hidden_create_access_Element = $('#assignedGroupsCreate');
+            hidden_create_access_values = $(this).parent().find('.hidden_create_access').val().split(',').map(value => value.trim());
+            hidden_create_access_Element.val(null).trigger('change');
+            hidden_create_access_Element.val(hidden_create_access_values).trigger('change');
+            choicesAssignedGroupsCreate.setValue(hidden_create_access_values);
+
+            hidden_create_access_values.forEach(value => {
+                choicesAssignedGroupsCreate.setChoiceByValue(value);
+            });
 
             $('#id').val($(this).closest('li').attr('id'));
         });

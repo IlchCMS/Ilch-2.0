@@ -36,7 +36,7 @@
             <?=$this->getTrans('writeAccess') ?>
         </label>
         <div class="col-xl-3">
-            <select class="chosen-select form-control"
+            <select class="choices-select form-control"
                     id="writeAccess"
                     name="writeAccess[]"
                     data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
@@ -63,5 +63,10 @@
 </form>
 
 <script>
-    $('#writeAccess').chosen();
+    $(document).ready(function() {
+        new Choices('#writeAccess', {
+            ...choicesOptions,
+            searchEnabled: true
+        })
+    });
 </script>

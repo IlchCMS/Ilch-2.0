@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  */
@@ -110,4 +111,16 @@ return [
     // Globally needed translations for media (often used for the media modal).
     'media' => 'Medien',
     'noMedias' => 'Keine Medien',
+
+    // Globally needed translations for Choices.
+    'choicesLoadingText' => 'Laden...',
+    'choicesNoResultsText' => 'Keine Ergebnisse gefunden',
+    'choicesNoChoicesText' => 'Keine Auswahlmöglichkeit',
+    'choicesItemSelectText' => 'Zum Auswählen drücken',
+    'choicesUniqueItemText' => 'Es können nur eindeutige Werte hinzugefügt werden',
+    'choicesCustomAddItemText' => 'Es können nur Werte hinzugefügt werden, die bestimmten Bedingungen entsprechen',
+    'choicesAddItemText' => 'Drücken Sie die Eingabetaste, um <b>"${value}"</b> hinzuzufügen',
+    'choicesRemoveItemIconText' => 'Element entfernen',
+    'choicesRemoveItemLabelText' => 'Element entfernen: ${value}',
+    'choicesMaxItemText' => 'Es können nur ${maxItemCount} Werte hinzugefügt werden',
 ];

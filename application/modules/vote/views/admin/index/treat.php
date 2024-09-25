@@ -17,7 +17,7 @@ $voteRes = $this->get('voteRes');
             <?=$this->getTrans('participationGroup') ?>
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control"
+            <select class="choices-select form-control"
                     id="group" name="groups[]"
                     data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
                     multiple>
@@ -37,7 +37,7 @@ $voteRes = $this->get('voteRes');
             <?=$this->getTrans('visibleFor') ?>
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control"
+            <select class="choices-select form-control"
                     id="access" name="access[]"
                     data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
                     multiple>
@@ -98,8 +98,16 @@ $voteRes = $this->get('voteRes');
 </form>
 
 <script>
-    $('#access').chosen();
-    $('#group').chosen();
+    $(document).ready(function() {
+        new Choices('#access', {
+            ...choicesOptions,
+            searchEnabled: true
+        });
+        new Choices('#group', {
+            ...choicesOptions,
+            searchEnabled: true
+        });
+    });
 
     $(document).ready(function() {
         $(document).on('click', '.btn-add', function() {

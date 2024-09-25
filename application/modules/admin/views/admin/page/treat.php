@@ -62,9 +62,12 @@ $entrie = $this->get('page');
             <?=$this->getTrans('seoKeywords') ?>:
         </label>
         <div class="col-xl-4">
-            <textarea class="form-control"
-                      id="keywords"
-                      name="keywords"><?=$this->escape($this->originalInput('keywords', ($entrie->getId()?$entrie->getKeywords():''))) ?></textarea>
+            <input type="text"
+                   class="choices-select form-control"
+                   name="keywords"
+                   id="keywords"
+                   data-placeholder="<?=$this->getTrans('seoKeywords') ?>"
+                   value="<?=$this->escape($this->originalInput('keywords', ($entrie->getId()?$entrie->getKeywords():''))) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('permaLink') ? ' has-error' : '' ?>">
@@ -126,10 +129,5 @@ $('#pageLanguage').change (
     }
 );
 
-$('#keywords').tokenfield().on('tokenfield:createtoken', function (event) {
-    $.each($(this).tokenfield('getTokens'), function(index, token) {
-        if (token.value === event.attrs.value)
-            event.preventDefault();
-    });
-});
+new Tokenfield('#keywords', choicesOptions);
 </script>

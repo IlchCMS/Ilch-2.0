@@ -12,7 +12,7 @@
             <?=$this->getTrans('addEntriesGroupAccesses') ?>
         </label>
         <div class="col-xl-3">
-            <select class="form-control chosen-select"
+            <select class="form-control choices-select"
                     id="event_add_entries_accesses"
                     name="event_add_entries_accesses[]"
                     data-placeholder="<?=$this->getTrans('selectGroupAccesses') ?>"
@@ -42,7 +42,7 @@
             <?=$this->getTrans('showEntryMembersAccesses') ?>
         </label>
         <div class="col-xl-3">
-            <select class="form-control chosen-select"
+            <select class="form-control choices-select"
                     id="event_show_members_accesses"
                     name="event_show_members_accesses[]"
                     data-placeholder="<?=$this->getTrans('selectGroupAccesses') ?>"
@@ -188,7 +188,7 @@
         <div class="col-xl-2">
             <select class="form-select" id="event_google_maps_map_typ" name="event_google_maps_map_typ">
                 <?php foreach (['ROADMAP', 'SATELLITE', 'HYBRID', 'TERRAIN'] as $type) : ?>
-                <option<?=($this->get('event_google_maps_map_typ') === $type) ? ' selected="selected"' : '' ?> value="<?=$type ?>>"><?=$type ?></option>
+                    <option<?=($this->get('event_google_maps_map_typ') === $type) ? ' selected="selected"' : '' ?> value="<?=$type ?>>"><?=$type ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -229,5 +229,14 @@
 <?=$this->getDialog('googleMapsAPIInfoModal', $this->getTrans('createGoogleMapsAPIKey'), $this->getTrans('googleMapsAPIKeyInfoText')) ?>
 
 <script>
-    $('#event_add_entries_accesses, #event_show_members_accesses').chosen();
+    $(document).ready(function() {
+        new Choices('#event_add_entries_accesses', {
+            ...choicesOptions,
+            searchEnabled: true
+        })
+        new Choices('#event_show_members_accesses', {
+            ...choicesOptions,
+            searchEnabled: true
+        })
+    });
 </script>

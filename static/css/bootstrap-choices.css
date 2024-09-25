@@ -1,0 +1,26 @@
+/* Set background color, borders and font-size to bootstrap default */
+.choices__inner, .choices__input, .choices__item {
+    background-color: var(--bs-body-bg) !important;
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
+    border-radius: var(--bs-border-radius) !important;
+    font-size: var(--bs-body-font-size) !important;
+}
+.choices__item {
+    border-radius: 3px !important;
+    color: var(--bs-body-color) !important;
+}
+/* Remove border */
+.choices__input {
+    border: 0 !important;
+}
+/* Change color of remove button */
+.choices__button {
+    filter: invert(59%) sepia(19%) saturate(0%) hue-rotate(288deg) brightness(96%) contrast(88%);
+}
+/* Align style for disabled select */
+.choices.is-disabled .choices__inner, .choices.is-disabled .choices__item {
+    background-color: var(--bs-secondary-bg) !important;
+}
+.choices__list--single .choices__item {
+    border: 0 !important;
+}

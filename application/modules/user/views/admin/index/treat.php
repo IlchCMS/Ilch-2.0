@@ -135,7 +135,7 @@ if ($user->getId()) {
                 <?=$this->getTrans('assignedGroups') ?>
         </label>
         <div class="col-xl-9">
-            <select class="chosen-select form-control"
+            <select class="choices-select form-control"
                     id="assignedGroups"
                     name="groups[]"
                     data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
@@ -175,6 +175,11 @@ if ($user->getId()) {
 </form>
 
 <script>
-$('#assignedGroups').chosen();
+    $(document).ready(function() {
+        new Choices('#assignedGroups', {
+            ...choicesOptions,
+            searchEnabled: true
+        });
+    });
 $('#userForm').validate();
 </script>

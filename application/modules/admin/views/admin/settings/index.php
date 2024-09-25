@@ -205,7 +205,7 @@
             <?= $this->getTrans('hideCaptchaFor') ?>:
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control"
+            <select class="choices-select form-control"
                     id="hideCaptchaFor"
                     name="groups[]"
                     data-placeholder="<?= $this->getTrans('hideCaptchaFor') ?>"
@@ -324,5 +324,10 @@ $('[name="captcha"]').change(function () {
 });
 $('[name="captcha"]').change();
 
-$('#hideCaptchaFor').chosen();
+$(document).ready(function() {
+    new Choices('#hideCaptchaFor', {
+        ...choicesOptions,
+        searchEnabled: true
+    })
+});
 </script>

@@ -49,7 +49,7 @@
             <?=$this->getTrans('excludeFloodProtection') ?>:
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control"
+            <select class="choices-select form-control"
                     id="excludeFloodProtection"
                     name="groups[]"
                     data-placeholder="<?=$this->getTrans('excludeFloodProtection') ?>"
@@ -163,5 +163,10 @@
 </form>
 
 <script>
-    $('#excludeFloodProtection').chosen();
+    $(document).ready(function() {
+        new Choices('#excludeFloodProtection', {
+            ...choicesOptions,
+            searchEnabled: true
+        })
+    });
 </script>

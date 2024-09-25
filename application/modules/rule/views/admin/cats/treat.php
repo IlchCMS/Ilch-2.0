@@ -46,7 +46,7 @@ $userGroupList = $this->get('userGroupList');
             <a href="#" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-title="<?=$this->getTrans('seetext') ?>"><i class="fa-solid fa-circle-info"></i></a>
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control" id="assignedGroupsRead" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+            <select class="choices-select form-control" id="assignedGroupsRead" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <option value="all"<?=(in_array('all', $this->originalInput('groups', $this->get('groups')))) ? ' selected' : '' ?>><?=$this->getTrans('all') ?></option>
             <?php foreach ($userGroupList as $groupList) : ?>
                 <?php if ($groupList->getId() != 1) : ?>
@@ -60,5 +60,10 @@ $userGroupList = $this->get('userGroupList');
 </form>
 
 <script>
-    $('#assignedGroupsRead').chosen();
+    $(document).ready(function() {
+        new Choices('#assignedGroupsRead', {
+            ...choicesOptions,
+            searchEnabled: true
+        })
+    });
 </script>

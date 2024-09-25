@@ -14,7 +14,7 @@ class Config extends \Ilch\Config\Install
      */
     public array $config = [
         'key' => 'vote',
-        'version' => '1.14.0',
+        'version' => '1.14.1',
         'icon_small' => 'fa-solid fa-bars-progress',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',

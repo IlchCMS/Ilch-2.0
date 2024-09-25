@@ -175,7 +175,7 @@ $entry = $this->get('calendar');
             <?=$this->getTrans('visibleFor') ?>
         </label>
         <div class="col-xl-4">
-            <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+            <select class="choices-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <option value="all" <?=in_array('all', $this->originalInput('groups', $this->get('groups'))) ? 'selected="selected"' : '' ?>><?=$this->getTrans('groupAll') ?></option>
                 <?php
                 /** @var \Modules\Calendar\Models\Calendar $entry */
@@ -214,7 +214,12 @@ $entry = $this->get('calendar');
     ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/'))
     ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>
-$('#access').chosen();
+$(document).ready(function() {
+    new Choices('#access', {
+        ...choicesOptions,
+        searchEnabled: true
+    })
+});
 
 $(document).ready(function() {
     let jsPeriodAppendix = <?=json_encode($periodAppendix) ?>;

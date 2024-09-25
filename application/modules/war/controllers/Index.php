@@ -175,6 +175,7 @@ class Index extends Frontend
             $this->getView()->set('userMapper', $userMapper)
                 ->set('userGroupIds', $userGroupMapper->getUsersForGroup($group ? $group->getGroupMember() : ''))
                 ->set('games', $gamesMapper->getGamesByWarId($war->getId()))
+                ->set('groups', $groupMapper->getGroups())
                 ->set('group', $group)
                 ->set('enemy', $enemyMapper->getEnemyById($war->getWarEnemy()))
                 ->set('war', $war)

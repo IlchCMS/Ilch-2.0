@@ -1,0 +1,12 @@
+{
+  "name": "choices-custom-build",
+  "version": "0.0.1",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "choices.js": "^11.0.2"
+  },
+  "scripts": {
+    "build": "rm -rf build && mkdir -p build && cp node_modules/choices.js/public/assets/scripts/choices.min.js build/ && cp node_modules/choices.js/public/assets/styles/choices.min.css build/"
+  }
+}

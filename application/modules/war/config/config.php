@@ -14,7 +14,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'war',
-        'version' => '1.16.1',
+        'version' => '1.16.2',
         'icon_small' => 'fa-solid fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',

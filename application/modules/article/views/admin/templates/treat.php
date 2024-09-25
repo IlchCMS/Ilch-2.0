@@ -108,9 +108,12 @@ if ($this->get('article') != '') {
             <?=$this->getTrans('seoKeywords') ?>:
         </label>
         <div class="col-xl-4">
-            <textarea class="form-control"
-                      id="keywords"
-                      name="keywords"><?=($this->get('article') != '') ? $this->escape($this->get('article')->getKeywords()) : '' ?></textarea>
+            <input type="text"
+                   class="choices-select form-control"
+                   name="keywords"
+                   id="keywords"
+                   data-placeholder="<?=$this->getTrans('seoKeywords') ?>"
+                   value="<?=($this->get('article')) ? $this->escape($this->get('article')->getKeywords()) : $this->originalInput('keywords') ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('permaLink') ? ' has-error' : '' ?>">
@@ -133,8 +136,9 @@ if ($this->get('article') != '') {
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
-$('#access').chosen();
-$('#cats').chosen();
+    $(document).ready(function() {
+        new Tokenfield('#keywords', choicesOptions);
+    });
 
 $('#title').change(
     function () {
@@ -170,21 +174,4 @@ $('#preview').click(
         $('#article_form').attr('target', '');
     }
 );
-
-$('#keywords').tokenfield();
-$('#keywords').on('tokenfield:createtoken', function (event) {
-    var existingTokens = $(this).tokenfield('getTokens');
-    $.each(existingTokens, function(index, token) {
-        if (token.value === event.attrs.value)
-            event.preventDefault();
-    });
-});
-$('#tags').tokenfield();
-$('#tags').on('tokenfield:createtoken', function (event) {
-    var existingTokens = $(this).tokenfield('getTokens');
-    $.each(existingTokens, function(index, token) {
-        if (token.value === event.attrs.value)
-            event.preventDefault();
-    });
-});
 </script>
