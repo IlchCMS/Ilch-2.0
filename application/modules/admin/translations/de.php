@@ -54,6 +54,9 @@ return [
     'version' => 'Version',
     'noUserEmailGiven' => 'Es wurde kein(e) Benutzername/E-Mail angegeben.',
     'contentLanguage' => 'Sprache des Inhaltes',
+    'domain' => 'Domain',
+    'useCurrentDomain' => 'Aktuelle Domain nutzen',
+    'clearDomain' => 'Domain löschen',
     'standardMail' => 'Standard E-Mail Absender',
     'defaultPaginationObjects' => 'Standardanzahl Objekte pro Seite',
     'hideCaptchaFor' => 'Captcha ausblenden für',
@@ -68,6 +71,12 @@ return [
                                   Dies wird in einigen Fällen dazu führen, dass die Ausgabe nicht mehr funktioniert oder anders aussieht als erwartet.<br>
                                   <a href="https://github.com/IlchCMS/Ilch-2.0/wiki/Doku-Benutzer-Inhalt-eigene-Boxen-Seiten">Siehe Dokumentation für weitere Informationen.</a></p>
                                   <p><strong>Es wird nicht empfohlen diese Sicherheitsmaßnahme zu deaktivieren.</strong></p>',
+    'htmlPurifierSettings' => 'HTMLPurifier-Einstellungen',
+    'showAndChangeHtmlPurifierSettings' => 'Anzeigen und ändern der HTMLPurifier-Einstellungen',
+    'menuHtmlPurifier' => 'HTMLPurifier-Einstellungen',
+    'htmlPurifierSafeUrlsAddOwnDomain' => 'Eigene Domain hinzufügen',
+    'htmlPurifierOwnDomainHelp' => 'Stellen Sie bitte sicher, dass dies die richtige Domain ist.',
+    'htmlPurifierUrlsConsideredSafe' => 'Als sicher angesehene Adressen',
     'timezone' => 'Zeitzone',
     'home' => 'Startseite',
     'updateserver' => 'Update-Server',

@@ -250,7 +250,7 @@ class Router
         if (!empty($this->query)) {
             return;
         }
-        
+
         $config = \Ilch\Registry::get('config');
         $locale = '';
 

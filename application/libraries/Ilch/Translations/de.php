@@ -15,6 +15,7 @@ return [
     'validation.errors.grecaptcha.wrongCaptcha' => '%s ist fehlgeschlagen.',
     'validation.errors.date.mustBeDate' => '%s ist kein gültiges Datum oder verwendet ein falsches Format (%s).',
     'validation.errors.url.noValidUrl' => '%s muss eine gültige URL sein.',
+    'validation.errors.domain.noValidDomain' => '%s muss eine gültige Domain sein.',
     'validation.errors.email.noValidEmail' => '%s muss eine gültige E-Mail-Adresse sein.',
     'validation.errors.unique.valueExists' => '%s `%s` ist bereits in Verwendung.',
     'validation.errors.unique.valueNotExists' => '%s `%s` ist nicht vorhanden.',

@@ -127,6 +127,23 @@
             </select>
         </div>
     </div>
+    <div class="row mb-3">
+        <label for="domainInput" class="col-xl-2 col-form-label">
+            <?= $this->getTrans('domain') ?>:
+        </label>
+        <div class="col-xl-4">
+            <div class="input-group">
+                <input type="text"
+                       class="form-control"
+                       id="domainInput"
+                       name="domain"
+                       value="<?= $this->escape($this->get('domain')) ?>"
+                       required />
+                <button class="btn btn-outline-secondary" type="button" id="useCurrentDomain"><?= $this->getTrans('useCurrentDomain') ?></button>
+                <button class="btn btn-outline-secondary" type="button" id="clearDomain"><?= $this->getTrans('clearDomain') ?></button>
+            </div>
+        </div>
+    </div>
     <div class="row mb-3<?= $this->validation()->hasError('standardMail') ? ' has-error' : '' ?>">
         <label for="standardMailInput" class="col-xl-2 col-form-label">
             <?= $this->getTrans('standardMail') ?>:
@@ -247,6 +264,14 @@
             </div>
         </div>
     </div>
+    <div id="htmlPurifierSettings" class="row mb-3">
+        <div class="col-xl-2 col-form-label">
+            <?= $this->getTrans('htmlPurifierSettings') ?>:
+        </div>
+        <div class="col-xl-4">
+            <a href="<?=$this->getUrl(['action' => 'htmlpurifier']) ?>" class="btn btn-light" role="button"><?= $this->getTrans('showAndChangeHtmlPurifierSettings') ?></a>
+        </div>
+    </div>
 
     <h1><?= $this->getTrans('backendFunctions') ?></h1>
     <div id="hmenuFixed" class="row mb-3">
@@ -329,5 +354,20 @@ $(document).ready(function() {
         ...choicesOptions,
         searchEnabled: true
     })
+});
+
+$('[name="htmlPurifier"]').click(function () {
+    if ($(this).val() == "1") {
+        $('#htmlPurifierSettings').removeAttr('hidden');
+    } else {
+        $('#htmlPurifierSettings').attr('hidden', '');
+    }
+});
+
+$('#useCurrentDomain').click(function () {
+    $('#domainInput').val(window.location.hostname);
+});
+$('#clearDomain').click(function () {
+    $('#domainInput').val('');
 });
 </script>
