@@ -57,7 +57,7 @@ return [
     'domain' => 'Domain',
     'useCurrentDomain' => 'Aktuelle Domain nutzen',
     'clearDomain' => 'Domain löschen',
-    'domainSettingHelp' => 'Stellen Sie bitte sicher, dass dies die richtige Domain ist.',
+    'domainSettingHelp' => 'Stellen Sie bitte sicher, dass dies die richtige Domain ist. Sie wird automatisch als sicher angesehen.',
     'standardMail' => 'Standard E-Mail Absender',
     'defaultPaginationObjects' => 'Standardanzahl Objekte pro Seite',
     'hideCaptchaFor' => 'Captcha ausblenden für',

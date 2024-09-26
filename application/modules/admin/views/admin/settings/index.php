@@ -142,7 +142,7 @@
                 <button class="btn btn-outline-secondary" type="button" id="useCurrentDomain"><?= $this->getTrans('useCurrentDomain') ?></button>
                 <button class="btn btn-outline-secondary" type="button" id="clearDomain"><?= $this->getTrans('clearDomain') ?></button>
             </div>
-            <div id="domainSettingHelp" class="form-text"><?= $this->getTrans('htmlPurifierOwnDomainHelp') ?></div>
+            <div id="domainSettingHelp" class="form-text"><?= $this->getTrans('domainSettingHelp') ?></div>
         </div>
     </div>
     <div class="row mb-3<?= $this->validation()->hasError('standardMail') ? ' has-error' : '' ?>">
