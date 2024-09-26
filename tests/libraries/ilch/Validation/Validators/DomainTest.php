@@ -43,76 +43,132 @@ class DomainTest extends TestCase
     public function dpForTestValidator(): array
     {
         return [
-            'valid domain with subdomain' => [
-                'data'                    => $this->createData('www.ilch.de'),
+            'valid domain with subdomain, hostname' => [
+                'data'                    => $this->createData('www.ilch.de', true),
                 'expectedIsValid'         => true
             ],
-            'valid domain' => [
-                'data'                    => $this->createData('ilch.de'),
+            'valid domain, hostname' => [
+                'data'                    => $this->createData('ilch.de', true),
                 'expectedIsValid'         => true
             ],
-            'valid domain, ip address' => [
-                'data'                    => $this->createData('127.0.0.1'),
+            'valid domain, ip address, hostname' => [
+                'data'                    => $this->createData('127.0.0.1', true),
                 'expectedIsValid'         => true
             ],
-            'invalid too long domain (toolongtoolongtoolongtoolongtoolongtoolongtoolongtoolongtoolongtoolong.com)' => [
-                'data'                    => $this->createData('toolongtoolongtoolongtoolongtoolongtoolongtoolongtoolongtoolongtoolong.com'),
+            'valid domain (longest domain), hostname' => [
+                'data'                    => $this->createData('www.thelongestdomainnameintheworldandthensomeandthensomemoreandmore.com', true),
+                'expectedIsValid'         => true
+            ],
+            'invalid too long domain (toolongtoolongtoolongtoolongtoolongtoolongtoolongtoolongtoolongtoolong.com), hostname' => [
+                'data'                    => $this->createData('toolongtoolongtoolongtoolongtoolongtoolongtoolongtoolongtoolongtoolong.com', true),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.domain.noValidDomain',
                 'expectedErrorParameters' => []
             ],
-            'invalid too long domain (random)' => [
-                'data'                    => $this->createData('eauBcFReEmjLcoZwI0RuONNnwU4H9r151juCaqTI5VeIP5jcYIqhx1lh5vV00l2rTs6y7hOp7rYw42QZiq6VIzjcYrRm8gFRMk9U9Wi1grL8Mr5kLVloYLthHgyA94QK3SaXCATklxgo6XvcbXIqAGG7U0KxTr8hJJU1p2ZQ2mXHmp4DhYP8N9SRuEKzaCPcSIcW7uj21jZqBigsLsNAXEzU8SPXZjmVQVtwQATPWeWyGW4GuJhjP4Q8o0.com'),
+            'invalid too long domain (random), hostname' => [
+                'data'                    => $this->createData('eauBcFReEmjLcoZwI0RuONNnwU4H9r151juCaqTI5VeIP5jcYIqhx1lh5vV00l2rTs6y7hOp7rYw42QZiq6VIzjcYrRm8gFRMk9U9Wi1grL8Mr5kLVloYLthHgyA94QK3SaXCATklxgo6XvcbXIqAGG7U0KxTr8hJJU1p2ZQ2mXHmp4DhYP8N9SRuEKzaCPcSIcW7uj21jZqBigsLsNAXEzU8SPXZjmVQVtwQATPWeWyGW4GuJhjP4Q8o0.com', true),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.domain.noValidDomain',
                 'expectedErrorParameters' => []
             ],
-            'valid domain (random, trailing dot)' => [
-                'data'                    => $this->createData('kDTvHt1PPDgX5EiP2MwiXjcoWNOhhTuOVAUWJ3TmpBYCC9QoJV114LMYrV3Zl58.kDTvHt1PPDgX5EiP2MwiXjcoWNOhhTuOVAUWJ3TmpBYCC9QoJV114LMYrV3Zl58.kDTvHt1PPDgX5EiP2MwiXjcoWNOhhTuOVAUWJ3TmpBYCC9QoJV114LMYrV3Zl58.CQ1oT5Uq3jJt6Uhy3VH9u3Gi5YhfZCvZVKgLlaXNFhVKB1zJxvunR7SJa.com.'),
+            'valid domain (random, trailing dot), hostname' => [
+                'data'                    => $this->createData('kDTvHt1PPDgX5EiP2MwiXjcoWNOhhTuOVAUWJ3TmpBYCC9QoJV114LMYrV3Zl58.kDTvHt1PPDgX5EiP2MwiXjcoWNOhhTuOVAUWJ3TmpBYCC9QoJV114LMYrV3Zl58.kDTvHt1PPDgX5EiP2MwiXjcoWNOhhTuOVAUWJ3TmpBYCC9QoJV114LMYrV3Zl58.CQ1oT5Uq3jJt6Uhy3VH9u3Gi5YhfZCvZVKgLlaXNFhVKB1zJxvunR7SJa.com.', true),
                 'expectedIsValid'         => true
             ],
-            'valid domain (cont-ains.h-yph-en-s.com)' => [
-                'data'                    => $this->createData('cont-ains.h-yph-en-s.com'),
+            'valid domain (cont-ains.h-yph-en-s.com), hostname' => [
+                'data'                    => $this->createData('cont-ains.h-yph-en-s.com', true),
                 'expectedIsValid'         => true
             ],
-            'invalid domian (..com)' => [
-                'data'                    => $this->createData('..com'),
+            'invalid domain (..com), hostname' => [
+                'data'                    => $this->createData('..com', true),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.domain.noValidDomain',
                 'expectedErrorParameters' => []
             ],
-            'invalid domian (ab..cc.dd)' => [
-                'data'                    => $this->createData('ab..cc.dd'),
+            'invalid domain (ab..cc.dd), hostname' => [
+                'data'                    => $this->createData('ab..cc.dd', true),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.domain.noValidDomain',
                 'expectedErrorParameters' => []
             ],
-            'valid domian (a.-bc.com)' => [
-                'data'                    => $this->createData('a.-bc.com'),
+            'invalid domain (a.-bc.com), hostname' => [
+                'data'                    => $this->createData('a.-bc.com', true),
+                'expectedIsValid'         => false,
+                'expectedErrorKey'        => 'validation.errors.domain.noValidDomain',
+                'expectedErrorParameters' => []
+            ],
+            'invalid domain (ab.cd-.com), hostname' => [
+                'data'                    => $this->createData('ab.cd-.com', true),
+                'expectedIsValid'         => false,
+                'expectedErrorKey'        => 'validation.errors.domain.noValidDomain',
+                'expectedErrorParameters' => []
+            ],
+            'invalid domain (-.abc.com), hostname' => [
+                'data'                    => $this->createData('-.abc.com', true),
+                'expectedIsValid'         => false,
+                'expectedErrorKey'        => 'validation.errors.domain.noValidDomain',
+                'expectedErrorParameters' => []
+            ],
+            'invalid domain (abc.-.abc.com), hostname' => [
+                'data'                    => $this->createData('abc.-.abc.com', true),
+                'expectedIsValid'         => false,
+                'expectedErrorKey'        => 'validation.errors.domain.noValidDomain',
+                'expectedErrorParameters' => []
+            ],
+            'invalid domain (underscore_.example.com), hostname' => [
+                'data'                    => $this->createData('underscore_.example.com', true),
+                'expectedIsValid'         => false,
+                'expectedErrorKey'        => 'validation.errors.domain.noValidDomain',
+                'expectedErrorParameters' => []
+            ],
+            'invalid domain (-1), hostname' => [
+                'data'                    => $this->createData('-1', true),
+                'expectedIsValid'         => false,
+                'expectedErrorKey'        => 'validation.errors.domain.noValidDomain',
+                'expectedErrorParameters' => []
+            ],
+            'valid domain (_example.com)' => [
+                'data'                    => $this->createData('_example.com'),
                 'expectedIsValid'         => true
             ],
-            'valid domian (ab.cd-.com)' => [
-                'data'                    => $this->createData('ab.cd-.com'),
+            'invalid domain (_example.com), hostname' => [
+                'data'                    => $this->createData('_example.com', true),
+                'expectedIsValid'         => false,
+                'expectedErrorKey'        => 'validation.errors.domain.noValidDomain',
+                'expectedErrorParameters' => []
+            ],
+            'valid domain (test_.example.com)' => [
+                'data'                    => $this->createData('test_.example.com'),
                 'expectedIsValid'         => true
             ],
-            'valid domian (-.abc.com)' => [
-                'data'                    => $this->createData('-.abc.com'),
+            'invalid domain (test_.example.com), hostname' => [
+                'data'                    => $this->createData('test_.example.com', true),
+                'expectedIsValid'         => false,
+                'expectedErrorKey'        => 'validation.errors.domain.noValidDomain',
+                'expectedErrorParameters' => []
+            ],
+            'valid domain (te_st.example.com)' => [
+                'data'                    => $this->createData('te_st.example.com'),
                 'expectedIsValid'         => true
             ],
-            'valid domian (abc.-.abc.com)' => [
-                'data'                    => $this->createData('abc.-.abc.com'),
+            'invalid domain (te_st.example.com), hostname' => [
+                'data'                    => $this->createData('te_st.example.com', true),
+                'expectedIsValid'         => false,
+                'expectedErrorKey'        => 'validation.errors.domain.noValidDomain',
+                'expectedErrorParameters' => []
+            ],
+            'valid domain (test._example.com)' => [
+                'data'                    => $this->createData('test._example.com'),
                 'expectedIsValid'         => true
             ],
-            'valid domian (underscore_.example.com)' => [
-                'data'                    => $this->createData('underscore_.example.com'),
-                'expectedIsValid'         => true
+            'invalid domain (test._example.com), hostname' => [
+                'data'                    => $this->createData('test._example.com', true),
+                'expectedIsValid'         => false,
+                'expectedErrorKey'        => 'validation.errors.domain.noValidDomain',
+                'expectedErrorParameters' => []
             ],
-            'valid domian (-1)' => [
-                'data'                    => $this->createData('-1'),
-                'expectedIsValid'         => true
-            ],
-            'empty string' => [
-                'data'                    => $this->createData(''),
+            'empty string, hostname' => [
+                'data'                    => $this->createData('', true),
                 'expectedIsValid'         => true
             ],
         ];
@@ -122,14 +178,18 @@ class DomainTest extends TestCase
      * Helper function for creating data object
      *
      * @param string $value
+     * @param bool $validateAsHostname
      * @return stdClass
      */
-    private function createData(string $value): stdClass
+    private function createData(string $value, bool $validateAsHostname = false): stdClass
     {
         $data = new stdClass();
         $data->field = 'fieldName';
         $data->parameters = [''];
         $data->input = ['fieldName' => $value];
+        if ($validateAsHostname) {
+            $data->parameters[] = 'hostname';
+        }
         $_SERVER['HTTP_HOST'] = '127.0.0.1';
         return $data;
     }

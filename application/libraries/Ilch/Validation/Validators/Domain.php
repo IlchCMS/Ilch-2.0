@@ -24,7 +24,8 @@ class Domain extends Base
      */
     public function run(): self
     {
-        $this->setIsValid($this->getValue() === '' || filter_var($this->getValue(), FILTER_VALIDATE_DOMAIN) !== false);
+        $validateAsHostname = $this->getParameter(1) === 'hostname';
+        $this->setIsValid($this->getValue() === '' || filter_var($this->getValue(), FILTER_VALIDATE_DOMAIN, ($validateAsHostname ? FILTER_FLAG_HOSTNAME : 0)) !== false);
 
         return $this;
     }
