@@ -50,6 +50,7 @@ class BasePurifyTest extends TestCase
         $this->translator = new Translator();
         $this->router = new Router($this->request);
         $this->view = new View($this->request, $this->translator, $this->router);
+        $this->view->initializeHtmlPurifier();
     }
 
     /**

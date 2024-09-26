@@ -110,6 +110,7 @@ class Settings extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $validationRules = [
                 'multilingualAcp' => 'required|numeric|integer|min:0|max:1',
+                'domain' => 'domain',
                 'standardMail' => 'required|email',
                 'defaultPaginationObjects' => 'numeric|integer|min:1',
                 'hmenuFixed' => 'required|numeric|integer|min:0|max:1',
@@ -129,6 +130,7 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('multilingual_acp', $this->getRequest()->getPost('multilingualAcp'));
                 $this->getConfig()->set('content_language', $this->getRequest()->getPost('contentLanguage'));
                 $this->getConfig()->set('start_page', $this->getRequest()->getPost('startPage'));
+                $this->getConfig()->set('domain', $this->getRequest()->getPost('domain'));
                 $this->getConfig()->set('standardMail', $this->getRequest()->getPost('standardMail'));
                 $this->getConfig()->set('timezone', $this->getRequest()->getPost('timezone'));
                 $this->getConfig()->set('locale', $this->getRequest()->getPost('locale'));
@@ -159,6 +161,7 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('multilingualAcp', $this->getConfig()->get('multilingual_acp'));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('startPage', $this->getConfig()->get('start_page'));
+        $this->getView()->set('domain', $this->getConfig()->get('domain'));
         $this->getView()->set('standardMail', $this->getConfig()->get('standardMail'));
         $this->getView()->set('timezones', \DateTimeZone::listIdentifiers());
         $this->getView()->set('timezone', $this->getConfig()->get('timezone'));
@@ -493,5 +496,20 @@ HTACCESS;
         $this->getView()->set('smtp_user', $this->getConfig()->get('smtp_user'));
         $this->getView()->set('smtp_pass', $this->getConfig()->get('smtp_pass'));
         $this->getView()->set('emailBlacklist', $this->getConfig()->get('emailBlacklist'));
+    }
+
+    public function htmlpurifierAction()
+    {
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuHtmlPurifier'), ['action' => 'htmlpurifier']);
+
+        $htmlPurifier = $this->getView()->getPurifier();
+        $urlsConsideredSafe = explode('|', $htmlPurifier->config->get('URI.SafeIframeRegexp'));
+        $urlsConsideredSafe = str_replace(['^', 'https://', 'http://', '%', '(', ')', '?'], '', $urlsConsideredSafe);
+        $urlsConsideredSafe = array_filter($urlsConsideredSafe);
+
+        $this->getView()->set('domain', $this->getConfig()->get('domain'));
+        $this->getView()->set('urlsConsideredSafe', $urlsConsideredSafe);
     }
 }

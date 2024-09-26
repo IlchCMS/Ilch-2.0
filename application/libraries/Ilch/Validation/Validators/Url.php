@@ -1,12 +1,12 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  */
 
 namespace Ilch\Validation\Validators;
 
 /**
- * Required validation class.
+ * Url validation class.
  */
 class Url extends Base
 {

@@ -44,6 +44,7 @@ class GetMenuTest extends DatabaseTestCase
         $request->setControllerName('index');
         $request->setActionName('index');
         $layout = new Frontend($request, new Translator(), new Router($request), '');
+        $layout->initializeHtmlPurifier();
 
         $out = new GetMenu($layout);
 

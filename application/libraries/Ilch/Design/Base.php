@@ -7,6 +7,7 @@
 
 namespace Ilch\Design;
 
+use Ilch\Config\Database;
 use Ilch\HTMLPurifier\EmbedUrlDef;
 use Ilch\Layout\Helper\GetMedia;
 use Ilch\Request;
@@ -44,32 +45,6 @@ abstract class Base
     private $baseUrl = '';
 
     /**
-     * Adds view/layout helper.
-     *
-     * @param string $name
-     * @param string $type
-     * @param mixed $obj
-     * @return $this
-     */
-    public function addHelper(string $name, string $type, $obj): Base
-    {
-        $this->helpers[$type][$name] = $obj;
-        return $this;
-    }
-
-    /**
-     * Gets view/layout helper.
-     *
-     * @param string $name
-     * @param string $type
-     * @return mixed
-     */
-    public function getHelper(string $name, string $type)
-    {
-        return $this->helpers[$type][$name];
-    }
-
-    /**
      * @var Request
      */
     private $request;
@@ -103,6 +78,107 @@ abstract class Base
      * @var \HTMLPurifier
      */
     private $purifier;
+
+    /**
+     * Injects request and translator to layout/view.
+     *
+     * @param Request $request
+     * @param Translator $translator
+     * @param Router $router
+     * @param string|null $baseUrl
+     */
+    public function __construct(Request $request, Translator $translator, Router $router, ?string $baseUrl = null)
+    {
+        $this->request = $request;
+        $this->translator = $translator;
+        $this->router = $router;
+        if ($baseUrl === null) {
+            $baseUrl = BASE_URL;
+        }
+        $this->baseUrl = $baseUrl;
+    }
+
+    /**
+     * Adds view/layout helper.
+     *
+     * @param string $name
+     * @param string $type
+     * @param mixed $obj
+     * @return $this
+     */
+    public function addHelper(string $name, string $type, $obj): Base
+    {
+        $this->helpers[$type][$name] = $obj;
+        return $this;
+    }
+
+    /**
+     * Gets view/layout helper.
+     *
+     * @param string $name
+     * @param string $type
+     * @return mixed
+     */
+    public function getHelper(string $name, string $type)
+    {
+        return $this->helpers[$type][$name];
+    }
+
+    /**
+     * Initialize HTMLPurifier.
+     *
+     * @param Database|null $databaseConfig
+     * @return void
+     */
+    public function initializeHtmlPurifier(?Database $databaseConfig = null): void
+    {
+        $safeIframeRegexp = '%(?|(^(http://|https://)localhost)|(^https://(youtube.com/|www.youtube.com/|www.youtube.com/embed/|www.youtube-nocookie.com/embed/|youtu.be/|vimeo.com/|player.vimeo.com/video/|open.spotify.com/artist/|open.spotify.com/album/|open.spotify.com/track/|open.spotify.com/embed/|www.dailymotion.com/video/|www.dailymotion.com/embed/video/|dai.ly/)))%';
+
+        // HTML Purifier configuration
+        $this->purifierConfig = \HTMLPurifier_Config::createDefault();
+        // $this->purifierConfig->set('Cache.DefinitionImpl', null);
+        $this->purifierConfig->set('Filter.YouTube', true);
+        $this->purifierConfig->set('HTML.SafeIframe', true);
+        $this->purifierConfig->set('URI.AllowedSchemes', ['data' => true, 'http' => true, 'https' => true, 'mailto' => true, 'src' => true]);
+
+        if ($databaseConfig && $databaseConfig->get('domain')) {
+            $safeIframeRegexp = str_replace('^(http://|https://)localhost)', '^(http://|https://)localhost)|^(http://|https://)' . $databaseConfig->get('domain') . ')' , $safeIframeRegexp);
+        }
+        $this->purifierConfig->set('URI.SafeIframeRegexp', $safeIframeRegexp);
+        $this->purifierConfig->set('Attr.AllowedFrameTargets', '_blank, _self, _target, _parent');
+        $this->purifierConfig->set('Attr.EnableID', true);
+        $this->purifierConfig->set('AutoFormat.Linkify', true);
+        // Had to be enabled to allow the output of the media embed plugin of CKEditor 5.
+        $this->purifierConfig->set('CSS.Trusted', true);
+        $def = $this->purifierConfig->getHTMLDefinition(true);
+        $def->addAttribute('iframe', 'allowfullscreen', 'Bool');
+        // Settings to allow (most of) the output of the media embed plugin of CKEditor 5.
+        // https://github.com/ckeditor/ckeditor5/blob/v41.1.0/packages/ckeditor5-media-embed/src/mediaembedediting.ts
+        // https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html#including-previews-in-data
+        $def->addAttribute('div', 'data-oembed-url', new EmbedUrlDef());
+        $def->addElement('oembed', 'Block', 'Inline', 'Common');
+        $def->addAttribute('oembed', 'url', new EmbedUrlDef());
+
+        $def->addElement('figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow', 'Common');
+        $def->addElement('figcaption', 'Inline', 'Flow', 'Common');
+
+        // https://github.com/ezyang/htmlpurifier/issues/152
+        $def->addAttribute('a', 'download', 'URI');
+
+        $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', array(
+            'autoplay' => 'Bool',
+            'src' => new EmbedUrlDef(),
+            'width' => 'Length',
+            'height' => 'Length',
+            'preload' => 'Enum#auto,metadata,none',
+            'controls' => 'Bool',
+        ));
+        $def->addElement('source', 'Block', 'Flow', 'Common', array(
+            'src' => new EmbedUrlDef(),
+            'type' => 'Text',
+        ));
+        $this->purifier = new \HTMLPurifier($this->purifierConfig);
+    }
 
     /**
      * Get object of HTML Purifier with default configuration.
@@ -147,66 +223,6 @@ abstract class Base
     public function alwaysPurify(string $content): string
     {
         return $this->getPurifier()->purify($content);
-    }
-
-    /**
-     * Injects request and translator to layout/view.
-     *
-     * @param Request $request
-     * @param Translator $translator
-     * @param Router $router
-     * @param string|null $baseUrl
-     */
-    public function __construct(Request $request, Translator $translator, Router $router, ?string $baseUrl = null)
-    {
-        $this->request = $request;
-        $this->translator = $translator;
-        $this->router = $router;
-        if ($baseUrl === null) {
-            $baseUrl = BASE_URL;
-        }
-        $this->baseUrl = $baseUrl;
-
-        // HTML Purifier configuration
-        $this->purifierConfig = \HTMLPurifier_Config::createDefault();
-        // $this->purifierConfig->set('Cache.DefinitionImpl', null);
-        $this->purifierConfig->set('Filter.YouTube', true);
-        $this->purifierConfig->set('HTML.SafeIframe', true);
-        $this->purifierConfig->set('URI.AllowedSchemes', ['data' => true, 'http' => true, 'https' => true, 'mailto' => true, 'src' => true]);
-        $this->purifierConfig->set('URI.SafeIframeRegexp', '%(?|(^(http://|https://)localhost)|(^https://(youtube.com/|www.youtube.com/|www.youtube.com/embed/|www.youtube-nocookie.com/embed/|youtu.be/|vimeo.com/|player.vimeo.com/video/|open.spotify.com/artist/|open.spotify.com/album/|open.spotify.com/track/|open.spotify.com/embed/|www.dailymotion.com/video/|www.dailymotion.com/embed/video/|dai.ly/)))%');
-        $this->purifierConfig->set('Attr.AllowedFrameTargets', '_blank, _self, _target, _parent');
-        $this->purifierConfig->set('Attr.EnableID', true);
-        $this->purifierConfig->set('AutoFormat.Linkify', true);
-        // Had to be enabled to allow the output of the media embed plugin of CKEditor 5.
-        $this->purifierConfig->set('CSS.Trusted', true);
-        $def = $this->purifierConfig->getHTMLDefinition(true);
-        $def->addAttribute('iframe', 'allowfullscreen', 'Bool');
-        // Settings to allow (most of) the output of the media embed plugin of CKEditor 5.
-        // https://github.com/ckeditor/ckeditor5/blob/v41.1.0/packages/ckeditor5-media-embed/src/mediaembedediting.ts
-        // https://ckeditor.com/docs/ckeditor5/latest/features/media-embed.html#including-previews-in-data
-        $def->addAttribute('div', 'data-oembed-url', new EmbedUrlDef());
-        $def->addElement('oembed', 'Block', 'Inline', 'Common');
-        $def->addAttribute('oembed', 'url', new EmbedUrlDef());
-
-        $def->addElement('figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow', 'Common');
-        $def->addElement('figcaption', 'Inline', 'Flow', 'Common');
-
-        // https://github.com/ezyang/htmlpurifier/issues/152
-        $def->addAttribute('a', 'download', 'URI');
-
-        $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', array(
-            'autoplay' => 'Bool',
-            'src' => new EmbedUrlDef(),
-            'width' => 'Length',
-            'height' => 'Length',
-            'preload' => 'Enum#auto,metadata,none',
-            'controls' => 'Bool',
-        ));
-        $def->addElement('source', 'Block', 'Flow', 'Common', array(
-            'src' => new EmbedUrlDef(),
-            'type' => 'Text',
-        ));
-        $this->purifier = new \HTMLPurifier($this->purifierConfig);
     }
 
     /**

@@ -29,6 +29,23 @@ $usages = $this->get('usages');
 </div>
 
 <div class="row mb-3">
+    <label for="domainInput" class="col-xl-3 col-form-label fw-bold text-end<?=$this->validation()->hasError('domain') ? ' text-danger' : '' ?>">
+        <?= $this->getTrans('domain') ?>:
+    </label>
+    <div class="col-xl-9">
+        <div class="input-group">
+            <input type="text"
+                   class="form-control"
+                   id="domainInput"
+                   name="domain"
+                   value="<?= $this->escape($this->get('domain')) ?>" />
+            <button class="btn btn-outline-secondary" type="button" id="useCurrentDomain"><?= $this->getTrans('useCurrentDomain') ?></button>
+            <button class="btn btn-outline-secondary" type="button" id="clearDomain"><?= $this->getTrans('clearDomain') ?></button>
+        </div>
+        <div id="domainSettingHelp" class="form-text"><?= $this->getTrans('domainSettingHelp') ?></div>
+    </div>
+</div>
+<div class="row mb-3">
     <label for="adminName" class="col-xl-3 col-form-label fw-bold text-end<?=$this->validation()->hasError('adminName') ? ' text-danger' : '' ?>">
         <?=$this->getTrans('adminName') ?>:
     </label>
@@ -99,5 +116,12 @@ $usages = $this->get('usages');
             'onValidatePassword': function(percentage) { }, // Define a function which will be called each time the password becomes valid;
             'onPasswordStrengthChanged' : function(passwordStrength, percentage) { } // Define a function which will be called each time the password strength is recalculated. You can use passwordStrength and percentage arguments for designing your own password meter
         });
+    });
+
+    $('#useCurrentDomain').click(function () {
+        $('#domainInput').val(window.location.hostname);
+    });
+    $('#clearDomain').click(function () {
+        $('#domainInput').val('');
     });
 </script>

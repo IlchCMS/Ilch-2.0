@@ -54,6 +54,10 @@ return [
     'version' => 'Version',
     'noUserEmailGiven' => 'No username/email was provided.',
     'contentLanguage' => 'Contentlanguage',
+    'domain' => 'Domain',
+    'useCurrentDomain' => 'Use current domain',
+    'clearDomain' => 'Clear domain',
+    'domainSettingHelp' => 'Please make sure that this is the correct domain. It is automatically considered as safe.',
     'standardMail' => 'Standard E-Mail sender',
     'defaultPaginationObjects' => 'Default count of objects per page',
     'hideCaptchaFor' => 'Hide captcha for',
@@ -68,6 +72,12 @@ return [
                                   This can cause the output to not work or look different than expected.<br>
                                   <a href="https://github.com/IlchCMS/Ilch-2.0/wiki/Doku-Benutzer-Inhalt-eigene-Boxen-Seiten">See documentation for further information.</a></p>
                                   <p><strong>It is not recommended to disable this security measure.</strong></p>',
+    'htmlPurifierSettings' => 'HTMLPurifier settings',
+    'showHtmlPurifierSettings' => 'Show the settings',
+    'menuHtmlPurifier' => 'HTMLPurifier settings',
+    'htmlPurifierSafeUrlsAddOwnDomain' => 'Add own domain',
+    'htmlPurifierOwnDomainHelp' => 'Please make sure that this is the correct domain. It is automatically considered as safe.',
+    'htmlPurifierUrlsConsideredSafe' => 'URLs considered safe',
     'timezone' => 'timezone',
     'home' => 'Start',
     'updateserver' => 'Updateserver',

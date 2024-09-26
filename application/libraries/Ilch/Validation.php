@@ -8,6 +8,7 @@ namespace Ilch;
 use Closure;
 use Ilch\Validation\Validators\Base;
 use Ilch\Validation\Validators\Captcha;
+use Ilch\Validation\Validators\Domain;
 use Ilch\Validation\Validators\Grecaptcha;
 use Ilch\Validation\Validators\Date;
 use Ilch\Validation\Validators\Email;
@@ -50,6 +51,7 @@ class Validation
         'size' => Size::class,
         'unique' => Unique::class,
         'url' => Url::class,
+        'domain' => Domain::class,
     ];
 
     /**

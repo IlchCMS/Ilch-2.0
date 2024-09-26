@@ -48,6 +48,7 @@ class Config extends \Ilch\Config\Install
             ->set('apple_icon', '')
             ->set('page_title', 'ilch - Content Management System')
             ->set('description', 'Das ilch CMS bietet dir ein einfach erweiterbares Grundsystem, welches keinerlei Kenntnisse in Programmiersprachen voraussetzt.')
+            ->set('domain', $_SESSION['install']['domain'])
             ->set('standardMail', $_SESSION['install']['adminEmail'])
             ->set('defaultPaginationObjects', 20)
             ->set('hideCaptchaFor', '1')
@@ -1034,6 +1035,25 @@ class Config extends \Ilch\Config\Install
                 // Update vendor folder
                 replaceVendorDirectory();
                 break;
+            case "2.2.3":
+                // Update vendor folder
+                replaceVendorDirectory();
+
+                // Add notification regarding the new domain setting and how it can affect HTMLPurifier.
+                $notificationsMapper = new \Modules\Admin\Mappers\Notifications();
+                $notificationModel = new \Modules\Admin\Models\Notification();
+
+                $message = [
+                    'de' => 'Es gibt eine neue Einstellmöglichkeit für die Domain, welche Einfluss auf HTMLPurifier haben kann, indem diese als vertrauenswürdig angesehen wird.',
+                    'en' => 'There is a new configuration option to set the domain, which can influence HTMLPurifier by considering it as trusted.'
+                ];
+
+                $notificationModel->setModule('admin');
+                $notificationModel->setMessage($message[$this->getTranslator()->shortenLocale($this->getTranslator()->getLocale())]);
+                $notificationModel->setURL(BASE_URL . '/' . 'admin/admin/settings/index');
+                $notificationModel->setType('adminNewDomainSetting');
+
+                $notificationsMapper->addNotification($notificationModel);
         }
 
         return 'Update function executed.';
