@@ -48,6 +48,7 @@ class Config extends \Ilch\Config\Install
             ->set('apple_icon', '')
             ->set('page_title', 'ilch - Content Management System')
             ->set('description', 'Das ilch CMS bietet dir ein einfach erweiterbares Grundsystem, welches keinerlei Kenntnisse in Programmiersprachen voraussetzt.')
+            ->set('domain', $_SESSION['install']['domain'])
             ->set('standardMail', $_SESSION['install']['adminEmail'])
             ->set('defaultPaginationObjects', 20)
             ->set('hideCaptchaFor', '1')

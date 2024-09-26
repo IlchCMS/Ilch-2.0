@@ -385,12 +385,13 @@ class Index extends \Ilch\Controller\Frontend
 
     public function configurationAction()
     {
-        $fields = ['usage' => '', 'adminName' => '', 'adminPassword' => '', 'adminPassword2' => '', 'adminEmail' => ''];
+        $fields = ['usage' => '', 'domain' => '', 'adminName' => '', 'adminPassword' => '', 'adminPassword2' => '', 'adminEmail' => ''];
         $systemModules = ['admin', 'article', 'user', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent'];
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'usage' => 'required',
+                'domain' => 'domain',
                 'adminName' => 'required',
                 'adminPassword' => 'required|min:6,string|max:30,string',
                 'adminPassword2' => 'required|same:adminPassword|min:6,string|max:30,string',
