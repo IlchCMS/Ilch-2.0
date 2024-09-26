@@ -45,32 +45,6 @@ abstract class Base
     private $baseUrl = '';
 
     /**
-     * Adds view/layout helper.
-     *
-     * @param string $name
-     * @param string $type
-     * @param mixed $obj
-     * @return $this
-     */
-    public function addHelper(string $name, string $type, $obj): Base
-    {
-        $this->helpers[$type][$name] = $obj;
-        return $this;
-    }
-
-    /**
-     * Gets view/layout helper.
-     *
-     * @param string $name
-     * @param string $type
-     * @return mixed
-     */
-    public function getHelper(string $name, string $type)
-    {
-        return $this->helpers[$type][$name];
-    }
-
-    /**
      * @var Request
      */
     private $request;
@@ -122,6 +96,32 @@ abstract class Base
             $baseUrl = BASE_URL;
         }
         $this->baseUrl = $baseUrl;
+    }
+
+    /**
+     * Adds view/layout helper.
+     *
+     * @param string $name
+     * @param string $type
+     * @param mixed $obj
+     * @return $this
+     */
+    public function addHelper(string $name, string $type, $obj): Base
+    {
+        $this->helpers[$type][$name] = $obj;
+        return $this;
+    }
+
+    /**
+     * Gets view/layout helper.
+     *
+     * @param string $name
+     * @param string $type
+     * @return mixed
+     */
+    public function getHelper(string $name, string $type)
+    {
+        return $this->helpers[$type][$name];
     }
 
     /**
