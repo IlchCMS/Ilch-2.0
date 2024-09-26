@@ -5,22 +5,13 @@
         <label class="col-xl-2 col-form-label" for="ownDomain">
             <?= $this->getTrans('htmlPurifierSafeUrlsAddOwnDomain') ?>:
         </label>
-        <div class="col-xl-3">
-            <div class="input-group">
-                <input type="text"
-                       class="form-control"
-                       id="ownDomain"
-                       name="ownDomain"
-                       value="<?= $this->escape($this->get('domain')) ?>"
-                       disabled />
-                <div class="flipswitch">
-                    <input type="radio" class="flipswitch-input" id="htmlPurifierSafeUrlsAddOwnDomain-on" name="htmlPurifierSafeUrlsAddOwnDomain" value="1" <?= ($this->get('htmlPurifierSafeUrlsAddOwnDomain')) ? 'checked="checked"' : '' ?> />
-                    <label for="htmlPurifierSafeUrlsAddOwnDomain-on" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('on') ?></label>
-                    <input type="radio" class="flipswitch-input" id="htmlPurifierSafeUrlsAddOwnDomain-off" name="htmlPurifierSafeUrlsAddOwnDomain" value="0" <?= (!$this->get('htmlPurifierSafeUrlsAddOwnDomain')) ? 'checked="checked"' : '' ?> />
-                    <label for="htmlPurifierSafeUrlsAddOwnDomain-off" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('off') ?></label>
-                    <span class="flipswitch-selection"></span>
-                </div>
-            </div>
+        <div class="col-xl-4">
+            <input type="text"
+                   class="form-control"
+                   id="ownDomain"
+                   name="ownDomain"
+                   value="<?= $this->escape($this->get('domain')) ?>"
+                   disabled />
             <div id="htmlPurifierOwnDomainHelp" class="form-text"><?= $this->getTrans('htmlPurifierOwnDomainHelp') ?></div>
         </div>
     </div>

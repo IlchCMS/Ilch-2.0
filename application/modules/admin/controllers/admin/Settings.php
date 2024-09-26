@@ -504,19 +504,11 @@ HTACCESS;
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuHtmlPurifier'), ['action' => 'htmlpurifier']);
 
-        if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('htmlPurifierSafeUrlsAddOwnDomain', $this->getRequest()->getPost('htmlPurifierSafeUrlsAddOwnDomain'));
-
-            $this->addMessage('saveSuccess');
-            $this->redirect(['action' => 'htmlpurifier']);
-        }
-
         $htmlPurifier = $this->getView()->getPurifier();
         $urlsConsideredSafe = explode('|', $htmlPurifier->config->get('URI.SafeIframeRegexp'));
         $urlsConsideredSafe = str_replace(['^', 'https://', 'http://', '%', '(', ')', '?'], '', $urlsConsideredSafe);
         $urlsConsideredSafe = array_filter($urlsConsideredSafe);
 
-        $this->getView()->set('htmlPurifierSafeUrlsAddOwnDomain', $this->getConfig()->get('htmlPurifierSafeUrlsAddOwnDomain'));
         $this->getView()->set('domain', $this->getConfig()->get('domain'));
         $this->getView()->set('urlsConsideredSafe', $urlsConsideredSafe);
     }

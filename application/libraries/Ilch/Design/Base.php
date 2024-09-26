@@ -141,8 +141,7 @@ abstract class Base
         $this->purifierConfig->set('HTML.SafeIframe', true);
         $this->purifierConfig->set('URI.AllowedSchemes', ['data' => true, 'http' => true, 'https' => true, 'mailto' => true, 'src' => true]);
 
-        if ($databaseConfig && $databaseConfig->get('htmlPurifierSafeUrlsAddOwnDomain')) {
-            file_put_contents('php://stderr', print_r('htmlPurifierSafeUrlsAddOwnDomain' . PHP_EOL, TRUE));
+        if ($databaseConfig && $databaseConfig->get('domain')) {
             $safeIframeRegexp = str_replace('^(http://|https://)localhost)', '^(http://|https://)localhost)|^(http://|https://)' . $databaseConfig->get('domain') . ')' , $safeIframeRegexp);
         }
         $this->purifierConfig->set('URI.SafeIframeRegexp', $safeIframeRegexp);

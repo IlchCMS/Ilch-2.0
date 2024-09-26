@@ -127,7 +127,7 @@
             </select>
         </div>
     </div>
-    <div class="row mb-3">
+    <div class="row mb-3<?= $this->validation()->hasError('domain') ? ' has-error' : '' ?>">
         <label for="domainInput" class="col-xl-2 col-form-label">
             <?= $this->getTrans('domain') ?>:
         </label>
@@ -142,6 +142,7 @@
                 <button class="btn btn-outline-secondary" type="button" id="useCurrentDomain"><?= $this->getTrans('useCurrentDomain') ?></button>
                 <button class="btn btn-outline-secondary" type="button" id="clearDomain"><?= $this->getTrans('clearDomain') ?></button>
             </div>
+            <div id="domainSettingHelp" class="form-text"><?= $this->getTrans('htmlPurifierOwnDomainHelp') ?></div>
         </div>
     </div>
     <div class="row mb-3<?= $this->validation()->hasError('standardMail') ? ' has-error' : '' ?>">
@@ -269,7 +270,7 @@
             <?= $this->getTrans('htmlPurifierSettings') ?>:
         </div>
         <div class="col-xl-4">
-            <a href="<?=$this->getUrl(['action' => 'htmlpurifier']) ?>" class="btn btn-light" role="button"><?= $this->getTrans('showAndChangeHtmlPurifierSettings') ?></a>
+            <a href="<?=$this->getUrl(['action' => 'htmlpurifier']) ?>" class="btn btn-light" role="button"><?= $this->getTrans('showHtmlPurifierSettings') ?></a>
         </div>
     </div>
 
