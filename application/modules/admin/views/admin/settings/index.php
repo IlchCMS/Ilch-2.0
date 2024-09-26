@@ -137,8 +137,7 @@
                        class="form-control"
                        id="domainInput"
                        name="domain"
-                       value="<?= $this->escape($this->get('domain')) ?>"
-                       required />
+                       value="<?= $this->escape($this->get('domain')) ?>" />
                 <button class="btn btn-outline-secondary" type="button" id="useCurrentDomain"><?= $this->getTrans('useCurrentDomain') ?></button>
                 <button class="btn btn-outline-secondary" type="button" id="clearDomain"><?= $this->getTrans('clearDomain') ?></button>
             </div>
