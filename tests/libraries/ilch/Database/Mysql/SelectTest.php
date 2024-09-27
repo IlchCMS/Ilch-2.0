@@ -147,7 +147,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      * @param string $expectedSqlPart
      * @param string|null $type
      */
-    public function testGenerateSqlForWhere($where, string $expectedSqlPart, string $type = null)
+    public function testGenerateSqlForWhere($where, string $expectedSqlPart, ?string $type = null)
     {
         if (\is_callable($where)) {
             $where = $where($this->out);

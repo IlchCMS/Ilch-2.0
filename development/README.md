@@ -125,6 +125,9 @@ phpcs -p ./application/modules/* --standard=PHPCompatibility --report=summary --
 phpcs -p ./application/modules/* --standard=PHPCompatibility --runtime-set testVersion 7.3-
 
 phpcs ./* --standard=PHPCompatibility --runtime-set testVersion 7.4- --report-file=/home/vagrant/output.txt --report-full=/home/vagrant/full.txt --report-summary=/home/vagrant/summary.txt
+
+// Nur Dateien mit der Endung php überprüfen. Angabe von mehreren Pfaden.
+phpcs --extensions=php ./application/* ./admin/* ./build/* ./tests/* --standard=PHPCompatibility --runtime-set testVersion 7.4- --report-file=/home/vagrant/output.txt --report-full=/home/vagrant/full.txt --report-summary=/home/vagrant/summary.txt
 ```
 
 Siehe auch die Dokumentation zu PHP CodeSniffer: [Dokumentation auf github.com/squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/wiki)

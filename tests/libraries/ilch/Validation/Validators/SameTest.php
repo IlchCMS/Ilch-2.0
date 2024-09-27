@@ -76,7 +76,7 @@ class SameTest extends TestCase
      * @param bool $invertResult
      * @return stdClass
      */
-    private function createData(string $firstField, $valueFirstField, string $secondField, $valueSecondField, bool $strict = null, bool $invertResult = false): stdClass
+    private function createData(string $firstField, $valueFirstField, string $secondField, $valueSecondField, ?bool $strict = null, bool $invertResult = false): stdClass
     {
         $data = new stdClass();
         $data->field = $firstField;
