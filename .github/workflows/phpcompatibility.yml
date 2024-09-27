@@ -13,4 +13,4 @@ jobs:
         uses: pantheon-systems/phpcompatibility-action@dev
         with:
           test-versions: '7.4-'
-          paths: ${{ github.workspace }}/admin/*.php ${{ github.workspace }}/application/**.php ${{ github.workspace }}/build/*.php ${{ github.workspace }}/tests/**.php
+          paths: ${{ github.workspace }}/admin/**/*.php ${{ github.workspace }}/application/**/*.php ${{ github.workspace }}/build/**/*.php ${{ github.workspace }}/tests/**/*.php
