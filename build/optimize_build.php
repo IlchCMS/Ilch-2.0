@@ -124,7 +124,7 @@ $directoriesStaticJs = [
  * @param array|null $filter if given only directories in the array are scanned
  * @return array
  */
-function getFilesRecursive(string $dirname, array $filter = null): array
+function getFilesRecursive(string $dirname, ?array $filter = null): array
 {
     $files = [];
     foreach (scandir($dirname) as $item) {

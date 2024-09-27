@@ -132,7 +132,7 @@ class ExistsTest extends DatabaseTestCase
      * @param bool $invertResult
      * @return stdClass
      */
-    private function createData(array $parameter = [], string $value = null, bool $invertResult = false): stdClass
+    private function createData(array $parameter = [], ?string $value = null, bool $invertResult = false): stdClass
     {
         $data = new stdClass();
         $data->field = 'fieldName';
