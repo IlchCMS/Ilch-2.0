@@ -60,9 +60,3 @@ jobs:
           envsubst '$HOST,$PORT' < development/ci/config.php > tests/config.php
       - name: Execute tests
         run: cd tests && ../vendor/bin/phpunit
-      - name: PHP Compatibility
-        uses: pantheon-systems/phpcompatibility-action@dev
-        with:
-          skip-php-setup: true
-          test-versions: 7.4-
-          paths: ${{ github.workspace }}/src

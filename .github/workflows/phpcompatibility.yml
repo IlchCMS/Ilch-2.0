@@ -1,0 +1,16 @@
+name: PHP Compatibility
+on: [push]
+jobs:
+  phpcompat:
+    name: PHP Compatibility Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check PHP Compatibility
+        uses: pantheon-systems/phpcompatibility-action@dev
+        with:
+          test-versions: '7.4-'
+          paths: ${{ github.workspace }}/admin/*.php ${{ github.workspace }}/application/*.php ${{ github.workspace }}/build/*.php ${{ github.workspace }}/tests/*.php
