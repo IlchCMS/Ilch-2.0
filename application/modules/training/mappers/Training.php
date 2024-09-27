@@ -15,12 +15,12 @@ class Training extends \Ilch\Mapper
     /**
      * @var string
      */
-    public $tablename = 'training';
+    public string $tablename = 'training';
 
     /**
      * @var string
      */
-    public $tablenameAccess = 'training_access';
+    public string $tablenameAccess = 'training_access';
 
     /**
      * Gets the Entries by param.
