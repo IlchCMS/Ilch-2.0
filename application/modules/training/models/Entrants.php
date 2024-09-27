@@ -14,19 +14,19 @@ class Entrants extends \Ilch\Model
      *
      * @var int
      */
-    protected $trainId = 0;
+    protected int $trainId = 0;
     /**
      * The userId of the training entrants.
      *
      * @var int
      */
-    protected $userId = 0;
+    protected int $userId = 0;
     /**
      * The note of the training entrants.
      *
      * @var string
      */
-    protected $note = '';
+    protected string $note = '';
 
     /**
      * @param array $entries

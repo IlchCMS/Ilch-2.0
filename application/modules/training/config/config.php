@@ -11,7 +11,7 @@ use Modules\User\Mappers\User;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = [
+    public array $config = [
         'key' => 'training',
         'version' => '1.9.1',
         'icon_small' => 'fa-solid fa-graduation-cap',
@@ -39,7 +39,7 @@ class Config extends \Ilch\Config\Install
             ]
         ],
         'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'phpVersion' => '7.4'
     ];
 
     public function install()
@@ -47,7 +47,7 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
 
         if ($this->db()->ifTableExists('calendar_events')) {
-            $this->db()->insert('calendar_events', ['url' => 'training/trainings/index/']);
+            $this->db()->insert('calendar_events', ['url' => 'training/trainings/index/'])->execute();
         }
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
@@ -61,7 +61,7 @@ class Config extends \Ilch\Config\Install
         $this->db()->drop('training', true);
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
-            $this->db()->delete('calendar_events', ['url' => 'training/trainings/index/']);
+            $this->db()->delete('calendar_events', ['url' => 'training/trainings/index/'])->execute();
         }
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
@@ -267,6 +267,11 @@ class Config extends \Ilch\Config\Install
             case "1.8.0":
                 // no break
             case "1.8.1":
+                // no break
+            case "1.9.0":
+                if ($this->db()->ifTableExists('calendar_events') && $this->db()->select('COUNT(*)', 'calendar_events', ['url' => 'training/trainings/index/'])->execute()->fetchCell() == 0) {
+                    $this->db()->insert('calendar_events', ['url' => 'training/trainings/index/'])->execute();
+                }
                 // no break
         }
 

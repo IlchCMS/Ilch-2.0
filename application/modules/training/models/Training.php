@@ -14,105 +14,105 @@ class Training extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The title of the training.
      *
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * The date of the training.
      *
      * @var string
      */
-    protected $date = '';
+    protected string $date = '';
 
     /**
      * The time of the training.
      *
      * @var int
      */
-    protected $time = 30;
+    protected int $time = 30;
 
     /**
      * The place of the training.
      *
      * @var string
      */
-    protected $place = '';
+    protected string $place = '';
 
     /**
      * The contact of the training.
      *
      * @var int
      */
-    protected $contact = 0;
+    protected int $contact = 0;
 
     /**
      * The voice server of the training.
      *
      * @var bool
      */
-    protected $voiceServer = false;
+    protected bool $voiceServer = false;
 
     /**
      * The voice server ip of the training.
      *
      * @var string
      */
-    protected $voiceServerIP = '';
+    protected string $voiceServerIP = '';
 
     /**
      * The voice server pw of the training.
      *
      * @var string
      */
-    protected $voiceServerPW = '';
+    protected string $voiceServerPW = '';
 
     /**
      * The game server of the training.
      *
      * @var bool
      */
-    protected $gameServer = false;
+    protected bool $gameServer = false;
 
     /**
      * The game server ip of the training.
      *
      * @var string
      */
-    protected $gameServerIP = '';
+    protected string $gameServerIP = '';
 
     /**
      * The game server pw of the training.
      *
      * @var string
      */
-    protected $gameServerPW = '';
+    protected string $gameServerPW = '';
 
     /**
      * The text of the training.
      *
      * @var string
      */
-    protected $text = '';
+    protected string $text = '';
 
     /**
      * The show value (hide or show in calendar) of the training.
      *
      * @var bool
      */
-    protected $show = false;
+    protected bool $show = false;
 
     /**
      * The readaccess of the training.
      *
      * @var string
      */
-    protected $readAccess = '2,3';
+    protected string $readAccess = '2,3';
 
     /**
      * @param array $entries

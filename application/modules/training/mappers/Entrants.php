@@ -15,7 +15,7 @@ class Entrants extends \Ilch\Mapper
     /**
      * @var string
      */
-    public $tablename = 'training_entrants';
+    public string $tablename = 'training_entrants';
 
     /**
      * Gets the Entries by param.
