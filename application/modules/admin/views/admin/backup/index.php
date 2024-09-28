@@ -26,11 +26,15 @@
             </thead>
             <tbody>
             <?php foreach ($this->get('backups') as $backup): ?>
-                <?php $backupPublicName = $this->escape(preg_replace('/_[^_.]*\./', '.', $backup->getName())) ?>
+                <?php $backupPublicName = $this->escape(preg_replace('/_[^_.]*\./', '.', $backup->getName())); ?>
                 <tr>
                     <td><?=$this->getDeleteCheckbox('id', $backup->getId()) ?></td>
                     <td><a href="<?=$this->getUrl(['action' => 'download', 'id' => $backup->getId()], null, true) ?>" title="<?=$this->getTrans('download') ?>"><span class="fa-solid fa-download"></span></a></td>
-                    <td><a href="<?=$this->getUrl(['action' => 'import', 'id' => $backup->getId()], null, true) ?>" title="<?=$this->getTrans('backupImport') ?>" id="backupImport" data-name="<?=$backupPublicName ?>"><span class="fa-solid fa-database"></span></a></td>
+                    <?php if (strpos($backupPublicName, '.sql.gz') === false) : ?>
+                        <td><a href="<?=$this->getUrl(['action' => 'import', 'id' => $backup->getId()], null, true) ?>" title="<?=$this->getTrans('backupImport') ?>" id="backupImport" data-name="<?=$backupPublicName ?>"><span class="fa-solid fa-database"></span></a></td>
+                    <?php else : ?>
+                        <td><span class="fa-solid fa-database text-danger" title="<?=$this->getTrans('backupCannotImport') ?>"></span></td>
+                    <?php endif; ?>
                     <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $backup->getId()]) ?></td>
                     <td><?=$this->escape($backup->getDate()) ?></td>
                     <td><?=formatBytes(filesize(ROOT_PATH . '/backups/' . $backup->getName())) ?></td>

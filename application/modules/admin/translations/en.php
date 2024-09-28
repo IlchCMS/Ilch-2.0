@@ -172,6 +172,7 @@ return [
     'backupNotFound' => 'The backup was not found or could not be opened.',
     'backupFilesize' => 'Filesize',
     'backupImport' => 'Import',
+    'backupCannotImport' => 'This backup cannot be imported from Ilch.',
     'backupConfirmImport' => 'Do you really want to import the backup (${name})?',
     'backupImportSuccess' => 'Backup was successfully imported.',
     'menuCustomCSS' => 'Custom CSS',
