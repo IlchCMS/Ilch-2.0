@@ -161,7 +161,8 @@ return [
     'menuBackup' => 'Backup',
     'createBackupInfoText' => '<p>"CREATE DATABASE-Befehl hinzufügen" möchte man aktiviert haben, wenn beim Import die Datenbank mit gleicher Bezeichnung erstellt werden soll.
                                Die Einstellung sollte deaktiviert sein, wenn die Datenbank danach eine andere Bezeichnung haben soll.</p>
-                               <p>"DROP TABLE-Befehle hinzufügen" löscht beim Import bereits vorhandene Tabellen, um diese dann neu zu erstellen.</p>',
+                               <p>"DROP TABLE-Befehle hinzufügen" löscht beim Import bereits vorhandene Tabellen, um diese dann neu zu erstellen.</p>
+                               <p>Wenn Sie später Ilch zum Importieren eines Backups nutzen möchten, sollten diese beiden Optionen für das Backup aktiviert werden. Die Komprimierung dagegen deaktiviert.</p>',
     'compress' => 'Komprimierung',
     'compressNone' => 'keine',
     'skipComments' => 'Kommentare anzeigen',
@@ -170,6 +171,8 @@ return [
     'noBackups' => 'Keine Backups vorhanden',
     'backupNotFound' => 'Das Backup wurde nicht gefunden oder konnte nicht geöffnet werden.',
     'backupFilesize' => 'Dateigröße',
+    'backupImport' => 'Importieren',
+    'backupImportSuccess' => 'Backup wurde erfolgreich importiert.',
     'menuCustomCSS' => 'Benutzerdefinierte CSS',
     'menuHtaccess' => 'htaccess',
     'modrewriteLinesAdded' => 'Einträge für Mod-Rewrite hinzugefügt.',

@@ -8,6 +8,7 @@
                 <col class="icon_width">
                 <col class="icon_width">
                 <col class="icon_width">
+                <col class="icon_width">
                 <col class="col-lg-2">
                 <col class="col-lg-2">
                 <col>
@@ -15,6 +16,7 @@
             <thead>
                 <tr>
                     <th><?=$this->getCheckAllCheckbox('id') ?></th>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th><?=$this->getTrans('date') ?></th>
@@ -27,6 +29,7 @@
                 <tr>
                     <td><?=$this->getDeleteCheckbox('id', $backup->getId()) ?></td>
                     <td><a href="<?=$this->getUrl(['action' => 'download', 'id' => $backup->getId()], null, true) ?>" title="<?=$this->getTrans('download') ?>"><span class="fa-solid fa-download"></span></a></td>
+                    <td><a href="<?=$this->getUrl(['action' => 'import', 'id' => $backup->getId()], null, true) ?>" title="<?=$this->getTrans('backupImport') ?>"><span class="fa-solid fa-database"></span></a></td>
                     <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $backup->getId()]) ?></td>
                     <td><?=$this->escape($backup->getDate()) ?></td>
                     <td><?=formatBytes(filesize(ROOT_PATH . '/backups/' . $backup->getName())) ?></td>

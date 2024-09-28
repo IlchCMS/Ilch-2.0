@@ -118,7 +118,7 @@ class Backup extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $date = new \Ilch\Date();
             $dbDate = $date->format('Y-m-d H-i-s', true);
-            $filename = $date->format('Y-m-d_H-i-s', true) . '_'.bin2hex(random_bytes(32));
+            $filename = $date->format('Y-m-d_H-i-s', true) . '_' . bin2hex(random_bytes(32));
 
             $fileConfig = new File();
             $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
@@ -133,22 +133,11 @@ class Backup extends \Ilch\Controller\Admin
             } else {
                 $compress = 'NONE';
             }
+
             $dumpfile = ROOT_PATH . '/backups/' . $dbname . '_' . $filename . $compressFile;
-            if ($this->getRequest()->getPost('addDatabases') == 1) {
-                $addDatabases = true;
-            } else {
-                $addDatabases = false;
-            }
-            if ($this->getRequest()->getPost('dropTable') == 1) {
-                $dropTable = true;
-            } else {
-                $dropTable = false;
-            }
-            if ($this->getRequest()->getPost('skipComments') == 1) {
-                $skipComments = false;
-            } else {
-                $skipComments = true;
-            }
+            $addDatabases = ($this->getRequest()->getPost('addDatabases') == 1);
+            $dropTable = ($this->getRequest()->getPost('dropTable') == 1);
+            $skipComments = ($this->getRequest()->getPost('skipComments') == 1);
 
             try {
                 $dumpSettings = [
@@ -161,7 +150,7 @@ class Backup extends \Ilch\Controller\Admin
                     'skip-comments' => $skipComments
                 ];
 
-                $dump = new IMysqldump\Mysqldump('mysql:host=' . $dbhost . ';dbname=' . $dbname,$dbuser,$dbpassword,$dumpSettings);
+                $dump = new IMysqldump\Mysqldump('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpassword, $dumpSettings);
                 $dump->start($dumpfile);
 
                 $backupMapper = new BackupMapper();
@@ -207,7 +196,7 @@ class Backup extends \Ilch\Controller\Admin
                         header('Content-type: application/x-sql');
                     }
                     header('Content-Disposition: filename="' . $publicFileName. '"');
-                    header('Content-length: ' .filesize($fullPath));
+                    header('Content-length: ' . filesize($fullPath));
                     // RFC2616 section 14.9.1: Indicates that all or part of the response message is intended for a single user and MUST NOT be cached by a shared cache, such as a proxy server.
                     header('Cache-control: private');
                     while(!feof($fd)) {
@@ -218,6 +207,43 @@ class Backup extends \Ilch\Controller\Admin
                     $this->addMessage('backupNotFound', 'danger');
                 }
                 fclose($fd);
+            }
+        }
+
+        $this->redirect(['action' => 'index']);
+    }
+
+    public function importAction()
+    {
+        if (!$this->getRequest()->isSecure()) {
+            return;
+        }
+
+        $id = $this->getRequest()->getParam('id');
+
+        if (!empty($id)) {
+            $fileConfig = new File();
+            $backupMapper = new BackupMapper();
+
+            $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
+            $dbhost = $fileConfig->get('dbHost');
+            $dbuser = $fileConfig->get('dbUser');
+            $dbpassword = $fileConfig->get('dbPassword');
+            $dbname = $fileConfig->get('dbName');
+            $backup = $backupMapper->getBackupById($id);
+
+            if ($backup !== null) {
+                set_time_limit(0);
+                $fullPath = ROOT_PATH . '/backups/' . $backup->getName();
+
+                try {
+                    $dump = new IMysqldump\Mysqldump('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpassword);
+                    $dump->restore($fullPath);
+
+                    $this->addMessage('backupImportSuccess');
+                } catch (\Exception $e) {
+                    $this->addMessage('mysqldump-php error: ' . $e->getMessage(), 'danger');
+                }
             }
         }
 
