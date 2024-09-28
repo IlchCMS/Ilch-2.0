@@ -172,6 +172,7 @@ return [
     'backupNotFound' => 'Das Backup wurde nicht gefunden oder konnte nicht geöffnet werden.',
     'backupFilesize' => 'Dateigröße',
     'backupImport' => 'Importieren',
+    'backupConfirmImport' => 'Wollen Sie das Backup (${name}) wirklich importieren?',
     'backupImportSuccess' => 'Backup wurde erfolgreich importiert.',
     'menuCustomCSS' => 'Benutzerdefinierte CSS',
     'menuHtaccess' => 'htaccess',
