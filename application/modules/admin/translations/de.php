@@ -75,7 +75,7 @@ return [
     'htmlPurifierSettings' => 'HTMLPurifier-Einstellungen',
     'showHtmlPurifierSettings' => 'Anzeigen der Einstellungen',
     'menuHtmlPurifier' => 'HTMLPurifier-Einstellungen',
-    'htmlPurifierSafeUrlsAddOwnDomain' => 'Eigene Domain hinzufügen',
+    'htmlPurifierOwnDomain' => 'Eigene Domain',
     'htmlPurifierOwnDomainHelp' => 'Stellen Sie bitte sicher, dass dies die richtige Domain ist. Sie wird automatisch als sicher angesehen.',
     'htmlPurifierUrlsConsideredSafe' => 'Als sicher angesehene Adressen',
     'timezone' => 'Zeitzone',
