@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('menuBackup') ?></h1>
 <form method="POST">
     <?=$this->getTokenField() ?>
-    <?php if ($this->get('backups') != ''): ?>
+    <?php if ($this->get('backups') != '') : ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-            <?php foreach ($this->get('backups') as $backup): ?>
+            <?php foreach ($this->get('backups') as $backup) : ?>
                 <?php $backupPublicName = $this->escape(preg_replace('/_[^_.]*\./', '.', $backup->getName())); ?>
                 <tr>
                     <td><?=$this->getDeleteCheckbox('id', $backup->getId()) ?></td>
@@ -37,14 +37,14 @@
                     <?php endif; ?>
                     <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $backup->getId()]) ?></td>
                     <td><?=$this->escape($backup->getDate()) ?></td>
-                    <td><?=formatBytes(filesize(ROOT_PATH . '/backups/' . $backup->getName())) ?></td>
+                    <td><?=(file_exists(ROOT_PATH . '/backups/' . $backup->getName())) ? formatBytes(filesize(ROOT_PATH . '/backups/' . $backup->getName())) : '' ?></td>
                     <td><?=$backupPublicName ?></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
         </table>
     </div>
-    <?php else: ?>
+    <?php else : ?>
         <tr>
             <td colspan="5"><?=$this->getTrans('noBackups') ?></td>
         </tr>
