@@ -21,44 +21,47 @@ if (!empty($profil->getBirthday())) {
             <form method="POST">
                 <?=$this->getTokenField() ?>
                 <div class="row mb-3<?=$this->validation()->hasError('email') ? ' has-error' : '' ?>">
-                    <label class="col-xl-2 col-form-label">
+                    <label class="col-xl-2 col-form-label" for="email">
                         <?=$this->getTrans('profileEmail') ?>*
                     </label>
                     <div class="col-xl-8">
                         <input type="text"
                                class="form-control"
                                name="email"
+                               id="email"
                                placeholder="<?=$this->escape($profil->getEmail()) ?>"
                                value="<?=($this->originalInput('email') != '') ? $this->escape($this->originalInput('email')) : $this->escape($profil->getEmail()) ?>"
                                required />
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-xl-2 col-form-label">
+                    <label class="col-xl-2 col-form-label" for="first-name">
                         <?=$this->getTrans('profileFirstName') ?>
                     </label>
                     <div class="col-xl-8">
                         <input type="text"
                                class="form-control"
                                name="first-name"
+                               id="first-name"
                                placeholder="<?=$this->escape($profil->getFirstName()) ?>"
                                value="<?=($this->originalInput('firstname') != '') ? $this->escape($this->originalInput('firstname')) : $this->escape($profil->getFirstName()) ?>" />
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-xl-2 col-form-label">
+                    <label class="col-xl-2 col-form-label" for="last-name">
                         <?=$this->getTrans('profileLastName') ?>
                     </label>
                     <div class="col-xl-8">
                         <input type="text"
                                class="form-control"
                                name="last-name"
+                               id="last-name"
                                placeholder="<?=$this->escape($profil->getLastName()) ?>"
                                value="<?=($this->originalInput('lastname') != '') ? $this->escape($this->originalInput('lastname')) : $this->escape($profil->getLastName()) ?>" />
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-xl-2 col-form-label">
+                    <label class="col-xl-2 col-form-label" for="gender">
                         <?=$this->getTrans('profileGender') ?>
                     </label>
                     <div class="col-xl-8">
@@ -71,19 +74,20 @@ if (!empty($profil->getBirthday())) {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-xl-2 col-form-label">
+                    <label class="col-xl-2 col-form-label" for="city">
                         <?=$this->getTrans('profileCity') ?>
                     </label>
                     <div class="col-xl-8">
                        <input type="text"
                               class="form-control"
                               name="city"
+                              id="city"
                               placeholder="<?=$this->escape($profil->getCity()) ?>"
                               value="<?=($this->originalInput('city') != '') ? $this->escape($this->originalInput('city')) : $this->escape($profil->getCity()) ?>" />
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-xl-2 col-form-label">
+                    <label class="col-xl-2 col-form-label" for="birthday">
                         <?=$this->getTrans('profileBirthday') ?>
                     </label>
                     <div id="birthday" class="col-xl-8 input-group ilch-date date form_datetime">
@@ -123,7 +127,7 @@ if (!empty($profil->getBirthday())) {
                             }
                         } ?>
                         <div class="row mb-3">
-                            <label class="col-xl-2 col-form-label">
+                            <label class="col-xl-2 col-form-label" for="<?=$index ?>">
                                 <?=$this->escape($profileFieldName) ?>
                             </label>
                             <div class="col-xl-8">
@@ -176,6 +180,7 @@ if (!empty($profil->getBirthday())) {
                                     <input type="text"
                                            class="form-control ilch-date date form_datetime"
                                            name="<?=$index ?>"
+                                           id="<?=$index ?>"
                                            placeholder="<?=$value ?>"
                                            value="<?=$value ?>">
                                 <?php if ($profileField->getShow() == 0) : ?>
@@ -190,6 +195,7 @@ if (!empty($profil->getBirthday())) {
                                 <input type="text"
                                        class="form-control"
                                        name="<?=$index ?>"
+                                       id="<?=$index ?>"
                                        placeholder="<?=$value ?>"
                                        value="<?=$value ?>" />
                                 <?php if ($profileField->getShow() == 0) : ?>
