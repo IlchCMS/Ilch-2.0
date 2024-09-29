@@ -166,9 +166,7 @@ $iconArray = [
                     <select class="form-select selectTrans" name="profileFieldTrans_locale[]">
                         <option selected="selected" disabled><?=$this->getTrans('pleaseSelect') ?></option>
                         <?php foreach ($localeList as $key => $locale) : ?>
-                            <option value="<?=$key ?>"
-                            <?=(($locale == $localeList[$profileFieldTranslation->getLocale()]) ? ' selected' : ''); ?>
-                            ><?=$locale ?></option>
+                            <option value="<?=$key ?>"<?=((isset($localeList[$profileFieldTranslation->getLocale()]) && $locale == $localeList[$profileFieldTranslation->getLocale()]) ? ' selected' : ''); ?>><?=$locale ?></option>
                             <?php next($localeList);
                         endforeach; ?>
                     </select>
