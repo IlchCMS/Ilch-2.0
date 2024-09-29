@@ -158,10 +158,11 @@ return [
     'menuLayouts' => 'Layouts',
     'menuSettings' => 'Settings',
     'menuMaintenance' => 'Maintenance',
-    'menuBackup' => 'Backup',
+    'menuBackup' => 'Database backup',
     'createBackupInfoText' => '<p>Enable "Add CREATE DATABASE statement" to create the database with the previous name on import.
                                Disable this if the database should have a different name.</p>
-                               <p>"Add DROP TABLE statements" should be enabled if you wish to drop/delete existing tables on import.</p>',
+                               <p>"Add DROP TABLE statements" should be enabled if you wish to drop/delete existing tables on import.</p>
+                               <p>If you later want to use Ilch to import a backup then the "Add DROP TABLE statements" option should be enabled for the backup. The compression on the other hand disabled.</p>',
     'compress' => 'Compression',
     'compressNone' => 'None',
     'skipComments' => 'Display comments',
@@ -170,6 +171,10 @@ return [
     'noBackups' => 'No backups available',
     'backupNotFound' => 'The backup was not found or could not be opened.',
     'backupFilesize' => 'Filesize',
+    'backupImport' => 'Import',
+    'backupCannotImport' => 'This backup cannot be imported from Ilch.',
+    'backupConfirmImport' => 'Do you really want to import the backup (${name})?',
+    'backupImportSuccess' => 'Backup was successfully imported.',
     'menuCustomCSS' => 'Custom CSS',
     'menuHtaccess' => 'htaccess',
     'modrewriteLinesAdded' => 'Added lines for mod rewrite.',
