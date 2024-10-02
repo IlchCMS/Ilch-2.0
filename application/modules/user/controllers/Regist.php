@@ -103,7 +103,7 @@ class Regist extends \Ilch\Controller\Frontend
 
             foreach ($profileFields as $profileField) {
                 if ($profileField->getType() != 1) {
-                    $index = 'profileField'.$profileField->getId();
+                    $index = 'profileField' . $profileField->getId();
                     if ($this->getRequest()->getPost($index) === null) {
                         // This is for example the case if an external module added a profile field.
                         // Skip this profile field so the value doesn't get deleted.
@@ -113,6 +113,9 @@ class Regist extends \Ilch\Controller\Frontend
                         $post[$index] = json_encode($this->getRequest()->getPost($index));
                     } else {
                         $post[$index] = trim($this->getRequest()->getPost($index));
+                    }
+                    if ($profileField->getRegistration() === 2) {
+                        $validationRules[$index] = 'required';
                     }
                 }
             }
@@ -144,14 +147,14 @@ class Regist extends \Ilch\Controller\Frontend
                     ->setLocale($this->getTranslator()->getLocale())
                     ->setDateCreated($currentDate->format('Y-m-d H:i:s', true))
                     ->addGroup($userGroup);
-                $registMapper->save($model);
+                $userId = $registMapper->save($model);
 
                 foreach ($profileFields as $profileField) {
                     if ($profileField->getType() != 1) {
                         $index = 'profileField'.$profileField->getId();
                         $profileFieldsContent = new ProfileFieldContentModel();
                         $profileFieldsContent->setFieldId($profileField->getId())
-                            ->setUserId($this->getUser()->getId())
+                            ->setUserId($userId)
                             ->setValue($post[$index]);
                         $profileFieldsContentMapper->save($profileFieldsContent);
                     }
