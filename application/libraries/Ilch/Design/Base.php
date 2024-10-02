@@ -142,7 +142,7 @@ abstract class Base
         $this->purifierConfig->set('URI.AllowedSchemes', ['data' => true, 'http' => true, 'https' => true, 'mailto' => true, 'src' => true]);
 
         if ($databaseConfig && $databaseConfig->get('domain')) {
-            $safeIframeRegexp = str_replace('^(http://|https://)localhost)', '^(http://|https://)localhost)|^(http://|https://)' . $databaseConfig->get('domain') . ')' , $safeIframeRegexp);
+            $safeIframeRegexp = str_replace('^(http://|https://)localhost)', '^(http://|https://)localhost)|^(http://|https://)' . $databaseConfig->get('domain'), $safeIframeRegexp);
         }
         $this->purifierConfig->set('URI.SafeIframeRegexp', $safeIframeRegexp);
         $this->purifierConfig->set('Attr.AllowedFrameTargets', '_blank, _self, _target, _parent');
