@@ -127,13 +127,13 @@ class ProfileFields extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $postData = $this->getRequest()->getPost();
             $profileFieldData = $postData['profileField'];
+            $profileFieldData['registration'] = $profileFieldData['showOnRegistration'] + $profileFieldData['showOnRegistrationRequired'];
             if ($profileFieldData['type'] != 2) {
                 $profileFieldData['icon'] = '';
                 $profileFieldData['addition'] = '';
             }
 
             if (in_array($profileFieldData['type'], $multiTypes)) {
-
                 $profileFieldData['options'] = json_encode(array_filter($postData['profileFieldOptions']));
             } else {
                 $profileFieldData['options'] = '';

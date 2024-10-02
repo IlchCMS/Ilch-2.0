@@ -305,6 +305,7 @@ return [
     'profileFieldKey' => 'Key',
     'profileFieldName' => 'Name',
     'profileFieldType' => 'Type',
+    'profileFieldRegistration' => 'Registration',
     'profileFieldField' => 'Text field',
     'profileFieldCat' => 'Category',
     'profileFieldIcon' => 'Icon',
@@ -326,6 +327,8 @@ return [
     'profileFieldHidden' => 'Field hidden by the administrator.',
     'chooseIcon' => 'Choose a symbol',
     'noIcon' => 'No symbol',
+    'profileFieldShowOnRegistration' => 'Query field on registration?',
+    'profileFieldShowOnRegistrationRequired' => 'Mark field as required on registration?',
     'profileFieldKeyDesc' => 'A key for the database. It should be a relatable and lowercase name for this profile field.',
     'profileFieldTypeDesc0' => 'The text field allows users to enter text in a single line.',
     'profileFieldTypeDesc1' => 'The category is a read-only heading. This is useful for organizing your own profile fields.',
@@ -335,6 +338,9 @@ return [
     'profileFieldTypeDesc5' => 'The drop-down box contains default entries to choose from. Users can only select one option here.',
     'profileFieldTypeDesc6' => 'The date field allows users to select a date from a drop-down calendar or enter it manually.',
     'profileFieldOptions' => 'Selection options',
+    'profileFieldShowTitle' => 'Show profile field',
+    'profileFieldHideTitle' => 'Hide profile field',
+    'profileFieldRegistrationTitle' => 'Will be requested during registration.',
 
     'picturesPerPage' => 'Pictures per page',
 

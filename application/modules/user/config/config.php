@@ -139,6 +139,7 @@ class Config extends \Ilch\Config\Install
                 `options` TEXT NOT NULL DEFAULT \'\',
                 `show` TINYINT(1) NOT NULL DEFAULT 1,
                 `hidden` TINYINT(1) NOT NULL DEFAULT 0,
+                `registration` TINYINT(1) NOT NULL DEFAULT 0,
                 `position` INT(11) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
@@ -663,6 +664,10 @@ class Config extends \Ilch\Config\Install
                             ->execute();
                     }
                 }
+                break;
+            case "2.2.3":
+                // Add new registration column.
+                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `registration` TEXT NOT NULL DEFAULT \'0\' AFTER `hidden`;');
                 break;
         }
 

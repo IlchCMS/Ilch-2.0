@@ -64,6 +64,14 @@ class ProfileField extends \Ilch\Model
      */
     protected $hidden;
 
+
+    /**
+     * Registration flag to mark a profile field as to be shown on registration and optionally be required.
+     *
+     * @var int
+     */
+    protected $registration;
+
     /**
      * The position of the profile-field.
      *
@@ -254,6 +262,29 @@ class ProfileField extends \Ilch\Model
     {
         $this->hidden = (int)$hidden;
 
+        return $this;
+    }
+
+    /**
+     * Get value of registration.
+     * 0: disabled, 1: enabled, 2: enabled and required
+     *
+     * @return int
+     */
+    public function getRegistration(): int
+    {
+        return $this->registration;
+    }
+
+    /**
+     * Set value of registration.
+     *
+     * @param int $registration 0: disabled, 1: enabled, 2: enabled and required
+     * @return ProfileField
+     */
+    public function setRegistration(int $registration): ProfileField
+    {
+        $this->registration = $registration;
         return $this;
     }
 

@@ -20,6 +20,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
                 <col class="icon_width" />
                 <col />
                 <col />
+                <col />
                 <col class="icon_width" />
             </colgroup>
             <thead>
@@ -30,6 +31,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
                     <th></th>
                     <th><?=$this->getTrans('profileFieldName') ?></th>
                     <th><?=$this->getTrans('profileFieldType') ?></th>
+                    <th><?=$this->getTrans('profileFieldRegistration') ?></th>
                     <th></th>
                 </tr>
             </thead>
@@ -51,11 +53,11 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
                     <?php endif; ?>
                     <td>
                         <?php if ($profileField->getShow() == 1): ?>
-                            <a href="<?=$this->getUrl(['action' => 'update', 'id' => $profileField->getId()], null, true) ?>">
+                            <a href="<?=$this->getUrl(['action' => 'update', 'id' => $profileField->getId()], null, true) ?>" title="<?=$this->getTrans('profileFieldHideTitle') ?>">
                                 <span class="fa-regular fa-square-check text-info"></span>
                             </a>
                         <?php else: ?>
-                            <a href="<?=$this->getUrl(['action' => 'update', 'id' => $profileField->getId()], null, true) ?>">
+                            <a href="<?=$this->getUrl(['action' => 'update', 'id' => $profileField->getId()], null, true) ?>" title="<?=$this->getTrans('profileFieldShowTitle') ?>">
                                 <span class="fa-regular fa-square text-info"></span>
                             </a>
                         <?php endif; ?>
@@ -84,6 +86,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
                         <td><b><?=$this->escape($profileFieldName) ?></b></td>
                         <td><b><i class="<?=$iconArray[$profileField->getType()] ?>"></i>&nbsp;&nbsp;<?=$this->getTrans($typeArray[$profileField->getType()]) ?></b></td>
                     <?php endif; ?>
+                        <td><?= ($profileField->getRegistration() === 2) ? '<i class="fa-solid fa-user-plus" title="' . $this->getTrans('profileFieldRegistrationTitle') . '"></i>' : '' ?></td>
                         <td><i class="fa-solid fa-up-down"></i></td>
                 </tr>
                 <?php endforeach; ?>

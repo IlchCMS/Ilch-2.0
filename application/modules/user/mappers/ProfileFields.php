@@ -20,7 +20,7 @@ class ProfileFields extends \Ilch\Mapper
     {
         $profileFieldRows = $this->db()->select('*')
             ->from('profile_fields')
-            ->where($where, 'or')
+            ->where($where)
             ->order(['position' => 'ASC'])
             ->execute()
             ->fetchRows();
@@ -111,6 +111,7 @@ class ProfileFields extends \Ilch\Mapper
             $fields['addition'] = $profileField->getAddition();
             $fields['options'] = $profileField->getOptions();
             $fields['show'] = $profileField->getShow();
+            $fields['registration'] = $profileField->getRegistration();
             $fields['position'] = $profileField->getPosition();
         }
 
@@ -121,17 +122,13 @@ class ProfileFields extends \Ilch\Mapper
             ->fetchCell();
 
         if ($id) {
-            /*
-             * ProfileField does exist already, update.
-             */
+            // ProfileField does exist already, update.
             $this->db()->update('profile_fields')
                 ->values($fields)
                 ->where(['id' => $id])
                 ->execute();
         } else {
-            /*
-             * ProfileField does not exist yet, insert.
-             */
+            // ProfileField does not exist yet, insert.
             $id = $this->db()->insert('profile_fields')
                 ->values($fields)
                 ->execute();
@@ -248,6 +245,10 @@ class ProfileFields extends \Ilch\Mapper
 
         if (isset($profileFieldRow['hidden'])) {
             $profileField->setHidden($profileFieldRow['hidden']);
+        }
+
+        if (isset($profileFieldRow['registration'])) {
+            $profileField->setRegistration($profileFieldRow['registration']);
         }
 
         if (isset($profileFieldRow['position'])) {
