@@ -96,6 +96,7 @@ abstract class Base
             $baseUrl = BASE_URL;
         }
         $this->baseUrl = $baseUrl;
+        $this->initializeHtmlPurifier();
     }
 
     /**
