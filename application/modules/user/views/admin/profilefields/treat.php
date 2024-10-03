@@ -98,9 +98,9 @@ $iconArray = [
         </label>
         <div class="col-xl-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="showOnRegistration-yes" name="profileField[showOnRegistration]" value="1" <?=($profileField->getRegistration() >= '1') ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="showOnRegistration-yes" name="profileField[showOnRegistration]" value="1"<?=($profileField->getRegistration() >= '1') ? ' checked="checked"' : '' ?> />
                 <label for="showOnRegistration-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="showOnRegistration-no" name="profileField[showOnRegistration]" value="0" <?=($profileField->getRegistration() == '0') ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="showOnRegistration-no" name="profileField[showOnRegistration]" value="0"<?=($profileField->getRegistration() == '0') ? ' checked="checked"' : '' ?> />
                 <label for="showOnRegistration-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -112,9 +112,9 @@ $iconArray = [
         </label>
         <div class="col-xl-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="showOnRegistrationRequired-yes" name="profileField[showOnRegistrationRequired]" value="1" <?=($profileField->getRegistration() == '2') ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="showOnRegistrationRequired-yes" name="profileField[showOnRegistrationRequired]" value="1"<?=($profileField->getRegistration() == '2') ? ' checked="checked"' : '' ?> />
                 <label for="showOnRegistrationRequired-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="showOnRegistrationRequired-no" name="profileField[showOnRegistrationRequired]" value="0" <?=($profileField->getRegistration() != '2') ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="showOnRegistrationRequired-no" name="profileField[showOnRegistrationRequired]" value="0"<?=($profileField->getRegistration() != '2') ? ' checked="checked"' : '' ?> />
                 <label for="showOnRegistrationRequired-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -126,7 +126,7 @@ $iconArray = [
         <?php
         $icon = '';
         if ($profileField->getType() == 2) {
-            $icon = ($profileField->getIcon() !== '') ? $profileField->getIcon() : $this->get('post')['symbol'];
+            $icon = ($profileField->getIcon() !== '') ? $profileField->getIcon() : $this->get('post')['symbol'] ?? '';
         }
         ?>
         <label for="profileFieldIcon" class="col-xl-2 col-form-label">
@@ -425,7 +425,7 @@ $iconArray = [
 
     $('[name="profileField[showOnRegistration]"').click(function () {
         let showOnRegistrationRequired = $('#showOnRegistrationRequired');
-        if ($(this).val() == "1") {
+        if ($(this).val() === "1") {
             showOnRegistrationRequired.removeAttr('hidden');
         } else {
             showOnRegistrationRequired.attr('hidden', '');

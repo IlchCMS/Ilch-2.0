@@ -118,7 +118,7 @@ class ProfileFields extends \Ilch\Controller\Admin
         $profileFieldsMapper = new ProfileFieldsMapper();
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
-        if ($profileFieldsMapper->profileFieldWithIdExists($profileFieldId)) {
+        if ($profileFieldId && $profileFieldsMapper->profileFieldWithIdExists($profileFieldId)) {
             $profileField = $profileFieldsMapper->getProfileFieldById($profileFieldId);
         } else {
             $profileField = new ProfileFieldModel();
