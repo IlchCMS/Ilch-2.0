@@ -92,7 +92,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
                         <td><b><?=$this->escape($profileFieldName) ?></b></td>
                         <td><b><i class="<?=$iconArray[$profileField->getType()] ?>"></i>&nbsp;&nbsp;<?=$this->getTrans($typeArray[$profileField->getType()]) ?></b></td>
                     <?php endif; ?>
-                        <td><?= ($profileField->getRegistration() === 2) ? '<i class="fa-solid fa-user-plus" title="' . $this->getTrans('profileFieldRegistrationTitle') . '"></i>' : '' ?></td>
+                        <td><?= ($profileField->getRegistration() >= 1) ? '<i class="fa-solid fa-user-plus" title="' . $this->getTrans('profileFieldRegistrationTitle') . '"></i>' : '' ?></td>
                         <td><i class="fa-solid fa-up-down"></i></td>
                 </tr>
                 <?php endforeach; ?>

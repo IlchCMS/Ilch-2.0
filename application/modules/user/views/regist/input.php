@@ -96,7 +96,7 @@ $profileFieldsTranslation = $this->get('profileFieldsTranslation');
                     ?>
                     <div class="row mb-3">
                         <label class="col-xl-2 col-form-label" for="<?=$index ?>">
-                            <?=$this->escape($profileFieldName) ?><?=($profileField->getRegistration() === 2) ? ' *' : '' ?>
+                            <?=$this->escape($profileFieldName) ?><?=($profileField->getRegistration() === 2) ? '*' : '' ?>:
                         </label>
                         <div class="col-xl-8">
                         <!-- radio -->
