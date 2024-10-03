@@ -7,7 +7,9 @@
 
 namespace Modules\User\Models;
 
-class ProfileField extends \Ilch\Model
+use Ilch\Model;
+
+class ProfileField extends Model
 {
     /**
      * The id of the profile-field.

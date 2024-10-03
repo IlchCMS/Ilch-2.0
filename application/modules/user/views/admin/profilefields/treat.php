@@ -1,12 +1,15 @@
 <?php
 
-/** @var \Ilch\View $this */
+use Ilch\View;
+use Modules\User\Models\ProfileField;
+use Modules\User\Models\ProfileFieldTranslation;
 
+/** @var View $this */
 /** @var int $countOfProfileFields */
 $countOfProfileFields = $this->get('countOfProfileFields');
-/** @var \Modules\User\Models\ProfileField $profileField */
+/** @var ProfileField $profileField */
 $profileField = $this->get('profileField');
-/** @var \Modules\User\Models\ProfileFieldTranslation[] $profileFieldsTranslation */
+/** @var ProfileFieldTranslation[] $profileFieldsTranslation */
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 /** @var string[] $localeList */
 $localeList = $this->get('localeList');

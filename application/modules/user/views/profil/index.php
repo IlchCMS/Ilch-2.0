@@ -1,14 +1,33 @@
 <?php
+
+use Ilch\Date;
+use Modules\User\Mappers\User;
+use Modules\User\Models\ProfileField;
+use Modules\User\Models\ProfileFieldContent;
+use Modules\User\Models\ProfileFieldTranslation;
+
+/** @var User $userMapper */
 $userMapper = $this->get('userMapper');
+
+/** @var \Modules\User\Models\User $profil */
 $profil = $this->get('profil');
+
 $birthday = '';
 if ($profil->getBirthday()) {
-    $birthday = new \Ilch\Date($profil->getBirthday());
+    $birthday = new Date($profil->getBirthday());
 }
-$date = new \Ilch\Date();
+$date = new Date();
+
+/** @var ProfileField[] $profileIconFields */
 $profileIconFields = $this->get('profileIconFields');
+
+/** @var ProfileField[] $profileFields */
 $profileFields = $this->get('profileFields');
+
+/** @var ProfileFieldContent[] $profileFieldsContent */
 $profileFieldsContent = $this->get('profileFieldsContent');
+
+/** @var ProfileFieldTranslation[] $profileFieldsTranslation */
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 
 $groups = '';

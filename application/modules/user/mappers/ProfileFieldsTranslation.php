@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,10 +14,10 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
     /**
      * Returns all ProfileFieldTranslation found by the locale.
      *
-     * @param  string $locale
+     * @param string $locale
      * @return array()|\Modules\User\Models\ProfileFieldTranslation
      */
-    public function getProfileFieldTranslationByLocale($locale)
+    public function getProfileFieldTranslationByLocale(string $locale): array
     {
         $profileFieldTranslationRows = $this->db()->select('*')
             ->from('profile_trans')
@@ -37,10 +38,10 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
     /**
      * Returns a ProfileFieldTranslation model found by the fieldid.
      *
-     * @param  int $fieldId
+     * @param int $fieldId
      * @return array()|\Modules\User\Models\ProfileFieldTranslation
      */
-    public function getProfileFieldTranslationByFieldId($fieldId)
+    public function getProfileFieldTranslationByFieldId(int $fieldId): array
     {
         $profileFieldTranslationRows = $this->db()->select('*')
             ->from('profile_trans')
@@ -64,7 +65,7 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
      * @param array $profileFieldRow
      * @return ProfileFieldTranslationModel
      */
-    public function loadFromArray($profileFieldRow = [])
+    public function loadFromArray(array $profileFieldRow = []): ProfileFieldTranslationModel
     {
         $profileFieldTranslation = new ProfileFieldTranslationModel();
 
@@ -88,11 +89,11 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
      * Use this function when a profilefield got deleted and it's
      * translations are no longer needed.
      *
-     * @param  int $fieldId
+     * @param int $fieldId
      *
      * @return bool True if success, otherwise false.
      */
-    public function deleteProfileFieldTranslationsByFieldId($fieldId)
+    public function deleteProfileFieldTranslationsByFieldId(int $fieldId): bool
     {
         return $this->db()->delete('profile_trans')
             ->where(['field_id' => $fieldId])
@@ -102,12 +103,12 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
     /**
      * Deletes the profilefield-translation with a given locale and fieldid.
      *
-     * @param  string $locale
-     * @param  int $fieldId
+     * @param string $locale
+     * @param int $fieldId
      *
      * @return bool True if success, otherwise false.
      */
-    public function deleteProfileFieldTranslation($locale, $fieldId)
+    public function deleteProfileFieldTranslation(string $locale, int $fieldId): bool
     {
         return $this->db()->delete('profile_trans')
             ->where(['locale' => $locale, 'field_id' => $fieldId])
@@ -137,17 +138,13 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
             ->fetchCell();
 
         if ($fieldId) {
-            /*
-             * profileFieldTranslation does exist already, update.
-             */
+            // profileFieldTranslation does exist already, update.
             $this->db()->update('profile_trans')
                 ->values($fields)
                 ->where(['field_id' => $fieldId, 'locale' => $profileFieldTranslation->getLocale()])
                 ->execute();
         } else {
-            /*
-             * profileFieldTranslation does not exist yet, insert.
-             */
+            // profileFieldTranslation does not exist yet, insert.
             $this->db()->insert('profile_trans')
                 ->values($fields)
                 ->execute();

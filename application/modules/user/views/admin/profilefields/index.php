@@ -1,4 +1,8 @@
 <?php
+
+use Modules\User\Models\ProfileField;
+use Modules\User\Models\ProfileFieldTranslation;
+
 $typeArray = ['profileFieldField', 'profileFieldCat', 'profileFieldIcon', 'profileFieldRadio', 'profileFieldCheck', 'profileFieldDrop', 'profileFieldDate'];
 $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa-icons', 'fa-regular fa-circle-check', 'fa-regular fa-square-check', 'fa-regular fa-square-caret-down', 'fa-regular fa-calendar-days'];
 ?>
@@ -39,7 +43,9 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
             </thead>
             <tbody id="sortable">
                 <?php
+                /** @var ProfileField[] $profileFields */
                 $profileFields = $this->get('profileFields');
+                /** @var ProfileFieldTranslation[] $profileFieldsTranslation */
                 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 
                 foreach ($profileFields as $profileField):

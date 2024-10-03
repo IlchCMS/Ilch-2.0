@@ -1,13 +1,26 @@
 <?php
+
+use Modules\User\Mappers\ProfileFieldsContent;
+use Modules\User\Mappers\User;
+use Modules\User\Models\ProfileField;
+use Modules\User\Models\ProfileFieldContent;
+use Modules\User\Models\ProfileFieldTranslation;
+
+/** @var User $userMapper */
 $userMapper = $this->get('userMapper');
+
+/** @var ProfileFieldsContent $profileFieldsContentMapper */
 $profileFieldsContentMapper = $this->get('profileFieldsContentMapper');
+
+/** @var ProfileField[] $profileIconFields */
 $profileIconFields = $this->get('profileIconFields');
+
+/** @var ProfileFieldTranslation[] $profileFieldsTranslation */
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 $group = $this->get('group');
 $groupText = (!empty($group)) ? ' ('.$this->getTrans('group') . ': ' . $this->escape($group->getName()) . ')' : '';
 $userGroupList_allowed = $this->get('userGroupList_allowed');
 $userAvatarList_allowed = $this->get('userAvatarList_allowed');
-
 ?>
 
     <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
@@ -47,7 +60,10 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
                             }?>
                             <?php $ilchDate = new Ilch\Date($userlist->getDateCreated()); ?>
                             <?php $ilchLastDate = (!empty($userlist->getDateLastActivity())) ? new Ilch\Date($userlist->getDateLastActivity()) : ''; ?>
-                            <?php $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($userlist->getId()); ?>
+                            <?php
+                            /** @var ProfileFieldContent[] $profileFieldsContent */
+                            $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($userlist->getId());
+                            ?>
                             <tr>
                                 <?php if ($userAvatarList_allowed): ?>
                                 <td>
@@ -86,7 +102,7 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
                                                 }
                                             }
 
-                                            echo '<a href="' . $profileIconField->getAddition().$profileFieldContent->getValue() . '" target="_blank" rel="noopener" class="' . $profileIconField->getIcon() . ' fa-lg user-link" title="' . $profileFieldName . '"></a>';
+                                            echo '<a href="' . $profileIconField->getAddition() . $profileFieldContent->getValue() . '" target="_blank" rel="noopener" class="' . $profileIconField->getIcon() . ' fa-lg user-link" title="' . $profileFieldName . '"></a>';
                                             break;
                                         }
                                     }

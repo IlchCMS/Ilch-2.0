@@ -1,8 +1,12 @@
 <?php
-$errors = $this->get('errors');
-$profil = $this->get('profil');
+
+use Modules\User\Models\ProfileField;
+use Modules\User\Models\ProfileFieldTranslation;
+
+/** @var ProfileField[] $profileFields */
 $profileFields = $this->get('profileFields');
-$profileFieldsContent = $this->get('profileFieldsContent');
+
+/** @var ProfileFieldTranslation[] $profileFieldsTranslation */
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 ?>
 
