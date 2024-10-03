@@ -306,7 +306,6 @@ return [
     'profileFieldName' => 'Name',
     'profileFieldType' => 'Typ',
     'profileFieldRegistration' => 'Registrierung',
-    'profileFieldPrivate' => 'Privat',
     'profileFieldField' => 'Textfeld',
     'profileFieldCat' => 'Kategorie',
     'profileFieldIcon' => 'Icon',
@@ -342,7 +341,6 @@ return [
     'profileFieldShowTitle' => 'Profil-Feld anzeigen',
     'profileFieldHideTitle' => 'Profil-Feld verstecken',
     'profileFieldRegistrationTitle' => 'Wird bei der Registrierung abgefragt.',
-    'profileFieldPrivateTitle' => 'Dieses Profil-Feld ist privat und wird nicht öffentlich angezeigt.',
 
     'picturesPerPage' => 'Bilder pro Seite',
 

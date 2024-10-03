@@ -306,7 +306,6 @@ return [
     'profileFieldName' => 'Name',
     'profileFieldType' => 'Type',
     'profileFieldRegistration' => 'Registration',
-    'profileFieldPrivate' => 'Private',
     'profileFieldField' => 'Text field',
     'profileFieldCat' => 'Category',
     'profileFieldIcon' => 'Icon',
@@ -342,7 +341,6 @@ return [
     'profileFieldShowTitle' => 'Show profile field',
     'profileFieldHideTitle' => 'Hide profile field',
     'profileFieldRegistrationTitle' => 'Will be requested during registration.',
-    'profileFieldPrivateTitle' => 'This profile field is private and not shown publicly.',
 
     'picturesPerPage' => 'Pictures per page',
 
