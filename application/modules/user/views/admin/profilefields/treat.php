@@ -121,6 +121,22 @@ $iconArray = [
         </div>
     </div>
 
+    <!-- private -->
+    <div class="row mb-3">
+        <label for="profileFieldPrivate" class="col-lg-2 col-form-label">
+            <?=$this->getTrans('profileFieldPrivate') ?>
+        </label>
+        <div class="col-xl-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="private-yes" name="profileField[private]" value="1"<?=($profileField->getPrivate()) ? ' checked="checked"' : '' ?> />
+                <label for="private-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="private-no" name="profileField[private]" value="0"<?=(!$profileField->getPrivate()) ? ' checked="checked"' : '' ?> />
+                <label for="private-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+
     <!-- icon selection -->
     <div class="row mb-3" id="profileFieldIcons" <?=($profileField->getType() == 2) ? '' : 'hidden' ?>>
         <?php

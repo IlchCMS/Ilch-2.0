@@ -113,6 +113,7 @@ class ProfileFields extends \Ilch\Mapper
             $fields['options'] = $profileField->getOptions();
             $fields['show'] = $profileField->getShow();
             $fields['registration'] = $profileField->getRegistration();
+            $fields['private'] = $profileField->getPrivate();
             $fields['position'] = $profileField->getPosition();
         }
 
@@ -250,6 +251,10 @@ class ProfileFields extends \Ilch\Mapper
 
         if (isset($profileFieldRow['registration'])) {
             $profileField->setRegistration($profileFieldRow['registration']);
+        }
+
+        if (isset($profileFieldRow['private'])) {
+            $profileField->setPrivate($profileFieldRow['private']);
         }
 
         if (isset($profileFieldRow['position'])) {

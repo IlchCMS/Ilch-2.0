@@ -78,6 +78,9 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
                                     <?php foreach ($profileIconFields as $profileIconField) {
                                 if ($profileIconField->getShow()) {
                                     foreach ($profileFieldsContent as $profileFieldContent) {
+                                        if (($profileIconField->getPrivate() && $profileFieldContent->getUserId() !== $this->getUser()->getId()) || !$this->getUser()->isAdmin()) {
+                                            continue 2;
+                                        }
                                         if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
                                             $profileFieldName = $profileIconField->getKey();
                                             foreach ($profileFieldsTranslation as $profileFieldTrans) {

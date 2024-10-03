@@ -62,6 +62,9 @@ foreach ($profil->getGroups() as $group) {
                 <?php foreach ($profileIconFields as $profileIconField) {
     if ($profileIconField->getShow()) {
         foreach ($profileFieldsContent as $profileFieldContent) {
+            if (($profileIconField->getPrivate() && $profileFieldContent->getUserId() !== $this->getUser()->getId()) || !$this->getUser()->isAdmin()) {
+                continue 2;
+            }
             if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
                 $profileFieldName = $profileIconField->getKey();
                 foreach ($profileFieldsTranslation as $profileFieldTrans) {
@@ -142,6 +145,9 @@ foreach ($profil->getGroups() as $group) {
             $profileFieldName = $profileField->getKey();
             $value = '';
             foreach ($profileFieldsContent as $profileFieldContent) {
+                if (($profileField->getPrivate() && $profileFieldContent->getUserId() !== $this->getUser()->getId()) || !$this->getUser()->isAdmin()) {
+                    continue 2;
+                }
                 if ($profileFieldContent->getValue() && $profileField->getId() == $profileFieldContent->getFieldId()) {
                     if ($profileField->getType() == 4) {
                         $value = implode(', ', json_decode($profileFieldContent->getValue(), true));

@@ -21,6 +21,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
                 <col />
                 <col />
                 <col />
+                <col />
                 <col class="icon_width" />
             </colgroup>
             <thead>
@@ -32,6 +33,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
                     <th><?=$this->getTrans('profileFieldName') ?></th>
                     <th><?=$this->getTrans('profileFieldType') ?></th>
                     <th><?=$this->getTrans('profileFieldRegistration') ?></th>
+                    <th><?=$this->getTrans('profileFieldPrivate') ?></th>
                     <th></th>
                 </tr>
             </thead>
@@ -87,6 +89,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
                         <td><b><i class="<?=$iconArray[$profileField->getType()] ?>"></i>&nbsp;&nbsp;<?=$this->getTrans($typeArray[$profileField->getType()]) ?></b></td>
                     <?php endif; ?>
                         <td><?= ($profileField->getRegistration() === 2) ? '<i class="fa-solid fa-user-plus" title="' . $this->getTrans('profileFieldRegistrationTitle') . '"></i>' : '' ?></td>
+                        <td><?= ($profileField->getPrivate()) ? '<i class="fa-solid fa-lock" title="' . $this->getTrans('profileFieldPrivateTitle') . '"></i>' : '' ?></td>
                         <td><i class="fa-solid fa-up-down"></i></td>
                 </tr>
                 <?php endforeach; ?>

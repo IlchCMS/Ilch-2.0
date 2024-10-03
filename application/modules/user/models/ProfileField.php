@@ -73,6 +73,13 @@ class ProfileField extends \Ilch\Model
     protected int $registration = 0;
 
     /**
+     * Determines if a profile field is private or public.
+     *
+     * @var int
+     */
+    protected int $private = 0;
+
+    /**
      * The position of the profile-field.
      *
      * @var int
@@ -285,6 +292,28 @@ class ProfileField extends \Ilch\Model
     public function setRegistration(int $registration): ProfileField
     {
         $this->registration = $registration;
+        return $this;
+    }
+
+    /**
+     * Get the value to determine if this profile field is private or public.
+     *
+     * @return int
+     */
+    public function getPrivate(): int
+    {
+        return $this->private;
+    }
+
+    /**
+     * Set the value to mark this profile field as private or public.
+     *
+     * @param int $private
+     * @return $this
+     */
+    public function setPrivate(int $private): ProfileField
+    {
+        $this->private = $private;
         return $this;
     }
 
