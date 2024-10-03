@@ -6,7 +6,7 @@ $profileFieldsContent = $this->get('profileFieldsContent');
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 ?>
 
-<?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
+<?php include APPLICATION_PATH . '/modules/user/views/regist/navi.php'; ?>
 
 <form id="registForm" name="registForm" method="POST">
     <?=$this->getTokenField() ?>
@@ -87,7 +87,7 @@ $profileFieldsTranslation = $this->get('profileFieldsTranslation');
                 }
                 if ($profileField->getType() != 1) :
                     $value = ($profileField->getType() == 4) ? [] : '';
-                    $index = 'profileField'.$profileField->getId();
+                    $index = 'profileField' . $profileField->getId();
                     $value = $this->escape($this->originalInput($index));
                     ?>
                     <div class="row mb-3">
@@ -98,7 +98,7 @@ $profileFieldsTranslation = $this->get('profileFieldsTranslation');
                         <!-- radio -->
                         <?php if ($profileField->getType() == 3) :
                             $options = json_decode($profileField->getOptions(), true);
-                            foreach ($options as $optValue): ?>
+                            foreach ($options as $optValue) : ?>
                                 <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '<div class="form-check">' ?>
                                     <input type="radio" name="<?=$index ?>" id="<?=$optValue ?>" value="<?=$optValue ?>" class="form-check-input" <?=($optValue == $value) ? 'checked' : '' ?> <?= ($profileField->getRegistration() === 2) ? 'required' : '' ?> />
                                     <label class="form-check-label" for="<?=$optValue ?>"><?=$this->escape($optValue) ?></label>

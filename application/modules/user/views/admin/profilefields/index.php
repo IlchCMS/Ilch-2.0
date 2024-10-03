@@ -46,7 +46,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
                 ?>
                 <tr id="<?=$profileField->getId() ?>">
 
-                    <?php if ($profileField->getHidden() == 0): ?>
+                    <?php if ($profileField->getHidden() == 0) : ?>
                         <td><?=$this->getDeleteCheckbox('check_users', $profileField->getId()) ?></td>
                         <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $profileField->getId()]) ?></td>
                         <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $profileField->getId()]) ?></td>
@@ -54,11 +54,11 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
                         <td colspan="3"></td>
                     <?php endif; ?>
                     <td>
-                        <?php if ($profileField->getShow() == 1): ?>
+                        <?php if ($profileField->getShow() == 1) : ?>
                             <a href="<?=$this->getUrl(['action' => 'update', 'id' => $profileField->getId()], null, true) ?>" title="<?=$this->getTrans('profileFieldHideTitle') ?>">
                                 <span class="fa-regular fa-square-check text-info"></span>
                             </a>
-                        <?php else: ?>
+                        <?php else : ?>
                             <a href="<?=$this->getUrl(['action' => 'update', 'id' => $profileField->getId()], null, true) ?>" title="<?=$this->getTrans('profileFieldShowTitle') ?>">
                                 <span class="fa-regular fa-square text-info"></span>
                             </a>
@@ -84,7 +84,7 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
                     <?php if ($profileField->getType() != 1) : ?>
                         <td><?=$this->escape($profileFieldName) ?></td>
                         <td><i class="<?=$iconArray[$profileField->getType()] ?>"></i>&nbsp;&nbsp;<?=$this->getTrans($typeArray[$profileField->getType()]) ?></td>
-                    <?php else: ?>
+                    <?php else : ?>
                         <td><b><?=$this->escape($profileFieldName) ?></b></td>
                         <td><b><i class="<?=$iconArray[$profileField->getType()] ?>"></i>&nbsp;&nbsp;<?=$this->getTrans($typeArray[$profileField->getType()]) ?></b></td>
                     <?php endif; ?>

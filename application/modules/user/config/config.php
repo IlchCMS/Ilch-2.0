@@ -668,8 +668,8 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.2.3":
                 // Add new registration and private column.
-                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `registration` TEXT NOT NULL DEFAULT \'0\' AFTER `hidden`;');
-                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `private` TEXT NOT NULL DEFAULT \'0\' AFTER `registration`;');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `registration` TINYINT(1) NOT NULL DEFAULT 0 AFTER `hidden`;');
+                $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `private` TINYINT(1) NOT NULL DEFAULT 0 AFTER `registration`;');
                 break;
         }
 
