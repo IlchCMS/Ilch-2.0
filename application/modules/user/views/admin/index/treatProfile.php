@@ -52,9 +52,6 @@ $profileFieldsContent = $this->get('profileFieldsContent');
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 
 foreach ($profileFields as $profileField) {
-    if (!$profileField->getShow()) {
-        continue;
-    }
     $profileFieldName = $profileField->getKey();
     $value = '';
     foreach ($profileFieldsContent as $profileFieldContent) {
