@@ -9,26 +9,20 @@ namespace Modules\Faq\Models;
 
 class Category extends \Ilch\Mapper
 {
-    /**
-     * The id of the category.
-     *
-     * @var int
-     */
-    private $id = 0;
+
+
 
     /**
-     * The title of the category.
-     *
-     * @var string
+     * @param int $id
+     * @param string $title
+     * @param string $read_access
      */
-    private $title = '';
-
-    /**
-     * Value for read_access.
-     *
-     * @var string
-     */
-    private $read_access = '';
+    public function __construct(
+        private int $id = 0,
+        private string $title = '',
+        private string $read_access = '')
+    {
+    }
 
     /**
      * @param array $entries
@@ -60,7 +54,7 @@ class Category extends \Ilch\Mapper
      *
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -82,7 +76,7 @@ class Category extends \Ilch\Mapper
      *
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -104,7 +98,7 @@ class Category extends \Ilch\Mapper
      *
      * @return string
      */
-    public function getReadAccess(): string
+    public function getReadAccess(): ?string
     {
         return $this->read_access;
     }
