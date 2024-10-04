@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,10 +14,10 @@ class ProfileFieldsContent extends \Ilch\Mapper
     /**
      * Returns a ProfileFieldContent model found by the userid.
      *
-     * @param  int $userId
+     * @param int $userId
      * @return array()|\Modules\User\Models\ProfileFieldContent
      */
-    public function getProfileFieldContentByUserId($userId)
+    public function getProfileFieldContentByUserId(int $userId): array
     {
         $profileFieldContentRows = $this->db()->select('*')
             ->from('profile_content')
@@ -40,7 +41,7 @@ class ProfileFieldsContent extends \Ilch\Mapper
      * @param array $profileFieldRow
      * @return ProfileFieldContentModel
      */
-    public function loadFromArray($profileFieldRow = [])
+    public function loadFromArray(array $profileFieldRow = []): ProfileFieldContentModel
     {
         $profileFieldContent = new ProfileFieldContentModel();
 
@@ -62,10 +63,10 @@ class ProfileFieldsContent extends \Ilch\Mapper
     /**
      * Deletes the profile-content for a user with the given id.
      *
-     * @param  int $userId
+     * @param int $userId
      * @return bool True if success, otherwise false.
      */
-    public function deleteProfileFieldContentByUserId($userId)
+    public function deleteProfileFieldContentByUserId(int $userId): bool
     {
         return $this->db()->delete('profile_content')
             ->where(['user_id' => $userId])
@@ -75,10 +76,10 @@ class ProfileFieldsContent extends \Ilch\Mapper
     /**
      * Deletes the profile-content with a given field-id.
      *
-     * @param  int $fieldId
+     * @param int $fieldId
      * @return bool True if success, otherwise false.
      */
-    public function deleteProfileFieldContentByFieldId($fieldId)
+    public function deleteProfileFieldContentByFieldId(int $fieldId): bool
     {
         return $this->db()->delete('profile_content')
             ->where(['field_id' => $fieldId])
@@ -88,12 +89,12 @@ class ProfileFieldsContent extends \Ilch\Mapper
     /**
      * Delete the value of a specific profile field for a specific user.
      *
-     * @param $userId
-     * @param $fieldId
-     * @return \Ilch\Database\Mysql\Result|int
+     * @param int $userId
+     * @param int $fieldId
+     * @return int affected rows
      * @since 2.1.32
      */
-    public function deleteProfileFieldContentByUserAndFieldId($userId, $fieldId)
+    public function deleteProfileFieldContentByUserAndFieldId(int $userId, int $fieldId): int
     {
         return $this->db()->delete('profile_content')
             ->where(['user_id' => $userId, 'field_id' => $fieldId])
@@ -123,17 +124,13 @@ class ProfileFieldsContent extends \Ilch\Mapper
             ->fetchCell();
 
         if ($fieldId) {
-            /*
-             * profileFieldContent does exist already, update.
-             */
+            // profileFieldContent does exist already, update.
             $this->db()->update('profile_content')
                 ->values($fields)
                 ->where(['user_id' => $userId, 'field_id' => $fieldId])
                 ->execute();
         } else {
-            /*
-             * profileFieldContent does not exist yet, insert.
-             */
+            // profileFieldContent does not exist yet, insert.
             $this->db()->insert('profile_content')
                 ->values($fields)
                 ->execute();

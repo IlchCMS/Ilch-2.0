@@ -6,8 +6,12 @@
 
 namespace Modules\User\Controllers;
 
+use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
+use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
+use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Group as GroupMapper;
+use Modules\User\Models\ProfileFieldContent as ProfileFieldContentModel;
 use Modules\User\Models\User as UserModel;
 use Modules\User\Service\Password as PasswordService;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
@@ -58,7 +62,26 @@ class Regist extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('step2to3'), ['action' => 'input']);
 
+        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
+        $profileFieldsMapper = new ProfileFieldsMapper();
+        $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
+
+        $profileFields = $profileFieldsMapper->getProfileFields(['hidden' => 0, 'registration >' => 0]);
+        $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
+
+        $this->getView()->set('profileFields', $profileFields)
+            ->set('profileFieldsTranslation', $profileFieldsTranslation);
+
         if ($this->getRequest()->isPost() && $this->getRequest()->getPost('bot') === '') {
+            $post = [
+                'name' => $this->getRequest()->getPost('name'),
+                'password' => $this->getRequest()->getPost('password'),
+                'password2' => $this->getRequest()->getPost('password2'),
+                'email' => $this->getRequest()->getPost('email'),
+                'captcha' => $this->getRequest()->getPost('captcha'),
+                'token' => $this->getRequest()->getPost('token'),
+            ];
+
             Validation::setCustomFieldAliases([
                 'grecaptcha' => 'token',
             ]);
@@ -75,6 +98,25 @@ class Regist extends \Ilch\Controller\Frontend
                     $validationRules['token'] = 'required|grecaptcha:saveRegist';
                 } else {
                     $validationRules['captcha'] = 'required|captcha';
+                }
+            }
+
+            foreach ($profileFields as $profileField) {
+                if ($profileField->getType() != 1) {
+                    $index = 'profileField' . $profileField->getId();
+                    if ($this->getRequest()->getPost($index) === null) {
+                        // This is for example the case if an external module added a profile field.
+                        // Skip this profile field so the value doesn't get deleted.
+                        continue;
+                    }
+                    if ($profileField->getType() == 4) {
+                        $post[$index] = json_encode($this->getRequest()->getPost($index));
+                    } else {
+                        $post[$index] = trim($this->getRequest()->getPost($index));
+                    }
+                    if ($profileField->getRegistration() === 2) {
+                        $validationRules[$index] = 'required';
+                    }
                 }
             }
 
@@ -105,7 +147,18 @@ class Regist extends \Ilch\Controller\Frontend
                     ->setLocale($this->getTranslator()->getLocale())
                     ->setDateCreated($currentDate->format('Y-m-d H:i:s', true))
                     ->addGroup($userGroup);
-                $registMapper->save($model);
+                $userId = $registMapper->save($model);
+
+                foreach ($profileFields as $profileField) {
+                    if ($profileField->getType() != 1) {
+                        $index = 'profileField'.$profileField->getId();
+                        $profileFieldsContent = new ProfileFieldContentModel();
+                        $profileFieldsContent->setFieldId($profileField->getId())
+                            ->setUserId($userId)
+                            ->setValue($post[$index]);
+                        $profileFieldsContentMapper->save($profileFieldsContent);
+                    }
+                }
 
                 $_SESSION['name'] = $this->getRequest()->getPost('name');
                 $_SESSION['email'] = $this->getRequest()->getPost('email');

@@ -1,12 +1,15 @@
 <?php
 
-/** @var \Ilch\View $this */
+use Ilch\View;
+use Modules\User\Models\ProfileField;
+use Modules\User\Models\ProfileFieldTranslation;
 
+/** @var View $this */
 /** @var int $countOfProfileFields */
 $countOfProfileFields = $this->get('countOfProfileFields');
-/** @var \Modules\User\Models\ProfileField $profileField */
+/** @var ProfileField $profileField */
 $profileField = $this->get('profileField');
-/** @var \Modules\User\Models\ProfileFieldTranslation[] $profileFieldsTranslation */
+/** @var ProfileFieldTranslation[] $profileFieldsTranslation */
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 /** @var string[] $localeList */
 $localeList = $this->get('localeList');
@@ -91,12 +94,42 @@ $iconArray = [
         </div>
     </div>
 
+    <!-- registration settings -->
+    <div class="row mb-3">
+        <label for="profileFieldShowOnRegistration" class="col-lg-2 col-form-label">
+            <?=$this->getTrans('profileFieldShowOnRegistration') ?>
+        </label>
+        <div class="col-xl-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="showOnRegistration-yes" name="profileField[showOnRegistration]" value="1"<?=($profileField->getRegistration() >= '1') ? ' checked="checked"' : '' ?> />
+                <label for="showOnRegistration-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="showOnRegistration-no" name="profileField[showOnRegistration]" value="0"<?=($profileField->getRegistration() == '0') ? ' checked="checked"' : '' ?> />
+                <label for="showOnRegistration-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3" id="showOnRegistrationRequired"<?=($profileField->getRegistration() == '0') ? ' hidden' : '' ?>>
+        <label for="profileFieldShowOnRegistrationRequired" class="col-lg-2 col-form-label">
+            <?=$this->getTrans('profileFieldShowOnRegistrationRequired') ?>
+        </label>
+        <div class="col-xl-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="showOnRegistrationRequired-yes" name="profileField[showOnRegistrationRequired]" value="1"<?=($profileField->getRegistration() == '2') ? ' checked="checked"' : '' ?> />
+                <label for="showOnRegistrationRequired-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="showOnRegistrationRequired-no" name="profileField[showOnRegistrationRequired]" value="0"<?=($profileField->getRegistration() != '2') ? ' checked="checked"' : '' ?> />
+                <label for="showOnRegistrationRequired-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+
     <!-- icon selection -->
     <div class="row mb-3" id="profileFieldIcons" <?=($profileField->getType() == 2) ? '' : 'hidden' ?>>
         <?php
         $icon = '';
         if ($profileField->getType() == 2) {
-            $icon = ($profileField->getIcon() !== '') ? $profileField->getIcon() : $this->get('post')['symbol'];
+            $icon = ($profileField->getIcon() !== '') ? $profileField->getIcon() : $this->get('post')['symbol'] ?? '';
         }
         ?>
         <label for="profileFieldIcon" class="col-xl-2 col-form-label">
@@ -391,5 +424,16 @@ $iconArray = [
         }
 
         updateRemoveButtons();
+    });
+
+    $('[name="profileField[showOnRegistration]"').click(function () {
+        let showOnRegistrationRequired = $('#showOnRegistrationRequired');
+        if ($(this).val() === "1") {
+            showOnRegistrationRequired.removeAttr('hidden');
+        } else {
+            showOnRegistrationRequired.attr('hidden', '');
+        }
+        $('#showOnRegistrationRequired-yes').removeAttr('checked');
+        $('#showOnRegistrationRequired-no').attr('checked');
     });
 </script>

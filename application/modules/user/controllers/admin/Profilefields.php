@@ -7,12 +7,13 @@
 
 namespace Modules\User\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Models\ProfileField as ProfileFieldModel;
 use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
 
-class ProfileFields extends \Ilch\Controller\Admin
+class ProfileFields extends Admin
 {
     public function init()
     {
@@ -118,7 +119,7 @@ class ProfileFields extends \Ilch\Controller\Admin
         $profileFieldsMapper = new ProfileFieldsMapper();
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
-        if ($profileFieldsMapper->profileFieldWithIdExists($profileFieldId)) {
+        if ($profileFieldId && $profileFieldsMapper->profileFieldWithIdExists($profileFieldId)) {
             $profileField = $profileFieldsMapper->getProfileFieldById($profileFieldId);
         } else {
             $profileField = new ProfileFieldModel();
@@ -127,13 +128,13 @@ class ProfileFields extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $postData = $this->getRequest()->getPost();
             $profileFieldData = $postData['profileField'];
+            $profileFieldData['registration'] = $profileFieldData['showOnRegistration'] + $profileFieldData['showOnRegistrationRequired'];
             if ($profileFieldData['type'] != 2) {
                 $profileFieldData['icon'] = '';
                 $profileFieldData['addition'] = '';
             }
 
             if (in_array($profileFieldData['type'], $multiTypes)) {
-
                 $profileFieldData['options'] = json_encode(array_filter($postData['profileFieldOptions']));
             } else {
                 $profileFieldData['options'] = '';
@@ -177,7 +178,7 @@ class ProfileFields extends \Ilch\Controller\Admin
             $this->redirect(['action' => 'treat', 'id' => $profileFieldId]);
         }
 
-        $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByFieldId($profileFieldId);
+        $profileFieldsTranslation = ($profileFieldId) ? $profileFieldsTranslationMapper->getProfileFieldTranslationByFieldId($profileFieldId) : [];
         if (count($profileFieldsTranslation) == 0) {
             $profileFieldsTranslation[] = $profileFieldsTranslationMapper->loadFromArray();
         }

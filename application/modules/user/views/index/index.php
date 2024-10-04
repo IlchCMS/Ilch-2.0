@@ -1,18 +1,31 @@
 <?php
+
+use Modules\User\Mappers\ProfileFieldsContent;
+use Modules\User\Mappers\User;
+use Modules\User\Models\ProfileField;
+use Modules\User\Models\ProfileFieldContent;
+use Modules\User\Models\ProfileFieldTranslation;
+
+/** @var User $userMapper */
 $userMapper = $this->get('userMapper');
+
+/** @var ProfileFieldsContent $profileFieldsContentMapper */
 $profileFieldsContentMapper = $this->get('profileFieldsContentMapper');
+
+/** @var ProfileField[] $profileIconFields */
 $profileIconFields = $this->get('profileIconFields');
+
+/** @var ProfileFieldTranslation[] $profileFieldsTranslation */
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 $group = $this->get('group');
-$groupText = (!empty($group)) ? ' ('.$this->getTrans('group').': '.$this->escape($group->getName()).')' : '';
+$groupText = (!empty($group)) ? ' ('.$this->getTrans('group') . ': ' . $this->escape($group->getName()) . ')' : '';
 $userGroupList_allowed = $this->get('userGroupList_allowed');
 $userAvatarList_allowed = $this->get('userAvatarList_allowed');
-
 ?>
 
     <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
-    <h1><?=$this->getTrans('menuUserList').$groupText ?></h1>
+    <h1><?=$this->getTrans('menuUserList') . $groupText ?></h1>
 <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
     <div class="userlist">
         <div class="row">
@@ -21,22 +34,21 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
                     <table class="table table-hover table-bordered">
                         <thead>
                         <tr>
-                            <?php if ($userAvatarList_allowed == 1): ?>
+                            <?php if ($userAvatarList_allowed == 1) : ?>
                             <th><?=$this->getTrans('userAvatars') ?></th>
                             <?php endif; ?>
                             <th><?=$this->getTrans('userlistName') ?></th>
                             <th><?=$this->getTrans('userlistRegist') ?></th>
                             <th><?=$this->getTrans('userDateLastActivity') ?></th>
                             <th><?=$this->getTrans('userlistContact') ?></th>
-                            <?php if ($userGroupList_allowed == 1): ?>
+                            <?php if ($userGroupList_allowed == 1) : ?>
                             <th><?=$this->getTrans('userGroups') ?></th>
                             <?php endif; ?>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($this->get('userList') as $userlist):
-
-                            // Gruppenliste laden um mit Komma trennen
+                        <?php foreach ($this->get('userList') as $userlist) :
+                            // Load grouplist and separate by comma.
                             $groups = '';
 
                             foreach ($userlist->getGroups() as $group) {
@@ -46,12 +58,12 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
 
                                 $groups .= $group->getName();
                             }?>
-                            <!-- Laden Ende -->
-
-
                             <?php $ilchDate = new Ilch\Date($userlist->getDateCreated()); ?>
                             <?php $ilchLastDate = (!empty($userlist->getDateLastActivity())) ? new Ilch\Date($userlist->getDateLastActivity()) : ''; ?>
-                            <?php $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($userlist->getId()); ?>
+                            <?php
+                            /** @var ProfileFieldContent[] $profileFieldsContent */
+                            $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($userlist->getId());
+                            ?>
                             <tr>
                                 <?php if ($userAvatarList_allowed): ?>
                                 <td>
@@ -62,16 +74,16 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
                                     <a href="<?=$this->getUrl(['controller' => 'profil', 'action' => 'index', 'user' => $userlist->getId()]) ?>" title="<?=$this->escape($userlist->getName()) ?>s <?=$this->getTrans('profile') ?>" class="user-link"><?=$this->escape($userlist->getName()) ?></a>
                                 </td>
                                 <td>
-                                    <?=substr($this->getTrans($ilchDate->format('l')), 0, 2).', '.$ilchDate->format('d. ').$this->getTrans($ilchDate->format('M')).$ilchDate->format(' Y') ?>
+                                    <?=substr($this->getTrans($ilchDate->format('l')), 0, 2) . ', ' . $ilchDate->format('d. ') . $this->getTrans($ilchDate->format('M')) . $ilchDate->format(' Y') ?>
                                 </td>
                                 <td>
-                                    <?=(!empty($ilchLastDate)) ? substr($this->getTrans($ilchLastDate->format('l')), 0, 2).', '.$ilchLastDate->format('d. ').$this->getTrans($ilchLastDate->format('M')).$ilchLastDate->format(' Y') : '' ?>
+                                    <?=(!empty($ilchLastDate)) ? substr($this->getTrans($ilchLastDate->format('l')), 0, 2) . ', ' . $ilchLastDate->format('d. ') . $this->getTrans($ilchLastDate->format('M')) . $ilchLastDate->format(' Y') : '' ?>
                                 </td>
                                 <td>
-                                    <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($userlist->getID())): ?>
+                                    <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($userlist->getID())) : ?>
                                         <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialognew', 'id' => $userlist->getId()]) ?>" class="fa-solid fa-comment fa-lg user-link" title="<?=$this->getTrans('privateMessage') ?>"></a>
                                     <?php endif; ?>
-                                    <?php if ($userlist->getOptMail() == 1 && $this->getUser() && $this->getUser()->getId() != $userlist->getID()): ?>
+                                    <?php if ($userlist->getOptMail() == 1 && $this->getUser() && $this->getUser()->getId() != $userlist->getID()) : ?>
                                         <a href="<?=$this->getUrl(['controller' => 'mail', 'action' => 'index', 'user' => $userlist->getId()]) ?>" class="fa-solid fa-envelope fa-lg user-link" title="<?=$this->getTrans('email') ?>"></a>
                                     <?php endif; ?>
 
@@ -87,7 +99,7 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
                                                 }
                                             }
 
-                                            echo '<a href="'.$profileIconField->getAddition().$profileFieldContent->getValue().'" target="_blank" rel="noopener" class="'.$profileIconField->getIcon().' fa-lg user-link" title="'.$profileFieldName.'"></a>';
+                                            echo '<a href="' . $profileIconField->getAddition() . $profileFieldContent->getValue() . '" target="_blank" rel="noopener" class="' . $profileIconField->getIcon() . ' fa-lg user-link" title="' . $profileFieldName . '"></a>';
                                             break;
                                         }
                                     }
@@ -95,7 +107,7 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
                             }
                                     ?>
                                 </td>
-                                <?php if ($userGroupList_allowed):?>
+                                <?php if ($userGroupList_allowed) : ?>
                                 <td>
                                     <?=$this->escape($groups) ?>
                                 </td>

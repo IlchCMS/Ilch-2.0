@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,14 +14,14 @@ class ProfileFields extends \Ilch\Mapper
     /**
      * Returns all profile-fields.
      *
-     * @param  array $where
+     * @param array $where
      * @return array()|\Modules\User\Models\ProfileField
      */
-    public function getProfileFields($where = [])
+    public function getProfileFields(array $where = []): array
     {
         $profileFieldRows = $this->db()->select('*')
             ->from('profile_fields')
-            ->where($where, 'or')
+            ->where($where)
             ->order(['position' => 'ASC'])
             ->execute()
             ->fetchRows();
@@ -38,10 +39,10 @@ class ProfileFields extends \Ilch\Mapper
     /**
      * Returns a ProfileField model found by the id.
      *
-     * @param  int $id
+     * @param int $id
      * @return null|ProfileFieldModel
      */
-    public function getProfileFieldById($id)
+    public function getProfileFieldById(int $id): ?ProfileFieldModel
     {
         $profileFieldRow = $this->db()->select('*')
             ->from('profile_fields')
@@ -59,10 +60,10 @@ class ProfileFields extends \Ilch\Mapper
     /**
      * Returns a ProfileField model found by the key.
      *
-     * @param  int $key
+     * @param int $key
      * @return null|ProfileFieldModel
      */
-    public function getProfileFieldIdByKey($key)
+    public function getProfileFieldIdByKey(int $key): ?ProfileFieldModel
     {
         $profileFieldRow = $this->db()->select('*')
             ->from('profile_fields')
@@ -84,7 +85,7 @@ class ProfileFields extends \Ilch\Mapper
      * @param int $position
      *
      */
-    public function updatePositionById($id, $position)
+    public function updatePositionById(int $id, int $position)
     {
         $this->db()->update('profile_fields')
             ->values(['position' => $position])
@@ -99,7 +100,7 @@ class ProfileFields extends \Ilch\Mapper
      *
      * @return int The id of the updated or inserted profile-field.
      */
-    public function save(ProfileFieldModel $profileField)
+    public function save(ProfileFieldModel $profileField): int
     {
         $fields = [];
         $key = $profileField->getKey();
@@ -111,6 +112,7 @@ class ProfileFields extends \Ilch\Mapper
             $fields['addition'] = $profileField->getAddition();
             $fields['options'] = $profileField->getOptions();
             $fields['show'] = $profileField->getShow();
+            $fields['registration'] = $profileField->getRegistration();
             $fields['position'] = $profileField->getPosition();
         }
 
@@ -121,17 +123,13 @@ class ProfileFields extends \Ilch\Mapper
             ->fetchCell();
 
         if ($id) {
-            /*
-             * ProfileField does exist already, update.
-             */
+            // ProfileField does exist already, update.
             $this->db()->update('profile_fields')
                 ->values($fields)
                 ->where(['id' => $id])
                 ->execute();
         } else {
-            /*
-             * ProfileField does not exist yet, insert.
-             */
+            // ProfileField does not exist yet, insert.
             $id = $this->db()->insert('profile_fields')
                 ->values($fields)
                 ->execute();
@@ -145,7 +143,7 @@ class ProfileFields extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function update($id)
+    public function update(int $id)
     {
         $show = (int) $this->db()->select('show')
             ->from('profile_fields')
@@ -169,11 +167,11 @@ class ProfileFields extends \Ilch\Mapper
     /**
      * Deletes a given profile-field with the given id.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return bool True if success, otherwise false.
      */
-    public function deleteProfileField($id)
+    public function deleteProfileField(int $id): bool
     {
         return $this->db()->delete('profile_fields')
             ->where(['id' => $id])
@@ -183,11 +181,11 @@ class ProfileFields extends \Ilch\Mapper
     /**
      * Returns whether a profile-field exists.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return bool True if a profile-field with this id exists, false otherwise.
      */
-    public function profileFieldWithIdExists($id)
+    public function profileFieldWithIdExists(int $id): bool
     {
         return (boolean) $this->db()->select('COUNT(*)', 'profile_fields', ['id' => (int)$id])
             ->execute()
@@ -200,7 +198,7 @@ class ProfileFields extends \Ilch\Mapper
      *
      * @return int The count of profile-fields.
      */
-    public function getCountOfProfileFields()
+    public function getCountOfProfileFields(): int
     {
         return $this->db()->select('*')
             ->from('profile_fields')
@@ -214,11 +212,11 @@ class ProfileFields extends \Ilch\Mapper
      * @param array $profileFieldRow
      * @return ProfileFieldModel
      */
-    public function loadFromArray($profileFieldRow = [])
+    public function loadFromArray(array $profileFieldRow = []): ProfileFieldModel
     {
         $profileField = new ProfileFieldModel();
 
-        if (isset($profileFieldRow['id'])) {
+        if (!empty($profileFieldRow['id'])) {
             $profileField->setId($profileFieldRow['id']);
         }
 
@@ -248,6 +246,10 @@ class ProfileFields extends \Ilch\Mapper
 
         if (isset($profileFieldRow['hidden'])) {
             $profileField->setHidden($profileFieldRow['hidden']);
+        }
+
+        if (isset($profileFieldRow['registration'])) {
+            $profileField->setRegistration($profileFieldRow['registration']);
         }
 
         if (isset($profileFieldRow['position'])) {

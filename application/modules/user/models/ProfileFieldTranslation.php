@@ -1,40 +1,43 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\User\Models;
 
-class ProfileFieldTranslation extends \Ilch\Model
+use Ilch\Model;
+
+class ProfileFieldTranslation extends Model
 {
     /**
      * The field-id of the ProfileFieldTranslation.
      *
      * @var int
      */
-    protected $fieldId;
+    protected int $fieldId;
 
     /**
      * The locale of the ProfileFieldTranslation.
      *
      * @var string
      */
-    protected $locale;
+    protected string $locale = '';
 
     /**
      * The name of the ProfileFieldTranslation.
      *
      * @var string
      */
-    protected $name;
+    protected string $name = '';
 
     /**
      * Returns the field-id of the ProfileFieldTranslation.
      *
      * @return int
      */
-    public function getFieldId()
+    public function getFieldId(): int
     {
         return $this->fieldId;
     }
@@ -45,9 +48,9 @@ class ProfileFieldTranslation extends \Ilch\Model
      * @param int $fieldId
      * @return ProfileFieldTranslation
      */
-    public function setFieldId($fieldId)
+    public function setFieldId(int $fieldId): ProfileFieldTranslation
     {
-        $this->fieldId = (int)$fieldId;
+        $this->fieldId = $fieldId;
 
         return $this;
     }
@@ -57,7 +60,7 @@ class ProfileFieldTranslation extends \Ilch\Model
      *
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -68,7 +71,7 @@ class ProfileFieldTranslation extends \Ilch\Model
      * @param string $locale
      * @return ProfileFieldTranslation
      */
-    public function setLocale($locale)
+    public function setLocale(string $locale): ProfileFieldTranslation
     {
         $this->locale = $locale;
 
@@ -80,7 +83,7 @@ class ProfileFieldTranslation extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -91,7 +94,7 @@ class ProfileFieldTranslation extends \Ilch\Model
      * @param string $name
      * @return ProfileFieldTranslation
      */
-    public function setName($name)
+    public function setName(string $name): ProfileFieldTranslation
     {
         $this->name = $name;
 

@@ -305,6 +305,7 @@ return [
     'profileFieldKey' => 'Key',
     'profileFieldName' => 'Name',
     'profileFieldType' => 'Typ',
+    'profileFieldRegistration' => 'Registrierung',
     'profileFieldField' => 'Textfeld',
     'profileFieldCat' => 'Kategorie',
     'profileFieldIcon' => 'Icon',
@@ -326,6 +327,8 @@ return [
     'profileFieldHidden' => 'Feld vom Administrator ausgeblendet.',
     'chooseIcon' => 'Wählen Sie ein Symbol',
     'noIcon' => 'Kein Symbol',
+    'profileFieldShowOnRegistration' => 'Feld bei der Registrierung abfragen?',
+    'profileFieldShowOnRegistrationRequired' => 'Feld bei der Registrierung als Pflichtfeld markieren?',
     'profileFieldKeyDesc' => 'Ein Schlüsselname für die Datenbank. Es sollte ein zuordenbarer und klein geschriebener Name für dieses Profilfeld sein.',
     'profileFieldTypeDesc0' => 'Das Textfeld erlaubt es Nutzern in einer einzelnen Zeile einen Text einzugeben.',
     'profileFieldTypeDesc1' => 'Die Kategorie ist eine nur lesbare Überschrift. Dies ist nützlich um eigene Profilfelder zu organisieren.',
@@ -335,6 +338,9 @@ return [
     'profileFieldTypeDesc5' => 'Das Dropdownfeld enthält vorgegebene Einträge zur Auswahl. Nutzer können hier nur eine Option auswählen.',
     'profileFieldTypeDesc6' => 'Das Datumsfeld erlaubt es Nutzern ein Datum aus einem Dropdown Kalender auszuwählen oder ihn manuell einzugeben.',
     'profileFieldOptions' => 'Auswahloptionen',
+    'profileFieldShowTitle' => 'Profil-Feld anzeigen',
+    'profileFieldHideTitle' => 'Profil-Feld verstecken',
+    'profileFieldRegistrationTitle' => 'Wird bei der Registrierung abgefragt.',
 
     'picturesPerPage' => 'Bilder pro Seite',
 
