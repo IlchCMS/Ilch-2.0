@@ -257,6 +257,27 @@ $(document).ready(function() {
         }
     });
 
+    let datetimeElements = document.getElementsByClassName('form_datetime');
+    Array.from(datetimeElements).forEach((datetimeElement) => {
+        new tempusDominus.TempusDominus(datetimeElement, {
+            display: {
+                calendarWeeks: true,
+                buttons: {
+                    today: true,
+                    close: true
+                },
+                components: {
+                    clock: false
+                }
+            },
+            localization: {
+                locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+                startOfTheWeek: 1,
+                format: "dd.MM.yyyy"
+            }
+        });
+    });
+
     $("[rel='tooltip']").tooltip();
 });
 </script>
