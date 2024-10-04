@@ -9,41 +9,23 @@ namespace Modules\Faq\Models;
 
 class Faq extends \Ilch\Model
 {
-    /**
-     * The id of the faq.
-     *
-     * @var int
-     */
-    protected $id = 0;
+
 
     /**
-     * The cat_id of the faq.
-     *
-     * @var int
+     * @param int $id
+     * @param int $catId
+     * @param string $question
+     * @param string $answer
+     * @param string $read_access
      */
-    protected $catId = 0;
-
-    /**
-     * The question of the faq.
-     *
-     * @var string
-     */
-    protected $question = '';
-
-    /**
-     * The answer of the faq.
-     *
-     * @var string
-     */
-    protected $answer = '';
-
-    /**
-     * Value for read_access.
-     *
-     * @var string
-     * @since 1.9.0
-     */
-    private $read_access = '';
+    public function __construct(
+        protected int $id = 0,
+        protected int $catId = 0,
+        protected string $question = '',
+        protected string $answer = '',
+        private string $read_access = ''
+    ) {
+    }
 
     /**
      * @param array $entries
@@ -81,7 +63,7 @@ class Faq extends \Ilch\Model
      *
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -104,7 +86,7 @@ class Faq extends \Ilch\Model
      *
      * @return int
      */
-    public function getCatId(): int
+    public function getCatId(): ?int
     {
         return $this->catId;
     }
@@ -127,7 +109,7 @@ class Faq extends \Ilch\Model
      *
      * @return string
      */
-    public function getQuestion(): string
+    public function getQuestion(): ?string
     {
         return $this->question;
     }
@@ -150,7 +132,7 @@ class Faq extends \Ilch\Model
      *
      * @return string
      */
-    public function getAnswer(): string
+    public function getAnswer(): ?string
     {
         return $this->answer;
     }
@@ -174,7 +156,7 @@ class Faq extends \Ilch\Model
      * @return string
      * @since 1.9.0
      */
-    public function getReadAccess(): string
+    public function getReadAccess(): ?string
     {
         return $this->read_access;
     }
