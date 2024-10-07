@@ -1050,7 +1050,7 @@ class Config extends \Ilch\Config\Install
 
                 $notificationModel->setModule('admin');
                 $notificationModel->setMessage($message[$this->getTranslator()->shortenLocale($this->getTranslator()->getLocale())]);
-                $notificationModel->setURL(BASE_URL . '/' . 'admin/admin/settings/index');
+                $notificationModel->setURL(BASE_URL . '/index.php/admin/admin/settings/index');
                 $notificationModel->setType('adminNewDomainSetting');
 
                 $notificationsMapper->addNotification($notificationModel);
