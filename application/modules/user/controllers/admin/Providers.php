@@ -54,8 +54,8 @@ class Providers extends Admin
 
     public function indexAction()
     {
-        $this->getLayout()
-            ->getAdminHmenu()
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuAuthProviders'), ['action' => 'index']);
 
         $authProvider = new AuthProvider();

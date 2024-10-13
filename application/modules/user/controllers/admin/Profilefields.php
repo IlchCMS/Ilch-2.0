@@ -71,6 +71,7 @@ class ProfileFields extends Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuProfileFields'), ['action' => 'index']);
 
         $profileFieldsMapper = new ProfileFieldsMapper();

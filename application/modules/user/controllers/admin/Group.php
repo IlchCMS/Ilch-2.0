@@ -122,13 +122,20 @@ class Group extends \Ilch\Controller\Admin
     public function treatAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuGroup'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('editGroup'), ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
+            ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuGroup'), ['action' => 'index']);
 
         $groupId = $this->getRequest()->getParam('id');
         $groupMapper = new GroupMapper();
         $userMapper = new UserMapper();
+
+        if ($groupId) {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('editGroup'), ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
+        } else {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('addGroup'), ['action' => 'treat']);
+        }
 
         if ($groupId == 1 && !$this->getUser()->isAdmin()) {
             $this->redirect(['action' => 'index']);
@@ -261,7 +268,9 @@ class Group extends \Ilch\Controller\Admin
     public function accessAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuAccess'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuGroup'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuAccess'), ['action' => 'index']);
 
         $postData = $this->getRequest()->getPost();
         $groupMapper = new GroupMapper();
