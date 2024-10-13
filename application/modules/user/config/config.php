@@ -145,15 +145,21 @@ class Config extends \Ilch\Config\Install
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_profile_content` (
-                `field_id` INT(11) NOT NULL,
-                `user_id` INT(11) NOT NULL,
-                `value` VARCHAR(255) NOT NULL
+                `field_id` INT(11) UNSIGNED NOT NULL,
+                `user_id` INT(11) UNSIGNED NOT NULL,
+                `value` VARCHAR(255) NOT NULL,
+                INDEX `FK_[prefix]_profile_content_[prefix]_profile_fields` (`field_id`) USING BTREE,
+                INDEX `FK_[prefix]_profile_content_[prefix]_users` (`user_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_profile_content_[prefix]_profile_fields` FOREIGN KEY (`field_id`) REFERENCES `[prefix]_profile_fields` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_profile_content_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_profile_trans` (
-                `field_id` INT(11) NOT NULL,
+                `field_id` INT(11) UNSIGNED NOT NULL,
                 `locale` VARCHAR(255) NOT NULL,
-                `name` VARCHAR(255) NOT NULL
+                `name` VARCHAR(255) NOT NULL,
+                INDEX `FK_[prefix]_profile_trans_[prefix]_profile_fields` (`field_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_profile_trans_[prefix]_profile_fields` FOREIGN KEY (`field_id`) REFERENCES `[prefix]_profile_fields` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_user_friends` (
@@ -669,6 +675,70 @@ class Config extends \Ilch\Config\Install
                 // Add new registration column.
                 $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `registration` TINYINT(1) NOT NULL DEFAULT 0 AFTER `hidden`;');
                 break;
+            case "2.2.4":
+                // Delete orphaned rows in profile_content and profile_trans before adjusting the columns and adding FKCs.
+                // Delete rows in profile_content with a field_id for a field that no longer exists.
+                $idsProfileFields = $this->db()->select('id')
+                    ->from('profile_fields')
+                    ->execute()
+                    ->fetchList();
+
+                $idsProfileContent = $this->db()->select('field_id')
+                    ->from('profile_content')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($idsProfileContent ?? [], $idsProfileFields ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('profile_content')
+                        ->where(['field_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Delete rows in profile_content with a user_id for an user that no longer exists.
+                $idsUsers = $this->db()->select('id')
+                    ->from('users')
+                    ->execute()
+                    ->fetchList();
+
+                $idsProfileContent = $this->db()->select('user_id')
+                    ->from('profile_content')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($idsProfileContent ?? [], $idsUsers ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('profile_content')
+                        ->where(['user_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Delete rows in profile_trans with a field_id for a field that no longer exists.
+                $idsProfileFields = $this->db()->select('id')
+                    ->from('profile_fields')
+                    ->execute()
+                    ->fetchList();
+
+                $idsProfileTrans = $this->db()->select('field_id')
+                    ->from('profile_trans')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($idsProfileTrans ?? [], $idsProfileFields ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('profile_trans')
+                        ->where(['field_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Change column types and add FKCs.
+                $this->db()->queryMulti('ALTER TABLE `[prefix]_profile_content` MODIFY COLUMN `field_id` INT(11) UNSIGNED NOT NULL;
+                        ALTER TABLE `[prefix]_profile_content` MODIFY COLUMN `user_id` INT(11) UNSIGNED NOT NULL;
+                        ALTER TABLE `[prefix]_profile_trans` MODIFY COLUMN `field_id` INT(11) UNSIGNED NOT NULL;');
+
+                $this->db()->queryMulti('ALTER TABLE `[prefix]_profile_content` ADD CONSTRAINT `FK_[prefix]_profile_content_[prefix]_profile_fields` FOREIGN KEY (`field_id`) REFERENCES `[prefix]_profile_fields` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                        ALTER TABLE `[prefix]_profile_content` ADD CONSTRAINT `FK_[prefix]_profile_content_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                        ALTER TABLE `[prefix]_profile_trans` ADD CONSTRAINT `FK_[prefix]_profile_trans_[prefix]_profile_fields` FOREIGN KEY (`field_id`) REFERENCES `[prefix]_profile_fields` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

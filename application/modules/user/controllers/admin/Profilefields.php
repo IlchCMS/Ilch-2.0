@@ -9,7 +9,6 @@ namespace Modules\User\Controllers\Admin;
 
 use Ilch\Controller\Admin;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
-use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Models\ProfileField as ProfileFieldModel;
 use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
 
@@ -74,7 +73,6 @@ class ProfileFields extends Admin
             ->add($this->getTranslator()->trans('menuProfileFields'), ['action' => 'index']);
 
         $profileFieldsMapper = new ProfileFieldsMapper();
-        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
         $this->getView()->set('profileFields', $profileFieldsMapper->getProfileFields())
@@ -83,8 +81,7 @@ class ProfileFields extends Admin
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_users')) {
             foreach ($this->getRequest()->getPost('check_users') as $id) {
                 $profileFieldsMapper->deleteProfileField($id);
-                $profileFieldsContentMapper->deleteProfileFieldContentByFieldId($id);
-                $profileFieldsTranslationMapper->deleteProfileFieldTranslationsByFieldId($id);
+                // profile field content and translations get deleted due to FKCs.
             }
         }
 
@@ -204,14 +201,11 @@ class ProfileFields extends Admin
     public function deleteAction()
     {
         $profileFieldsMapper = new ProfileFieldsMapper();
-        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
-        $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
         $id = $this->getRequest()->getParam('id');
         if ($id && $this->getRequest()->isSecure()) {
             $profileFieldsMapper->deleteProfileField($id);
-            $profileFieldsContentMapper->deleteProfileFieldContentByFieldId($id);
-            $profileFieldsTranslationMapper->deleteProfileFieldTranslationsByFieldId($id);
+            // profile field content and translations get deleted due to FKCs.
         }
 
         $this->redirect(['action' => 'index']);
