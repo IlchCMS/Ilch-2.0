@@ -1,9 +1,13 @@
-<?php if ($this->getUser() == null): ?>
+<?php
+
+/** @var \Ilch\View $this */
+
+if ($this->getUser() == null) : ?>
     <script>$(document).ready(function(){
     $('.providers').on('click', function (e) {
         e.preventDefault();
 
-        var myForm = $(this).closest('form')[0];
+        let myForm = $(this).closest('form')[0];
         myForm.action = this.href;// the href of the link
         myForm.method = "POST";
         myForm.submit();
@@ -59,10 +63,10 @@
                     <i class="fa-solid fa-fw fa-right-to-bracket"></i> <?=$this->getTrans('login') ?>
                 </button>
                 <span class="social-logins">
-                    <?php if (count($this->get('providers')) > 0): ?>
+                    <?php if (count($this->get('providers')) > 0) : ?>
                         <i class="fa-solid fa-fw fa-angle-right"></i>
                     <?php endif; ?>
-                    <?php foreach ($this->get('providers') as $provider): ?>
+                    <?php foreach ($this->get('providers') as $provider) : ?>
                         <a
                             class="btn btn-link providers provider-<?= $provider->getKey() ?>"
                             href="<?= $this->getUrl([
@@ -81,7 +85,7 @@
     <div class="offset-xl-2 col-xl-10">
             <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword']) ?>"><?=$this->getTrans('forgotPassword') ?></a><br />
     </div>
-    <?php if ($this->get('regist_accept') == '1'): ?>
+    <?php if ($this->get('regist_accept') == '1') : ?>
         <br /><br /><br />
         <h1><?=$this->getTrans('menuRegist') ?></h1>
         <p>
@@ -93,7 +97,7 @@
             </a>
         </p>
     <?php endif; ?>
-<?php else: ?>
+<?php else : ?>
     <div class="mx-auto"><h4 class="text-center"><?=$this->getTrans('alreadyLoggedIn') ?></h4></div>
     <div class="text-center">
         <a class="btn btn-outline-secondary" href="<?=$this->getUrl() ?>"><?=$this->getTrans('back') ?></a>

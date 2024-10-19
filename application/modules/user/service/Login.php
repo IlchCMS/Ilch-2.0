@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -15,16 +16,16 @@ use Modules\User\Service\Login\Result as LoginResult;
 class Login
 {
     /** @var UserMapper */
-    private $mapper;
+    private UserMapper $mapper;
 
     /** @var Password */
-    private $passwordService;
+    private Password $passwordService;
 
     /**
      * Simple factory for more convenient usage
      * @return static
      */
-    public static function factory()
+    public static function factory(): Login
     {
         return new static(new UserMapper(), new Password());
     }
@@ -44,15 +45,19 @@ class Login
      * Performs the Login for a User
      * @param string $userNameOrEmail
      * @param string $password
+     * @param bool $remember
      * @return LoginResult
-     * @throws \Ilch\Database\Exception
      */
-    public function perform($userNameOrEmail, $password)
+    public function perform(string $userNameOrEmail, string $password, bool $remember = false): LoginResult
     {
         $user = $this->mapper->getUserByEmail($userNameOrEmail);
 
         if ($user == null) {
             $user = $this->mapper->getUserByName($userNameOrEmail);
+        }
+
+        if ($remember && (empty($_COOKIE['tarteaucitron']) || strpos($_COOKIE['tarteaucitron'], 'ilch2login=false') !== false)) {
+            return new LoginResult(false, $user, LoginResult::COOKIESNOTALLOWED);
         }
 
         if ($user == null || !$this->passwordService->verify($password, $user->getPassword())) {

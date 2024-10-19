@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -6,9 +7,11 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
+use Ilch\Validation;
 use Modules\User\Mappers\AuthToken;
 use Modules\User\Service\Login as LoginService;
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
+use Modules\User\Service\Remember as RememberMe;
 
 /**
  * Handles the login functionality.
@@ -29,39 +32,50 @@ class Login extends \Ilch\Controller\Admin
      */
     public function indexAction()
     {
-        $errors = [];
-
         if ($this->getRequest()->isPost()) {
             if (\Ilch\Registry::get('user')) {
-                $errors[] = 'alreadyLoggedIn';
+                $this->redirect(['controller' => 'index', 'action' => 'index']);
             }
 
-            $emailName = $this->getRequest()->getPost('emailname');
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'emailname' => 'required',
+                'password' => 'required',
+                'language' => 'required',
+            ]);
 
-            if (!is_string($emailName) || empty($emailName)) {
-                $errors[] = 'noUserEmailGiven';
-            } else {
-                $password = $this->getRequest()->getPost('password');
+            if ($validation->isValid()) {
                 $language = $this->getRequest()->getPost('language');
 
-                if (is_string($language) && !empty($language)) {
+                if (is_string($language) && !empty($language) && $language !== 'default') {
                     $_SESSION['language'] = $language;
                     $this->getTranslator()->setLocale($language, true);
                 }
 
-                $result = LoginService::factory()->perform($emailName, $password);
+                $result = LoginService::factory()->perform($this->getRequest()->getPost('emailname'), $this->getRequest()->getPost('password'));
 
                 if ($result->isSuccessful()) {
+                    if ($this->getRequest()->getPost('rememberMe')) {
+                        $rememberMe = new RememberMe();
+                        $rememberMe->rememberMe($result->getUser()->getId());
+                    }
+
+                    if ($result->getError() != '') {
+                        $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
+                    }
                     $this->redirect(['controller' => 'index', 'action' => 'index']);
                 } else {
-                    $errors[] = $result->getError();
+                    $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
+                    $this->redirect()
+                        ->to(['action' => 'index']);
                 }
             }
-
-            $this->getLayout()->set('emailname', $emailName);
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
-        $this->getLayout()->set('errors', $errors);
         $this->getLayout()->set('languages', $this->getTranslator()->getLocaleList());
     }
 

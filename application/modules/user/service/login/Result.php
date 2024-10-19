@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -14,25 +15,28 @@ use Modules\User\Models\User as UserModel;
 class Result
 {
     /** @var string */
-    const LOGIN_FAILED = 'loginFailed';
+    public const LOGIN_FAILED = 'loginFailed';
 
     /** @var string */
-    const USER_NOT_ACTIVATED = 'userNotActivated';
+    public const COOKIESNOTALLOWED = 'cookiesNotAllowed';
 
     /** @var string */
-    const USER_LOCKED = 'userLocked';
+    public const USER_NOT_ACTIVATED = 'userNotActivated';
 
     /** @var string */
-    const USER_SELECTSDELETE = 'userSelectsDelete';
+    public const USER_LOCKED = 'userLocked';
+
+    /** @var string */
+    public const USER_SELECTSDELETE = 'userSelectsDelete';
 
     /** @var bool */
-    private $success;
+    private bool $success;
 
     /** @var null|UserModel */
-    private $user;
+    private ?UserModel $user;
 
     /** @var null|string */
-    private $error;
+    private ?string $error;
 
     /**
      * Result constructor.
@@ -40,7 +44,7 @@ class Result
      * @param UserModel|null $user
      * @param string|null $error
      */
-    public function __construct($success, ?UserModel $user = null, $error = null)
+    public function __construct(bool $success, ?UserModel $user = null, ?string $error = null)
     {
         $this->success = $success;
         $this->user = $user;
@@ -50,7 +54,7 @@ class Result
     /**
      * @return bool
      */
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         return $this->success;
     }
@@ -58,7 +62,7 @@ class Result
     /**
      * @return UserModel|null
      */
-    public function getUser()
+    public function getUser(): ?UserModel
     {
         return $this->user;
     }
@@ -66,7 +70,7 @@ class Result
     /**
      * @return null|string
      */
-    public function getError()
+    public function getError(): ?string
     {
         return $this->error;
     }

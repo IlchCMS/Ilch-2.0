@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -165,6 +166,7 @@ return [
     'loginFailed' => 'Sie haben einen fehlerhaften Benutzername, E-Mail oder Passwort angegeben. Bitte prüfen Sie ihre Angaben und versuche Sie es erneut.',
     'userNotActivated' => 'Benutzer nicht freigeschaltet! Bitte bestätigen Sie ihren Account in der verschickten E-Mail oder fordern Sie eine neue E-Mail mit einen Freischaltlink an.',
     'userLocked' => 'Benutzer ist gesperrt. Eine Anmeldung ist daher nicht möglich.',
+    'cookiesNotAllowed' => 'Sie haben den speichern von Cookies nicht zugestimmt.',
     'rememberMe' => 'Angemeldet bleiben?',
     'registDescription' => 'Die Registrierung ist in wenigen Augenblicken erledigt und ermöglicht Ihnen auf weitere Funktionen zuzugreifen. Die Administration kann registrierten Benutzern auch zusätzliche Berechtigungen zuweisen.',
     'accountApproved' => 'Ihr Benutzerkonto wurde erfolgreich freigeschaltet. Sie können sich jetzt mit Ihren Benutzerdaten anmelden.',
@@ -305,7 +307,6 @@ return [
     'profileFieldKey' => 'Key',
     'profileFieldName' => 'Name',
     'profileFieldType' => 'Typ',
-    'profileFieldRegistration' => 'Registrierung',
     'profileFieldField' => 'Textfeld',
     'profileFieldCat' => 'Kategorie',
     'profileFieldIcon' => 'Icon',
@@ -327,8 +328,6 @@ return [
     'profileFieldHidden' => 'Feld vom Administrator ausgeblendet.',
     'chooseIcon' => 'Wählen Sie ein Symbol',
     'noIcon' => 'Kein Symbol',
-    'profileFieldShowOnRegistration' => 'Feld bei der Registrierung abfragen?',
-    'profileFieldShowOnRegistrationRequired' => 'Feld bei der Registrierung als Pflichtfeld markieren?',
     'profileFieldKeyDesc' => 'Ein Schlüsselname für die Datenbank. Es sollte ein zuordenbarer und klein geschriebener Name für dieses Profilfeld sein.',
     'profileFieldTypeDesc0' => 'Das Textfeld erlaubt es Nutzern in einer einzelnen Zeile einen Text einzugeben.',
     'profileFieldTypeDesc1' => 'Die Kategorie ist eine nur lesbare Überschrift. Dies ist nützlich um eigene Profilfelder zu organisieren.',
@@ -338,9 +337,6 @@ return [
     'profileFieldTypeDesc5' => 'Das Dropdownfeld enthält vorgegebene Einträge zur Auswahl. Nutzer können hier nur eine Option auswählen.',
     'profileFieldTypeDesc6' => 'Das Datumsfeld erlaubt es Nutzern ein Datum aus einem Dropdown Kalender auszuwählen oder ihn manuell einzugeben.',
     'profileFieldOptions' => 'Auswahloptionen',
-    'profileFieldShowTitle' => 'Profil-Feld anzeigen',
-    'profileFieldHideTitle' => 'Profil-Feld verstecken',
-    'profileFieldRegistrationTitle' => 'Wird bei der Registrierung abgefragt.',
 
     'picturesPerPage' => 'Bilder pro Seite',
 

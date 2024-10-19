@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -45,13 +46,13 @@ class AfterDatabaseLoad
 
         Registry::set('user', $user);
 
-        // Check if user is locked out or deleted. If that is the case log him out.
-        if ($userId && !$user || \is_object($user) && $user->getLocked()) {
+        // Check if user is locked out | deleted | Cookie is not set. If that is the case log him out.
+        if ($userId && (!$user || (\is_object($user) && $user->getLocked()) || (!$pluginData['request']->isAdmin() && !empty($_COOKIE['remember']) && strpos($_COOKIE['tarteaucitron'], '!ilch2login=false') !== false))) {
+            $_SESSION = [];
             if (!empty($_COOKIE['remember'])) {
                 setcookieIlch('remember', '', strtotime('-1 hours'));
             }
 
-            $_SESSION = [];
             Registry::remove('user');
 
             if (ini_get('session.use_cookies')) {
@@ -59,6 +60,9 @@ class AfterDatabaseLoad
             }
 
             session_destroy();
+
+            $Redirect = new Redirect($pluginData['request'], $pluginData['translator']);
+            $Redirect->to($pluginData['request']->getArray());
         }
 
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && preg_match("/^[0-9a-zA-Z\/.:]{7,}$/", $_SERVER['HTTP_X_FORWARDED_FOR'])) {
