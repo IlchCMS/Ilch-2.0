@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+
 /**
  * Script to remove not needed files from the vendor and static/js directory, when creating a build (just --no-dev dependencies)
  */
@@ -116,6 +117,17 @@ $directoriesStaticJs = [
             'LICENSE.md',
         ]
     ],
+    'tarteaucitron' => [
+        'keep' => [
+            'build/css/',
+            'build/lang/',
+            'build/choices.min.css',
+            'build/advertising.min.js',
+            'build/tarteaucitron.services.min.js',
+            'build/tarteaucitron.min.js',
+            'LICENSE.md',
+        ]
+    ],
 ];
 
 /**
@@ -124,7 +136,7 @@ $directoriesStaticJs = [
  * @param array|null $filter if given only directories in the array are scanned
  * @return array
  */
-function getFilesRecursive(string $dirname, ?array $filter = null): array
+function getFilesRecursive(string $dirname, array $filter = null): array
 {
     $files = [];
     foreach (scandir($dirname) as $item) {
@@ -217,7 +229,7 @@ function optimizeDirectory(string $pathString, array $directories): string
         'Removed %d files from the "' . $pathString . '" directory saving %s kB.',
         count($filesToDelete),
         number_format($savedSpace / 1024, 2, '.', ' ')
-    ).PHP_EOL;
+    ) . PHP_EOL;
 }
 
 // Optimize vendor directory

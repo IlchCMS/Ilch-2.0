@@ -29,7 +29,7 @@ use Modules\Admin\Mappers\Box as BoxMapper;
  */
 class Frontend extends Base
 {
-    private $settings = [];
+    private array $settings = [];
 
     /**
      * Adds layout helper.
@@ -586,37 +586,66 @@ class Frontend extends Base
         if (\Ilch\DebugBar::isInitialized()) {
             $html .= \Ilch\DebugBar::getInstance()->getJavascriptRenderer()->renderHead();
         }
-
+        if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) {
+            $html .= '<script src="' . $this->getStaticUrl('js/ckeditor5/build/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.umd.js') . '" charset="UTF-8"></script>';
+        }
         if ($this->getConfigKey('cookie_consent') != 0) {
             $html .= '
+                <script src="' . $this->getStaticUrl('js/tarteaucitron/build/tarteaucitron.min.js') . '"></script>
+                <style>
+                    #tarteaucitronPersonalize,
+                    #tarteaucitronSaveButton {
+                        background-color: ' . $this->escape($this->getConfigKey('cookie_consent_btn_bg_color')) . ' !important;
+                        color: ' . $this->escape($this->getConfigKey('cookie_consent_btn_text_color')) . ' !important;
+                    }
+                    
+                    #tarteaucitronMainLineOffset,
+                    #tarteaucitronInfo,
+                    #tarteaucitronSave {
+                        background-color: ' . $this->escape($this->getConfigKey('cookie_consent_popup_bg_color')) . ' !important;
+                        color: ' . $this->escape($this->getConfigKey('cookie_consent_popup_text_color')) . ' !important;
+                    }
+                </style>
                 <script>
-                    window.addEventListener("load", function(){
-                    window.cookieconsent.initialise({
-                      "palette": {
-                        "popup": {
-                          "background": "' . $this->escape($this->getConfigKey('cookie_consent_popup_bg_color')) . '",
-                          "text": "' . $this->escape($this->getConfigKey('cookie_consent_popup_text_color')) . '"
+                    var tarteaucitronForceLanguage = "' . substr($this->getTranslator()->getLocale(), 2) . '";
+                    tarteaucitronCustomText = {
+                        "close": "' . $this->getTrans('dismissBTNText') . '",
+                        "denyAll": "' . $this->getTrans('denyBTNText') . '",
+                        "allowAll": "' . $this->getTrans('allowBTNText') . '",
+                        "disclaimer": "' . $this->getTrans('policyInfoText') . '",
+                        "privacyUrl": "' . $this->getTrans('policyLinkText') . '",
+                    };
+                    tarteaucitron.init({
+                        privacyUrl: "' . $this->getUrl(['module' => 'privacy', 'controller' => 'index', 'action' => 'index']) . '",
+                        hashtag: "#tarteaucitron",
+                        cookieName: "tarteaucitron",
+                        orientation: "' . $this->escape($this->getConfigKey('cookie_consent_pos')) . '",
+                        cookieslist: true,
+                        removeCredit: true,
+                        iconPosition: "' . $this->escape($this->getConfigKey('cookie_icon_pos')) . '",
+                        ' . ($this->getConfigKey('cookieConsentType') == 'opt-in' ? 'highPrivacy: true,' : ($this->getConfigKey('cookieConsentType') == 'opt-out' ? 'highPrivacy: false,' : '')) . '
+                        ' . ($this->getConfigKey('cookieConsentType') == 'opt-in' ? 'AcceptAllCta: true,' : ($this->getConfigKey('cookieConsentType') == 'opt-out' ? 'AcceptAllCta: false,' : '')) . '
+                    });
+                    
+                    tarteaucitron.services.ilch2login = {
+                        "key": "ilch2login",
+                        "type": "other",
+                        "name": "' . $this->escape($this->getConfigKey('page_title')) . '",
+                        "needConsent": true,
+                        "cookies": ["remember"],
+                        "readmoreLink": "' . $this->getUrl(['module' => 'privacy', 'controller' => 'index', 'action' => 'index']) . '",
+                        "uri": "' . $this->getUrl() . '",
+                        "js": function () {
+                            "use strict";
                         },
-                        "button": {
-                          "background": "' . $this->escape($this->getConfigKey('cookie_consent_btn_bg_color')) . '",
-                          "text": "' . $this->escape($this->getConfigKey('cookie_consent_btn_text_color')) . '"
+                        "fallback": function () {
+                            "use strict";
                         }
-                      },
-                      "theme": "' . $this->escape($this->getConfigKey('cookie_consent_layout')) . '",
-                      "position": "' . $this->escape($this->getConfigKey('cookie_consent_pos')) . '",
-                      "type": "' . $this->escape($this->getConfigKey('cookie_consent_type')) . '",
-                      "content": {
-                        "message": "' . $this->getTrans('policyInfoText') . '",
-                        "dismiss": "' . $this->getTrans('dismissBTNText') . '",
-                        "allow": "' . $this->getTrans('allowBTNText') . '",
-                        "deny": "' . $this->getTrans('denyBTNText') . '",
-                        "link": "' . $this->getTrans('policyLinkText') . '",
-                        "href": "' . $this->getUrl(['module' => 'privacy', 'controller' => 'index', 'action' => 'index']) . '"
-                      }
-                    })});
+                    };
+                    
+                    (tarteaucitron.job = tarteaucitron.job || []).push("ilch2login");
                 </script>
-                <link rel="stylesheet" type="text/css" href="' . $this->getStaticUrl('js/cookieconsent/cookieconsent.min.css') . '" />
-                <script src="' . $this->getStaticUrl('js/cookieconsent/cookieconsent.min.js') . '"></script>';
+                ';
         }
 
         return $html;

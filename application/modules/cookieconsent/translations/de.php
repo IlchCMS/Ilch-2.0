@@ -1,17 +1,15 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 return [
     'menuCookieConsent' => 'Cookie-Richtlinien',
     'cookieConsentShow' => 'Anzeigen',
-    'cookieConsentLayout' => 'Layout',
-    'cookieConsentLayoutBlock' => 'Block',
-    'cookieConsentLayoutClassic' => 'Klassisch',
-    'cookieConsentLayoutEdgeless' => 'Edgeless',
     'cookieConsentPos' => 'Position',
+    'cookieIconPos' => 'Icon Position',
     'cookieConsentPopUp' => 'PopUp Style',
     'cookieConsentPopUpBGColor' => 'Hintergrund',
     'cookieConsentPopUpTextColor' => 'Text',
@@ -23,9 +21,13 @@ return [
     'cookieConsentBtnBGColor' => 'Hintergrund',
     'cookieConsentBtnTextColor' => 'Text',
     'cookieConsentPosTop' => 'am Seitenanfang',
-    'cookieConsentPosFloatingLeft' => 'unten Links',
-    'cookieConsentPosFloatingRight' => 'unten Rechts',
+    'cookieConsentPosMiddle' => 'Mittig',
     'cookieConsentPosBottom' => 'am Seitenende',
+    'cookieConsentPosPopup' => 'Popup',
+    'cookieIconBottomRight' => 'Rechts unten',
+    'cookieIconBottomLeft' => 'Links unten',
+    'cookieIconTopRight' => 'Rechts oben',
+    'cookieIconTopLeft' => 'Links oben',
     'cookieConsentLocale' => 'Sprache',
     'cookieConsentDesc' => 'Beschreibung',
     'cookieConsentText' => 'Richtlinien',

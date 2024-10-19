@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -21,8 +22,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuCookieConsent',
             $items
         );
@@ -39,20 +39,20 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'cookieConsent' => 'required|numeric|integer|min:0|max:1',
-                'cookieConsentLayout' => 'required',
-                'cookieConsentPos' => 'required',
-                'cookieConsentPopUpBGColor' => 'required',
-                'cookieConsentPopUpTextColor' => 'required',
-                'cookieConsentBtnBGColor' => 'required',
-                'cookieConsentBtnTextColor' => 'required',
-                'cookieConsentType' => 'required'
+                'cookieConsent'                 => 'required|numeric|integer|min:0|max:1',
+                'cookieConsentPos'              => 'required',
+                'cookieIconPos'                 => 'required',
+                'cookieConsentPopUpBGColor'     => 'required',
+                'cookieConsentPopUpTextColor'   => 'required',
+                'cookieConsentBtnBGColor'       => 'required',
+                'cookieConsentBtnTextColor'     => 'required',
+                'cookieConsentType'             => 'required'
             ]);
 
             if ($validation->isValid()) {
                 $this->getConfig()->set('cookie_consent', $this->getRequest()->getPost('cookieConsent'))
-                    ->set('cookie_consent_layout', $this->getRequest()->getPost('cookieConsentLayout'))
                     ->set('cookie_consent_pos', $this->getRequest()->getPost('cookieConsentPos'))
+                    ->set('cookie_icon_pos', $this->getRequest()->getPost('cookieIconPos'))
                     ->set('cookie_consent_popup_bg_color', $this->getRequest()->getPost('cookieConsentPopUpBGColor'))
                     ->set('cookie_consent_popup_text_color', $this->getRequest()->getPost('cookieConsentPopUpTextColor'))
                     ->set('cookie_consent_btn_bg_color', $this->getRequest()->getPost('cookieConsentBtnBGColor'))
@@ -72,8 +72,8 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('cookieConsent', $this->getConfig()->get('cookie_consent'))
-            ->set('cookieConsentLayout', $this->getConfig()->get('cookie_consent_layout'))
             ->set('cookieConsentPos', $this->getConfig()->get('cookie_consent_pos'))
+            ->set('cookieIconPos', $this->getConfig()->get('cookie_icon_pos'))
             ->set('cookieConsentPopUpBGColor', $this->getConfig()->get('cookie_consent_popup_bg_color'))
             ->set('cookieConsentPopUpTextColor', $this->getConfig()->get('cookie_consent_popup_text_color'))
             ->set('cookieConsentBtnBGColor', $this->getConfig()->get('cookie_consent_btn_bg_color'))

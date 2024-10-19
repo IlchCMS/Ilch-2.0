@@ -1,0 +1,12 @@
+{
+  "name": "tarteaucitron-custom-build",
+  "version": "0.0.1",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "tarteaucitronjs": "^1.19.0"
+  },
+  "scripts": {
+    "build": "rm -rf build && mkdir -p build && cp node_modules/tarteaucitronjs/*.min.js build/ && cp -r node_modules/tarteaucitronjs/lang build/ && mkdir -p build/css && cp node_modules/tarteaucitronjs/css/*.min.css build/css/"
+  }
+}
