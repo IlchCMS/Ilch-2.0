@@ -7,6 +7,6 @@
     "tarteaucitronjs": "^1.19.0"
   },
   "scripts": {
-    "build": "rm -rf build && mkdir -p build && cp node_modules/tarteaucitronjs/*.min.js build/ && cp -r node_modules/tarteaucitronjs/lang build/ && mkdir -p build/css && cp node_modules/tarteaucitronjs/css/*.min.css build/css/"
+    "build": "rm -rf build && mkdir -p build && cp node_modules/tarteaucitronjs/*.min.js build/ && mkdir -p build/lang && cp -r node_modules/tarteaucitronjs/lang/*.min.js build/lang && mkdir -p build/css && cp node_modules/tarteaucitronjs/css/*.min.css build/css/"
   }
 }
