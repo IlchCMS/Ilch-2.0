@@ -18,9 +18,6 @@ class Result
     public const LOGIN_FAILED = 'loginFailed';
 
     /** @var string */
-    public const COOKIESNOTALLOWED = 'cookiesNotAllowed';
-
-    /** @var string */
     public const USER_NOT_ACTIVATED = 'userNotActivated';
 
     /** @var string */

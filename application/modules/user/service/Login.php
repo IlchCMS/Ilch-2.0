@@ -56,10 +56,6 @@ class Login
             $user = $this->mapper->getUserByName($userNameOrEmail);
         }
 
-        if ($remember && (empty($_COOKIE['tarteaucitron']) || strpos($_COOKIE['tarteaucitron'], 'ilch2login=false') !== false)) {
-            return new LoginResult(false, $user, LoginResult::COOKIESNOTALLOWED);
-        }
-
         if ($user == null || !$this->passwordService->verify($password, $user->getPassword())) {
             return new LoginResult(false, $user, LoginResult::LOGIN_FAILED);
         }
