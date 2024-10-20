@@ -626,24 +626,6 @@ class Frontend extends Base
                         ' . ($this->getConfigKey('cookieConsentType') == 'opt-in' ? 'highPrivacy: true,' : ($this->getConfigKey('cookieConsentType') == 'opt-out' ? 'highPrivacy: false,' : '')) . '
                         ' . ($this->getConfigKey('cookieConsentType') == 'opt-in' ? 'AcceptAllCta: true,' : ($this->getConfigKey('cookieConsentType') == 'opt-out' ? 'AcceptAllCta: false,' : '')) . '
                     });
-                    
-                    tarteaucitron.services.ilch2login = {
-                        "key": "ilch2login",
-                        "type": "other",
-                        "name": "' . $this->escape($this->getConfigKey('page_title')) . '",
-                        "needConsent": true,
-                        "cookies": ["remember"],
-                        "readmoreLink": "' . $this->getUrl(['module' => 'privacy', 'controller' => 'index', 'action' => 'index']) . '",
-                        "uri": "' . $this->getUrl() . '",
-                        "js": function () {
-                            "use strict";
-                        },
-                        "fallback": function () {
-                            "use strict";
-                        }
-                    };
-                    
-                    (tarteaucitron.job = tarteaucitron.job || []).push("ilch2login");
                 </script>
                 ';
         }
