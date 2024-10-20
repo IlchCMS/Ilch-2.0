@@ -60,13 +60,14 @@ class Config extends \Ilch\Config\Install
             case "2.1.60":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = '" . $this->config['icon_small'] . "' WHERE `key` = '" . $this->config['key'] . "';");
                 break;
-            case "2.2.3":
+            case "2.2.4":
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('cookie_icon_pos', 'TopLeft');
                 $databaseConfig->delete('cookie_consent_layout');
                 if ($databaseConfig->get('cookie_consent_pos') == 'bottom-left' || $databaseConfig->get('cookie_consent_pos') == 'bottom-right') {
                     $databaseConfig->set('cookie_consent_pos', 'bottom');
                 }
+                removeDir(ROOT_PATH . '/static/js/cookieconsent');
                 break;
         }
 
