@@ -66,15 +66,6 @@ $languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
                                            autocomplete="current-password">
                                 </div>
                             </div>
-                            <div class="row mb-3<?=$this->getRequest()->getErrors()->hasError('rememberMe') ? ' has-error' : '' ?>" style="padding: 0 13px;">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1"><label for="rememberMe"><i class="fa-solid fa-bookmark"></i></label></span>
-                                    <div class="form-control">
-                                        <input class="form-check-input" type="checkbox" value="rememberMe" name="rememberMe" id="rememberMe" aria-label="<?=$this->getTrans('rememberMe') ?>">
-                                    </div>
-                                    <span class="input-group-text"><?=$this->getTrans('rememberMe') ?></span>
-                                </div>
-                            </div>
                             <div class="row mb-3<?=$this->getRequest()->getErrors()->hasError('language') ? ' has-error' : '' ?>" style="padding: 0 13px;">
                                 <label for="language" class="col-form-label p-0"><?=$this->getTrans('language') ?></label>
                                 <select class="form-select" name="language" id="language">
@@ -83,6 +74,15 @@ $languages = (!empty($this->get('languages'))) ? $this->get('languages') : [];
                                         <option value="<?=$key ?>"<?=$this->getRequest()->getOldInput('language', $this->getTranslator()->getLocale()) == $key ? ' selected' : '' ?>><?=$this->escape($value) ?></option>
                                     <?php endforeach; ?>
                                 </select>
+                            </div>
+                            <div class="row mb-3<?=$this->getRequest()->getErrors()->hasError('rememberMe') ? ' has-error' : '' ?>">
+                                <div class="col-xl-12">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="rememberMe" id="rememberMe" value="rememberMe"> <?=$this->getTrans('rememberMe') ?>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-outline-secondary"><?=$this->getTrans('signIn') ?></button>
                         </form>
