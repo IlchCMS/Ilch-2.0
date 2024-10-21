@@ -43,7 +43,7 @@ return [
     'loginWelcome' => 'Please sign in',
     'emailname' => 'Username or E-Mail',
     'password' => 'Password',
-    'rememberMe' => 'Remember me',
+    'rememberMe' => 'Remember me?',
     'signIn' => 'Sign in',
     'logoutMsg' => 'You got successfully logged out.',
     'alreadyLoggedIn' => 'You are already logged in.',

@@ -43,7 +43,7 @@ return [
     'loginWelcome' => 'Bitte loggen Sie sich ein',
     'emailname' => 'Benutzername oder E-Mail',
     'password' => 'Passwort',
-    'rememberMe' => 'Eingeloggt bleiben',
+    'rememberMe' => 'Angemeldet bleiben?',
     'signIn' => 'Einloggen',
     'logoutMsg' => 'Sie wurden erfolgreich ausgeloggt.',
     'alreadyLoggedIn' => 'Sie sind bereits eingeloggt.',

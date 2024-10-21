@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -47,18 +48,24 @@ class AfterDatabaseLoad
 
         // Check if user is locked out or deleted. If that is the case log him out.
         if ($userId && !$user || \is_object($user) && $user->getLocked()) {
+            // Delete remember cookie if it exists.
             if (!empty($_COOKIE['remember'])) {
                 setcookieIlch('remember', '', strtotime('-1 hours'));
             }
 
+            // Unset all of the session variables and delete user from registry.
             $_SESSION = [];
             Registry::remove('user');
 
+            // Delete session cookie.
             if (ini_get('session.use_cookies')) {
                 setcookieIlch(session_name(), '', strtotime('-12 hours'));
             }
 
             session_destroy();
+
+            $Redirect = new Redirect($pluginData['request'], $pluginData['translator']);
+            $Redirect->to($pluginData['request']->getArray());
         }
 
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && preg_match("/^[0-9a-zA-Z\/.:]{7,}$/", $_SERVER['HTTP_X_FORWARDED_FOR'])) {

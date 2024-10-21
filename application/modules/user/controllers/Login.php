@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -41,7 +42,7 @@ class Login extends \Ilch\Controller\Frontend
                 $userMapper = new UserMapper();
                 $userMapper->deleteselectsdelete(($this->getConfig()->get('userdeletetime')));
 
-                $result  = LoginService::factory()->perform($this->getRequest()->getPost('login_emailname'), $this->getRequest()->getPost('login_password'));
+                $result  = LoginService::factory()->perform($this->getRequest()->getPost('login_emailname'), $this->getRequest()->getPost('login_password'), (bool)$this->getRequest()->getPost('rememberMe', 0));
 
                 if ($result->isSuccessful()) {
                     $cookieStolenMapper = new CookieStolenMapper();
@@ -179,8 +180,8 @@ class Login extends \Ilch\Controller\Frontend
 
                 $name = $this->getLayout()->escape($user->getName());
                 $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
-                $siteurl = '<a href="'.BASE_URL.'"><i>'.$siteTitle.'</i></a>';
-                $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
+                $siteurl = '<a href="' . BASE_URL . '"><i>' . $siteTitle . '</i></a>';
+                $confirmCode = '<a href="' . BASE_URL . '/index.php/user/login/newpassword/selector/' . $selector . '/code/' . $confirmedCode . '" class="btn btn-primary btn-sm">' . $this->getTranslator()->trans('confirmMailButtonText') . '</a>';
                 $date = new \Ilch\Date();
 
                 $layout = '';
@@ -198,10 +199,10 @@ class Login extends \Ilch\Controller\Frontend
 
                 $mailContent = $emailsMapper->getEmail('user', $type, $user->getLocale());
 
-                if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php')) {
-                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php');
+                if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/user/layouts/mail/passwordchange.php')) {
+                    $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/user/layouts/mail/passwordchange.php');
                 } else {
-                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/passwordchange.php');
+                    $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/user/layouts/mail/passwordchange.php');
                 }
 
                 $messageReplace = [
