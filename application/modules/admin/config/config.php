@@ -1054,6 +1054,11 @@ class Config extends \Ilch\Config\Install
                 $notificationModel->setType('adminNewDomainSetting');
 
                 $notificationsMapper->addNotification($notificationModel);
+                break;
+            case "2.2.4":
+                // Update vendor folder
+                replaceVendorDirectory();
+                break;
         }
 
         return 'Update function executed.';
