@@ -1,22 +1,3 @@
-auth_tokens:
-  -
-    id: 1
-    selector: "selector"
-    token: "token"
-    userid: 1
-    expires: "2014-01-01 12:12:12"
-  -
-    id: 2
-    selector: "selector2"
-    token: "token"
-    userid: 2
-    expires: "2014-01-01 12:12:12"
-
-cookie_stolen:
-  -
-    id: 1
-    userid: 1
-
 users:
   -
     id: 1
@@ -36,6 +17,37 @@ users:
     date_confirmed: "2014-01-01 12:12:12"
     confirmed: 1
     confirmed_code: "123"
+  -
+    id: 3
+    name: "admin"
+    password: "top"
+    email: "admin@admin.admin"
+    date_created: "2020-02-01 15:00:00"
+  -
+    id: 4
+    name: "user"
+    password: "secret"
+    email: "user@user.user"
+    date_created: "2020-02-01 15:00:00"
+
+auth_tokens:
+  -
+    id: 1
+    selector: "selector"
+    token: "token"
+    userid: 1
+    expires: "2014-01-01 12:12:12"
+  -
+    id: 2
+    selector: "selector2"
+    token: "token"
+    userid: 2
+    expires: "2014-01-01 12:12:12"
+
+cookie_stolen:
+  -
+    id: 1
+    userid: 1
 
 groups:
   -
