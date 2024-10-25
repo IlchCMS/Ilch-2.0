@@ -131,7 +131,8 @@ class Config extends \Ilch\Config\Install
                 `article_id` INT(11) DEFAULT 0,
                 `box_id` INT(11) DEFAULT 0,
                 `access_level` INT(11) DEFAULT 0,
-                PRIMARY KEY (`group_id`, `page_id`, `module_key`, `article_id`, `box_id`)
+                PRIMARY KEY (`group_id`, `page_id`, `module_key`, `article_id`, `box_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_groups_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_profile_fields` (
@@ -301,14 +302,15 @@ class Config extends \Ilch\Config\Install
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_users_auth_providers` (
-                `user_id` INT(11) NOT NULL,
+                `user_id` INT(11) UNSIGNED NOT NULL,
                 `provider` VARCHAR(50) NOT NULL,
                 `identifier` VARCHAR(255) NOT NULL,
                 `screen_name` VARCHAR(255) DEFAULT NULL,
                 `oauth_token` VARCHAR(255) DEFAULT NULL,
                 `oauth_token_secret` VARCHAR(255) DEFAULT NULL,
                 `created_at` VARCHAR(45) DEFAULT NULL,
-                PRIMARY KEY (`user_id`, `provider`)
+                PRIMARY KEY (`user_id`, `provider`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_users_auth_providers_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_users_notifications` (
@@ -899,11 +901,38 @@ class Config extends \Ilch\Config\Install
                         ->execute();
                 }
 
+                // Delete orphaned rows in users_auth_providers.
+                $userIdusersAuthProviders = $this->db()->select('user_id')
+                    ->from('users_auth_providers')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($userIdusersAuthProviders ?? [], $idsUsers ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('users_auth_providers')
+                        ->where(['user_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Delete orphaned rows in groups_access.
+                $groupIdsGroupsAccess = $this->db()->select('group_id')
+                    ->from('groups_access')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($groupIdsGroupsAccess ?? [], $idsGroups ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('groups_access')
+                        ->where(['group_id' => $orphanedRows])
+                        ->execute();
+                }
+
                 // Change column types and add FKCs.
                 // user_groups
                 $this->db()->queryMulti('ALTER TABLE `[prefix]_users_groups` MODIFY COLUMN `user_id` INT(11) UNSIGNED NOT NULL;
                         ALTER TABLE `[prefix]_users_groups` ADD CONSTRAINT `FK_[prefix]_users_groups_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
-                        ALTER TABLE `[prefix]_users_groups` ADD CONSTRAINT `FK_[prefix]_users_groups_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                        ALTER TABLE `[prefix]_users_groups` ADD CONSTRAINT `FK_[prefix]_users_groups_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                        ALTER TABLE `[prefix]_users_groups` ADD CONSTRAINT `FK_[prefix]_groups_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
 
                 // auth_tokens
                 $this->db()->queryMulti('ALTER TABLE `[prefix]_auth_tokens` ADD CONSTRAINT `FK_[prefix]_auth_tokens_[prefix]_users` FOREIGN KEY (`userid`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
@@ -927,6 +956,10 @@ class Config extends \Ilch\Config\Install
                         ALTER TABLE `[prefix]_users_gallery_imgs` ADD CONSTRAINT `FK_[prefix]_users_gallery_imgs_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
                         ALTER TABLE `[prefix]_users_gallery_items` ADD CONSTRAINT `FK_[prefix]_users_gallery_items_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
                         ALTER TABLE `[prefix]_users_media` ADD CONSTRAINT `FK_[prefix]_users_media_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+                // users_auth_providers
+                $this->db()->queryMulti('ALTER TABLE `[prefix]_users_auth_providers` MODIFY COLUMN `user_id` INT(11) UNSIGNED NOT NULL;
+                        ALTER TABLE `[prefix]_users_auth_providers` ADD CONSTRAINT `FK_[prefix]_users_auth_providers_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 break;
         }
 

@@ -194,14 +194,7 @@ class Group extends \Ilch\Mapper
             $groupId = $groupId->getId();
         }
 
-        $this->db()->delete('users_groups')
-            ->where(['group_id' => $groupId])
-            ->execute();
-
-        $this->db()->delete('groups_access')
-            ->where(['group_id' => $groupId])
-            ->execute();
-
+        // Rows in users_groups and groups_access get deleted due to FKCs.
         return $this->db()->delete('groups')
             ->where(['id' => $groupId])
             ->execute();
