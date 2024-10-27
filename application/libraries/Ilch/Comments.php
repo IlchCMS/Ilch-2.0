@@ -65,54 +65,54 @@ class Comments
             }
 
             $commentsHtml .= '
-            <article id="comment_'.$fk_comment->getId().'">
+            <article id="comment_' . $fk_comment->getId() . '">
                 <div>
                     <div class="media-block">
-                        <a class="media-left col-md-offset-<?=$req ?> col-sm-offset-'.$req.' hidden-xs" href="'.$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]).'" title="'.$obj->escape($user->getName()).'">
-                            <img class="rounded-circle comment-img" alt="'.$obj->escape($user->getName()).'" src="'.$obj->getUrl().'/'.$user->getAvatar().'">
+                        <a class="media-left col-md-offset-<?=$req ?> col-sm-offset-' . $req . ' hidden-xs" href="' . $obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) . '" title="' . $obj->escape($user->getName()) . '">
+                            <img class="rounded-circle comment-img" alt="' . $obj->escape($user->getName()) . '" src="' . $obj->getUrl() . '/' . $user->getAvatar() . '">
                         </a>
                         <div class="media-body pe-2 ps-2">
                             <div class="clearfix">
                                 <div class="fload-start">
-                                    <a href="'.$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]).'" title="'.$obj->escape($user->getName()).'">'.
-                                        $obj->escape($user->getName()).'
+                                    <a href="' . $obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) . '" title="' . $obj->escape($user->getName()) . '">'.
+                                        $obj->escape($user->getName()) . '
                                     </a>
                                     <p class="text-muted small">
-                                        <i class="fa-regular fa-clock" title="'.$obj->getTrans('commentDateTime').'"></i> '.$commentDate->format('d.m.Y - H:i', true).'
+                                        <i class="fa-regular fa-clock" title="' . $obj->getTrans('commentDateTime') . '"></i> ' . $commentDate->format('d.m.Y - H:i', true) . '
                                     </p>
                                 </div>
                                 <div class="fload-end text-muted small">
-                                    <i class="fa-solid fa-reply fa-flip-vertical"></i> '.$user_rep->getName().'
+                                    <i class="fa-solid fa-reply fa-flip-vertical"></i> ' . $user_rep->getName() . '
                                 </div>
                             </div>
-                            <p>'.nl2br($obj->escape($fk_comment->getText())).'</p>
+                            <p>'.nl2br($obj->escape($fk_comment->getText())) . '</p>
                             <div>';
             if ($obj->getUser() && !in_array($obj->getUser()->getId(), $voted)) {
                 $commentsHtml .= '
                                 <div class="btn-group">
-                                    <a class="btn btn-sm btn-outline-secondary btn-hover-success" href="'.$obj->getUrl(['id' => $id, 'commentId' => $fk_comment->getId(), 'key' => 'up']).'" title="'.$obj->getTrans('iLike').'">
-                                        <i class="fa-solid fa-thumbs-up"></i> '.$obj->escape($fk_comment->getUp()).'
+                                    <a class="btn btn-sm btn-outline-secondary btn-hover-success" href="' . $obj->getUrl(['id' => $id, 'commentId' => $fk_comment->getId(), 'key' => 'up']) . '" title="' . $obj->getTrans('iLike') . '">
+                                        <i class="fa-solid fa-thumbs-up"></i> ' . $obj->escape($fk_comment->getUp()) . '
                                     </a>
-                                    <a class="btn btn-sm btn-outline-secondary btn-hover-danger" href="'.$obj->getUrl(['id' => $id, 'commentId' => $fk_comment->getId(), 'key' => 'down']).'" title="'.$obj->getTrans('notLike').'">
-                                        <i class="fa-solid fa-thumbs-down"></i> '.$obj->escape($fk_comment->getDown()).'
+                                    <a class="btn btn-sm btn-outline-secondary btn-hover-danger" href="' . $obj->getUrl(['id' => $id, 'commentId' => $fk_comment->getId(), 'key' => 'down']) . '" title="' . $obj->getTrans('notLike') . '">
+                                        <i class="fa-solid fa-thumbs-down"></i> ' . $obj->escape($fk_comment->getDown()) . '
                                     </a>
                                 </div>';
             } else {
                 $commentsHtml .= '
                                 <div class="btn-group">
                                     <button class="btn btn-sm btn-outline-secondary btn-success text-white">
-                                        <i class="fa-solid fa-thumbs-up"></i> '.$obj->escape($fk_comment->getUp()).'
+                                        <i class="fa-solid fa-thumbs-up"></i> ' . $obj->escape($fk_comment->getUp()) . '
                                     </button>
                                     <button class="btn btn-sm btn-outline-secondary btn-danger text-white">
-                                        <i class="fa-solid fa-thumbs-down"></i> '.$obj->escape($fk_comment->getDown()).'
+                                        <i class="fa-solid fa-thumbs-down"></i> ' . $obj->escape($fk_comment->getDown()) . '
                                     </button>
                                 </div>';
             }
 
             if ($obj->getUser() && $config->get('comment_reply') == 1 && $req < $config->get('comment_nesting')-1) {
                 $commentsHtml .= '
-                                <a href="javascript:slideReply(\'reply_'.$fk_comment->getId().'\');" class="btn btn-sm btn-outline-secondary btn-hover-primary">
-                                    <i class="fa-solid fa-reply"></i> '.$obj->getTrans('reply').'
+                                <a href="javascript:slideReply(\'reply_' . $fk_comment->getId() . '\');" class="btn btn-sm btn-outline-secondary btn-hover-primary">
+                                    <i class="fa-solid fa-reply"></i> ' . $obj->getTrans('reply') . '
                                 </a>';
             }
 
@@ -125,26 +125,26 @@ class Comments
 
             if ($obj->getUser()) {
                 $commentsHtml .= '
-                        <div class="replyHidden" id="reply_'.$fk_comment->getId().'">
+                        <div class="replyHidden" id="reply_' . $fk_comment->getId() . '">
                             <form method="POST">'.
-                                $obj->getTokenField().'
+                                $obj->getTokenField() . '
                                 <div>
                                     <div class="media-block">
-                                        <a class="media-left col-md-offset-'.$req.' col-sm-offset-'.$req.' hidden-xs" href="'.$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $obj->getUser()->getId()]).'" title="'.$obj->escape($obj->getUser()->getName()).'">
-                                            <img class="rounded-circle comment-img" alt="'.$obj->escape($obj->getUser()->getName()).'" src="'.$obj->getUrl().'/'.$obj->getUser()->getAvatar().'">
+                                        <a class="media-left col-md-offset-' . $req . ' col-sm-offset-' . $req . ' hidden-xs" href="' . $obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $obj->getUser()->getId()]) . '" title="' . $obj->escape($obj->getUser()->getName()) . '">
+                                            <img class="rounded-circle comment-img" alt="' . $obj->escape($obj->getUser()->getName()) . '" src="' . $obj->getUrl() . '/' . $obj->getUser()->getAvatar() . '">
                                         </a>
                                         <div class="media-body ps-2 pe-2">
                                             <div class="clearfix">
                                                 <div class="fload-start">
-                                                    <a href="'.$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $obj->getUser()->getId()]).'" title="'.$obj->escape($obj->getUser()->getName()).'">'.
-                                                        $obj->escape($obj->getUser()->getName()).'
+                                                    <a href="' . $obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $obj->getUser()->getId()]) . '" title="' . $obj->escape($obj->getUser()->getName()) . '">'.
+                                                        $obj->escape($obj->getUser()->getName()) . '
                                                     </a>
                                                     <p class="text-muted small">
-                                                        <i class="fa-regular fa-clock" title="'.$obj->getTrans('commentDateTime').'"></i> '.$nowDate->format('d.m.Y - H:i', true).'
+                                                        <i class="fa-regular fa-clock" title="' . $obj->getTrans('commentDateTime') . '"></i> ' . $nowDate->format('d.m.Y - H:i', true) . '
                                                     </p>
                                                 </div>
                                                 <div class="float-end text-muted small">
-                                                    <i class="fa-solid fa-reply fa-flip-vertical"></i> '.$user->getName().'
+                                                    <i class="fa-solid fa-reply fa-flip-vertical"></i> ' . $user->getName() . '
                                                 </div>
                                             </div>
                                             <p>
@@ -152,12 +152,12 @@ class Comments
                                                           style="resize: vertical"
                                                           name="comment_text"
                                                           required></textarea>
-                                                <input type="hidden" name="fkId" value="'.$fk_comment->getId().'" />
+                                                <input type="hidden" name="fkId" value="' . $fk_comment->getId() . '" />
                                             </p>
                                             <div>
                                                 <div class="content_savebox">
                                                     <button type="submit" class="btn btn-outline-secondary btn-sm" name="saveComment" value="save">'.
-                                                        $obj->getTrans('submit').'
+                                                        $obj->getTrans('submit') . '
                                                     </button>
                                                 </div>
                                             </div>
@@ -218,27 +218,27 @@ class Comments
         $commentsHtml = '
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header" id="comment">'.$layout->getTrans('comments').'('.$commentsCount.')</h1>';
+        <h1 class="page-header" id="comment">' . $layout->getTrans('comments') . ' (' . $commentsCount . ')</h1>';
 
         if ($layout->getUser()) {
             $commentsHtml .= '
         <div class="reply">
             <form method="POST">'.
-                $layout->getTokenField().'
+                $layout->getTokenField() . '
                 <section class="comment-list">
                     <div class="card">
                         <div class="card-body">
                             <div class="media-block">
-                                <a class="media-left hidden-xs" href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]).'" title="'.$layout->escape($layout->getUser()->getName()).'">
-                                    <img class="rounded-circle comment-img" alt="'.$layout->escape($layout->getUser()->getName()).'" src="'.$layout->getUrl().'/'.$layout->getUser()->getAvatar().'">
+                                <a class="media-left hidden-xs" href="' . $layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]) . '" title="' . $layout->escape($layout->getUser()->getName()) . '">
+                                    <img class="rounded-circle comment-img" alt="' . $layout->escape($layout->getUser()->getName()) . '" src="' . $layout->getUrl() . '/' . $layout->getUser()->getAvatar() . '">
                                 </a>
                                 <div class="media-body ps-2 pe-2">
                                     <div>
-                                        <a href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]).'" title="'.$layout->escape($layout->getUser()->getName()).'">'.
-                $layout->escape($layout->getUser()->getName()).'
+                                        <a href="' . $layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]) . '" title="' . $layout->escape($layout->getUser()->getName()) . '">'.
+                $layout->escape($layout->getUser()->getName()) . '
                                         </a>
                                         <p class="text-muted small">
-                                            <i class="fa-regular fa-clock" title="'.$layout->getTrans('commentDateTime').'"></i> '.$nowDate->format('d.m.Y - H:i', true).'
+                                            <i class="fa-regular fa-clock" title="' . $layout->getTrans('commentDateTime') . '"></i> ' . $nowDate->format('d.m.Y - H:i', true) . '
                                         </p>
                                     </div>
                                     <p>
@@ -250,7 +250,7 @@ class Comments
                                     <div>
                                         <div class="content_savebox">
                                             <button type="submit" class="btn btn-outline-secondary btn-sm" name="saveComment" value="save">'.
-                $layout->getTrans('submit').'
+                $layout->getTrans('submit') . '
                                             </button>
                                         </div>
                                     </div>
@@ -271,49 +271,49 @@ class Comments
 
             $commentsHtml .= '
         <section class="comment-list">
-            <article id="comment_'.$comment->getId().'">
+            <article id="comment_' . $comment->getId() . '">
                 <div class="card">
                     <div class="card-body">
                         <div class="media-block ps-2 pe-2">
-                            <a class="media-left hidden-xs" href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]).'" title="'.$layout->escape($user->getName()).'">
-                                <img class="rounded-circle comment-img" alt="'.$layout->escape($user->getName()).'" src="'.$layout->getUrl().'/'.$user->getAvatar().'">
+                            <a class="media-left hidden-xs" href="' . $layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) . '" title="' . $layout->escape($user->getName()) . '">
+                                <img class="rounded-circle comment-img" alt="' . $layout->escape($user->getName()) . '" src="' . $layout->getUrl() . '/' . $user->getAvatar() . '">
                             </a>
                             <div class="media-body">
                                 <div>
-                                    <a href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]).'" title="'.$layout->escape($user->getName()).'">'.$layout->escape($user->getName()).'</a>
+                                    <a href="' . $layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) . '" title="' . $layout->escape($user->getName()) . '">' . $layout->escape($user->getName()) . '</a>
                                     <p class="text-muted small">
-                                        <i class="fa-regular fa-clock" title="'.$layout->getTrans('commentDateTime').'"></i> '.$commentDate->format('d.m.Y - H:i', true).'
+                                        <i class="fa-regular fa-clock" title="' . $layout->getTrans('commentDateTime') . '"></i> ' . $commentDate->format('d.m.Y - H:i', true) . '
                                     </p>
                                 </div>
-                                <p>'.nl2br($layout->escape($comment->getText())).'</p>
+                                <p>'.nl2br($layout->escape($comment->getText())) . '</p>
                                 <div>';
 
             if ($layout->getUser() && !in_array($layout->getUser()->getId(), $voted)) {
                 $commentsHtml .= '
                                     <div class="btn-group">
-                                        <a class="btn btn-sm btn-outline-secondary btn-hover-success" href="'.$layout->getUrl(['id' => $object->getId(), 'commentId' => $comment->getId(), 'key' => 'up']).'" title="'.$layout->getTrans('iLike').'">
-                                            <i class="fa-solid fa-thumbs-up"></i> '.$comment->getUp().'
+                                        <a class="btn btn-sm btn-outline-secondary btn-hover-success" href="' . $layout->getUrl(['id' => $object->getId(), 'commentId' => $comment->getId(), 'key' => 'up']) . '" title="' . $layout->getTrans('iLike') . '">
+                                            <i class="fa-solid fa-thumbs-up"></i> ' . $comment->getUp() . '
                                         </a>
-                                        <a class="btn btn-sm btn-outline-secondary btn-hover-danger" href="'.$layout->getUrl(['id' => $object->getId(), 'commentId' => $comment->getId(), 'key' => 'down']).'" title="'.$layout->getTrans('notLike').'">
-                                            <i class="fa-solid fa-thumbs-down"></i> '.$comment->getDown().'
+                                        <a class="btn btn-sm btn-outline-secondary btn-hover-danger" href="' . $layout->getUrl(['id' => $object->getId(), 'commentId' => $comment->getId(), 'key' => 'down']) . '" title="' . $layout->getTrans('notLike') . '">
+                                            <i class="fa-solid fa-thumbs-down"></i> ' . $comment->getDown() . '
                                         </a>
                                     </div>';
             } else {
                 $commentsHtml .= '
                                     <div class="btn-group">
                                         <button class="btn btn-sm btn-outline-secondary btn-success text-white">
-                                            <i class="fa-solid fa-thumbs-up"></i> '.$comment->getUp().'
+                                            <i class="fa-solid fa-thumbs-up"></i> ' . $comment->getUp() . '
                                         </button>
                                         <button class="btn btn-sm btn-outline-secondary btn-danger text-white">
-                                            <i class="fa-solid fa-thumbs-down"></i> '.$comment->getDown().'
+                                            <i class="fa-solid fa-thumbs-down"></i> ' . $comment->getDown() . '
                                         </button>
                                     </div>';
             }
 
             if ($layout->getUser() && $config->get('comment_reply') == 1 && $config->get('comment_nesting') > 0) {
                 $commentsHtml .= '
-                                    <a href="javascript:slideReply(\'reply_'.$comment->getId().'\');" class="btn btn-sm btn-outline-secondary btn-hover-primary">
-                                        <i class="fa-solid fa-reply"></i> '.$layout->getTrans('reply').'
+                                    <a href="javascript:slideReply(\'reply_' . $comment->getId() . '\');" class="btn btn-sm btn-outline-secondary btn-hover-primary">
+                                        <i class="fa-solid fa-reply"></i> ' . $layout->getTrans('reply') . '
                                     </a>';
             }
             $commentsHtml .= '
@@ -322,26 +322,26 @@ class Comments
 
             if ($layout->getUser()) {
                 $commentsHtml .= '
-                                <div class="replyHidden" id="reply_'.$comment->getId().'">
+                                <div class="replyHidden" id="reply_' . $comment->getId() . '">
                                     <form method="POST">'.
-                                        $layout->getTokenField().'
+                                        $layout->getTokenField() . '
                                         <div>
                                             <div class="media-block">
-                                                <a class="media-left hidden-xs" href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]).'" title="'.$layout->escape($layout->getUser()->getName()).'">
-                                                    <img class="rounded-circle comment-img" alt="'.$layout->escape($layout->getUser()->getName()).'" src="'.$layout->getUrl().'/'.$layout->getUser()->getAvatar().'">
+                                                <a class="media-left hidden-xs" href="' . $layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]) . '" title="' . $layout->escape($layout->getUser()->getName()) . '">
+                                                    <img class="rounded-circle comment-img" alt="' . $layout->escape($layout->getUser()->getName()) . '" src="' . $layout->getUrl() . '/' . $layout->getUser()->getAvatar() . '">
                                                 </a>
                                                 <div class="media-body ps-2 pe-2">
                                                     <div class="clearfix">
                                                         <div class="float-start">
-                                                            <a href="'.$layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]).'" title="'.$layout->escape($layout->getUser()->getName()).'">'.
-                                                                $layout->escape($layout->getUser()->getName()).'
+                                                            <a href="' . $layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]) . '" title="' . $layout->escape($layout->getUser()->getName()) . '">'.
+                                                                $layout->escape($layout->getUser()->getName()) . '
                                                             </a>
                                                             <p class="text-muted small">
-                                                                <i class="fa-regular fa-clock" title="'.$layout->getTrans('commentDateTime').'"></i> '.$nowDate->format('d.m.Y - H:i', true).'
+                                                                <i class="fa-regular fa-clock" title="' . $layout->getTrans('commentDateTime') . '"></i> ' . $nowDate->format('d.m.Y - H:i', true) . '
                                                             </p>
                                                         </div>
                                                         <div class="float-end text-muted small">
-                                                            <i class="fa-solid fa-reply fa-flip-vertical"></i> '.$layout->escape($user->getName()).'
+                                                            <i class="fa-solid fa-reply fa-flip-vertical"></i> ' . $layout->escape($user->getName()) . '
                                                         </div>
                                                     </div>
                                                     <p>
@@ -349,12 +349,12 @@ class Comments
                                                                   style="resize: vertical"
                                                                   name="comment_text"
                                                                   required></textarea>
-                                                        <input type="hidden" name="fkId" value="'.$comment->getId().'" />
+                                                        <input type="hidden" name="fkId" value="' . $comment->getId() . '" />
                                                     </p>
                                                     <div>
                                                         <div class="content_savebox">
                                                             <button type="submit" class="btn btn-outline-secondary btn-sm" name="saveComment" value="save">'.
-                                                                $layout->getTrans('submit').'
+                                                                $layout->getTrans('submit') . '
                                                             </button>
                                                         </div>
                                                     </div>
@@ -415,7 +415,7 @@ function slideReply(thechosenone) {
 
         if ($config->get('comment_floodInterval') > 0 && !$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time()-$config->get('comment_floodInterval')))) {
             $translator = new \Ilch\Translator();
-            $translator->load(APPLICATION_PATH.'/modules/comment/translations/');
+            $translator->load(APPLICATION_PATH . '/modules/comment/translations/');
             $_SESSION['messages'][] = ['text' => $translator->trans('floodError'), 'type' => 'danger'];
             return false;
         }
@@ -425,7 +425,7 @@ function slideReply(thechosenone) {
 
         foreach ($splittedKey as $x => $xValue) {
             if (($xValue === 'id_c') && isset($splittedKey[$x + 1])) {
-                $fkId = $splittedKey[$x+1];
+                $fkId = $splittedKey[$x + 1];
             }
         }
 
@@ -459,11 +459,11 @@ function slideReply(thechosenone) {
         $commentModel = new CommentModel();
         $commentModel->setId($id);
         if ($upVote) {
-            $commentModel->setUp($oldComment->getUp()+1);
+            $commentModel->setUp($oldComment->getUp() + 1);
         } else {
-            $commentModel->setDown($oldComment->getDown()+1);
+            $commentModel->setDown($oldComment->getDown() + 1);
         }
-        $commentModel->setVoted($oldComment->getVoted().$userId.',');
+        $commentModel->setVoted($oldComment->getVoted() . $userId . ',');
         $commentMapper->saveLike($commentModel);
     }
 }
