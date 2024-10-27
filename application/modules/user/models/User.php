@@ -101,21 +101,30 @@ class User extends \Ilch\Model
      *
      * @var int
      */
-    protected $opt_mail;
+    protected int $opt_mail = 1;
 
     /**
      * The opt_comments of the user.
+     * Whether the user allows comments on the profile or not.
      *
      * @var int
      */
-    protected $opt_comments;
+    protected int $opt_comments = 1;
+
+    /**
+     * The admin_comments of the user.
+     * Whether the admin allows comments on the profile of this user or not.
+     * @var int
+     */
+    protected int $admin_comments = 1;
 
     /**
      * The opt_gallery of the user.
      *
      * @var int
      */
-    protected $opt_gallery;
+    protected int $opt_gallery = 1;
+
     /**
      * The \Ilch\Date of when the user got created.
      *
@@ -306,7 +315,7 @@ class User extends \Ilch\Model
      *
      * @return int
      */
-    public function getOptMail()
+    public function getOptMail(): int
     {
         return $this->opt_mail;
     }
@@ -317,15 +326,16 @@ class User extends \Ilch\Model
      * @param int $opt_mail
      * @return User
      */
-    public function setOptMail($opt_mail): User
+    public function setOptMail(int $opt_mail): User
     {
-        $this->opt_mail = (string)$opt_mail;
+        $this->opt_mail = $opt_mail;
 
         return $this;
     }
 
     /**
      * Returns the opt_comments of the user.
+     * Whether the user allows comments on the profile or not.
      *
      * @return int
      */
@@ -336,6 +346,7 @@ class User extends \Ilch\Model
 
     /**
      * Sets the opt_comments of the user.
+     * Whether the user allows comments on the profile or not.
      *
      * @param int $opt_comments
      * @return $this
@@ -347,11 +358,35 @@ class User extends \Ilch\Model
     }
 
     /**
+     * Get admin_comments of the user.
+     * Whether the admin allows comments on the profile of this user or not.
+     *
+     * @return int
+     */
+    public function getAdminComments(): int
+    {
+        return $this->admin_comments;
+    }
+
+    /**
+     * Set admin_comments of the user.
+     * Whether the admin allows comments on the profile of this user or not.
+     *
+     * @param int $admin_comments
+     * @return $this
+     */
+    public function setAdminComments(int $admin_comments): User
+    {
+        $this->admin_comments = $admin_comments;
+        return $this;
+    }
+
+    /**
      * Returns the opt_gallery of the user.
      *
      * @return int
      */
-    public function getOptGallery()
+    public function getOptGallery(): int
     {
         return $this->opt_gallery;
     }
@@ -362,9 +397,9 @@ class User extends \Ilch\Model
      * @param int $opt_gallery
      * @return User
      */
-    public function setOptGallery($opt_gallery): User
+    public function setOptGallery(int $opt_gallery): User
     {
-        $this->opt_gallery = (string)$opt_gallery;
+        $this->opt_gallery = $opt_gallery;
 
         return $this;
     }

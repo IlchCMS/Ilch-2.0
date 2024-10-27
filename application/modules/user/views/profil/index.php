@@ -218,8 +218,9 @@ foreach ($profil->getGroups() as $group) {
     </div>
 </div>
 
-<?php if ($profil->getOptComments() /* comments not disabled by user or globally */): ?>
+<?php if ($profil->getOptComments() && $profil->getAdminComments() && $this->get('commentsOnProfiles')) : ?>
     <?php
+    // Add comments if not disabled by the user or the admin either for this user or globally.
     $commentsClass = new Ilch\Comments();
     echo $commentsClass->getComments(sprintf(Modules\User\Config\Config::COMMENT_KEY_TPL, $profil->getId()), $profil, $this);
     ?>

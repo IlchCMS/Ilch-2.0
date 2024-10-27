@@ -41,6 +41,7 @@ class Profil extends \Ilch\Controller\Frontend
             $this->getView()->set('profileFields', $profileFields);
             $this->getView()->set('profileFieldsContent', $profileFieldsContent);
             $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslation);
+            $this->getView()->set('commentsOnProfiles', $this->getConfig()->get('user_commentsOnProfiles'));
             $this->getView()->set('galleryAllowed', $this->getConfig()->get('usergallery_allowed'));
             $this->getView()->set('gallery', $galleryMapper->getCountGalleryByUser($this->getRequest()->getParam('user')));
             $this->getView()->set('isFriend', $friendsMapper->hasFriend($this->getUser()->getId(), $profil->getid()));

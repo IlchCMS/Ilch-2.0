@@ -64,7 +64,8 @@ class Config extends \Ilch\Config\Install
             ->set('usergallery_filetypes', 'jpg jpeg png gif')
             ->set('userdeletetime', '5')
             ->set('userGroupList_allowed', '0')
-            ->set('userAvatarList_allowed', '0');
+            ->set('userAvatarList_allowed', '0')
+            ->set('user_commentsOnProfiles', '1');
 
         $userMapper = new UserMapper();
         $groupMapper = new GroupMapper();
@@ -105,6 +106,7 @@ class Config extends \Ilch\Config\Install
                 `locale` VARCHAR(255) NOT NULL DEFAULT "",
                 `opt_mail` TINYINT(1) DEFAULT 1,
                 `opt_comments` TINYINT(1) DEFAULT 1,
+                `admin_comments` TINYINT(1) DEFAULT 1,
                 `opt_gallery` TINYINT(1) DEFAULT 1,
                 `date_created` DATETIME NOT NULL,
                 `date_confirmed` DATETIME NULL DEFAULT NULL,
@@ -964,8 +966,15 @@ class Config extends \Ilch\Config\Install
                 $this->db()->queryMulti('ALTER TABLE `[prefix]_users_auth_providers` MODIFY COLUMN `user_id` INT(11) UNSIGNED NOT NULL;
                         ALTER TABLE `[prefix]_users_auth_providers` ADD CONSTRAINT `FK_[prefix]_users_auth_providers_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
 
-                // Add new opt_comments column to users table.
-                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `opt_comments` TINYINT(1) DEFAULT 1 AFTER `opt_mail`;');
+                // Add new opt_comments and admin_comments column to the users table.
+                // opt_comments: Whether the user allows comments on the profile or not.
+                // admin_comments: Whether the admin allows comments on the profile of this user or not.
+                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `opt_comments` TINYINT(1) DEFAULT 1 AFTER `opt_mail`;
+                        ALTER TABLE `[prefix]_users` ADD COLUMN `admin_comments` TINYINT(1) DEFAULT 1 AFTER `opt_comments`;');
+
+                // Add new setting for comments on profiles (globally) and allow them by default.
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('user_commentsOnProfiles', '1');
                 break;
         }
 

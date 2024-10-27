@@ -1,4 +1,6 @@
 <?php
+
+/** @var \Modules\User\Models\User $user */
 $user = $this->get('user');
 
 if ($user->getId()) {
@@ -98,14 +100,24 @@ if ($user->getId()) {
         </div>
         <div class="col-xl-9">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="opt-gallery-yes" name="opt_gallery" value="1" <?php if ($user->getOptGallery() == '1') {
-        echo 'checked="checked"';
-    } ?> />
+                <input type="radio" class="flipswitch-input" id="opt-gallery-yes" name="opt_gallery" value="1" <?=($user->getOptGallery() == '1') ? 'checked="checked"' : '' ?> />
                 <label for="opt-gallery-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="opt-gallery-no" name="opt_gallery" value="0" <?php if ($user->getOptGallery() != '1') {
-        echo 'checked="checked"';
-    } ?> />
+                <input type="radio" class="flipswitch-input" id="opt-gallery-no" name="opt_gallery" value="0" <?=($user->getOptGallery() != '1') ? 'checked="checked"' : '' ?> />
                 <label for="opt-gallery-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-xl-3 col-form-label">
+            <?=$this->getTrans('commentsOnProfileAllowed') ?>
+        </div>
+        <div class="col-xl-9">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="commentsOnProfile-yes" name="admin_comments" value="1" <?=($user->getAdminComments() == '1') ? 'checked="checked"' : '' ?> />
+                <label for="commentsOnProfile-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="commentsOnProfile-no" name="admin_comments" value="0" <?=($user->getAdminComments() != '1') ? 'checked="checked"' : '' ?> />
+                <label for="commentsOnProfile-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
@@ -117,13 +129,9 @@ if ($user->getId()) {
         </div>
         <div class="col-xl-9">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="locked-yes" name="locked" value="1" <?php if ($user->getLocked() == '1') {
-        echo 'checked="checked"';
-    } ?> />
+                <input type="radio" class="flipswitch-input" id="locked-yes" name="locked" value="1" <?=($user->getLocked() == '1') ? 'checked="checked"' : '' ?> />
                 <label for="locked-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="locked-no" name="locked" value="0" <?php if ($user->getLocked() != '1') {
-        echo 'checked="checked"';
-    } ?> />
+                <input type="radio" class="flipswitch-input" id="locked-no" name="locked" value="0" <?=($user->getLocked() != '1') ? 'checked="checked"' : '' ?> />
                 <label for="locked-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
