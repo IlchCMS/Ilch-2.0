@@ -8,9 +8,6 @@
 namespace Modules\User\Mappers;
 
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
-use Modules\User\Mappers\AuthToken as AuthTokenMapper;
-use Modules\User\Mappers\Dialog as DialogMapper;
-use Modules\User\Mappers\Friends as FriendsMapper;
 use Modules\User\Models\User as UserModel;
 use Modules\User\Mappers\Group as GroupMapper;
 use Ilch\Date as IlchDate;
@@ -539,10 +536,7 @@ class User extends \Ilch\Mapper
     public function deleteselectsdelete($timetodelete = 5): bool
     {
         $date = new IlchDate();
-        $authTokenMapper = new AuthTokenMapper();
         $statisticMapper = new StatisticMapper();
-        $friendsMapper = new FriendsMapper();
-        $dialogMapper = new DialogMapper();
 
         $date->modify('-' . $timetodelete . ' days');
         $entries = $this->getUserList(['selectsdelete >' => '1000-01-01 00:00:00', 'selectsdelete <=' => $date]);
@@ -552,11 +546,7 @@ class User extends \Ilch\Mapper
                 $dateuser = new IlchDate($user->getSelectsDelete());
                 if ($dateuser->getTimestamp() <= $date->getTimestamp()) {
                     $this->delete($user->getId());
-                    $authTokenMapper->deleteAllAuthTokenOfUser($user->getId());
                     $statisticMapper->deleteUserOnline($user->getId());
-                    $friendsMapper->deleteFriendsByUserId($user->getId());
-                    $friendsMapper->deleteFriendByFriendUserId($user->getId());
-                    $dialogMapper->deleteAllOfUser($user->getId());
                 }
             }
         }
@@ -576,26 +566,7 @@ class User extends \Ilch\Mapper
             $userId = $userId->getId();
         }
 
-        $this->db()->delete('users_groups')
-            ->where(['user_id' => $userId])
-            ->execute();
-
-        $this->db()->delete('profile_content')
-            ->where(['user_id' => $userId])
-            ->execute();
-
-        $this->db()->delete('users_gallery_imgs')
-            ->where(['user_id' => $userId])
-            ->execute();
-
-        $this->db()->delete('users_gallery_items')
-            ->where(['user_id' => $userId])
-            ->execute();
-
-        $this->db()->delete('users_media')
-            ->where(['user_id' => $userId])
-            ->execute();
-
+        // Groups, profile content, user gallery content and media connected to the user gets deleted due to FKCs.
         return $this->db()->delete('users')
             ->where(['id' => $userId])
             ->execute();

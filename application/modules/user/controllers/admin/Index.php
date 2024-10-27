@@ -17,9 +17,6 @@ use Modules\User\Models\User as UserModel;
 use Modules\User\Models\Group as GroupModel;
 use Modules\User\Service\Password as PasswordService;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
-use Modules\User\Mappers\AuthProvider;
-use Modules\User\Mappers\Friends as FriendsMapper;
-use Modules\User\Mappers\Dialog as DialogMapper;
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 use Ilch\Registry;
 use Ilch\Validation;
@@ -89,11 +86,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $pagination = new \Ilch\Pagination();
         $userMapper = new UserMapper();
-        $authTokenMapper = new AuthTokenMapper();
         $statisticMapper = new StatisticMapper();
-        $authProviderMapper = new AuthProvider();
-        $friendsMapper = new FriendsMapper();
-        $dialogMapper = new DialogMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index']);
@@ -104,13 +97,9 @@ class Index extends \Ilch\Controller\Admin
 
                 if ($deleteUser->getId() != Registry::get('user')->getId() && (($deleteUser->isAdmin() && $this->getUser()->isAdmin()) || !$deleteUser->isAdmin())) {
                     if (!$deleteUser->hasGroup(1) || $userMapper->getAdministratorCount() > 1) {
+                        // AuthTokens, auth providers, friends and dialogs connected to the user get deleted due to FKCs.
                         $userMapper->delete($deleteUser->getId());
-                        $authTokenMapper->deleteAllAuthTokenOfUser($deleteUser->getId());
                         $statisticMapper->deleteUserOnline($deleteUser->getId());
-                        $authProviderMapper->deleteUser($userId);
-                        $friendsMapper->deleteFriendsByUserId($userId);
-                        $friendsMapper->deleteFriendByFriendUserId($userId);
-                        $dialogMapper->deleteAllOfUser($userId);
                     }
                 }
             }
@@ -470,12 +459,7 @@ class Index extends \Ilch\Controller\Admin
     public function deleteAction()
     {
         $userMapper = new UserMapper();
-        $authTokenMapper = new AuthTokenMapper();
         $statisticMapper = new StatisticMapper();
-        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
-        $authProviderMapper = new AuthProvider();
-        $friendsMapper = new FriendsMapper();
-        $dialogMapper = new DialogMapper();
 
         $userId = $this->getRequest()->getParam('id');
 
@@ -508,14 +492,9 @@ class Index extends \Ilch\Controller\Admin
                     rmdir($path);
                 }
 
-                $profileFieldsContentMapper->deleteProfileFieldContentByUserId($userId);
-                $authProviderMapper->deleteUser($userId);
                 if ($userMapper->delete($userId)) {
-                    $authTokenMapper->deleteAllAuthTokenOfUser($userId);
+                    // AuthTokens, auth providers, profile field content, friends and dialogs connected to the user get deleted due to FKCs.
                     $statisticMapper->deleteUserOnline($userId);
-                    $friendsMapper->deleteFriendsByUserId($userId);
-                    $friendsMapper->deleteFriendByFriendUserId($userId);
-                    $dialogMapper->deleteAllOfUser($userId);
                     $this->addMessage('delUserMsg');
                 }
             }

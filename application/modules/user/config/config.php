@@ -116,8 +116,12 @@ class Config extends \Ilch\Config\Install
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_users_groups` (
-                `user_id` INT(11) NOT NULL,
-                `group_id` INT(11) NOT NULL
+                `user_id` INT(11) UNSIGNED NOT NULL,
+                `group_id` INT(11) NOT NULL,
+                INDEX `FK_[prefix]_users_groups_[prefix]_users` (`user_id`) USING BTREE,
+                INDEX `FK_[prefix]_users_groups_[prefix]_groups` (`group_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_users_groups_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_users_groups_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_groups_access` (
@@ -127,7 +131,8 @@ class Config extends \Ilch\Config\Install
                 `article_id` INT(11) DEFAULT 0,
                 `box_id` INT(11) DEFAULT 0,
                 `access_level` INT(11) DEFAULT 0,
-                PRIMARY KEY (`group_id`, `page_id`, `module_key`, `article_id`, `box_id`)
+                PRIMARY KEY (`group_id`, `page_id`, `module_key`, `article_id`, `box_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_groups_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_profile_fields` (
@@ -164,10 +169,14 @@ class Config extends \Ilch\Config\Install
 
             CREATE TABLE IF NOT EXISTS `[prefix]_user_friends` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `user_id` INT(11) NOT NULL,
-                `friend_user_id` INT(11) NOT NULL,
+                `user_id` INT(11) UNSIGNED NOT NULL,
+                `friend_user_id` INT(11) UNSIGNED NOT NULL,
                 `approved` TINYINT(1) NOT NULL DEFAULT 2,
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`id`) USING BTREE,
+                INDEX `FK_[prefix]_user_friends_[prefix]_users` (`user_id`) USING BTREE,
+                INDEX `FK_[prefix]_user_friends_[prefix]_users_2` (`friend_user_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_user_friends_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_user_friends_[prefix]_users_2` FOREIGN KEY (`friend_user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_user_menu` (
@@ -190,13 +199,19 @@ class Config extends \Ilch\Config\Install
                 `user_one` INT(11) UNSIGNED NOT NULL,
                 `user_two` INT(11) UNSIGNED NOT NULL,
                 `time` DATETIME NOT NULL,
-                PRIMARY KEY (`c_id`)
+                PRIMARY KEY (`c_id`) USING BTREE,
+                INDEX `FK_[prefix]_users_dialog_[prefix]_users` (`user_one`) USING BTREE,
+                INDEX `FK_[prefix]_users_dialog_[prefix]_users_2` (`user_two`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_users_dialog_[prefix]_users` FOREIGN KEY (`user_one`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                CONSTRAINT `FK_[prefix]_users_dialog_[prefix]_users_2` FOREIGN KEY (`user_two`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog_hidden` (
                 `c_id` INT(11) UNSIGNED NOT NULL,
                 `user_id` INT(11) UNSIGNED NOT NULL,
-                `permanent` TINYINT(1) UNSIGNED NOT NULL
+                `permanent` TINYINT(1) UNSIGNED NOT NULL,
+                INDEX `FK_[prefix]_users_dialog_hidden_[prefix]_users` (`user_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_users_dialog_hidden_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog_reply` (
@@ -206,40 +221,48 @@ class Config extends \Ilch\Config\Install
                 `c_id_fk` INT(11) NOT NULL,
                 `time` DATETIME NOT NULL,
                 `read` TINYINT(1) DEFAULT 0,
-                PRIMARY KEY (`cr_id`)
+                PRIMARY KEY (`cr_id`) USING BTREE,
+                INDEX `FK_[prefix]_users_dialog_reply_[prefix]_users` (`user_id_fk`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_users_dialog_reply_[prefix]_users` FOREIGN KEY (`user_id_fk`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_users_media` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `user_id` INT(11) NOT NULL,
+                `user_id` INT(11) UNSIGNED NOT NULL,
                 `name` VARCHAR(50) NOT NULL DEFAULT 0,
                 `url` VARCHAR(150) NOT NULL DEFAULT 0,
                 `url_thumb` VARCHAR(150) NOT NULL DEFAULT 0,
                 `ending` VARCHAR(5) NOT NULL DEFAULT 0,
                 `datetime` DATETIME NOT NULL,
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`id`) USING BTREE,
+                INDEX `FK_[prefix]_users_media_[prefix]_users` (`user_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_users_media_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_users_gallery_imgs` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `user_id` INT(11) NOT NULL,
+                `user_id` INT(11) UNSIGNED NOT NULL,
                 `image_id` VARCHAR(150)NOT NULL,
                 `image_title` VARCHAR(255) NOT NULL DEFAULT \'\',
                 `image_description` VARCHAR(255) NOT NULL DEFAULT \'\',
                 `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
                 `visits` INT(11) NOT NULL DEFAULT 0,
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`id`) USING BTREE,
+                INDEX `FK_[prefix]_users_gallery_imgs_[prefix]_users` (`user_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_users_gallery_imgs_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_users_gallery_items` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `user_id` INT(11) NOT NULL,
+                `user_id` INT(11) UNSIGNED NOT NULL,
                 `sort` INT(11) NOT NULL DEFAULT 0,
                 `parent_id` INT(11) NOT NULL DEFAULT 0,
                 `type` TINYINT(1) NOT NULL,
                 `title` VARCHAR(255) NOT NULL,
                 `description` VARCHAR(255) NOT NULL,
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`id`) USING BTREE,
+                INDEX `FK_[prefix]_users_gallery_items_[prefix]_users` (`user_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_users_gallery_items_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_auth_tokens` (
@@ -247,8 +270,10 @@ class Config extends \Ilch\Config\Install
                 `selector` CHAR(12),
                 `token` CHAR(64),
                 `userid` INT(11) UNSIGNED NOT NULL,
-                `expires` DATETIME,
-                PRIMARY KEY (`id`)
+                `expires` DATETIME NULL DEFAULT NULL,
+                PRIMARY KEY (`id`) USING BTREE,
+                INDEX `FK_[prefix]_auth_tokens_[prefix]_users` (`userid`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_auth_tokens_[prefix]_users` FOREIGN KEY (`userid`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_cookie_stolen` (
@@ -277,14 +302,15 @@ class Config extends \Ilch\Config\Install
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_users_auth_providers` (
-                `user_id` INT(11) NOT NULL,
+                `user_id` INT(11) UNSIGNED NOT NULL,
                 `provider` VARCHAR(50) NOT NULL,
                 `identifier` VARCHAR(255) NOT NULL,
                 `screen_name` VARCHAR(255) DEFAULT NULL,
                 `oauth_token` VARCHAR(255) DEFAULT NULL,
                 `oauth_token_secret` VARCHAR(255) DEFAULT NULL,
                 `created_at` VARCHAR(45) DEFAULT NULL,
-                PRIMARY KEY (`user_id`, `provider`)
+                PRIMARY KEY (`user_id`, `provider`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_users_auth_providers_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_users_notifications` (
@@ -714,11 +740,6 @@ class Config extends \Ilch\Config\Install
                 }
 
                 // Delete rows in profile_trans with a field_id for a field that no longer exists.
-                $idsProfileFields = $this->db()->select('id')
-                    ->from('profile_fields')
-                    ->execute()
-                    ->fetchList();
-
                 $idsProfileTrans = $this->db()->select('field_id')
                     ->from('profile_trans')
                     ->execute()
@@ -734,11 +755,212 @@ class Config extends \Ilch\Config\Install
                 // Change column types and add FKCs.
                 $this->db()->queryMulti('ALTER TABLE `[prefix]_profile_content` MODIFY COLUMN `field_id` INT(11) UNSIGNED NOT NULL;
                         ALTER TABLE `[prefix]_profile_content` MODIFY COLUMN `user_id` INT(11) UNSIGNED NOT NULL;
-                        ALTER TABLE `[prefix]_profile_trans` MODIFY COLUMN `field_id` INT(11) UNSIGNED NOT NULL;');
-
-                $this->db()->queryMulti('ALTER TABLE `[prefix]_profile_content` ADD CONSTRAINT `FK_[prefix]_profile_content_[prefix]_profile_fields` FOREIGN KEY (`field_id`) REFERENCES `[prefix]_profile_fields` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                        ALTER TABLE `[prefix]_profile_trans` MODIFY COLUMN `field_id` INT(11) UNSIGNED NOT NULL;
+                        ALTER TABLE `[prefix]_profile_content` ADD CONSTRAINT `FK_[prefix]_profile_content_[prefix]_profile_fields` FOREIGN KEY (`field_id`) REFERENCES `[prefix]_profile_fields` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
                         ALTER TABLE `[prefix]_profile_content` ADD CONSTRAINT `FK_[prefix]_profile_content_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
                         ALTER TABLE `[prefix]_profile_trans` ADD CONSTRAINT `FK_[prefix]_profile_trans_[prefix]_profile_fields` FOREIGN KEY (`field_id`) REFERENCES `[prefix]_profile_fields` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+                // Add FKCs for users_groups, users_gallery_imgs, users_gallery_items, users_media, auth_tokens, visits_online, users_friends, users_dialog, users_dialog_reply and users_dialog_hidden.
+                // Delete orphaned rows in users_groups.
+                $idsGroups = $this->db()->select('id')
+                    ->from('groups')
+                    ->execute()
+                    ->fetchList();
+
+                $userIdsUserGroups = $this->db()->select('user_id')
+                    ->from('users_groups')
+                    ->execute()
+                    ->fetchList();
+
+                $groupIdsUserGroups = $this->db()->select('group_id')
+                    ->from('users_groups')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($userIdsUserGroups ?? [], $idsGroups ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('users_groups')
+                        ->where(['user_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                $orphanedRows = array_diff($groupIdsUserGroups ?? [], $idsGroups ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('users_groups')
+                        ->where(['group_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Delete orphaned rows in auth_tokens.
+                $userIdsAuthTokens = $this->db()->select('userid')
+                    ->from('auth_tokens')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($userIdsAuthTokens ?? [], $idsUsers ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('auth_tokens')
+                        ->where(['userid' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Delete orphaned rows in user_friends.
+                $userIdsUserFriends = $this->db()->select('user_id')
+                    ->from('user_friends')
+                    ->execute()
+                    ->fetchList();
+
+                $userIdsFriendsUserFriends = $this->db()->select('friend_user_id')
+                    ->from('user_friends')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($userIdsUserFriends ?? [], $userIdsFriendsUserFriends ?? [], $idsUsers ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('user_friends')
+                        ->where(['user_id' => $orphanedRows, 'friend_user_id' => $orphanedRows], 'or')
+                        ->execute();
+                }
+
+                // Delete orphaned rows in users_dialog, users_dialog_reply and users_dialog_hidden.
+                $userOneUsersDialog = $this->db()->select('user_one')
+                    ->from('users_dialog')
+                    ->execute()
+                    ->fetchList();
+
+                $userTwoUsersDialog = $this->db()->select('user_two')
+                    ->from('users_dialog')
+                    ->execute()
+                    ->fetchList();
+
+                $userIdUsersDialogReply = $this->db()->select('user_id_fk')
+                    ->from('users_dialog_reply')
+                    ->execute()
+                    ->fetchList();
+
+                $userIdUsersDialogHidden = $this->db()->select('user_id')
+                    ->from('users_dialog_hidden')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($userOneUsersDialog ?? [], $userTwoUsersDialog ?? [], $idsUsers ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('users_dialog')
+                        ->where(['user_one' => $orphanedRows, 'user_two' => $orphanedRows], 'or')
+                        ->execute();
+                }
+
+                $orphanedRows = array_diff($userIdUsersDialogReply ?? [], $idsUsers ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('users_dialog_reply')
+                        ->where(['user_id_fk' => $orphanedRows])
+                        ->execute();
+                }
+
+                $orphanedRows = array_diff($userIdUsersDialogHidden ?? [], $idsUsers ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('users_dialog_hidden')
+                        ->where(['user_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Delete orphaned rows in users_gallery_imgs, users_gallery_items and users_media.
+                $userIdUsersGalleryImgs = $this->db()->select('user_id')
+                    ->from('users_gallery_imgs')
+                    ->execute()
+                    ->fetchList();
+
+                $userIdUsersGalleryItems = $this->db()->select('user_id')
+                    ->from('users_gallery_items')
+                    ->execute()
+                    ->fetchList();
+
+                $userIdUsersMedia = $this->db()->select('user_id')
+                    ->from('users_media')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($userIdUsersGalleryImgs ?? [], $idsUsers ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('users_gallery_imgs')
+                        ->where(['user_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                $orphanedRows = array_diff($userIdUsersGalleryItems ?? [], $idsUsers ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('users_gallery_items')
+                        ->where(['user_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                $orphanedRows = array_diff($userIdUsersMedia ?? [], $idsUsers ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('users_media')
+                        ->where(['user_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Delete orphaned rows in users_auth_providers.
+                $userIdusersAuthProviders = $this->db()->select('user_id')
+                    ->from('users_auth_providers')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($userIdusersAuthProviders ?? [], $idsUsers ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('users_auth_providers')
+                        ->where(['user_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Delete orphaned rows in groups_access.
+                $groupIdsGroupsAccess = $this->db()->select('group_id')
+                    ->from('groups_access')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($groupIdsGroupsAccess ?? [], $idsGroups ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('groups_access')
+                        ->where(['group_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Change column types and add FKCs.
+                // user_groups
+                $this->db()->queryMulti('ALTER TABLE `[prefix]_users_groups` MODIFY COLUMN `user_id` INT(11) UNSIGNED NOT NULL;
+                        ALTER TABLE `[prefix]_users_groups` ADD CONSTRAINT `FK_[prefix]_users_groups_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                        ALTER TABLE `[prefix]_users_groups` ADD CONSTRAINT `FK_[prefix]_users_groups_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                        ALTER TABLE `[prefix]_users_groups` ADD CONSTRAINT `FK_[prefix]_groups_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+                // auth_tokens
+                $this->db()->queryMulti('ALTER TABLE `[prefix]_auth_tokens` ADD CONSTRAINT `FK_[prefix]_auth_tokens_[prefix]_users` FOREIGN KEY (`userid`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+                // user_friends
+                $this->db()->queryMulti('ALTER TABLE `[prefix]_user_friends` MODIFY COLUMN `user_id` INT(11) UNSIGNED NOT NULL;
+                        ALTER TABLE `[prefix]_user_friends` MODIFY COLUMN `friend_user_id` INT(11) UNSIGNED NOT NULL;
+                        ALTER TABLE `[prefix]_user_friends` ADD CONSTRAINT `FK_[prefix]_user_friends_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                        ALTER TABLE `[prefix]_user_friends` ADD CONSTRAINT `FK_[prefix]_user_friends_[prefix]_users_2` FOREIGN KEY (`friend_user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+                // users_dialog, users_dialog_reply and users_dialog_hidden
+                $this->db()->queryMulti('ALTER TABLE `[prefix]_users_dialog` ADD CONSTRAINT `FK_[prefix]_users_dialog_[prefix]_users` FOREIGN KEY (`user_one`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                        ALTER TABLE `[prefix]_users_dialog` ADD CONSTRAINT `FK_[prefix]_users_dialog_[prefix]_users` FOREIGN KEY (`user_two`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                        ALTER TABLE `[prefix]_users_dialog_reply` ADD CONSTRAINT `FK_[prefix]_users_dialog_reply_[prefix]_users` FOREIGN KEY (`user_id_fk`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                        ALTER TABLE `[prefix]_users_dialog_hidden` ADD CONSTRAINT `FK_[prefix]_users_dialog_hidden_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+                // users_gallery_imgs, users_gallery_items and users_media
+                $this->db()->queryMulti('ALTER TABLE `[prefix]_users_gallery_imgs` MODIFY COLUMN `user_id` INT(11) UNSIGNED NOT NULL;
+                        ALTER TABLE `[prefix]_users_gallery_items` MODIFY COLUMN `user_id` INT(11) UNSIGNED NOT NULL;
+                        ALTER TABLE `[prefix]_users_media` MODIFY COLUMN `user_id` INT(11) UNSIGNED NOT NULL;
+                        ALTER TABLE `[prefix]_users_gallery_imgs` ADD CONSTRAINT `FK_[prefix]_users_gallery_imgs_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                        ALTER TABLE `[prefix]_users_gallery_items` ADD CONSTRAINT `FK_[prefix]_users_gallery_items_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                        ALTER TABLE `[prefix]_users_media` ADD CONSTRAINT `FK_[prefix]_users_media_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+                // users_auth_providers
+                $this->db()->queryMulti('ALTER TABLE `[prefix]_users_auth_providers` MODIFY COLUMN `user_id` INT(11) UNSIGNED NOT NULL;
+                        ALTER TABLE `[prefix]_users_auth_providers` ADD CONSTRAINT `FK_[prefix]_users_auth_providers_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                break;
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

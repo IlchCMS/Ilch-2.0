@@ -345,10 +345,6 @@ class Panel extends BaseController
         $userMapper = new UserMapper();
         $authTokenMapper = new AuthTokenMapper();
         $statisticMapper = new StatisticMapper();
-        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
-        $authProviderMapper = new AuthProvider();
-        $friendsMapper = new FriendsMapper();
-        $dialogMapper = new DialogMapper();
 
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
@@ -376,14 +372,9 @@ class Panel extends BaseController
                     rmdir($path);
                 }
 
-                $profileFieldsContentMapper->deleteProfileFieldContentByUserId($userId);
-                $authProviderMapper->deleteUser($userId);
                 if ($userMapper->delete($userId)) {
-                    $authTokenMapper->deleteAllAuthTokenOfUser($userId);
+                    // AuthTokens, auth providers, profile field content, friends and dialogs connected to the user get deleted due to FKCs.
                     $statisticMapper->deleteUserOnline($userId);
-                    $friendsMapper->deleteFriendsByUserId($userId);
-                    $friendsMapper->deleteFriendByFriendUserId($userId);
-                    $dialogMapper->deleteAllOfUser($userId);
                 }
 
                 if (!empty($_COOKIE['remember'])) {
