@@ -16,7 +16,7 @@ use Modules\User\Models\User;
  */
 class Comments
 {
-    private $userCache = [];
+    private array $userCache = [];
 
     /**
      * Get the user or the dummy user if not existing.
@@ -84,9 +84,9 @@ class Comments
                                 <div class="fload-end text-muted small">
                                     <i class="fa-solid fa-reply fa-flip-vertical"></i> ' . $user_rep->getName() . '
                                 </div>
-                            </div>
-                            <p>'.nl2br($obj->escape($fk_comment->getText())) . '</p>
-                            <div>';
+                            </div>'
+                            . $obj->alwaysPurify($fk_comment->getText()) .
+                            '<div>';
             if ($obj->getUser() && !in_array($obj->getUser()->getId(), $voted)) {
                 $commentsHtml .= '
                                 <div class="btn-group">
@@ -148,10 +148,10 @@ class Comments
                                                 </div>
                                             </div>
                                             <p>
-                                                <textarea class="form-control"
+                                                <textarea class="form-control ckeditor"
                                                           style="resize: vertical"
                                                           name="comment_text"
-                                                          required></textarea>
+                                                          toolbar="ilch_html_frontend"></textarea>
                                                 <input type="hidden" name="fkId" value="' . $fk_comment->getId() . '" />
                                             </p>
                                             <div>
@@ -242,10 +242,10 @@ class Comments
                                         </p>
                                     </div>
                                     <p>
-                                        <textarea class="form-control"
+                                        <textarea class="form-control ckeditor"
                                                   style="resize: vertical"
                                                   name="comment_text"
-                                                  required></textarea>
+                                                  toolbar="ilch_html_frontend"></textarea>
                                     </p>
                                     <div>
                                         <div class="content_savebox">
@@ -284,9 +284,9 @@ class Comments
                                     <p class="text-muted small">
                                         <i class="fa-regular fa-clock" title="' . $layout->getTrans('commentDateTime') . '"></i> ' . $commentDate->format('d.m.Y - H:i', true) . '
                                     </p>
-                                </div>
-                                <p>'.nl2br($layout->escape($comment->getText())) . '</p>
-                                <div>';
+                                </div>'
+                                . $layout->alwaysPurify($comment->getText()) .
+                                '<div>';
 
             if ($layout->getUser() && !in_array($layout->getUser()->getId(), $voted)) {
                 $commentsHtml .= '
@@ -345,10 +345,10 @@ class Comments
                                                         </div>
                                                     </div>
                                                     <p>
-                                                        <textarea class="form-control"
+                                                        <textarea class="form-control ckeditor"
                                                                   style="resize: vertical"
                                                                   name="comment_text"
-                                                                  required></textarea>
+                                                                  toolbar="ilch_html_frontend"></textarea>
                                                         <input type="hidden" name="fkId" value="' . $comment->getId() . '" />
                                                     </p>
                                                     <div>
