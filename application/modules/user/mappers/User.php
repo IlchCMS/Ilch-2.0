@@ -591,7 +591,6 @@ class User extends \Ilch\Mapper
     {
         $user = new UserModel();
         $groups = new GroupMapper();
-        $user->setId('');
         $user->setName('No longer exist');
         $user->setAvatar('static/img/noavatar.jpg');
         //$user->setGroups(array(3));

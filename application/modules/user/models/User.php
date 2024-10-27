@@ -16,9 +16,9 @@ class User extends \Ilch\Model
     /**
      * The id of the user.
      *
-     * @var int
+     * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The username.
@@ -201,7 +201,7 @@ class User extends \Ilch\Model
      *
      * @return int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -209,10 +209,10 @@ class User extends \Ilch\Model
     /**
      * Saves the id of the user.
      *
-     * @param int $id
+     * @param int|null $id
      * @return User
      */
-    public function setId(int $id): User
+    public function setId(?int $id): User
     {
         $this->id = $id;
 

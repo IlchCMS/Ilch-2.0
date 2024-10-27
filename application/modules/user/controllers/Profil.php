@@ -26,7 +26,7 @@ class Profil extends \Ilch\Controller\Frontend
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
         $friendsMapper = new FriendsMapper();
 
-        $profil = $userMapper->getUserById($this->getRequest()->getParam('user'));
+        $profil = ($this->getRequest()->getParam('user')) ? $userMapper->getUserById($this->getRequest()->getParam('user')) : null;
 
         if ($profil) {
             $profileIconFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
