@@ -27,12 +27,12 @@ class Profil extends \Ilch\Controller\Frontend
         $friendsMapper = new FriendsMapper();
 
         $profil = $userMapper->getUserById($this->getRequest()->getParam('user'));
-        $profileIconFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
-        $profileFields = $profileFieldsMapper->getProfileFields(['type !=' => 2]);
-        $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($this->getRequest()->getParam('user'));
-        $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
 
         if ($profil) {
+            $profileIconFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
+            $profileFields = $profileFieldsMapper->getProfileFields(['type !=' => 2]);
+            $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($this->getRequest()->getParam('user'));
+            $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
             $commentsOnProfiles = $this->getConfig()->get('user_commentsOnProfiles');
 
             $this->getLayout()->getHmenu()
