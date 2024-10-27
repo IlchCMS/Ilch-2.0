@@ -8,6 +8,7 @@
 namespace Modules\User\Models;
 
 use Ilch\Accesses;
+use Ilch\Date;
 use Ilch\Request;
 
 class User extends \Ilch\Model
@@ -38,14 +39,14 @@ class User extends \Ilch\Model
      *
      * @var string
      */
-    protected $firstname;
+    protected string $firstname = '';
 
     /**
      * The lastname of the user.
      *
      * @var string
      */
-    protected $lastname;
+    protected string $lastname = '';
 
     /**
      * The gender of the user.
@@ -59,12 +60,12 @@ class User extends \Ilch\Model
      *
      * @var string
      */
-    protected $city;
+    protected string $city = '';
 
     /**
      * The \Ilch\Date of when the user got created.
      *
-     * @var \Ilch\Date
+     * @var Date
      */
     protected $birthday;
 
@@ -73,14 +74,14 @@ class User extends \Ilch\Model
      *
      * @var string
      */
-    protected $avatar;
+    protected string $avatar = '';
 
     /**
      * The signature of the user.
      *
      * @var string
      */
-    protected $signature;
+    protected string $signature = '';
 
     /**
      * The password of the user.
@@ -94,7 +95,7 @@ class User extends \Ilch\Model
      *
      * @var string
      */
-    protected $locale;
+    protected string $locale = '';
 
     /**
      * The opt_mail of the user.
@@ -128,21 +129,21 @@ class User extends \Ilch\Model
     /**
      * The \Ilch\Date of when the user got created.
      *
-     * @var \Ilch\Date
+     * @var Date
      */
     protected $dateCreated;
 
     /**
      * The \Ilch\Date of when the user got confirmed.
      *
-     * @var \Ilch\Date
+     * @var Date
      */
     protected $dateConfirmed;
 
     /**
      * LastActivity timestamp of the user.
      *
-     * @var \Ilch\Date
+     * @var Date
      */
     protected $dateLastActivity;
 
@@ -170,7 +171,7 @@ class User extends \Ilch\Model
     /**
      * date at which the confirmCode expires.
      *
-     * @var \Ilch\Date
+     * @var Date
      */
     protected $expires;
 
@@ -186,12 +187,12 @@ class User extends \Ilch\Model
      *
      * @var int
      */
-    protected $locked;
+    protected int $locked = 0;
 
     /**
      * Selects Delete timestamp of the user.
      *
-     * @var \Ilch\Date
+     * @var Date
      */
     protected $selectsdelete;
 
@@ -211,9 +212,9 @@ class User extends \Ilch\Model
      * @param int $id
      * @return User
      */
-    public function setId($id): User
+    public function setId(int $id): User
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -234,9 +235,9 @@ class User extends \Ilch\Model
      * @param string $username
      * @return User
      */
-    public function setName($username): User
+    public function setName(string $username): User
     {
-        $this->name = (string)$username;
+        $this->name = $username;
 
         return $this;
     }
@@ -257,9 +258,9 @@ class User extends \Ilch\Model
      * @param string $email
      * @return User
      */
-    public function setEmail($email): User
+    public function setEmail(string $email): User
     {
-        $this->email = (string)$email;
+        $this->email = $email;
 
         return $this;
     }
@@ -280,9 +281,9 @@ class User extends \Ilch\Model
      * @param string $password
      * @return User
      */
-    public function setPassword($password): User
+    public function setPassword(string $password): User
     {
-        $this->password = (string)$password;
+        $this->password = $password;
 
         return $this;
     }
@@ -292,7 +293,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -303,9 +304,9 @@ class User extends \Ilch\Model
      * @param string $locale
      * @return User
      */
-    public function setLocale($locale): User
+    public function setLocale(string $locale): User
     {
-        $this->locale = (string)$locale;
+        $this->locale = $locale;
 
         return $this;
     }
@@ -420,9 +421,9 @@ class User extends \Ilch\Model
      * @param int $confirmed
      * @return User
      */
-    public function setConfirmed($confirmed): User
+    public function setConfirmed(int $confirmed): User
     {
-        $this->confirmed = (int)$confirmed;
+        $this->confirmed = $confirmed;
 
         return $this;
     }
@@ -443,9 +444,9 @@ class User extends \Ilch\Model
      * @param string $confirmedCode
      * @return User
      */
-    public function setConfirmedCode($confirmedCode): User
+    public function setConfirmedCode(string $confirmedCode): User
     {
-        $this->confirmedCode = (string)$confirmedCode;
+        $this->confirmedCode = $confirmedCode;
 
         return $this;
     }
@@ -466,9 +467,9 @@ class User extends \Ilch\Model
      * @param string $selector
      * @return User
      */
-    public function setSelector($selector): User
+    public function setSelector(string $selector): User
     {
-        $this->selector = (string)$selector;
+        $this->selector = $selector;
 
         return $this;
     }
@@ -476,7 +477,7 @@ class User extends \Ilch\Model
     /**
      * Get date at which the confirm code expires.
      *
-     * @return \Ilch\Date
+     * @return Date
      */
     public function getExpires()
     {
@@ -512,7 +513,7 @@ class User extends \Ilch\Model
      * @param Group[] $groups
      * @return User
      */
-    public function setGroups($groups): User
+    public function setGroups(array $groups): User
     {
         $this->groups = $groups;
 
@@ -540,7 +541,7 @@ class User extends \Ilch\Model
      * @param int $groupId
      * @return bool
      */
-    public function hasGroup($groupId): bool
+    public function hasGroup(int $groupId): bool
     {
         if (!isset($this->groups[$groupId])) {
             return false;
@@ -552,7 +553,7 @@ class User extends \Ilch\Model
     /**
      * Returns the date_created \Ilch\Date of the user.
      *
-     * @return \Ilch\Date
+     * @return Date
      */
     public function getDateCreated()
     {
@@ -562,7 +563,7 @@ class User extends \Ilch\Model
     /**
      * Saves the date_created \Ilch\Date of the user.
      *
-     * @param \Ilch\Date $dateCreated
+     * @param Date $dateCreated
      * @return User
      */
     public function setDateCreated($dateCreated): User
@@ -575,7 +576,7 @@ class User extends \Ilch\Model
     /**
      * Returns the date_confirmed timestamp of the user.
      *
-     * @return \Ilch\Date
+     * @return Date
      */
     public function getDateConfirmed()
     {
@@ -585,7 +586,7 @@ class User extends \Ilch\Model
     /**
      * Saves the date_confirmed timestamp of the user.
      *
-     * @param \Ilch\Date $dateConfirmed
+     * @param Date $dateConfirmed
      * @return User
      */
     public function setDateConfirmed($dateConfirmed): User
@@ -598,7 +599,7 @@ class User extends \Ilch\Model
     /**
      * Returns the date_LastActivity timestamp of the user.
      *
-     * @return \Ilch\Date
+     * @return Date
      */
     public function getDateLastActivity()
     {
@@ -608,7 +609,7 @@ class User extends \Ilch\Model
     /**
      * Saves the date_LastActivity timestamp of the user.
      *
-     * @param \Ilch\Date $dateLastActivity
+     * @param Date $dateLastActivity
      * @return User
      */
     public function setDateLastActivity($dateLastActivity): User
@@ -623,7 +624,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstname;
     }
@@ -634,9 +635,9 @@ class User extends \Ilch\Model
      * @param string $firstname
      * @return User
      */
-    public function setFirstName($firstname): User
+    public function setFirstName(string $firstname): User
     {
-        $this->firstname = (string)$firstname;
+        $this->firstname = $firstname;
 
         return $this;
     }
@@ -646,7 +647,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastname;
     }
@@ -657,9 +658,9 @@ class User extends \Ilch\Model
      * @param string $lastname
      * @return User
      */
-    public function setLastName($lastname): User
+    public function setLastName(string $lastname): User
     {
-        $this->lastname = (string)$lastname;
+        $this->lastname = $lastname;
 
         return $this;
     }
@@ -680,9 +681,9 @@ class User extends \Ilch\Model
      * @param int $gender
      * @return User
      */
-    public function setGender($gender): User
+    public function setGender(int $gender): User
     {
-        $this->gender = (int)$gender;
+        $this->gender = $gender;
 
         return $this;
     }
@@ -692,7 +693,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getAvatar()
+    public function getAvatar(): string
     {
         return $this->avatar;
     }
@@ -703,9 +704,9 @@ class User extends \Ilch\Model
      * @param string $avatar
      * @return User
      */
-    public function setAvatar($avatar): User
+    public function setAvatar(string $avatar): User
     {
-        $this->avatar = (string)$avatar;
+        $this->avatar = $avatar;
 
         return $this;
     }
@@ -715,7 +716,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getSignature()
+    public function getSignature(): string
     {
         return $this->signature;
     }
@@ -726,9 +727,9 @@ class User extends \Ilch\Model
      * @param string $signature
      * @return User
      */
-    public function setSignature($signature): User
+    public function setSignature(string $signature): User
     {
-        $this->signature = (string)$signature;
+        $this->signature = $signature;
 
         return $this;
     }
@@ -738,7 +739,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
@@ -749,9 +750,9 @@ class User extends \Ilch\Model
      * @param string $city
      * @return User
      */
-    public function setCity($city): User
+    public function setCity(string $city): User
     {
-        $this->city = (string)$city;
+        $this->city = $city;
 
         return $this;
     }
@@ -759,7 +760,7 @@ class User extends \Ilch\Model
     /**
      * Returns the date_created \Ilch\Date of the user.
      *
-     * @return \Ilch\Date
+     * @return Date
      */
     public function getBirthday()
     {
@@ -772,7 +773,7 @@ class User extends \Ilch\Model
     /**
      * Saves the date_created \Ilch\Date of the user.
      *
-     * @param \Ilch\Date $birthday
+     * @param Date $birthday
      * @return User
      */
     public function setBirthday($birthday): User
@@ -787,7 +788,7 @@ class User extends \Ilch\Model
      *
      * @return int
      */
-    public function getLocked()
+    public function getLocked(): int
     {
         return $this->locked;
     }
@@ -795,10 +796,10 @@ class User extends \Ilch\Model
     /**
      * Set if user is locked
      *
-     * @param mixed $locked
+     * @param int $locked
      * @return User
      */
-    public function setLocked($locked): User
+    public function setLocked(int $locked): User
     {
         $this->locked = $locked;
 
@@ -808,7 +809,7 @@ class User extends \Ilch\Model
     /**
      * Returns the selectsdelete \Ilch\Date of the user.
      *
-     * @return \Ilch\Date
+     * @return Date
      */
     public function getSelectsDelete()
     {
@@ -818,7 +819,7 @@ class User extends \Ilch\Model
     /**
      * Saves the selectsdelete \Ilch\Date of the user.
      *
-     * @param \Ilch\Date $selectsdelete
+     * @param Date $selectsdelete
      * @return User
      */
     public function setSelectsDelete($selectsdelete): User
