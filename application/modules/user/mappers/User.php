@@ -259,6 +259,10 @@ class User extends \Ilch\Mapper
             $user->setOptMail($userRow['opt_mail']);
         }
 
+        if (isset($userRow['opt_comments'])) {
+            $user->setOptComments($userRow['opt_comments']);
+        }
+
         if (isset($userRow['opt_gallery'])) {
             $user->setOptGallery($userRow['opt_gallery']);
         }
@@ -380,6 +384,7 @@ class User extends \Ilch\Mapper
         $fields['signature'] = $user->getSignature();
         $fields['locale'] = $user->getLocale();
         $fields['opt_mail'] = $user->getOptMail();
+        $fields['opt_comments'] = $user->getOptComments();
         $fields['opt_gallery'] = $user->getOptGallery();
 
         $userId = (int)$this->db()->select('id')

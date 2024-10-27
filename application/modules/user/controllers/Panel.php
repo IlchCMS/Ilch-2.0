@@ -315,14 +315,16 @@ class Panel extends BaseController
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'optMail' => 'required|numeric|integer|min:0|max:1'
+                'optMail' => 'required|numeric|integer|min:0|max:1',
+                'optComments' => 'required|numeric|integer|min:0|max:1'
             ]);
 
             if ($validation->isValid()) {
                 $model = new UserModel();
                 $model->setId($this->getUser()->getId())
                     ->setLocale($this->getRequest()->getPost('locale'))
-                    ->setOptMail($this->getRequest()->getPost('optMail'));
+                    ->setOptMail($this->getRequest()->getPost('optMail'))
+                    ->setOptComments($this->getRequest()->getPost('optComments'));
                 $profilMapper->save($model);
 
                 $this->redirect()

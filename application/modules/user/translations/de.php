@@ -266,6 +266,7 @@ return [
     'emailSuccess' => 'E-Mail wurde erfolgreich versendet',
     'locale' => 'Sprache',
     'optMail' => 'E-Mail von anderen Usern?',
+    'optComments' => 'Kommentare auf Profil?',
     'writes' => 'schreibt',
 
     'cat' => 'Kategorie',

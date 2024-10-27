@@ -266,6 +266,7 @@ return [
     'emailSuccess' => 'E-Mail was successfully send',
     'locale' => 'Locale',
     'optMail' => 'E-Mail from other users?',
+    'optComments' => 'Comments on profile?',
     'writes' => 'writes',
 
     'cat' => 'Categorie',

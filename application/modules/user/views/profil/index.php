@@ -217,3 +217,10 @@ foreach ($profil->getGroups() as $group) {
         </div>
     </div>
 </div>
+
+<?php if ($profil->getOptComments() /* comments not disabled by user or globally */): ?>
+    <?php
+    $commentsClass = new Ilch\Comments();
+    echo $commentsClass->getComments(sprintf(Modules\User\Config\Config::COMMENT_KEY_TPL, $profil->getId()), $profil, $this);
+    ?>
+<?php endif; ?>

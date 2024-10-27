@@ -14,6 +14,8 @@ use Modules\User\Service\Password as PasswordService;
 
 class Config extends \Ilch\Config\Install
 {
+    const COMMENT_KEY_TPL = 'user/profil/index/user/%d';
+
     public $config = [
         'key' => 'user',
         'icon_small' => 'fa-solid fa-user',
@@ -102,6 +104,7 @@ class Config extends \Ilch\Config\Install
                 `signature` VARCHAR(255) NOT NULL DEFAULT "",
                 `locale` VARCHAR(255) NOT NULL DEFAULT "",
                 `opt_mail` TINYINT(1) DEFAULT 1,
+                `opt_comments` TINYINT(1) DEFAULT 1,
                 `opt_gallery` TINYINT(1) DEFAULT 1,
                 `date_created` DATETIME NOT NULL,
                 `date_confirmed` DATETIME NULL DEFAULT NULL,
@@ -960,6 +963,9 @@ class Config extends \Ilch\Config\Install
                 // users_auth_providers
                 $this->db()->queryMulti('ALTER TABLE `[prefix]_users_auth_providers` MODIFY COLUMN `user_id` INT(11) UNSIGNED NOT NULL;
                         ALTER TABLE `[prefix]_users_auth_providers` ADD CONSTRAINT `FK_[prefix]_users_auth_providers_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+
+                // Add new opt_comments column to users table.
+                $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `opt_comments` TINYINT(1) DEFAULT 1 AFTER `opt_mail`;');
                 break;
         }
 

@@ -104,6 +104,13 @@ class User extends \Ilch\Model
     protected $opt_mail;
 
     /**
+     * The opt_comments of the user.
+     *
+     * @var int
+     */
+    protected $opt_comments;
+
+    /**
      * The opt_gallery of the user.
      *
      * @var int
@@ -314,6 +321,28 @@ class User extends \Ilch\Model
     {
         $this->opt_mail = (string)$opt_mail;
 
+        return $this;
+    }
+
+    /**
+     * Returns the opt_comments of the user.
+     *
+     * @return int
+     */
+    public function getOptComments(): int
+    {
+        return $this->opt_comments;
+    }
+
+    /**
+     * Sets the opt_comments of the user.
+     *
+     * @param int $opt_comments
+     * @return $this
+     */
+    public function setOptComments(int $opt_comments): User
+    {
+        $this->opt_comments = $opt_comments;
         return $this;
     }
 
