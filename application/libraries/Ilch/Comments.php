@@ -86,7 +86,7 @@ class Comments
                                     <i class="fa-solid fa-reply fa-flip-vertical"></i> ' . $user_rep->getName() . '
                                 </div>
                             </div>'
-                            . $obj->alwaysPurify($fk_comment->getText()) .
+                            . nl2br($obj->alwaysPurify($fk_comment->getText())) .
                             '<div>';
             if ($obj->getUser() && !in_array($obj->getUser()->getId(), $voted)) {
                 $commentsHtml .= '
@@ -294,7 +294,7 @@ class Comments
                                         <i class="fa-regular fa-clock" title="' . $layout->getTrans('commentDateTime') . '"></i> ' . $commentDate->format('d.m.Y - H:i', true) . '
                                     </p>
                                 </div>'
-                                . $layout->alwaysPurify($comment->getText()) .
+                                . nl2br($layout->alwaysPurify($comment->getText())) .
                                 '<div>';
 
             if ($layout->getUser() && !in_array($layout->getUser()->getId(), $voted)) {
