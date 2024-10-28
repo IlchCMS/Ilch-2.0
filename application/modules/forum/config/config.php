@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.35.2',
+        'version' => '1.35.3',
         'icon_small' => 'fa-solid fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
@@ -170,7 +170,7 @@ class Config extends \Ilch\Config\Install
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `topic_id` INT(11) NOT NULL,
                 `forum_id` INT(11) NOT NULL DEFAULT 0,
-                `text` TEXT NOT NULL,
+                `text` MEDIUMTEXT NOT NULL,
                 `user_id` INT(10) NOT NULL,
                 `date_created` DATETIME NOT NULL,
                 PRIMARY KEY (`id`) USING BTREE,
@@ -926,6 +926,13 @@ class Config extends \Ilch\Config\Install
             case "1.34.5":
             case "1.34.6":
             case "1.34.7":
+            case "1.35.0":
+            case "1.35.1":
+            case "1.35.2":
+                // Change datatype of the text column from TEXT to MEDIUMTEXT. This obviously allows longer forum posts.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` MODIFY COLUMN `text` MEDIUMTEXT NOT NULL;');
+
+                // no break
         }
 
         return '"' . $this->config['key'] . '" Update function executed.';
