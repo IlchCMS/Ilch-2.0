@@ -6,6 +6,7 @@
 
 namespace Ilch;
 
+use Ilch\Design\Base;
 use Modules\Comment\Models\Comment as CommentModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
@@ -44,10 +45,10 @@ class Comments
      * @param int $commentId
      * @param int $uid
      * @param int $req
-     * @param $obj
+     * @param Base $obj
      * @return string
      */
-    private function rec(int $id, int $commentId, int $uid, int $req, $obj): string
+    private function rec(int $id, int $commentId, int $uid, int $req, Base $obj): string
     {
         $commentMappers = new CommentMapper();
         $fk_comments = $commentMappers->getCommentsByFKId($commentId);
@@ -114,6 +115,14 @@ class Comments
                                 <a href="javascript:slideReply(\'reply_' . $fk_comment->getId() . '\');" class="btn btn-sm btn-outline-secondary btn-hover-primary">
                                     <i class="fa-solid fa-reply"></i> ' . $obj->getTrans('reply') . '
                                 </a>';
+            }
+
+            if ($obj->getUser() && (($obj->getUser()->getId() === $obj->getRequest()->getParam('user')) || $obj->getUser()->isAdmin())) {
+                $commentsHtml .= '<div class="btn-group float-end">
+                                      <a href="' . $obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'deleteComment', 'user' => $obj->getUser()->getId(), 'id' => $fk_comment->getId()], null, true) . '" class="btn btn-sm btn-outline-secondary">
+                                          <i class="fa-solid fa-trash-can"></i> ' . $obj->getTrans('delete') . '
+                                      </a>
+                                  </div>';
             }
 
             $commentsHtml .= '
@@ -202,12 +211,12 @@ class Comments
      *
      * @param string $key comment key e.g. "article/index/show/id/1"
      * @param mixed $object e.g. an article model
-     * @param mixed $layout $this from within the view.
+     * @param Base $layout $this from within the view.
      * @return string the complete html for the comments
      * @throws Database\Exception
      * @since 2.1.37
      */
-    public function getComments(string $key, $object, $layout): string
+    public function getComments(string $key, $object, Base $layout): string
     {
         $commentMapper = new CommentMapper();
         $comments = $commentMapper->getCommentsByKey($key);
@@ -316,6 +325,15 @@ class Comments
                                         <i class="fa-solid fa-reply"></i> ' . $layout->getTrans('reply') . '
                                     </a>';
             }
+
+            if ($layout->getUser() && (($layout->getUser()->getId() === $layout->getRequest()->getParam('user')) || $layout->getUser()->isAdmin())) {
+                $commentsHtml .= '<div class="btn-group float-end">
+                                      <a href="' . $layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'deleteComment', 'user' => $layout->getUser()->getId(), 'id' => $comment->getId()], null, true) . '" class="btn btn-sm btn-outline-secondary">
+                                          <i class="fa-solid fa-trash-can"></i> ' . $layout->getTrans('delete') . '
+                                      </a>
+                                  </div>';
+            }
+
             $commentsHtml .= '
                                 </div>
                                 <hr />';

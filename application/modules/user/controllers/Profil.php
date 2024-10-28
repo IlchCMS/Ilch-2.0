@@ -14,6 +14,7 @@ use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
 use Modules\User\Mappers\Friends as FriendsMapper;
+use Modules\Comment\Mappers\Comment as CommentMapper;
 
 class Profil extends \Ilch\Controller\Frontend
 {
@@ -74,5 +75,22 @@ class Profil extends \Ilch\Controller\Frontend
         } else {
             $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'User', 'errorText' => 'notFound']);
         }
+    }
+
+    public function deleteCommentAction()
+    {
+        $commentMapper = new CommentMapper();
+
+        // Check if the request is secure, the user tries to delete a comment on his profile or is an administrator.
+        if ($this->getRequest()->isSecure() && (($this->getRequest()->getParam('user') == $this->getUser()->getId()) || $this->getUser()->isAdmin())) {
+            $commentMapper->delete($this->getRequest()->getParam('id'));
+
+            $this->redirect()
+                ->withMessage('deleteSuccess')
+                ->to(['action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
+        }
+
+        $this->redirect()
+            ->to(['action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
     }
 }
