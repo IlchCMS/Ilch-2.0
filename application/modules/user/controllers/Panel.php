@@ -6,6 +6,7 @@
 
 namespace Modules\User\Controllers;
 
+use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Models\User as UserModel;
 use Modules\User\Mappers\Dialog as DialogMapper;
@@ -344,6 +345,7 @@ class Panel extends BaseController
 
     public function deleteaccountAction()
     {
+        $commentMapper = new CommentMapper();
         $userMapper = new UserMapper();
         $authTokenMapper = new AuthTokenMapper();
         $statisticMapper = new StatisticMapper();
@@ -377,6 +379,7 @@ class Panel extends BaseController
                 if ($userMapper->delete($userId)) {
                     // AuthTokens, auth providers, profile field content, friends and dialogs connected to the user get deleted due to FKCs.
                     $statisticMapper->deleteUserOnline($userId);
+                    $commentMapper->deleteByKey('user/profil/index/user/' . $userId . '/');
                 }
 
                 if (!empty($_COOKIE['remember'])) {
