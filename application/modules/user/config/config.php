@@ -950,7 +950,7 @@ class Config extends \Ilch\Config\Install
 
                 // users_dialog, users_dialog_reply and users_dialog_hidden
                 $this->db()->queryMulti('ALTER TABLE `[prefix]_users_dialog` ADD CONSTRAINT `FK_[prefix]_users_dialog_[prefix]_users` FOREIGN KEY (`user_one`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
-                        ALTER TABLE `[prefix]_users_dialog` ADD CONSTRAINT `FK_[prefix]_users_dialog_[prefix]_users` FOREIGN KEY (`user_two`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
+                        ALTER TABLE `[prefix]_users_dialog` ADD CONSTRAINT `FK_[prefix]_users_dialog_[prefix]_users_2` FOREIGN KEY (`user_two`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
                         ALTER TABLE `[prefix]_users_dialog_reply` ADD CONSTRAINT `FK_[prefix]_users_dialog_reply_[prefix]_users` FOREIGN KEY (`user_id_fk`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;
                         ALTER TABLE `[prefix]_users_dialog_hidden` ADD CONSTRAINT `FK_[prefix]_users_dialog_hidden_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
 
