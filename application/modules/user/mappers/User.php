@@ -17,14 +17,14 @@ class User extends \Ilch\Mapper
     /**
      * Returns user model found by the id.
      *
-     * @param  int $id
+     * @param int $id
      * @return null|UserModel
      * @throws \Ilch\Database\Exception
      */
-    public function getUserById($id): ?UserModel
+    public function getUserById(int $id): ?UserModel
     {
         $where = [
-            'id' => (int)$id,
+            'id' => $id,
         ];
 
         $users = $this->getBy($where);
@@ -39,14 +39,14 @@ class User extends \Ilch\Mapper
     /**
      * Returns user model found by the username.
      *
-     * @param  string $name
+     * @param string $name
      * @return null|UserModel
      * @throws \Ilch\Database\Exception
      */
-    public function getUserByName($name): ?UserModel
+    public function getUserByName(string $name): ?UserModel
     {
         $where = [
-            'name' => (string)$name,
+            'name' => $name,
         ];
 
         $users = $this->getBy($where);
@@ -61,14 +61,14 @@ class User extends \Ilch\Mapper
     /**
      * Returns user model found by the email.
      *
-     * @param  string $email
+     * @param string $email
      * @return null|UserModel
      * @throws \Ilch\Database\Exception
      */
-    public function getUserByEmail($email): ?UserModel
+    public function getUserByEmail(string $email): ?UserModel
     {
         $where = [
-            'email' => (string)$email,
+            'email' => $email,
         ];
 
         $users = $this->getBy($where);
@@ -83,14 +83,14 @@ class User extends \Ilch\Mapper
     /**
      * Returns user model found by the selector.
      *
-     * @param  string $selector
+     * @param string $selector
      * @return null|UserModel
      * @throws \Ilch\Database\Exception
      */
-    public function getUserBySelector($selector): ?UserModel
+    public function getUserBySelector(string $selector): ?UserModel
     {
         $where = [
-            'selector' => (string)$selector,
+            'selector' => $selector,
         ];
 
         $users = $this->getBy($where);
@@ -105,13 +105,13 @@ class User extends \Ilch\Mapper
     /**
      * Get users (not all fields) by group id.
      *
-     * @param $groupId
+     * @param int $groupId
      * @param int $confirmed
      * @param null $pagination
      * @return array
      * @since 2.1.20
      */
-    public function getUserListByGroupId($groupId, $confirmed = 0, $pagination = null): array
+    public function getUserListByGroupId(int $groupId, int $confirmed = 0, $pagination = null): array
     {
         $select = $this->db()->select()
             ->fields(['u.id', 'u.name', 'u.opt_mail', 'u.date_created', 'u.date_last_activity', 'u.confirmed'])
@@ -146,12 +146,12 @@ class User extends \Ilch\Mapper
      * Returns an array with user models found by the where clause of false if
      * none found.
      *
-     * @param  array $where
+     * @param array $where
      * @param null $pagination
      * @return null|UserModel[]
      * @throws \Ilch\Database\Exception
      */
-    protected function getBy($where = [], $pagination = null): ?array
+    protected function getBy(array $where = [], $pagination = null): ?array
     {
         $select = $this->db()->select('*')
             ->from('users')
@@ -199,7 +199,7 @@ class User extends \Ilch\Mapper
      * @param array $userRow
      * @return UserModel
      */
-    public function loadFromArray($userRow = []): UserModel
+    public function loadFromArray(array $userRow = []): UserModel
     {
         $user = new UserModel();
 
@@ -257,6 +257,14 @@ class User extends \Ilch\Mapper
 
         if (isset($userRow['opt_mail'])) {
             $user->setOptMail($userRow['opt_mail']);
+        }
+
+        if (isset($userRow['opt_comments'])) {
+            $user->setOptComments($userRow['opt_comments']);
+        }
+
+        if (isset($userRow['admin_comments'])) {
+            $user->setAdminComments($userRow['admin_comments']);
         }
 
         if (isset($userRow['opt_gallery'])) {
@@ -380,6 +388,8 @@ class User extends \Ilch\Mapper
         $fields['signature'] = $user->getSignature();
         $fields['locale'] = $user->getLocale();
         $fields['opt_mail'] = $user->getOptMail();
+        $fields['opt_comments'] = $user->getOptComments();
+        $fields['admin_comments'] = $user->getAdminComments();
         $fields['opt_gallery'] = $user->getOptGallery();
 
         $userId = (int)$this->db()->select('id')
@@ -424,7 +434,7 @@ class User extends \Ilch\Mapper
      * @param string $homepage
      * @return string
      */
-    public function getHomepage($homepage): string
+    public function getHomepage(string $homepage): string
     {
         $homepage = trim($homepage);
         if (preg_match('~^https?://~', $homepage) === 0) {
@@ -449,12 +459,12 @@ class User extends \Ilch\Mapper
     /**
      * Returns a array of all user model objects.
      *
-     * @param array|mixed $where
+     * @param array $where
      * @param null $pagination
      * @return UserModel[]
      * @throws \Ilch\Database\Exception
      */
-    public function getUserList($where = [], $pagination = null): ?array
+    public function getUserList(array $where = [], $pagination = null): ?array
     {
         return $this->getBy($where, $pagination);
     }
@@ -462,10 +472,10 @@ class User extends \Ilch\Mapper
     /**
      * Returns whether a user exists.
      *
-     * @param  int $userId
+     * @param int $userId
      * @return bool True if a user with this id exists, false otherwise.
      */
-    public function userWithIdExists($userId): bool
+    public function userWithIdExists(int $userId): bool
     {
         return (bool)$this->db()->select('id')
             ->from('users')
@@ -480,7 +490,7 @@ class User extends \Ilch\Mapper
      * @param int $userId
      * @param int $groupId
      */
-    public function addUserToGroup($userId, $groupId)
+    public function addUserToGroup(int $userId, int $groupId)
     {
         $groupMapper = new GroupMapper();
 
@@ -497,7 +507,7 @@ class User extends \Ilch\Mapper
      * @param int $userId
      * @param int $groupId
      */
-    public function deleteUserToGroup($userId, $groupId)
+    public function deleteUserToGroup(int $userId, int $groupId)
     {
         $groupMapper = new GroupMapper();
 
@@ -530,10 +540,10 @@ class User extends \Ilch\Mapper
     /**
      * Delete all Selects Delete finally.
      *
-     * @param  int $timetodelete
+     * @param int $timetodelete
      * @return bool True if success, otherwise false.
      */
-    public function deleteselectsdelete($timetodelete = 5): bool
+    public function deleteselectsdelete(int $timetodelete = 5): bool
     {
         $date = new IlchDate();
         $statisticMapper = new StatisticMapper();
@@ -581,7 +591,6 @@ class User extends \Ilch\Mapper
     {
         $user = new UserModel();
         $groups = new GroupMapper();
-        $user->setId('');
         $user->setName('No longer exist');
         $user->setAvatar('static/img/noavatar.jpg');
         //$user->setGroups(array(3));

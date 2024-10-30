@@ -105,7 +105,8 @@ class Settings extends \Ilch\Controller\Admin
                     ->set('usergallery_allowed', $this->getRequest()->getPost('usergallery_allowed'))
                     ->set('usergallery_filetypes', strtolower($this->getRequest()->getPost('usergallery_filetypes')))
                     ->set('regist_rules', $this->getRequest()->getPost('regist_rules'))
-                    ->set('user_picturesPerPage', $this->getRequest()->getPost('picturesPerPage'));
+                    ->set('user_picturesPerPage', $this->getRequest()->getPost('picturesPerPage'))
+                    ->set('user_commentsOnProfiles', $this->getRequest()->getPost('commentsOnProfiles'));
                 $this->addMessage('saveSuccess');
             }
         }
@@ -123,6 +124,7 @@ class Settings extends \Ilch\Controller\Admin
             ->set('picturesPerPage', $this->getConfig()->get('user_picturesPerPage'))
             ->set('delete_time', $this->getConfig()->get('userdeletetime'))
             ->set('userGroupList_allowed', $this->getConfig()->get('userGroupList_allowed'))
-            ->set('userAvatarList_allowed', $this->getConfig()->get('userAvatarList_allowed'));
+            ->set('userAvatarList_allowed', $this->getConfig()->get('userAvatarList_allowed'))
+            ->set('commentsOnProfiles', $this->getConfig()->get('user_commentsOnProfiles'));
     }
 }

@@ -41,6 +41,7 @@ foreach ($profil->getGroups() as $group) {
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('../comment/static/css/comment.css') ?>" rel="stylesheet">
 
 <div class="profil">
     <div class="profil-header">
@@ -217,3 +218,11 @@ foreach ($profil->getGroups() as $group) {
         </div>
     </div>
 </div>
+
+<?php if ($profil->getOptComments() && $profil->getAdminComments() && $this->get('commentsOnProfiles')) : ?>
+    <?php
+    // Add comments if not disabled by the user or the admin either for this user or globally.
+    $commentsClass = new Ilch\Comments();
+    echo $commentsClass->getComments(sprintf(Modules\User\Config\Config::COMMENT_KEY_TPL, $profil->getId()), $profil, $this);
+    ?>
+<?php endif; ?>

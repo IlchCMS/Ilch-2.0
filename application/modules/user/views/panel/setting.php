@@ -31,17 +31,27 @@
                     </div>
                     <div class="col-xl-4">
                         <div class="flipswitch">
-                            <input type="radio" class="flipswitch-input" id="opt_mail_yes" name="optMail" value="1" <?php if ($this->getUser()->getOptMail() == '1') {
-    echo 'checked="checked"';
-} ?> />
+                            <input type="radio" class="flipswitch-input" id="opt_mail_yes" name="optMail" value="1" <?=($this->getUser()->getOptMail() == '1') ? 'checked="checked"' : '' ?> />
                             <label for="opt_mail_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                            <input type="radio" class="flipswitch-input" id="opt_mail_no" name="optMail" value="0" <?php if ($this->getUser()->getOptMail() == '0') {
-    echo 'checked="checked"';
-} ?> />
+                            <input type="radio" class="flipswitch-input" id="opt_mail_no" name="optMail" value="0" <?=($this->getUser()->getOptMail() == '0') ? 'checked="checked"' : '' ?> />
                             <label for="opt_mail_no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                             <span class="flipswitch-selection"></span>
                         </div>
                      </div>
+                </div>
+                <div class="row mb-3<?=$this->validation()->hasError('optComments') ? ' has-error' : '' ?>">
+                    <div class="col-xl-3 col-form-label">
+                        <?=$this->getTrans('optComments') ?>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="flipswitch">
+                            <input type="radio" class="flipswitch-input" id="opt_comments_yes" name="optComments" value="1" <?=($this->getUser()->getOptComments() == '1') ? 'checked="checked"' : '' ?> />
+                            <label for="opt_comments_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                            <input type="radio" class="flipswitch-input" id="opt_comments_no" name="optComments" value="0" <?=($this->getUser()->getOptComments() == '0') ? 'checked="checked"' : '' ?> />
+                            <label for="opt_comments_no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                            <span class="flipswitch-selection"></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="row mb-3">
                     <div class="offset-xl-3 col-xl-12">

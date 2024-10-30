@@ -198,6 +198,22 @@
             </div>
         </div>
     </div>
+
+    <h1><?=$this->getTrans('commentsOnProfiles') ?></h1>
+    <div class="row mb-3">
+        <div class="col-xl-2 col-form-label">
+            <?=$this->getTrans('commentsOnProfilesAllow') ?>
+        </div>
+        <div class="col-xl-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="commentsOnProfiles_yes" name="commentsOnProfiles" value="1" <?=($this->get('commentsOnProfiles') == '1') ? 'checked="checked"' : '' ?> />
+                <label for="commentsOnProfiles_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="commentsOnProfiles_no" name="commentsOnProfiles" value="0" <?=($this->get('commentsOnProfiles') == '0') ? 'checked="checked"' : '' ?> />
+                <label for="commentsOnProfiles_no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
     <?=$this->getSaveBar() ?>
 </form>
 

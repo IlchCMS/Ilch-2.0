@@ -6,6 +6,7 @@
 
 namespace Modules\User\Controllers\Admin;
 
+use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\AuthToken as AuthTokenMapper;
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
@@ -87,6 +88,7 @@ class Index extends \Ilch\Controller\Admin
         $pagination = new \Ilch\Pagination();
         $userMapper = new UserMapper();
         $statisticMapper = new StatisticMapper();
+        $commentMapper = new CommentMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index']);
@@ -99,6 +101,7 @@ class Index extends \Ilch\Controller\Admin
                     if (!$deleteUser->hasGroup(1) || $userMapper->getAdministratorCount() > 1) {
                         // AuthTokens, auth providers, friends and dialogs connected to the user get deleted due to FKCs.
                         $userMapper->delete($deleteUser->getId());
+                        $commentMapper->deleteByKey('user/profil/index/user/' . $userId . '/');
                         $statisticMapper->deleteUserOnline($deleteUser->getId());
                     }
                 }
@@ -371,7 +374,7 @@ class Index extends \Ilch\Controller\Admin
             $userId = $this->getRequest()->getParam('id');
         }
 
-        if ($userMapper->userWithIdExists($userId)) {
+        if ($userId && $userMapper->userWithIdExists($userId)) {
             $user = $userMapper->getUserById($userId);
 
             if ($user->isAdmin() && !$this->getUser()->isAdmin()) {
@@ -460,6 +463,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $userMapper = new UserMapper();
         $statisticMapper = new StatisticMapper();
+        $commentMapper = new CommentMapper();
 
         $userId = $this->getRequest()->getParam('id');
 
@@ -495,6 +499,7 @@ class Index extends \Ilch\Controller\Admin
                 if ($userMapper->delete($userId)) {
                     // AuthTokens, auth providers, profile field content, friends and dialogs connected to the user get deleted due to FKCs.
                     $statisticMapper->deleteUserOnline($userId);
+                    $commentMapper->deleteByKey('user/profil/index/user/' . $userId . '/');
                     $this->addMessage('delUserMsg');
                 }
             }
