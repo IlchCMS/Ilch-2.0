@@ -242,10 +242,10 @@ if (!empty($event)) {
                         <input type="hidden" name="id" value="<?= $this->escape($event->getId()) ?>">
                         <div style="margin-bottom: 10px; margin-top: 10px;">
                             <div class="col-xl-12">
-                                <textarea class="eventTextarea"
+                                <textarea class="eventTextarea form-control ckeditor"
                                           name="commentEvent"
                                           placeholder="<?=$this->getTrans('writeToEvent') ?>"
-                                          required></textarea>
+                                          toolbar="ilch_html_frontend"></textarea>
                             </div>
                         </div>
                         <div class="col-xl-12 eventSubmit">
@@ -257,7 +257,7 @@ if (!empty($event)) {
                 </div>
             <?php endif; ?>
 
-            <?php if ($this->get('eventComments') != '') : ?>
+            <?php if ($this->get('eventComments')) : ?>
                 <div class="eventBoxHead">
                     <strong><?=$this->getTrans('comments') ?></strong>
                 </div>
@@ -278,7 +278,7 @@ if (!empty($event)) {
                             <a href="<?=$this->getUrl('user/profil/index/user/' . $commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a><br />
                             <span class="small"><?=$commentDate->format('Y.m.d H:i', true) ?></span>
                         </div>
-                        <div class="commentEventText"><?=nl2br($this->escape($eventComment->getText())) ?></div>
+                        <div class="commentEventText"><?=nl2br($this->alwaysPurify($eventComment->getText())) ?></div>
                     </div>
                     <br />
                 <?php endforeach; ?>
