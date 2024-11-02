@@ -37,5 +37,5 @@ return [
     'addServices' => 'Dienste hinzufügen',
     'removeServices' => 'Dienste entfernen',
     'removeAllServices' => 'Alle Dienste entfernen',
-    'servicesNeededModificationsDesc' => 'Wenn Sie einen oder mehrere Dienste ausgewählt haben, müssen Sie noch die Einbindung der Dienste anpassen. Lesen Sie hierzu mehr auf folgender Seite: <a href="https://tarteaucitron.io/en/install/">tarteaucitron.io/en/install/</a>',
+    'servicesNeededModificationsDesc' => 'Wenn Sie einen oder mehrere Dienste ausgewählt haben, müssen Sie noch die Einbindung der Dienste anpassen. Lesen Sie hierzu mehr auf folgender Seite: <a href="https://tarteaucitron.io/en/install/" target="_blank" rel="noopener">tarteaucitron.io/en/install/</a>',
 ];
