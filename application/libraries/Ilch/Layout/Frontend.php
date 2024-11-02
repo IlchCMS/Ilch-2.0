@@ -625,9 +625,18 @@ class Frontend extends Base
                         iconPosition: "' . $this->escape($this->getConfigKey('cookie_icon_pos')) . '",
                         ' . ($this->getConfigKey('cookieConsentType') == 'opt-in' ? 'highPrivacy: true,' : ($this->getConfigKey('cookieConsentType') == 'opt-out' ? 'highPrivacy: false,' : '')) . '
                         ' . ($this->getConfigKey('cookieConsentType') == 'opt-in' ? 'AcceptAllCta: true,' : ($this->getConfigKey('cookieConsentType') == 'opt-out' ? 'AcceptAllCta: false,' : '')) . '
-                    });
+                    })
                 </script>
                 ';
+
+            if ($this->getConfigKey('cookie_consent_services')) {
+                $services = explode(',', $this->getConfigKey('cookie_consent_services'));
+                $html .= '<script>';
+                foreach ($services as $service) {
+                    $html .= '(tarteaucitron.job = tarteaucitron.job || []).push("' . $this->escape($service) . '");';
+                }
+                $html .= '</script>';
+            }
         }
 
         return $html;
