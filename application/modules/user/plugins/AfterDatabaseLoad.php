@@ -42,7 +42,7 @@ class AfterDatabaseLoad
         }
 
         $mapper = new UserMapper();
-        $user = $mapper->getUserById($userId);
+        $user = ($userId) ? $mapper->getUserById($userId) : null;
 
         Registry::set('user', $user);
 

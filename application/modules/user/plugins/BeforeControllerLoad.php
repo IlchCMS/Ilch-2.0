@@ -24,7 +24,7 @@ class BeforeControllerLoad
             return;
         }
 
-        $userId = 0;
+        $userId = null;
 
         if (isset($_SESSION['user_id'])) {
             $userId = (int) $_SESSION['user_id'];
@@ -37,7 +37,7 @@ class BeforeControllerLoad
         }
 
         $userMapper = new UserMapper();
-        $user = $userMapper->getUserById($userId);
+        $user = ($userId) ? $userMapper->getUserById($userId) : null;
 
         if (!\is_object($user)) {
             // Happens rarely, for example if a user id is saved in the session before reinstalling and the cms got just installed.
@@ -45,16 +45,12 @@ class BeforeControllerLoad
         }
 
         if ($user->isAdmin()) {
-            /*
-             * Administrator group should have sight on everything, return here.
-             */
+            // Administrator group should have sight on everything, return here.
             return;
         }
 
         if ($request->isAdmin() && !$user->isAdmin()) {
-            /*
-             * Not admins have only access to modules.
-             */
+            // Not admins have only access to modules.
             if ($request->getModuleName() === 'admin' && !\in_array($request->getControllerName(), ['index', 'login', 'page', 'boxes'])) {
                 $pluginData['controller']->redirect()->withMessage('noRights', 'danger')->to(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
             }
@@ -69,9 +65,7 @@ class BeforeControllerLoad
                 $pluginData['controller']->redirect()->withMessage('noRights', 'danger')->to(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
             }
 
-            /*
-             * Check if user has right for this module.
-             */
+            // Check if user has right for this module.
             if (!$user->hasAccess('module_' . $request->getModuleName()) && $request->getModuleName() !== 'admin' && $request->getModuleName() !== 'article') {
                 $pluginData['controller']->redirect()->withMessage('noRights', 'danger')->to(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
             }
