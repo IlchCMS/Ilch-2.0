@@ -99,7 +99,16 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
                                                 }
                                             }
 
-                                            echo '<a href="' . $profileIconField->getAddition() . $profileFieldContent->getValue() . '" target="_blank" rel="noopener" class="' . $profileIconField->getIcon() . ' fa-lg user-link" title="' . $profileFieldName . '"></a>';
+                                            // Using this code instead of for example str_replace to only replace the addition once.
+                                            // Example: addition = "https://discord.gg/", value = "https://discord.gg/username". The user entered the complete URL instead of just the username.
+                                            $profileFieldContentValue = $profileFieldContent->getValue();
+                                            $pos = strpos($profileFieldContent->getValue(), $profileIconField->getAddition());
+
+                                            if ($pos !== false) {
+                                                $profileFieldContentValue = substr_replace($profileFieldContent->getValue(), '', $pos, $profileIconField->getAddition());
+                                            }
+
+                                            echo '<a href="' . $profileFieldContentValue . '" target="_blank" rel="noopener" class="' . $profileIconField->getIcon() . ' fa-lg user-link" title="' . $profileFieldName . '"></a>';
                                             break;
                                         }
                                     }
