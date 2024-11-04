@@ -187,23 +187,12 @@
         }
     });
 
-    function removeSelectedServices()
-    {
+    document.getElementById("removeButton").addEventListener("click", () => {
         for (let i = selectSelectedServices.selectedOptions.length - 1; i >= 0; i--) {
             selectSelectedServices.selectedOptions[i].remove();
         }
         for (let option of selectSelectedServices.options) {
             option.selected = true;
-        }
-    }
-
-    document.getElementById("removeButton").addEventListener("click", () => {
-        removeSelectedServices();
-    });
-
-    selectSelectedServices.addEventListener("keyup", (e) => {
-        if (e.keyCode === 46) {
-            removeSelectedServices();
         }
     });
 
