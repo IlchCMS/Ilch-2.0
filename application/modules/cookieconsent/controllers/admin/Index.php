@@ -57,7 +57,8 @@ class Index extends \Ilch\Controller\Admin
                     ->set('cookie_consent_popup_text_color', $this->getRequest()->getPost('cookieConsentPopUpTextColor'))
                     ->set('cookie_consent_btn_bg_color', $this->getRequest()->getPost('cookieConsentBtnBGColor'))
                     ->set('cookie_consent_btn_text_color', $this->getRequest()->getPost('cookieConsentBtnTextColor'))
-                    ->set('cookie_consent_type', $this->getRequest()->getPost('cookieConsentType'));
+                    ->set('cookie_consent_type', $this->getRequest()->getPost('cookieConsentType'))
+                    ->set('cookie_consent_services', implode(',', $this->getRequest()->getPost('cookieConsentServices')) ?? '');
 
                 $this->redirect()
                     ->withMessage('saveSuccess')
@@ -78,6 +79,7 @@ class Index extends \Ilch\Controller\Admin
             ->set('cookieConsentPopUpTextColor', $this->getConfig()->get('cookie_consent_popup_text_color'))
             ->set('cookieConsentBtnBGColor', $this->getConfig()->get('cookie_consent_btn_bg_color'))
             ->set('cookieConsentBtnTextColor', $this->getConfig()->get('cookie_consent_btn_text_color'))
-            ->set('cookieConsentType', $this->getConfig()->get('cookie_consent_type'));
+            ->set('cookieConsentType', $this->getConfig()->get('cookie_consent_type'))
+            ->set('cookieConsentServices', $this->getConfig()->get('cookie_consent_services') ? explode(',', $this->getConfig()->get('cookie_consent_services')) : []);
     }
 }

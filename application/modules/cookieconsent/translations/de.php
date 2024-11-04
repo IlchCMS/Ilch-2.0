@@ -31,4 +31,11 @@ return [
     'cookieConsentLocale' => 'Sprache',
     'cookieConsentDesc' => 'Beschreibung',
     'cookieConsentText' => 'Richtlinien',
+    'cookieConsentServices' => 'Auswahl der Dienste',
+    'cookieConsentAvailableServices' => 'Verfügbare Dienste',
+    'cookieConsentSelectedServices' => 'Ausgewählte Dienste',
+    'addServices' => 'Dienste hinzufügen',
+    'removeServices' => 'Dienste entfernen',
+    'removeAllServices' => 'Alle Dienste entfernen',
+    'servicesNeededModificationsDesc' => 'Wenn Sie einen oder mehrere Dienste ausgewählt haben, müssen Sie noch die Einbindung der Dienste anpassen. Lesen Sie hierzu mehr auf folgender Seite: <a href="https://tarteaucitron.io/en/install/" target="_blank" rel="noopener">tarteaucitron.io/en/install/</a>',
 ];

@@ -58,6 +58,29 @@
             </select>
         </div>
     </div>
+    <div class="row mb-3 col-xl-5">
+        <label for="serviceSelection" class="col-xl-2 col-form-label">
+            <?=$this->getTrans('cookieConsentServices') ?>:
+        </label>
+        <div id="serviceSelection" class="row mb-3">
+            <div class="col-xl-5">
+                <select id="selectAvailableServices" class="form-select" size="10" multiple aria-label="<?=$this->getTrans('cookieConsentAvailableServices') ?>"></select>
+            </div>
+            <div class="col-auto">
+                <p><button type="button" class="btn btn-secondary" id="addButton" title="<?=$this->getTrans('addServices') ?>"><i class="fa-solid fa-arrow-right"></i></button></p>
+                <p><button type="button" class="btn btn-secondary" id="removeButton" title="<?=$this->getTrans('removeServices') ?>"><i class="fa-solid fa-arrow-left"></i></button></p>
+                <p><button type="button" class="btn btn-secondary" id="removeAllButton" title="<?=$this->getTrans('removeAllServices') ?>"><i class="fa-solid fa-backward-fast"></i></button></p>
+            </div>
+            <div class="col-xl-5">
+                <select id="selectSelectedServices" name="cookieConsentServices[]" class="form-select" size="10" multiple aria-label="<?=$this->getTrans('cookieConsentSelectedServices') ?>">
+                    <?php foreach ($this->get('cookieConsentServices') as $service): ?>
+                        <option value="<?=$service ?>" selected></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    </div>
+    <p><?=$this->getTrans('servicesNeededModificationsDesc') ?></p>
 
     <h1><?=$this->getTrans('cookieConsentPopUp') ?></h1>
     <div class="row mb-3<?=$this->validation()->hasError('cookieConsentPopUpBGColor') ? ' has-error' : '' ?>">
@@ -125,4 +148,55 @@
     <?=$this->getSaveBar() ?>
 </form>
 
+<script src="<?=$this->getStaticUrl('js/tarteaucitron/build/tarteaucitron.min.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/tarteaucitron/build/tarteaucitron.services.min.js') ?>"></script>
 <script src="<?=$this->getStaticUrl('js/jscolor/jscolor.min.js') ?>"></script>
+
+<script>
+    let services = Object.entries(tarteaucitron.services).sort();
+    let selectAvailableServices = document.getElementById("selectAvailableServices");
+    let selectSelectedServices = document.getElementById("selectSelectedServices");
+
+    services.forEach(item => {
+        let option = document.createElement("option");
+        option.value = item[1].key;
+        option.text = item[1].name;
+        selectAvailableServices.appendChild(option);
+
+        for (let selectedItem of selectSelectedServices.selectedOptions) {
+            if (item[1].key === selectedItem.value) {
+                selectedItem.text = item[1].name;
+                return;
+            }
+        }
+    });
+
+    document.getElementById("addButton").addEventListener("click", () => {
+        availableServices: for (let item of selectAvailableServices.selectedOptions) {
+            for (let selectedItem of selectSelectedServices.selectedOptions) {
+                if (item.value === selectedItem.value) {
+                    continue availableServices;
+                }
+            }
+
+            let option = document.createElement("option");
+            option.value = item.value;
+            option.text = item.text;
+            option.setAttribute('selected', '');
+            selectSelectedServices.appendChild(option);
+        }
+    });
+
+    document.getElementById("removeButton").addEventListener("click", () => {
+        for (let i = selectSelectedServices.selectedOptions.length - 1; i >= 0; i--) {
+            selectSelectedServices.selectedOptions[i].remove();
+        }
+        for (let option of selectSelectedServices.options) {
+            option.selected = true;
+        }
+    });
+
+    document.getElementById("removeAllButton").addEventListener("click", () => {
+        selectSelectedServices.length = 0;
+    });
+</script>
