@@ -483,4 +483,16 @@ class BasePurifyTest extends TestCase
         $output = $this->view->purify('<figure class="media"><div data-oembed-url="http://bad.url/ilch-bs5-ck5/application/modules/media/static/upload/65e2c095300cdDSCN0918.mov"><div style="position:relative; padding-bottom:100%; height:0"><video style="position:absolute; width:100%; height:100%; top:0; left:0" controls="" src="http://bad.url/65e2c095300cdDSCN0918.mov"></video></div></div></figure>');
         self::assertEquals('<figure class="media"><div><div style="position:relative;padding-bottom:100%;height:0;"><video style="position:absolute;width:100%;height:100%;top:0;left:0;" controls=""></video></div></div></figure>', $output);
     }
+
+    public function testPurifyGoogleMaps()
+    {
+        $output = $this->view->purify('<div style="width:100%;"><iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street,%20Dublin,%20Ireland+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe></div>');
+        self::assertEquals('<div style="width:100%;"><iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street,%20Dublin,%20Ireland+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe></div>', $output);
+    }
+
+    public function testPurifyGoogleMapsVariant()
+    {
+        $output = $this->view->purify('<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d155421.70603670573!2d13.259929971252207!3d52.506938616502325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a84e373f035901%3A0x42120465b5e3b70!2sBerlin!5e0!3m2!1sde!2sde!4v1731237633185!5m2!1sde!2sde" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>');
+        self::assertEquals('<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d155421.70603670573!2d13.259929971252207!3d52.506938616502325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a84e373f035901%3A0x42120465b5e3b70!2sBerlin!5e0!3m2!1sde!2sde!4v1731237633185!5m2!1sde!2sde" width="600" height="450" style="border:0;" allowfullscreen=""></iframe>', $output);
+    }
 }
