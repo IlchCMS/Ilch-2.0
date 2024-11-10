@@ -112,6 +112,10 @@ class Page
             $this->router->defineStartPage($databaseConfig->get('start_page'), $this->translator);
             if ($databaseConfig->get('domain')) {
                 $this->view->initializeHtmlPurifier($databaseConfig);
+                $this->layout->initializeHtmlPurifier($databaseConfig);
+            } else {
+                $this->view->initializeHtmlPurifier();
+                $this->layout->initializeHtmlPurifier();
             }
         } else {
             // Cms not installed yet.

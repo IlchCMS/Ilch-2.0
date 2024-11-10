@@ -96,7 +96,6 @@ abstract class Base
             $baseUrl = BASE_URL;
         }
         $this->baseUrl = $baseUrl;
-        $this->initializeHtmlPurifier();
     }
 
     /**
@@ -133,7 +132,7 @@ abstract class Base
      */
     public function initializeHtmlPurifier(?Database $databaseConfig = null): void
     {
-        $safeIframeRegexp = '%(?|(^(http://|https://)localhost)|(^https://(youtube.com/|www.youtube.com/|www.youtube.com/embed/|www.youtube-nocookie.com/embed/|youtu.be/|vimeo.com/|player.vimeo.com/video/|open.spotify.com/artist/|open.spotify.com/album/|open.spotify.com/track/|open.spotify.com/embed/|www.dailymotion.com/video/|www.dailymotion.com/embed/video/|dai.ly/|maps.google.com/)))%';
+        $safeIframeRegexp = '%(?|(^(http://|https://)localhost)|(^https://(youtube.com/|www.youtube.com/|www.youtube.com/embed/|www.youtube-nocookie.com/embed/|youtu.be/|vimeo.com/|player.vimeo.com/video/|open.spotify.com/artist/|open.spotify.com/album/|open.spotify.com/track/|open.spotify.com/embed/|www.dailymotion.com/video/|www.dailymotion.com/embed/video/|dai.ly/|maps.google.com/|www.google.com/maps/)))%';
 
         // HTML Purifier configuration
         $this->purifierConfig = \HTMLPurifier_Config::createDefault();
