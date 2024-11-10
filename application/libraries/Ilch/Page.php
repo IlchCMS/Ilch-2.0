@@ -110,13 +110,8 @@ class Page
             $this->plugin->addPluginData('translator', $this->translator);
             $this->plugin->execute('AfterDatabaseLoad');
             $this->router->defineStartPage($databaseConfig->get('start_page'), $this->translator);
-            if ($databaseConfig->get('domain')) {
-                $this->view->initializeHtmlPurifier($databaseConfig);
-                $this->layout->initializeHtmlPurifier($databaseConfig);
-            } else {
-                $this->view->initializeHtmlPurifier();
-                $this->layout->initializeHtmlPurifier();
-            }
+            $this->view->initializeHtmlPurifier($databaseConfig);
+            $this->layout->initializeHtmlPurifier($databaseConfig);
         } else {
             // Cms not installed yet.
             $this->request->setModuleName('install');
