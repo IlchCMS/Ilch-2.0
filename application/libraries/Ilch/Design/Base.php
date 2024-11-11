@@ -141,9 +141,17 @@ abstract class Base
         $this->purifierConfig->set('HTML.SafeIframe', true);
         $this->purifierConfig->set('URI.AllowedSchemes', ['data' => true, 'http' => true, 'https' => true, 'mailto' => true, 'src' => true]);
 
-        if ($databaseConfig && $databaseConfig->get('domain')) {
-            $safeIframeRegexp = str_replace('^(http://|https://)localhost)', '^(http://|https://)localhost)|^(http://|https://)' . $databaseConfig->get('domain'), $safeIframeRegexp);
+        // Add domain or other additional domains to safeIframeRegexp.
+        if ($databaseConfig) {
+            if ($databaseConfig->get('domain')) {
+                $safeIframeRegexp = str_replace('^(http://|https://)localhost)', '^(http://|https://)localhost)|^(http://|https://)' . $databaseConfig->get('domain'), $safeIframeRegexp);
+            }
+
+            if ($databaseConfig->get('htmlPurifier_additionalDomains')) {
+                $safeIframeRegexp = str_replace(')))%', '|' . $databaseConfig->get('htmlPurifier_additionalDomains') . ')))%', $safeIframeRegexp);
+            }
         }
+
         $this->purifierConfig->set('URI.SafeIframeRegexp', $safeIframeRegexp);
         $this->purifierConfig->set('Attr.AllowedFrameTargets', '_blank, _self, _target, _parent');
         $this->purifierConfig->set('Attr.EnableID', true);

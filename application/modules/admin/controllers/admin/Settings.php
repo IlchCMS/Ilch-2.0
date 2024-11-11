@@ -504,6 +504,27 @@ HTACCESS;
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuHtmlPurifier'), ['action' => 'htmlpurifier']);
 
+        if ($this->getRequest()->isPost()) {
+            foreach ($this->getRequest()->getPost('additionalDomains') ?? [] as $additionalDomain) {
+                $validation = Validation::create(['additionalDomains' => $additionalDomain], [
+                    'additionalDomains' => 'domain',
+                ]);
+
+                if (!$validation->isValid()) {
+                    $this->addMessage('htmlPurifierInvalidDomain', 'danger');
+                    $this->redirect()
+                        ->to(['action' => 'htmlpurifier']);
+                    break;
+                }
+            }
+
+            if (!empty($validation) && $validation->isValid()) {
+                $this->addMessage('saveSuccess');
+            }
+
+            $this->getConfig()->set('htmlPurifier_additionalDomains', implode('|', $this->getRequest()->getPost('additionalDomains') ?? []));
+        }
+
         $htmlPurifier = $this->getView()->getPurifier();
         $urlsConsideredSafe = explode('|', $htmlPurifier->config->get('URI.SafeIframeRegexp'));
         $urlsConsideredSafe = str_replace(['^', 'https://', 'http://', '%', '(', ')', '?'], '', $urlsConsideredSafe);
@@ -511,5 +532,6 @@ HTACCESS;
 
         $this->getView()->set('domain', $this->getConfig()->get('domain'));
         $this->getView()->set('urlsConsideredSafe', $urlsConsideredSafe);
+        $this->getView()->set('additionalDomains', ($this->getConfig()->get('htmlPurifier_additionalDomains')) ? explode('|', $this->getConfig()->get('htmlPurifier_additionalDomains')) : []);
     }
 }
