@@ -203,7 +203,7 @@ class User extends \Ilch\Mapper
     {
         $user = new UserModel();
 
-        if (isset($userRow['id'])) {
+        if (!empty($userRow['id'])) {
             $user->setId($userRow['id']);
         }
 
