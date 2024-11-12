@@ -514,15 +514,14 @@ HTACCESS;
                     $this->addMessage('htmlPurifierInvalidDomain', 'danger');
                     $this->redirect()
                         ->to(['action' => 'htmlpurifier']);
-                    break;
                 }
             }
 
-            if (!empty($validation) && $validation->isValid()) {
-                $this->addMessage('saveSuccess');
-            }
-
             $this->getConfig()->set('htmlPurifier_additionalDomains', implode('|', $this->getRequest()->getPost('additionalDomains') ?? []));
+
+            $this->addMessage('saveSuccess');
+            $this->redirect()
+                ->to(['action' => 'htmlpurifier']);
         }
 
         $htmlPurifier = $this->getView()->getPurifier();
