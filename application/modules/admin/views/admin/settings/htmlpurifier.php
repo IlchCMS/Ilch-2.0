@@ -36,10 +36,10 @@
     <div class="col-xl-4">
         <ul class="list-group" id="domainList">
             <?php foreach ($this->get('additionalDomains') as $index => $domain) : ?>
-                <li class="list-group-item list-group-item-info" id="additionalDomain-<?= $index ?>"><?= $domain ?><i class="delete text-danger float-end fa-regular fa-trash-can"></i></li>
+                <li class="list-group-item list-group-item-info" id="additionalDomain-<?= $index ?>"><?= $this->escape($domain) ?><i class="delete text-danger float-end fa-regular fa-trash-can"></i></li>
             <?php endforeach; ?>
             <?php foreach ($this->get('urlsConsideredSafe') as $url) : ?>
-                <li class="list-group-item"><?= $url ?></li>
+                <li class="list-group-item"><?= $this->escape($url) ?></li>
             <?php endforeach; ?>
         </ul>
     </div>
