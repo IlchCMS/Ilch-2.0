@@ -749,4 +749,34 @@ abstract class Base
 
         return $html;
     }
+
+    public function getErrors(): string
+    {
+        $html = '';
+        $messages = [];
+
+        if (!empty($_SESSION['messages'])) {
+            $messages = $_SESSION['messages'];
+        }
+
+        foreach ($messages as $key => $message) {
+            $html .= '<div class="alert alert-' . $message['type'] . ' alert-dismissible fade show" role="alert">';
+            if (!empty($message['validationError']) && $message['validationError'] == true) {
+                $text = '<b>' . $this->getTrans('errorsOccured') . '</b>';
+                $text .= '<ul>';
+                foreach ($message['text'] as $messageText) {
+                    $text .= '<li>' . $messageText . '</li>';
+                }
+                $text .= '</ul>';
+                $html .= $text;
+            } else {
+                $html .= $this->escape($message['text']);
+            }
+            $html .= '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>';
+            unset($_SESSION['messages'][$key]);
+        }
+
+        return $html;
+    }
 }
