@@ -32,6 +32,7 @@ return [
     'validation.errors.max.numeric' => '%s may not be greater than %s.',
     'validation.errors.max.string' => '%s may not be greater than %s characters.',
     'validation.errors.max.array' => '%s may not have more than %s items.',
+    'validation.errors.timezone.notAValidTimezone' => '%s is not a valid timezone.',
 
     // general
     'saveSuccess' => 'Saved successful',
