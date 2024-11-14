@@ -469,10 +469,12 @@ function group(string $file)
  */
 function validateDate(?string $date, string $format = 'Y-m-d H:i:s'): bool
 {
-    if ((0 === substr_compare($date ?? '', "\0", - 1))) {
-        // Return false when $date contains null bytes.
-        // This avoids "createFromFormat(): Argument must not contain any null bytes".
-        return false;
+    foreach (["\0", "%00"] as $nullByte) {
+        if ((0 === substr_compare($date ?? '', $nullByte, - 1))) {
+            // Return false when $date contains null bytes.
+            // This avoids "createFromFormat(): Argument must not contain any null bytes".
+            return false;
+        }
     }
 
     $d = DateTime::createFromFormat($format, $date ?? '');
