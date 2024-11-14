@@ -57,7 +57,7 @@ class Index extends \Ilch\Controller\Frontend
     {
         $linkMapper = new LinkMapper();
 
-        $linkModel = $linkMapper->getLinkById($this->getRequest()->getParam('link_id') ?? 0);
+        $linkModel = ($this->getRequest()->getParam('link_id') && is_numeric($this->getRequest()->getParam('link_id'))) ? $linkMapper->getLinkById($this->getRequest()->getParam('link_id') ?? 0) : 0;
         if ($linkModel) {
             $linkModel->addHits();
             $linkMapper->save($linkModel);
