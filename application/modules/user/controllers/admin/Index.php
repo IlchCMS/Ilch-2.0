@@ -248,9 +248,9 @@ class Index extends \Ilch\Controller\Admin
                 ];
 
             if ($userData['id']) {
-                $userbyid = $userMapper->getUserById($userData['id']);
+                $userbyid = (is_numeric($userData['id'])) ? $userMapper->getUserById($userData['id']) : null;
 
-                if ($userbyid->isAdmin() && !$this->getUser()->isAdmin()) {
+                if (!$userbyid || ($userbyid->isAdmin() && !$this->getUser()->isAdmin())) {
                     $this->redirect(['action' => 'index']);
                 }
 
@@ -398,7 +398,7 @@ class Index extends \Ilch\Controller\Admin
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
-        $user = $userMapper->getUserById($this->getRequest()->getParam('user'));
+        $user = ($this->getRequest()->getParam('user') && is_numeric($this->getRequest()->getParam('user'))) ? $userMapper->getUserById($this->getRequest()->getParam('user')) : null;
 
         if ($user) {
             $this->getLayout()->getAdminHmenu()
