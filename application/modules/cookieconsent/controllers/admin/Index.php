@@ -58,7 +58,7 @@ class Index extends \Ilch\Controller\Admin
                     ->set('cookie_consent_btn_bg_color', $this->getRequest()->getPost('cookieConsentBtnBGColor'))
                     ->set('cookie_consent_btn_text_color', $this->getRequest()->getPost('cookieConsentBtnTextColor'))
                     ->set('cookie_consent_type', $this->getRequest()->getPost('cookieConsentType'))
-                    ->set('cookie_consent_services', implode(',', $this->getRequest()->getPost('cookieConsentServices')) ?? '');
+                    ->set('cookie_consent_services', implode(',', (is_array($this->getRequest()->getPost('cookieConsentServices'))) ? $this->getRequest()->getPost('cookieConsentServices') : []) ?? '');
 
                 $this->redirect()
                     ->withMessage('saveSuccess')
