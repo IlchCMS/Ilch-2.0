@@ -57,18 +57,21 @@ class Menu extends Mapper
      * Gets the menu for the given id.
      *
      * @param int $menuId
-     * @return MenuModel
+     * @return MenuModel|null
      */
-    public function getMenu(int $menuId): MenuModel
+    public function getMenu(int $menuId): ?MenuModel
     {
-        $menu = new MenuModel();
-
         $menuRow = $this->db()->select(['id','title'])
             ->from('menu')
             ->where(['id' => $menuId])
             ->execute()
             ->fetchAssoc();
 
+        if (empty($menuRow)) {
+            return null;
+        }
+
+        $menu = new MenuModel();
         $menu->setId($menuRow['id']);
         $menu->setTitle($menuRow['title']);
 
@@ -300,6 +303,11 @@ class Menu extends Mapper
         $this->db()->delete('menu')
             ->where(['id' => $id])
             ->execute();
+
+        // Truncate table if this was the last menu. This will also reset AUTO_INCREMENT.
+        if (!$this->getMenus()) {
+            $this->db()->truncate('menu');
+        }
     }
 
     /**

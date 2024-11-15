@@ -146,6 +146,8 @@ return [
     'menu' => 'Menü',
     'deleteMenu' => 'Menü löschen',
     'askIfDeleteMenu' => 'Sind Sie sicher, dass das Menü "%s" entfernt werden soll?',
+    'lastMenuDeletedRestored' => 'Sie haben das einzig verbliebene Menü gelöscht. Es wurde ein leeres Menü wiederhergestellt.',
+    'menuNotFound' => 'Menü nicht gefunden.',
     'multilingualAcp' => 'Mehrsprachige Einstellungen',
     'list' => 'Liste',
     'menuActionNewLayout' => 'Neues Layout hinzufügen',

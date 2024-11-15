@@ -146,6 +146,8 @@ return [
     'menu' => 'menu',
     'deleteMenu' => 'Delete menu',
     'askIfDeleteMenu' => 'Are you sure to delete menu "%s"?',
+    'lastMenuDeletedRestored' => 'You have deleted the only remaining menu. An empty menu has been restored.',
+    'menuNotFound' => 'Menu not found.',
     'multilingualAcp' => 'Multilingual Settings',
     'list' => 'List',
     'menuActionNewLayout' => 'Add new layout',

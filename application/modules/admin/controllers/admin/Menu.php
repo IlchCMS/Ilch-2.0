@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -35,9 +35,7 @@ class Menu extends \Ilch\Controller\Admin
         $pageMapper = new PageMapper();
         $userGroupMapper = new UserGroupMapper();
 
-        /*
-         * Saves the item tree to database.
-         */
+        // Saves the item tree to database.
         if ($this->getRequest()->isPost()) {
             if ($this->getRequest()->getPost('save')) {
                 $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
@@ -58,9 +56,7 @@ class Menu extends \Ilch\Controller\Admin
 
                 $oldItems = $menuMapper->getMenuItems($menuId);
 
-                /*
-                 * Deletes old entries from database.
-                 */
+                // Deletes old entries from database.
                 if (!empty($oldItems)) {
                     foreach ($oldItems as $oldItem) {
                         if (!isset($items[$oldItem->getId()])) {
@@ -170,6 +166,24 @@ class Menu extends \Ilch\Controller\Admin
         $menuItems = $menuMapper->getMenuItemsByParent($menuId, 0);
         $menu = $menuMapper->getMenu($menuId);
         $menus = $menuMapper->getMenus();
+
+        if (!$menus) {
+            // The last remaining menu was deleted. Restore one empty menu.
+            $menuMapper = new MenuMapper();
+
+            $menu = new MenuModel();
+            $menu->setTitle('New');
+            $menuMapper->save($menu);
+
+            $menus = $menuMapper->getMenus();
+            $this->addMessage('lastMenuDeletedRestored');
+        }
+
+        if (!$menu) {
+            $this->addMessage('menuNotFound', 'danger');
+            $this->redirect(['action' => 'index']);
+        }
+
         $userGroupList = $userGroupMapper->getGroupList();
 
         $moduleMapper = new \Modules\Admin\Mappers\Module();
