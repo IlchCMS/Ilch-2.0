@@ -19,6 +19,7 @@ use Ilch\Validation\Validators\Numeric;
 use Ilch\Validation\Validators\Required;
 use Ilch\Validation\Validators\Same;
 use Ilch\Validation\Validators\Size;
+use Ilch\Validation\Validators\Timezone;
 use Ilch\Validation\Validators\Unique;
 use Ilch\Validation\Validators\Url;
 use Ilch\Validation\Validators\Exists;
@@ -52,6 +53,7 @@ class Validation
         'unique' => Unique::class,
         'url' => Url::class,
         'domain' => Domain::class,
+        'timezone' => Timezone::class,
     ];
 
     /**
