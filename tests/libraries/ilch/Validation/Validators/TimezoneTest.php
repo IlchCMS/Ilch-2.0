@@ -42,7 +42,7 @@ class TimezoneTest extends TestCase
         return [
             // timezone validations
             'timezone valid' => [
-                'data'                    => $this->createData('Europe/Kyiv'),
+                'data'                    => $this->createData('Europe/Berlin'),
                 'expectedIsValid'         => true
             ],
             'timezone valid including outdated' => [
