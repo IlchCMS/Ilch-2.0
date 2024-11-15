@@ -69,7 +69,7 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'language' => 'required',
-                'timezone' => 'required',
+                'timezone' => 'required|timezone',
             ]);
 
             if ($validation->isValid()) {
