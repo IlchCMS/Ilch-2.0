@@ -109,7 +109,7 @@
             </select>
         </div>
     </div>
-    <div class="row mb-3">
+    <div class="row mb-3<?= $this->validation()->hasError('timezone') ? ' has-error' : '' ?>">
         <label for="timezone" class="col-xl-2 col-form-label">
             <?= $this->getTrans('timezone') ?>:
         </label>

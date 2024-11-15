@@ -112,6 +112,7 @@ class Settings extends \Ilch\Controller\Admin
                 'multilingualAcp' => 'required|numeric|integer|min:0|max:1',
                 'domain' => 'domain',
                 'standardMail' => 'required|email',
+                'timezone' => 'required|timezone',
                 'defaultPaginationObjects' => 'numeric|integer|min:1',
                 'hmenuFixed' => 'required|numeric|integer|min:0|max:1',
                 'htmlPurifier' => 'required|numeric|integer|min:0|max:1',
