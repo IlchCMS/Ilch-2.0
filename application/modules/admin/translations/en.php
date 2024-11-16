@@ -417,6 +417,7 @@ return [
     'emailDesc' => 'Description',
     'emailLocale' => 'Language',
     'emailText' => 'Text',
+    'emailTemplateNotFound' => 'E-Mail template not found.',
 
     'menuMail' => 'Mail settings',
     'smtpModeEnabledDescription' => 'Sending emails through a SMTP server.',

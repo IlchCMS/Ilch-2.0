@@ -1,7 +1,7 @@
 <?php
 $email = $this->get('emailContent');
-$moduleMapper = $this->get('moduleMapper');
-$module = $moduleMapper->getModulesByKey($this->getRequest()->getParam('key'), $this->getTranslator()->getLocale());
+$module = $this->get('module');
+$moduleName = ($module) ? $module->getName() : $this->escape($this->getRequest()->getParam('key'));
 ?>
 
 <h1><?=$this->getTrans('edit') ?></h1>
@@ -12,7 +12,7 @@ $module = $moduleMapper->getModulesByKey($this->getRequest()->getParam('key'), $
             <?=$this->getTrans('emailModule') ?>
         </label>
         <div class="col-xl-10">
-            <?=$module->getName() ?>
+            <?=$moduleName ?>
         </div>
     </div>
     <div class="row mb-3">
