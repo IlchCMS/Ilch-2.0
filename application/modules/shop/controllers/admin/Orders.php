@@ -122,7 +122,7 @@ class Orders extends Admin
         if ($this->getRequest()->getParam('id') && is_numeric($this->getRequest()->getParam('id'))) {
             $order = $ordersMapper->getOrderById($this->getRequest()->getParam('id'));
             // Get the currency from the order as you don't want a currency change for existing orders.
-            $currency = $currencyMapper->getCurrencyById($order->getCurrencyId())[0];
+            $currency = $currencyMapper->getCurrencyById($order->getCurrencyId());
             $this->getView()->set('order', $order);
             $this->getView()->set('currency', $currency->getName());
             $this->getView()->set('itemsMapper', $itemsMapper);

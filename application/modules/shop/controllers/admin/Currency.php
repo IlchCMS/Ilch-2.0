@@ -104,7 +104,7 @@ class Currency extends Admin
                     $currencyIds[] = $order->getCurrencyId();
                 }
                 foreach ($this->getRequest()->getPost('check_currencies') as $id) {
-                    $currencyInUse = (in_array($this->getConfig()->get('shop_currency'), $currencyIds) && $currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('shop_currency'));
+                    $currencyInUse = (in_array($this->getConfig()->get('shop_currency'), $currencyIds) && $currencyMapper->getCurrencyById($id)->getId() == $this->getConfig()->get('shop_currency'));
 
                     if ($currencyInUse) {
                         $this->addMessage('currencyInUse', 'danger');
@@ -145,7 +145,7 @@ class Currency extends Admin
             foreach ($orders as $order) {
                 $currencyIds[] = $order->getCurrencyId();
             }
-            $currencyInUse = (in_array($this->getConfig()->get('shop_currency'), $currencyIds) && $currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('shop_currency'));
+            $currencyInUse = (in_array($this->getConfig()->get('shop_currency'), $currencyIds) && $currencyMapper->getCurrencyById($id)->getId() == $this->getConfig()->get('shop_currency'));
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
@@ -190,15 +190,9 @@ class Currency extends Admin
             }
         }
 
-        if ($this->getRequest()->getParam('id')) {
-            $currency = $currencyMapper->getCurrencyById($id);
-        } else {
-            $currency = [];
-        }
+        $currency = $this->getRequest()->getParam('id') ? $currencyMapper->getCurrencyById($id) : null;
 
-        if (count($currency) > 0) {
-            $currency = $currency[0];
-        } else {
+        if (!$currency) {
             $currency = new CurrencyModel();
         }
 
@@ -219,7 +213,7 @@ class Currency extends Admin
             foreach ($orders as $order) {
                 $currencyIds[] = $order->getCurrencyId();
             }
-            $currencyInUse = (in_array($this->getConfig()->get('shop_currency'), $currencyIds) && $currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('shop_currency'));
+            $currencyInUse = (in_array($this->getConfig()->get('shop_currency'), $currencyIds) && $currencyMapper->getCurrencyById($id)->getId() == $this->getConfig()->get('shop_currency'));
 
             if ($currencyInUse) {
                 $this->addMessage('currencyInUse', 'danger');

@@ -49,11 +49,17 @@ class Currency extends Mapper
      * Gets the currencies by id.
      *
      * @param int $id
-     * @return CurrencyModel[]|array
+     * @return CurrencyModel|null
      */
-    public function getCurrencyById(int $id): array
+    public function getCurrencyById(int $id): ?CurrencyModel
     {
-        return $this->getCurrencies(['id' => $id]);
+        $currency = $this->getCurrencies(['id' => $id]);
+
+        if (empty($currency)) {
+            return null;
+        }
+
+        return reset($currency);
     }
 
     /**

@@ -33,6 +33,8 @@ return [
     'validation.errors.max.string' => '%s may not be greater than %s characters.',
     'validation.errors.max.array' => '%s may not have more than %s items.',
     'validation.errors.timezone.notAValidTimezone' => '%s is not a valid timezone.',
+    'validation.errors.exists.resourceNotFound' => '%s was not found.',
+    'validation.errors.exists.resourceFound' => '%s was found.',
 
     // general
     'saveSuccess' => 'Saved successful',

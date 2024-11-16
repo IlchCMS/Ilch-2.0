@@ -33,6 +33,8 @@ return [
     'validation.errors.max.string' => '%s darf höchstens %s Zeichen lang sein.',
     'validation.errors.max.array' => '%s darf höchstens %s Einträge haben.',
     'validation.errors.timezone.notAValidTimezone' => '%s ist keine gültige Zeitzone.',
+    'validation.errors.exists.resourceNotFound' => '%s konnte nicht gefunden werden.',
+    'validation.errors.exists.resourceFound' => '%s wurde gefunden.',
 
     // general
     'saveSuccess' => 'Erfolgreich gespeichert',
