@@ -1,11 +1,10 @@
 <?php
 $userMapper = $this->get('userMapper');
-$modulesMapper = $this->get('modulesMapper');
-$locale = $this->get('locale');
-$modules = $modulesMapper->getModulesByKey($this->getRequest()->getParam('key'), $locale);
+$modules = $this->get('modules');
+$moduleName = $modules ? $modules->getName() : $this->escape($this->getRequest()->getParam('key'));
 ?>
 
-<h1><?=$modules->getName() ?></h1>
+<h1><?=$moduleName ?></h1>
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="table-responsive">
@@ -44,7 +43,7 @@ $modules = $modulesMapper->getModulesByKey($this->getRequest()->getParam('key'),
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'key' => $commentKey, 'id' => $comment->getId()]) ?></td>
                             <td><?=$date->format("d.m.Y H:i", true) ?></td>
                             <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>
-                            <td><a href="<?=$this->getUrl($comment->getKey()) ?>#comment_<?=$comment->getId() ?>" target="_blank"><?=$modules->getName() ?></a></td>
+                            <td><a href="<?=$this->getUrl($comment->getKey()) ?>#comment_<?=$comment->getId() ?>" target="_blank"><?=$moduleName ?></a></td>
                             <td><?=nl2br($this->escape($comment->getText())) ?></td>
                         </tr>
                     <?php endforeach; ?>

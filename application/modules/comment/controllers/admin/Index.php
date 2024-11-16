@@ -71,7 +71,7 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuComments'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('manage'), ['action' => 'index'])
-            ->add($modules->getName(), ['action' => 'show', 'module' => $module]);
+            ->add($modules ? $modules->getName() : $this->getLayout()->escape($this->getRequest()->getParam('key')), ['action' => 'show', 'module' => $module]);
 
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_comments')) {
             foreach ($this->getRequest()->getPost('check_comments') as $commentId) {
@@ -83,10 +83,9 @@ class Index extends \Ilch\Controller\Admin
                 ->to(['action' => 'show', 'key' => $this->getRequest()->getParam('key')]);
         }
 
-        $this->getView()->set('modulesMapper', $modulesMapper);
         $this->getView()->set('userMapper', $userMapper);
+        $this->getView()->set('modules', $modules);
         $this->getView()->set('comments', $commentMapper->getCommentsLikeKey($module));
-        $this->getView()->set('locale', $this->getConfig()->get('locale'));
     }
 
     public function deleteAction()

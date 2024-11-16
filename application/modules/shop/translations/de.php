@@ -145,7 +145,7 @@ return [
     'menuSettings' => 'Einstellungen',
     'menuSettingShop' => 'Shop Daten',
     'menuSettingBank' => 'Bankverbindung',
-    'menuSettingDefault' => 'Standard Werte',
+    'menuSettingDefault' => 'Standardwerte',
     'menuSettingAGB' => 'Allgemeine Geschäftsbedingungen',
     'menuShopOverview' => 'Shop Übersicht',
     'menuShops' => 'Shop',

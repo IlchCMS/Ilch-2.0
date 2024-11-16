@@ -9,12 +9,13 @@ namespace Modules\War\Config;
 
 use Ilch\Config\Database;
 use Ilch\Config\Install;
+use Modules\Comment\Mappers\Comment as CommentMapper;
 
 class Config extends Install
 {
     public $config = [
         'key' => 'war',
-        'version' => '1.16.2',
+        'version' => '1.16.3',
         'icon_small' => 'fa-solid fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -83,6 +84,9 @@ class Config extends Install
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
             $this->db()->delete('calendar_events')->where(['url' => 'war/wars/index/'])->execute();
         }
+
+        $commentMapper = new CommentMapper();
+        $commentMapper->deleteByKey('war/index/show/id/');
     }
 
     public function getInstallSql(): string

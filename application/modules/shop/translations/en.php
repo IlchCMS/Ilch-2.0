@@ -145,7 +145,7 @@ return [
     'menuSettings' => 'Settings',
     'menuSettingShop' => 'Shop data',
     'menuSettingBank' => 'Bank details',
-    'menuSettingDefault' => 'Standard values',
+    'menuSettingDefault' => 'Default values',
     'menuSettingAGB' => 'Terms of Service',
     'menuShopOverview' => 'Shop overview',
     'menuShops' => 'Shop',
