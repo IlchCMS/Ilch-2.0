@@ -143,7 +143,15 @@ class Emails extends \Ilch\Controller\Admin
                 ->to(['action' => 'treat', 'key' => $this->getRequest()->getParam('key'), 'type' => $this->getRequest()->getParam('type'), 'locale' => $this->getRequest()->getParam('locale')]);
         }
 
-        $this->getView()->set('moduleMapper', $moduleMapper)
-            ->set('emailContent', $emailsMapper->getEmail($this->getRequest()->getParam('key'), $this->getRequest()->getParam('type'), $locale));
+        $emailContent = $emailsMapper->getEmail($this->getRequest()->getParam('key'), $this->getRequest()->getParam('type'), $locale);
+
+        if (!$emailContent) {
+            $this->redirect()
+                ->withMessage('emailTemplateNotFound', 'danger')
+                ->to(['action' => 'index']);
+        }
+
+        $this->getView()->set('modules', $moduleMapper->getModulesByKey($this->getRequest()->getParam('key'), $this->getTranslator()->getLocale()))
+            ->set('emailContent', $emailContent);
     }
 }

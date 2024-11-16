@@ -22,7 +22,7 @@ $moduleMapper = $this->get('moduleMapper');
                                 <?php continue; ?>
                             <?php endif; ?>
 
-                            <img src="<?=$this->getStaticUrl('img/lang/' . $key . '.png') ?>">
+                            <img src="<?=$this->getStaticUrl('img/lang/' . $key . '.png') ?>" alt="<?=$key ?>">
                         <?php endforeach; ?>
                     </th>
                 <?php endif; ?>
@@ -34,7 +34,7 @@ $moduleMapper = $this->get('moduleMapper');
                 <?php $emails = $emailsMapper->getEmailsByKey($modules->getModuleKey(), $this->getTranslator()->getLocale()); ?>
                 <tr>
                     <td <?=($this->get('multilingual')) ? 'colspan=2' : '' ?>>
-                        <b><?=$module->getName() ?></b>
+                        <b><?=$module ? $module->getName() : $this->escape($modules->getModuleKey()) ?></b>
                     </td>
                 </tr>
                 <?php foreach ($emails as $email): ?>
