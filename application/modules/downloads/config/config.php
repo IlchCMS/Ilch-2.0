@@ -7,11 +7,13 @@
 
 namespace Modules\Downloads\Config;
 
+use Modules\Comment\Mappers\Comment as CommentMapper;
+
 class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'downloads',
-        'version' => '1.14.1',
+        'version' => '1.14.2',
         'icon_small' => 'fa-regular fa-circle-down',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -38,6 +40,9 @@ class Config extends \Ilch\Config\Install
     {
         $this->db()->drop('downloads_files', true);
         $this->db()->drop('downloads_items', true);
+
+        $commentMapper = new CommentMapper();
+        $commentMapper->deleteByKey('downloads/index/showfile/id/');
     }
 
     public function getInstallSql(): string

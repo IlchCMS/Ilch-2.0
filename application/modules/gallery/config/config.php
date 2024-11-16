@@ -9,12 +9,13 @@ namespace Modules\Gallery\Config;
 
 use Ilch\Config\Install;
 use Modules\Admin\Models\Box;
+use Modules\Comment\Mappers\Comment as CommentMapper;
 
 class Config extends Install
 {
     public $config = [
         'key' => 'gallery',
-        'version' => '1.23.2',
+        'version' => '1.23.3',
         'icon_small' => 'fa-regular fa-image',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -76,6 +77,9 @@ class Config extends Install
 
         $this->db()->drop('gallery_imgs', true);
         $this->db()->drop('gallery_items', true);
+
+        $commentMapper = new CommentMapper();
+        $commentMapper->deleteByKey('gallery/index/showimage/id/');
     }
 
     public function getInstallSql(): string

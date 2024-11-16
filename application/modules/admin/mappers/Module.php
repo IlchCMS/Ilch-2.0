@@ -118,9 +118,9 @@ class Module extends \Ilch\Mapper
      *
      * @param string $key
      * @param string $locale
-     * @return ModuleModel|void
+     * @return ModuleModel|null
      */
-    public function getModulesByKey($key, $locale)
+    public function getModulesByKey(string $key, string $locale): ?ModuleModel
     {
         $modulesRows = $this->db()->select('*')
             ->from('modules_content')
@@ -129,7 +129,7 @@ class Module extends \Ilch\Mapper
             ->fetchAssoc();
 
         if (empty($modulesRows)) {
-            return;
+            return null;
         }
 
         $modulesModel = new ModuleModel();
