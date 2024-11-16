@@ -48,7 +48,7 @@ class Module extends \Ilch\Mapper
     /**
      * Gets all not installed modules.
      *
-     * @return ModuleModel[]|Array[]
+     * @return ModuleModel[]|[]
      */
     public function getModulesNotInstalled()
     {
@@ -60,6 +60,7 @@ class Module extends \Ilch\Mapper
             }
         }
 
+        $modulesDB = [];
         $removeModule = ['admin', 'install', 'sample', 'error'];
         $modulesDir = array_diff($modulesDir, $removeModule);
 
