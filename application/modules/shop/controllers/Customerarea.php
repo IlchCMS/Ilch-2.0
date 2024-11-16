@@ -71,7 +71,7 @@ class Customerarea extends Frontend
                 if (!empty($order)) {
                     $order = $order[0];
                     // Get the currency from the order as you don't want a currency change for existing orders.
-                    $currency = $currencyMapper->getCurrencyById($order->getCurrencyId())[0];
+                    $currency = $currencyMapper->getCurrencyById($order->getCurrencyId());
                 } else {
                     $order = [];
                 }

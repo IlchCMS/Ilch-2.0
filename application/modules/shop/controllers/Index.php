@@ -33,7 +33,7 @@ class Index extends Frontend
         $itemsMapper = new ItemsMapper();
         $userMapper = new UserMapper();
 
-        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
+        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'));
 
         $user = null;
         if ($this->getUser()) {
@@ -129,7 +129,7 @@ class Index extends Frontend
         $currencyMapper = new CurrencyMapper();
         $itemsMapper = new ItemsMapper();
         $settingsMapper = new SettingsMapper();
-        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
+        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'));
 
         $this->getLayout()->header()->css('static/css/style_front.css');
         $this->getLayout()->getTitle()
@@ -170,7 +170,7 @@ class Index extends Frontend
         $settingsMapper = new SettingsMapper();
         $ilchDate = new Date();
         $captchaNeeded = captchaNeeded();
-        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
+        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'));
         $addresses = [];
         $customer = null;
 
@@ -479,7 +479,7 @@ class Index extends Frontend
             $this->redirect(['action' => 'index']);
         }
 
-        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
+        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'));
         $category = $categoryMapper->getCategoryById($shopItem->getCatId());
 
         $user = null;

@@ -163,7 +163,7 @@ class Settings extends Admin
         $currencyMapper = new CurrencyMapper();
         $settingsMapper = new SettingsMapper();
 
-        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
+        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'));
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
@@ -178,7 +178,8 @@ class Settings extends Admin
                 'allowWillCollect' => 'required|numeric|integer|min:0|max:1',
                 'deliveryTextTop' => 'required',
                 'invoiceTextTop' => 'required',
-                'invoiceTextBottom' => 'required'
+                'invoiceTextBottom' => 'required',
+                'shopCurrency' => 'required|exists:shop_currencies,id',
             ]);
 
             if ($validation->isValid()) {

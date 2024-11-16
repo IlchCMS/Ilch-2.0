@@ -96,7 +96,7 @@ class Items extends Admin
         $ordersMapper = new OrdersMapper();
         $itemsMapper = new ItemsMapper();
 
-        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
+        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'));
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
@@ -137,7 +137,7 @@ class Items extends Admin
         $itemsMapper = new ItemsMapper();
         $settingsMapper = new SettingsMapper();
 
-        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'))[0];
+        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'));
 
         if ($this->getRequest()->getParam('id')) {
             if (!is_numeric($this->getRequest()->getParam('id'))) {
