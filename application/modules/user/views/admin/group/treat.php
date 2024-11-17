@@ -1,5 +1,11 @@
 <?php
+
+use Modules\User\Mappers\User;
+use Modules\User\Models\Group;
+
+/** @var Group $group */
 $group = $this->get('group');
+/** @var User $userMapper */
 $userMapper = $this->get('userMapper');
 
 if ($group->getId()) {
@@ -8,6 +14,12 @@ if ($group->getId()) {
     $fieldsetLegend = $this->getTrans('addGroup');
 }
 ?>
+
+<style>
+    .connectedSortable {
+        min-height: 50px;
+    }
+</style>
 
 <h1><?=$fieldsetLegend ?></h1>
 <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'group', 'action' => 'save']) ?>" method="POST" id="groupForm">
@@ -58,9 +70,7 @@ if ($group->getId()) {
                             <ol id="assigned_users" class="sortable connectedSortable">
                             <?php foreach ($this->get('groupUsersList') as $user_Id): ?>
                                 <?php $user = $userMapper->getUserById($user_Id); ?>
-                                <?php if (!$user) {
-    $user = $userMapper->getDummyUser();
-} ?>
+                                <?php $user ?? $user = $userMapper->getDummyUser(); ?>
                                 <li class="handle_li" value="<?=$user_Id ?>"><div><span class="fa-solid fa-sort"></span> <?=$user->getName() ?></div></li>
                             <?php endforeach; ?>
                             </ol>
@@ -78,7 +88,7 @@ if ($group->getId()) {
 $('#groupForm').validate();
 $(document).ready (function () {
     $('#groupForm').submit (function () {
-        $('#hiddenMenu').val(JSON.stringify($('#assigned_users').sortable('toArray', {attribute: 'value'})));
+        $('#hiddenMenu').val(JSON.stringify($('#assigned_users').sortable('toArray', { attribute: 'value' })));
     });
 
     $('#unassigned_users, #assigned_users').sortable({
@@ -90,18 +100,12 @@ $(document).ready (function () {
 
 //attach on load
 $(function() {
-   $(".handle_li").dblclick(function(){
-       if( $(this).parent().attr("id") == "unassigned_users" ){
+   $(".handle_li").dblclick(function() {
+       if( $(this).parent().attr("id") === "unassigned_users" ) {
             $(this).detach().appendTo("#assigned_users");
-        }
-        else{
+        } else {
             $(this).detach().appendTo("#unassigned_users");
         }
    });
 });
 </script>
-<style>
-.connectedSortable{
-    min-height: 50px;
-}
-</style>

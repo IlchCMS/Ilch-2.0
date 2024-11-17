@@ -49,6 +49,8 @@ return [
     'delUserMsg' => 'User got deleted successfully.',
     'delLastAdminProhibited' => 'It is not allowed to delete the last user with the group "Administrator" assigned.',
     'delOwnUserProhibited' => 'It is not allowed to delete the your own user.',
+    'userNotFound' => 'User not found.',
+    'insufficientRightsToEditUser' => 'You do not have permission to edit this user.',
     'menuSettingsGallery' => 'Gallery',
     'usergalleryAllowed' => 'Allow Gallery?',
     'usergalleryNotAllowed' => 'Gallery disabled by the administrator',
@@ -74,6 +76,7 @@ return [
     'delUserGroup' => 'It is not allowed to delete the group "User".',
     'delDefaultGroups' => 'It is not allowed to delete the group "Administrator", "User" or "Guest".',
     'noGroupsExist' => 'No groups exist.',
+    'newOrTreatGroupInvalid' => 'The entries for this group were invalid.',
 
     'menuAccess' => 'Grouprights',
     'lookAccess' => 'visible (Frontend)',
