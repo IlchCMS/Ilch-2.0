@@ -34,12 +34,15 @@ class Index extends Frontend
             ]);
 
             if ($validation->isValid()) {
+                $date = new Date();
                 $countEmails = $subscriberMapper->countEmails($this->getRequest()->getPost('email'));
                 if ($countEmails == 0) {
                     $subscriberModel = new SubscriberModel();
                     $subscriberModel->setSelector(bin2hex(random_bytes(9)));
                     $subscriberModel->setConfirmCode(bin2hex(random_bytes(32)));
                     $subscriberModel->setEmail($this->getRequest()->getPost('email'));
+                    $subscriberModel->setDoubleOptInDate($date);
+                    $subscriberModel->setDoubleOptInConfirmed(!$this->getConfig()->get('newsletter_doubleOptIn'));
                     $subscriberMapper->saveSubscriber($subscriberModel);
                 }
 
@@ -131,6 +134,10 @@ class Index extends Frontend
 
     public function settingsAction()
     {
+        if (!$this->getUser()) {
+            $this->redirect(['module' => 'user', 'controller' => 'login', 'action' => 'index']);
+        }
+
         $subscriberMapper = new SubscriberMapper();
         $userMapper = new UserMapper();
         $UserMenuMapper = new UserMenuMapper();
