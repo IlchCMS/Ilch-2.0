@@ -414,4 +414,6 @@ return [
     'grantedPermissionSuccess' => 'Successfully granted the permission to issue notifications.',
     'noNotificationPermissions' => 'No entries existing.',
     'notificationsAllTypes' => 'all',
+
+    'emptyCommentText' => 'You have not entered any text for the comment.',
 ];

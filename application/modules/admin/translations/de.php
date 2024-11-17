@@ -343,7 +343,7 @@ return [
     'shortcutCustumCSSLineLeft' => 'Verschiebt die markierte Zeile nach links',
     'shortcutCustumCSSLineRight' => 'Verschiebt die markierte Zeile nach rechts',
     'shortcutCustumCSSMultiEdit' => 'Markiert mit der Maus mehrere Zeilen zur gleichzeitigen Bearbeitung',
-    'shortcutCustumCSStoggleComment' => 'Zum auskommentieren von markierten Zeilen oder um die Kommentar wieder zu entfernen',
+    'shortcutCustumCSStoggleComment' => 'Zum Auskommentieren von markierten Zeilen oder um die Kommentar wieder zu entfernen',
 
     'menuLogs' => 'Protokoll',
     'hmenuLogs' => 'Protokoll',
