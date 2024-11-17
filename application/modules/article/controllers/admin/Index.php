@@ -187,8 +187,9 @@ class Index extends \Ilch\Controller\Admin
                 ->to($redirect);
         }
 
-        if ($this->getRequest()->getParam('id')) {
-            $groups = explode(',', $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'))->getReadAccess());
+        if ($this->getRequest()->getParam('id') && is_numeric($this->getRequest()->getParam('id'))) {
+            $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
+            $groups = explode(',', $article ? $article->getReadAccess() : [1,2,3]);
         } else {
             $groups = [1,2,3];
         }
