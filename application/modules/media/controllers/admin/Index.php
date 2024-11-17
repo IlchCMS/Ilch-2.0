@@ -156,6 +156,11 @@ class Index extends \Ilch\Controller\Admin
         $mediaMapper = new MediaMapper();
 
         if ($this->getRequest()->isPost()) {
+            // Early return if name is empty. Nothing to do here.
+            if (empty($_FILES['upl']['name'])) {
+                return;
+            }
+
             $upload = new \Ilch\Upload();
             $upload->setFile($_FILES['upl']['name']);
             $upload->setTypes($this->getConfig()->get('media_ext_img'));
