@@ -25,7 +25,7 @@ $training = $this->get('training');
                    value="<?=$this->escape($this->originalInput('title', $training->getTitle())) ?>" />
         </div>
     </div>
-    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('date') ? ' has-error' : '' ?>">
         <label for="date" class="col-md-2 col-form-label">
             <?=$this->getTrans('dateTime') ?>:
         </label>
@@ -50,7 +50,7 @@ $training = $this->get('training');
             </span>
         </div>
     </div>
-    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('time') ? ' has-error' : '' ?>">
         <label for="time" class="col-xl-2 col-form-label">
             <?=$this->getTrans('time') ?>:
         </label>
@@ -63,7 +63,7 @@ $training = $this->get('training');
                    value="<?=$this->escape($this->originalInput('time', $training->getTime())) ?>">
         </div>
     </div>
-    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
         <label for="place" class="col-xl-2 col-form-label">
             <?=$this->getTrans('place') ?>:
         </label>
@@ -75,7 +75,7 @@ $training = $this->get('training');
                    value="<?=$this->escape($this->originalInput('place', $training->getPlace())) ?>" />
         </div>
     </div>
-    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('contact') ? ' has-error' : '' ?>">
         <label for="contact" class="col-xl-2 col-form-label">
             <?=$this->getTrans('contactPerson') ?>:
         </label>
@@ -93,7 +93,7 @@ $training = $this->get('training');
             </select>
         </div>
     </div>
-    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('voiceServer') ? ' has-error' : '' ?>">
         <label for="voiceServer" class="col-xl-2 col-form-label">
             <?=$this->getTrans('voiceServer') ?>:
         </label>
@@ -115,7 +115,7 @@ $training = $this->get('training');
     }
     ?>
     <div id="voiceServerInfo" <?=$voiceDisplay ?>>
-        <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('voiceServerIP') ? ' has-error' : '' ?>">
             <label for="voiceServerIP" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('voiceServerIP') ?>:
             </label>
@@ -128,7 +128,7 @@ $training = $this->get('training');
                        value="<?=$this->escape($this->originalInput('voiceServerIP', $training->getVoiceServerIP())) ?>" />
             </div>
         </div>
-        <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('voiceServerPW') ? ' has-error' : '' ?>">
             <label for="voiceServerPW" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('voiceServerPW') ?>:
             </label>
@@ -142,7 +142,7 @@ $training = $this->get('training');
             </div>
         </div>
     </div>
-    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('gameServer') ? ' has-error' : '' ?>">
         <label for="gameServer" class="col-xl-2 col-form-label">
             <?=$this->getTrans('gameServer') ?>:
         </label>
@@ -164,7 +164,7 @@ $training = $this->get('training');
     }
     ?>
     <div id="gameServerInfo" <?=$gameDisplay ?>>
-        <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('gameServerIP') ? ' has-error' : '' ?>">
             <label for="gameServerIP" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('gameServerIP') ?>:
             </label>
@@ -177,7 +177,7 @@ $training = $this->get('training');
                        value="<?=$this->escape($this->originalInput('gameServerIP', $training->getGameServerIP())) ?>" />
             </div>
         </div>
-        <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('gameServerPW') ? ' has-error' : '' ?>">
             <label for="gameServerPW" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('gameServerPW') ?>:
             </label>
@@ -191,7 +191,7 @@ $training = $this->get('training');
             </div>
         </div>
     </div>
-    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
         <label for="ck_1" class="col-xl-2 col-form-label">
             <?=$this->getTrans('otherInfo') ?>:
         </label>
@@ -203,7 +203,7 @@ $training = $this->get('training');
                       rows="5"><?=$this->escape($this->originalInput('text', $training->getText())) ?></textarea>
         </div>
     </div>
-    <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+    <div class="row mb-3<?=$this->validation()->hasError('access') ? ' has-error' : '' ?>">
         <label for="access" class="col-xl-2 col-form-label">
             <?=$this->getTrans('visibleFor') ?>
         </label>
@@ -218,7 +218,7 @@ $training = $this->get('training');
         </div>
     </div>
     <?php if ($this->get('calendarShow')) : ?>
-        <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
+        <div class="row mb-3<?=$this->validation()->hasError('calendarShow') ? ' has-error' : '' ?>">
             <label for="calendarShow" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('calendarShow') ?>
             </label>

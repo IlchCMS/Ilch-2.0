@@ -87,10 +87,21 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $rules = [
                 'title' => 'required',
-                'contact' => 'required',
+                'contact' => 'required|integer|min:1|exists:users,id,id,' . $this->getRequest()->getPost('contact'),
+                'voiceServer' => 'required|integer|min:0|max:1',
+                'gameServer' => 'required|integer|min:0|max:1',
                 'groups' => 'required',
-                'time' => 'required|integer'
+                'time' => 'required|integer',
+                'calendarShow' => 'required|integer|min:0|max:1',
             ];
+
+            // Require atleast the address of the voice or gameserver if enabled.
+            if ($this->getRequest()->getPost('voiceServer')) {
+                $rules['voiceServerIP'] = 'required';
+            }
+            if ($this->getRequest()->getPost('gameServer')) {
+                $rules['gameServerIP'] = 'required';
+            }
 
             $validation = Validation::create($this->getRequest()->getPost(), $rules);
             if ($validation->isValid()) {
@@ -119,7 +130,7 @@ class Index extends \Ilch\Controller\Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'index']);
+                ->to(($this->getRequest()->getParam('id')) ? ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')] : ['action' => 'treat']);
         }
 
         if ($trainingMapper->existsTable('calendar')) {
