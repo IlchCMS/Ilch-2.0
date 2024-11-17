@@ -275,7 +275,10 @@ class Index extends \Ilch\Controller\Admin
 
             Validation::setCustomFieldAliases([
                 'name' => 'userName',
-                'email' => 'userEmail'
+                'email' => 'userEmail',
+                'opt_gallery' => 'usergalleryAllowed',
+                'admin_comments' => 'commentsOnProfileAllowed',
+                'locked' => 'lockUser',
             ]);
 
             $validation = Validation::create($this->getRequest()->getPost(), $rules);

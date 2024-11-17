@@ -15,6 +15,12 @@ if ($group->getId()) {
 }
 ?>
 
+<style>
+    .connectedSortable {
+        min-height: 50px;
+    }
+</style>
+
 <h1><?=$fieldsetLegend ?></h1>
 <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'group', 'action' => 'save']) ?>" method="POST" id="groupForm">
     <?=$this->getTokenField() ?>
@@ -82,7 +88,7 @@ if ($group->getId()) {
 $('#groupForm').validate();
 $(document).ready (function () {
     $('#groupForm').submit (function () {
-        $('#hiddenMenu').val(JSON.stringify($('#assigned_users').sortable('toArray', {attribute: 'value'})));
+        $('#hiddenMenu').val(JSON.stringify($('#assigned_users').sortable('toArray', { attribute: 'value' })));
     });
 
     $('#unassigned_users, #assigned_users').sortable({
@@ -94,18 +100,12 @@ $(document).ready (function () {
 
 //attach on load
 $(function() {
-   $(".handle_li").dblclick(function(){
-       if( $(this).parent().attr("id") === "unassigned_users" ){
+   $(".handle_li").dblclick(function() {
+       if( $(this).parent().attr("id") === "unassigned_users" ) {
             $(this).detach().appendTo("#assigned_users");
-        }
-        else{
+        } else {
             $(this).detach().appendTo("#unassigned_users");
         }
    });
 });
 </script>
-<style>
-.connectedSortable{
-    min-height: 50px;
-}
-</style>
