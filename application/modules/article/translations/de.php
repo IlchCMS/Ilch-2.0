@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -62,4 +62,5 @@ return [
     'unknownKeyword' => 'Keyword nicht vorhanden',
     'clock' => 'Uhr',
     'rssDesc' => 'Alle Neuigkeiten von %s',
+    'articleNotFound' => 'Artikel nicht gefunden.',
 ];

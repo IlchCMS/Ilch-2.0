@@ -187,9 +187,22 @@ class Index extends \Ilch\Controller\Admin
                 ->to($redirect);
         }
 
-        if ($this->getRequest()->getParam('id') && is_numeric($this->getRequest()->getParam('id'))) {
+        if ($this->getRequest()->getParam('id')) {
+            if (!is_numeric($this->getRequest()->getParam('id'))) {
+                $this->redirect()
+                    ->withMessage('articleNotFound', 'danger')
+                    ->to(['action' => 'index']);
+            }
+
             $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
-            $groups = explode(',', $article ? $article->getReadAccess() : [1,2,3]);
+
+            if (!$article) {
+                $this->redirect()
+                    ->withMessage('articleNotFound', 'danger')
+                    ->to(['action' => 'index']);
+            }
+
+            $groups = explode(',', $article->getReadAccess());
         } else {
             $groups = [1,2,3];
         }
