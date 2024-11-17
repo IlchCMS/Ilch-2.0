@@ -220,6 +220,7 @@ return [
     'dialogsHidden' => 'Einige Dialoge sind ausgeblendet. Hier klicken um sie anzuzeigen.',
     'deleteDialogConfirm' => 'Soll der Dialog wirklich gelöscht werden?',
     'noDialog' => 'Keine Nachrichten vorhanden.',
+    'dialogNotExisting' => 'Dialog existiert nicht.',
     'menuPanel' => 'User Panel',
     'menuSetting' => 'Einstellung',
     'menuSettingsAvatar' => 'Avatar',

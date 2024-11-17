@@ -420,7 +420,19 @@ class Panel extends BaseController
         $c_id = $this->getRequest()->getParam('id');
 
         if ($c_id) {
+            if (!is_numeric($c_id)) {
+                $this->redirect()
+                    ->withMessage('dialogNotExisting', 'danger')
+                    ->to(['action' => 'dialog']);
+            }
+
             $user = $dialogMapper->getDialogCheckByCId($c_id);
+
+            if (!$user) {
+                $this->redirect()
+                    ->withMessage('dialogNotExisting', 'danger')
+                    ->to(['action' => 'dialog']);
+            }
 
             if ($this->getUser()->getId() != $user->getUserTwo()) {
                 $user_one = $user->getUserTwo();
