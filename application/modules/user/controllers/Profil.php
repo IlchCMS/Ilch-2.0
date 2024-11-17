@@ -42,6 +42,12 @@ class Profil extends \Ilch\Controller\Frontend
 
             if ($this->getUser() && $profil->getOptComments() && $profil->getAdminComments() && $commentsOnProfiles) {
                 if ($this->getRequest()->getPost('saveComment')) {
+                    if (!$this->getRequest()->getPost('comment_text')) {
+                        $this->redirect()
+                            ->withMessage('emptyCommentText', 'danger')
+                            ->to(['action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
+                    }
+
                     $comments = new Comments();
                     $key = sprintf(UserConfig::COMMENT_KEY_TPL, $this->getRequest()->getParam('user'));
 

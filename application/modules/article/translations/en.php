@@ -63,4 +63,5 @@ return [
     'clock' => 'o\'clock',
     'rssDesc' => 'All articles from %s',
     'articleNotFound' => 'Article not found.',
+    'emptyCommentText' => 'You have not entered any text for the comment.',
 ];

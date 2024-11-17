@@ -147,6 +147,12 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($this->getUser() && $hasReadAccess && !$article->getCommentsDisabled()) {
             if ($this->getRequest()->getPost('saveComment')) {
+                if (!$this->getRequest()->getPost('comment_text')) {
+                    $this->redirect()
+                        ->withMessage('emptyCommentText', 'danger')
+                        ->to(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
+                }
+
                 $comments = new Comments();
                 $key = sprintf(ArticleConfig::COMMENT_KEY_TPL, $this->getRequest()->getParam('id'));
 

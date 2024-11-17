@@ -414,4 +414,6 @@ return [
     'grantedPermissionSuccess' => 'Die Erlaubnis Benachrichtigungen anzuzeigen wurde erfolgreich gegeben.',
     'noNotificationPermissions' => 'Keine Einträge vorhanden.',
     'notificationsAllTypes' => 'alle',
+
+    'emptyCommentText' => 'Sie haben für den Kommentar keinen Text eingegeben.',
 ];
