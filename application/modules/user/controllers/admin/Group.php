@@ -243,6 +243,10 @@ class Group extends \Ilch\Controller\Admin
                         ->to(['action' => 'treat', 'id' => $groupId]);
                 }
             }
+
+            $this->redirect()
+                ->withMessage('newOrTreatGroupInvalid', 'danger')
+                ->to(['action' => 'index']);
         }
     }
 

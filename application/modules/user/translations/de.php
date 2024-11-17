@@ -74,6 +74,7 @@ return [
     'delUserGroup' => 'Es ist nicht erlaubt die Gruppe "User" zu entfernen.',
     'delDefaultGroups' => 'Es ist nicht erlaubt die Gruppe "Administrator", "User" oder "Gast" zu entfernen.',
     'noGroupsExist' => 'Keine Gruppen vorhanden.',
+    'newOrTreatGroupInvalid' => 'Die Eingaben für diese Gruppe waren ungültig.',
 
     'menuAccess' => 'Gruppenrechte',
     'lookAccess' => 'sichtbar (Frontend)',

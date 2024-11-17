@@ -74,6 +74,7 @@ return [
     'delUserGroup' => 'It is not allowed to delete the group "User".',
     'delDefaultGroups' => 'It is not allowed to delete the group "Administrator", "User" or "Guest".',
     'noGroupsExist' => 'No groups exist.',
+    'newOrTreatGroupInvalid' => 'The entries for this group were invalid.',
 
     'menuAccess' => 'Grouprights',
     'lookAccess' => 'visible (Frontend)',
