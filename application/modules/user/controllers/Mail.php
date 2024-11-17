@@ -14,7 +14,20 @@ class Mail extends \Ilch\Controller\Frontend
     public function indexAction()
     {
         $userMapper = new UserMapper();
+
+        if (!$this->getRequest()->getParam('user') || !is_numeric($this->getRequest()->getParam('user'))) {
+            $this->redirect()
+                ->withMessage('userNotFound', 'danger')
+                ->to(['controller' => 'index', 'action' => 'index']);
+        }
+
         $user = $userMapper->getUserById($this->getRequest()->getParam('user'));
+
+        if (!$user) {
+            $this->redirect()
+                ->withMessage('userNotFound', 'danger')
+                ->to(['controller' => 'index', 'action' => 'index']);
+        }
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuUserList'))
