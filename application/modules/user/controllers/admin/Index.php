@@ -243,21 +243,28 @@ class Index extends \Ilch\Controller\Admin
             $userData = $this->getRequest()->getPost();
 
             $rules = [
+                'id' => 'integer|min:1',
                 'name' => 'required|unique:users,name',
                 'email' => 'required|email|unique:users,email'
-                ];
+            ];
 
             if ($userData['id']) {
-                $userbyid = (is_numeric($userData['id'])) ? $userMapper->getUserById($userData['id']) : null;
+                $userById = (is_numeric($userData['id'])) ? $userMapper->getUserById($userData['id']) : null;
 
-                if (!$userbyid || ($userbyid->isAdmin() && !$this->getUser()->isAdmin())) {
+                if (!$userById) {
+                    $this->addMessage('userNotFound', 'danger');
+                    $this->redirect(['action' => 'index']);
+                }
+                if ($userById->isAdmin() && !$this->getUser()->isAdmin()) {
+                    $this->addMessage('userNotAdmin', 'danger');
                     $this->redirect(['action' => 'index']);
                 }
 
                 $rules = [
-                    'name' => 'required|unique:users,name,'.$userData['id'],
-                    'email' => 'required|email|unique:users,email,'.$userData['id']
-                    ];
+                    'id' => 'required|integer|min:1|exists:users,id,id,' . $userData['id'],
+                    'name' => 'required|unique:users,name,' . $userData['id'],
+                    'email' => 'required|email|unique:users,email,' . $userData['id']
+                ];
             }
 
             Validation::setCustomFieldAliases([
@@ -275,7 +282,6 @@ class Index extends \Ilch\Controller\Admin
                     $pool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
                     $password = PasswordService::generateSecurePassword(10, $pool);
                     $userData['password'] = (new PasswordService())->hash($password);
-
                     $generated = true;
                 }
 

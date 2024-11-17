@@ -49,6 +49,8 @@ return [
     'delUserMsg' => 'Der Benutzer wurde erfolgreich entfernt.',
     'delLastAdminProhibited' => 'Es ist nicht erlaubt den letzten aktiven Benutzer mit zugewiesener Gruppe "Administrator" zu entfernen.',
     'delOwnUserProhibited' => 'Es ist nicht erlaubt Ihren eigenen Benutzer zu entfernen.',
+    'userNotFound' => 'Benutzer nicht gefunden.',
+    'insufficientRightsToEditUser' => 'Sie haben nicht die nötigen Rechte um diesen Benutzer zu bearbeiten.',
     'menuSettingsGallery' => 'Galerie',
     'usergalleryAllowed' => 'Galerie erlauben?',
     'usergalleryNotAllowed' => 'Galerie wurde vom Administrator deaktiviert',
