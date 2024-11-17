@@ -245,7 +245,10 @@ class Index extends \Ilch\Controller\Admin
             $rules = [
                 'id' => 'integer|min:1',
                 'name' => 'required|unique:users,name',
-                'email' => 'required|email|unique:users,email'
+                'email' => 'required|email|unique:users,email',
+                'opt_gallery' => 'required|integer|min:0|max:1',
+                'admin_comments' => 'required|integer|min:0|max:1',
+                'locked' => 'required|integer|min:0|max:1',
             ];
 
             if ($userData['id']) {
@@ -256,14 +259,17 @@ class Index extends \Ilch\Controller\Admin
                     $this->redirect(['action' => 'index']);
                 }
                 if ($userById->isAdmin() && !$this->getUser()->isAdmin()) {
-                    $this->addMessage('userNotAdmin', 'danger');
+                    $this->addMessage('insufficientRightsToEditUser', 'danger');
                     $this->redirect(['action' => 'index']);
                 }
 
                 $rules = [
                     'id' => 'required|integer|min:1|exists:users,id,id,' . $userData['id'],
                     'name' => 'required|unique:users,name,' . $userData['id'],
-                    'email' => 'required|email|unique:users,email,' . $userData['id']
+                    'email' => 'required|email|unique:users,email,' . $userData['id'],
+                    'opt_gallery' => 'required|integer|min:0|max:1',
+                    'admin_comments' => 'required|integer|min:0|max:1',
+                    'locked' => 'required|integer|min:0|max:1',
                 ];
             }
 
