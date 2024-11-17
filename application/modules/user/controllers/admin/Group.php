@@ -13,6 +13,7 @@ use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Mappers\Page as PageMapper;
 use Modules\Article\Mappers\Article as ArticleMapper;
 use Modules\User\Mappers\User as UserMapper;
+use Ilch\Validation;
 
 /**
  * Handles action for the main admin configuration page.
@@ -166,74 +167,81 @@ class Group extends \Ilch\Controller\Admin
         $postData = $this->getRequest()->getPost();
 
         if (isset($postData['group'])) {
-            $groupData = $postData['group'];
-            $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
-            $groupMapper = new GroupMapper();
-            $group = $groupMapper->loadFromArray($groupData);
+            $validation = Validation::create($postData['group'], [
+                'id' => 'required|integer|min:1',
+                'name' => 'required',
+            ]);
 
-            if ($group->getId() == 1 && !$this->getUser()->isAdmin()) {
-                $this->redirect(['action' => 'index']);
-            }
+            if ($validation->isValid()) {
+                $groupData = $postData['group'];
+                $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
+                $groupMapper = new GroupMapper();
+                $group = $groupMapper->loadFromArray($groupData);
 
-            $groupId = $groupMapper->save($group);
-
-            $groupUsers = $groupMapper->getUsersForGroup($groupId);
-            $userMapper = new UserMapper();
-            foreach ($sortItems as $key => $user_Id) {
-                if (!\in_array($user_Id, $groupUsers)) {
-                    $userMapper->addUserToGroup($user_Id, $groupId);
-                    $groupUsers[] = $user_Id;
+                if ($group->getId() == 1 && !$this->getUser()->isAdmin()) {
+                    $this->redirect(['action' => 'index']);
                 }
-            }
-            foreach ($groupUsers as $key => $user_Id) {
-                if (!\in_array($user_Id, $sortItems)) {
-                    if ($groupId != 1 || (\count($groupUsers) > 1)) {
-                        $userMapper->deleteUserToGroup($user_Id, $groupId);
-                        unset($groupUsers[$key]);
-                    } elseif (\count($groupUsers) <= 1) {
-                        $this->addMessage('delLastAdminProhibited', 'warning');
+
+                $groupId = $groupMapper->save($group);
+
+                $groupUsers = $groupMapper->getUsersForGroup($groupId);
+                $userMapper = new UserMapper();
+                foreach ($sortItems as $key => $user_Id) {
+                    if (!\in_array($user_Id, $groupUsers)) {
+                        $userMapper->addUserToGroup($user_Id, $groupId);
+                        $groupUsers[] = $user_Id;
                     }
                 }
-            }
-
-            if (!empty($groupId) && empty($groupData['id'])) {
-                $moduleMapper = new ModuleMapper();
-                $modules = $moduleMapper->getModules() ?? [];
-
-                $pageMapper = new PageMapper();
-                $pages = $pageMapper->getPageList() ?? [];
-
-                $articleMapper = new ArticleMapper();
-                $articles = $articleMapper->getArticles() ?? [];
-
-                $boxMapper = new BoxMapper();
-                $boxes = $boxMapper->getSelfBoxList('') ?? [];
-
-                $accessTypes = [
-                    'module' => $modules,
-                    'page' => $pages,
-                    'article' => $articles,
-                    'box' => $boxes,
-                ];
-
-                foreach ($accessTypes as $type => $TypeData) {
-                    foreach ($TypeData as $TypeDataModel) {
-                        if ($type === 'module') {
-                            $value = $TypeDataModel->getKey();
-                        } else {
-                            $value = $TypeDataModel->getId();
+                foreach ($groupUsers as $key => $user_Id) {
+                    if (!\in_array($user_Id, $sortItems)) {
+                        if ($groupId != 1 || (\count($groupUsers) > 1)) {
+                            $userMapper->deleteUserToGroup($user_Id, $groupId);
+                            unset($groupUsers[$key]);
+                        } elseif (\count($groupUsers) <= 1) {
+                            $this->addMessage('delLastAdminProhibited', 'warning');
                         }
-                        $groupMapper->saveAccessData($groupId, $value, 1, $type);
                     }
                 }
 
-                $this->redirect()
-                    ->withMessage('newGroupMsg')
-                    ->to(['action' => 'treat', 'id' => $groupId]);
-            } else {
-                $this->redirect()
-                    ->withMessage('treatGroupMsg')
-                    ->to(['action' => 'treat', 'id' => $groupId]);
+                if (!empty($groupId) && empty($groupData['id'])) {
+                    $moduleMapper = new ModuleMapper();
+                    $modules = $moduleMapper->getModules() ?? [];
+
+                    $pageMapper = new PageMapper();
+                    $pages = $pageMapper->getPageList() ?? [];
+
+                    $articleMapper = new ArticleMapper();
+                    $articles = $articleMapper->getArticles() ?? [];
+
+                    $boxMapper = new BoxMapper();
+                    $boxes = $boxMapper->getSelfBoxList('') ?? [];
+
+                    $accessTypes = [
+                        'module' => $modules,
+                        'page' => $pages,
+                        'article' => $articles,
+                        'box' => $boxes,
+                    ];
+
+                    foreach ($accessTypes as $type => $TypeData) {
+                        foreach ($TypeData as $TypeDataModel) {
+                            if ($type === 'module') {
+                                $value = $TypeDataModel->getKey();
+                            } else {
+                                $value = $TypeDataModel->getId();
+                            }
+                            $groupMapper->saveAccessData($groupId, $value, 1, $type);
+                        }
+                    }
+
+                    $this->redirect()
+                        ->withMessage('newGroupMsg')
+                        ->to(['action' => 'treat', 'id' => $groupId]);
+                } else {
+                    $this->redirect()
+                        ->withMessage('treatGroupMsg')
+                        ->to(['action' => 'treat', 'id' => $groupId]);
+                }
             }
         }
     }

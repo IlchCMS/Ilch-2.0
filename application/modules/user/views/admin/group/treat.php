@@ -1,5 +1,11 @@
 <?php
+
+use Modules\User\Mappers\User;
+use Modules\User\Models\Group;
+
+/** @var Group $group */
 $group = $this->get('group');
+/** @var User $userMapper */
 $userMapper = $this->get('userMapper');
 
 if ($group->getId()) {
@@ -58,9 +64,7 @@ if ($group->getId()) {
                             <ol id="assigned_users" class="sortable connectedSortable">
                             <?php foreach ($this->get('groupUsersList') as $user_Id): ?>
                                 <?php $user = $userMapper->getUserById($user_Id); ?>
-                                <?php if (!$user) {
-    $user = $userMapper->getDummyUser();
-} ?>
+                                <?php $user ?? $user = $userMapper->getDummyUser(); ?>
                                 <li class="handle_li" value="<?=$user_Id ?>"><div><span class="fa-solid fa-sort"></span> <?=$user->getName() ?></div></li>
                             <?php endforeach; ?>
                             </ol>
@@ -91,7 +95,7 @@ $(document).ready (function () {
 //attach on load
 $(function() {
    $(".handle_li").dblclick(function(){
-       if( $(this).parent().attr("id") == "unassigned_users" ){
+       if( $(this).parent().attr("id") === "unassigned_users" ){
             $(this).detach().appendTo("#assigned_users");
         }
         else{
