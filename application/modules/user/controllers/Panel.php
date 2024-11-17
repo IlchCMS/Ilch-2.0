@@ -420,7 +420,19 @@ class Panel extends BaseController
         $c_id = $this->getRequest()->getParam('id');
 
         if ($c_id) {
+            if (!is_numeric($c_id)) {
+                $this->redirect()
+                    ->withMessage('dialogNotExisting', 'danger')
+                    ->to(['action' => 'dialog']);
+            }
+
             $user = $dialogMapper->getDialogCheckByCId($c_id);
+
+            if (!$user) {
+                $this->redirect()
+                    ->withMessage('dialogNotExisting', 'danger')
+                    ->to(['action' => 'dialog']);
+            }
 
             if ($this->getUser()->getId() != $user->getUserTwo()) {
                 $user_one = $user->getUserTwo();
@@ -539,25 +551,33 @@ class Panel extends BaseController
     {
         $DialogMapper = new DialogMapper();
         $ilchdate = new IlchDate();
+        $userMapper = new UserMapper();
 
         $user_one = $this->getUser()->getId();
         $user_two = $this->getRequest()->getParam('id');
 
-        if ($user_one != $user_two) {
+        if ($user_two && is_numeric($user_two) && ($user_one != $user_two)) {
             $c_exist = $DialogMapper->getDialogCheck($user_one, $user_two);
-            if ($c_exist == null) {
-                $model = new DialogModel();
-                $model->setUserOne($user_one)
-                    ->setUserTwo($user_two)
-                    ->setTime($ilchdate->toDb());
-                $DialogMapper->save($model);
 
-                $c_id = $DialogMapper->getDialogId($user_one);
-                $this->redirect(['action' => 'dialog', 'id' => $c_id->getCId()]);
+            if (!$c_exist) {
+                if ($userMapper->userWithIdExists($user_two)) {
+                    $model = new DialogModel();
+                    $model->setUserOne($user_one)
+                        ->setUserTwo($user_two)
+                        ->setTime($ilchdate->toDb());
+                    $DialogMapper->save($model);
+
+                    $c_id = $DialogMapper->getDialogId($user_one);
+                    $this->redirect(['action' => 'dialog', 'id' => $c_id->getCId()]);
+                }
+            } else {
+                $this->redirect(['action' => 'dialog', 'id' => $c_exist->getCId()]);
             }
-
-            $this->redirect(['action' => 'dialog', 'id' => $c_exist->getCId()]);
         }
+
+        $this->redirect()
+            ->withMessage('userNotFound', 'danger')
+            ->to(['action' => 'dialog']);
     }
 
     public function galleryAction()
