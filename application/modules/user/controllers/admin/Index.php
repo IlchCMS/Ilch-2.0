@@ -248,7 +248,7 @@ class Index extends \Ilch\Controller\Admin
                 'email' => 'required|email|unique:users,email',
                 'opt_gallery' => 'required|integer|min:0|max:1',
                 'admin_comments' => 'required|integer|min:0|max:1',
-                'locked' => 'required|integer|min:0|max:1',
+                'locked' => 'integer|min:0|max:1',
             ];
 
             if ($userData['id']) {
