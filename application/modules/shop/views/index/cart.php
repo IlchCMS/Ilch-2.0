@@ -31,7 +31,7 @@ if (!empty($_SESSION['shopping_cart']) && $this->getRequest()->isSecure()) {
             }
         }
 
-        $_SESSION['shopping_willCollect'] = $_POST['willCollect'];
+        $_SESSION['shopping_willCollect'] = $_POST['willCollect'] ?? null;
     }
 }
 
