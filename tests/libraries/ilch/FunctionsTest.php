@@ -264,6 +264,7 @@ class FunctionsTest extends TestCase
             'invalid null bytes middle' => ['params' => ['date' => 'test' . chr(0) . 'test', 'format' => 'Y-m-d H:i:s'], false],
             'invalid null bytes end' => ['params' => ['date' => 'test' . chr(0), 'format' => 'Y-m-d H:i:s'], false],
             'invalid zero date' => ['params' => ['date' => '0000-00-00 00:00:00', 'format' => 'Y-m-d H:i:s'], false],
+            'invalid date format' => ['params' => ['date' => '2024-10-27 04:42:04', 'format' => 'Y-m-d H:i'], false],
             'valid date' => ['params' => ['date' => '2024-10-27 04:42:04', 'format' => 'Y-m-d H:i:s'], true],
             'valid date without seconds' => ['params' => ['date' => '2024-10-27 04:42', 'format' => 'Y-m-d H:i'], true],
         ];
