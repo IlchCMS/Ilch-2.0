@@ -29,7 +29,7 @@ class Shoutbox extends \Ilch\Box
             $userId = $this->getUser()->getId();
         }
 
-        $user = $userMapper->getUserById($userId);
+        $user = $userId ? $userMapper->getUserById($userId) : null;
         $ids = [3];
         if ($user) {
             $ids = [];
