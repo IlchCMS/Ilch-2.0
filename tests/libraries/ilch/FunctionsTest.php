@@ -239,4 +239,34 @@ class FunctionsTest extends TestCase
             'yottabytes' => ['params' => ['bytes' => 2417851639229258349412352, 'decimals' => 0], '2 YB'],
         ];
     }
+
+    /**
+     * Tests the validateDate function.
+     *
+     * @dataProvider dpForTestValidateDate
+     * @return void
+     */
+    public function testValidateDate(array $params, $expected)
+    {
+        self::assertSame($expected, validateDate($params['date'], $params['format']));
+    }
+
+    /**
+     * @return array
+     */
+    public function dpForTestValidateDate(): array
+    {
+        return [
+            'invalid empty string' => ['params' => ['date' => '', 'format' => 'Y-m-d H:i:s'], false],
+            'invalid null' => ['params' => ['date' => null, 'format' => 'Y-m-d H:i:s'], false],
+            'invalid null bytes' => ['params' => ['date' => chr(0), 'format' => 'Y-m-d H:i:s'], false],
+            'invalid null bytes beginning' => ['params' => ['date' => chr(0) . 'test', 'format' => 'Y-m-d H:i:s'], false],
+            'invalid null bytes middle' => ['params' => ['date' => 'test' . chr(0) . 'test', 'format' => 'Y-m-d H:i:s'], false],
+            'invalid null bytes end' => ['params' => ['date' => 'test' . chr(0), 'format' => 'Y-m-d H:i:s'], false],
+            'invalid zero date' => ['params' => ['date' => '0000-00-00 00:00:00', 'format' => 'Y-m-d H:i:s'], false],
+            'invalid date format' => ['params' => ['date' => '2024-10-27 04:42:04', 'format' => 'Y-m-d H:i'], false],
+            'valid date' => ['params' => ['date' => '2024-10-27 04:42:04', 'format' => 'Y-m-d H:i:s'], true],
+            'valid date without seconds' => ['params' => ['date' => '2024-10-27 04:42', 'format' => 'Y-m-d H:i'], true],
+        ];
+    }
 }

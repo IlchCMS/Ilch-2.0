@@ -92,6 +92,12 @@ class DateTest extends TestCase
                 'expectedErrorKey'        => 'validation.errors.date.mustBeDate',
                 'expectedErrorParameters' => ['Y-m-d']
             ],
+            'empty string' => [
+                'data'                    => $this->createData(""),
+                'expectedIsValid'         => false,
+                'expectedErrorKey'        => 'validation.errors.date.mustBeDate',
+                'expectedErrorParameters' => ['Y-m-d']
+            ],
         ];
     }
 
