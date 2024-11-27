@@ -1053,12 +1053,19 @@ class Config extends \Ilch\Config\Install
                 // Add new opt_comments and admin_comments column to the users table.
                 // opt_comments: Whether the user allows comments on the profile or not.
                 // admin_comments: Whether the admin allows comments on the profile of this user or not.
-                $this->db()->queryMulti('ALTER TABLE `[prefix]_users` ADD COLUMN `opt_comments` TINYINT(1) DEFAULT 1 AFTER `opt_mail`;
-                        ALTER TABLE `[prefix]_users` ADD COLUMN `admin_comments` TINYINT(1) DEFAULT 1 AFTER `opt_comments`;');
+                if (!$this->db()->queryCell("SHOW COLUMNS FROM `[prefix]_users` LIKE 'opt_comments';")) {
+                    $this->db()->query('ALTER TABLE `[prefix]_users` ADD COLUMN `opt_comments` TINYINT(1) DEFAULT 1 AFTER `opt_mail`;');
+                }
+                if (!$this->db()->queryCell("SHOW COLUMNS FROM `[prefix]_users` LIKE 'admin_comments';")) {
+                    $this->db()->queryMulti('ALTER TABLE `[prefix]_users` ADD COLUMN `admin_comments` TINYINT(1) DEFAULT 1 AFTER `opt_comments`;');
+                }
 
                 // Add new setting for comments on profiles (globally) and allow them by default.
                 $databaseConfig = new \Ilch\Config\Database($this->db());
-                $databaseConfig->set('user_commentsOnProfiles', '1');
+
+                if ($databaseConfig->get('user_commentsOnProfiles') === '') {
+                    $databaseConfig->set('user_commentsOnProfiles', '1');
+                }
                 break;
         }
 
