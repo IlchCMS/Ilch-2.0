@@ -807,6 +807,11 @@ class Config extends \Ilch\Config\Install
                 }
 
                 // Find users with missing user_groups and assign them to the default user group.
+                $userIdsUserGroups = $this->db()->select('user_id')
+                    ->from('users_groups')
+                    ->execute()
+                    ->fetchList();
+
                 $usersWithoutAssignedGroup = array_diff($idsUsers ?? [], $userIdsUserGroups ?? []);
                 if (count($usersWithoutAssignedGroup) > 0) {
                     $neededRows = [];
