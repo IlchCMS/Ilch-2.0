@@ -806,6 +806,23 @@ class Config extends \Ilch\Config\Install
                         ->execute();
                 }
 
+                // Find users with missing user_groups and assign them to the default user group.
+                $usersWithoutAssignedGroup = array_diff($idsUsers ?? [], $userIdsUserGroups ?? []);
+                if (count($usersWithoutAssignedGroup) > 0) {
+                    $neededRows = [];
+                    foreach ($usersWithoutAssignedGroup as $userWithoutAssignedGroup) {
+                        $neededRows[] = [$userWithoutAssignedGroup, 2];
+                    }
+
+                    $neededRows = array_chunk($neededRows, 25);
+                    foreach($neededRows as $neededRowsChunk) {
+                        $this->db()->insert('users_groups')
+                            ->columns(['user_id', 'group_id'])
+                            ->values($neededRowsChunk)
+                            ->execute();
+                    }
+                }
+
                 // Delete orphaned rows in auth_tokens.
                 $userIdsAuthTokens = $this->db()->select('userid')
                     ->from('auth_tokens')
