@@ -792,7 +792,7 @@ class Config extends \Ilch\Config\Install
                     ->execute()
                     ->fetchList();
 
-                $orphanedRows = array_diff($userIdsUserGroups ?? [], $idsGroups ?? []);
+                $orphanedRows = array_diff($userIdsUserGroups ?? [], $idsUsers ?? []);
                 if (count($orphanedRows) > 0) {
                     $this->db()->delete()->from('users_groups')
                         ->where(['user_id' => $orphanedRows])
