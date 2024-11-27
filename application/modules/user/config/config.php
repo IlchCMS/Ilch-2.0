@@ -707,6 +707,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `registration` TINYINT(1) NOT NULL DEFAULT 0 AFTER `hidden`;');
                 break;
             case "2.2.4":
+            case "2.2.5":
                 $fileConfig = new \Ilch\Config\File();
                 $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
                 $dbname = $fileConfig->get('dbName');
