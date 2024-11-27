@@ -963,10 +963,10 @@ class Config extends \Ilch\Config\Install
                     $this->db()->query('ALTER TABLE `[prefix]_users_groups` ADD CONSTRAINT `FK_[prefix]_users_groups_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 }
                 if (!$this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_users_groups' AND constraint_name='FK_[prefix]_users_groups_[prefix]_groups');")) {
-                    $this->db()->query('ALTER TABLE `[prefix]_users_groups` ADD CONSTRAINT `FK_[prefix]_users_groups_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                    $this->db()->query('ALTER TABLE `[prefix]_users_groups` ADD CONSTRAINT `FK_[prefix]_users_groups_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 }
                 if (!$this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_users_groups' AND constraint_name='FK_[prefix]_groups_access_[prefix]_groups');")) {
-                    $this->db()->query('ALTER TABLE `[prefix]_users_groups` ADD CONSTRAINT `FK_[prefix]_users_groups_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                    $this->db()->query('ALTER TABLE `[prefix]_users_groups` ADD CONSTRAINT `FK_[prefix]_groups_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 }
 
                 // auth_tokens
