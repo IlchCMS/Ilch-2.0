@@ -34,8 +34,8 @@ $teams = $this->get('teams');
                     <div class="col-xl-12">
                         <?php
                         $groupList = $groupMapper->getUsersForGroup($team->getGroupId());
-                        $leaderIds = explode(',', $team->getLeader());
-                        $coLeaderIds = explode(',', $team->getCoLeader());
+                        $leaderIds = $team->getLeader() ? explode(',', $team->getLeader()) : [];
+                        $coLeaderIds = $team->getCoLeader() ? explode(',', $team->getCoLeader()) : [];
                         $groupList = array_unique(array_merge($leaderIds, $coLeaderIds, $groupList));
                         ?>
                         <div class="table-responsive">
