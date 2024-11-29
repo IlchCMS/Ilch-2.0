@@ -1063,7 +1063,7 @@ class Config extends \Ilch\Config\Install
                 // Add new setting for comments on profiles (globally) and allow them by default.
                 $databaseConfig = new \Ilch\Config\Database($this->db());
 
-                if ($databaseConfig->get('user_commentsOnProfiles') === '') {
+                if ($databaseConfig->get('user_commentsOnProfiles') !== '0') {
                     $databaseConfig->set('user_commentsOnProfiles', '1');
                 }
                 break;
