@@ -318,11 +318,18 @@ class Layouts extends \Ilch\Controller\Admin
     public function advSettingsShowAction()
     {
         $layoutKey = $this->getRequest()->getParam('layoutKey');
+
+        if (!$layoutKey || !file_exists(APPLICATION_PATH . '/layouts/' . $layoutKey . '/config/config.php')) {
+            $this->redirect()
+                ->to(['action' => 'advSettings']);
+        }
+
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'settings'])
             ->add($this->getTranslator()->trans('menuAdvSettings'), ['action' => 'advSettings'])
             ->add($this->getTranslator()->trans('menuAdvSettingsShow'), ['action' => 'advSettings', 'layoutKey' => $layoutKey]);
+
         $settings = [];
         $layoutPath = APPLICATION_PATH . '/layouts/' . $layoutKey;
         if (is_dir($layoutPath)) {
