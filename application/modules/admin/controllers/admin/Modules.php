@@ -421,14 +421,16 @@ class Modules extends \Ilch\Controller\Admin
         $key = $this->getRequest()->getParam('key');
 
         if ($this->getRequest()->isSecure()) {
-            $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
-            $config = new $configClass($this->getTranslator());
+            if (file_exists(APPLICATION_PATH . '/modules/' . $key . '/config/config.php')) {
+                $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
 
-            if (!isset($config->config['system_module'])) {
-                $config->uninstall();
-                $moduleMapper->delete($key);
+                if (!isset($config->config['system_module'])) {
+                    $config->uninstall();
+                    $moduleMapper->delete($key);
 
-                $this->addMessage('deleteSuccess');
+                    $this->addMessage('deleteSuccess');
+                }
             }
         }
 
