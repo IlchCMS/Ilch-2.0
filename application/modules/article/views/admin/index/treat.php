@@ -78,15 +78,21 @@ if ($this->get('article')) {
                     multiple>
                 <?php foreach ($this->get('cats') as $cats): ?>
                     <option value="<?=$cats->getId() ?>"
-                        <?php if ($this->get('article')) {
-                            $catIds = explode(',', $this->get('article')->getCatId());
+                        <?php
+                            $catIds = [];
+
+                            if ($this->originalInput('cats')) {
+                                $catIds = $this->originalInput('cats');
+                            } else {
+                                $catIds = ($this->get('article')) ? explode(',', $this->get('article')->getCatId()) : [];
+                            }
+
                             foreach ($catIds as $catId) {
                                 if ($cats->getId() == $catId) {
                                     echo 'selected="selected"';
                                     break;
                                 }
                             }
-                        }
                         ?>>
                         <?=$this->escape($cats->getName()) ?>
                     </option>
