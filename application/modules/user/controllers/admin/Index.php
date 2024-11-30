@@ -297,6 +297,7 @@ class Index extends \Ilch\Controller\Admin
                 $user = $userMapper->loadFromArray($userData);
 
                 if (empty($userData['groups'])) {
+                    $this->addMessage('userGroupRequired', 'info');
                     $userData['groups'][0] = 2;
                 }
                 foreach ($userData['groups'] as $groupId) {
