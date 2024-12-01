@@ -385,6 +385,8 @@ return [
     'moduleUpdateFailed' => 'The update of the module failed.',
     'downloadOrInstallDenied' => 'Due to an invalid web address the update was not downloaded or installed.',
     'processingPleaseWait' => 'Processing. Please wait.',
+    'uninstallDeniedSystemModule' => 'An system module cannot be uninstalled.',
+    'moduleNotFoundOrInvalid' => 'Module not found or invalid.',
 
     'enableSelectedEntries' => 'Enable the selected entries?',
     'deleteSelectedEntries' => 'Delete the selected entries?',
@@ -434,6 +436,7 @@ return [
     'menuAdvSettings' => 'Advanced Settings',
     'menuAdvSettingsShow' => 'Show',
     'noLayouts' => 'No layouts with advanced settings found.',
+    'layoutNotFoundOrInvalid' => 'Layout not found or invalid.',
     'orphanedSettings' => 'Settings have been found for not existing layouts. These can be deleted below.',
     'deleteOrphanedSettings' => 'Delete orphaned settings',
 ];

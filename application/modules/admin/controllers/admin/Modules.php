@@ -234,7 +234,6 @@ class Modules extends \Ilch\Controller\Admin
 
         foreach (glob(ROOT_PATH . '/application/modules/*') as $modulesPath) {
             $key = basename($modulesPath);
-            $modulesDir[] = $key;
 
             $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
             if (class_exists($configClass)) {
@@ -422,12 +421,21 @@ class Modules extends \Ilch\Controller\Admin
         $key = $this->getRequest()->getParam('key');
 
         if ($this->getRequest()->isSecure()) {
-            $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
-            $config = new $configClass($this->getTranslator());
-            $config->uninstall();
-            $moduleMapper->delete($key);
+            if ($key && file_exists(APPLICATION_PATH . '/modules/' . $key . '/config/config.php')) {
+                $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
 
-            $this->addMessage('deleteSuccess');
+                if (!isset($config->config['system_module'])) {
+                    $config->uninstall();
+                    $moduleMapper->delete($key);
+
+                    $this->addMessage('uninstallSuccess');
+                } else {
+                    $this->addMessage('uninstallDeniedSystemModule', 'danger');
+                }
+            } else {
+                $this->addMessage('moduleNotFoundOrInvalid', 'danger');
+            }
         }
 
         $this->redirect(['action' => 'index']);
