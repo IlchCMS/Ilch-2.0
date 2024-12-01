@@ -77,7 +77,7 @@ class Config extends \Ilch\Config\Install
                 `autoload` TINYINT(1) NOT NULL,
                 UNIQUE KEY `key` (`key`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_emails` (
                 `moduleKey` VARCHAR(255) NOT NULL,
                 `type` VARCHAR(255) NOT NULL,
@@ -85,7 +85,7 @@ class Config extends \Ilch\Config\Install
                 `text` TEXT NOT NULL,
                 `locale` VARCHAR(255) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_modules` (
                 `key` VARCHAR(191) NOT NULL,
                 `system` TINYINT(1) NOT NULL DEFAULT 0,
@@ -97,37 +97,43 @@ class Config extends \Ilch\Config\Install
                 `icon_small` VARCHAR(255) NOT NULL,
                 UNIQUE KEY `key` (`key`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_content` (
                 `key` VARCHAR(191) NOT NULL,
                 `locale` VARCHAR(255) NOT NULL,
                 `description` VARCHAR(255) NOT NULL,
-                `name` VARCHAR(255) NOT NULL
+                `name` VARCHAR(255) NOT NULL,
+                INDEX `FK_[prefix]_modules_content_[prefix]_modules` (`key`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_modules_content_[prefix]_modules` FOREIGN KEY (`key`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_php_extensions` (
                 `key` VARCHAR(191) NOT NULL,
-                `extension` VARCHAR(255) NOT NULL
+                `extension` VARCHAR(255) NOT NULL,
+                INDEX `FK_[prefix]_modules_php_extensions_[prefix]_modules` (`key`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_modules_php_extensions_[prefix]_modules` FOREIGN KEY (`key`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_folderrights` (
                 `key` VARCHAR(191) NOT NULL,
-                `folder` VARCHAR(255) NOT NULL
+                `folder` VARCHAR(255) NOT NULL,
+                INDEX `FK_[prefix]_modules_folderrights_[prefix]_modules` (`key`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_modules_folderrights_[prefix]_modules` FOREIGN KEY (`key`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_boxes_content` (
                 `key` VARCHAR(255) NOT NULL,
                 `module` VARCHAR(255) NOT NULL,
                 `locale` VARCHAR(255) NOT NULL,
                 `name` VARCHAR(255) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_menu` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `title` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_menu_items` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `menu_id` INT(11) NOT NULL,
@@ -144,26 +150,26 @@ class Config extends \Ilch\Config\Install
                 `access` VARCHAR(255) NOT NULL DEFAULT "",
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_boxes` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `date_created` DATETIME NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_boxes_content` (
                 `box_id` INT(11) NOT NULL,
                 `content` MEDIUMTEXT NOT NULL,
                 `locale` VARCHAR(255) NOT NULL,
                 `title` VARCHAR(255) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_pages` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `date_created` DATETIME NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_pages_content` (
                 `page_id` INT(11) NOT NULL,
                 `content` MEDIUMTEXT NOT NULL,
@@ -173,20 +179,20 @@ class Config extends \Ilch\Config\Install
                 `title` VARCHAR(255) NOT NULL,
                 `perma` VARCHAR(255) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_backup` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `name` VARCHAR(255) NOT NULL,
                 `date` DATETIME NOT NULL,
             PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_logs` (
                 `user_id` VARCHAR(255) NOT NULL,
                 `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 `info` VARCHAR(255) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_admin_layoutadvsettings` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `layoutKey` VARCHAR(255) NOT NULL,
@@ -194,7 +200,7 @@ class Config extends \Ilch\Config\Install
                 `value` TEXT NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_admin_notifications` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -204,13 +210,13 @@ class Config extends \Ilch\Config\Install
                 `type` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_admin_notifications_permission` (
                 `module` VARCHAR(255) NOT NULL,
                 `granted` TINYINT(1) NOT NULL,
                 `limit` TINYINT(1) UNSIGNED NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_admin_updateservers` (
                 `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                 `url` VARCHAR(255) NOT NULL,
@@ -218,7 +224,7 @@ class Config extends \Ilch\Config\Install
                 `country` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-            
+
             INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://www.ilch.de/ilch2_updates/stable/", "ilch", "Germany");
             INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://ilch.blackcoder.de/stable/", "ilch", "Germany");';
     }
