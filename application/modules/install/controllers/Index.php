@@ -386,7 +386,7 @@ class Index extends \Ilch\Controller\Frontend
     public function configurationAction()
     {
         $fields = ['usage' => '', 'domain' => '', 'adminName' => '', 'adminPassword' => '', 'adminPassword2' => '', 'adminEmail' => ''];
-        $systemModules = ['admin', 'article', 'user', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent'];
+        $systemModules = ['admin', 'article', 'comment', 'contact', 'cookieconsent', 'error', 'imprint', 'install', 'media', 'privacy', 'statistic', 'user'];
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
@@ -441,32 +441,32 @@ class Index extends \Ilch\Controller\Frontend
                     $config->install();
 
                     if (!empty($config->config)) {
-                        if ($config->config['key'] !== 'admin') {
-                            $moduleModel = new \Modules\Admin\Models\Module();
-                            $moduleModel->setKey($config->config['key']);
-                            if (isset($config->config['author'])) {
-                                $moduleModel->setAuthor($config->config['author']);
-                            }
-                            if (isset($config->config['link'])) {
-                                $moduleModel->setLink($config->config['link']);
-                            }
-                            if (isset($config->config['languages'])) {
-                                foreach ($config->config['languages'] as $key => $value) {
-                                    $moduleModel->addContent($key, $value);
-                                }
-                            }
-                            if (isset($config->config['system_module'])) {
-                                $moduleModel->setSystemModule(true);
-                            }
-                            if (isset($config->config['hide_menu'])) {
-                                $moduleModel->setHideMenu(true);
-                            }
-                            if (isset($config->config['version'])) {
-                                $moduleModel->setVersion($config->config['version']);
-                            }
-                            $moduleModel->setIconSmall($config->config['icon_small']);
-                            $moduleMapper->save($moduleModel);
+                        $moduleModel = new \Modules\Admin\Models\Module();
+                        $moduleModel->setKey($config->config['key']);
+                        if (isset($config->config['author'])) {
+                            $moduleModel->setAuthor($config->config['author']);
                         }
+                        if (isset($config->config['link'])) {
+                            $moduleModel->setLink($config->config['link']);
+                        }
+                        if (isset($config->config['languages'])) {
+                            foreach ($config->config['languages'] as $key => $value) {
+                                $moduleModel->addContent($key, $value);
+                            }
+                        }
+                        if (isset($config->config['system_module'])) {
+                            $moduleModel->setSystemModule(true);
+                        }
+                        if (isset($config->config['hide_menu'])) {
+                            $moduleModel->setHideMenu(true);
+                        }
+                        if (isset($config->config['version'])) {
+                            $moduleModel->setVersion($config->config['version']);
+                        }
+                        if (isset($config->config['icon_small'])) {
+                            $moduleModel->setIconSmall($config->config['icon_small']);
+                        }
+                        $moduleMapper->save($moduleModel);
 
                         if (isset($config->config['boxes'])) {
                             $boxModel = new \Modules\Admin\Models\Box();
@@ -500,7 +500,7 @@ class Index extends \Ilch\Controller\Frontend
 
                 foreach ($modulesToInstall as $module) {
                     // Will not be linked in the menu
-                    if (in_array($module, ['comment', 'shoutbox', 'admin', 'media', 'newsletter', 'statistic', 'cookieconsent', 'error', 'contact', 'imprint', 'privacy'])) {
+                    if (in_array($module, ['admin', 'comment', 'contact', 'cookieconsent', 'error', 'imprint', 'install', 'media', 'newsletter', 'privacy', 'shoutbox', 'statistic'])) {
                         continue;
                     }
 

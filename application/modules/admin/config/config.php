@@ -123,9 +123,11 @@ class Config extends \Ilch\Config\Install
 
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_boxes_content` (
                 `key` VARCHAR(255) NOT NULL,
-                `module` VARCHAR(255) NOT NULL,
+                `module` VARCHAR(191) NOT NULL,
                 `locale` VARCHAR(255) NOT NULL,
-                `name` VARCHAR(255) NOT NULL
+                `name` VARCHAR(255) NOT NULL,
+                INDEX `FK_[prefix]_modules_boxes_content_[prefix]_modules` (`module`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_modules_boxes_content_[prefix]_modules` FOREIGN KEY (`module`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_menu` (
@@ -1070,18 +1072,23 @@ class Config extends \Ilch\Config\Install
             case "2.2.6":
                 // Add FKCs for modules_content, modules_folderrights and modules_php_extensions tables.
                 // The column key of modules_boxes_content is not a module key (examples: lastwar, nexttraining, ...).
-                // The column module of modules_boxes_content can contain module keys that are not in the modules table (example: admin).
                 $fileConfig = new \Ilch\Config\File();
                 $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
                 $dbname = $fileConfig->get('dbName');
 
                 // Adjust data type for key column. Change to VARCHAR(191) from VARCHAR(255).
-                $this->db()->queryMulti('ALTER TABLE `[prefix]_modules_content` MODIFY COLUMN `key` VARCHAR(191) NOT NULL;
+                $this->db()->queryMulti('ALTER TABLE `[prefix]_modules_boxes_content` MODIFY COLUMN `module` VARCHAR(191) NOT NULL;
+                        ALTER TABLE `[prefix]_modules_content` MODIFY COLUMN `key` VARCHAR(191) NOT NULL;
                         ALTER TABLE `[prefix]_modules_folderrights` MODIFY COLUMN `key` VARCHAR(191) NOT NULL;
                         ALTER TABLE `[prefix]_modules_php_extensions` MODIFY COLUMN `key` VARCHAR(191) NOT NULL;');
 
                 $moduleKeys = $this->db()->select('key')
                     ->from('modules')
+                    ->execute()
+                    ->fetchList();
+
+                $moduleKeysBoxesContent = $this->db()->select('module')
+                    ->from('modules_boxes_content')
                     ->execute()
                     ->fetchList();
 
@@ -1099,6 +1106,13 @@ class Config extends \Ilch\Config\Install
                     ->from('modules_php_extensions')
                     ->execute()
                     ->fetchList();
+
+                $orphanedRows = array_diff($moduleKeysBoxesContent ?? [], $moduleKeys ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('modules_boxes_content')
+                        ->where(['module' => $orphanedRows])
+                        ->execute();
+                }
 
                 $orphanedRows = array_diff($moduleKeysContent ?? [], $moduleKeys ?? []);
                 if (count($orphanedRows) > 0) {
@@ -1119,6 +1133,10 @@ class Config extends \Ilch\Config\Install
                     $this->db()->delete()->from('modules_php_extensions')
                         ->where(['key' => $orphanedRows])
                         ->execute();
+                }
+
+                if (!$this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_modules_boxes_content' AND constraint_name='FK_[prefix]_modules_boxes_content_[prefix]_modules');")) {
+                    $this->db()->query('ALTER TABLE `[prefix]_modules_boxes_content` ADD CONSTRAINT `FK_[prefix]_modules_boxes_content_[prefix]_modules` FOREIGN KEY (`module`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 }
 
                 if (!$this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_modules_content' AND constraint_name='FK_[prefix]_modules_content_[prefix]_modules');")) {
