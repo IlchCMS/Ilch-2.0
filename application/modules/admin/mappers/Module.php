@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  */
 
 namespace Modules\Admin\Mappers;
@@ -15,7 +15,7 @@ class Module extends \Ilch\Mapper
      *
      * @return array|ModuleModel[]
      */
-    public function getModules()
+    public function getModules(): array
     {
         $modulesRows = $this->db()->select()
             ->fields(['m.key', 'm.system', 'm.layout', 'm.hide_menu', 'm.version', 'm.link', 'm.icon_small', 'm.author'])
@@ -50,8 +50,9 @@ class Module extends \Ilch\Mapper
      *
      * @return ModuleModel[]|[]
      */
-    public function getModulesNotInstalled()
+    public function getModulesNotInstalled(): array
     {
+        $modulesDir = [];
         foreach (glob(APPLICATION_PATH . '/modules/*') as $modulePath) {
             if (is_dir($modulePath)) {
                 $moduleModel = new ModuleModel();
@@ -77,6 +78,7 @@ class Module extends \Ilch\Mapper
             return [];
         }
 
+        $modules = [];
         foreach ($modulesNotInstalled as $module) {
             $moduleModel = new ModuleModel();
             $configClass = '\\Modules\\' . ucfirst($module) . '\\Config\\Config';
@@ -145,7 +147,8 @@ class Module extends \Ilch\Mapper
      * @param string $key
      * @return ModuleModel|null
      */
-    public function getModuleByKey($key) {
+    public function getModuleByKey(string $key): ?ModuleModel
+    {
         $moduleRow = $this->db()->select('*')
             ->from('modules')
             ->where(['key' => $key])
@@ -174,7 +177,7 @@ class Module extends \Ilch\Mapper
      *
      * @return array|string[]
      */
-    public function getKeysInstalledModules()
+    public function getKeysInstalledModules(): array
     {
         $modulesRows = $this->db()->select('key')
             ->from('modules')
@@ -188,7 +191,13 @@ class Module extends \Ilch\Mapper
         return $modulesRows;
     }
 
-    public function getVersionsOfModules() {
+    /**
+     * Get the version numbers of the modules.
+     *
+     * @return array
+     */
+    public function getVersionsOfModules(): array
+    {
         $modulesRows = $this->db()->select(['key','version'])
             ->from('modules')
             ->execute()
@@ -198,7 +207,7 @@ class Module extends \Ilch\Mapper
 
         foreach ($modulesNotInstalled as $moduleNotInstalled) {
             $key = $moduleNotInstalled->getKey();
-            $modulesRows[$key] = array('key' => $key, 'version' => $moduleNotInstalled->getVersion());
+            $modulesRows[$key] = ['key' => $key, 'version' => $moduleNotInstalled->getVersion()];
         }
 
         if (empty($modulesRows)) {
@@ -215,7 +224,8 @@ class Module extends \Ilch\Mapper
      * @param string $version
      *
      */
-    public function updateVersion($key, $version) {
+    public function updateVersion(string $key, string $version)
+    {
         $this->db()->update('modules')
             ->values(['version' => $version])
             ->where(['key' => $key])
@@ -228,7 +238,7 @@ class Module extends \Ilch\Mapper
      * @param ModuleModel $module
      * @return int
      */
-    public function save(ModuleModel $module)
+    public function save(ModuleModel $module): int
     {
         $moduleId = $this->db()->insert('modules')
             ->values([
@@ -262,7 +272,7 @@ class Module extends \Ilch\Mapper
      *
      * @param string $key
      */
-    public function delete($key)
+    public function delete(string $key)
     {
         $menuMapper = new MenuMapper();
         $menuMapper->deleteItemsByModuleKey($key);
