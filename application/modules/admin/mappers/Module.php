@@ -280,10 +280,6 @@ class Module extends \Ilch\Mapper
             ->where(['key' => $key])
             ->execute();
 
-        $this->db()->delete('modules_content')
-            ->where(['key' => $key])
-            ->execute();
-
         $this->db()->delete('modules_boxes_content')
             ->where(['module' => $key])
             ->execute();

@@ -11,6 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'admin',
+        'system_module' => true,
         'boxes' => [
             'langswitch' => [
                 'de_DE' => [
@@ -98,19 +99,19 @@ class Config extends \Ilch\Config\Install
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_content` (
-                `key` VARCHAR(255) NOT NULL,
+                `key` VARCHAR(191) NOT NULL,
                 `locale` VARCHAR(255) NOT NULL,
                 `description` VARCHAR(255) NOT NULL,
                 `name` VARCHAR(255) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_php_extensions` (
-                `key` VARCHAR(255) NOT NULL,
+                `key` VARCHAR(191) NOT NULL,
                 `extension` VARCHAR(255) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
             CREATE TABLE IF NOT EXISTS `[prefix]_modules_folderrights` (
-                `key` VARCHAR(255) NOT NULL,
+                `key` VARCHAR(191) NOT NULL,
                 `folder` VARCHAR(255) NOT NULL
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
             
@@ -1056,12 +1057,76 @@ class Config extends \Ilch\Config\Install
                 $notificationsMapper->addNotification($notificationModel);
                 break;
             case "2.2.4":
-                // Update vendor folder
-                replaceVendorDirectory();
-                break;
             case "2.2.5":
                 // Update vendor folder
                 replaceVendorDirectory();
+                break;
+            case "2.2.6":
+                // Add FKCs for modules_content, modules_folderrights and modules_php_extensions tables.
+                // The column key of modules_boxes_content is not a module key (examples: lastwar, nexttraining, ...).
+                // The column module of modules_boxes_content can contain module keys that are not in the modules table (example: admin).
+                $fileConfig = new \Ilch\Config\File();
+                $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
+                $dbname = $fileConfig->get('dbName');
+
+                // Adjust data type for key column. Change to VARCHAR(191) from VARCHAR(255).
+                $this->db()->queryMulti('ALTER TABLE `[prefix]_modules_content` MODIFY COLUMN `key` VARCHAR(191) NOT NULL;
+                        ALTER TABLE `[prefix]_modules_folderrights` MODIFY COLUMN `key` VARCHAR(191) NOT NULL;
+                        ALTER TABLE `[prefix]_modules_php_extensions` MODIFY COLUMN `key` VARCHAR(191) NOT NULL;');
+
+                $moduleKeys = $this->db()->select('key')
+                    ->from('modules')
+                    ->execute()
+                    ->fetchList();
+
+                $moduleKeysContent = $this->db()->select('key')
+                    ->from('modules_content')
+                    ->execute()
+                    ->fetchList();
+
+                $moduleKeysFolderrights = $this->db()->select('key')
+                    ->from('modules_folderrights')
+                    ->execute()
+                    ->fetchList();
+
+                $moduleKeysPhpExtensions = $this->db()->select('key')
+                    ->from('modules_php_extensions')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($moduleKeysContent ?? [], $moduleKeys ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('modules_content')
+                        ->where(['key' => $orphanedRows])
+                        ->execute();
+                }
+
+                $orphanedRows = array_diff($moduleKeysFolderrights ?? [], $moduleKeys ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('modules_folderrights')
+                        ->where(['key' => $orphanedRows])
+                        ->execute();
+                }
+
+                $orphanedRows = array_diff($moduleKeysPhpExtensions ?? [], $moduleKeys ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('modules_php_extensions')
+                        ->where(['key' => $orphanedRows])
+                        ->execute();
+                }
+
+                if (!$this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_modules_content' AND constraint_name='FK_[prefix]_modules_content_[prefix]_modules');")) {
+                    $this->db()->query('ALTER TABLE `[prefix]_modules_content` ADD CONSTRAINT `FK_[prefix]_modules_content_[prefix]_modules` FOREIGN KEY (`key`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                }
+
+                if (!$this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_modules_folderrights' AND constraint_name='FK_[prefix]_modules_folderrights_[prefix]_modules');")) {
+                    $this->db()->query('ALTER TABLE `[prefix]_modules_folderrights` ADD CONSTRAINT `FK_[prefix]_modules_folderrights_[prefix]_modules` FOREIGN KEY (`key`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                }
+
+                if (!$this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_modules_php_extensions' AND constraint_name='FK_[prefix]_modules_php_extensions_[prefix]_modules');")) {
+                    $this->db()->query('ALTER TABLE `[prefix]_modules_php_extensions` ADD CONSTRAINT `FK_[prefix]_modules_php_extensions_[prefix]_modules` FOREIGN KEY (`key`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                }
+
                 break;
         }
 
