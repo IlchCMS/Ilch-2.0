@@ -321,6 +321,7 @@ class Layouts extends \Ilch\Controller\Admin
 
         if (!$layoutKey || !file_exists(APPLICATION_PATH . '/layouts/' . $layoutKey . '/config/config.php')) {
             $this->redirect()
+                ->withMessage('layoutNotFoundOrInvalid', 'danger')
                 ->to(['action' => 'advSettings']);
         }
 

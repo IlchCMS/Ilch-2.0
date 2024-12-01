@@ -385,6 +385,8 @@ return [
     'moduleUpdateFailed' => 'Modul konnte nicht aktualisiert werden.',
     'downloadOrInstallDenied' => 'Aufgrund einer ungültigen Internetadresse wurde das Herunterladen oder Installieren des Updates nicht durchgeführt.',
     'processingPleaseWait' => 'Verarbeite. Bitte warten.',
+    'uninstallDeniedSystemModule' => 'Ein Systemmodul kann nicht deinstalliert werden.',
+    'moduleNotFoundOrInvalid' => 'Modul nicht gefunden oder ungültig.',
 
     'enableSelectedEntries' => 'Sollen die markierten Einträge wirklich freigeschaltet werden?',
     'deleteSelectedEntries' => 'Sollen die markierten Einträge wirklich gelöscht werden?',
@@ -434,6 +436,7 @@ return [
     'menuAdvSettings' => 'Erweiterte Einstellungen',
     'menuAdvSettingsShow' => 'Anzeige',
     'noLayouts' => 'Keine Layouts mit erweiterten Einstellungen gefunden.',
+    'layoutNotFoundOrInvalid' => 'Layout nicht gefunden oder ungültig.',
     'orphanedSettings' => 'Es wurden Einstellungen für nicht vorhandene Layouts gefunden. Diese können unten gelöscht werden.',
     'deleteOrphanedSettings' => 'Lösche verwaiste Einstellungen',
 ];
