@@ -303,6 +303,7 @@ class Menu extends Mapper
         $this->db()->delete('menu')
             ->where(['id' => $id])
             ->execute();
+        // Rows in menu_items get deleted due to a FKC.
 
         // Truncate table if this was the last menu. This will also reset AUTO_INCREMENT.
         if (!$this->getMenus()) {
