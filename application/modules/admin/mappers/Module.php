@@ -279,5 +279,6 @@ class Module extends \Ilch\Mapper
         $this->db()->delete('modules')
             ->where(['key' => $key])
             ->execute();
+        // Rows in modules_boxes_content, modules_content, modules_folderrights and modules_php_extensions are being deleted due to FKCs.
     }
 }
