@@ -9,6 +9,7 @@ $(document).ready(function(){
         if (toolbar === 'ilch_html') {
             // ilch_html configuration
             config = {
+                licenseKey: 'GPL',
                 toolbar: {
                     items: [
                         'sourceEditing',
@@ -118,6 +119,7 @@ $(document).ready(function(){
         } else if(toolbar === 'ilch_html_frontend') {
             // ilch_html_frontend configuration
             config = {
+                licenseKey: 'GPL',
                 toolbar: {
                     items: [
                         'heading',

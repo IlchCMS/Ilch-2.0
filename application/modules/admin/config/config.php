@@ -1175,6 +1175,7 @@ class Config extends \Ilch\Config\Install
                 if (!$this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_menu_items' AND constraint_name='FK_[prefix]_menu_items_[prefix]_menu');")) {
                     $this->db()->query('ALTER TABLE `[prefix]_menu_items` ADD CONSTRAINT `FK_[prefix]_menu_items_[prefix]_menu` FOREIGN KEY (`menu_id`) REFERENCES `[prefix]_menu` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 }
+
                 break;
         }
 
