@@ -5,24 +5,22 @@
  * @package ilch
  */
 
-namespace Modules\Error\Config;
+namespace Modules\Install\Config;
 
 class Config extends \Ilch\Config\Install
 {
     public $config = [
-        'key' => 'error',
+        'key' => 'install',
         'system_module' => true
     ];
 
     public function install()
     {
+
     }
 
-    public function getInstallSql()
+    public function getUpdate($installedVersion)
     {
-    }
 
-    public function getUpdate(string $installedVersion)
-    {
     }
 }
