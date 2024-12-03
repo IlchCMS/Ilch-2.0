@@ -20,12 +20,17 @@ class Mysql
     /**
      * @var string|null
      */
-    protected $prefix = null;
+    protected ?string $prefix = null;
 
     /**
      * @var \mysqli|null
      */
-    protected $conn = null;
+    protected ?\mysqli $conn = null;
+
+    /**
+     * @var string|null
+     */
+    protected ?string $dbName = null;
 
     /**
      * Close database connection.
@@ -79,7 +84,18 @@ class Mysql
             return false;
         }
 
+        $this->dbName = $db;
         return @$this->conn->select_db($db);
+    }
+
+    /**
+     * Get name of currently used database.
+     *
+     * @return string
+     */
+    public function getDatabaseName(): string
+    {
+        return $this->dbName;
     }
 
     /**
@@ -211,6 +227,21 @@ class Mysql
         $result = $this->query($sql);
 
         return \mysqli_num_rows($result) > 0;
+    }
+
+    /**
+     * Check if Foreign Key Contraint exists.
+     *
+     * @param string $table table without prefix
+     * @param string $constraintName constraint name
+     * @return bool
+     * @throws Exception
+     * @since 2.2.7
+     */
+    public function ifForeignKeyConstraintExists(string $table, string $constraintName): bool
+    {
+        $table = \str_replace('[prefix]_', '', $table);
+        return $this->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $this->getDatabaseName() . "' AND table_name='" . '[prefix]_' . $table . "' AND constraint_name='" . $constraintName . "');");
     }
 
     /**
