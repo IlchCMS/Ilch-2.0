@@ -42,7 +42,7 @@ class Login extends \Ilch\Controller\Frontend
                 $userMapper = new UserMapper();
                 $userMapper->deleteselectsdelete(($this->getConfig()->get('userdeletetime')));
 
-                $result  = LoginService::factory()->perform($this->getRequest()->getPost('login_emailname'), $this->getRequest()->getPost('login_password'), (bool)$this->getRequest()->getPost('rememberMe', 0));
+                $result  = LoginService::factory()->perform($this->getRequest()->getPost('login_emailname'), $this->getRequest()->getPost('login_password'));
 
                 if ($result->isSuccessful()) {
                     $cookieStolenMapper = new CookieStolenMapper();
