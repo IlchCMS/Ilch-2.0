@@ -607,7 +607,7 @@ class Frontend extends Base
                     }
                 </style>
                 <script>
-                    var tarteaucitronForceLanguage = "' . substr($this->getTranslator()->getLocale(), 2) . '";
+                    var tarteaucitronForceLanguage = "' . substr($this->getTranslator()->getLocale(), 0, 2) . '";
                     tarteaucitronCustomText = {
                         "close": "' . $this->getTrans('dismissBTNText') . '",
                         "denyAll": "' . $this->getTrans('denyBTNText') . '",
