@@ -22,7 +22,7 @@ class Remember
      * @throws \Exception
      * @since 2.1.38
      */
-    public function rememberMe($userId)
+    public function rememberMe(int $userId)
     {
         $authTokenModel = new AuthTokenModel();
 
@@ -36,7 +36,7 @@ class Remember
         $authTokenModel->setUserid($userId);
         $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime('+30 days')));
 
-        setcookieIlch('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime('+30 days'));
+        setcookieIlch('remember', $authTokenModel->getSelector() . ':' . base64_encode($authenticator), strtotime('+30 days'));
 
         $authTokenMapper = new AuthTokenMapper();
         $authTokenMapper->addAuthToken($authTokenModel);
@@ -74,7 +74,7 @@ class Remember
                 $authTokenModel->setUserid($_SESSION['user_id']);
                 $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime('+30 days')));
 
-                setcookieIlch('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime('+30 days'));
+                setcookieIlch('remember', $authTokenModel->getSelector() . ':' . base64_encode($authenticator), strtotime('+30 days'));
 
                 $authTokenMapper->updateAuthToken($authTokenModel);
             } else {

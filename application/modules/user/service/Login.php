@@ -7,6 +7,7 @@
 
 namespace Modules\User\Service;
 
+use Ilch\Database\Exception;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Service\Login\Result as LoginResult;
 
@@ -45,10 +46,10 @@ class Login
      * Performs the Login for a User
      * @param string $userNameOrEmail
      * @param string $password
-     * @param bool $remember
      * @return LoginResult
+     * @throws Exception
      */
-    public function perform(string $userNameOrEmail, string $password, bool $remember = false): LoginResult
+    public function perform(string $userNameOrEmail, string $password): LoginResult
     {
         $user = $this->mapper->getUserByEmail($userNameOrEmail);
 
