@@ -150,7 +150,9 @@ class Config extends \Ilch\Config\Install
                 `target` VARCHAR(50) NULL DEFAULT NULL,
                 `module_key` VARCHAR(255) NULL DEFAULT NULL,
                 `access` VARCHAR(255) NOT NULL DEFAULT "",
-                PRIMARY KEY (`id`)
+                PRIMARY KEY (`id`),
+                INDEX `FK_[prefix]_menu_items_[prefix]_menu` (`menu_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_menu_items_[prefix]_menu` FOREIGN KEY (`menu_id`) REFERENCES `[prefix]_menu` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_boxes` (
@@ -1149,6 +1151,29 @@ class Config extends \Ilch\Config\Install
 
                 if (!$this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_modules_php_extensions' AND constraint_name='FK_[prefix]_modules_php_extensions_[prefix]_modules');")) {
                     $this->db()->query('ALTER TABLE `[prefix]_modules_php_extensions` ADD CONSTRAINT `FK_[prefix]_modules_php_extensions_[prefix]_modules` FOREIGN KEY (`key`) REFERENCES `[prefix]_modules` (`key`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                }
+
+                // Add FKC to the menu_items table.
+                // Delete orphaned menu items.
+                $menuIds = $this->db()->select('id')
+                    ->from('menu')
+                    ->execute()
+                    ->fetchList();
+
+                $menuItemsIds = $this->db()->select('menu_id')
+                    ->from('menu_items')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($menuItemsIds ?? [], $menuIds ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('menu_items')
+                        ->where(['menu_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                if (!$this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_menu_items' AND constraint_name='FK_[prefix]_menu_items_[prefix]_menu');")) {
+                    $this->db()->query('ALTER TABLE `[prefix]_menu_items` ADD CONSTRAINT `FK_[prefix]_menu_items_[prefix]_menu` FOREIGN KEY (`menu_id`) REFERENCES `[prefix]_menu` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 }
 
                 break;
