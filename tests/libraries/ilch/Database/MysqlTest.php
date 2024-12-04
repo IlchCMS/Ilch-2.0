@@ -90,4 +90,16 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
             ->fetchCell();
         self::assertEquals(1, $result, 'The db entry has not being inserted with an empty string.');
     }
+
+    /**
+     * Tests if ifForeignKeyConstraintExists works as expected.
+     *
+     * @return void
+     */
+    public function testIfForeignKeyConstraintExists()
+    {
+        self::assertTrue($this->db->ifForeignKeyConstraintExists('[prefix]_menu_items', 'FK_[prefix]_menu_items_[prefix]_menu'), 'Returning true for an existing foreign key constraint failed.');
+        self::assertTrue($this->db->ifForeignKeyConstraintExists('menu_items', 'FK_menu_items_menu'), 'Returning true for an existing foreign key constraint failed. No prefixes.');
+        self::assertFalse($this->db->ifForeignKeyConstraintExists('[prefix]_menu_items', 'wrongConstraintName'), 'Returning false for a clearly wrong contraint name failed.');
+    }
 }
