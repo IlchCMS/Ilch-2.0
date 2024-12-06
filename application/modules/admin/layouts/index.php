@@ -373,7 +373,7 @@ $accesses = $this->get('accesses');
     <!-- LEFT PANEL END -->
 <?php endif; ?>
 <!-- MAIN -->
-<div id="main" role="main" class="<?=$contentFullClass ?><?=(!empty($config->get('admin_layout_hmenu'))) ? ' ribbon-fixed' : '' ?>">
+<div id="main" role="main" class="<?=$contentFullClass ?><?=(!empty($config->get('admin_layout_hmenu'))) ? 'ribbon-fixed' : '' ?>">
     <div id="ribbon"><?=$this->getAdminHmenu() ?></div>
     <!-- CONTENT -->
     <div id="content">
