@@ -26,14 +26,13 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuAway'), ['action' => 'index']);
 
+        $currentlyEditingAway = null;
+        $awayId = $this->getRequest()->getParam('id');
+        if ($awayId && is_numeric($awayId)) {
+            $currentlyEditingAway = $awayMapper->getAwayById($awayId);
+        }
+
         $userCache = [];
-        $post = [
-            'reason' => '',
-            'start' => '',
-            'end' => '',
-            'text' => '',
-            'calendarShow' => ''
-        ];
 
         if ($this->getRequest()->getPost('saveAway')) {
             Validation::setCustomFieldAliases([
@@ -60,6 +59,11 @@ class Index extends \Ilch\Controller\Frontend
                 ];
 
                 $awayModel = new AwayModel();
+                if ($currentlyEditingAway && $this->getUser() && ($currentlyEditingAway->getUserId() == $this->getUser()->getId())) {
+                    // Entry found and the current user is the autor. Set id to update an existing entry. Reset status to reported.
+                    $awayModel->setId($awayId);
+                    $awayModel->setStatus(2);
+                }
                 $awayModel->setUserId($this->getUser()->getId());
                 $awayModel->setReason($post['reason']);
                 $awayModel->setStart($post['start']);
@@ -114,7 +118,10 @@ class Index extends \Ilch\Controller\Frontend
             }
 
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-            $errorFields = $validation->getFieldsWithError();
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
         $aways = $awayMapper->getAway();
@@ -124,15 +131,14 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
-        if ($awayMapper->existsTable('calendar') == true) {
+        if ($awayMapper->existsTable('calendar')) {
             $this->getView()->set('calendarShow', 1);
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', ($errorFields ?? []));
         $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('userCache', $userCache);
         $this->getView()->set('aways', $aways);
+        $this->getView()->set('currentlyEditingAway', $currentlyEditingAway);
     }
 
     public function updateAction()

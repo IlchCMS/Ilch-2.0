@@ -13,63 +13,63 @@ class Away extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * The userId of the away.
      *
      * @var int
      */
-    protected $userId;
+    protected int $userId;
 
     /**
      * The reason of the away.
      *
      * @var string
      */
-    protected $reason;
+    protected string $reason;
 
     /**
      * The start of the away.
      *
      * @var string
      */
-    protected $start;
+    protected string $start;
 
     /**
      * The end of the away.
      *
      * @var string
      */
-    protected $end;
+    protected string $end;
 
     /**
      * The text of the away.
      *
      * @var string
      */
-    protected $text;
+    protected string $text;
 
     /**
      * The status of the away.
      *
      * @var int
      */
-    protected $status;
+    protected int $status;
 
     /**
      * The show of the away.
      *
      * @var int
      */
-    protected $show;
+    protected int $show;
 
     /**
      * Gets the id of the away.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -78,11 +78,11 @@ class Away extends \Ilch\Model
      * Sets the id of the away.
      *
      * @param int $id
-     * @return this
+     * @return Away
      */
-    public function setId($id)
+    public function setId(int $id): Away
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -92,7 +92,7 @@ class Away extends \Ilch\Model
      *
      * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -101,11 +101,11 @@ class Away extends \Ilch\Model
      * Sets the userId of the away.
      *
      * @param int $userId
-     * @return this
+     * @return Away
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): Away
     {
-        $this->userId = (int)$userId;
+        $this->userId = $userId;
 
         return $this;
     }
@@ -115,7 +115,7 @@ class Away extends \Ilch\Model
      *
      * @return string
      */
-    public function getReason()
+    public function getReason(): string
     {
         return $this->reason;
     }
@@ -124,11 +124,11 @@ class Away extends \Ilch\Model
      * Sets the reason of the away.
      *
      * @param string $reason
-     * @return this
+     * @return Away
      */
-    public function setReason($reason)
+    public function setReason(string $reason): Away
     {
-        $this->reason = (string)$reason;
+        $this->reason = $reason;
 
         return $this;
     }
@@ -138,7 +138,7 @@ class Away extends \Ilch\Model
      *
      * @return string
      */
-    public function getStart()
+    public function getStart(): string
     {
         return $this->start;
     }
@@ -147,11 +147,11 @@ class Away extends \Ilch\Model
      * Sets the start of the away.
      *
      * @param string $start
-     * @return this
+     * @return Away
      */
-    public function setStart($start)
+    public function setStart(string $start): Away
     {
-        $this->start = (string)$start;
+        $this->start = $start;
 
         return $this;
     }
@@ -161,7 +161,7 @@ class Away extends \Ilch\Model
      *
      * @return string
      */
-    public function getEnd()
+    public function getEnd(): string
     {
         return $this->end;
     }
@@ -170,11 +170,11 @@ class Away extends \Ilch\Model
      * Sets the end of the away.
      *
      * @param string $end
-     * @return this
+     * @return Away
      */
-    public function setEnd($end)
+    public function setEnd(string $end): Away
     {
-        $this->end = (string)$end;
+        $this->end = $end;
 
         return $this;
     }
@@ -184,7 +184,7 @@ class Away extends \Ilch\Model
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -193,11 +193,11 @@ class Away extends \Ilch\Model
      * Sets the text of the away.
      *
      * @param string $text
-     * @return this
+     * @return Away
      */
-    public function setText($text)
+    public function setText(string $text): Away
     {
-        $this->text = (string)$text;
+        $this->text = $text;
 
         return $this;
     }
@@ -207,7 +207,7 @@ class Away extends \Ilch\Model
      *
      * @return int
      */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -215,12 +215,12 @@ class Away extends \Ilch\Model
     /**
      * Sets the status of the away.
      *
-     * @param int $status
-     * @return this
+     * @param int $status 0: declined, 1: approved, 2: reported
+     * @return Away
      */
-    public function setStatus($status)
+    public function setStatus(int $status): Away
     {
-        $this->status = (int)$status;
+        $this->status = $status;
 
         return $this;
     }
@@ -230,7 +230,7 @@ class Away extends \Ilch\Model
      *
      * @return int
      */
-    public function getShow()
+    public function getShow(): int
     {
         return $this->show;
     }
@@ -239,11 +239,11 @@ class Away extends \Ilch\Model
      * Sets the show of the away.
      *
      * @param int $show
-     * @return this
+     * @return Away
      */
-    public function setShow($show)
+    public function setShow(int $show): Away
     {
-        $this->show = (int)$show;
+        $this->show = $show;
 
         return $this;
     }
