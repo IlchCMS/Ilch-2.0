@@ -78,9 +78,9 @@ class Index extends \Ilch\Controller\Frontend
                     $adminNotificationsMapper = new AdminNotificationsMapper();
 
                     $notification->setModule('away');
-                    $notification->setMessage($this->getLayout()->getTrans('awayAdminNewEntryMessage'));
+                    $notification->setMessage($currentlyEditingAway ? $this->getLayout()->getTrans('awayUserUpdatedEntryMessage') : $this->getLayout()->getTrans('awayAdminNewEntryMessage'));
                     $notification->setURL($this->getLayout()->getUrl(['module' => 'away', 'controller' => 'index', 'action' => 'index'], 'admin'));
-                    $notification->setType('awayAdminNewEntry');
+                    $notification->setType($currentlyEditingAway ? 'awayUserUpdatedEntry' : 'awayAdminNewEntry');
                     $adminNotificationsMapper->addNotification($notification);
                 }
 
@@ -104,9 +104,9 @@ class Index extends \Ilch\Controller\Frontend
                         $notification = new UserNotificationModel();
                         $notification->setUserId($user->getId());
                         $notification->setModule('away');
-                        $notification->setMessage($this->getLayout()->getTrans('awayNewEntryMessage'));
+                        $notification->setMessage($currentlyEditingAway ? $this->getLayout()->getTrans('awayUserUpdatedEntryMessage') : $this->getLayout()->getTrans('awayNewEntryMessage'));
                         $notification->setURL($this->getLayout()->getUrl(['module' => 'away', 'controller' => 'index', 'action' => 'index']));
-                        $notification->setType('awayNewEntry');
+                        $notification->setType($currentlyEditingAway ? 'awayUserUpdatedEntry' : 'awayNewEntry');
                         $notifications[] = $notification;
                     }
 
