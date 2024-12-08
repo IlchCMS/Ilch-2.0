@@ -14,14 +14,14 @@ class Events extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The Url of the events.
      *
      * @var string
      */
-    protected $url = '';
+    protected string $url = '';
 
     /**
      * Sets Model by Array.

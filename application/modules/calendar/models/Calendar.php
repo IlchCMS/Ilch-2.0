@@ -14,7 +14,7 @@ class Calendar extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The uid of the calendar.
@@ -23,77 +23,77 @@ class Calendar extends \Ilch\Model
      * @var string
      * @see https://icalendar.org/New-Properties-for-iCalendar-RFC-7986/5-3-uid-property.html
      */
-    protected $uid = '';
+    protected string $uid = '';
 
     /**
      * The title of the calendar.
      *
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * The place of the calendar.
      *
      * @var string
      */
-    protected $place = '';
+    protected string $place = '';
 
     /**
      * The start date of the calendar.
      *
      * @var string
      */
-    protected $start = '';
+    protected string $start = '';
 
     /**
      * The end date of the calendar.
      *
      * @var string
      */
-    protected $end = '';
+    protected string $end = '';
 
     /**
      * The text of the calendar.
      *
      * @var string
      */
-    protected $text = '';
+    protected string $text = '';
 
     /**
      * The color of the calendar.
      *
      * @var string
      */
-    protected $color = '';
+    protected string $color = '';
 
     /**
      * The period day of the calendar.
      *
      * @var int
      */
-    protected $periodDay = 0;
+    protected int $periodDay = 0;
 
     /**
      * Read access of the calendar.
      *
      * @var string
      */
-    protected $readAccess = '';
+    protected string $readAccess = '';
 
     /**
      * period day of the calendar.
      *
      * @var string
      */
-    protected $periodType = '';
+    protected string $periodType = '';
 
     /**
      * Repeat event until a specific date.
      *
      * @var string
      */
-    protected $repeatUntil = '';
+    protected string $repeatUntil = '';
 
     /**
      * Gets the id of the calendar.

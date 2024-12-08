@@ -7,11 +7,12 @@
 
 namespace Modules\Calendar\Mappers;
 
+use Ilch\Pagination;
 use Modules\Calendar\Models\Events as EntriesModel;
 
 class Events extends \Ilch\Mapper
 {
-    public $tablename = 'calendar_events';
+    public string $tablename = 'calendar_events';
 
     /**
      * returns if the module is installed.
@@ -28,10 +29,10 @@ class Events extends \Ilch\Mapper
      *
      * @param array $where
      * @param array $orderBy
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['*'])

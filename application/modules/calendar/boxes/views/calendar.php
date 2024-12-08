@@ -4,8 +4,8 @@
     <div id='calendarbox<?=$this->get('uniqid') ?>'></div>
 </div>
 
-<script src="<?=$this->getBoxUrl('static/js/fullcalendar-6.1.10/dist/index.global.min.js') ?>"></script>
-<script src="<?=$this->getBoxUrl('static/js/fullcalendar-6.1.10/packages/core/locales-all.global.min.js') ?>"></script>
+<script src="<?=$this->getBoxUrl('static/js/fullcalendar-6.1.15/dist/index.global.min.js') ?>"></script>
+<script src="<?=$this->getBoxUrl('static/js/fullcalendar-6.1.15/packages/core/locales-all.global.min.js') ?>"></script>
 <script>
     if (typeof languagecalendar === 'undefined') {
         var languagecalendar = '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>';
@@ -45,9 +45,8 @@
                 <?php endforeach; ?>
             ],
             eventDidMount: function (info) {
-                $('#calendarbox<?=$this->get('uniqid') ?> .fc-daygrid-day.fc-day').each(function(i) {
-                    let date = $(this).data('date'),
-                    eventframe = $(this).find('.fc-daygrid-day-frame .fc-daygrid-day-events');
+                $('#calendarbox<?=$this->get('uniqid') ?> .fc-daygrid-day.fc-day').each(function() {
+                    let eventframe = $(this).find('.fc-daygrid-day-frame .fc-daygrid-day-events');
                     
                     let count = eventframe[0].childElementCount;
                     count--;

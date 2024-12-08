@@ -302,10 +302,10 @@ $(document).ready(function() {
         });
     });
 
-    diasableDays();
+    disableDays();
 
     document.getElementById("periodType").onchange = function() {
-        diasableDays();
+        disableDays();
 
         document.getElementById("periodDayAppendix").textContent = jsPeriodAppendix[document.getElementById('periodType').value];
 
@@ -357,7 +357,7 @@ $(document).ready(function() {
         }
     }
 
-    function diasableDays() {
+    function disableDays() {
         if (document.getElementById('periodType').value !== '') {
             if (document.getElementById("periodType").value === 'days') {
                 document.getElementById("periodDays_div").style.display = "block";
