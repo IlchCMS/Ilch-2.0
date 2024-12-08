@@ -13,7 +13,7 @@ if ($trainingList) {
         $e = [];
         $e['title'] = $this->escape($training->getTitle());
         $e['start'] = $training->getDate();
-        $e['start'] = $training->getEnd();
+        $e['end'] = $training->getEnd();
         $e['color'] = '#C52C66';
         $e['url'] = $this->getUrl('training/index/show/id/' . $training->getId());
 
