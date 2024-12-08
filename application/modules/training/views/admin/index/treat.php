@@ -4,6 +4,33 @@
 
 /** @var \Modules\Training\Models\Training $training */
 $training = $this->get('training');
+
+$periodDays = [
+    '1' => $this->getTranslator()->trans('Monday'),
+    '2' => $this->getTranslator()->trans('Tuesday'),
+    '3' => $this->getTranslator()->trans('Wednesday'),
+    '4' => $this->getTranslator()->trans('Thursday'),
+    '5' => $this->getTranslator()->trans('Friday'),
+    '6' => $this->getTranslator()->trans('Saturday'),
+    '7' => $this->getTranslator()->trans('Sunday')
+];
+$periodTypes = [
+    'daily' => $this->getTranslator()->trans('daily'),
+    'weekly' => $this->getTranslator()->trans('weekly'),
+    'monthly' => $this->getTranslator()->trans('monthly'),
+    'quarterly' => $this->getTranslator()->trans('quarterly'),
+    'yearly' => $this->getTranslator()->trans('yearly'),
+    'days' => $this->getTranslator()->trans('days'),
+];
+
+$periodAppendix = [
+    'daily' => $this->getTranslator()->trans('daily'),
+    'weekly' => $this->getTranslator()->trans('weeks'),
+    'monthly' => $this->getTranslator()->trans('months'),
+    'yearly' => $this->getTranslator()->trans('years'),
+    'quarterly' => $this->getTranslator()->trans('quarter'),
+    'days' => $this->getTranslator()->trans('days'),
+];
 ?>
 <link href="<?=$this->getModuleUrl('static/css/training.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
@@ -26,8 +53,8 @@ $training = $this->get('training');
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('date') ? ' has-error' : '' ?>">
-        <label for="date" class="col-md-2 col-form-label">
-            <?=$this->getTrans('dateTime') ?>:
+        <label for="start" class="col-md-2 col-form-label">
+            <?=$this->getTrans('start') ?>:
         </label>
         <div class="col-xl-2 input-group ilch-date date form_datetime" id="date">
             <?php
@@ -37,11 +64,11 @@ $training = $this->get('training');
             } else {
                 $date = new \Ilch\Date();
             }
-            $datecreate = $date->format('d.m.Y H:i', true);
+            $datecreate = $date->format('d.m.Y H:i');
             ?>
             <input type="text"
                    class="form-control"
-                   id="date"
+                   id="start"
                    name="date"
                    value="<?=$this->escape($this->originalInput('date', $datecreate)) ?>"
                    readonly>
@@ -50,17 +77,78 @@ $training = $this->get('training');
             </span>
         </div>
     </div>
-    <div class="row mb-3<?=$this->validation()->hasError('time') ? ' has-error' : '' ?>">
-        <label for="time" class="col-xl-2 col-form-label">
-            <?=$this->getTrans('time') ?>:
+    <div class="row mb-3<?=$this->validation()->hasError('end') ? ' has-error' : '' ?>">
+        <label for="end" class="col-xl-2 col-form-label">
+            <?=$this->getTrans('end') ?>:
         </label>
-        <div class="col-xl-1">
-            <input type="number"
+        <div id="end" class="col-xl-4 input-group ilch-date date form_datetime_2">
+            <input type="text"
                    class="form-control"
-                   id="time"
-                   name="time"
-                   min="0"
-                   value="<?=$this->escape($this->originalInput('time', $training->getTime())) ?>">
+                   id="end"
+                   name="end"
+                   value="<?=$this->escape($this->originalInput('end', ($training->getId() ? ($training->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($training->getEnd()))->format('d.m.Y H:i') : '') : ''))) ?>"
+                   readonly>
+            <span class="input-group-text">
+                <span class="fa-solid fa-calendar"></span>
+            </span>
+        </div>
+    </div>
+    <div class="row mb-3<?=$this->validation()->hasError('periodType') ? ' has-error' : '' ?>">
+        <label for="periodType" class="col-xl-2 col-form-label">
+            <?=$this->getTrans('periodEntry') ?>:
+        </label>
+        <div class="col-xl-4">
+            <select class="form-select" name="periodType" id="periodType">
+                <option value="" <?=($this->originalInput('periodType', ($training->getId() ? $training->getPeriodType() : ''))) == '' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
+                <?php foreach ($periodTypes as $key => $value) : ?>
+                    <option value="<?=$key ?>" <?=($this->originalInput('periodType', ($training->getId() ? $training->getPeriodType() : ''))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+    <div class="<?=$this->validation()->hasError('periodDays') ? ' has-error' : '' ?>" id="periodDays_div">
+        <div class="row mb-3">
+            <label for="periodDays" class="col-xl-2 col-form-label"></label>
+            <div class="col-xl-4">
+                <select class="form-select" name="periodDays" id="periodDays">
+                    <option value="0" <?=($this->originalInput('periodDay', ($training->getId() ? $training->getPeriodDay() : '0'))) == '0' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
+                    <?php foreach ($periodDays as $key => $value) : ?>
+                        <option value="<?=$key ?>" <?=($this->originalInput('periodDay', ($training->getId() ? $training->getPeriodDay() : '0'))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="<?=$this->validation()->hasError('periodDay') ? ' has-error' : '' ?>" id="periodDay_div">
+        <div class="row mb-3">
+            <label for="periodDay" class="col-xl-2 col-form-label"></label>
+            <div class="col-xl-4 input-group">
+                <span class="input-group-text"><?=$this->getTrans('periodEvery') ?></span>
+                <input type="text"
+                       class="form-control"
+                       id="periodDay"
+                       name="periodDay"
+                       value="<?=$this->escape($this->originalInput('periodDay', ($this->originalInput('periodType', ($training->getId() ? $training->getPeriodType() : '')) == 'days' ? '0' : ($training->getId() ? $training->getPeriodDay() : '1')))) ?>" />
+                <span class="input-group-text" id="periodDayAppendix"><?=(!empty($training->getPeriodType())) ? $this->getTrans($periodAppendix[$training->getPeriodType()]) : '' ?></span>
+            </div>
+        </div>
+    </div>
+    <div class="<?=$this->validation()->hasError('repeatUntil') ? ' has-error' : '' ?>" id="repeatUntil_div">
+        <div class="row mb-3">
+            <label for="repeatUntil" class="col-xl-2 col-form-label">
+                <?=$this->getTrans('repeatUntil') ?>:
+            </label>
+            <div id="repeatUntil" class="col-xl-4 input-group ilch-date date form_datetime_3">
+                <input type="text"
+                       class="form-control"
+                       id="repeatUntil"
+                       name="repeatUntil"
+                       value="<?=$this->escape($this->originalInput('repeatUntil', ($training->getId() ? ($training->getRepeatUntil() != '1000-01-01 00:00:00' ? (new \Ilch\Date($training->getRepeatUntil()))->format('d.m.Y H:i') : '') : ''))) ?>"
+                       readonly>
+                <span class="input-group-text">
+                <span class="fa-solid fa-calendar"></span>
+            </span>
+            </div>
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
@@ -243,6 +331,8 @@ $training = $this->get('training');
     <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
+    let jsPeriodAppendix = <?=json_encode($periodAppendix) ?>;
+
     $(document).ready(function() {
         new Choices('#access', {
             ...choicesOptions,
@@ -256,7 +346,7 @@ $training = $this->get('training');
     }
 
     $(document).ready(function() {
-        new tempusDominus.TempusDominus(document.getElementById('date'), {
+        const start = new tempusDominus.TempusDominus(document.getElementById('date'), {
             restrictions: {
               minDate: new Date()
             },
@@ -275,6 +365,135 @@ $training = $this->get('training');
             },
             stepping: 15
         });
+
+        const end = new tempusDominus.TempusDominus(document.getElementById('end'), {
+            display: {
+                sideBySide: true,
+                calendarWeeks: true,
+                buttons: {
+                    today: true,
+                    close: true
+                }
+            },
+            localization: {
+                locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+                startOfTheWeek: 1,
+                format: "dd.MM.yyyy HH:mm"
+            },
+            stepping: 15
+        });
+
+        const repeatUntil = new tempusDominus.TempusDominus(document.getElementById('repeatUntil'), {
+            display: {
+                sideBySide: true,
+                calendarWeeks: true,
+                buttons: {
+                    today: true,
+                    close: true
+                }
+            },
+            localization: {
+                locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
+                startOfTheWeek: 1,
+                format: "dd.MM.yyyy HH:mm"
+            },
+            promptTimeOnDateChange: true,
+            stepping: 15
+        });
+
+        start.subscribe('change.td', (e) => {
+            end.updateOptions({
+                restrictions: {
+                    minDate: e.date,
+                },
+            });
+        });
+
+        end.subscribe('change.td', (e) => {
+            repeatUntil.updateOptions({
+                restrictions: {
+                    minDate: e.date,
+                },
+            });
+            start.updateOptions({
+                restrictions: {
+                    maxDate: e.date,
+                },
+            });
+        });
+
+
+        disableDays();
+
+        document.getElementById("periodType").onchange = function() {
+            disableDays();
+
+            document.getElementById("periodDayAppendix").textContent = jsPeriodAppendix[document.getElementById('periodType').value];
+
+            adjustRepeatUntilDate();
+        };
+
+        document.getElementById("startDate").onchange = function() {
+            adjustRepeatUntilDate();
+        }
+
+        function adjustRepeatUntilDate() {
+            let value = document.getElementById('periodType').value;
+
+            if (value !== '') {
+                let repeatUntilDate;
+                let startValue = document.getElementById("startDate").value;
+
+                if (startValue !== '') {
+                    // d.m.Y H:i
+                    let startdateArray = startValue.split(' ');
+                    let startDateArrayDateParts = startdateArray[0].split('.');
+                    let startDateArrayTimeParts = startdateArray[1].split(':');
+
+                    // new Date(year, monthIndex, day, hours, minutes)
+                    repeatUntilDate = new Date(startDateArrayDateParts[2], startDateArrayDateParts[1] - 1, startDateArrayDateParts[0], startDateArrayTimeParts[0], startDateArrayTimeParts[1]);
+                } else {
+                    repeatUntilDate = new Date();
+                }
+
+                switch (value) {
+                    case 'daily':
+                        repeatUntilDate.setMonth(repeatUntilDate.getMonth() + 1);
+                        break;
+                    case 'weekly':
+                    case 'days':
+                        repeatUntilDate.setMonth(repeatUntilDate.getMonth() + 6);
+                        break;
+                    case 'monthly':
+                        repeatUntilDate.setFullYear(repeatUntilDate.getFullYear() + 1);
+                        break;
+                    case 'quarterly':
+                    case 'yearly':
+                        repeatUntilDate.setFullYear(repeatUntilDate.getFullYear() + 5);
+                        break;
+                }
+
+                document.getElementById("repeatUntil").value = [repeatUntilDate.getDate().toString().padStart(2, '0'), (repeatUntilDate.getMonth() + 1).toString().padStart(2, '0'), repeatUntilDate.getFullYear()].join('.')
+                    + ' ' + [repeatUntilDate.getHours().toString().padStart(2, '0'), repeatUntilDate.getMinutes().toString().padStart(2, '0')].join(':');
+            }
+        }
+
+        function disableDays() {
+            if (document.getElementById('periodType').value !== '') {
+                if (document.getElementById("periodType").value === 'days') {
+                    document.getElementById("periodDays_div").style.display = "block";
+                    document.getElementById("periodDay_div").style.display = "none";
+                } else {
+                    document.getElementById("periodDays_div").style.display = "none";
+                    document.getElementById("periodDay_div").style.display = "block";
+                }
+                document.getElementById("repeatUntil_div").style.display = "block";
+            } else {
+                document.getElementById("periodDays_div").style.display = "none";
+                document.getElementById("periodDay_div").style.display = "none";
+                document.getElementById("repeatUntil_div").style.display = "none";
+            }
+        }
     });
 
     function showMe (it, box) {
