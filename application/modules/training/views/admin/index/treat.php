@@ -367,6 +367,9 @@ $periodAppendix = [
         });
 
         const end = new tempusDominus.TempusDominus(document.getElementById('end'), {
+            restrictions: {
+                minDate: new Date()
+            },
             display: {
                 sideBySide: true,
                 calendarWeeks: true,
@@ -384,6 +387,9 @@ $periodAppendix = [
         });
 
         const repeatUntil = new tempusDominus.TempusDominus(document.getElementById('repeatUntil'), {
+            restrictions: {
+                minDate: new Date()
+            },
             display: {
                 sideBySide: true,
                 calendarWeeks: true,
@@ -422,7 +428,6 @@ $periodAppendix = [
             });
         });
 
-
         disableDays();
 
         document.getElementById("periodType").onchange = function() {
@@ -433,7 +438,7 @@ $periodAppendix = [
             adjustRepeatUntilDate();
         };
 
-        document.getElementById("startDate").onchange = function() {
+        document.getElementById("date").onchange = function() {
             adjustRepeatUntilDate();
         }
 
@@ -442,7 +447,7 @@ $periodAppendix = [
 
             if (value !== '') {
                 let repeatUntilDate;
-                let startValue = document.getElementById("startDate").value;
+                let startValue = document.getElementById("date").value;
 
                 if (startValue !== '') {
                     // d.m.Y H:i
