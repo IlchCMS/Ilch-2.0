@@ -89,10 +89,13 @@ class Index extends \Ilch\Controller\Admin
                 'periodDay' => 'periodEntry',
                 'periodDays' => 'periodEntry',
                 'periodType' => 'periodEntry',
+                'date' => 'start',
             ]);
 
             $rules = [
                 'title' => 'required',
+                'date' => 'required|date:d.m.Y H\:i',
+                'end' => 'required|date:d.m.Y H\:i',
                 'contact' => 'required|integer|min:1|exists:users,id,id,' . $this->getRequest()->getPost('contact'),
                 'voiceServer' => 'required|integer|min:0|max:1',
                 'gameServer' => 'required|integer|min:0|max:1',
