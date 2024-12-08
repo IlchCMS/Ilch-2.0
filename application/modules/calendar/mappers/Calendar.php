@@ -8,11 +8,12 @@
 namespace Modules\Calendar\Mappers;
 
 use Ilch\Date;
+use Ilch\Pagination;
 use Modules\Calendar\Models\Calendar as EntriesModel;
 
 class Calendar extends \Ilch\Mapper
 {
-    public $tablename = 'calendar';
+    public string $tablename = 'calendar';
 
     /**
      * returns if the module is installed.
@@ -29,10 +30,10 @@ class Calendar extends \Ilch\Mapper
      *
      * @param array $where
      * @param array $orderBy
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['c.id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['c.id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
         $read_access = '';
         if (isset($where['ra.group_id'])) {
@@ -303,6 +304,7 @@ class Calendar extends \Ilch\Mapper
                     break;
             }
 
+            /** @noinspection PhpConditionAlreadyCheckedInspection */
             if ($startdateRecurrence <= $untilDate) {
                 $event['start'] = clone $startdateRecurrence;
                 $event['end'] = clone $enddateRecurrence;

@@ -7,6 +7,7 @@
 
 namespace Modules\Calendar\Controllers\Admin;
 
+use Ilch\Date;
 use Modules\Calendar\Mappers\Calendar as CalendarMapper;
 use Modules\Calendar\Models\Calendar as CalendarModel;
 use Modules\User\Mappers\Group as GroupMapper;
@@ -130,13 +131,13 @@ class Index extends \Ilch\Controller\Admin
                 $calendarModel->setUid(($this->getRequest()->getParam('id')) ? $calendarModel->getUid() : generateUUID())
                     ->setTitle($this->getRequest()->getPost('title'))
                     ->setPlace($this->getRequest()->getPost('place'))
-                    ->setStart(new \Ilch\Date($this->getRequest()->getPost('start')))
-                    ->setEnd($this->getRequest()->getPost('end') ? new \Ilch\Date($this->getRequest()->getPost('end')) : '1000-01-01 00:00:00')
+                    ->setStart(new Date($this->getRequest()->getPost('start')))
+                    ->setEnd($this->getRequest()->getPost('end') ? new Date($this->getRequest()->getPost('end')) : '1000-01-01 00:00:00')
                     ->setText($this->getRequest()->getPost('text'))
                     ->setColor($this->getRequest()->getPost('color'))
                     ->setPeriodDay($this->getRequest()->getPost('periodDay'))
                     ->setPeriodType($this->getRequest()->getPost('periodType'))
-                    ->setRepeatUntil($this->getRequest()->getPost('repeatUntil') ? new \Ilch\Date($this->getRequest()->getPost('repeatUntil')) : '1000-01-01 00:00:00')
+                    ->setRepeatUntil($this->getRequest()->getPost('repeatUntil') ? new Date($this->getRequest()->getPost('repeatUntil')) : '1000-01-01 00:00:00')
                     ->setReadAccess($groups);
                 $calendarMapper->save($calendarModel);
 

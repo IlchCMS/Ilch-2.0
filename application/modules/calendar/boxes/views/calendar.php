@@ -45,9 +45,8 @@
                 <?php endforeach; ?>
             ],
             eventDidMount: function (info) {
-                $('#calendarbox<?=$this->get('uniqid') ?> .fc-daygrid-day.fc-day').each(function(i) {
-                    let date = $(this).data('date'),
-                    eventframe = $(this).find('.fc-daygrid-day-frame .fc-daygrid-day-events');
+                $('#calendarbox<?=$this->get('uniqid') ?> .fc-daygrid-day.fc-day').each(function() {
+                    let eventframe = $(this).find('.fc-daygrid-day-frame .fc-daygrid-day-events');
                     
                     let count = eventframe[0].childElementCount;
                     count--;
