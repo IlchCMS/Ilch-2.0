@@ -70,13 +70,11 @@ $endDate = is_numeric($endDate) ? null : $endDate;
         <div class="col-xl-3"><?=$this->getTrans('periodEntry') ?></div>
         <div class="col-xl-9">
             <?php
-            if ($training->getPeriodType()) {
-                echo $periodTypes[$training->getPeriodType()];
-                if ($training->getPeriodType() != 'days') {
-                    echo ' (x ' . $training->getPeriodDay() . ')';
-                } else {
-                    echo ' (' . $periodDays[$training->getPeriodDay()] . ')';
-                }
+            echo $periodTypes[$training->getPeriodType()];
+            if ($training->getPeriodType() != 'days') {
+                echo ' (x ' . $training->getPeriodDay() . ')';
+            } else {
+                echo ' (' . $periodDays[$training->getPeriodDay()] . ')';
             }
             ?>
         </div>
