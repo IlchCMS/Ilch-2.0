@@ -60,10 +60,10 @@ class ProfileFields extends \Ilch\Mapper
     /**
      * Returns a ProfileField model found by the key.
      *
-     * @param int $key
+     * @param string $key
      * @return null|ProfileFieldModel
      */
-    public function getProfileFieldIdByKey(int $key): ?ProfileFieldModel
+    public function getProfileFieldIdByKey(string $key): ?ProfileFieldModel
     {
         $profileFieldRow = $this->db()->select('*')
             ->from('profile_fields')
