@@ -85,15 +85,34 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('training', $model);
 
         if ($this->getRequest()->isPost()) {
+            Validation::setCustomFieldAliases([
+                'periodDay' => 'periodEntry',
+                'periodDays' => 'periodEntry',
+                'periodType' => 'periodEntry',
+                'date' => 'start',
+            ]);
+
             $rules = [
                 'title' => 'required',
+                'date' => 'required|date:d.m.Y H\:i',
+                'end' => 'required|date:d.m.Y H\:i',
                 'contact' => 'required|integer|min:1|exists:users,id,id,' . $this->getRequest()->getPost('contact'),
                 'voiceServer' => 'required|integer|min:0|max:1',
                 'gameServer' => 'required|integer|min:0|max:1',
                 'groups' => 'required',
-                'time' => 'required|integer',
                 'calendarShow' => 'required|integer|min:0|max:1',
             ];
+
+            if ($this->getRequest()->getPost('periodType') == 'days') {
+                $_POST['periodDay'] = $this->getRequest()->getPost('periodDays');
+                $rules['periodDay'] = 'required|numeric|min:1|max:7';
+            } elseif ($this->getRequest()->getPost('periodType') != '') {
+                $rules['periodDay'] = 'required|numeric|min:1';
+            }
+
+            if ($this->getRequest()->getPost('periodType') != '') {
+                $rules['repeatUntil'] = 'required|date:d.m.Y H\:i';
+            }
 
             // Require atleast the address of the voice or gameserver if enabled.
             if ($this->getRequest()->getPost('voiceServer')) {
@@ -107,7 +126,10 @@ class Index extends \Ilch\Controller\Admin
             if ($validation->isValid()) {
                 $model->setTitle($this->getRequest()->getPost('title'))
                     ->setDate(new \Ilch\Date($this->getRequest()->getPost('date')))
-                    ->setTime($this->getRequest()->getPost('time'))
+                    ->setEnd(new \Ilch\Date($this->getRequest()->getPost('end')))
+                    ->setPeriodDay($this->getRequest()->getPost('periodDay'))
+                    ->setPeriodType($this->getRequest()->getPost('periodType'))
+                    ->setRepeatUntil($this->getRequest()->getPost('repeatUntil') ? new \Ilch\Date($this->getRequest()->getPost('repeatUntil')) : '1000-01-01 00:00:00')
                     ->setPlace($this->getRequest()->getPost('place'))
                     ->setContact($this->getRequest()->getPost('contact'))
                     ->setVoiceServer($this->getRequest()->getPost('voiceServer') ?? false)
@@ -119,7 +141,6 @@ class Index extends \Ilch\Controller\Admin
                     ->setText($this->getRequest()->getPost('text'))
                     ->setShow($this->getRequest()->getPost('calendarShow'))
                     ->setReadAccess(implode(',', $this->getRequest()->getPost('groups')));
-
                 $trainingMapper->save($model);
 
                 $this->redirect(['action' => 'index'])

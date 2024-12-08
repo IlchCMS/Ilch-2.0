@@ -10,8 +10,8 @@ return [
     'noTraining' => 'No entry available',
     'title' => 'Title',
     'text' => 'Text',
-    'dateTime' => 'Date/Time',
-    'time' => 'Training time in minutes',
+    'start' => 'Begins',
+    'end' => 'Ends',
     'place' => 'Meeting point',
     'clock' => 'o\'clock',
     'at' => 'at',
@@ -36,4 +36,21 @@ return [
 
     'noTrainings' => 'No Trainings',
     'boxNexttrainingLimit' => 'Next Trainings Limit',
+
+    'periodEntry' => 'Cycle',
+    'noPeriodEntry' => 'no cycle',
+    'repeatUntil' => 'Repeat until the',
+
+    'daily' => 'daily',
+    'weekly' => 'weekly',
+    'monthly' => 'monthly',
+    'quarterly' => 'quarterly',
+    'yearly' => 'yearly',
+    'days' => 'day',
+
+    'periodEvery' => 'Every',
+    'weeks' => 'week(s)',
+    'months' => 'month(s)',
+    'quarter' => 'quarter',
+    'years' => 'year(s)',
 ];

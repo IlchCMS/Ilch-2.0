@@ -14,7 +14,7 @@ $training = $this->get('training');
 
 <?php if ($training) : ?>
     <?php foreach ($training as $model) :
-        $countdown = $trainingMapper->countdown(new \Ilch\Date($model->getDate()), $model->getTime());
+        $countdown = $trainingMapper->countdown(new \Ilch\Date($model->getDate()));
         if ($countdown === false) {
             continue;
         }

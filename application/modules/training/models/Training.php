@@ -31,11 +31,32 @@ class Training extends \Ilch\Model
     protected string $date = '';
 
     /**
-     * The time of the training.
+     * The end of the training.
+     *
+     * @var string
+     */
+    protected string $end = '';
+
+    /**
+     * The period day of the training.
      *
      * @var int
      */
-    protected int $time = 30;
+    protected int $periodDay = 0;
+
+    /**
+     * period day of the training.
+     *
+     * @var string
+     */
+    protected string $periodType = '';
+
+    /**
+     * Repeat event until a specific date.
+     *
+     * @var string
+     */
+    protected string $repeatUntil = '';
 
     /**
      * The place of the training.
@@ -129,8 +150,17 @@ class Training extends \Ilch\Model
         if (isset($entries['date'])) {
             $this->setDate($entries['date']);
         }
-        if (isset($entries['time'])) {
-            $this->setTime($entries['time']);
+        if (isset($entries['end'])) {
+            $this->setEnd($entries['end']);
+        }
+        if (isset($entries['period_type'])) {
+            $this->setPeriodType($entries['period_type']);
+        }
+        if (isset($entries['period_day'])) {
+            $this->setPeriodDay($entries['period_day']);
+        }
+        if (isset($entries['repeat_until'])) {
+            $this->setRepeatUntil($entries['repeat_until']);
         }
         if (isset($entries['place'])) {
             $this->setPlace($entries['place']);
@@ -243,25 +273,90 @@ class Training extends \Ilch\Model
     }
 
     /**
-     * Gets the time of the training.
+     * Get the end of the training.
      *
-     * @return int
+     * @return string
      */
-    public function getTime(): int
+    public function getEnd(): string
     {
-        return $this->time;
+        return $this->end;
     }
 
     /**
-     * Sets the time of the training.
+     * Set the end of the training.
      *
-     * @param int $time
+     * @param string $end
      * @return $this
      */
-    public function setTime(int $time): Training
+    public function setEnd(string $end): Training
     {
-        $this->time = $time;
+        $this->end = $end;
+        return $this;
+    }
 
+    /**
+     * Gets the period day of the training.
+     *
+     * @return int
+     */
+    public function getPeriodDay(): int
+    {
+        return $this->periodDay;
+    }
+
+    /**
+     * Sets the period day of the training.
+     *
+     * @param int $periodDay
+     * @return $this
+     */
+    public function setPeriodDay(int $periodDay): Training
+    {
+        $this->periodDay = $periodDay;
+        return $this;
+    }
+
+    /**
+     * Gets the period type of the training.
+     *
+     * @return string
+     */
+    public function getPeriodType(): string
+    {
+        return $this->periodType;
+    }
+
+    /**
+     * Sets the period type of the training.
+     *
+     * @param string $periodType
+     * @return $this
+     */
+    public function setPeriodType(string $periodType): Training
+    {
+        $this->periodType = $periodType;
+        return $this;
+    }
+
+    /**
+     * Gets the date of until which date the event should be repeated.
+     *
+     * @return string
+     */
+    public function getRepeatUntil(): string
+    {
+        return $this->repeatUntil;
+    }
+
+    /**
+     * Sets the date of until which date the event should be repeated.
+     *
+     * @param string $repeatUntil
+     * @return $this
+     */
+    public function setRepeatUntil(string $repeatUntil): Training
+    {
+        $this->repeatUntil = $repeatUntil;
         return $this;
     }
 
@@ -532,7 +627,10 @@ class Training extends \Ilch\Model
             [
                 'title' => $this->getTitle(),
                 'date' => $this->getDate(),
-                'time' => $this->getTime(),
+                'end' => $this->getEnd(),
+                'period_day' => $this->getPeriodDay(),
+                'period_type' => $this->getPeriodType(),
+                'repeat_until' => $this->getRepeatUntil(),
                 'place' => $this->getPlace(),
                 'contact' => $this->getContact(),
                 'voice_server' => $this->getVoiceServer(),
@@ -543,7 +641,7 @@ class Training extends \Ilch\Model
                 'game_server_pw' => $this->getGameServerPW(),
                 'text' => $this->getText(),
                 'show' => $this->getShow(),
-                'access_all'    => ($this->getReadAccess() === 'all' ? 1 : 0)
+                'access_all' => ($this->getReadAccess() === 'all' ? 1 : 0)
             ]
         );
     }

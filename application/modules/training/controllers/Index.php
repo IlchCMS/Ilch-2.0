@@ -11,6 +11,7 @@ use Modules\Training\Mappers\Training as TrainingMapper;
 use Modules\Training\Mappers\Entrants as EntrantsMapper;
 use Modules\Training\Models\Entrants as EntrantsModel;
 use Modules\User\Mappers\User as UserMapper;
+use Modules\Calendar\Mappers\Calendar as CalendarMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -41,6 +42,7 @@ class Index extends \Ilch\Controller\Frontend
         $entrantsMapper = new EntrantsMapper();
         $entrantsModel = new EntrantsModel();
         $userMapper = new UserMapper();
+        $calendarMapper = new CalendarMapper();
 
         $groupIds = [3];
         if ($this->getUser()) {
@@ -85,6 +87,8 @@ class Index extends \Ilch\Controller\Frontend
 
         $trainEntrantsUser = $entrantsMapper->getEntrantsById($training->getId());
         $this->getView()->set('training', $training)
+            ->set('calendarMapper', $calendarMapper)
+            ->set('iteration', $this->getRequest()->getParam('iteration'))
             ->set('trainEntrantsUser', $trainEntrantsUser);
     }
 }

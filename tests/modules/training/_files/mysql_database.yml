@@ -24,7 +24,7 @@ training:
     id: 1
     title: "Tag 1"
     date: "2024-01-15 05:00:00"
-    time: 30
+    end: "2024-01-15 05:30:00"
     place: ""
     contact: 1
     voice_server: 0
@@ -40,7 +40,7 @@ training:
     id: 2
     title: "Tag 2"
     date: "2024-02-15 05:00:00"
-    time: 30
+    end: "2024-02-15 05:30:00"
     place: ""
     contact: 1
     voice_server: 0
@@ -56,7 +56,7 @@ training:
     id: 3
     title: "Tag 3"
     date: "2024-03-15 05:00:00"
-    time: 30
+    end: "2024-03-15 05:30:00"
     place: ""
     contact: 1
     voice_server: 0

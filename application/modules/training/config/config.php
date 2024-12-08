@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public array $config = [
         'key' => 'training',
-        'version' => '1.9.2',
+        'version' => '1.10.0',
         'icon_small' => 'fa-solid fa-graduation-cap',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -74,7 +74,10 @@ class Config extends \Ilch\Config\Install
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `title` VARCHAR(100) NOT NULL,
                 `date` DATETIME NOT NULL,
-                `time` INT(11) NOT NULL,
+                `end` DATETIME DEFAULT NULL,
+                `period_type` VARCHAR(100) NOT NULL,
+                `period_day` INT(11) NOT NULL,
+                `repeat_until` DATETIME DEFAULT NULL,
                 `place` VARCHAR(100) NOT NULL,
                 `contact` INT(11) UNSIGNED NOT NULL,
                 `voice_server` INT(11) NOT NULL,
@@ -272,6 +275,28 @@ class Config extends \Ilch\Config\Install
                 if ($this->db()->ifTableExists('calendar_events') && $this->db()->select('COUNT(*)', 'calendar_events', ['url' => 'training/trainings/index/'])->execute()->fetchCell() == 0) {
                     $this->db()->insert('calendar_events', ['url' => 'training/trainings/index/'])->execute();
                 }
+                // no break
+            case "1.9.1":
+            case "1.9.2":
+                // Add new columns for recurrent trainings feature.
+                $this->db()->queryMulti('ALTER TABLE `[prefix]_training` ADD `end` DATETIME DEFAULT NULL AFTER `date`;
+                        ALTER TABLE `[prefix]_training` ADD `period_type` VARCHAR(100) NOT NULL AFTER `time`;
+                        ALTER TABLE `[prefix]_training` ADD `period_day` INT(11) NOT NULL AFTER `period_type`;
+                        ALTER TABLE `[prefix]_training` ADD `repeat_until` DATETIME DEFAULT NULL AFTER `period_day`;');
+
+                // Calculate the value for the end column with the columns date and time. Update the end column in the table.
+                $trainings = $this->db()->select(['id', 'date', 'time'])
+                    ->from(['training'])
+                    ->execute()
+                    ->fetchRows();
+
+                foreach($trainings ?? [] as $training) {
+                    $end = date("Y-m-d H:i:s", strtotime('+' . $training['time'] . ' minutes', strtotime($training['date'])));
+                    $this->db()->update('training', ['end' => $end], ['id' => $training['id']]);
+                }
+
+                // Drop time column
+                $this->db()->query('ALTER TABLE `[prefix]_training` DROP COLUMN `time`;');
                 // no break
         }
 
