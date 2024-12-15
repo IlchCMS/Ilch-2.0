@@ -49,38 +49,45 @@ class Index extends \Ilch\Controller\Admin
         $versions = $update->getVersions();
 
         if (!$versions) {
+            // Check for ilch update failed.
             $this->getView()->set('curlErrorOccurred', true);
             $this->addMessage($this->getTranslator()->trans('versionQueryFailedWith', curl_error($update->getTransferUrl())), 'danger');
         } else {
             // If a check for an ilch update was successfull then check for module updates and the latest news as well.
             $countOfUpdatesAvailable = 0;
             $modulesList = url_get_contents($this->getConfig()->get('updateserver') . 'modules.json');
-            $modulesOnUpdateServer = json_decode($modulesList);
-            $versionsOfModules = $moduleMapper->getVersionsOfModules();
-            foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
-                if (in_array($moduleOnUpdateServer->key, $modules) && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')) {
-                    ++$countOfUpdatesAvailable;
-                }
-            }
 
-            $notificationsMapper = new NotificationsMapper();
-            if ($countOfUpdatesAvailable) {
-                $notifications = $notificationsMapper->getNotificationsByType('adminModuleUpdatesAvailable');
-                $currentTime = new Date();
-                $notificationModel = new NotificationModel();
-                $notificationModel->setModule('admin');
-                $notificationModel->setMessage($this->getTranslator()->trans('moduleUpdatesAvailable', $countOfUpdatesAvailable));
-                $notificationModel->setURL($this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'updates']));
-                $notificationModel->setType('adminModuleUpdatesAvailable');
-                if (!$notifications) {
-                    $notificationsMapper->addNotification($notificationModel);
-                } elseif ((strtotime($currentTime->toDb(true)) - strtotime($notifications[count($notifications) - 1]->getTimestamp()) > 86400)) {
-                    $notificationModel->setId($notifications[count($notifications) - 1]->getId());
-                    $notificationsMapper->updateNotificationById($notificationModel);
-                }
+            if ($modulesList === false) {
+                // Check for module updates failed.
+                $this->addMessage($this->getTranslator()->trans('checkForModuleUpdatesFailed'), 'danger');
             } else {
-                // There are no module updates available. Delete notifications.
-                $notificationsMapper->deleteNotificationsByType('adminModuleUpdatesAvailable');
+                $modulesOnUpdateServer = json_decode($modulesList);
+                $versionsOfModules = $moduleMapper->getVersionsOfModules();
+                foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
+                    if (in_array($moduleOnUpdateServer->key, $modules) && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')) {
+                        ++$countOfUpdatesAvailable;
+                    }
+                }
+
+                $notificationsMapper = new NotificationsMapper();
+                if ($countOfUpdatesAvailable) {
+                    $notifications = $notificationsMapper->getNotificationsByType('adminModuleUpdatesAvailable');
+                    $currentTime = new Date();
+                    $notificationModel = new NotificationModel();
+                    $notificationModel->setModule('admin');
+                    $notificationModel->setMessage($this->getTranslator()->trans('moduleUpdatesAvailable', $countOfUpdatesAvailable));
+                    $notificationModel->setURL($this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'updates']));
+                    $notificationModel->setType('adminModuleUpdatesAvailable');
+                    if (!$notifications) {
+                        $notificationsMapper->addNotification($notificationModel);
+                    } elseif ((strtotime($currentTime->toDb(true)) - strtotime($notifications[count($notifications) - 1]->getTimestamp()) > 86400)) {
+                        $notificationModel->setId($notifications[count($notifications) - 1]->getId());
+                        $notificationsMapper->updateNotificationById($notificationModel);
+                    }
+                } else {
+                    // There are no module updates available. Delete notifications.
+                    $notificationsMapper->deleteNotificationsByType('adminModuleUpdatesAvailable');
+                }
             }
 
             // Load the latest news.

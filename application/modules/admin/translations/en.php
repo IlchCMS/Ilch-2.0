@@ -261,6 +261,7 @@ return [
     'lastUpdateUnknown' => 'unknown',
     'lastUpdateError' => 'Querying the updateserver failed.',
     'layoutModuleNotInstalled' => 'The associated module is not installed.',
+    'checkForModuleUpdatesFailed' => 'Querying the updateserver for modules updates failed.',
 
     'menuInfos' => 'Information',
     'menuPHPInfo' => 'PHP Info',
