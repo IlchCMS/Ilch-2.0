@@ -261,6 +261,7 @@ return [
     'lastUpdateUnknown' => 'unbekannt',
     'lastUpdateError' => 'Abfrage des Updateservers fehlgeschlagen.',
     'layoutModuleNotInstalled' => 'Das dazugehörige Modul ist nicht installiert.',
+    'checkForModuleUpdatesFailed' => 'Abfrage des Updateservers auf Modul-Updates fehlgeschlagen.',
 
     'menuInfos' => 'Informationen',
     'menuPHPInfo' => 'PHP Info',
