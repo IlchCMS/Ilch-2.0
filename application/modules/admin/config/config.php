@@ -1176,6 +1176,8 @@ class Config extends \Ilch\Config\Install
                     $this->db()->query('ALTER TABLE `[prefix]_menu_items` ADD CONSTRAINT `FK_[prefix]_menu_items_[prefix]_menu` FOREIGN KEY (`menu_id`) REFERENCES `[prefix]_menu` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 }
 
+                // Update vendor folder
+                replaceVendorDirectory();
                 break;
         }
 
