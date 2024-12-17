@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,56 +14,56 @@ class Away extends \Ilch\Model
      *
      * @var int
      */
-    protected int $id;
+    protected int $id = 0;
 
     /**
      * The userId of the away.
      *
      * @var int
      */
-    protected int $userId;
+    protected int $userId = 0;
 
     /**
      * The reason of the away.
      *
      * @var string
      */
-    protected string $reason;
+    protected string $reason = '';
 
     /**
      * The start of the away.
      *
      * @var string
      */
-    protected string $start;
+    protected string $start = '';
 
     /**
      * The end of the away.
      *
      * @var string
      */
-    protected string $end;
+    protected string $end = '';
 
     /**
      * The text of the away.
      *
      * @var string
      */
-    protected string $text;
+    protected string $text = '';
 
     /**
      * The status of the away.
      *
      * @var int
      */
-    protected int $status;
+    protected int $status = 2;
 
     /**
      * The show of the away.
      *
      * @var int
      */
-    protected int $show;
+    protected int $show = 0;
 
     /**
      * Gets the id of the away.

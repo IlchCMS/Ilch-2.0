@@ -1,8 +1,11 @@
 <?php
 
+/** @var \Ilch\View $this */
+
 use Modules\Away\Models\Away;
 use Modules\User\Mappers\User;
 
+/** @var \Modules\User\Models\User[] $userCache */
 $userCache = $this->get('userCache');
 
 /** @var User $userMapper */
@@ -11,6 +14,7 @@ $userMapper = $this->get('userMapper');
 /** @var Away $currentlyEditingAway */
 $currentlyEditingAway = $this->get('currentlyEditingAway');
 
+$userCheck = null;
 if ($this->getUser()) {
     $userCheck = $userMapper->getUserById($this->getUser()->getId());
 }
@@ -40,16 +44,18 @@ if ($this->getUser()) {
                 <th></th>
             </tr>
         </thead>
-        <?php if (!empty($this->get('aways'))): ?>
+        <?php if (!empty($this->get('aways'))) : ?>
             <form method="POST" action="">
                 <?=$this->getTokenField() ?>
                 <tbody>
-                    <?php foreach ($this->get('aways') as $away): ?>
+                    <?php
+                    /** @var \Modules\Away\Models\Away $away */
+                    foreach ($this->get('aways') as $away) : ?>
                         <?php $user = (!empty($userCache[$away->getUserId()])) ? $userCache[$away->getUserId()] : null; ?>
                         <tr id="<?=$away->getId() ?>">
                             <td>
                                 <?php if (!empty($user)) : ?>
-                                    <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a><br>
+                                    <a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>" target="_blank"><?=$user->getName() ?></a><br>
                                 <?php else : ?>
                                     <?=$this->getTrans('unknown') ?><br>
                                 <?php endif; ?>
@@ -63,32 +69,32 @@ if ($this->getUser()) {
                                     <div class="agenda col">
                                         <div class="dayofmonth"><?=$startDate->format('d', true) ?></div>
                                         <div><?=$this->getTrans($startDate->format('l', true)) ?></div>
-                                        <div class="shortdate"><?=$this->getTrans($startDate->format('F', true)).$startDate->format(', Y', true) ?></div>
+                                        <div class="shortdate"><?=$this->getTrans($startDate->format('F', true)) . $startDate->format(', Y', true) ?></div>
                                     </div>
                                     <div class="agenda-arrow col"><i class="fa-solid fa-chevron-right"></i></div>
                                     <div class="agenda col">
                                         <div class="dayofmonth"><?=$endDate->format('d', true) ?></div>
                                         <div><?=$this->getTrans($endDate->format('l', true)) ?></div>
-                                        <div class="shortdate"><?=$this->getTrans($endDate->format('F', true)).$endDate->format(', Y', true) ?></div>
+                                        <div class="shortdate"><?=$this->getTrans($endDate->format('F', true)) . $endDate->format(', Y', true) ?></div>
                                     </div>
                                 </div>
                             </td>
-                            <?php if ($away->getStatus() == 2): ?>
+                            <?php if ($away->getStatus() == 2) : ?>
                                 <td style="color: #4295C9;"><?=$this->getTrans('reported') ?></td>
-                            <?php elseif ($away->getStatus() == 0): ?>
+                            <?php elseif ($away->getStatus() == 0) : ?>
                                 <td style="color: #ff0000;"><?=$this->getTrans('declined') ?></td>
-                            <?php else: ?>
+                            <?php else : ?>
                                 <td style="color: #008000;"><?=$this->getTrans('approved') ?></td>
                             <?php endif; ?>
                             <td>
-                                <?php if ($this->getUser()): ?>
-                                    <?php if ($userCheck->isAdmin()): ?>
-                                        <?php if ($away->getStart() >= date('Y-m-d') || $away->getEnd() >= date('Y-m-d')): ?>
-                                            <?php if ($away->getStatus() == 1): ?>
+                                <?php if ($this->getUser()) : ?>
+                                    <?php if ($userCheck->isAdmin()) : ?>
+                                        <?php if ($away->getStart() >= date('Y-m-d') || $away->getEnd() >= date('Y-m-d')) : ?>
+                                            <?php if ($away->getStatus() == 1) : ?>
                                                 <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>" title="<?= $this->getTrans('decline') ?>">
                                                     <span class="fa-regular fa-square-check text-info"></span>
                                                 </a>
-                                            <?php else: ?>
+                                            <?php else : ?>
                                                 <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>" title="<?= $this->getTrans('approve') ?>">
                                                     <span class="fa-regular fa-square text-info"></span>
                                                 </a>
@@ -116,7 +122,7 @@ if ($this->getUser()) {
                     <?php endforeach; ?>
                 </tbody>
             </form>
-        <?php else: ?>
+        <?php else : ?>
             <tr>
                 <td colspan="5"><?=$this->getTrans('noAway') ?></td>
             </tr>
@@ -124,7 +130,7 @@ if ($this->getUser()) {
     </table>
 </div>
 
-<?php if ($this->getUser()): ?>
+<?php if ($this->getUser()) : ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <h1><?=$this->getTrans('menuEntry') ?></h1>
@@ -186,7 +192,7 @@ if ($this->getUser()) {
                           rows="3"><?=$this->originalInput('text') ? $this->originalInput('text') : (($currentlyEditingAway) ? $currentlyEditingAway->getText() : '') ?></textarea>
             </div>
         </div>
-        <?php if ($this->get('calendarShow') == 1): ?>
+        <?php if ($this->get('calendarShow') == 1) : ?>
             <div class="row mb-3">
                 <div class="offset-xl-2 col-xl-10">
                     <input type="checkbox"

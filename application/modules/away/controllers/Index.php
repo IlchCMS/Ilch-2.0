@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -64,12 +65,12 @@ class Index extends \Ilch\Controller\Frontend
                     $awayModel->setId($awayId);
                     $awayModel->setStatus(2);
                 }
-                $awayModel->setUserId($this->getUser()->getId());
-                $awayModel->setReason($post['reason']);
-                $awayModel->setStart($post['start']);
-                $awayModel->setEnd($post['end']);
-                $awayModel->setText($post['text']);
-                $awayModel->setShow($post['calendarShow']);
+                $awayModel->setUserId($this->getUser()->getId())
+                    ->setReason($post['reason'])
+                    ->setStart($post['start'])
+                    ->setEnd($post['end'])
+                    ->setText($post['text'])
+                    ->setShow((int)$post['calendarShow'] ?? 0);
                 $awayMapper->save($awayModel);
 
                 // Notify administrators and users if enabled.
@@ -121,7 +122,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'index']);
+                ->to(array_merge(['action' => 'index'], $awayId ? ['id' => $awayId] : []));
         }
 
         $aways = $awayMapper->getAway();
