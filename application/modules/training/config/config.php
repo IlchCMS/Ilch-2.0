@@ -135,7 +135,7 @@ class Config extends \Ilch\Config\Install
                 // Convert tables to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_training` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 $this->db()->query('ALTER TABLE `[prefix]_training_entrants` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
-            // no break
+                // no break
             case "1.3.0":
             case "1.4.0":
             case "1.5.0":
@@ -268,9 +268,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_training_entrants` ADD CONSTRAINT `FK_[prefix]_training_entrants_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 // no break
             case "1.8.0":
-                // no break
             case "1.8.1":
-                // no break
             case "1.9.0":
                 if ($this->db()->ifTableExists('calendar_events') && $this->db()->select('COUNT(*)', 'calendar_events', ['url' => 'training/trainings/index/'])->execute()->fetchCell() == 0) {
                     $this->db()->insert('calendar_events', ['url' => 'training/trainings/index/'])->execute();
@@ -290,14 +288,13 @@ class Config extends \Ilch\Config\Install
                     ->execute()
                     ->fetchRows();
 
-                foreach($trainings ?? [] as $training) {
+                foreach ($trainings ?? [] as $training) {
                     $end = date("Y-m-d H:i:s", strtotime('+' . $training['time'] . ' minutes', strtotime($training['date'])));
                     $this->db()->update('training', ['end' => $end], ['id' => $training['id']]);
                 }
 
                 // Drop time column
                 $this->db()->query('ALTER TABLE `[prefix]_training` DROP COLUMN `time`;');
-                // no break
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

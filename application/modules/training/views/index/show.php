@@ -165,7 +165,7 @@ $endDate = is_numeric($endDate) ? null : $endDate;
         <?=$this->getTrans('otherInfo') ?>:
     </div>
     <div class="col-xl-12">
-        <?php if ($training->getText()!= '') : ?>
+        <?php if ($training->getText() != '') : ?>
             <?=$this->purify($training->getText()) ?>
         <?php else : ?>
             <?=$this->getTrans('noOtherInfo') ?>
