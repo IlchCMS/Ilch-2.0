@@ -7,6 +7,7 @@
 
 namespace Modules\Training\Mappers;
 
+use Ilch\Date;
 use Ilch\Pagination;
 use Modules\Training\Models\Training as TrainingModel;
 
@@ -39,7 +40,7 @@ class Training extends \Ilch\Mapper
         }
 
         $select = $this->db()->select();
-        $select->fields(['t.id', 't.title', 't.date', 't.time', 't.place', 't.contact', 't.voice_server', 't.voice_server_ip', 't.voice_server_pw', 't.game_server', 't.game_server_ip', 't.game_server_pw', 't.text', 't.show', 't.access_all'])
+        $select->fields(['t.id', 't.title', 't.date', 't.end', 't.period_type', 't.period_day', 't.repeat_until', 't.place', 't.contact', 't.voice_server', 't.voice_server_ip', 't.voice_server_pw', 't.game_server', 't.game_server_ip', 't.game_server_pw', 't.text', 't.show', 't.access_all'])
             ->from(['t' => $this->tablename])
             ->join(['ra' => $this->tablenameAccess], 't.id = ra.training_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
             ->where(array_merge($where, ($access ? [$select->orX(['ra.group_id' => $access, 't.access_all' => '1'])] : [])))
@@ -114,11 +115,36 @@ class Training extends \Ilch\Mapper
      */
     public function getTrainingsForJson(?string $start, ?string $end, $groupIds = '3'): ?array
     {
-        if ($start && $end) {
-            $start = new \Ilch\Date($start);
-            $end = new \Ilch\Date($end);
+        if (\is_string($groupIds)) {
+            $groupIds = explode(',', $groupIds);
+        }
 
-            return $this->getTraining(['t.date >=' => $start, 't.date <=' => $end, 't.show' => 1], $groupIds);
+        if ($start && $end) {
+            if (!is_a($start, Date::class)) {
+                $start = new Date($start);
+            }
+            if (!is_a($end, Date::class)) {
+                $end = new Date($end);
+            }
+            $select = $this->db()->select();
+            return $this->getEntriesBy(
+                [
+                    $select->orX(
+                        [
+                            $select->andX(['t.end <=' => $end->format('Y-m-d') . ' 23:59:59']),
+                            $select->andX(['t.date >=' => $start->format('Y-m-d') . ' 00:00:00', 't.end <=' => $end->format('Y-m-d') . ' 23:59:59']),
+                            $select->andX(
+                                [
+                                    't.period_type !=' => '',
+                                    't.date <=' => $end->format('Y-m-d') . ' 00:00:00',
+                                    $select->orX(['t.end >=' => $start->format('Y-m-d') . ' 23:59:59', 't.end =' => '1000-01-01 00:00:00'])
+                                ]
+                            )
+                        ]
+                    ),
+                    'ra.group_id' => $groupIds
+                ]
+            );
         } else {
             return null;
         }

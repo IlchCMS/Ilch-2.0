@@ -56,7 +56,7 @@ class TrainingTest extends DatabaseTestCase
         self::assertEquals(1, $entry->getId());
         self::assertEquals('Tag 1', $entry->getTitle());
         self::assertEquals("2024-01-15 05:00:00", $entry->getDate());
-        self::assertEquals(30, $entry->getTime());
+        self::assertEquals("2024-01-15 05:30:00", $entry->getEnd());
         self::assertEquals("", $entry->getPlace());
         self::assertEquals(1, $entry->getContact());
         self::assertEquals(0, $entry->getVoiceServer());
@@ -73,7 +73,7 @@ class TrainingTest extends DatabaseTestCase
         self::assertEquals(2, $entry->getId());
         self::assertEquals('Tag 2', $entry->getTitle());
         self::assertEquals("2024-02-15 05:00:00", $entry->getDate());
-        self::assertEquals(30, $entry->getTime());
+        self::assertEquals("2024-02-15 05:30:00", $entry->getEnd());
         self::assertEquals("", $entry->getPlace());
         self::assertEquals(1, $entry->getContact());
         self::assertEquals(0, $entry->getVoiceServer());
@@ -90,7 +90,7 @@ class TrainingTest extends DatabaseTestCase
         self::assertEquals(3, $entry->getId());
         self::assertEquals('Tag 3', $entry->getTitle());
         self::assertEquals("2024-03-15 05:00:00", $entry->getDate());
-        self::assertEquals(30, $entry->getTime());
+        self::assertEquals("2024-03-15 05:30:00", $entry->getEnd());
         self::assertEquals("", $entry->getPlace());
         self::assertEquals(1, $entry->getContact());
         self::assertEquals(0, $entry->getVoiceServer());
@@ -110,7 +110,7 @@ class TrainingTest extends DatabaseTestCase
         $model->setId(0);
         $model->setTitle('Tag 4');
         $model->setDate('2024-04-15 05:00:00');
-        $model->setTime(30);
+        $model->setEnd('2024-04-15 05:30:00');
         $model->setPlace('');
         $model->setContact(1);
         $model->setVoiceServer(false);
@@ -130,7 +130,7 @@ class TrainingTest extends DatabaseTestCase
         self::assertEquals($id, $entry->getId());
         self::assertEquals($model->getTitle(), $entry->getTitle());
         self::assertEquals($model->getDate(), $entry->getDate());
-        self::assertEquals($model->getTime(), $entry->getTime());
+        self::assertEquals($model->getEnd(), $entry->getEnd());
         self::assertEquals($model->getPlace(), $entry->getPlace());
         self::assertEquals($model->getContact(), $entry->getContact());
         self::assertEquals($model->getVoiceServer(), $entry->getVoiceServer());
@@ -159,7 +159,7 @@ class TrainingTest extends DatabaseTestCase
         $model->setId(1);
         $model->setTitle('Tag 10');
         $model->setDate('2024-10-15 05:00:00');
-        $model->setTime(30);
+        $model->setEnd('2024-10-15 05:30:00');
         $model->setPlace('');
         $model->setContact(1);
         $model->setVoiceServer(false);
@@ -179,7 +179,7 @@ class TrainingTest extends DatabaseTestCase
         self::assertEquals(1, $entry->getId());
         self::assertEquals($model->getTitle(), $entry->getTitle());
         self::assertEquals($model->getDate(), $entry->getDate());
-        self::assertEquals($model->getTime(), $entry->getTime());
+        self::assertEquals($model->getEnd(), $entry->getEnd());
         self::assertEquals($model->getPlace(), $entry->getPlace());
         self::assertEquals($model->getContact(), $entry->getContact());
         self::assertEquals($model->getVoiceServer(), $entry->getVoiceServer());

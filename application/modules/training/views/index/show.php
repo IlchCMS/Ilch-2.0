@@ -6,8 +6,44 @@
 $training = $this->get('training');
 $userMapper = new \Modules\User\Mappers\User();
 
+/** @var \Modules\Calendar\Mappers\Calendar $calendarMapper */
+$calendarMapper = $this->get('calendarMapper');
+
 /** @var \Modules\Training\Models\Entrants[]|null $trainEntrantsUser */
 $trainEntrantsUser = $this->get('trainEntrantsUser');
+
+/** @var int $iteration */
+$iteration = $this->get('iteration');
+
+$periodDays = [
+    '1' => $this->getTranslator()->trans('Monday'),
+    '2' => $this->getTranslator()->trans('Tuesday'),
+    '3' => $this->getTranslator()->trans('Wednesday'),
+    '4' => $this->getTranslator()->trans('Thursday'),
+    '5' => $this->getTranslator()->trans('Friday'),
+    '6' => $this->getTranslator()->trans('Saturday'),
+    '7' => $this->getTranslator()->trans('Sunday')
+];
+$periodTypes = [
+    'daily' => $this->getTranslator()->trans('daily'),
+    'weekly' => $this->getTranslator()->trans('weekly'),
+    'monthly' => $this->getTranslator()->trans('monthly'),
+    'quarterly' => $this->getTranslator()->trans('quarterly'),
+    'yearly' => $this->getTranslator()->trans('yearly'),
+    'days' => $this->getTranslator()->trans('days'),
+];
+
+$startDate = new \Ilch\Date($training->getDate());
+$endDate = $training->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($training->getEnd()) : 1;
+$repeatUntil = $training->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($training->getRepeatUntil()) : 1;
+
+if ($iteration != '') {
+    $recurrence = $calendarMapper->repeat($training->getPeriodType(), $startDate, $endDate, $repeatUntil, $training->getPeriodDay())[$iteration];
+    $startDate = $recurrence['start'];
+    $endDate = $recurrence['end'];
+}
+
+$endDate = is_numeric($endDate) ? null : $endDate;
 ?>
 
 <h1><?=$this->getTrans('trainDetails') ?></h1>
@@ -19,16 +55,31 @@ $trainEntrantsUser = $this->get('trainEntrantsUser');
 </div>
 <div class="row mb-3">
     <div class="col-xl-3">
-        <?=$this->getTrans('dateTime') ?>:
+        <?=$this->getTrans('start') ?>:
     </div>
-    <div class="col-xl-9"><?=date('d.m.Y', strtotime($training->getDate())) ?> <?=$this->getTrans('at') ?> <?=date('H:i', strtotime($training->getDate())) ?> <?=$this->getTrans('clock') ?></div>
+    <div class="col-xl-9"><?=$this->getTrans($startDate->format('l')) . $startDate->format(', d. ') . $this->getTrans($startDate->format('F')) . $startDate->format(' Y') ?> <?=$this->getTrans('at') ?> <?=$startDate->format('H:i') ?> <?=$this->getTrans('clock') ?></div>
 </div>
 <div class="row mb-3">
     <div class="col-xl-3">
-        <?=$this->getTrans('time') ?>:
+        <?=$this->getTrans('end') ?>:
     </div>
-    <div class="col-xl-9">~ <?=$this->escape($training->getTime()) ?></div>
+    <div class="col-xl-9"><?=$this->getTrans($endDate->format('l')) . $endDate->format(', d. ') . $this->getTrans($endDate->format('F')) . $endDate->format(' Y') ?> <?=$this->getTrans('at') ?> <?=$endDate->format('H:i') ?> <?=$this->getTrans('clock') ?></div>
 </div>
+<?php if ($training->getPeriodType()) : ?>
+    <div class="row mb-3">
+        <div class="col-xl-3"><?=$this->getTrans('periodEntry') ?></div>
+        <div class="col-xl-9">
+            <?php
+            echo $periodTypes[$training->getPeriodType()];
+            if ($training->getPeriodType() != 'days') {
+                echo ' (x ' . $training->getPeriodDay() . ')';
+            } else {
+                echo ' (' . $periodDays[$training->getPeriodDay()] . ')';
+            }
+            ?>
+        </div>
+    </div>
+<?php endif; ?>
 <div class="row mb-3">
     <div class="col-xl-3">
         <?=$this->getTrans('place') ?>:
@@ -114,7 +165,7 @@ $trainEntrantsUser = $this->get('trainEntrantsUser');
         <?=$this->getTrans('otherInfo') ?>:
     </div>
     <div class="col-xl-12">
-        <?php if ($training->getText()!= '') : ?>
+        <?php if ($training->getText() != '') : ?>
             <?=$this->purify($training->getText()) ?>
         <?php else : ?>
             <?=$this->getTrans('noOtherInfo') ?>
