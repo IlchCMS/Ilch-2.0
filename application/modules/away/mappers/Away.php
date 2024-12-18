@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -6,6 +7,8 @@
 
 namespace Modules\Away\Mappers;
 
+use Ilch\Database\Exception;
+use Ilch\Date;
 use Modules\Away\Models\Away as AwayModel;
 
 class Away extends \Ilch\Mapper
@@ -16,7 +19,7 @@ class Away extends \Ilch\Mapper
      * @param array $where
      * @return AwayModel[]|array
      */
-    public function getAway($where = [])
+    public function getAway(array $where = []): array
     {
         $entryArray = $this->db()->select('*')
             ->from('away')
@@ -52,14 +55,14 @@ class Away extends \Ilch\Mapper
      * @param integer $id
      * @return AwayModel|null
      */
-    public function getAwayById($id)
+    public function getAwayById(int $id): ?AwayModel
     {
         $away = $this->getAway(['id' => $id]);
 
         return reset($away);
     }
 
-    public function existsTable($table)
+    public function existsTable($table): bool
     {
         return $this->db()->ifTableExists('[prefix]_'.$table);
     }
@@ -80,6 +83,10 @@ class Away extends \Ilch\Mapper
             'show' => $away->getShow()
         ];
 
+        if ($away->getStatus()) {
+            $fields['status'] = $away->getStatus();
+        }
+
         if ($away->getId()) {
             $this->db()->update('away')
                 ->values($fields)
@@ -95,16 +102,16 @@ class Away extends \Ilch\Mapper
     /**
      * Gets the Away entries by start and end.
      *
-     * @param integer $start
-     * @param integer $end
+     * @param string $start
+     * @param string $end
      * @return AwayModel[]|array|null
-     * @throws \Ilch\Database\Exception
+     * @throws Exception
      */
-    public function getEntriesForJson($start, $end)
+    public function getEntriesForJson(string $start, string $end): ?array
     {
         if ($start && $end) {
-            $start = new \Ilch\Date($start);
-            $end = new \Ilch\Date($end);
+            $start = new Date($start);
+            $end = new Date($end);
 
             $sql = sprintf("SELECT * FROM `[prefix]_away` WHERE `start` >= '%s' AND `end` <= '%s' AND `show` = 1 ORDER BY `start` ASC;", $start, $end);
         } else {
@@ -137,7 +144,7 @@ class Away extends \Ilch\Mapper
      *
      * @param integer $id
      */
-    public function update($id)
+    public function update(int $id)
     {
         $show = (int) $this->db()->select('status')
                         ->from('away')
@@ -163,7 +170,7 @@ class Away extends \Ilch\Mapper
      *
      * @param integer $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->db()->delete('away')
             ->where(['id' => $id])

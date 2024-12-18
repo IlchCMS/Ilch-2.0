@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -14,7 +15,7 @@ class Groups extends \Ilch\Mapper
      *
      * @return array|null
      */
-    public function getGroups()
+    public function getGroups(): ?array
     {
         return $this->db()->select('*')
             ->from('away_groups')

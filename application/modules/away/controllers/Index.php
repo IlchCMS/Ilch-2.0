@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -26,14 +27,13 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuAway'), ['action' => 'index']);
 
+        $currentlyEditingAway = null;
+        $awayId = $this->getRequest()->getParam('id');
+        if ($awayId && is_numeric($awayId)) {
+            $currentlyEditingAway = $awayMapper->getAwayById($awayId);
+        }
+
         $userCache = [];
-        $post = [
-            'reason' => '',
-            'start' => '',
-            'end' => '',
-            'text' => '',
-            'calendarShow' => ''
-        ];
 
         if ($this->getRequest()->getPost('saveAway')) {
             Validation::setCustomFieldAliases([
@@ -60,12 +60,17 @@ class Index extends \Ilch\Controller\Frontend
                 ];
 
                 $awayModel = new AwayModel();
-                $awayModel->setUserId($this->getUser()->getId());
-                $awayModel->setReason($post['reason']);
-                $awayModel->setStart($post['start']);
-                $awayModel->setEnd($post['end']);
-                $awayModel->setText($post['text']);
-                $awayModel->setShow($post['calendarShow']);
+                if ($currentlyEditingAway && $this->getUser() && ($currentlyEditingAway->getUserId() == $this->getUser()->getId())) {
+                    // Entry found and the current user is the autor. Set id to update an existing entry. Reset status to reported.
+                    $awayModel->setId($awayId);
+                    $awayModel->setStatus(2);
+                }
+                $awayModel->setUserId($this->getUser()->getId())
+                    ->setReason($post['reason'])
+                    ->setStart($post['start'])
+                    ->setEnd($post['end'])
+                    ->setText($post['text'])
+                    ->setShow((int)$post['calendarShow'] ?? 0);
                 $awayMapper->save($awayModel);
 
                 // Notify administrators and users if enabled.
@@ -74,9 +79,9 @@ class Index extends \Ilch\Controller\Frontend
                     $adminNotificationsMapper = new AdminNotificationsMapper();
 
                     $notification->setModule('away');
-                    $notification->setMessage($this->getLayout()->getTrans('awayAdminNewEntryMessage'));
+                    $notification->setMessage($currentlyEditingAway ? $this->getLayout()->getTrans('awayUserUpdatedEntryMessage') : $this->getLayout()->getTrans('awayAdminNewEntryMessage'));
                     $notification->setURL($this->getLayout()->getUrl(['module' => 'away', 'controller' => 'index', 'action' => 'index'], 'admin'));
-                    $notification->setType('awayAdminNewEntry');
+                    $notification->setType($currentlyEditingAway ? 'awayUserUpdatedEntry' : 'awayAdminNewEntry');
                     $adminNotificationsMapper->addNotification($notification);
                 }
 
@@ -100,9 +105,9 @@ class Index extends \Ilch\Controller\Frontend
                         $notification = new UserNotificationModel();
                         $notification->setUserId($user->getId());
                         $notification->setModule('away');
-                        $notification->setMessage($this->getLayout()->getTrans('awayNewEntryMessage'));
+                        $notification->setMessage($currentlyEditingAway ? $this->getLayout()->getTrans('awayUserUpdatedEntryMessage') : $this->getLayout()->getTrans('awayNewEntryMessage'));
                         $notification->setURL($this->getLayout()->getUrl(['module' => 'away', 'controller' => 'index', 'action' => 'index']));
-                        $notification->setType('awayNewEntry');
+                        $notification->setType($currentlyEditingAway ? 'awayUserUpdatedEntry' : 'awayNewEntry');
                         $notifications[] = $notification;
                     }
 
@@ -114,7 +119,10 @@ class Index extends \Ilch\Controller\Frontend
             }
 
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-            $errorFields = $validation->getFieldsWithError();
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(array_merge(['action' => 'index'], $awayId ? ['id' => $awayId] : []));
         }
 
         $aways = $awayMapper->getAway();
@@ -124,15 +132,14 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
-        if ($awayMapper->existsTable('calendar') == true) {
+        if ($awayMapper->existsTable('calendar')) {
             $this->getView()->set('calendarShow', 1);
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', ($errorFields ?? []));
         $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('userCache', $userCache);
         $this->getView()->set('aways', $aways);
+        $this->getView()->set('currentlyEditingAway', $currentlyEditingAway);
     }
 
     public function updateAction()

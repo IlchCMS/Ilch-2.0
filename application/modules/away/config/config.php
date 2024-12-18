@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'away',
-        'version' => '1.7.1',
+        'version' => '1.8.0',
         'icon_small' => 'fa-solid fa-calendar-xmark',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -34,22 +35,25 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
-        $databaseConfig->set('away_adminNotification', 1);
+        $databaseConfig->set('away_adminNotification', 1)
+            ->set('away_userNotification', 0);
     }
 
     public function uninstall()
     {
-        $this->db()->queryMulti("DROP TABLE `[prefix]_away`;
-            DROP TABLE `[prefix]_away_groups`;
-            DELETE FROM `[prefix]_config` WHERE `key` = 'away_adminNotification';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'away_userNotification';");
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->delete('away_adminNotification')
+            ->delete('away_userNotification');
+
+        $this->db()->drop('away_groups');
+        $this->db()->drop('away');
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
             $this->db()->queryMulti("DELETE FROM `[prefix]_calendar_events` WHERE `url` = 'away/aways/index/';");
         }
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         $installSql =
             'CREATE TABLE IF NOT EXISTS `[prefix]_away` (
@@ -77,7 +81,7 @@ class Config extends \Ilch\Config\Install
         return $installSql;
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -102,15 +106,20 @@ class Config extends \Ilch\Config\Install
 
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('away_adminNotification', 1);
+                // no break
             case "1.5.0":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-calendar-xmark' WHERE `key` = 'away';");
+                // no break
             case "1.6.0":
                 if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
                     if (!$this->db()->select('url', 'calendar_events', ['url' => 'away/aways/index/'])->execute()->getNumRows()) {
                         $this->db()->query("INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ('away/aways/index/');");
                     }
                 }
+                // no break
             case "1.6.1":
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

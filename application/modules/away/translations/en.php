@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -20,14 +21,18 @@ return [
     'status' => 'Status',
     'reported' => 'reported',
     'declined' => 'declined',
+    'decline' => 'Decline',
     'approved' => 'approved',
-    'addButton' => 'Entry',
+    'approve' => 'Approve',
+    'addButton' => 'Enter',
     'calendarShow' => 'Show in the calendar?',
     'unknown' => 'unknown',
     'awayAdminNewEntry' => 'New entry',
     'awayAdminNewEntryMessage' => 'New entry waiting for approval.',
     'awayNewEntry' => 'New entry',
     'awayNewEntryMessage' => 'New entry in the away list.',
+    'awayUserUpdatedEntry' => 'Entry was updated by the user.',
+    'awayUserUpdatedEntryMessage' => 'Entry was updated by the user.',
     'awayChangedEntry' => 'Status of entry changed',
     'awayChangedEntryMessage' => 'The status of an entry in the away list has changed.',
 ];
