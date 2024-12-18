@@ -118,7 +118,6 @@ class User extends \Ilch\Mapper
 
     /**
      * Get users (not all fields) by group ids. The users have to be in at least one of the groups.
-     * This will return duplicated users if a user is in multiple of the groups.
      *
      * @param int[] $groupIds array of group ids.
      * @param int $confirmed
@@ -133,7 +132,8 @@ class User extends \Ilch\Mapper
             ->from(['u' => 'users'])
             ->join(['g' => 'users_groups'], 'u.id = g.user_id', 'LEFT', ['group_id' => 'g.group_id'])
             ->where(['group_id' => $groupIds], 'or')
-            ->andWhere(['confirmed' => $confirmed]);
+            ->andWhere(['confirmed' => $confirmed])
+            ->group(['u.id']);
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
                 ->useFoundRows();

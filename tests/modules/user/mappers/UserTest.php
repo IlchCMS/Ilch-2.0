@@ -71,17 +71,15 @@ class UserTest extends DatabaseTestCase
         /** @var \Modules\User\Models\User[] $users */
         $users = $userMapper->getUserListByGroupIds([1, 3], 1);
         self::assertNotEmpty($users);
+        self::assertCount(2, $users);
+
         self::assertEquals(1, $users[0]->getId());
         self::assertEquals('Testuser1', $users[0]->getName());
         self::assertEquals(1, $users[0]->getConfirmed());
 
-        self::assertEquals(1, $users[1]->getId());
-        self::assertEquals('Testuser1', $users[1]->getName());
+        self::assertEquals(2, $users[1]->getId());
+        self::assertEquals('Testuser2', $users[1]->getName());
         self::assertEquals(1, $users[1]->getConfirmed());
-
-        self::assertEquals(2, $users[2]->getId());
-        self::assertEquals('Testuser2', $users[2]->getName());
-        self::assertEquals(1, $users[2]->getConfirmed());
     }
 
     /**
