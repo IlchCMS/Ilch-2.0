@@ -26,8 +26,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'User can enter when they are away (e.g. on holidays). There is an overview of this and the entries can be mananged in the admincenter.',
             ],
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'ilchCore' => '2.2.7',
+        'phpVersion' => '7.4'
     ];
 
     public function install()

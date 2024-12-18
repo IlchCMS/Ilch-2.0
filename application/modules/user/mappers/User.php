@@ -113,11 +113,27 @@ class User extends \Ilch\Mapper
      */
     public function getUserListByGroupId(int $groupId, int $confirmed = 0, $pagination = null): array
     {
+        return $this->getUserListByGroupIds([$groupId], $confirmed, $pagination);
+    }
+
+    /**
+     * Get users (not all fields) by group ids. The users have to be in at least one of the groups.
+     *
+     * @param int[] $groupIds array of group ids.
+     * @param int $confirmed
+     * @param $pagination
+     * @return array
+     * @since 2.2.7
+     */
+    public function getUserListByGroupIds(array $groupIds, int $confirmed = 0, $pagination = null): array
+    {
         $select = $this->db()->select()
             ->fields(['u.id', 'u.name', 'u.opt_mail', 'u.date_created', 'u.date_last_activity', 'u.confirmed'])
             ->from(['u' => 'users'])
             ->join(['g' => 'users_groups'], 'u.id = g.user_id', 'LEFT', ['group_id' => 'g.group_id'])
-            ->where(['group_id' => $groupId, 'confirmed' => $confirmed]);
+            ->where(['group_id' => $groupIds], 'or')
+            ->andWhere(['confirmed' => $confirmed])
+            ->group(['u.id']);
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
                 ->useFoundRows();
