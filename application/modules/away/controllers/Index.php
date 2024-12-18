@@ -91,7 +91,7 @@ class Index extends \Ilch\Controller\Frontend
 
                     $notifications = [];
                     $userGroups = $awayGroupMapper->getGroups();
-                    $users = $userMapper->getUserListByGroupId($userGroups, 1);
+                    $users = $userMapper->getUserListByGroupIds($userGroups, 1);
                     // Users might be in several groups. Remove duplicates so each user only gets one notification.
                     $users = array_unique($users, SORT_REGULAR);
                     $currentUserId = $this->getUser()->getId();
@@ -155,7 +155,7 @@ class Index extends \Ilch\Controller\Frontend
 
                 $notifications = [];
                 $userGroups = $awayGroupMapper->getGroups();
-                $users = $userMapper->getUserListByGroupId($userGroups, 1);
+                $users = $userMapper->getUserListByGroupIds($userGroups, 1);
                 // Users might be in several groups. Remove duplicates so each user only gets one notification.
                 $users = array_unique($users, SORT_REGULAR);
                 $currentUserId = $this->getUser()->getId();
