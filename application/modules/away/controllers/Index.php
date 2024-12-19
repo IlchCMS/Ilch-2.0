@@ -154,7 +154,6 @@ class Index extends \Ilch\Controller\Frontend
                 $notifications = [];
                 $userGroups = $awayGroupMapper->getGroups();
                 $users = $userMapper->getUserListByGroupIds($userGroups, 1);
-                // Users might be in several groups. Remove duplicates so each user only gets one notification.
                 $currentUserId = $this->getUser()->getId();
 
                 foreach ($users as $user) {
