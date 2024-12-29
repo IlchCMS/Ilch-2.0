@@ -106,11 +106,11 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
                                                 $pos = strpos($profileFieldContent->getValue(), $profileIconField->getAddition());
 
                                                 if ($pos !== false) {
-                                                    $profileFieldContentValue = substr_replace($profileFieldContent->getValue(), '', $pos, $profileIconField->getAddition());
+                                                    $profileFieldContentValue = substr_replace($profileFieldContent->getValue(), '', $pos, strlen($profileIconField->getAddition()));
                                                 }
                                             }
 
-                                            echo '<a href="' . $profileFieldContentValue . '" target="_blank" rel="noopener" class="' . $profileIconField->getIcon() . ' fa-lg user-link" title="' . $profileFieldName . '"></a>';
+                                            echo '<a href="' . $profileIconField->getAddition() . $profileFieldContentValue . '" target="_blank" rel="noopener" class="' . $profileIconField->getIcon() . ' fa-lg user-link" title="' . $profileFieldName . '"></a>';
                                             break;
                                         }
                                     }
