@@ -382,7 +382,7 @@ class Events extends \Ilch\Mapper
             ->execute()
             ->fetchAssoc();
 
-        if (file_exists($imageRow['image'])) {
+        if (isset($imageRow['image']) && file_exists($imageRow['image'])) {
             unlink($imageRow['image']);
         }
 
