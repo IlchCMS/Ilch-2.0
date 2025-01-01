@@ -137,7 +137,7 @@ if ($this->get('article') != '') {
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
     $(document).ready(function() {
-        new Tokenfield('#keywords', choicesOptions);
+        new Tokenfield('keywords', choicesOptions);
     });
 
 $('#title').change(

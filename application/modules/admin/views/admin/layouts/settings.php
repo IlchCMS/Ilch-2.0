@@ -166,5 +166,5 @@ function eraseValue(id) {
     document.getElementById(id).value = "";
 }
 
-new Tokenfield('#keywords', choicesOptions);
+new Tokenfield('keywords', choicesOptions);
 </script>

@@ -129,5 +129,5 @@ $('#pageLanguage').change (
     }
 );
 
-new Tokenfield('#keywords', choicesOptions);
+new Tokenfield('keywords', choicesOptions);
 </script>
