@@ -386,7 +386,7 @@ class Index extends \Ilch\Controller\Frontend
     public function configurationAction()
     {
         $fields = ['usage' => '', 'domain' => '', 'adminName' => '', 'adminPassword' => '', 'adminPassword2' => '', 'adminEmail' => ''];
-        $systemModules = ['admin', 'article', 'comment', 'contact', 'cookieconsent', 'error', 'imprint', 'install', 'media', 'privacy', 'statistic', 'user'];
+        $systemModules = ['admin', 'user', 'article', 'comment', 'contact', 'cookieconsent', 'error', 'imprint', 'install', 'media', 'privacy', 'statistic'];
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
