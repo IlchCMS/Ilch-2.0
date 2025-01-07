@@ -8,31 +8,61 @@
 namespace Ilch\Config;
 
 use Ilch\Registry;
+use Ilch\Translator;
 
 class Install extends \Ilch\Mapper
 {
     /**
-     * @var \Ilch\Translator|null
+     * @var Translator|null
      */
     private $translator;
 
     /**
-     * @param null|\Ilch\Translator $translator
+     * @param null|Translator $translator
      */
-    public function __construct(?\Ilch\Translator $translator = null)
+    public function __construct(?Translator $translator = null)
     {
-        $this->translator = $translator;
+        $this->setTranslator($translator);
         parent::__construct();
     }
 
     /**
-     * @return \Ilch\Translator
+     * @return Translator|null
      */
-    public function getTranslator(): \Ilch\Translator
+    public function getTranslator(): ?Translator
     {
         if (!$this->translator) {
-            $this->translator = Registry::get('translator');
+            $this->setTranslator(Registry::get('translator'));
         }
         return $this->translator;
+    }
+
+    /**
+     * @param Translator|null $translator
+     * @return $this
+     * @since V2.2.7
+     */
+    public function setTranslator(?Translator $translator): Install
+    {
+        if ($translator) {
+            $this->translator = $translator;
+        }
+        return $this;
+    }
+
+    /**
+     * Gets the config object.
+     *
+     * @return Database|null
+     * @since 2.2.7
+     */
+    public function getConfig(): ?Database
+    {
+        $config = Registry::get('config');
+        if (!$config) {
+            $config = new Database($this->db());
+        }
+
+        return $config;
     }
 }

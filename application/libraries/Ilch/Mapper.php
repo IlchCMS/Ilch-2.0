@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -6,12 +7,14 @@
 
 namespace Ilch;
 
+use Ilch\Database\Mysql;
+
 class Mapper
 {
     /**
      * Hold the database adapter.
      *
-     * @var \Ilch\Database\Mysql
+     * @var Mysql|null
      */
     private $db;
 
@@ -20,15 +23,15 @@ class Mapper
      */
     public function __construct()
     {
-        $this->db = Registry::get('db');
+        $this->setDatabase(Registry::get('db'));
     }
 
     /**
      * Gets the database adapter.
      *
-     * @return \Ilch\Database\Mysql
+     * @return Mysql|null
      */
-    public function getDatabase()
+    public function getDatabase(): ?Database\Mysql
     {
         return $this->db;
     }
@@ -36,9 +39,9 @@ class Mapper
     /**
      * Shortcut for getDatabse.
      *
-     * @return \Ilch\Database\Mysql
+     * @return Mysql|null
      */
-    public function db()
+    public function db(): ?Database\Mysql
     {
         return $this->getDatabase();
     }
@@ -46,10 +49,12 @@ class Mapper
     /**
      * Sets the database adapter.
      *
-     * @param \Ilch\Database\Mysql
+     * @param Mysql|null $db
+     * @return $this
      */
-    public function setDatabase($db)
+    public function setDatabase(?Database\Mysql $db): Mapper
     {
         $this->db = $db;
+        return $this;
     }
 }
