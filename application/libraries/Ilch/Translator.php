@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -76,10 +77,8 @@ class Translator
         }
 
         $this->translationDirectories[] = $transDir;
-
         $localeShort = $this->shortenLocale($this->locale);
-        $transFile = $transDir.'/'.$localeShort.'.php';
-
+        $transFile = $transDir . '/' . $localeShort . '.php';
         // Suppress warning "is_file() expects parameter 1 to be a valid path, string given"
         // If it's not a valid path, is_file() will return a falsey value.
         if (@is_file($transFile)) {
@@ -107,7 +106,6 @@ class Translator
     public function trans(string $key): string
     {
         $translatedText = $key;
-
         if (!$this->isCallFromLayout()) {
             if (isset($this->translations[$key])) {
                 $translatedText = $this->translations[$key];
@@ -120,6 +118,12 @@ class Translator
         }
 
         $arguments = func_get_args();
+
+        // Fill missing arguments
+        while (substr_count($translatedText, '%') > count($arguments) - 1) {
+            $arguments[] = '%';
+        }
+
         $arguments[0] = $translatedText;
         return sprintf(...$arguments);
     }
@@ -225,14 +229,13 @@ class Translator
     {
         $numberFormatter = new \NumberFormatter($this->getLocale(), \NumberFormatter::CURRENCY);
         $returnValue = $numberFormatter->formatCurrency($amount, $currencyCode);
-
         if (intl_is_failure($numberFormatter->getErrorCode())) {
             // Error occured - probably the currency-code is wrong.
             // Try to just format the number correctly and append $currencyCode.
             $numberFormatter = new \NumberFormatter($this->getLocale(), \NumberFormatter::DECIMAL);
             $numberFormatter->setAttribute(\NumberFormatter::MIN_FRACTION_DIGITS, 2);
             $numberFormatter->setAttribute(\NumberFormatter::MAX_FRACTION_DIGITS, 2);
-            $returnValue = $numberFormatter->format($amount). ' ' .$currencyCode;
+            $returnValue = $numberFormatter->format($amount) . ' ' . $currencyCode;
         }
 
         return $returnValue;
@@ -247,9 +250,8 @@ class Translator
     private function isCallFromLayout(): bool
     {
         $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 4);
-
         foreach ($backtrace as $entry) {
-            if ($entry['function'] === 'getTrans' && (strpos($entry['file'], 'application'.DIRECTORY_SEPARATOR.'layouts') !== false)) {
+            if ($entry['function'] === 'getTrans' && (strpos($entry['file'], 'application' . DIRECTORY_SEPARATOR . 'layouts') !== false)) {
                 return true;
             }
         }
