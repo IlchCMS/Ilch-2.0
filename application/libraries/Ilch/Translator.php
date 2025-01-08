@@ -125,6 +125,12 @@ class Translator
         }
 
         $arguments[0] = $translatedText;
+
+        // Fill missing arguments
+        while (substr_count($translatedText, '%') > count($arguments) - 1) {
+            $arguments[] = '%';
+        }
+
         return sprintf(...$arguments);
     }
 
