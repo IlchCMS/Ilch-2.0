@@ -170,7 +170,7 @@ class Index extends Admin
                         '{sitetitle}' => $this->getLayout()->escape($this->getConfig()->get('page_title')),
                         '{date}' => $date->format('l, d. F Y', true),
                         '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
-                        '{unreadable}' => $this->getTranslator()->trans('mailUnreadable', $newsletterMapper->getLastId(), $email->getEmail()),
+                        '{unreadable}' => $this->getTranslator()->trans('mailUnreadable', $newsletterMapper->getLastId()),
                         '{unsubscribe}' => $this->getTranslator()->trans('mailUnsubscribe', $email->getSelector(), $email->getConfirmCode()),
                     ];
                     $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);

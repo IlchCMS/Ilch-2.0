@@ -23,7 +23,7 @@ return [
     'unsubscribeSuccess' => 'E-Mail has been successfully removed.',
     'subscribeFailed' => 'Subscribing failed.',
     'noReplyMailFooter' => 'Please do not reply to this email. This mailbox is not monitored, so you will not receive a response.',
-    'mailUnreadable' => 'If you can not read HTML E-Mail click <a href="' . BASE_URL . '/index.php/newsletter/index/show/id/%s/email/%s">here</a>.',
+    'mailUnreadable' => 'If you can not read HTML E-Mail click <a href="' . BASE_URL . '/index.php/newsletter/index/show/id/%s">here</a>.',
     'mailUnsubscribe' => 'If you do not wish to receive newsletters from us, you can cancel these at any time <a href="' . BASE_URL . '/index.php/newsletter/index/unsubscribe/selector/%s/code/%s">here</a>.',
     'incompleteUnsubscribeUrl' => 'The url to unsubscribe from the newsletter is invalid.',
     'incompleteDoubleOptInUrl' => 'The url to confirm the subscription to the newsletter is invalid.',
