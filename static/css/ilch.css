@@ -222,3 +222,7 @@ div.input-group.filter input:not(:placeholder-shown) {
     color: #a94442;
     background: #f2dede;
 }
+
+.ck-content {
+    overflow: auto;
+}

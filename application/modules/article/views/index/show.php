@@ -33,7 +33,7 @@
             <?php endif; ?>
         </figure>
     <?php endif; ?>
-    <?=$this->purify($content) ?>
+    <div class="ck-content"><?=$this->purify($content) ?></div>
     <hr />
     <div>
         <?php
