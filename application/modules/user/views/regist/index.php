@@ -6,7 +6,7 @@
             <div class="card-header">
                 <?=$this->getTrans('rules') ?>
             </div>
-            <div class="card-body" style="background: #eee;">
+            <div class="card-body ck-content" style="background: #eee;">
                 <?=$this->get('regist_rules') ?>
             </div>
             <div class="card-footer clearfix">

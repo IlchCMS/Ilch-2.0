@@ -15,7 +15,7 @@ if ($privacies) : ?>
         }
         ?>
         <h1><b><?=$this->escape($privacy->getTitle()) ?></b></h1>
-        <p><?=$this->purify($privacy->getText()) ?><br /></p>
+        <div class="ck-content"><?=$this->purify($privacy->getText()) ?></div><br>
     <?php endforeach; ?>
     <?php if (count($sources) > 0) : ?>
         <b><?=$this->getTrans('source') ?>:</b>
