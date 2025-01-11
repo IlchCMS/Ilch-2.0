@@ -223,7 +223,7 @@ $datenow = $this->get('datenow');
             <div class="card-header">
                 <h6 class="card-title"><?=$this->getTrans('warReport') ?></h6>
             </div>
-            <div class="card-body">
+            <div class="card-body ck-content">
                 <?=$this->purify($war->getWarReport()) ?>
             </div>
         </div>
