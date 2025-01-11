@@ -107,7 +107,7 @@ $userDeleted = $this->get('userDeleted');
     <label class="col-lg-2">
         <?=$this->getTrans('text') ?>:
     </label>
-    <div class="col-lg-12">
+    <div class="col-lg-12 ck-content">
         <?=$this->alwaysPurify($join->getText()) ?>
     </div>
 </div>
