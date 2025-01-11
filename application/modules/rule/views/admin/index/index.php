@@ -50,7 +50,7 @@ $rules = $this->get('rules');
                             <td><?=($rulesparent ? $this->escape($rulesparent->getParagraph()) . ' / ' : '') ?><?=$this->escape($rule->getParagraph()) ?></td>
                             <td><?=$this->escape($rule->getTitle()) ?></td>
                             <td><?=$this->escape($rule->getParentTitle()) ?></td>
-                            <td><?=$this->purify($rule->getText()) ?></td>
+                            <td class="ck-content"><?=$this->purify($rule->getText()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

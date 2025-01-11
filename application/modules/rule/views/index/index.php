@@ -52,7 +52,7 @@ function rec(\Modules\Rule\Models\Rule $item, \Ilch\View $obj)
                     </th>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="ck-content">
                         ' . $obj->purify($item->getText()) . '
                     </td>
                 </tr>';
