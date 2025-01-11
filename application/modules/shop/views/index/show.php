@@ -168,7 +168,7 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
                     <td><?=$this->getTrans('approx') ?> <?=$this->escape($shopItem->getShippingTime()) ?> <?=$this->getTrans('days') ?></td>
                 </tr>
                 <tr>
-                    <td colspan="2"><b><?=$this->getTrans('shortInfo') ?></b><br /><br /><small><?=$shopItem->getInfo() ?></small></td>
+                    <td colspan="2"><b><?=$this->getTrans('shortInfo') ?></b><br /><br /><small class="ck-content"><?=$this->purify($shopItem->getInfo()) ?></small></td>
                 </tr>
                 <tr>
                     <td colspan="2" class="text-center">
@@ -210,7 +210,7 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
     <div class="col-xl-12 desc">
         <table class="table table-striped border">
             <tr>
-                <td>
+                <td class="ck-content">
                     <?=$shopItem->getDesc() ?>
                 </td>
             </tr>
