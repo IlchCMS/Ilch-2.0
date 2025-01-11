@@ -85,9 +85,11 @@ class Comments
                                 <div class="fload-end text-muted small">
                                     <i class="fa-solid fa-reply fa-flip-vertical"></i> ' . $user_rep->getName() . '
                                 </div>
-                            </div>'
+                            </div>
+                            <div class="ck-content">'
                             . nl2br($obj->alwaysPurify($fk_comment->getText())) .
-                            '<div>';
+                            '</div>
+                            <div>';
             if ($obj->getUser() && !in_array($obj->getUser()->getId(), $voted)) {
                 $commentsHtml .= '
                                 <div class="btn-group">
@@ -293,9 +295,11 @@ class Comments
                                     <p class="text-muted small">
                                         <i class="fa-regular fa-clock" title="' . $layout->getTrans('commentDateTime') . '"></i> ' . $commentDate->format('d.m.Y - H:i', true) . '
                                     </p>
-                                </div>'
+                                </div>
+                                <div class="ck-content">'
                                 . nl2br($layout->alwaysPurify($comment->getText())) .
-                                '<div>';
+                                '</div>
+                                <div>';
 
             if ($layout->getUser() && !in_array($layout->getUser()->getId(), $voted)) {
                 $commentsHtml .= '
