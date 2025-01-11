@@ -1,7 +1,7 @@
 <h1><?=$this->getTrans('menuContact') ?></h1>
 <?php if (!empty($this->get('welcomeMessage'))) : ?>
 <div class="card card-default">
-    <div class="card-body welcomeMessage"><?=$this->alwaysPurify($this->get('welcomeMessage')) ?></div>
+    <div class="card-body welcomeMessage ck-content"><?=$this->alwaysPurify($this->get('welcomeMessage')) ?></div>
 </div>
 <?php endif; ?>
 <?php if ($this->get('receivers') != ''): ?>

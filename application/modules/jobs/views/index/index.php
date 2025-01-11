@@ -16,16 +16,18 @@ $jobs = $this->get('jobs');
 <?php if ($jobs) : ?>
     <div class="row">
         <?php foreach ($jobs as $job) : ?>
-            <div class="col-xl-2">
+            <div class="col-xl-1">
                 <i class="fa-solid fa-briefcase fa-4x briefcase"></i>
             </div>
-            <div class="col-xl-10" style="margin-bottom: 35px;">
+            <div class="col-xl-11" style="margin-bottom: 35px;">
                 <h1>
                     <a href="<?=$this->getUrl('jobs/index/show/id/' . $job->getId()) ?>">
                         <?=$this->escape($job->getTitle()) ?>
                     </a>
                 </h1>
-                <?=$this->purify($job->getText()) ?>
+                <div class="ck-content">
+                    <?=$this->purify($job->getText()) ?>
+                </div>
 
                 <?php if ($this->getUser()) : ?>
                     <br />

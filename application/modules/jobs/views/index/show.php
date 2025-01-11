@@ -15,12 +15,14 @@ $job = $this->get('job');
 <h1><?=$this->getTrans('menuJob') ?></h1>
 
 <div class="row">
-    <div class="col-xl-2">
+    <div class="col-xl-1">
         <i class="fa-solid fa-briefcase fa-4x briefcase"></i>
     </div>
-    <div class="col-xl-10" style="margin-bottom: 35px;">
+    <div class="col-xl-11" style="margin-bottom: 35px;">
         <h1><?=$this->escape($job->getTitle()) ?></h1>
-        <?=$this->purify($job->getText()) ?>
+        <div class="ck-content">
+            <?=$this->purify($job->getText()) ?>
+        </div>
     </div>
 </div>
 

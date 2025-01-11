@@ -43,7 +43,7 @@ foreach ($this->get('entries') as $entry): ?>
                 </div>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body ck-content">
             <?=$this->alwaysPurify($entry->getText()) ?>
         </div>
     </div>

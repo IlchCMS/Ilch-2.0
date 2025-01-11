@@ -6,4 +6,4 @@
 $imprint = $this->get('imprint');
 ?>
 <h1><?=$this->getTrans('menuImprint') ?></h1>
-<?=$this->purify($imprint->getImprint()) ?>
+<div class="ck-content"><?=$this->purify($imprint->getImprint()) ?></div>

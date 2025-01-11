@@ -78,7 +78,7 @@ $endDate = is_numeric($endDate) ? null : $endDate;
     <div class="col-xl-2"><?=$this->getTrans('description') ?></div>
     <div class="col-xl-12">
         <?php if ($calendar->getText()) : ?>
-            <?=$this->purify($calendar->getText()) ?>
+            <div class="ck-content"><?=$this->purify($calendar->getText()) ?></div>
         <?php else : ?>
             <?=$this->getTrans('noDescription') ?>
         <?php endif; ?>

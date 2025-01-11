@@ -7,4 +7,4 @@ $faq = $this->get('faq');
 ?>
 
 <h1><?=$this->escape($faq->getQuestion()) ?></h1>
-<?=$faq->getAnswer() ?>
+<div class="ck-content"><?=$faq->getAnswer() ?></div>
