@@ -4,8 +4,6 @@ use Ilch\Registry;
 use Ilch\Translator;
 
 $config = Registry::get('config');
-$subscriberMapper = new Modules\Newsletter\Mappers\Subscriber();
-$subscriber = $subscriberMapper->getSubscriberByEMail($this->getRequest()->getParam('email'));
 $translator = new Translator();
 $translator->load(APPLICATION_PATH . '/modules/newsletter/translations/');
 ?>
@@ -223,7 +221,6 @@ $translator->load(APPLICATION_PATH . '/modules/newsletter/translations/');
                 <td class="container">
                     <div class="content" align="center">
                         <p><?=$translator->trans('noReplyMailFooter') ?></p>
-                        <p><?=$translator->trans('mailUnsubscribe', $subscriber->getSelector(), $subscriber->getConfirmCode()) ?></p>
                     </div>
                 </td>
                 <td></td>
