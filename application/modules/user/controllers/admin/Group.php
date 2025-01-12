@@ -168,7 +168,9 @@ class Group extends \Ilch\Controller\Admin
 
         if (isset($postData['group'])) {
             $validation = Validation::create($postData['group'], [
-                'id' => 'required|integer|min:1',
+                // Normally an id is 1 or higher, but the model has a default of 0 instead of null.
+                // Not changing this now to avoid possible breakage. id = 0 is the case for a new group.
+                'id' => 'required|integer|min:0',
                 'name' => 'required',
             ]);
 
