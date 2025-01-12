@@ -17,8 +17,8 @@ $entry = $this->get('map');
                    class="form-control"
                    id="mapsNameInput"
                    name="mapsName"
-                   value="<?=$this->escape($this->originalInput('mapsName', ($entry->getId() ? $entrie->getName() : ''))) ?>" />
+                   value="<?=$this->escape($this->originalInput('mapsName', ($entry->getId() ? $entry->getName() : ''))) ?>" />
         </div>
     </div>
-    <?=($entrie->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=($entry->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>

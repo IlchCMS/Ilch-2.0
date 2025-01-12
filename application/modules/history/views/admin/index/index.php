@@ -38,7 +38,7 @@ $entries = $this->get('entries');
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $entry->getId()]) ?></td>
                             <td><?=$getDate->format('d.m.Y', true) ?></td>
                             <td><?=$this->escape($entry->getTitle()) ?></td>
-                            <td><?=$this->purify($entry->getText()) ?></td>
+                            <td class="ck-content"><?=$this->purify($entry->getText()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

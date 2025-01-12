@@ -342,7 +342,7 @@ $(document).ready(function () {
     }
 
     function diasableMatchtype() {
-        if (document.getElementById('warMatchtype').value === 'neu') {
+        if (document.getElementById('warMatchtype').value === 'new') {
             document.getElementById("warMatchtypeNew").style.display = "block";
             document.getElementById("warMatchtype").style.margin = "0 0 5px";
         } else {

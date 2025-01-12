@@ -126,7 +126,7 @@ class Group extends Admin
         if ($this->getRequest()->isPost()) {
             $groupImage = $this->getRequest()->getPost('groupImage');
             if (!empty($groupImage)) {
-                $groupImage = BASE_URL . '/' . $groupImage;
+                $groupImage = BASE_URL . '/' . urlencode($groupImage);
             }
 
             $post = [

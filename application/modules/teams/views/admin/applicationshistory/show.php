@@ -104,7 +104,7 @@ $birthday = new Ilch\Date($join->getBirthday());
     <label class="col-xl-2">
         <?=$this->getTrans('text') ?>:
     </label>
-    <div class="col-xl-12">
+    <div class="col-xl-12 ck-content">
         <?=$this->alwaysPurify($join->getText()) ?>
     </div>
 </div>

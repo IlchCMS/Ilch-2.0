@@ -25,6 +25,7 @@ $date = new \Ilch\Date();
         <link href="<?=$this->getStaticUrl('css/ilch.css') ?>" rel="stylesheet">
         <link href="<?=$this->getBaseUrl('application/modules/admin/static/css/maintenance.css') ?>" rel="stylesheet">
         <link href="<?=$this->getVendorUrl('npm-asset/jquery-ui/dist/themes/ui-lightness/jquery-ui.min.css') ?>" rel="stylesheet">
+        <link href="<?=$this->getStaticUrl('js/ckeditor5/build/ckeditor.css') ?>" rel="stylesheet" type="text/css">
 
         <!-- SCRIPTS -->
         <script src="<?=$this->getVendorUrl('npm-asset/jquery/dist/jquery.min.js') ?>"></script>
@@ -96,7 +97,7 @@ $date = new \Ilch\Date();
                         style="width: <?=$config->get('maintenance_status') ?>%;">
                     </div>
                 </div>
-                <div class="install_content">
+                <div class="install_content ck-content">
                     <?=$config->get('maintenance_text') ?>
                 </div>
 

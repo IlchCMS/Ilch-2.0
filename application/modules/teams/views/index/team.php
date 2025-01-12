@@ -32,7 +32,7 @@ $team = $this->get('team');
                 $groupList = $groupMapper->getUsersForGroup($team->getGroupId());
                 $leaderIds = explode(',', $team->getLeader());
                 $coLeaderIds = explode(',', $team->getCoLeader());
-                $groupList = array_unique(array_merge($leaderIds, $coLeaderIds, $groupList));
+                $groupList = array_unique(array_filter(array_merge($leaderIds, $coLeaderIds, $groupList)));
                 ?>
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">

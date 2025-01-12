@@ -9,7 +9,7 @@ $checkouts = $this->get('checkout');
 ?>
 
 <h1><?=$this->getTrans('accountdata') ?></h1>
-<?=($this->get('checkout_contact') != '') ? $this->purify($this->get('checkout_contact')) : '' ?>
+<?=($this->get('checkout_contact') != '') ? '<div class="ck-content">' . $this->purify($this->get('checkout_contact')) . '</div>' : '' ?>
 <br>
 <br>
 <h1><?=$this->getTrans('bankbalance') ?></h1>

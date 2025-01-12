@@ -49,7 +49,7 @@ $userGroupList = $this->get('userGroupList');
         </label>
         <div class="col-xl-4">
             <select class="choices-select form-control" id="cat" name="cat">
-                <?php foreach ($rulesparents as $item) : ?>
+                <?php foreach ($rulesparents ?? [] as $item) : ?>
                     <option value="<?=$item->getId() ?>"<?=($this->originalInput('cat', $rule->getParentId()) == $item->getId()) ? ' selected' : '' ?>><?=$this->escape($item->getParagraph() . '. ' . $item->getTitle()) ?></option>
                 <?php endforeach; ?>
             </select>

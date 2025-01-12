@@ -227,7 +227,7 @@ if (!empty($event)) {
             <div class="eventBoxHead">
                 <strong><?=$this->getTrans('description') ?></strong>
             </div>
-            <div class="eventBoxContent">
+            <div class="eventBoxContent ck-content">
                 <?=$this->alwaysPurify($event->getText()) ?>
             </div>
         </div>

@@ -142,13 +142,13 @@ $pagination = $this->get('pagination');
                 </div>
                 <div class="postbody">
                     <hr class="hr-top" />
-                    <div class="content">
+                    <div class="content ck-content">
                         <?=$this->alwaysPurify($post->getText()) ?>
                     </div>
 
                     <?php if ($post->getAutor()->getSignature()) : ?>
                         <hr />
-                        <?=$this->alwaysPurify($post->getAutor()->getSignature()) ?>
+                        <div class="ck-content"><?=$this->alwaysPurify($post->getAutor()->getSignature()) ?></div>
                     <?php endif; ?>
                 </div>
                 <dl class="postprofile">

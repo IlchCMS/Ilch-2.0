@@ -18,7 +18,7 @@ $historys = $this->get('historys');
 
                 <div class="cd-timeline-content">
                     <h3 id="history-<?=$history->getId() ?>"><a href="<?=$this->getUrl(['action' => 'index']) ?>#history-<?=$history->getId() ?>"><?=$this->escape($history->getTitle()) ?></a></h3>
-                    <?=$this->purify($history->getText()) ?>
+                    <div class="ck-content"><?=$this->purify($history->getText()) ?></div>
                     <?php $getDate = new \Ilch\Date($history->getDate()); ?>
                     <span class="cd-date"><?=$getDate->format('d. ', true) . $this->getTrans($getDate->format('F', true)) . $getDate->format(' Y', true) ?></span>
                 </div>
