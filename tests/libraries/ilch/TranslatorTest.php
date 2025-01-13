@@ -156,4 +156,31 @@ class TranslatorTest extends TestCase
         $translator = new Translator();
         self::assertEquals('en', $translator->shortenLocale('en_EN'), 'The locale wasn\'t trimmed correctly.');
     }
+
+    /**
+     * Tests if sprintf work correctly.
+     */
+    public function testSprintf()
+    {
+        $translator = new Translator('de_DE');
+        $translator->load(__DIR__ . '/_files');
+
+        self::assertEquals(
+            '<span style="font-size:120%;">hallo</span>',
+            $translator->trans('sprintf_1percent', 'Hans'),
+            'The text wasnt returned with the placeholder.'
+        );
+
+        self::assertEquals(
+            '<span style="font-size:120%;">Hans</span>',
+            $translator->trans('sprintf_2percent', 'Hans'),
+            'The text was returned with the placeholder.'
+        );
+
+        self::assertEquals(
+            'Hallo Admin <span style="font-size:120%;">!</span>',
+            $translator->trans('sprintf_3percent', 'Admin'),
+            'The text was returned with the placeholder.'
+        );
+    }
 }
