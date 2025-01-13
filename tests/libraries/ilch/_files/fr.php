@@ -1,13 +1,16 @@
 <?php
+
 /**
- * Translations file for testing purposes.
+ * Translations fr-file for testing purposes.
  *
  * @package ilch_phpunit
  */
 
-return
-    [
-    'userGetsWhatHeWants' => 'L\'utilisateur obtient ce qu\'il veut!',
-    'welcomeUser' => 'Accueil, %s',
-    'welcomeUserExtended' => 'Accueil, %s, votre dernière connexion était de %s',
-    ];
+return [
+    'userGetsWhatHeWants' => 'L\'utilisateur obtient ce qu\'il veut !',
+    'welcomeUser' => 'Bienvenue, %s',
+    'welcomeUserExtended' => 'Bienvenue, %s, votre dernière connexion était %s',
+    'sprintf_1percent' => '<span style="font-size:120%;">bonjour</span>',
+    'sprintf_2percent' => '<span style="font-size:120%;">%s</span>',
+    'sprintf_3percent' => 'Bonjour %s <span style="font-size:120%;">!</span>',
+];
