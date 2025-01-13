@@ -117,19 +117,16 @@ class Translator
             $translatedText = $this->translations[$key];
         }
 
+        $translatedText = preg_replace('/%(?![sd])/i', '%%', $translatedText);
+
         $arguments = func_get_args();
-
-        // Fill missing arguments
-        while (substr_count($translatedText, '%') > count($arguments) - 1) {
-            $arguments[] = '%';
-        }
-
         $arguments[0] = $translatedText;
 
         // Fill missing arguments
-        while (substr_count($translatedText, '%') > count($arguments) - 1) {
-            $arguments[] = '%';
+        while (substr_count($translatedText, '%s') + substr_count($translatedText, '%d') > count($arguments) - 1) {
+            $arguments[] = '';
         }
+
 
         return sprintf(...$arguments);
     }
