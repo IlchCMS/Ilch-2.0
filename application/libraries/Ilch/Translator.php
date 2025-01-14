@@ -117,18 +117,14 @@ class Translator
             $translatedText = $this->translations[$key];
         }
 
-        // Escape invalid percent signs
-        $translatedText = preg_replace('/%(?![bcdeEfFgGosuxX\d\$])/i', '%%', $translatedText);
-
         $arguments = func_get_args();
         $arguments[0] = $translatedText;
 
         // Count actual placeholders and fill missing arguments
-        $placeholdersCount = preg_match_all('/%(?:[bcdeEfFgGosuxX]|\d+\$[bcdeEfFgGosuxX])/i', $translatedText);
-        while ($placeholdersCount > count($arguments) - 1) {
+        preg_match_all('/%[bcdeEfFgGosuxX]/', $translatedText, $matches);
+        while (count($matches[0]) > count($arguments) - 1) {
             $arguments[] = '';
         }
-
 
         return sprintf(...$arguments);
     }
