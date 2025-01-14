@@ -15,6 +15,7 @@ $trainings = $this->get('trainings');
 <?php if ($trainings) : ?>
     <div class="nexttraining-box">
     <?php foreach ($trainings as $model) :
+        $model = $trainingMapper->calculateNextTrainingDate($model);
         $countdown = $trainingMapper->countdown(new \Ilch\Date($model->getDate()));
         if ($countdown === false) {
             continue;
