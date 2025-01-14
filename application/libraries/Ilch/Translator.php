@@ -121,8 +121,8 @@ class Translator
         $arguments[0] = $translatedText;
 
         // Count actual placeholders and fill missing arguments
-        preg_match_all('/%[bcdeEfFgGosuxX]/', $translatedText, $matches);
-        while (count($matches[0]) > count($arguments) - 1) {
+        $placeholdersCount = preg_match_all('/%(?:[bcdeEfFgGosuxX]|\d+\$[bcdeEfFgGosuxX])/i', $translatedText);
+        while ($placeholdersCount > count($arguments) - 1) {
             $arguments[] = '';
         }
 
