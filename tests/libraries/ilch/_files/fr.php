@@ -13,4 +13,5 @@ return [
     'sprintf_1percent' => '<span style="font-size:120%;">bonjour</span>',
     'sprintf_2percent' => '<span style="font-size:120%;">%s</span>',
     'sprintf_3percent' => 'Bonjour %s <span style="font-size:120%;">!</span>',
+    'sprintf_percentAlreadyEscaped' => 'Bienvenue %s, tu as gagné %d %%.',
 ];

@@ -71,7 +71,7 @@ class TranslatorTest extends TestCase
     }
 
     /**
-     * Tests if the Translator returns an entry which wasnt translated yet in
+     * Tests if the Translator returns an entry which wasn't translated yet in
      * the translation file.
      */
     public function testTransNotTranslated()
@@ -96,13 +96,14 @@ class TranslatorTest extends TestCase
     {
         return [
             ['welcomeUser', ['Hans'], 'Welcome, Hans'],
-            ['welcomeUserExtended', ['Hans', 'yesterday'], 'Welcome, Hans, ur last login was yesterday'],
+            ['welcomeUserExtended', ['Hans', 'yesterday'], 'Welcome, Hans, your last login was yesterday'],
             ['sprintf_2percent', ['Hans'], '<span style="font-size:120%;">Hans</span>'],
             ['sprintf_3percent', ['Admin'], 'Hallo Admin <span style="font-size:120%;">!</span>'],
             ['sprintf_3percent', ['Admin', 'Hans'], 'Hallo Admin <span style="font-size:120%;">!</span>'],
-            ['welcomeUser', [], 'Welcome, '], // Keine Platzhalter
-            ['welcomeUser', ['Hans', 'Extra'], 'Welcome, Hans'], // Zusätzliche Platzhalter
-            ['welcomeUser', ['<b>Hans</b>'], 'Welcome, <b>Hans</b>'], // Platzhalter mit HTML
+            ['sprintf_percentAlreadyEscaped', ['Hans', 5], 'Welcome Hans, you gained 5 %.'],
+            ['welcomeUser', [], 'Welcome, '], // No placeholder
+            ['welcomeUser', ['Hans', 'Extra'], 'Welcome, Hans'], // Additional placeholder
+            ['welcomeUser', ['<b>Hans</b>'], 'Welcome, <b>Hans</b>'], // Placeholder with HTML.
         ];
     }
 
