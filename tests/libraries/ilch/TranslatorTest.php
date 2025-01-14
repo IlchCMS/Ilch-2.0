@@ -71,6 +71,19 @@ class TranslatorTest extends TestCase
     }
 
     /**
+     * Test if a string with a literal %s is correctly translated.
+     *
+     * @return void
+     */
+    public function testTransWithSpecifier()
+    {
+        self::assertSame(
+            'With %s the argument is treated and presented as a string.',
+            $this->translator->trans('test')
+        );
+    }
+
+    /**
      * Tests if the Translator returns an entry which wasn't translated yet in
      * the translation file.
      */
@@ -101,6 +114,9 @@ class TranslatorTest extends TestCase
             ['sprintf_3percent', ['Admin'], 'Hallo Admin <span style="font-size:120%;">!</span>'],
             ['sprintf_3percent', ['Admin', 'Hans'], 'Hallo Admin <span style="font-size:120%;">!</span>'],
             ['sprintf_percentAlreadyEscaped', ['Hans', 5], 'Welcome Hans, you gained 5 %.'],
+            ['test', [], 'With %s the argument is treated and presented as a string.'],
+            ['test2', [], 'With %s the argument is treated and presented as a string.'],
+            ['test', ['%s'], 'With %s the argument is treated and presented as a string.'],
             ['welcomeUser', [], 'Welcome, '], // No placeholder
             ['welcomeUser', ['Hans', 'Extra'], 'Welcome, Hans'], // Additional placeholder
             ['welcomeUser', ['<b>Hans</b>'], 'Welcome, <b>Hans</b>'], // Placeholder with HTML.

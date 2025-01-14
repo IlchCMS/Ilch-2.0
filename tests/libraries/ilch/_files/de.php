@@ -14,4 +14,6 @@ return [
     'sprintf_2percent' => '<span style="font-size:120%;">%s</span>',
     'sprintf_3percent' => 'Hello %s <span style="font-size:120%;">!</span>',
     'sprintf_percentAlreadyEscaped' => 'Willkommen %s, du hast %d %% zugelegt.',
+    'test' => 'Bei %s wird der Parameter als Zeichenkette betrachtet und ausgegeben.',
+    'test2' => 'Bei %%s wird der Parameter als Zeichenkette betrachtet und ausgegeben.',
 ];
