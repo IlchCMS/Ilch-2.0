@@ -1,13 +1,4 @@
 /* Box */
-.nexttraining-box {
-    margin: 0 15px;
-}
-.nexttraining-box [class*="col-"] {
-    padding: 0;
-}
-.nexttraining-box i {
-    padding-right: 4px;
-}
 .nexttraining-box .ellipsis {
     display: -webkit-flex;
     display: flex;
@@ -19,7 +10,6 @@
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
-    align-items: flex-end;
     white-space: nowrap;
 }
 .nexttraining-box .nexttraining-date {

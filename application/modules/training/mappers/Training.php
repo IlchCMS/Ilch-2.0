@@ -7,6 +7,8 @@
 
 namespace Modules\Training\Mappers;
 
+use DateInterval;
+use DatePeriod;
 use Ilch\Date;
 use Ilch\Pagination;
 use Modules\Training\Models\Training as TrainingModel;
@@ -75,7 +77,7 @@ class Training extends \Ilch\Mapper
      * Gets the Training.
      *
      * @param array $where
-     *  @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return TrainingModel[]|null
      */
     public function getTraining(array $where = [], $groupIds = '3'): ?array
@@ -154,7 +156,7 @@ class Training extends \Ilch\Mapper
      * Gets Trainings by limit
      *
      * @param int|null $limit
-     *  @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param string $order
      * @return TrainingModel[]|null
      */
@@ -204,6 +206,100 @@ class Training extends \Ilch\Mapper
         }
 
         return $days_left . 'd ' . $hours_left . 'h';
+    }
+
+    /**
+     * Calculate the next training date.
+     *
+     * @param TrainingModel $training
+     * @return TrainingModel
+     * @throws \DateMalformedPeriodStringException
+     * @since Version 1.10.0
+     */
+    public function calculateNextTrainingDate(TrainingModel $training): TrainingModel
+    {
+        // Early return if this is not a recurrent training.
+        if ($training->getPeriodType() === '') {
+            return $training;
+        }
+
+        $givenDate = new \Ilch\Date();
+        $begin = new \Ilch\Date($training->getDate());
+
+        // Early return if the date is still in the future.
+        if ($begin > $givenDate) {
+            return $training;
+        }
+
+        // Early return if the repeat until date is in the past.
+        if ($givenDate > new \Ilch\Date($training->getRepeatUntil())) {
+            return $training;
+        }
+
+        $interval = null;
+        $factor = $training->getPeriodDay();
+
+        switch ($training->getPeriodType()) {
+            case 'monthly':
+                $interval = DateInterval::createFromDateString($factor . ' months');
+                break;
+            case 'daily':
+                $interval = DateInterval::createFromDateString($factor . ' days');
+                break;
+            case 'weekly':
+                $interval = DateInterval::createFromDateString($factor . ' weeks');
+                break;
+            case 'quarterly':
+                // work with a factor and 3 months as a quarter of a year is 3 months.
+                $interval = DateInterval::createFromDateString(($factor * 3) . ' months');
+                break;
+            case 'yearly':
+                $interval = DateInterval::createFromDateString($factor . ' years');
+                break;
+            case 'days':
+                $days = [
+                    1 => 'Monday',
+                    2 => 'Tuesday',
+                    3 => 'Wednesday',
+                    4 => 'Thursday',
+                    5 => 'Friday',
+                    6 => 'Saturday',
+                    7 => 'Sunday'
+                ];
+
+                $interval = DateInterval::createFromDateString('next ' . $days[$factor] . ' ' . $begin->format('H:i:s'));
+                break;
+        }
+
+        // Calculate the date for the next recurring training.
+        $end = new \Ilch\Date($training->getRepeatUntil());
+        $datePeriod = new DatePeriod($begin, $interval ,$end);
+        $givenDate = new \Ilch\Date();
+
+        foreach ($datePeriod as $date) {
+            if ($date < $givenDate) {
+                continue;
+            }
+
+            $training->setDate($date->format('Y-m-d H:i:s'));
+            break;
+        }
+
+        // Calculate the end date for the next recurring training.
+        $begin = new \Ilch\Date($training->getEnd());
+        $datePeriod = new DatePeriod($begin, $interval ,$end);
+        $nextTrainingDate = new \Ilch\Date($training->getDate());
+
+        foreach ($datePeriod as $date) {
+            if ($date < $givenDate && $date < $nextTrainingDate) {
+                continue;
+            }
+
+            $training->setEnd($date->format('Y-m-d H:i:s'));
+            break;
+        }
+
+        return $training;
     }
 
     /**
