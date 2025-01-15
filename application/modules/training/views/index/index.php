@@ -5,7 +5,7 @@
 /** @var \Modules\Training\Mappers\Entrants $entrantsMapper */
 $entrantsMapper = $this->get('entrantsMapper');
 /** @var \Modules\Training\Models\Training[]|null $training */
-$training = $this->get('training');
+$trainings = $this->get('trainings');
 ?>
 <h1><?=$this->getTrans('menuTraining') ?></h1>
 <div class="table-responsive">
@@ -27,8 +27,8 @@ $training = $this->get('training');
             </tr>
         </thead>
         <tbody>
-            <?php if ($training) : ?>
-                <?php foreach ($training as $model) : ?>
+            <?php if ($trainings) : ?>
+                <?php foreach ($trainings as $model) : ?>
                     <tr>
                         <td><?=date('d.m.Y', strtotime($model->getDate())) ?> <?=$this->getTrans('at') ?> <?=date('H:i', strtotime($model->getDate())) ?> <?=$this->getTrans('clock') ?></td>
                         <td><?=date('d.m.Y', strtotime($model->getEnd())) ?> <?=$this->getTrans('at') ?> <?=date('H:i', strtotime($model->getEnd())) ?> <?=$this->getTrans('clock') ?></td>

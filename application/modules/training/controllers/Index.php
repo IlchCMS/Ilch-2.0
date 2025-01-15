@@ -10,6 +10,7 @@ namespace Modules\Training\Controllers;
 use Modules\Training\Mappers\Training as TrainingMapper;
 use Modules\Training\Mappers\Entrants as EntrantsMapper;
 use Modules\Training\Models\Entrants as EntrantsModel;
+use Modules\Training\Models\Training as TrainingModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Calendar\Mappers\Calendar as CalendarMapper;
 
@@ -32,8 +33,15 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
+        // Get trainings, calculate next date if it's a recurrent event and sort them by date.
+        $trainings = $trainingMapper->getTraining([], $groupIds);
+        foreach ($trainings as $training) {
+            $trainingMapper->calculateNextTrainingDate($training);
+        }
+        usort($trainings, fn(TrainingModel $a, TrainingModel $b) => strcmp($a->getDate(), $b->getDate()));
+
         $this->getView()->set('entrantsMapper', $entrantsMapper)
-            ->set('training', $trainingMapper->getTraining([], $groupIds));
+            ->set('trainings', $trainings);
     }
 
     public function showAction()
