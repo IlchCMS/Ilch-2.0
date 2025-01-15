@@ -159,15 +159,54 @@ class Training extends \Ilch\Mapper
      * @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param string $order
      * @return TrainingModel[]|null
+     * @todo deprecate to remove this function later?
      */
     public function getTrainingsListWithLimt(?int $limit = null, $groupIds = '3', string $order = 'ASC'): ?array
     {
         if ($limit) {
             $pagination = new Pagination();
-            $pagination->setRows($limit);
+            $pagination->setRowsPerPage($limit);
         }
 
         return $this->getEntriesBy(($groupIds ? ['ra.read_access' => $groupIds] : []), ['t.date' => $order], $pagination ?? null);
+    }
+
+    /**
+     * Get the next trainings.
+     *
+     * @param int|null $limit
+     * @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param string $order ASC|DESC
+     * @return TrainingModel[]|null
+     * @since Version 1.10.0
+     */
+    public function getNextTrainings(?int $limit = null, $groupIds = '3', string $order = 'ASC'): ?array
+    {
+        if ($limit) {
+            $pagination = new Pagination();
+            $pagination->setRowsPerPage($limit);
+        }
+
+        $currentDate = new \Ilch\Date();
+        $currentDate->format("Y-m-d H:i:s");
+        $select = $this->db()->select();
+        $where = [
+            $select->orX([
+                $select->andX([
+                        't.period_type !=' => '',
+                        't.repeat_until >' => $currentDate,
+                    ]
+                ),
+                $select->andX([
+                        't.period_type =' => '',
+                        't.date >=' => $currentDate,
+                    ]
+                ),
+            ]),
+            'ra.read_access' => $groupIds
+        ];
+
+        return $this->getEntriesBy($where, ['t.date' => $order], $pagination ?? null);
     }
 
     /**

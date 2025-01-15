@@ -32,7 +32,7 @@ class Nexttraining extends \Ilch\Box
         }
 
         // Get trainings, calculate next date if it's a recurrent event and sort them by date.
-        $trainings = $trainingMapper->getTrainingsListWithLimt($config->get('training_boxNexttrainingLimit') ?: 5, $groupIds);
+        $trainings = $trainingMapper->getNextTrainings($config->get('training_boxNexttrainingLimit') ?? 5, $groupIds);
         foreach ($trainings as $training) {
             $trainingMapper->calculateNextTrainingDate($training);
         }
