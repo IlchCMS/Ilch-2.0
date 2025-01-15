@@ -63,6 +63,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $training = $trainingMapper->getTrainingById($this->getRequest()->getParam('id', 0), $groupIds);
+        $trainingMapper->calculateNextTrainingDate($training);
         if (!$training) {
             $this->redirect(['action' => 'index'])
                 ->withMessage('noTraining', 'danger');
