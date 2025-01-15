@@ -77,7 +77,7 @@ class Training extends \Ilch\Mapper
      * Gets the Training.
      *
      * @param array $where
-     *  @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return TrainingModel[]|null
      */
     public function getTraining(array $where = [], $groupIds = '3'): ?array
@@ -156,7 +156,7 @@ class Training extends \Ilch\Mapper
      * Gets Trainings by limit
      *
      * @param int|null $limit
-     *  @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param string $order
      * @return TrainingModel[]|null
      */
@@ -214,6 +214,7 @@ class Training extends \Ilch\Mapper
      * @param TrainingModel $training
      * @return TrainingModel
      * @throws \DateMalformedPeriodStringException
+     * @since Version 1.10.0
      */
     public function calculateNextTrainingDate(TrainingModel $training): TrainingModel
     {
