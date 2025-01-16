@@ -45,7 +45,7 @@ class Training extends \Ilch\Model
     protected int $periodDay = 0;
 
     /**
-     * period day of the training.
+     * period type of the training.
      *
      * @var string
      */
