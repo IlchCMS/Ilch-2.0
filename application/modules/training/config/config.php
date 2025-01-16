@@ -293,8 +293,12 @@ class Config extends \Ilch\Config\Install
                     $this->db()->update('training', ['end' => $end], ['id' => $training['id']]);
                 }
 
-                // Drop time column
+                // Drop time column.
                 $this->db()->query('ALTER TABLE `[prefix]_training` DROP COLUMN `time`;');
+
+                // Update voice_server and game_server column.
+                $this->db()->queryMulti('ALTER TABLE `[prefix]_training` MODIFY COLUMN `voice_server` TINYINT(1) NOT NULL DEFAULT 0;
+                            ALTER TABLE `[prefix]_training` MODIFY COLUMN `game_server` TINYINT(1) NOT NULL DEFAULT 0;');
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
