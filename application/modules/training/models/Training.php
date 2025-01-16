@@ -12,9 +12,9 @@ class Training extends \Ilch\Model
     /**
      * The id of the training.
      *
-     * @var int
+     * @var int|null
      */
-    protected int $id = 0;
+    protected ?int $id = null;
 
     /**
      * The title of the training.
@@ -206,9 +206,9 @@ class Training extends \Ilch\Model
     /**
      * Gets the id of the training.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

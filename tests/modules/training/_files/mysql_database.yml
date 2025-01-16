@@ -25,6 +25,9 @@ training:
     title: "Tag 1"
     date: "2024-01-15 05:00:00"
     end: "2024-01-15 05:30:00"
+    period_type: ""
+    period_day: 1
+    repeat_until: "1000-01-01 00:00:00"
     place: ""
     contact: 1
     voice_server: 0
@@ -41,6 +44,9 @@ training:
     title: "Tag 2"
     date: "2024-02-15 05:00:00"
     end: "2024-02-15 05:30:00"
+    period_type: ""
+    period_day: 1
+    repeat_until: "1000-01-01 00:00:00"
     place: ""
     contact: 1
     voice_server: 0
@@ -57,6 +63,9 @@ training:
     title: "Tag 3"
     date: "2024-03-15 05:00:00"
     end: "2024-03-15 05:30:00"
+    period_type: ""
+    period_day: 1
+    repeat_until: "1000-01-01 00:00:00"
     place: ""
     contact: 1
     voice_server: 0

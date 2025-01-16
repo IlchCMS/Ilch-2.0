@@ -80,10 +80,10 @@ class Config extends \Ilch\Config\Install
                 `repeat_until` DATETIME DEFAULT NULL,
                 `place` VARCHAR(100) NOT NULL,
                 `contact` INT(11) UNSIGNED NOT NULL,
-                `voice_server` INT(11) NOT NULL,
+                `voice_server` TINYINT(1) NOT NULL DEFAULT 0,
                 `voice_server_ip` VARCHAR(100) NOT NULL,
                 `voice_server_pw` VARCHAR(100) NOT NULL,
-                `game_server` INT(11) NOT NULL,
+                `game_server` TINYINT(1) NOT NULL DEFAULT 0,
                 `game_server_ip` VARCHAR(100) NOT NULL,
                 `game_server_pw` VARCHAR(100) NOT NULL,
                 `text` MEDIUMTEXT NOT NULL,
@@ -293,8 +293,12 @@ class Config extends \Ilch\Config\Install
                     $this->db()->update('training', ['end' => $end], ['id' => $training['id']]);
                 }
 
-                // Drop time column
+                // Drop time column.
                 $this->db()->query('ALTER TABLE `[prefix]_training` DROP COLUMN `time`;');
+
+                // Update voice_server and game_server column.
+                $this->db()->queryMulti('ALTER TABLE `[prefix]_training` MODIFY COLUMN `voice_server` TINYINT(1) NOT NULL DEFAULT 0;
+                            ALTER TABLE `[prefix]_training` MODIFY COLUMN `game_server` TINYINT(1) NOT NULL DEFAULT 0;');
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
