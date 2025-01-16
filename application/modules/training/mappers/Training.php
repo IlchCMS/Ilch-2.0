@@ -176,37 +176,52 @@ class Training extends \Ilch\Mapper
      *
      * @param int|null $limit
      * @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
-     * @param string $order ASC|DESC
      * @return TrainingModel[]|null
      * @since Version 1.10.0
      */
-    public function getNextTrainings(?int $limit = null, $groupIds = '3', string $order = 'ASC'): ?array
+    public function getNextTrainings(?int $limit = null, $groupIds = '3'): ?array
     {
+        $pagination = new Pagination();
+
         if ($limit) {
-            $pagination = new Pagination();
             $pagination->setRowsPerPage($limit);
         }
 
         $currentDate = new \Ilch\Date();
         $currentDate->format("Y-m-d H:i:s");
-        $select = $this->db()->select();
+
+        // Get all recurrent trainings with a repeat until date not in the past.
         $where = [
-            $select->orX([
-                $select->andX([
-                        't.period_type !=' => '',
-                        't.repeat_until >' => $currentDate,
-                    ]
-                ),
-                $select->andX([
-                        't.period_type =' => '',
-                        't.date >=' => $currentDate,
-                    ]
-                ),
-            ]),
+            't.period_type !=' => '',
+            't.repeat_until >' => $currentDate,
+            'ra.read_access' => $groupIds
+        ];
+        $recurrentTrainings = $this->getEntriesBy($where) ?? [];
+
+        // Calculate next training dates for the recurrent trainings.
+        foreach ($recurrentTrainings as $training) {
+            $this->calculateNextTrainingDate($training);
+        }
+
+        // Get the next trainings. Taking the limit into account.
+        $where = [
+            't.period_type =' => '',
+            't.date >=' => $currentDate,
             'ra.read_access' => $groupIds
         ];
 
-        return $this->getEntriesBy($where, ['t.date' => $order], $pagination ?? null);
+        $trainings = array_merge($recurrentTrainings, $this->getEntriesBy($where, ['t.date' => 'ASC'], $pagination ?? null) ?? []);
+
+        // Sort all trainings by date.
+        usort($trainings, fn(TrainingModel $a, TrainingModel $b) => strcmp($a->getDate(), $b->getDate()));
+
+        // If there is a limit then only return the number of trainings according to the limit as there
+        // might be more results than needed.
+        if ($limit) {
+            return array_slice($trainings, 0, $limit);
+        }
+
+        return $trainings;
     }
 
     /**
@@ -248,31 +263,26 @@ class Training extends \Ilch\Mapper
     }
 
     /**
-     * Calculate the next training date.
+     * Calculate the next training date. Updates the passed parameter.
      *
      * @param TrainingModel $training
-     * @return TrainingModel
+     * @return void
      * @throws \DateMalformedPeriodStringException
      * @since Version 1.10.0
      */
-    public function calculateNextTrainingDate(TrainingModel $training): TrainingModel
+    public function calculateNextTrainingDate(TrainingModel $training)
     {
         // Early return if this is not a recurrent training.
         if ($training->getPeriodType() === '') {
-            return $training;
+            return;
         }
 
         $givenDate = new \Ilch\Date();
         $begin = new \Ilch\Date($training->getDate());
 
-        // Early return if the date is still in the future.
-        if ($begin > $givenDate) {
-            return $training;
-        }
-
-        // Early return if the repeat until date is in the past.
-        if ($givenDate > new \Ilch\Date($training->getRepeatUntil())) {
-            return $training;
+        // Early return if the date is still in the future or if the repeat until date is in the past.
+        if ($begin > $givenDate || ($givenDate > new \Ilch\Date($training->getRepeatUntil()))) {
+            return;
         }
 
         $interval = null;
@@ -337,8 +347,6 @@ class Training extends \Ilch\Mapper
             $training->setEnd($date->format('Y-m-d H:i:s'));
             break;
         }
-
-        return $training;
     }
 
     /**

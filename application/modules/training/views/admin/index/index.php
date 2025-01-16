@@ -2,8 +2,8 @@
 
 /** @var \Ilch\View $this */
 
-/** @var \Modules\Training\Models\Training[]|null $training */
-$training = $this->get('training');
+/** @var \Modules\Training\Models\Training[]|null $trainings */
+$trainings = $this->get('trainings');
 
 $periodDays = [
     '1' => $this->getTranslator()->trans('Monday'),
@@ -24,7 +24,7 @@ $periodTypes = [
 ];
 ?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if ($training) : ?>
+<?php if ($trainings) : ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -41,7 +41,7 @@ $periodTypes = [
                 </colgroup>
                 <thead>
                     <tr>
-                        <th><?=$this->getCheckAllCheckbox('check_training') ?></th>
+                        <th><?=$this->getCheckAllCheckbox('check_trainings') ?></th>
                         <th></th>
                         <th></th>
                         <th><?=$this->getTrans('start') ?></th>
@@ -52,7 +52,7 @@ $periodTypes = [
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($training as $model) :
+                    <?php foreach ($trainings as $model) :
                         $datecreate = '';
                         if ($model->getDate()) {
                             $date = new \Ilch\Date($model->getDate());
