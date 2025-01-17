@@ -53,6 +53,8 @@ function rec(ForumItem $item, \Ilch\View $obj)
 }
 ?>
 
+<link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/forum-items.css') ?>">
+
 <form class="row" id="forumForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <h1><?=$this->getTrans('forum') ?></h1>
@@ -142,6 +144,7 @@ $(document).ready (
             protectRoot: true
         });
 
+        let choicesAssignedPrefixes;
         let choicesAssignedGroupsRead;
         let choicesAssignedGroupsReply;
         let choicesAssignedGroupsCreate;
@@ -176,8 +179,15 @@ $(document).ready (
 
             menuHtml = '<div class="row mb-3"><label for="menukey" class="col-xl-3 col-form-label"><?=$this->getTrans('menuSelection') ?></label>\n\
                         <div class="col-xl-6"><select class="form-select" id="menukey">'+options+'</select></div></div>\n\
-                        <div class="row mb-3"><label for="prefixes" class="col-xl-3 col-form-label"><?=$this->getTrans('prefixes') ?></label>\n\
-                        <div class="col-xl-6"><input type="text" class="form-control" id="prefixes" placeholder="<?=$this->getTrans('selectPrefixes') ?>"></div></div>\n\
+                        <div class="row mb-3"><label for="assignedPrefixes" class="col-xl-3 col-form-label"><?=$this->getTrans('prefixes') ?></label>\n\
+                        <div class="col-xl-6"><select class="choices-select form-control" id="assignedPrefixes" data-placeholder="<?=$this->getTrans('selectPrefixes') ?>" multiple>\n\
+                        \n\
+                        <?php
+                        /** @var \Modules\Forum\Models\Prefix $prefix */
+                        foreach ($this->get('prefixes') ?? [] as $prefix) : ?>\n\
+                        <option value="<?=$prefix->getId() ?>"><?=$this->escape($prefix->getPrefix()) ?></option>\n\
+                        <?php endforeach; ?>\n\
+                        </select></div></div>\n\
                         <div class="row mb-3"><label for="assignedGroupsRead" class="col-xl-3 col-form-label"><?=$this->getTrans('see') ?></label>\n\
                         <div class="col-xl-6"><select class="choices-select form-control" id="assignedGroupsRead" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
@@ -210,46 +220,11 @@ $(document).ready (
                 $('.dyn').html('');
             } else if ($(this).val() == '1') {
                 $('.dyn').html(menuHtml);
-                <?php
-                $prefixes = [];
-                /** @var \Modules\Forum\Models\Prefix $prefix */
-                foreach ($this->get('prefixes') ?? [] as $prefix) {
-                    $prefixes[] = ['value' => $prefix->getId(), 'label' => $prefix->getPrefix()];
-                }
-                ?>
-                const existingPrefixes = <?=json_encode($prefixes) ?>;
 
-                $('#prefixes').tokenfield({
-                    autocomplete: {
-                        source: existingPrefixes,
-                        delay: 100
-                    },
-                    showAutocompleteOnFocus: true,
-                    beautify: false
+                choicesAssignedPrefixes = new Choices('#assignedPrefixes', {
+                    ...choicesOptions,
+                    searchEnabled: true
                 });
-                $('#prefixes').on('tokenfield:createtoken', function (event) {
-                    let exists = false;
-                    const existingTokens = $(this).tokenfield('getTokens');
-                    $.each(existingTokens, function(index, token) {
-                        if (token.value === event.attrs.value) {
-                            exists = true;
-                            event.preventDefault();
-                        }
-                    });
-                    if (!exists && (event.attrs.value === event.attrs.label)) {
-                        $.each(existingPrefixes, function(index, prefix) {
-                            if (prefix['value'].toString() === event.attrs.value) {
-                                event.attrs.label = prefix['label'];
-                                return false;
-                            }
-                        });
-                    }
-                    $('#prefixes-tokenfield').blur();
-                });
-                $('#prefixes-tokenfield').keydown(function() {
-                    return false;
-                });
-
                 choicesAssignedGroupsRead = new Choices('#assignedGroupsRead', {
                     ...choicesOptions,
                     searchEnabled: true
@@ -297,7 +272,7 @@ $(document).ready (
                 +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+$('#title').val()+'" />'
                 +'<input type="hidden" class="hidden_desc" name="items[tmp_'+itemId+'][desc]" value="'+$('#desc').val()+'" />'
                 +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
-                +'<input type="hidden" class="hidden_prefixes" name="items[tmp_'+itemId+'][prefixes]" value="'+$('#prefixes').val()+'" />'
+                +'<input type="hidden" class="hidden_prefixes" name="items[tmp_'+itemId+'][prefixes]" value="'+$('#assignedPrefixes').val()+'" />'
                 +'<input type="hidden" class="hidden_read_access" name="items[tmp_'+itemId+'][readAccess]" value="'+$('#assignedGroupsRead').val()+'" />'
                 +'<input type="hidden" class="hidden_reply_access" name="items[tmp_'+itemId+'][replyAccess]" value="'+$('#assignedGroupsReply').val()+'" />'
                 +'<input type="hidden" class="hidden_create_access" name="items[tmp_'+itemId+'][createAccess]" value="'+$('#assignedGroupsCreate').val()+'" />'
@@ -313,11 +288,19 @@ $(document).ready (
             $('#desc').val($(this).parent().find('.hidden_desc').val());
             $('#type').val($(this).parent().find('.hidden_type').val());
             $('#type').change();
-            $('#prefixes').val($(this).parent().find('.hidden_prefixes').val());
-            $('#prefixes').tokenfield('setTokens', $(this).parent().find('.hidden_prefixes').val());
+
+            let hidden_prefixes_Element = $('#assignedPrefixes');
+            let hidden_prefixes_values = $(this).parent().find('.hidden_prefixes').val().split(',').map(value => value.trim());
+            hidden_prefixes_Element.val(null).trigger('change');
+            hidden_prefixes_Element.val(hidden_prefixes_values).trigger('change');
+            choicesAssignedPrefixes.setValue(hidden_prefixes_values);
+
+            hidden_prefixes_values.forEach(value => {
+                choicesAssignedPrefixes.setChoiceByValue(value);
+            });
 
             let hidden_read_access_Element = $('#assignedGroupsRead');
-            hidden_read_access_values = $(this).parent().find('.hidden_read_access').val().split(',').map(value => value.trim());
+            let hidden_read_access_values = $(this).parent().find('.hidden_read_access').val().split(',').map(value => value.trim());
             hidden_read_access_Element.val(null).trigger('change');
             hidden_read_access_Element.val(hidden_read_access_values).trigger('change');
             choicesAssignedGroupsRead.setValue(hidden_read_access_values);
@@ -327,7 +310,7 @@ $(document).ready (
             });
 
             let hidden_reply_access_Element = $('#assignedGroupsReply');
-            hidden_reply_access_values = $(this).parent().find('.hidden_reply_access').val().split(',').map(value => value.trim());
+            let hidden_reply_access_values = $(this).parent().find('.hidden_reply_access').val().split(',').map(value => value.trim());
             hidden_reply_access_Element.val(null).trigger('change');
             hidden_reply_access_Element.val(hidden_reply_access_values).trigger('change');
             choicesAssignedGroupsReply.setValue(hidden_reply_access_values);
@@ -337,7 +320,7 @@ $(document).ready (
             });
 
             let hidden_create_access_Element = $('#assignedGroupsCreate');
-            hidden_create_access_values = $(this).parent().find('.hidden_create_access').val().split(',').map(value => value.trim());
+            let hidden_create_access_values = $(this).parent().find('.hidden_create_access').val().split(',').map(value => value.trim());
             hidden_create_access_Element.val(null).trigger('change');
             hidden_create_access_Element.val(hidden_create_access_values).trigger('change');
             choicesAssignedGroupsCreate.setValue(hidden_create_access_values);
@@ -355,14 +338,15 @@ $(document).ready (
                 return;
             }
 
-            $('#'+$('#id').val()).find('.title:first').text($('#title').val());
-            $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
-            $('#'+$('#id').val()).find('.hidden_desc:first').val($('#desc').val());
-            $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
-            $('#'+$('#id').val()).find('.hidden_prefixes:first').val($('#prefixes').val());
-            $('#'+$('#id').val()).find('.hidden_read_access:first').val($('#assignedGroupsRead').val());
-            $('#'+$('#id').val()).find('.hidden_reply_access:first').val($('#assignedGroupsReply').val());
-            $('#'+$('#id').val()).find('.hidden_create_access:first').val($('#assignedGroupsCreate').val());
+            let idSelector = $('#'+$('#id').val());
+            idSelector.find('.title:first').text($('#title').val());
+            idSelector.find('.hidden_title:first').val($('#title').val());
+            idSelector.find('.hidden_desc:first').val($('#desc').val());
+            idSelector.find('.hidden_type:first').val($('#type').val());
+            idSelector.find('.hidden_prefixes:first').val($('#assignedPrefixes').val());
+            idSelector.find('.hidden_read_access:first').val($('#assignedGroupsRead').val());
+            idSelector.find('.hidden_reply_access:first').val($('#assignedGroupsReply').val());
+            idSelector.find('.hidden_create_access:first').val($('#assignedGroupsCreate').val());
             resetBox();
         });
 
@@ -384,96 +368,3 @@ function reload() {
     setTimeout(function(){window.location.reload(1);}, 1000);
 }
 </script>
-
-<style>
-.item_delete {
-    float: right;
-    cursor: pointer;
-}
-
-.item_edit {
-    margin-right: 6px;
-    float: right;
-    cursor: pointer;
-}
-
-ol.sortable, ol.sortable ol {
-    margin: 0 0 0 25px;
-    padding: 0;
-    list-style-type: none;
-}
-
-ol.sortable {
-    margin: 0;
-}
-
-.sortable li {
-    margin: 5px 0 0 0;
-    padding: 0;
-}
-
-.sortable li div  {
-    border: 1px solid;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    border-color: #D4D4D4 #D4D4D4 #BCBCBC;
-    padding: 6px;
-    margin: 0;
-    cursor: move;
-    background: #f6f6f6;
-    background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #ededed 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed));
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-    background: -o-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-    background: -ms-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-    background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 );
-}
-
-.sortable li.mjs-nestedSortable-branch div {
-    background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #f0ece9 100%);
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#f0ece9 100%);
-
-}
-
-.sortable li.mjs-nestedSortable-leaf div {
-    background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #bcccbc 100%);
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#bcccbc 100%);
-
-}
-
-li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
-    border-color: #999;
-    background: #fafafa;
-}
-
-.disclose {
-    cursor: pointer;
-    width: 18px;
-    display: none;
-}
-
-.sortable > li > div > .upload {
-    display: none;
-}
-
-.sortable > li > div > .view {
-    display: none;
-}
-
-.sortable > li > div > .count {
-    display: none;
-}
-.sortable li.mjs-nestedSortable-collapsed > ol {
-    display: none;
-}
-
-.sortable li.mjs-nestedSortable-branch > div > .disclose {
-    display: inline-block;
-}
-
-.placeholder {
-    outline: 1px dashed #4183C4;
-}
-</style>
