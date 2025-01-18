@@ -45,6 +45,7 @@ class Upload extends \Ilch\Controller\Base
 
     /**
      * @var string $types
+     * @deprecated
      */
     protected $types;
 
@@ -60,16 +61,20 @@ class Upload extends \Ilch\Controller\Base
 
     /**
      * @var string $path
+     * @deprecated
      */
     protected $mediaExtImage;
 
     /**
      * @var string $size
+     * @deprecated
      */
     protected $size;
 
     /**
      * __construct
+     *
+     * @deprecated
      */
     public function __construct()
     {
@@ -78,6 +83,8 @@ class Upload extends \Ilch\Controller\Base
 
     /**
      * Resets
+     *
+     * @deprecated
      */
     public function reset(): Upload
     {
@@ -117,6 +124,7 @@ class Upload extends \Ilch\Controller\Base
      * @param string $ending
      *
      * @return Upload Ending
+     * @deprecated
      */
     public function setEnding(string $ending): Upload
     {
@@ -139,6 +147,7 @@ class Upload extends \Ilch\Controller\Base
      * @param string $name
      *
      * @return Upload Name
+     * @deprecated
      */
     public function setName(string $name): Upload
     {
@@ -201,6 +210,7 @@ class Upload extends \Ilch\Controller\Base
      * @param string $types
      *
      * @return Upload types
+     * @deprecated
      */
     public function setTypes(string $types): Upload
     {
@@ -211,6 +221,7 @@ class Upload extends \Ilch\Controller\Base
 
     /**
      * @return string
+     * @deprecated 
      */
     public function getTypes(): string
     {
@@ -381,7 +392,7 @@ class Upload extends \Ilch\Controller\Base
      * Convert for example the memory_limit of php (example: 128M) to bytes.
      *
      * @param string $size_str
-     * @return float|int
+     * @return int|string
      * @since 2.0.0
      */
     public function returnBytes(string $size_str)
