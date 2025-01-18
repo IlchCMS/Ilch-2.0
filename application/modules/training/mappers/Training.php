@@ -159,7 +159,7 @@ class Training extends \Ilch\Mapper
      * @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param string $order
      * @return TrainingModel[]|null
-     * @todo deprecate to remove this function later?
+     * @deprecated No longer used in this module.
      */
     public function getTrainingsListWithLimt(?int $limit = null, $groupIds = '3', string $order = 'ASC'): ?array
     {
@@ -181,13 +181,14 @@ class Training extends \Ilch\Mapper
      */
     public function getNextTrainings(?int $limit = null, $groupIds = '3'): ?array
     {
-        $pagination = new Pagination();
+        $pagination = null;
 
         if ($limit) {
+            $pagination = new Pagination();
             $pagination->setRowsPerPage($limit);
         }
 
-        $currentDate = new \Ilch\Date();
+        $currentDate = new Date();
         $currentDate->format("Y-m-d H:i:s");
 
         // Get all recurrent trainings with a repeat until date not in the past.
@@ -210,7 +211,7 @@ class Training extends \Ilch\Mapper
             'ra.read_access' => $groupIds
         ];
 
-        $trainings = array_merge($recurrentTrainings, $this->getEntriesBy($where, ['t.date' => 'ASC'], $pagination ?? null) ?? []);
+        $trainings = array_merge($recurrentTrainings, $this->getEntriesBy($where, ['t.date' => 'ASC'], $pagination) ?? []);
 
         // Sort all trainings by date.
         usort($trainings, fn(TrainingModel $a, TrainingModel $b) => strcmp($a->getDate(), $b->getDate()));
@@ -227,14 +228,14 @@ class Training extends \Ilch\Mapper
     /**
      * Gets the calculated Countdown
      *
-     * @param \Ilch\Date $countdown_date
+     * @param Date $countdown_date
      * @param int $countdown_time
      * @return bool|string
      */
-    public function countdown(\Ilch\Date $countdown_date, int $countdown_time = 60)
+    public function countdown(Date $countdown_date, int $countdown_time = 60)
     {
-        $date = new \Ilch\Date();
-        $datenow = new \Ilch\Date($date->format("Y-m-d H:i:s", true));
+        $date = new Date();
+        $datenow = new Date($date->format("Y-m-d H:i:s", true));
         $difference = $countdown_date->getTimestamp() - $datenow->getTimestamp();
         if ($difference < 0) {
             if ($difference <= (60 * $countdown_time)) {
@@ -277,11 +278,11 @@ class Training extends \Ilch\Mapper
             return;
         }
 
-        $givenDate = new \Ilch\Date();
-        $begin = new \Ilch\Date($training->getDate());
+        $givenDate = new Date();
+        $begin = new Date($training->getDate());
 
         // Early return if the date is still in the future or if the repeat until date is in the past.
-        if ($begin > $givenDate || ($givenDate > new \Ilch\Date($training->getRepeatUntil()))) {
+        if ($begin > $givenDate || ($givenDate > new Date($training->getRepeatUntil()))) {
             return;
         }
 
@@ -321,9 +322,9 @@ class Training extends \Ilch\Mapper
         }
 
         // Calculate the date for the next recurring training.
-        $end = new \Ilch\Date($training->getRepeatUntil());
+        $end = new Date($training->getRepeatUntil());
         $datePeriod = new DatePeriod($begin, $interval ,$end);
-        $givenDate = new \Ilch\Date();
+        $givenDate = new Date();
 
         foreach ($datePeriod as $date) {
             if ($date < $givenDate) {
@@ -335,9 +336,9 @@ class Training extends \Ilch\Mapper
         }
 
         // Calculate the end date for the next recurring training.
-        $begin = new \Ilch\Date($training->getEnd());
+        $begin = new Date($training->getEnd());
         $datePeriod = new DatePeriod($begin, $interval ,$end);
-        $nextTrainingDate = new \Ilch\Date($training->getDate());
+        $nextTrainingDate = new Date($training->getDate());
 
         foreach ($datePeriod as $date) {
             if ($date < $givenDate && $date < $nextTrainingDate) {
