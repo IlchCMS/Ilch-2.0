@@ -44,12 +44,6 @@ class Upload extends \Ilch\Controller\Base
     protected string $urlThumb;
 
     /**
-     * @var string $types
-     * @deprecated
-     */
-    protected $types;
-
-    /**
      * @var string $allowedExtensions
      */
     protected string $allowedExtensions;
@@ -60,45 +54,10 @@ class Upload extends \Ilch\Controller\Base
     protected string $path;
 
     /**
-     * @var string $path
-     * @deprecated
-     */
-    protected $mediaExtImage;
-
-    /**
      * @var string $size
      * @deprecated
      */
     protected $size;
-
-    /**
-     * __construct
-     *
-     * @deprecated
-     */
-    public function __construct()
-    {
-        $this->reset();
-    }
-
-    /**
-     * Resets
-     *
-     * @deprecated
-     */
-    public function reset(): Upload
-    {
-        $this->file = null;
-        $this->ending = null;
-        $this->name = null;
-        $this->fileName = null;
-        $this->url = null;
-        $this->urlThumb = null;
-        $this->path = null;
-        $this->mediaExtImage = null;
-        $this->size = null;
-        return $this;
-    }
 
     /**
      * @param string $file
@@ -204,28 +163,6 @@ class Upload extends \Ilch\Controller\Base
     public function getUrl(): string
     {
         return $this->url;
-    }
-
-    /**
-     * @param string $types
-     *
-     * @return Upload types
-     * @deprecated
-     */
-    public function setTypes(string $types): Upload
-    {
-        $this->types = $types;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     * @deprecated 
-     */
-    public function getTypes(): string
-    {
-        return $this->types;
     }
 
     /**
@@ -452,7 +389,7 @@ class Upload extends \Ilch\Controller\Base
         $thumb->Thumbsize = 300;
         $thumb->Createthumb($this->getUrl(), 'file');
 
-        $this->setUrlThumb($this->path.'thumb_'.basename($this->getUrl()));
+        $this->setUrlThumb($this->path . 'thumb_' . basename($this->getUrl()));
         return true;
     }
 }
