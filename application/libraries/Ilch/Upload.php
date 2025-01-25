@@ -54,12 +54,6 @@ class Upload
     protected string $path;
 
     /**
-     * @var string $size
-     * @deprecated
-     */
-    protected $size;
-
-    /**
      * @param string $file
      *
      * @return Upload File
@@ -80,19 +74,6 @@ class Upload
     }
 
     /**
-     * @param string $ending
-     *
-     * @return Upload Ending
-     * @deprecated
-     */
-    public function setEnding(string $ending): Upload
-    {
-        $this->ending = $ending;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getEnding(): string
@@ -100,19 +81,6 @@ class Upload
         $this->ending = strtolower(pathinfo($this->file, PATHINFO_EXTENSION));
 
         return $this->ending;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return Upload Name
-     * @deprecated
-     */
-    public function setName(string $name): Upload
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     /**

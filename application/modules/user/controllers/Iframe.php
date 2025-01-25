@@ -6,6 +6,7 @@
 
 namespace Modules\User\Controllers;
 
+use Ilch\Upload;
 use Modules\User\Mappers\Media as MediaMapper;
 use Ilch\Date as IlchDate;
 use Modules\User\Models\Media as MediaModel;
@@ -56,7 +57,7 @@ class Iframe extends \Ilch\Controller\Frontend
                 mkdir(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId());
             }
 
-            $upload = new \Ilch\Upload();
+            $upload = new Upload();
             $upload->setFile($_FILES['upl']['name']);
             $upload->setPath($this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId().'/');
             // Early return if extension is not allowed. Should normally already be done client-side.
