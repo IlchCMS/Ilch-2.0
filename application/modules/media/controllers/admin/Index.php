@@ -145,7 +145,7 @@ class Index extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('media'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('mediaUpload'), ['action' => 'upload']);
 
-        $allowedExtensions = $this->getConfig()->get('media_ext_img') . ' ' . $this->getConfig()->get('media_ext_file') . ' ' . $this->getConfig()->get('media_ext_video');
+        $allowedExtensions = $this->getConfig()->get('media_ext_img');
         $this->getView()->set('allowedExtensions', $allowedExtensions);
 
         if (!is_writable(ROOT_PATH . '/' . $this->getConfig()->get('media_uploadpath'))) {
@@ -163,7 +163,6 @@ class Index extends \Ilch\Controller\Admin
 
             $upload = new \Ilch\Upload();
             $upload->setFile($_FILES['upl']['name']);
-            $upload->setTypes($this->getConfig()->get('media_ext_img'));
             $upload->setPath($this->getConfig()->get('media_uploadpath'));
             // Early return if extension is not allowed. Should normally already be done client-side.
             $upload->setAllowedExtensions($allowedExtensions);

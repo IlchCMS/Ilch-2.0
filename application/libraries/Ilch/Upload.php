@@ -229,6 +229,8 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
+     * Set allowed file exensions.
+     *
      * @param string $allowedExtensions Space separated list of file extensions.
      *
      * @return Upload allowedExtensions

@@ -6,6 +6,7 @@
 
 namespace Modules\User\Controllers;
 
+use Ilch\Upload;
 use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Models\User as UserModel;
@@ -33,6 +34,7 @@ use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Models\ProfileFieldContent as ProfileFieldContentModel;
 use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
 use Modules\User\Mappers\AuthProvider;
+use Thumb\Thumbnail;
 
 class Panel extends BaseController
 {
@@ -197,10 +199,10 @@ class Panel extends BaseController
 
                         if (move_uploaded_file($file_tmpe, $avatar)) {
                             if ($width > $avatarWidth || $height > $avatarHeight) {
-                                $upload = new \Ilch\Upload();
+                                $upload = new Upload();
 
                                 if ($upload->enoughFreeMemory($avatar)) {
-                                    $thumb = new \Thumb\Thumbnail();
+                                    $thumb = new Thumbnail();
                                     $thumb -> Thumbsize = ($avatarWidth <= $avatarHeight) ? $avatarWidth : $avatarHeight;
                                     $thumb -> Square = true;
                                     $thumb -> Thumblocation = $path;

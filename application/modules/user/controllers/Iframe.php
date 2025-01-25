@@ -44,7 +44,7 @@ class Iframe extends \Ilch\Controller\Frontend
         $ilchdate = new IlchDate();
         $mediaMapper = new MediaMapper();
 
-        $allowedExtensions = $this->getConfig()->get('media_ext_img');
+        $allowedExtensions = $this->getConfig()->get('usergallery_filetypes');
         $this->getView()->set('allowedExtensions', $allowedExtensions);
 
         if (!is_writable(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath'))) {
@@ -58,7 +58,6 @@ class Iframe extends \Ilch\Controller\Frontend
 
             $upload = new \Ilch\Upload();
             $upload->setFile($_FILES['upl']['name']);
-            $upload->setTypes($this->getConfig()->get('usergallery_filetypes'));
             $upload->setPath($this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId().'/');
             // Early return if extension is not allowed. Should normally already be done client-side.
             $upload->setAllowedExtensions($allowedExtensions);
