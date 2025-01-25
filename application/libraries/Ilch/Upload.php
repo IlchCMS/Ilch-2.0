@@ -19,16 +19,6 @@ class Upload
     protected string $file;
 
     /**
-     * @var string $extension
-     */
-    protected string $extension;
-
-    /**
-     * @var string $name
-     */
-    protected string $name;
-
-    /**
      * @var string $url
      */
     protected string $url;
@@ -78,9 +68,7 @@ class Upload
      */
     public function getExtension(): string
     {
-        $this->extension = strtolower(pathinfo($this->file, PATHINFO_EXTENSION));
-
-        return $this->extension;
+        return strtolower(pathinfo($this->file, PATHINFO_EXTENSION));
     }
 
     /**
@@ -90,9 +78,7 @@ class Upload
      */
     public function getName(): string
     {
-        $this->name = pathinfo($this->file, PATHINFO_FILENAME);
-
-        return $this->name;
+        return pathinfo($this->file, PATHINFO_FILENAME);
     }
 
     /**
