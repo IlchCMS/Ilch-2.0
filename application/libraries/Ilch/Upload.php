@@ -11,7 +11,7 @@ use Thumb\Thumbnail;
 /**
  * Ilch/Upload class.
  */
-class Upload extends \Ilch\Controller\Base
+class Upload
 {
     /**
      * @var string $file
