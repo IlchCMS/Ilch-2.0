@@ -16,32 +16,32 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @var string $file
      */
-    protected $file;
+    protected string $file;
 
     /**
      * @var string $ending
      */
-    protected $ending;
+    protected string $ending;
 
     /**
      * @var string $name
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @var string $fileName
      */
-    protected $fileName;
+    protected string $fileName;
 
     /**
      * @var string $url
      */
-    protected $url;
+    protected string $url;
 
     /**
      * @var string $urlThumb
      */
-    protected $urlThumb;
+    protected string $urlThumb;
 
     /**
      * @var string $types
@@ -52,12 +52,12 @@ class Upload extends \Ilch\Controller\Base
     /**
      * @var string $allowedExtensions
      */
-    protected $allowedExtensions;
+    protected string $allowedExtensions;
 
     /**
      * @var string $path
      */
-    protected $path;
+    protected string $path;
 
     /**
      * @var string $path
@@ -229,7 +229,7 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
-     * @param string $allowedExtensions
+     * @param string $allowedExtensions Space separated list of file extensions.
      *
      * @return Upload allowedExtensions
      */
@@ -241,6 +241,8 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
+     * Get a space separated list of file extensions.
+     *
      * @return string
      */
     public function getAllowedExtensions(): string
@@ -367,11 +369,11 @@ class Upload extends \Ilch\Controller\Base
     public function upload()
     {
         $hash = uniqid() . $this->getName();
-        $this->setUrl($this->path.$hash.'.'.$this->getEnding());
-        $this->setUrlThumb($this->path.'thumb_'.$hash.'.'.$this->getEnding());
+        $this->setUrl($this->path . $hash . '.' . $this->getEnding());
+        $this->setUrlThumb($this->path . 'thumb_' . $hash . '.' . $this->getEnding());
 
-        if (move_uploaded_file($_FILES['upl']['tmp_name'], $this->path . $hash . '.' . $this->getEnding()) && in_array($this->getEnding(), explode(' ', $this->types))) {
-            if (!$this->enoughFreeMemory($this->path.$hash.'.'.$this->getEnding())) {
+        if (move_uploaded_file($_FILES['upl']['tmp_name'], $this->path . $hash . '.' . $this->getEnding()) && $this->isAllowedExtension()) {
+            if (!$this->enoughFreeMemory($this->path . $hash . '.' . $this->getEnding())) {
                 return;
             }
             $this->createThumbnail();
@@ -418,12 +420,12 @@ class Upload extends \Ilch\Controller\Base
     public function save()
     {
         $hash = uniqid() . $this->getName();
-        $this->setUrl($this->path.$hash.'.'.$this->getEnding());
-        $this->setUrlThumb($this->path.'thumb_'.$hash.'.'.$this->getEnding());
+        $this->setUrl($this->path . $hash . '.' . $this->getEnding());
+        $this->setUrlThumb($this->path . 'thumb_' . $hash . '.' . $this->getEnding());
 
-        rename($this->path.$this->getName().'.'.$this->getEnding(), $this->path.$hash.'.'.$this->getEnding());
-        if (in_array($this->getEnding(), explode(' ', $this->types))) {
-            if (!$this->enoughFreeMemory($this->path.$hash.'.'.$this->getEnding())) {
+        rename($this->path . $this->getName() . '.' . $this->getEnding(), $this->path . $hash . '.' . $this->getEnding());
+        if ($this->isAllowedExtension()) {
+            if (!$this->enoughFreeMemory($this->path . $hash . '.' . $this->getEnding())) {
                 return;
             }
             $this->createThumbnail();
