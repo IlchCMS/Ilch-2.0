@@ -71,7 +71,7 @@ class Iframe extends \Ilch\Controller\Frontend
             $model->setUserId($this->getUser()->getId());
             $model->setUrl($upload->getUrl());
             $model->setUrlThumb($upload->getUrlThumb());
-            $model->setEnding($upload->getEnding());
+            $model->setEnding($upload->getExtension());
             $model->setName($upload->getName());
             $model->setDatetime($ilchdate->toDb());
             $mediaMapper->save($model);

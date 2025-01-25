@@ -27,15 +27,14 @@ class UploadTest extends TestCase
     public function testProperties()
     {
         $this->upload->setFile('file.png')
-            ->setFileName('file')
             ->setUrl('https://test/file.png')
             ->setUrlThumb('https://test/file_thumb.png')
             ->setAllowedExtensions('png jpg jpeg')
             ->setPath('file');
 
         self::assertSame('file.png', $this->upload->getFile());
-        self::assertSame('png', $this->upload->getEnding());
-        self::assertSame('file', $this->upload->getFileName());
+        self::assertSame('file', $this->upload->getName());
+        self::assertSame('png', $this->upload->getExtension());
         self::assertSame('https://test/file.png', $this->upload->getUrl());
         self::assertSame('https://test/file_thumb.png', $this->upload->getUrlThumb());
         self::assertSame('png jpg jpeg', $this->upload->getAllowedExtensions());

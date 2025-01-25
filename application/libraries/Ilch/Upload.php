@@ -19,19 +19,14 @@ class Upload
     protected string $file;
 
     /**
-     * @var string $ending
+     * @var string $extension
      */
-    protected string $ending;
+    protected string $extension;
 
     /**
      * @var string $name
      */
     protected string $name;
-
-    /**
-     * @var string $fileName
-     */
-    protected string $fileName;
 
     /**
      * @var string $url
@@ -54,9 +49,10 @@ class Upload
     protected string $path;
 
     /**
-     * @param string $file
+     * Set file. This is a complete path with filename and extension.
      *
-     * @return Upload File
+     * @param string $file
+     * @return Upload
      */
     public function setFile(string $file): Upload
     {
@@ -66,6 +62,8 @@ class Upload
     }
 
     /**
+     * Get file. This is a complete path with filename and extension.
+     *
      * @return string
      */
     public function getFile(): string
@@ -74,16 +72,20 @@ class Upload
     }
 
     /**
+     * Get the extension of file. This gets determined from the value of file.
+     *
      * @return string
      */
-    public function getEnding(): string
+    public function getExtension(): string
     {
-        $this->ending = strtolower(pathinfo($this->file, PATHINFO_EXTENSION));
+        $this->extension = strtolower(pathinfo($this->file, PATHINFO_EXTENSION));
 
-        return $this->ending;
+        return $this->extension;
     }
 
     /**
+     * Get the name of the file. This gets determined from the value of file.
+     *
      * @return string
      */
     public function getName(): string
@@ -94,29 +96,10 @@ class Upload
     }
 
     /**
-     * @param string $fileName
+     * Set the url.
      *
-     * @return Upload fileName
-     */
-    public function setFileName(string $fileName): Upload
-    {
-        $this->fileName = $fileName;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFileName(): string
-    {
-        return $this->fileName;
-    }
-
-    /**
      * @param string $url
-     *
-     * @return Upload url
+     * @return Upload
      */
     public function setUrl(string $url): Upload
     {
@@ -126,6 +109,8 @@ class Upload
     }
 
     /**
+     * Get the url.
+     *
      * @return string
      */
     public function getUrl(): string
@@ -136,9 +121,8 @@ class Upload
     /**
      * Set allowed file exensions.
      *
-     * @param string $allowedExtensions Space separated list of file extensions.
-     *
-     * @return Upload allowedExtensions
+     * @param string $allowedExtensions The file extensions are separated by spaces.
+     * @return Upload
      */
     public function setAllowedExtensions(string $allowedExtensions): Upload
     {
@@ -148,7 +132,7 @@ class Upload
     }
 
     /**
-     * Get a space separated list of file extensions.
+     * Get allowed file extensions. The file extensions are separated by spaces.
      *
      * @return string
      */
@@ -158,9 +142,10 @@ class Upload
     }
 
     /**
-     * @param string $path
+     * Set the destination path of the file.
      *
-     * @return Upload path
+     * @param string $path
+     * @return Upload
      */
     public function setPath(string $path): Upload
     {
@@ -170,6 +155,8 @@ class Upload
     }
 
     /**
+     * Get the destination path of the file.
+     *
      * @return string
      */
     public function getPath(): string
@@ -178,9 +165,10 @@ class Upload
     }
 
     /**
-     * @param string $urlThumb
+     * Set the thumbnail url of the file.
      *
-     * @return Upload urlThumb
+     * @param string $urlThumb
+     * @return Upload
      */
     public function setUrlThumb(string $urlThumb): Upload
     {
@@ -190,6 +178,8 @@ class Upload
     }
 
     /**
+     * Get the thumbnail url of the file.
+     *
      * @return string
      */
     public function getUrlThumb(): string
@@ -239,7 +229,7 @@ class Upload
         // The tweak-factor might be overly careful and could therefore be lowered if necessary.
         // After testing with >10k pictures the tweak factor got lowered to 1.9 (90 %) from 2.5 (150 %)
         // With a tweak factor of 1.9 there were still no out of memory errors.
-        return ($imageInfo[0] * $imageInfo[1] * ($imageInfo['bits'] / 8) * $imageInfo['channels'] * 1.9);
+        return (int)($imageInfo[0] * $imageInfo[1] * ($imageInfo['bits'] / 8) * $imageInfo['channels'] * 1.9);
     }
 
     /**
@@ -275,12 +265,13 @@ class Upload
      */
     public function upload()
     {
+        $extension = $this->getExtension();
         $hash = uniqid() . $this->getName();
-        $this->setUrl($this->path . $hash . '.' . $this->getEnding());
-        $this->setUrlThumb($this->path . 'thumb_' . $hash . '.' . $this->getEnding());
+        $this->setUrl($this->path . $hash . '.' . $extension);
+        $this->setUrlThumb($this->path . 'thumb_' . $hash . '.' . $extension);
 
-        if (move_uploaded_file($_FILES['upl']['tmp_name'], $this->path . $hash . '.' . $this->getEnding()) && $this->isAllowedExtension()) {
-            if (!$this->enoughFreeMemory($this->path . $hash . '.' . $this->getEnding())) {
+        if (move_uploaded_file($_FILES['upl']['tmp_name'], $this->path . $hash . '.' . $extension) && $this->isAllowedExtension()) {
+            if (!$this->enoughFreeMemory($this->path . $hash . '.' . $extension)) {
                 return;
             }
             $this->createThumbnail();
@@ -294,7 +285,7 @@ class Upload
      */
     public function isAllowedExtension(): bool
     {
-        return in_array($this->getEnding(), explode(' ', $this->getAllowedExtensions()));
+        return in_array($this->getExtension(), explode(' ', $this->getAllowedExtensions()));
     }
 
     /**
@@ -326,13 +317,15 @@ class Upload
      */
     public function save()
     {
-        $hash = uniqid() . $this->getName();
-        $this->setUrl($this->path . $hash . '.' . $this->getEnding());
-        $this->setUrlThumb($this->path . 'thumb_' . $hash . '.' . $this->getEnding());
+        $name = $this->getName();
+        $extension = $this->getExtension();
+        $hash = uniqid() . $name;
+        $this->setUrl($this->path . $hash . '.' . $extension);
+        $this->setUrlThumb($this->path . 'thumb_' . $hash . '.' . $extension);
 
-        rename($this->path . $this->getName() . '.' . $this->getEnding(), $this->path . $hash . '.' . $this->getEnding());
+        rename($this->path . $name . '.' . $extension, $this->path . $hash . '.' . $extension);
         if ($this->isAllowedExtension()) {
-            if (!$this->enoughFreeMemory($this->path . $hash . '.' . $this->getEnding())) {
+            if (!$this->enoughFreeMemory($this->path . $hash . '.' . $extension)) {
                 return;
             }
             $this->createThumbnail();
