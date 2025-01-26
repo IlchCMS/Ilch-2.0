@@ -2,20 +2,23 @@
 <?php
 
 /**
- * Script to remove not needed files from the vendor and static/js directory, when creating a build (just --no-dev dependencies)
+ * Script to remove not needed files from the vendor and static/js directory, when creating a build (just --no-dev dependencies).
+ *
+ * Configuration of files/directories to remove or keep.
+ * Directories must be given with a trailing /
+ * Only the provided directories in vendor will be processes, all other directories in vendor will be kept untouched.
+ *
+ * Select files that should be kept, all other files/dirs in dir-in-vendor will be removed
+ * 'dir-in-vendor' => [
+ *    'keep' => ['file', 'dir/']
+ * ],
+ *
+ * Select files that should be removed, all other files/dirs in dir-in-vendor2 will not be removed
+ * 'dir-in-vendor2' => [
+ *    'remove' => ['file', 'dir/']
+ * ]
  */
 
-/* Configuration of files/directories to remove or keep,
- // select files that should be kept, all other files/dirs in dir-in-vendor will be removed
- 'dir-in-vendor' => [
-    'keep' => ['file', 'dir/'] //directories must be given with a trailing /
- ],
- //select files that should be removed, all other files/dirs in dir-in-vendor2 will not be removed
- 'dir-in-vendor2' => [
-    'remove' => ['file', 'dir/'] //directories must be given with a trailing /
- ]
- //only the provided directories in vendor will be processes, all other directories in vendor will be kept untouched
-*/
 $directories = [
     'fortawesome' => [
         'keep' => [
@@ -136,7 +139,7 @@ $directoriesStaticJs = [
  * @param array|null $filter if given only directories in the array are scanned
  * @return array
  */
-function getFilesRecursive(string $dirname, array $filter = null): array
+function getFilesRecursive(string $dirname, ?array $filter = null): array
 {
     $files = [];
     foreach (scandir($dirname) as $item) {
