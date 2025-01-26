@@ -1179,6 +1179,35 @@ class Config extends \Ilch\Config\Install
                 // Update vendor folder
                 replaceVendorDirectory();
                 break;
+            case "2.2.7":
+                // Add the admin module to the modules table if missing and restore the boxes of the admin module (langswitch and layoutswitch) in that case.
+                // The entry for the admin module was missing if it wasn't a fresh 2.2.7 install. Therefore on the update to 2.2.7 the boxes
+                // for the admin module looked orphaned and got deleted.
+                $adminEntryExists = $this->db()->select('key')
+                    ->from('modules')
+                    ->where(['key' => 'admin'])
+                    ->execute()
+                    ->fetchCell();
+
+                if (!$adminEntryExists) {
+                    // Add the admin module to the modules table
+                    $this->db()->insert('modules', ['key' => 'admin', 'icon_small' => ''])
+                        ->execute();
+
+                    // Restore the boxes of the admin module (langswitch and layoutswitch).
+                    $this->db()->insert('modules_boxes_content')
+                        ->columns(['key', 'module', 'locale', 'name'])
+                        ->values(
+                            [
+                                ['langswitch', 'admin', 'de_DE', 'Sprachauswahl'],
+                                ['langswitch', 'admin', 'en_EN', 'Language selection'],
+                                ['layoutswitch', 'admin', 'de_DE', 'Layoutauswahl'],
+                                ['layoutswitch', 'admin', 'en_EN', 'Layout selection']
+                            ]
+                        )
+                        ->execute();
+                }
+                break;
         }
 
         return 'Update function executed.';
