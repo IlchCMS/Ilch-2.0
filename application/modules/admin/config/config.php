@@ -1180,7 +1180,7 @@ class Config extends \Ilch\Config\Install
                 replaceVendorDirectory();
                 break;
             case "2.2.7":
-                // Add the admin module to the modules table if missing and restore the boxes of the admin module (login and layout) in that case.
+                // Add the admin module to the modules table if missing and restore the boxes of the admin module (langswitch and layoutswitch) in that case.
                 // The entry for the admin module was missing if it wasn't a fresh 2.2.7 install. Therefore on the update to 2.2.7 the boxes
                 // for the admin module looked orphaned and got deleted.
                 $adminEntryExists = $this->db()->select('key')
@@ -1194,7 +1194,7 @@ class Config extends \Ilch\Config\Install
                     $this->db()->insert('modules', ['key' => 'admin', 'icon_small' => ''])
                         ->execute();
 
-                    // Restore the boxes of the admin module (login and layout).
+                    // Restore the boxes of the admin module (langswitch and layoutswitch).
                     $this->db()->insert('modules_boxes_content')
                         ->columns(['key', 'module', 'locale', 'name'])
                         ->values(
