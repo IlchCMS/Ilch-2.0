@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,28 +14,28 @@ class Infos extends \Ilch\Model
      *
      * @var string
      */
-    protected $key;
+    protected $key = '';
 
     /**
      * The folder of the module.
      *
      * @var string
      */
-    protected $folder;
+    protected $folder = '';
 
     /**
      * The extension of the module.
      *
      * @var string
      */
-    protected $extension;
+    protected $extension = '';
 
     /**
      * Gets the key of the module.
      *
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -43,11 +44,11 @@ class Infos extends \Ilch\Model
      * Sets the key of the module.
      *
      * @param string $key
-     * @return this
+     * @return $this
      */
-    public function setKey($key)
+    public function setKey(string $key): Infos
     {
-        $this->key = (string)$key;
+        $this->key = $key;
 
         return $this;
     }
@@ -57,7 +58,7 @@ class Infos extends \Ilch\Model
      *
      * @return string
      */
-    public function getFolder()
+    public function getFolder(): string
     {
         return $this->folder;
     }
@@ -66,11 +67,11 @@ class Infos extends \Ilch\Model
      * Sets the folder of the module.
      *
      * @param string $folder
-     * @return this
+     * @return $this
      */
-    public function setFolder($folder)
+    public function setFolder(string $folder): Infos
     {
-        $this->folder = (string)$folder;
+        $this->folder = $folder;
 
         return $this;
     }
@@ -80,7 +81,7 @@ class Infos extends \Ilch\Model
      *
      * @return string
      */
-    public function getExtension()
+    public function getExtension(): string
     {
         return $this->extension;
     }
@@ -89,11 +90,11 @@ class Infos extends \Ilch\Model
      * Sets the extension of the module.
      *
      * @param string $extension
-     * @return this
+     * @return $this
      */
-    public function setExtension($extension)
+    public function setExtension(string $extension): Infos
     {
-        $this->extension = (string)$extension;
+        $this->extension = $extension;
 
         return $this;
     }

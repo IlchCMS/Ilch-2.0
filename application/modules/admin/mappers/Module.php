@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  */
@@ -10,6 +11,8 @@ use Modules\Admin\Mappers\Menu as MenuMapper;
 
 class Module extends \Ilch\Mapper
 {
+    protected $cache = [];
+
     /**
      * Gets all modules.
      *
@@ -21,25 +24,48 @@ class Module extends \Ilch\Mapper
             ->fields(['m.key', 'm.system', 'm.layout', 'm.hide_menu', 'm.version', 'm.link', 'm.icon_small', 'm.author'])
             ->from(['m' => 'modules'])
             ->join(['c' => 'modules_content'], 'm.key = c.key', 'LEFT', ['c.locale', 'c.description', 'c.name'])
+            ->join(['ex' => 'modules_php_extensions'], 'm.key = ex.key', 'LEFT', ['phpExtensions' => 'GROUP_CONCAT(ex.extension)'])
+            ->join(['lr' => 'modules_folderrights'], 'm.key = lr.key', 'LEFT', ['folderRight' => 'lr.folder'])
             ->where(['c.locale' => $this->db()->escape(\Ilch\Registry::get('translator')->getLocale())])
             ->order(['c.name' => 'ASC'])
+            ->group(['m.key'])
             ->execute()
             ->fetchRows();
 
         $modules = [];
         foreach ($modulesRows as $moduleRow) {
+            $moduleRow['phpExtensions'] = explode(',', $moduleRow['phpExtensions']);
+
             $moduleModel = new ModuleModel();
-            $moduleModel->setKey($moduleRow['key']);
-            $moduleModel->setSystemModule($moduleRow['system']);
-            $moduleModel->setLayoutModule($moduleRow['layout']);
-            $moduleModel->setHideMenu($moduleRow['hide_menu']);
-            $moduleModel->setVersion($moduleRow['version']);
-            $moduleModel->setLink($moduleRow['link']);
-            $moduleModel->setIconSmall($moduleRow['icon_small']);
-            $moduleModel->setAuthor($moduleRow['author']);
+            $moduleModel->setByArray($moduleRow);
+
             $moduleModel->addContent($moduleRow['locale'], ['name' => $moduleRow['name'], 'description' => $moduleRow['description']]);
 
             $modules[] = $moduleModel;
+            $this->cache[$moduleRow['key']] = $moduleModel;
+        }
+
+        return $modules;
+    }
+
+    /**
+     * Gets all modules.
+     *
+     * @return array
+     * @since 2.2.8
+     */
+    public function getLocalModules(): array
+    {
+        $modules = [];
+        foreach (glob(ROOT_PATH . '/application/modules/*') as $modulesPath) {
+            if (is_dir($modulesPath)) {
+                $key = basename($modulesPath);
+
+                $configClass = '\\Modules\\' . ucfirst($key) . '\\Config\\Config';
+                if (class_exists($configClass)) {
+                    $modules[] = $key;
+                }
+            }
         }
 
         return $modules;
@@ -52,19 +78,12 @@ class Module extends \Ilch\Mapper
      */
     public function getModulesNotInstalled(): array
     {
-        $modulesDir = [];
-        foreach (glob(APPLICATION_PATH . '/modules/*') as $modulePath) {
-            if (is_dir($modulePath)) {
-                $moduleModel = new ModuleModel();
-                $moduleModel->setKey(basename($modulePath));
-                $modulesDir[] = $moduleModel->getKey();
-            }
-        }
+        $modulesDir = $this->getLocalModules();
 
-        $modulesDB = [];
         $removeModule = ['admin', 'install', 'sample', 'error'];
         $modulesDir = array_diff($modulesDir, $removeModule);
 
+        $modulesDB = [];
         foreach ($this->getModules() as $module) {
             $moduleModel = new ModuleModel();
             $moduleModel->setKey($module->getKey());
@@ -84,31 +103,7 @@ class Module extends \Ilch\Mapper
             $configClass = '\\Modules\\' . ucfirst($module) . '\\Config\\Config';
             $config = new $configClass();
 
-            $moduleModel->setKey($config->config['key']);
-            $moduleModel->setIconSmall($config->config['icon_small']);
-            $moduleModel->setVersion($config->config['version']);
-
-            if (isset($config->config['link'])) {
-                $moduleModel->setLink($config->config['link']);
-            }
-            if (isset($config->config['author'])) {
-                $moduleModel->setAuthor($config->config['author']);
-            }
-            if (isset($config->config['languages'])) {
-                foreach ($config->config['languages'] as $key => $value) {
-                    $moduleModel->addContent($key, $value);
-                }
-            }
-            $moduleModel->setIlchCore($config->config['ilchCore']);
-            $moduleModel->setPHPVersion($config->config['phpVersion']);
-            if (isset($config->config['phpExtensions'])) {
-                $moduleModel->setPHPExtension($config->config['phpExtensions']);
-            }
-            if (isset($config->config['depends'])) {
-                $moduleModel->setDepends($config->config['depends']);
-            } else {
-                $moduleModel->setDepends([]);
-            }
+            $moduleModel->setByArray($config->config);
 
             $modules[] = $moduleModel;
         }
@@ -145,13 +140,24 @@ class Module extends \Ilch\Mapper
      * Get module with given key.
      *
      * @param string $key
+     * @param bool $force
      * @return ModuleModel|null
      */
-    public function getModuleByKey(string $key): ?ModuleModel
+    public function getModuleByKey(string $key, bool $force = false): ?ModuleModel
     {
-        $moduleRow = $this->db()->select('*')
-            ->from('modules')
-            ->where(['key' => $key])
+        if ($this->cache[$key] && !$force) {
+            return $this->cache[$key];
+        }
+
+        $moduleRow = $this->db()->select()
+            ->fields(['m.key', 'm.system', 'm.layout', 'm.hide_menu', 'm.version', 'm.link', 'm.icon_small', 'm.author'])
+            ->from(['m' => 'modules'])
+            ->join(['c' => 'modules_content'], 'm.key = c.key', 'LEFT', ['c.locale', 'c.description', 'c.name'])
+            ->join(['ex' => 'modules_php_extensions'], 'm.key = ex.key', 'LEFT', ['phpExtensions' => 'GROUP_CONCAT(ex.extension)'])
+            ->join(['lr' => 'modules_folderrights'], 'm.key = lr.key', 'LEFT', ['folderRight' => 'lr.folder'])
+            ->where(['key' => $key, 'c.locale' => $this->db()->escape(\Ilch\Registry::get('translator')->getLocale())])
+            ->order(['c.name' => 'ASC'])
+            ->group(['m.key'])
             ->execute()
             ->fetchAssoc();
 
@@ -159,15 +165,10 @@ class Module extends \Ilch\Mapper
             return null;
         }
 
+        $moduleRow['phpExtensions'] = explode(',', $moduleRow['phpExtensions']);
+
         $moduleModel = new ModuleModel();
-        $moduleModel->setKey($moduleRow['key']);
-        $moduleModel->setSystemModule($moduleRow['system']);
-        $moduleModel->setLayoutModule($moduleRow['layout']);
-        $moduleModel->setHideMenu($moduleRow['hide_menu']);
-        $moduleModel->setVersion($moduleRow['version']);
-        $moduleModel->setLink($moduleRow['link']);
-        $moduleModel->setIconSmall($moduleRow['icon_small']);
-        $moduleModel->setAuthor($moduleRow['author']);
+        $moduleModel->setByArray($moduleRow);
 
         return $moduleModel;
     }
@@ -236,32 +237,51 @@ class Module extends \Ilch\Mapper
      * Inserts a module model in the database.
      *
      * @param ModuleModel $module
-     * @return int
+     * @return bool
      */
-    public function save(ModuleModel $module): int
+    public function save(ModuleModel $module): bool
     {
-        $moduleId = $this->db()->insert('modules')
-            ->values([
-                'key' => $module->getKey(),
-                'system' => (int) $module->getSystemModule(),
-                'layout' => (int) $module->getLayoutModule(),
-                'hide_menu' => (int) $module->getHideMenu(),
-                'icon_small' => $module->getIconSmall(),
-                'version' => $module->getVersion(),
-                'link' => $module->getLink(),
-                'author' => $module->getAuthor()
-            ])
-            ->execute();
+        $fields = $module->getArray();
 
-        foreach ($module->getContent() as $key => $value) {
-            $this->db()->insert('modules_content')
-                ->values([
-                    'key' => $module->getKey(),
-                    'locale' => $key,
-                    'name' => $value['name'],
-                    'description' => $value['description']
-                ])
+        if ($this->getModuleByKey($module->getKey())) {
+            $moduleId = $module->getKey();
+            $this->db()->update('modules')
+                ->where(['key' => $module->getKey()])
+                ->values($fields)
                 ->execute();
+        } else {
+            $moduleId = $this->db()->insert('modules')
+                ->values($fields)
+                ->execute();
+        }
+
+        if ($moduleId) {
+            $infosMapper = new Infos();
+            $infosMapper->saveModulesFolderRight($module->getKey(), $module->getFolderRight())
+                ->saveModulesPHPExtensions($module->getKey(), $module->getPHPExtension());
+
+            foreach ($module->getContent() as $locale => $value) {
+                if ($this->getModulesByKey($module->getKey(), $locale)) {
+                    $this->db()->update('modules_content')
+                        ->where(['key' => $module->getKey(), 'locale' => $locale])
+                        ->values([
+                            'key' => $module->getKey(),
+                            'locale' => $locale,
+                            'name' => $value['name'],
+                            'description' => $value['description']
+                        ])
+                        ->execute();
+                } else {
+                    $this->db()->insert('modules_content')
+                        ->values([
+                            'key' => $module->getKey(),
+                            'locale' => $locale,
+                            'name' => $value['name'],
+                            'description' => $value['description']
+                        ])
+                        ->execute();
+                }
+            }
         }
 
         return $moduleId;
@@ -280,5 +300,50 @@ class Module extends \Ilch\Mapper
             ->where(['key' => $key])
             ->execute();
         // Rows in modules_boxes_content, modules_content, modules_folderrights and modules_php_extensions are being deleted due to FKCs.
+    }
+
+    /**
+     * @param string $key
+     * @param array $dependencies
+     * @return array
+     * @since 2.2.8
+     */
+    public function checkOthersDependencies(string $key, array $dependencies): array
+    {
+        $dependencyCheck = [];
+        if (count($dependencies[$key])) {
+            $dependencyCheck = $dependencies[$key];
+            unset($dependencyCheck['version']);
+        }
+        return $dependencyCheck;
+    }
+
+    /**
+     * @param string $modulKey
+     * @param array|null $dependencies
+     * @return bool
+     * @since 2.2.8
+     */
+    public function checkOthersDependenciesVersion(string $modulKey, array $dependencies): bool
+    {
+        $dependencyCheck = true;
+        foreach ($dependencies[$modulKey] as $key => $version) {
+            if ($key != 'version') {
+                $modulVersion = '';
+                if ($dependencies[$key]) {
+                    $modul = $this->getModuleByKey($key);
+                    if ($modul) {
+                        $modulVersion = $dependencies[$key]['version'];
+                    }
+                }
+
+                $parsed = explode(',', $version);
+                if (!empty($modulVersion) && !version_compare($modulVersion, $parsed[1], $parsed[0])) {
+                    $dependencyCheck = false;
+                }
+            }
+        }
+
+        return $dependencyCheck;
     }
 }

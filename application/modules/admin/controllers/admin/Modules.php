@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -46,17 +47,16 @@ class Modules extends \Ilch\Controller\Admin
         ];
 
         if ($this->getRequest()->getActionName() === 'notinstalled') {
-            $items[1]['active'] = true; 
+            $items[1]['active'] = true;
         } elseif ($this->getRequest()->getActionName() === 'updates') {
             $items[2]['active'] = true;
         } elseif ($this->getRequest()->getActionName() === 'search' || $this->getRequest()->getActionName() === 'show') {
             $items[3]['active'] = true;
         } else {
-            $items[0]['active'] = true; 
+            $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuModules',
             $items
         );
@@ -178,7 +178,7 @@ class Modules extends \Ilch\Controller\Admin
                     return;
                 }
 
-                foreach ($groups as $key => $group) {
+                foreach ($groups as $group) {
                     if ($group->getId() !== 1) {
                         $groupMapper->saveAccessData($group->getId(), $this->getRequest()->getParam('key'), 1, 'module');
                     }
@@ -299,6 +299,7 @@ class Modules extends \Ilch\Controller\Admin
 
     public function localUpdateAction()
     {
+        $key = '';
         try {
             $moduleMapper = new ModuleMapper();
 
@@ -358,33 +359,8 @@ class Modules extends \Ilch\Controller\Admin
 
             if (!empty($config->config)) {
                 $moduleModel = new ModuleModel();
-                $moduleModel->setKey($config->config['key']);
+                $moduleModel->setByArray($config->config);
 
-                if (isset($config->config['author'])) {
-                    $moduleModel->setAuthor($config->config['author']);
-                }
-                if (isset($config->config['languages'])) {
-                    foreach ($config->config['languages'] as $key => $value) {
-                        $moduleModel->addContent($key, $value);
-                    }
-                }
-                if (isset($config->config['system_module'])) {
-                    $moduleModel->setSystemModule(true);
-                }
-                if (isset($config->config['isLayout'])) {
-                    $moduleModel->setLayoutModule(true);
-                }
-                if (isset($config->config['hide_menu'])) {
-                    $moduleModel->setHideMenu(true);
-                }
-                if (isset($config->config['link'])) {
-                    $moduleModel->setLink($config->config['link']);
-                }
-                if (isset($config->config['version'])) {
-                    $moduleModel->setVersion($config->config['version']);
-                }
-
-                $moduleModel->setIconSmall($config->config['icon_small']);
                 $moduleMapper->save($moduleModel);
 
                 if (isset($config->config['boxes'])) {
@@ -409,10 +385,10 @@ class Modules extends \Ilch\Controller\Admin
         if ($this->getRequest()->getPost('gotokey')) {
             $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => '#Module_' . $this->getRequest()->getParam('key')]);
         } elseif ($this->getRequest()->getParam('from') === 'notinstalled') {
-                $this->redirect(['action' => $this->getRequest()->getParam('from')]);
-            } else {
-                $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => 'false']);
-            }
+            $this->redirect(['action' => $this->getRequest()->getParam('from')]);
+        } else {
+            $this->redirect(['action' => $this->getRequest()->getParam('from'), 'anchor' => 'false']);
+        }
     }
 
     public function uninstallAction()
