@@ -66,7 +66,7 @@ class Infos extends \Ilch\Mapper
     public function saveModulesFolderRight(string $key, string $folder): Infos
     {
         $modul = $this->getModulesFolderRightByKey($key);
-        if (!empty($modul->getFolder())) {
+        if ($modul && !empty($modul->getFolder())) {
             $this->db()->delete('modules_folderrights')->where(['key' => $key])->execute();
         }
 

@@ -145,19 +145,13 @@ class Module extends \Ilch\Mapper
      */
     public function getModuleByKey(string $key, bool $force = false): ?ModuleModel
     {
-        if ($this->cache[$key] && !$force) {
+        if (isset($this->cache[$key]) && !$force) {
             return $this->cache[$key];
         }
 
-        $moduleRow = $this->db()->select()
-            ->fields(['m.key', 'm.system', 'm.layout', 'm.hide_menu', 'm.version', 'm.link', 'm.icon_small', 'm.author'])
-            ->from(['m' => 'modules'])
-            ->join(['c' => 'modules_content'], 'm.key = c.key', 'LEFT', ['c.locale', 'c.description', 'c.name'])
-            ->join(['ex' => 'modules_php_extensions'], 'm.key = ex.key', 'LEFT', ['phpExtensions' => 'GROUP_CONCAT(ex.extension)'])
-            ->join(['lr' => 'modules_folderrights'], 'm.key = lr.key', 'LEFT', ['folderRight' => 'lr.folder'])
-            ->where(['key' => $key, 'c.locale' => $this->db()->escape(\Ilch\Registry::get('translator')->getLocale())])
-            ->order(['c.name' => 'ASC'])
-            ->group(['m.key'])
+        $moduleRow = $this->db()->select('*')
+            ->from('modules')
+            ->where(['key' => $key])
             ->execute()
             ->fetchAssoc();
 
@@ -165,10 +159,10 @@ class Module extends \Ilch\Mapper
             return null;
         }
 
-        $moduleRow['phpExtensions'] = explode(',', $moduleRow['phpExtensions']);
-
         $moduleModel = new ModuleModel();
         $moduleModel->setByArray($moduleRow);
+
+        $this->cache[$key] = $moduleModel;
 
         return $moduleModel;
     }
@@ -244,18 +238,17 @@ class Module extends \Ilch\Mapper
         $fields = $module->getArray();
 
         if ($this->getModuleByKey($module->getKey())) {
-            $moduleId = $module->getKey();
             $this->db()->update('modules')
                 ->where(['key' => $module->getKey()])
                 ->values($fields)
                 ->execute();
         } else {
-            $moduleId = $this->db()->insert('modules')
+            $this->db()->insert('modules')
                 ->values($fields)
                 ->execute();
         }
 
-        if ($moduleId) {
+        if ($this->getModuleByKey($module->getKey())) {
             $infosMapper = new Infos();
             $infosMapper->saveModulesFolderRight($module->getKey(), $module->getFolderRight())
                 ->saveModulesPHPExtensions($module->getKey(), $module->getPHPExtension());
@@ -282,9 +275,10 @@ class Module extends \Ilch\Mapper
                         ->execute();
                 }
             }
+            return true;
         }
 
-        return $moduleId;
+        return false;
     }
 
     /**

@@ -71,9 +71,9 @@ class Module extends \Ilch\Model
     protected $official = false;
 
     /**
-     * @var bool
+     * @var string
      */
-    protected $ilchCore = false;
+    protected $ilchCore = '';
 
     /**
      * @var string
@@ -163,8 +163,8 @@ class Module extends \Ilch\Model
         if (isset($entries['phpVersion'])) {
             $this->setPHPVersion($entries['phpVersion']);
         }
-        if (isset($entries['folderRights'])) {
-            $this->setFolderRight($entries['folderRights']);
+        if (isset($entries['folderRight'])) {
+            $this->setFolderRight($entries['folderRight']);
         }
 
         return $this;
@@ -430,9 +430,9 @@ class Module extends \Ilch\Model
     /**
      * Gets the ilch core version.
      *
-     * @return bool
+     * @return string
      */
-    public function getIlchCore(): bool
+    public function getIlchCore(): string
     {
         return $this->ilchCore;
     }
@@ -440,10 +440,10 @@ class Module extends \Ilch\Model
     /**
      * Sets the ilch core version.
      *
-     * @param bool $ilchCore
+     * @param string $ilchCore
      * @return $this
      */
-    public function setIlchCore(bool $ilchCore): Module
+    public function setIlchCore(string $ilchCore): Module
     {
         $this->ilchCore = $ilchCore;
         return $this;
@@ -695,9 +695,9 @@ class Module extends \Ilch\Model
     {
         return [
             'key' => $this->getKey(),
-            'system' => $this->getSystemModule(),
-            'layout' => $this->getLayoutModule(),
-            'hide_menu' => $this->getHideMenu(),
+            'system' => (int)$this->getSystemModule(),
+            'layout' => (int)$this->getLayoutModule(),
+            'hide_menu' => (int)$this->getHideMenu(),
             'icon_small' => $this->getIconSmall(),
             'version' => $this->getVersion(),
             'link' => $this->getLink(),
