@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpMultipleClassDeclarationsInspection */
+<?php
 
 /**
  * @package ilch_phpunit
@@ -8,7 +8,6 @@ namespace Ilch;
 
 use ArgumentCountError;
 use PHPUnit\Ilch\TestCase;
-use ValueError;
 
 /**
  * Tests the translator object.
@@ -73,23 +72,6 @@ class TranslatorTest extends TestCase
     }
 
     /**
-     * Test if we see the expected ValueError exception when calling
-     * trans (sprintf) without the needed arguments when the translation
-     * contains specifiers.
-     *
-     * @return void
-     */
-    public function testMissingArguments()
-    {
-        if (version_compare(PHP_VERSION, '8.0', '<')) {
-            $this->markTestSkipped('Requires PHP >= 8.0');
-        }
-
-        $this->expectException(ValueError::class);
-        $this->translator->trans('welcomeUser');
-    }
-
-    /**
      * Test if we see the expected ArgumentCountError exception when calling
      * trans (sprintf) with too few arguments when the translation
      * contains specifiers.
@@ -103,8 +85,12 @@ class TranslatorTest extends TestCase
         }
 
         $this->expectException(ArgumentCountError::class);
-        $this->expectExceptionMessage('sprintf(): Too few arguments');
+        $this->expectExceptionMessage('3 arguments are required, 2 given');
         $this->translator->trans('welcomeUserExtended', 'Hans');
+
+        $this->expectException(ArgumentCountError::class);
+        $this->expectExceptionMessage('2 arguments are required, 1 given');
+        $this->translator->trans('welcomeUser');
     }
 
     /**
