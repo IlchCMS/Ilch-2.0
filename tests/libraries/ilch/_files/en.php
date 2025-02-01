@@ -14,6 +14,6 @@ return [
     'sprintf_2percent' => '<span style="font-size:120%%;">%s</span>',
     'sprintf_3percent' => 'Hallo %s <span style="font-size:120%%;">!</span>',
     'sprintf_percentAlreadyEscaped' => 'Welcome %s, you gained %d %%.',
-    'test' => 'With %s the argument is treated and presented as a string.',
-    'test2' => 'With %%s the argument is treated and presented as a string.',
+    'percentNotEscaped' => 'With %s the argument is treated and presented as a string.',
+    'percentEscaped' => 'With %%s the argument is treated and presented as a string.',
 ];

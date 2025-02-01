@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpMultipleClassDeclarationsInspection */
 
 /**
  * @package ilch_phpunit
@@ -6,7 +6,9 @@
 
 namespace Ilch;
 
+use ArgumentCountError;
 use PHPUnit\Ilch\TestCase;
+use ValueError;
 
 /**
  * Tests the translator object.
@@ -71,16 +73,38 @@ class TranslatorTest extends TestCase
     }
 
     /**
-     * Test if a string with a literal %s is correctly translated.
+     * Test if we see the expected ValueError exception when calling
+     * trans (sprintf) without the needed arguments when the translation
+     * contains specifiers.
      *
      * @return void
      */
-    public function testTransWithSpecifier()
+    public function testMissingArguments()
     {
-        self::assertSame(
-            'With %s the argument is treated and presented as a string.',
-            $this->translator->trans('test2')
-        );
+        if (version_compare(PHP_VERSION, '8.0', '<')) {
+            $this->markTestSkipped('Requires PHP >= 8.0');
+        }
+
+        $this->expectException(ValueError::class);
+        $this->translator->trans('welcomeUser');
+    }
+
+    /**
+     * Test if we see the expected ArgumentCountError exception when calling
+     * trans (sprintf) with too few arguments when the translation
+     * contains specifiers.
+     *
+     * @return void
+     */
+    public function testTooFewArguments()
+    {
+        if (version_compare(PHP_VERSION, '8.0', '<')) {
+            $this->markTestSkipped('Requires PHP >= 8.0');
+        }
+
+        $this->expectException(ArgumentCountError::class);
+        $this->expectExceptionMessage('sprintf(): Too few arguments');
+        $this->translator->trans('welcomeUserExtended', 'Hans');
     }
 
     /**
@@ -114,11 +138,8 @@ class TranslatorTest extends TestCase
             ['sprintf_3percent', ['Admin'], 'Hallo Admin <span style="font-size:120%;">!</span>'],
             ['sprintf_3percent', ['Admin', 'Hans'], 'Hallo Admin <span style="font-size:120%;">!</span>'],
             ['sprintf_percentAlreadyEscaped', ['Hans', 5], 'Welcome Hans, you gained 5 %.'],
-            ['test', [], 'With  the argument is treated and presented as a string.'],
-            ['test2', [], 'With %s the argument is treated and presented as a string.'],
-            ['test', ['%s'], 'With %s the argument is treated and presented as a string.'],
-            ['test2', ['%s'], 'With %s the argument is treated and presented as a string.'],
-            ['welcomeUser', [], 'Welcome, '], // No placeholder
+            ['percentEscaped', [], 'With %s the argument is treated and presented as a string.'],
+            ['percentNotEscaped', ['%s'], 'With %s the argument is treated and presented as a string.'],
             ['welcomeUser', ['Hans', 'Extra'], 'Welcome, Hans'], // Additional placeholder
             ['welcomeUser', ['<b>Hans</b>'], 'Welcome, <b>Hans</b>'], // Placeholder with HTML.
         ];

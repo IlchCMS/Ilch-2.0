@@ -14,6 +14,6 @@ return [
     'sprintf_2percent' => '<span style="font-size:120%%;">%s</span>',
     'sprintf_3percent' => 'Bonjour %s <span style="font-size:120%%;">!</span>',
     'sprintf_percentAlreadyEscaped' => 'Bienvenue %s, tu as gagné %d %%.',
-    'test' => 'Avec %s, le paramètre est visualisé et affiché sous forme de chaîne de caractères.',
-    'test2' => 'Avec %%s, le paramètre est visualisé et affiché sous forme de chaîne de caractères.',
+    'percentNotEscaped' => 'Avec %s, le paramètre est visualisé et affiché sous forme de chaîne de caractères.',
+    'percentEscaped' => 'Avec %%s, le paramètre est visualisé et affiché sous forme de chaîne de caractères.',
 ];

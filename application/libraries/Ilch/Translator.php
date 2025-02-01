@@ -25,7 +25,7 @@ class Translator
      *
      * @var array
      */
-    private $translations = [];
+    private array $translations = [];
 
     /**
      * Holds the translations for each loaded translation file of a layout.
@@ -35,21 +35,21 @@ class Translator
      *
      * @var array
      */
-    private $translationsLayout = [];
+    private array $translationsLayout = [];
 
     /**
      * Holds the loaded translation directories
      *
      * @var array
      */
-    private $translationDirectories = [];
+    private array $translationDirectories = [];
 
     /**
      * The locale in which the texts should be translated.
      *
      * @var string
      */
-    private $locale = 'de_DE';
+    private string $locale = 'de_DE';
 
     /**
      * Sets the locale to use for the request.
@@ -119,12 +119,6 @@ class Translator
 
         $arguments = func_get_args();
         $arguments[0] = $translatedText;
-
-        // Count actual placeholders and fill missing arguments
-        $placeholdersCount = preg_match_all('/%(?:[bcdeEfFgGosuxX]|\d+\$[bcdeEfFgGosuxX])/i', $translatedText);
-        while ($placeholdersCount > count($arguments) - 1) {
-            $arguments[] = '';
-        }
 
         return sprintf(...$arguments);
     }
