@@ -6,6 +6,7 @@
 
 namespace Ilch;
 
+use ArgumentCountError;
 use PHPUnit\Ilch\TestCase;
 
 /**
@@ -15,6 +16,21 @@ use PHPUnit\Ilch\TestCase;
  */
 class TranslatorTest extends TestCase
 {
+    protected Translator $translator;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->translator = new Translator('en_EN');
+        $this->translator->load(__DIR__ . '/_files');
+    }
+
+    protected function tearDown(): void
+    {
+        unset($this->translator);
+        parent::tearDown();
+    }
+
     /**
      * Tests if the translator can handle a directory which is filled with
      * translations and can find a translation file.
@@ -31,10 +47,7 @@ class TranslatorTest extends TestCase
     public function testLoadTranslationFileNotExists()
     {
         $translator = new Translator('xx_xx');
-        self::assertFalse(
-            $translator->load(__DIR__ . '/_files'),
-            'The translator didn\'t return false when the translation file doesn\'t exist.'
-        );
+        self::assertFalse($translator->load(__DIR__ . '/_files'));
     }
 
     /**
@@ -43,10 +56,7 @@ class TranslatorTest extends TestCase
     public function testLoadTranslationDirNotExists()
     {
         $translator = new Translator('de_DE');
-        self::assertFalse(
-            $translator->load('someImaginaryFolder'),
-            'The translator didn\'t return false when the given translation directory doesn\'t exist.'
-        );
+        self::assertFalse($translator->load('someImaginaryFolder'));
     }
 
     /**
@@ -55,62 +65,70 @@ class TranslatorTest extends TestCase
      */
     public function testTrans()
     {
-        $translator = new Translator('en_EN');
-        $translator->load(__DIR__ . '/_files');
-
-        self::assertEquals(
+        self::assertSame(
             'The user gets what he wants!',
-            $translator->trans('userGetsWhatHeWants'),
-            'The text wasnt translated using the translation file.'
+            $this->translator->trans('userGetsWhatHeWants')
         );
     }
 
     /**
-     * Tests if the Translator returns an entry which wasnt translated yet in
+     * Test if we see the expected ArgumentCountError exception when calling
+     * trans (sprintf) with too few arguments when the translation
+     * contains specifiers.
+     *
+     * @return void
+     */
+    public function testTooFewArguments()
+    {
+        if (version_compare(PHP_VERSION, '8.0', '<')) {
+            $this->markTestSkipped('Requires PHP >= 8.0');
+        }
+
+        $this->expectException(ArgumentCountError::class);
+        $this->expectExceptionMessage('3 arguments are required, 2 given');
+        $this->translator->trans('welcomeUserExtended', 'Hans');
+
+        $this->expectException(ArgumentCountError::class);
+        $this->expectExceptionMessage('2 arguments are required, 1 given');
+        $this->translator->trans('welcomeUser');
+    }
+
+    /**
+     * Tests if the Translator returns an entry which wasn't translated yet in
      * the translation file.
      */
     public function testTransNotTranslated()
     {
-        $translator = new Translator('en_EN');
-        $translator->load(__DIR__ . '/_files');
-
-        self::assertEquals(
+        self::assertSame(
             'notTranslatedText',
-            $translator->trans('notTranslatedText'),
-            'The text wasnt simply returned.'
+            $this->translator->trans('notTranslatedText')
         );
     }
 
     /**
-     * Tests if the Translator replaces the placeholder withing the translated text
+     * Tests if the Translator replaces the placeholders withing the translated texts
      * with one replacement.
+     * @dataProvider placeholderDataProvider
      */
-    public function testTransPlaceholder()
+    public function testTransPlaceholders(string $key, array $placeholders, string $expected)
     {
-        $translator = new Translator('en_EN');
-        $translator->load(__DIR__ . '/_files');
-
-        self::assertEquals(
-            'Welcome, Hans',
-            $translator->trans('welcomeUser', 'Hans'),
-            'The text wasnt returned with the placeholder.'
-        );
+        self::assertSame($expected, $this->translator->trans($key, ...$placeholders));
     }
 
-    /**
-     * Tests if the Translator replaces the placeholder withing the translated text
-     * with multiple replacements.
-     */
-    public function testTransMultiplePlaceholder()
+    public function placeholderDataProvider(): array
     {
-        $translator = new Translator('en_EN');
-        $translator->load(__DIR__ . '/_files');
-
-        self::assertEquals(
-            'Welcome, Hans, ur last login was yesterday',
-            $translator->trans('welcomeUserExtended', 'Hans', 'yesterday'),
-            'The text wasnt returned with the placeholder.'
-        );
+        return [
+            ['welcomeUser', ['Hans'], 'Welcome, Hans'],
+            ['welcomeUserExtended', ['Hans', 'yesterday'], 'Welcome, Hans, your last login was yesterday'],
+            ['sprintf_2percent', ['Hans'], '<span style="font-size:120%;">Hans</span>'],
+            ['sprintf_3percent', ['Admin'], 'Hallo Admin <span style="font-size:120%;">!</span>'],
+            ['sprintf_3percent', ['Admin', 'Hans'], 'Hallo Admin <span style="font-size:120%;">!</span>'],
+            ['sprintf_percentAlreadyEscaped', ['Hans', 5], 'Welcome Hans, you gained 5 %.'],
+            ['percentEscaped', [], 'With %s the argument is treated and presented as a string.'],
+            ['percentNotEscaped', ['%s'], 'With %s the argument is treated and presented as a string.'],
+            ['welcomeUser', ['Hans', 'Extra'], 'Welcome, Hans'], // Additional placeholder
+            ['welcomeUser', ['<b>Hans</b>'], 'Welcome, <b>Hans</b>'], // Placeholder with HTML.
+        ];
     }
 
     /**
@@ -119,7 +137,7 @@ class TranslatorTest extends TestCase
     public function testRequestLocaleDefinition()
     {
         $translator = new Translator('en_EN');
-        self::assertEquals('en_EN', $translator->getLocale());
+        self::assertSame('en_EN', $translator->getLocale());
     }
 
     /**
@@ -129,7 +147,7 @@ class TranslatorTest extends TestCase
     public function testRequestLocaleDefinitionDefault()
     {
         $translator = new Translator();
-        self::assertEquals('de_DE', $translator->getLocale());
+        self::assertSame('de_DE', $translator->getLocale());
     }
 
     /**
@@ -137,15 +155,8 @@ class TranslatorTest extends TestCase
      */
     public function testGetTranslationsArray()
     {
-        $translator = new Translator('en_EN');
-        $translator->load(__DIR__ . '/_files');
-
         $expectedTranslations = require __DIR__ . '/_files/en.php';
-        self::assertEquals(
-            $expectedTranslations,
-            $translator->getTranslations(),
-            'The translations array was returned wrongly.'
-        );
+        self::assertSame($expectedTranslations, $this->translator->getTranslations());
     }
 
     /**
@@ -154,6 +165,18 @@ class TranslatorTest extends TestCase
     public function testShortenLocale()
     {
         $translator = new Translator();
-        self::assertEquals('en', $translator->shortenLocale('en_EN'), 'The locale wasn\'t trimmed correctly.');
+        self::assertSame('en', $translator->shortenLocale('en_EN'));
+    }
+
+    public function testMultipleLocales()
+    {
+        $deTranslator = new Translator('de_DE');
+        $deTranslator->load(__DIR__ . '/_files');
+        $frTranslator = new Translator('fr_FR');
+        $frTranslator->load(__DIR__ . '/_files');
+
+        self::assertSame('Der Benutzer bekommt, was er will!', $deTranslator->trans('userGetsWhatHeWants'));
+        self::assertSame('The user gets what he wants!', $this->translator->trans('userGetsWhatHeWants'));
+        self::assertSame('L\'utilisateur obtient ce qu\'il veut !', $frTranslator->trans('userGetsWhatHeWants'));
     }
 }
