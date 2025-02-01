@@ -69,13 +69,12 @@ foreach ($modules as $module): ?>
         }
         ?>
         <div id="module" class="tab-content">
-
             <?php if (!empty($module->thumbs)): ?>
-                <div id="module-search-carousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner" role="listbox">
+                <div id="module-search-carousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
                         <?php $itemI = 0; ?>
                         <?php foreach ($module->thumbs as $thumb): ?>
-                            <div class="item <?=$itemI == 0 ? 'active' : '' ?>">
+                            <div class="carousel-item <?=$itemI == 0 ? 'active' : '' ?>">
                                 <img src="<?=$this->get('updateserver') . 'modules/images/' . $module->id . '/' . $thumb->img ?>" alt="<?=$this->escape($module->name) ?>">
                                 <div class="carousel-caption">
                                     <?php if ($thumb->desc != ''): ?>
@@ -90,14 +89,14 @@ foreach ($modules as $module): ?>
                     </div>
 
                     <?php if(count($module->thumbs) > 1): ?>
-                        <a class="left carousel-control" href="#module-search-carousel" role="button" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#module-search-carousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
-                        </a>
-                        <a class="right carousel-control" href="#module-search-carousel" role="button" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#module-search-carousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
-                        </a>
+                        </button>
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
