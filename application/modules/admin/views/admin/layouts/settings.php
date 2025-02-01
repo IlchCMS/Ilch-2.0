@@ -101,9 +101,9 @@
         <div class="col-xl-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="pageTitleModuledataOrder-yes" name="pageTitleModuledataOrder" value="1" <?=($this->originalInput('pageTitleModuledataOrder', $this->get('pageTitleModuledataOrder'))) ? 'checked="checked"' : '' ?> />
-                <label for="pageTitleModuledataOrder-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('DESC') ?></label>
+                <label for="pageTitleModuledataOrder-yes" class="flipswitch-label flipswitch-label-on"><i class="fa-solid fa-arrow-left-long" title="<?=$this->getTrans('pageTitleModuledataOrderRightToLeft') ?>"></i></label>
                 <input type="radio" class="flipswitch-input" id="pageTitleModuledataOrder-no" name="pageTitleModuledataOrder" value="0"  <?=(!$this->originalInput('pageTitleModuledataOrder', $this->get('pageTitleModuledataOrder'))) ? 'checked="checked"' : '' ?> />
-                <label for="pageTitleModuledataOrder-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('ASC') ?></label>
+                <label for="pageTitleModuledataOrder-no" class="flipswitch-label flipswitch-label-off"><i class="fa-solid fa-arrow-right-long" title="<?=$this->getTrans('pageTitleModuledataOrderLeftToRight') ?>"></i></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
