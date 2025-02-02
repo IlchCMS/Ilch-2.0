@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.24.3',
+        'version' => '1.24.4',
         'icon_small' => 'fa-solid fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -29,14 +29,15 @@ class Config extends \Ilch\Config\Install
             ],
         ],
         'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'phpVersion' => '7.3',
+        'folderRights' => [
+            'static/upload/image'
+        ]
     ];
 
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
-
-        $this->db()->query('INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES ("teams", "static/upload/image");');
 
         $databaseConfig = new IlchDatabase($this->db());
         $databaseConfig->set('teams_uploadpath', 'application/modules/teams/static/upload/')
@@ -56,8 +57,7 @@ class Config extends \Ilch\Config\Install
             ->delete('teams_width')
             ->delete('teams_filetypes');
 
-        $this->db()->queryMulti("DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'teams';
-            DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'teams'");
+        $this->db()->query("DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'teams'");
     }
 
     /**
