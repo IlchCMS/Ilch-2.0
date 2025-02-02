@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'events',
-        'version' => '1.23.4',
+        'version' => '1.23.5',
         'icon_small' => 'fa-solid fa-ticket',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -39,7 +39,10 @@ class Config extends \Ilch\Config\Install
             ]
         ],
         'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'phpVersion' => '7.3',
+        'folderRights' => [
+            'static/upload/image'
+        ]
     ];
 
     public function install()
@@ -86,7 +89,6 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->delete('event_google_maps_zoom');
 
         $this->db()->queryMulti("
-            DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'events';
             DELETE FROM `[prefix]_comments` WHERE `key` LIKE 'events/%';");
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
@@ -135,9 +137,7 @@ class Config extends \Ilch\Config\Install
             INSERT INTO `[prefix]_events_currencies` (`id`, `name`) VALUES (3, "GBP (£)");
             INSERT INTO `[prefix]_events_currencies` (`id`, `name`) VALUES (4, "AUD ($)");
             INSERT INTO `[prefix]_events_currencies` (`id`, `name`) VALUES (5, "NZD ($)");
-            INSERT INTO `[prefix]_events_currencies` (`id`, `name`) VALUES (6, "CHF");
-
-            INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES ("events", "static/upload/image");';
+            INSERT INTO `[prefix]_events_currencies` (`id`, `name`) VALUES (6, "CHF");';
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
             $installSql .= 'INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("events/events/index/");';

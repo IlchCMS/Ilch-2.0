@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -498,6 +499,8 @@ class Transfer
                 return false;
             }
 
+            $availableConfigs = [];
+
             for ($i = 0; $i < $zip->numFiles; $i++) {
                 $thisFileName = $zip->getNameIndex($i);
                 $thisFileDir = \dirname($thisFileName);
@@ -526,10 +529,14 @@ class Transfer
                         $config = new $configClass();
 
                         if (method_exists($config, 'getUpdate')) {
-                            $content[] = $config->getUpdate($installedVersion);
+                            $availableConfigs[] = $config;
                         }
                     }
                 }
+            }
+
+            foreach ($availableConfigs as $config) {
+                $content[] = $config->getUpdate($installedVersion);
             }
 
             return true;
@@ -550,13 +557,15 @@ class Transfer
     public function install(): bool
     {
         $zip = new \ZipArchive();
+        $content = [];
 
         try {
             if ($zip->open($this->zipFile) !== true) {
                 return false;
             }
             $zip->extractTo(ROOT_PATH);
-            $content = [];
+
+            $availableConfigs = [];
             for ($i = 0; $i < $zip->numFiles; $i++) {
                 $thisFileName = $zip->getNameIndex($i);
                 $thisFileDir = dirname($thisFileName);
@@ -568,7 +577,7 @@ class Transfer
                     if (class_exists($configClass)) {
                         $config = new $configClass();
                         if (method_exists($config, 'install')) {
-                            $content[] = $config->install();
+                            $availableConfigs[] = $config;
 
                             // Skip module related stuff if this is a layout install.
                             if (strpos($thisFileName, 'application/modules/') === false) {
@@ -618,9 +627,14 @@ class Transfer
                     }
                 }
             }
-            $this->setContent($content);
+
+            foreach ($availableConfigs as $config) {
+                $content[] = $config->install();
+            }
+
             return true;
         } finally {
+            $this->setContent($content);
             $zip->close();
             unlink($this->zipFile);
             unlink($this->zipSigFile);
