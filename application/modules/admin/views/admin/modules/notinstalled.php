@@ -61,9 +61,9 @@
 
                         foreach ($extensionCheck as $key => $value) {
                             if ($value == true) {
-                                $phpExtension[] = '<font color="#3c763d">' . $key . '</font>';
+                                $phpExtension[] = '<span class="text-success">' . $key . '</span>';
                             } else {
-                                $phpExtension[] = '<font color="#a94442">' . $key . '</font>';
+                                $phpExtension[] = '<span class="text-danger">' . $key . '</span>';
                             }
                         }
 
@@ -71,15 +71,15 @@
                     }
 
                     if (version_compare(PHP_VERSION, $module->getPHPVersion(), '>=')) {
-                        $phpVersion = '<font color="#3c763d">' . $module->getPHPVersion() . '</font>';
+                        $phpVersion = '<span class="text-success">' . $module->getPHPVersion() . '</span>';
                     } else {
-                        $phpVersion = '<font color="#a94442">' . $module->getPHPVersion() . '</font>';
+                        $phpVersion = '<span class="text-danger">' . $module->getPHPVersion() . '</span>';
                     }
 
                     if (version_compare($this->get('coreVersion'), $module->getIlchCore(), '>=')) {
-                        $ilchCore = '<font color="#3c763d">' . $module->getIlchCore() . '</font>';
+                        $ilchCore = '<span class="text-success">' . $module->getIlchCore() . '</span>';
                     } else {
-                        $ilchCore = '<font color="#a94442">' . $module->getIlchCore() . '</font>';
+                        $ilchCore = '<span class="text-danger">' . $module->getIlchCore() . '</span>';
                     }
                     ?>
                     <tr id="Module_<?=$module->getKey() ?>">
