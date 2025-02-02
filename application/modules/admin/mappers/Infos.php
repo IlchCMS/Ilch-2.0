@@ -42,6 +42,8 @@ class Infos extends \Ilch\Mapper
 
 
     /**
+     * Get modules folder right by given key.
+     *
      * @param string $key
      * @return InfosModel|null
      * @since 2.2.8
@@ -58,6 +60,9 @@ class Infos extends \Ilch\Mapper
     }
 
     /**
+     * save modules folder right by given key.
+     * This can be entered with an entry in the module configuration file with 'folderRight'.
+     *
      * @param string $key
      * @param string $folder
      * @return $this
@@ -112,6 +117,8 @@ class Infos extends \Ilch\Mapper
 
 
     /**
+     * Get modules php extensions by given key.
+     *
      * @param string $key
      * @return InfosModel[]
      * @since 2.2.8
@@ -122,6 +129,9 @@ class Infos extends \Ilch\Mapper
     }
 
     /**
+     * save modules php extensions by given key.
+     * This can be entered with an entry in the module configuration file with 'phpExtensions'.
+     *
      * @param string $key
      * @param array $extensions
      * @return $this
