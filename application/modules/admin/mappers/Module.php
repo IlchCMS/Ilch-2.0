@@ -141,7 +141,7 @@ class Module extends \Ilch\Mapper
      * Get module with given key.
      *
      * @param string $key
-     * @param bool $force
+     * @param bool $force True: Skip cache and get new result.
      * @return ModuleModel|null
      */
     public function getModuleByKey(string $key, bool $force = false): ?ModuleModel
@@ -295,50 +295,5 @@ class Module extends \Ilch\Mapper
             ->where(['key' => $key])
             ->execute();
         // Rows in modules_boxes_content, modules_content, modules_folderrights and modules_php_extensions are being deleted due to FKCs.
-    }
-
-    /**
-     * @param string $key
-     * @param array $dependencies
-     * @return array
-     * @since 2.2.8
-     */
-    public function checkOthersDependencies(string $key, array $dependencies): array
-    {
-        $dependencyCheck = [];
-        if (count($dependencies[$key])) {
-            $dependencyCheck = $dependencies[$key];
-            unset($dependencyCheck['version']);
-        }
-        return $dependencyCheck;
-    }
-
-    /**
-     * @param string $modulKey
-     * @param array|null $dependencies
-     * @return bool
-     * @since 2.2.8
-     */
-    public function checkOthersDependenciesVersion(string $modulKey, array $dependencies): bool
-    {
-        $dependencyCheck = true;
-        foreach ($dependencies[$modulKey] as $key => $version) {
-            if ($key != 'version') {
-                $modulVersion = '';
-                if ($dependencies[$key]) {
-                    $modul = $this->getModuleByKey($key);
-                    if ($modul) {
-                        $modulVersion = $dependencies[$key]['version'];
-                    }
-                }
-
-                $parsed = explode(',', $version);
-                if (!empty($modulVersion) && !version_compare($modulVersion, $parsed[1], $parsed[0])) {
-                    $dependencyCheck = false;
-                }
-            }
-        }
-
-        return $dependencyCheck;
     }
 }

@@ -19,87 +19,87 @@ class Module extends \Ilch\Model
     /**
      * Key of the module.
      *
-     * @var string
+     * @var string|null
      */
-    protected $key = '';
+    protected ?string $key = null;
 
     /**
      * Small icon of the module.
      *
      * @var string
      */
-    protected $iconSmall = '';
+    protected string $iconSmall = '';
 
     /**
      * @var bool
      */
-    protected $systemModule = false;
+    protected bool $systemModule = false;
 
     /**
      * @var bool
      */
-    protected $layoutModule = false;
+    protected bool $layoutModule = false;
 
     /**
      * @var bool
      */
-    protected $hideMenu = false;
+    protected bool $hideMenu = false;
 
     /**
      * @var string
      */
-    protected $author = '';
+    protected string $author = '';
 
     /**
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * @var string
      */
-    protected $version = '';
+    protected string $version = '';
 
     /**
      * @var string
      */
-    protected $link = '';
+    protected string $link = '';
 
     /**
      * @var bool
      */
-    protected $official = false;
+    protected bool $official = false;
 
     /**
      * @var string
      */
-    protected $ilchCore = '';
+    protected string $ilchCore = '';
 
     /**
      * @var string
      */
-    protected $phpVersion = '';
+    protected string $phpVersion = '';
 
     /**
      * @var array
      */
-    protected $phpExtension = [];
+    protected array $phpExtension = [];
 
     /**
      * @var array
      */
-    protected $depends = [];
+    protected array $depends = [];
 
     /**
      * @var array
      */
-    protected $dependsCheck = [];
+    protected array $dependsCheck = [];
 
     /**
      * @var array
      * @since 2.2.8
      */
-    protected $folderRights = [];
+    protected array $folderRights = [];
 
     /**
      * @param array $entries

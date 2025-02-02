@@ -12,23 +12,23 @@ class Infos extends \Ilch\Model
     /**
      * The key of the module.
      *
-     * @var string
+     * @var string|null
      */
-    protected $key = '';
+    protected ?string $key = null;
 
     /**
      * The folder of the module.
      *
      * @var string
      */
-    protected $folder = '';
+    protected string $folder = '';
 
     /**
      * The extension of the module.
      *
      * @var string
      */
-    protected $extension = '';
+    protected string $extension = '';
 
     /**
      * Gets the key of the module.
