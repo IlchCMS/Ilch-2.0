@@ -1207,6 +1207,19 @@ class Config extends \Ilch\Config\Install
                         )
                         ->execute();
                 }
+
+                // There was a bug, which caused installs of modules with folderrights to fail. Therefore there might be leftovers in the database.
+                $moduleMapper = new \Modules\Admin\Mappers\Module();
+                $modulesNotInstalled = $moduleMapper->getModulesNotInstalled();
+
+                foreach ($modulesNotInstalled as $module) {
+                    if ($module->getKey() === 'events' || $module->getKey() === 'teams') {
+                        // Found one of the known affected modules. Call it's uninstall function to remove possible leftovers.
+                        $configClass = '\\Modules\\' . ucfirst($module->getKey()) . '\\Config\\Config';
+                        $config = new $configClass();
+                        $config->uninstall();
+                    }
+                }
                 break;
         }
 
