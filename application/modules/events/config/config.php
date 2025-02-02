@@ -40,7 +40,9 @@ class Config extends \Ilch\Config\Install
         ],
         'ilchCore' => '2.2.0',
         'phpVersion' => '7.3',
-        'folderRight' => 'static/upload/image'
+        'folderRights' => [
+            'static/upload/image'
+        ]
     ];
 
     public function install()

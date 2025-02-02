@@ -25,7 +25,7 @@ class Module extends \Ilch\Mapper
             ->from(['m' => 'modules'])
             ->join(['c' => 'modules_content'], 'm.key = c.key', 'LEFT', ['c.locale', 'c.description', 'c.name'])
             ->join(['ex' => 'modules_php_extensions'], 'm.key = ex.key', 'LEFT', ['phpExtensions' => 'GROUP_CONCAT(ex.extension)'])
-            ->join(['lr' => 'modules_folderrights'], 'm.key = lr.key', 'LEFT', ['folderRight' => 'lr.folder'])
+            ->join(['lr' => 'modules_folderrights'], 'm.key = lr.key', 'LEFT', ['folderRights' => 'GROUP_CONCAT(lr.folder)'])
             ->where(['c.locale' => $this->db()->escape(\Ilch\Registry::get('translator')->getLocale())])
             ->order(['c.name' => 'ASC'])
             ->group(['m.key'])
@@ -35,6 +35,7 @@ class Module extends \Ilch\Mapper
         $modules = [];
         foreach ($modulesRows as $moduleRow) {
             $moduleRow['phpExtensions'] = explode(',', $moduleRow['phpExtensions']);
+            $moduleRow['folderRights'] = explode(',', $moduleRow['folderRights']);
 
             $moduleModel = new ModuleModel();
             $moduleModel->setByArray($moduleRow);
@@ -250,7 +251,7 @@ class Module extends \Ilch\Mapper
 
         if ($this->getModuleByKey($module->getKey())) {
             $infosMapper = new Infos();
-            $infosMapper->saveModulesFolderRight($module->getKey(), $module->getFolderRight())
+            $infosMapper->saveModulesFolderRights($module->getKey(), $module->getFolderRights())
                 ->saveModulesPHPExtensions($module->getKey(), $module->getPHPExtension());
 
             foreach ($module->getContent() as $locale => $value) {

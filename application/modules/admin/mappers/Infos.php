@@ -15,7 +15,7 @@ class Infos extends \Ilch\Mapper
      * Gets all modules folder rights.
      *
      * @param array $where
-     * @return InfosModel[]
+     * @return InfosModel[]|null
      */
     public function getModulesFolderRights(array $where = []): ?array
     {
@@ -45,18 +45,12 @@ class Infos extends \Ilch\Mapper
      * Get modules folder right by given key.
      *
      * @param string $key
-     * @return InfosModel|null
+     * @return InfosModel[]|null
      * @since 2.2.8
      */
     public function getModulesFolderRightByKey(string $key): ?InfosModel
     {
-        $entries = $this->getModulesFolderRights(['key' => $key]);
-
-        if (!empty($entries)) {
-            return reset($entries);
-        }
-
-        return null;
+        return $this->getModulesFolderRights(['key' => $key]);
     }
 
     /**
@@ -64,18 +58,18 @@ class Infos extends \Ilch\Mapper
      * This can be entered with an entry in the module configuration file with 'folderRight'.
      *
      * @param string $key
-     * @param string $folder
+     * @param array $folders
      * @return $this
      * @since 2.2.8
      */
-    public function saveModulesFolderRight(string $key, string $folder): Infos
+    public function saveModulesFolderRights(string $key, array $folders): Infos
     {
-        $modul = $this->getModulesFolderRightByKey($key);
-        if ($modul && !empty($modul->getFolder())) {
+        $moduls = $this->getModulesPHPExtensionsByKey($key);
+        if (!empty($moduls)) {
             $this->db()->delete('modules_folderrights')->where(['key' => $key])->execute();
         }
 
-        if (!empty($folder)) {
+        foreach ($folders as $folder) {
             $this->db()->insert('modules_folderrights')
                 ->values([
                     'key' => $key,

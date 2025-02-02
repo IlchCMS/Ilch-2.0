@@ -96,10 +96,10 @@ class Module extends \Ilch\Model
     protected $dependsCheck = [];
 
     /**
-     * @var string
+     * @var array
      * @since 2.2.8
      */
-    protected $folderRight = '';
+    protected $folderRights = [];
 
     /**
      * @param array $entries
@@ -163,8 +163,10 @@ class Module extends \Ilch\Model
         if (isset($entries['phpVersion'])) {
             $this->setPHPVersion($entries['phpVersion']);
         }
-        if (isset($entries['folderRight'])) {
-            $this->setFolderRight($entries['folderRight']);
+        if (isset($entries['folderRights'])) {
+            foreach ($entries['folderRights'] as $folder) {
+                $this->addFolderRight($folder);
+            }
         }
 
         return $this;
@@ -571,24 +573,38 @@ class Module extends \Ilch\Model
     /**
      * Gets the folderRight.
      *
-     * @return string
+     * @return array
      * @since 2.2.8
      */
-    public function getFolderRight(): string
+    public function getFolderRights(): array
     {
-        return $this->folderRight;
+        return $this->folderRights;
     }
 
     /**
      * Sets the folderRight.
      *
-     * @param string $folderRight
+     * @param array $folderRights
      * @return $this
      * @since 2.2.8
      */
-    public function setFolderRight(string $folderRight): Module
+    public function setFolderRights(array $folderRights): Module
     {
-        $this->folderRight = $folderRight;
+        $this->folderRights = $folderRights;
+        return $this;
+    }
+
+    /**
+     * Sets the php extension.
+     *
+     * @param string $folder
+     * @param bool $state
+     * @return $this
+     * @since 2.2.8
+     */
+    public function addFolderRight(string $folder, bool $state = false): Module
+    {
+        $this->folderRights[$folder] = $state;
         return $this;
     }
 
