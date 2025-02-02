@@ -54,13 +54,12 @@
 
                     $extensionCheck = [];
                     $phpExtension = [];
-                    if ($module->getPHPExtension() != '') {
-                        foreach ($module->getPHPExtension() as $extension) {
-                            $extensionCheck[] = extension_loaded($extension);
+                    if ($module->getPHPExtension()) {
+                        foreach ($module->getPHPExtension() as $extension => $state) {
+                            $extensionCheck[$extension] = extension_loaded($extension);
                         }
 
-                        $phpExtensions = array_combine($module->getPHPExtension(), $extensionCheck);
-                        foreach ($phpExtensions as $key => $value) {
+                        foreach ($extensionCheck as $key => $value) {
                             if ($value == true) {
                                 $phpExtension[] = '<font color="#3c763d">' . $key . '</font>';
                             } else {
@@ -98,7 +97,7 @@
                                 <?php endif; ?>
                             </small>
                             <br /><br />
-                            <?php if ($module->getPHPExtension() != '' && in_array(false, $extensionCheck)): ?>
+                            <?php if ($module->getPHPExtension() && in_array(false, $extensionCheck)): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('phpExtensionError') ?>">
                                     <i class="fa-regular fa-floppy-disk"></i>

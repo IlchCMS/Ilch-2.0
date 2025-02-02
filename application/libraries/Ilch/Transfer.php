@@ -586,31 +586,8 @@ class Transfer
 
                             $moduleMapper = new ModuleMapper();
                             $moduleModel = new ModuleModel();
-                            $moduleModel->setKey($config->config['key']);
+                            $moduleModel->setByArray($config->config);
 
-                            if (isset($config->config['author'])) {
-                                $moduleModel->setAuthor($config->config['author']);
-                            }
-
-                            if (isset($config->config['languages'])) {
-                                foreach ($config->config['languages'] as $key => $value) {
-                                    $moduleModel->addContent($key, $value);
-                                }
-                            }
-
-                            if (isset($config->config['system_module'])) {
-                                $moduleModel->setSystemModule(true);
-                            }
-
-                            if (isset($config->config['link'])) {
-                                $moduleModel->setLink($config->config['link']);
-                            }
-
-                            if (isset($config->config['version'])) {
-                                $moduleModel->setVersion($config->config['version']);
-                            }
-
-                            $moduleModel->setIconSmall($config->config['icon_small']);
                             $moduleMapper->save($moduleModel);
 
                             if (isset($config->config['boxes'])) {

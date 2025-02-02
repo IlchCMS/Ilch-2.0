@@ -48,7 +48,7 @@ class Infos extends \Ilch\Mapper
      * @return InfosModel[]|null
      * @since 2.2.8
      */
-    public function getModulesFolderRightByKey(string $key): ?InfosModel
+    public function getModulesFolderRightByKey(string $key): ?array
     {
         return $this->getModulesFolderRights(['key' => $key]);
     }
@@ -69,7 +69,7 @@ class Infos extends \Ilch\Mapper
             $this->db()->delete('modules_folderrights')->where(['key' => $key])->execute();
         }
 
-        foreach ($folders as $folder) {
+        foreach ($folders as $folder => $state) {
             $this->db()->insert('modules_folderrights')
                 ->values([
                     'key' => $key,
@@ -84,7 +84,7 @@ class Infos extends \Ilch\Mapper
      * Gets all modules php extensions.
      *
      * @param array $where
-     * @return InfosModel[]
+     * @return InfosModel[]|null
      */
     public function getModulesPHPExtensions(array $where = []): ?array
     {
@@ -114,10 +114,10 @@ class Infos extends \Ilch\Mapper
      * Get modules php extensions by given key.
      *
      * @param string $key
-     * @return InfosModel[]
+     * @return InfosModel[]|null
      * @since 2.2.8
      */
-    public function getModulesPHPExtensionsByKey(string $key): array
+    public function getModulesPHPExtensionsByKey(string $key): ?array
     {
         return $this->getModulesFolderRights(['key' => $key]);
     }
@@ -138,7 +138,7 @@ class Infos extends \Ilch\Mapper
             $this->db()->delete('modules_php_extensions')->where(['key' => $key])->execute();
         }
 
-        foreach ($extensions as $extension) {
+        foreach ($extensions as $extension => $state) {
             $this->db()->insert('modules_php_extensions')
                 ->values([
                     'key' => $key,
