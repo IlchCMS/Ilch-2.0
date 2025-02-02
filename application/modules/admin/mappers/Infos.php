@@ -42,7 +42,7 @@ class Infos extends \Ilch\Mapper
 
 
     /**
-     * Get modules folder right by given key.
+     * Get modules folder rights by given key.
      *
      * @param string $key
      * @return InfosModel[]|null
@@ -54,8 +54,8 @@ class Infos extends \Ilch\Mapper
     }
 
     /**
-     * save modules folder right by given key.
-     * This can be entered with an entry in the module configuration file with 'folderRight'.
+     * save modules folder rights by given key.
+     * This can be entered with an entry in the module configuration file with 'folderRights'.
      *
      * @param string $key
      * @param array $folders
