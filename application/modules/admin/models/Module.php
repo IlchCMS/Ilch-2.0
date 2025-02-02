@@ -175,9 +175,9 @@ class Module extends \Ilch\Model
     /**
      * Gets the key.
      *
-     * @return string
+     * @return string|null
      */
-    public function getKey(): string
+    public function getKey(): ?string
     {
         return $this->key;
     }

@@ -33,9 +33,9 @@ class Infos extends \Ilch\Model
     /**
      * Gets the key of the module.
      *
-     * @return string
+     * @return string|null
      */
-    public function getKey(): string
+    public function getKey(): ?string
     {
         return $this->key;
     }
