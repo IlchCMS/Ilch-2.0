@@ -34,8 +34,8 @@ class Module extends \Ilch\Mapper
 
         $modules = [];
         foreach ($modulesRows as $moduleRow) {
-            $moduleRow['phpExtensions'] = explode(',', $moduleRow['phpExtensions']);
-            $moduleRow['folderRights'] = explode(',', $moduleRow['folderRights']);
+            $moduleRow['phpExtensions'] = explode(',', $moduleRow['phpExtensions'] ?? '');
+            $moduleRow['folderRights'] = explode(',', $moduleRow['folderRights'] ?? '');
 
             $moduleModel = new ModuleModel();
             $moduleModel->setByArray($moduleRow);

@@ -28,9 +28,9 @@ foreach ($modules as $module): ?>
             $phpExtensions = array_combine($module->phpExtensions, $extensionCheck);
             foreach ($phpExtensions as $key => $value) {
                 if ($value == true) {
-                    $phpExtension[] = '<font color="#3c763d">' . $key . '</font>';
+                    $phpExtension[] = '<span class="text-success">' . $key . '</span>';
                 } else {
-                    $phpExtension[] = '<font color="#a94442">' . $key . '</font>';
+                    $phpExtension[] = '<span class="text-danger">' . $key . '</span>';
                 }
             }
 
@@ -47,9 +47,9 @@ foreach ($modules as $module): ?>
 
             foreach ($dependencyCheck as $key => $value) {
                 if ($value['result'] == true) {
-                    $dependency[] = '<font color="#3c763d">' . $key . ' ' . $value['condition'] . '</font>';
+                    $dependency[] = '<span class="text-success">' . $key . ' ' . $value['condition'] . '</span>';
                 } else {
-                    $dependency[] = '<font color="#a94442">' . $key . ' ' . $value['condition'] . '</font>';
+                    $dependency[] = '<span class="text-danger">' . $key . ' ' . $value['condition'] . '</span>';
                 }
             }
 
@@ -57,15 +57,15 @@ foreach ($modules as $module): ?>
         }
 
         if (version_compare(PHP_VERSION, $module->phpVersion, '>=')) {
-            $phpVersion = '<font color="#3c763d">' . $module->phpVersion . '</font>';
+            $phpVersion = '<span class="text-success">' . $module->phpVersion . '</span>';
         } else {
-            $phpVersion = '<font color="#a94442">' . $module->phpVersion . '</font>';
+            $phpVersion = '<span class="text-danger">' . $module->phpVersion . '</span>';
         }
 
         if (version_compare($coreVersion, $module->ilchCore, '>=')) {
-            $ilchCore = '<font color="#3c763d">' . $module->ilchCore . '</font>';
+            $ilchCore = '<span class="text-success">' . $module->ilchCore . '</span>';
         } else {
-            $ilchCore = '<font color="#a94442">' . $module->ilchCore . '</font>';
+            $ilchCore = '<span class="text-danger">' . $module->ilchCore . '</span>';
         }
         ?>
         <div id="module" class="tab-content">
