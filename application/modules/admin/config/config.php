@@ -1221,6 +1221,14 @@ class Config extends \Ilch\Config\Install
                     }
                 }
                 break;
+            case "2.2.8":
+                // Delete files of chosen and bootstrap tokenfield.
+                removeDir(ROOT_PATH . '/static/js/tokenfield');
+                removeDir(ROOT_PATH . '/static/css/chosen');
+
+                // Update vendor folder to remove harvesthq/chosen.
+                replaceVendorDirectory();
+                break;
         }
 
         return 'Update function executed.';
