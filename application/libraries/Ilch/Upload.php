@@ -125,7 +125,7 @@ class Upload extends \Ilch\Controller\Base
      * @param string $ending
      *
      * @return Upload Ending
-     * @deprecated
+     * @deprecated Just use setFile instead.
      */
     public function setEnding(string $ending): Upload
     {
@@ -160,7 +160,7 @@ class Upload extends \Ilch\Controller\Base
      * @param string $name
      *
      * @return Upload Name
-     * @deprecated
+     * @deprecated Just use setFile instead.
      */
     public function setName(string $name): Upload
     {
