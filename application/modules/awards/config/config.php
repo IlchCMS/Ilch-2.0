@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'awards',
-        'version' => '1.11.0',
+        'version' => '1.11.1',
         'icon_small' => 'fa-solid fa-trophy',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -36,8 +36,8 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_awards_recipients`;
-            DROP TABLE `[prefix]_awards`;');
+        $this->db()->queryMulti('DROP TABLE `[prefix]_awards_recipients` IF EXISTS;
+            DROP TABLE `[prefix]_awards` IF EXISTS;');
     }
 
     public function getInstallSql()
