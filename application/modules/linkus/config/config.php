@@ -41,8 +41,7 @@ class Config extends \Ilch\Config\Install
     {
         $this->db()->drop('linkus', true);
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'linkus_html';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'linkus_bbcode'"
-        );
+            DELETE FROM `[prefix]_config` WHERE `key` = 'linkus_bbcode'");
     }
 
     public function getInstallSql()
