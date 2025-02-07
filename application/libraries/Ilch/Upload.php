@@ -20,16 +20,19 @@ class Upload extends \Ilch\Controller\Base
 
     /**
      * @var string $ending
+     * @deprecated
      */
     protected $ending;
 
     /**
      * @var string $name
+     * @deprecated
      */
     protected $name;
 
     /**
      * @var string $fileName
+     * @deprecated
      */
     protected $fileName;
 
@@ -45,6 +48,7 @@ class Upload extends \Ilch\Controller\Base
 
     /**
      * @var string $types
+     * @deprecated
      */
     protected $types;
 
@@ -60,16 +64,19 @@ class Upload extends \Ilch\Controller\Base
 
     /**
      * @var string $path
+     * @deprecated
      */
     protected $mediaExtImage;
 
     /**
      * @var string $size
+     * @deprecated
      */
     protected $size;
 
     /**
      * __construct
+     * @deprecated
      */
     public function __construct()
     {
@@ -78,6 +85,7 @@ class Upload extends \Ilch\Controller\Base
 
     /**
      * Resets
+     * @deprecated
      */
     public function reset(): Upload
     {
@@ -117,6 +125,7 @@ class Upload extends \Ilch\Controller\Base
      * @param string $ending
      *
      * @return Upload Ending
+     * @deprecated Just use setFile instead.
      */
     public function setEnding(string $ending): Upload
     {
@@ -127,6 +136,7 @@ class Upload extends \Ilch\Controller\Base
 
     /**
      * @return string
+     * @deprecated Use getExtension instead.
      */
     public function getEnding(): string
     {
@@ -136,9 +146,21 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
+     * Get the extension of file. This gets determined from the value of file.
+     *
+     * @return string
+     * @since 2.2.9
+     */
+    public function getExtension(): string
+    {
+        return strtolower(pathinfo($this->file, PATHINFO_EXTENSION));
+    }
+
+    /**
      * @param string $name
      *
      * @return Upload Name
+     * @deprecated Just use setFile instead.
      */
     public function setName(string $name): Upload
     {
@@ -148,6 +170,8 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
+     * Get the name of the file. This gets determined from the value of file.
+     *
      * @return string
      */
     public function getName(): string
@@ -161,6 +185,7 @@ class Upload extends \Ilch\Controller\Base
      * @param string $fileName
      *
      * @return Upload fileName
+     * @deprecated
      */
     public function setFileName(string $fileName): Upload
     {
@@ -171,6 +196,7 @@ class Upload extends \Ilch\Controller\Base
 
     /**
      * @return string
+     * @deprecated
      */
     public function getFileName(): string
     {
@@ -201,6 +227,7 @@ class Upload extends \Ilch\Controller\Base
      * @param string $types
      *
      * @return Upload types
+     * @deprecated Use setAllowedExtensions instead.
      */
     public function setTypes(string $types): Upload
     {
@@ -211,6 +238,7 @@ class Upload extends \Ilch\Controller\Base
 
     /**
      * @return string
+     * @deprecated Use getAllowedExtensions instead.
      */
     public function getTypes(): string
     {
