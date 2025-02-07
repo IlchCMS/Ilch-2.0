@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -13,14 +14,16 @@ class Infos extends \Ilch\Mapper
     /**
      * Gets all modules folder rights.
      *
-     * @return InfosModel[]|array
+     * @param array $where
+     * @return InfosModel[]|null
      */
-    public function getModulesFolderRights()
+    public function getModulesFolderRights(array $where = []): ?array
     {
         $moduleArray = $this->db()->select('*')
-                ->from('modules_folderrights')
-                ->execute()
-                ->fetchRows();
+            ->from('modules_folderrights')
+            ->where($where)
+            ->execute()
+            ->fetchRows();
 
         if (empty($moduleArray)) {
             return null;
@@ -37,17 +40,59 @@ class Infos extends \Ilch\Mapper
         return $module;
     }
 
+
+    /**
+     * Get modules folder rights by given key.
+     *
+     * @param string $key
+     * @return InfosModel[]|null
+     * @since 2.2.8
+     */
+    public function getModulesFolderRightByKey(string $key): ?array
+    {
+        return $this->getModulesFolderRights(['key' => $key]);
+    }
+
+    /**
+     * save modules folder rights by given key.
+     * This can be entered with an entry in the module configuration file with 'folderRights'.
+     *
+     * @param string $key
+     * @param array $folders
+     * @return $this
+     * @since 2.2.8
+     */
+    public function saveModulesFolderRights(string $key, array $folders): Infos
+    {
+        $moduls = $this->getModulesPHPExtensionsByKey($key);
+        if (!empty($moduls)) {
+            $this->db()->delete('modules_folderrights')->where(['key' => $key])->execute();
+        }
+
+        foreach ($folders as $folder => $state) {
+            $this->db()->insert('modules_folderrights')
+                ->values([
+                    'key' => $key,
+                    'folder' => $folder,
+                ])
+                ->execute();
+        }
+        return $this;
+    }
+
     /**
      * Gets all modules php extensions.
      *
-     * @return InfosModel[]|array
+     * @param array $where
+     * @return InfosModel[]|null
      */
-    public function getModulesPHPExtensions()
+    public function getModulesPHPExtensions(array $where = []): ?array
     {
         $moduleArray = $this->db()->select('*')
-                ->from('modules_php_extensions')
-                ->execute()
-                ->fetchRows();
+            ->from('modules_php_extensions')
+            ->where($where)
+            ->execute()
+            ->fetchRows();
 
         if (empty($moduleArray)) {
             return null;
@@ -62,5 +107,45 @@ class Infos extends \Ilch\Mapper
         }
 
         return $module;
+    }
+
+
+    /**
+     * Get modules php extensions by given key.
+     *
+     * @param string $key
+     * @return InfosModel[]|null
+     * @since 2.2.8
+     */
+    public function getModulesPHPExtensionsByKey(string $key): ?array
+    {
+        return $this->getModulesFolderRights(['key' => $key]);
+    }
+
+    /**
+     * save modules php extensions by given key.
+     * This can be entered with an entry in the module configuration file with 'phpExtensions'.
+     *
+     * @param string $key
+     * @param array $extensions
+     * @return $this
+     * @since 2.2.8
+     */
+    public function saveModulesPHPExtensions(string $key, array $extensions): Infos
+    {
+        $moduls = $this->getModulesPHPExtensionsByKey($key);
+        if (!empty($moduls)) {
+            $this->db()->delete('modules_php_extensions')->where(['key' => $key])->execute();
+        }
+
+        foreach ($extensions as $extension => $state) {
+            $this->db()->insert('modules_php_extensions')
+                ->values([
+                    'key' => $key,
+                    'extension' => $extension,
+                ])
+                ->execute();
+        }
+        return $this;
     }
 }

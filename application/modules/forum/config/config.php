@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.35.4',
+        'version' => '1.35.5',
         'icon_small' => 'fa-solid fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
@@ -69,20 +69,20 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti("DROP TABLE `[prefix]_forum_topics_read`;
-            DROP TABLE `[prefix]_forum_read`;
-            DROP TABLE `[prefix]_forum_votes`;
-            DROP TABLE `[prefix]_forum_remember`;
-            DROP TABLE `[prefix]_forum_posts`;
-            DROP TABLE `[prefix]_forum_topicsubscription`;
-            DROP TABLE `[prefix]_forum_topics`;
-            DROP TABLE `[prefix]_forum_groupranking`;
-            DROP TABLE `[prefix]_forum_accesses`;
-            DROP TABLE `[prefix]_forum_prefixes_items`;
-            DROP TABLE `[prefix]_forum_prefixes`;
-            DROP TABLE `[prefix]_forum_items`;
-            DROP TABLE `[prefix]_forum_ranks`;
-            DROP TABLE `[prefix]_forum_reports`;
+        $this->db()->queryMulti("DROP TABLE `[prefix]_forum_topics_read` IF EXISTS;
+            DROP TABLE `[prefix]_forum_read` IF EXISTS;
+            DROP TABLE `[prefix]_forum_votes` IF EXISTS;
+            DROP TABLE `[prefix]_forum_remember` IF EXISTS;
+            DROP TABLE `[prefix]_forum_posts` IF EXISTS;
+            DROP TABLE `[prefix]_forum_topicsubscription` IF EXISTS;
+            DROP TABLE `[prefix]_forum_topics` IF EXISTS;
+            DROP TABLE `[prefix]_forum_groupranking` IF EXISTS;
+            DROP TABLE `[prefix]_forum_accesses` IF EXISTS;
+            DROP TABLE `[prefix]_forum_prefixes_items` IF EXISTS;
+            DROP TABLE `[prefix]_forum_prefixes` IF EXISTS;
+            DROP TABLE `[prefix]_forum_items` IF EXISTS;
+            DROP TABLE `[prefix]_forum_ranks` IF EXISTS;
+            DROP TABLE `[prefix]_forum_reports` IF EXISTS;
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_floodInterval';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_excludeFloodProtection';
             DELETE FROM `[prefix]_config` WHERE `key` = 'forum_postVoting';

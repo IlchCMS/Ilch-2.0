@@ -1179,6 +1179,56 @@ class Config extends \Ilch\Config\Install
                 // Update vendor folder
                 replaceVendorDirectory();
                 break;
+            case "2.2.7":
+                // Add the admin module to the modules table if missing and restore the boxes of the admin module (langswitch and layoutswitch) in that case.
+                // The entry for the admin module was missing if it wasn't a fresh 2.2.7 install. Therefore on the update to 2.2.7 the boxes
+                // for the admin module looked orphaned and got deleted.
+                $adminEntryExists = $this->db()->select('key')
+                    ->from('modules')
+                    ->where(['key' => 'admin'])
+                    ->execute()
+                    ->fetchCell();
+
+                if (!$adminEntryExists) {
+                    // Add the admin module to the modules table
+                    $this->db()->insert('modules', ['key' => 'admin', 'icon_small' => ''])
+                        ->execute();
+
+                    // Restore the boxes of the admin module (langswitch and layoutswitch).
+                    $this->db()->insert('modules_boxes_content')
+                        ->columns(['key', 'module', 'locale', 'name'])
+                        ->values(
+                            [
+                                ['langswitch', 'admin', 'de_DE', 'Sprachauswahl'],
+                                ['langswitch', 'admin', 'en_EN', 'Language selection'],
+                                ['layoutswitch', 'admin', 'de_DE', 'Layoutauswahl'],
+                                ['layoutswitch', 'admin', 'en_EN', 'Layout selection']
+                            ]
+                        )
+                        ->execute();
+                }
+
+                // There was a bug, which caused installs of modules with folderrights to fail. Therefore there might be leftovers in the database.
+                $moduleMapper = new \Modules\Admin\Mappers\Module();
+                $modulesNotInstalled = $moduleMapper->getModulesNotInstalled();
+
+                foreach ($modulesNotInstalled as $module) {
+                    if ($module->getKey() === 'events' || $module->getKey() === 'teams') {
+                        // Found one of the known affected modules. Call it's uninstall function to remove possible leftovers.
+                        $configClass = '\\Modules\\' . ucfirst($module->getKey()) . '\\Config\\Config';
+                        $config = new $configClass();
+                        $config->uninstall();
+                    }
+                }
+                break;
+            case "2.2.8":
+                // Delete files of chosen and bootstrap tokenfield.
+                removeDir(ROOT_PATH . '/static/js/tokenfield');
+                removeDir(ROOT_PATH . '/static/css/chosen');
+
+                // Update vendor folder to remove harvesthq/chosen.
+                replaceVendorDirectory();
+                break;
         }
 
         return 'Update function executed.';

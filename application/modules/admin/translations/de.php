@@ -135,6 +135,8 @@ return [
     'pageTitleOrderInfo' => '%%moduledata%% -> Moduldaten<br>%%title%% -> Titel',
     'moduledata' => 'Moduldaten',
     'pageTitleModuledataOrder' => 'Moduldaten Reihenfolge',
+    'pageTitleModuledataOrderLeftToRight' => 'Von links nach rechts',
+    'pageTitleModuledataOrderRightToLeft' => 'Von rechts nach links',
     'pageTitleModuledataSeparator' => 'Moduldaten Trenner',
     'pageContent' => 'Inhalt',
     'startPage' => 'Startseite',

@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'partner',
-        'version' => '1.14.0',
+        'version' => '1.14.1',
         'icon_small' => 'fa-regular fa-handshake',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -51,7 +51,7 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_partners`');
+        $this->db()->drop('partners', true);
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'partners_slider';
             DELETE FROM `[prefix]_config` WHERE `key` = 'partners_slider_mode';
             DELETE FROM `[prefix]_config` WHERE `key` = 'partners_box_height';

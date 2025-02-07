@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'linkus',
-        'version' => '1.7.1',
+        'version' => '1.7.2',
         'icon_small' => 'fa-solid fa-link',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -39,9 +39,9 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_linkus`;');
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'linkus_html'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'linkus_bbcode'");
+        $this->db()->drop('linkus', true);
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'linkus_html';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'linkus_bbcode'");
     }
 
     public function getInstallSql()

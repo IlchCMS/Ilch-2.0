@@ -1292,7 +1292,7 @@ class Thumbnail
             $random3 = 1;
             $random4 = 1;
         }
-        if (version_compare(PHP_VERSION, '8.1.0', '>=') === -1) {
+        if (version_compare(PHP_VERSION, '8.1.0', '>=')) {
             if ($this->Clipcorner[3] && $random1) {
                 imagefilledpolygon($this->im, $points_tl, $bgcolor);
             }
