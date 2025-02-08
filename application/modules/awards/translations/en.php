@@ -26,4 +26,7 @@ return [
     'formerUsersOrTeams' => 'Former users or teams',
     'awardNotFound' => 'Award not found',
     'recipientsOfAward' => 'Recipients of this award',
+    'userNotification' => 'Notify user of received award',
+    'awardReceived' => 'You have received an award.',
+    'awardReceivedAsTeam' => 'You have received an award as a member of a team.',
 ];

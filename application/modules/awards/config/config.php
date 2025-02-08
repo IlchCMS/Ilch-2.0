@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'awards',
-        'version' => '1.11.1',
+        'version' => '1.12.0',
         'icon_small' => 'fa-solid fa-trophy',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -32,12 +32,18 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('awards_userNotification', 1);
     }
 
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_awards_recipients` IF EXISTS;
             DROP TABLE `[prefix]_awards` IF EXISTS;');
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->delete('awards_userNotification');
     }
 
     public function getInstallSql()
@@ -110,6 +116,10 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_awards` DROP COLUMN `ut_id`, DROP COLUMN `typ`');
             case '1.10.0':
             case '1.10.1':
+            case '1.11.0':
+                // Enable notification of users if they receive an award by default.
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('awards_userNotification', 1);
         }
     }
 }
