@@ -43,7 +43,8 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('teams_uploadpath', 'application/modules/teams/static/upload/')
             ->set('teams_height', '80')
             ->set('teams_width', '530')
-            ->set('teams_filetypes', 'jpg jpeg png');
+            ->set('teams_filetypes', 'jpg jpeg png')
+            ->set('teams_userNotification', '1');
     }
 
     public function uninstall()
@@ -55,7 +56,8 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->delete('teams_uploadpath')
             ->delete('teams_height')
             ->delete('teams_width')
-            ->delete('teams_filetypes');
+            ->delete('teams_filetypes')
+            ->delete('teams_userNotification');
 
         $this->db()->query("DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'teams'");
     }
