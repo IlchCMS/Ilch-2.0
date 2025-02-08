@@ -179,38 +179,38 @@ class Index extends \Ilch\Controller\Admin
                 }
                 $recipientMapper->saveMulti($recipientModels);
 
-                // Notify the recipient of the award if this is enabled.
-                if ($this->getConfig()->get('awards_userNotification')) {
-                    $notificationModels = [];
+                // Notify the recipient of the award if this is enabled. Don't send a notification if this post is from editing an award.
+                if ($this->getConfig()->get('awards_userNotification') && !$this->getRequest()->getParam('id')) {
                     $notificationsMapper = new NotificationsMapper();
+                    $notificationModels = [];
 
                     foreach($recipientModels as $recipientModel) {
-                        $notificationModel = new NotificationModel();
-
                         $users = [];
                         if ($recipientModel->getTyp() === 2) {
                             // The recipient is a team.
                             if ($awardsMapper->existsTable('teams')) {
                                 $teamsMapper = new TeamsMapper();
                                 $team = $teamsMapper->getTeamById($recipientModel->getUtId());
-                                $users = $userMapper->getUserListByGroupId($team->getGroupId());
+                                $users = $userMapper->getUserListByGroupId($team->getGroupId(), 1);
                             }
                         } else {
                             // The recipient is a user.
+                            $notificationModel = new NotificationModel();
                             $notificationModel->setUserId($recipientModel->getUtId())
                                 ->setModule('awards')
                                 ->setMessage($this->getTranslator()->trans('awardReceived'))
-                                ->setURL($this->getLayout()->getUrl(['module' => 'awards', 'controller' => 'index', 'action' => 'show', 'id' => $awardsModel->getId()], ''))
+                                ->setURL($this->getLayout()->getUrl(['module' => 'awards', 'controller' => 'index', 'action' => 'show', 'id' => $recipientModel->getAwardId()], ''))
                                 ->setType('awardReceived');
                             $notificationModels[] = $notificationModel;
                         }
 
                         // Notify all users of the team.
                         foreach ($users as $user) {
+                            $notificationModel = new NotificationModel();
                             $notificationModel->setUserId($user->getId())
                                 ->setModule('awards')
                                 ->setMessage($this->getTranslator()->trans('awardReceivedAsTeam'))
-                                ->setURL($this->getLayout()->getUrl(['module' => 'awards', 'controller' => 'index', 'action' => 'show', 'id' => $awardsModel->getId()], ''))
+                                ->setURL($this->getLayout()->getUrl(['module' => 'awards', 'controller' => 'index', 'action' => 'show', 'id' => $recipientModel->getAwardId()], ''))
                                 ->setType('awardReceivedAsTeam');
                             $notificationModels[] = $notificationModel;
                         }
