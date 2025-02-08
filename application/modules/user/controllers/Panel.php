@@ -51,7 +51,7 @@ class Panel extends BaseController
             }
         }
 
-        $this->getView()->set('notifications', $notificationsMapper->getNotificationsSortedByDateType($this->getUser()->getId()));
+        $this->getView()->set('notifications', $notificationsMapper->getNotifications($this->getUser()->getId()));
         $this->getView()->set('openFriendRequests', $friendsMapper->getOpenFriendRequests($this->getUser()->getId()));
     }
 
