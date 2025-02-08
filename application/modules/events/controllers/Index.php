@@ -7,6 +7,7 @@
 
 namespace Modules\Events\Controllers;
 
+use Ilch\Upload;
 use Modules\Events\Mappers\Events as EventMapper;
 use Modules\Events\Models\Events as EventModel;
 use Modules\Events\Mappers\Entrants as EntrantsMapper;
@@ -15,6 +16,7 @@ use Modules\User\Mappers\Setting as SettingMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Group as GroupMapper;
 use Ilch\Validation;
+use Thumb\Thumbnail;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -136,10 +138,10 @@ class Index extends \Ilch\Controller\Frontend
 
                             if (move_uploaded_file($file_tmpe, $image)) {
                                 if ($width > $imageWidth || $height > $imageHeight) {
-                                    $upload = new \Ilch\Upload();
+                                    $upload = new Upload();
 
                                     if ($upload->enoughFreeMemory($image)) {
-                                        $thumb = new \Thumb\Thumbnail();
+                                        $thumb = new Thumbnail();
                                         $thumb -> Thumbsize = ($imageWidth <= $imageHeight) ? $imageWidth : $imageHeight;
                                         $thumb -> Square = true;
                                         $thumb -> Thumblocation = $path;

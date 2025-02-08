@@ -7,11 +7,13 @@
 
 namespace Modules\Teams\Controllers\Admin;
 
+use Ilch\Upload;
 use Modules\Teams\Mappers\Teams as TeamsMapper;
 use Modules\Teams\Models\Teams as TeamsModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Group as UserGroupMapper;
 use Ilch\Validation;
+use Thumb\Thumbnail;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -156,10 +158,10 @@ class Index extends \Ilch\Controller\Admin
 
                         if (move_uploaded_file($file_tmpe, $image)) {
                             if ($width > $imageMaxWidth || $height > $imageMaxHeight) {
-                                $upload = new \Ilch\Upload();
+                                $upload = new Upload();
 
                                 if ($upload->enoughFreeMemory($image)) {
-                                    $thumb = new \Thumb\Thumbnail();
+                                    $thumb = new Thumbnail();
                                     $calcHeight = $height;
                                     $calcWidth = $width;
 
