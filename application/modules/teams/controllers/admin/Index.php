@@ -9,9 +9,11 @@ namespace Modules\Teams\Controllers\Admin;
 
 use Modules\Teams\Mappers\Teams as TeamsMapper;
 use Modules\Teams\Models\Teams as TeamsModel;
+use Modules\User\Mappers\Notifications as NotificationsMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Group as UserGroupMapper;
 use Ilch\Validation;
+use Modules\User\Models\Notification as NotificationModel;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -211,6 +213,26 @@ class Index extends \Ilch\Controller\Admin
                     ->setOptIn($this->getRequest()->getPost('optIn'))
                     ->setNotifyLeader($this->getRequest()->getPost('notifyLeader'));
                 $teamsMapper->save($model);
+
+                // Notify all users of the team.
+                if ($this->getConfig()->get('teams_userNotification')) {
+                    // Notify all users of the team.
+                    $notificationsMapper = new NotificationsMapper();
+                    $notificationModels = [];
+                    $users = $userMapper->getUserListByGroupId($model->getGroupId(), 1);
+
+                    foreach ($users as $user) {
+                        $notificationModel = new NotificationModel();
+                        $notificationModel->setUserId($user->getId())
+                            ->setModule('teams')
+                            ->setMessage($this->getTranslator()->trans('teamsAddedToTeam', $model->getName()))
+                            ->setURL($this->getLayout()->getUrl(['module' => 'teams', 'controller' => 'index', 'action' => 'show', 'id' => $model->getId()], ''))
+                            ->setType('teamsAddedToTeam');
+                        $notificationModels[] = $notificationModel;
+                    }
+
+                    $notificationsMapper->addNotifications($notificationModels);
+                }
 
                 $this->redirect()
                     ->withMessage('saveSuccess')
