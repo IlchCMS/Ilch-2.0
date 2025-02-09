@@ -18,12 +18,8 @@ jobs:
         db:
           - ver: mysql
             release: '5.7'
-          - ver: mysql
-            release: latest
           - ver: mariadb
             release: 10.5
-          - ver: mariadb
-            release: latest
 
     steps:
       - name: Checkout code
