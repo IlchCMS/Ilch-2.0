@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.24.4',
+        'version' => '1.25.0',
         'icon_small' => 'fa-solid fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -43,7 +43,8 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('teams_uploadpath', 'application/modules/teams/static/upload/')
             ->set('teams_height', '80')
             ->set('teams_width', '530')
-            ->set('teams_filetypes', 'jpg jpeg png');
+            ->set('teams_filetypes', 'jpg jpeg png')
+            ->set('teams_userNotification', '1');
     }
 
     public function uninstall()
@@ -55,7 +56,8 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->delete('teams_uploadpath')
             ->delete('teams_height')
             ->delete('teams_width')
-            ->delete('teams_filetypes');
+            ->delete('teams_filetypes')
+            ->delete('teams_userNotification');
 
         $this->db()->query("DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'teams'");
     }
@@ -243,10 +245,16 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-users' WHERE `key` = 'teams';");
                 // no break
             case "1.22.0":
-                // no break
             case "1.23.0":
-                // no break
             case "1.23.1":
+            case "1.24.0":
+            case "1.24.1":
+            case "1.24.2":
+            case "1.24.3":
+            case "1.24.4":
+                // Enable notification of users if they are added to a team by default.
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('teams_userNotification', 1);
                 // no break
         }
         return 'Update function executed.';
