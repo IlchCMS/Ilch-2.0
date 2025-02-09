@@ -28,7 +28,7 @@ return [
     'imageHeight' => 'Maximum image height',
     'imageWidth' => 'Maximum image width',
     'allowedFileExtensions' => 'Allowed file extensions',
-    'userNotification' => 'Notify user of enrollment in the team.',
+    'userNotification' => 'Notify users of enrollment in the team.',
     'teamsAddedToTeam' => 'You have been added to the "%s" team.',
     'forbiddenExtension' => 'You tried to add an forbidden file extension.',
     'failedFiletypes' => 'Image does not contain allowed file format.',

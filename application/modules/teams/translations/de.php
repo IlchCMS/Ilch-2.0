@@ -28,7 +28,7 @@ return [
     'imageHeight' => 'Max. Bild Höhe',
     'imageWidth' => 'Max. Bild Breite',
     'allowedFileExtensions' => 'Erlaubte Dateiendungen',
-    'userNotification' => 'Benutzer über Aufnahme zum Team benachrichtigen.',
+    'userNotification' => 'Benutzer bei Aufnahme ins Team benachrichtigen.',
     'teamsAddedToTeam' => 'Sie wurden dem Team "%s" hinzugefügt.',
     'forbiddenExtension' => 'Sie haben versucht eine unerlaubte Dateiendung einzutragen.',
     'failedFiletypes' => 'Bild enthält kein erlaubtes Dateiformat.',

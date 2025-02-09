@@ -226,7 +226,7 @@ class Index extends \Ilch\Controller\Admin
                         $notificationModel->setUserId($user->getId())
                             ->setModule('teams')
                             ->setMessage($this->getTranslator()->trans('teamsAddedToTeam', $model->getName()))
-                            ->setURL($this->getLayout()->getUrl(['module' => 'teams', 'controller' => 'index', 'action' => 'show', 'id' => $model->getId()], ''))
+                            ->setURL($this->getLayout()->getUrl(['module' => 'teams', 'controller' => 'index', 'action' => 'team', 'id' => $model->getId()], ''))
                             ->setType('teamsAddedToTeam');
                         $notificationModels[] = $notificationModel;
                     }
