@@ -15,12 +15,19 @@ jobs:
     strategy:
       matrix:
         php-versions: ['7.4', '8.0', '8.1', '8.2', '8.3', '8.4']
-        db:
-          - name: 'MySQL'
-            version: '5.7'
-        include:
-            - {php-versions: '8.4', db: {name: 'MariaDB', version: '10.5'}}
-            - {php-versions: '8.4', db: {name: 'MariaDB', version: 'latest'}}
+        mysql-versions: ['5.7']
+
+    services:
+      mysql:
+        image: mysql:${{ matrix.mysql-versions }}
+        env:
+          MYSQL_RANDOM_ROOT_PASSWORD: yes
+          MYSQL_DATABASE: ilch2_test
+          MYSQL_USER: ilch2_test_user
+          MYSQL_PASSWORD: ilch2_test_password
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=10
+        ports:
+          - 3306:3306
 
     steps:
       - name: Checkout code
@@ -31,22 +38,6 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           coverage: xdebug
           tools: composer
-      - name: Setup MariaDB
-        if: ${{ matrix.db.name == 'MariaDB' }}
-        uses: getong/mariadb-action@v1.11
-        with:
-          mariadb version: ${{ matrix.db.version }}
-          mysql database: ilch2_test
-          mysql user: ilch2_test_user
-          mysql password: ilch2_test_password
-      - name: Setup MySQL
-        if: ${{ matrix.db.name == 'MySQL' }}
-        uses: mirromutth/mysql-action@v1.1
-        with:
-          mysql version: ${{ matrix.db.version }}
-          mysql database: ilch2_test
-          mysql user: ilch2_test_user
-          mysql password: ilch2_test_password
       - name: Get composer cache directory
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
@@ -58,10 +49,62 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-php${{ matrix.php-versions }}
       - name: Install dependencies
         run: composer install --prefer-dist
-      - name: Verify ${{ matrix.db.name }} connection
+      - name: Verify MySQL connection
         env:
           HOST: 127.0.0.1
-          PORT: 3306
+          PORT: ${{ job.services.mysql.ports[3306] }}
+        run: |
+          while ! mysqladmin ping -h"$HOST" -P"$PORT" --silent; do
+            sleep 1
+          done
+          envsubst '$HOST,$PORT' < development/ci/config.php > tests/config.php
+      - name: Execute tests
+        run: cd tests && ../vendor/bin/phpunit
+
+  run-ci-mariadb:
+    runs-on: ubuntu-24.04
+
+    strategy:
+      matrix:
+        php-versions: ['8.4']
+        mariadb-versions: ['10.5']
+
+    services:
+      mariadb:
+        image: mariadb:${{ matrix.mariadb-versions }}
+        env:
+          MYSQL_RANDOM_ROOT_PASSWORD: yes
+          MYSQL_DATABASE: ilch2_test
+          MYSQL_USER: ilch2_test_user
+          MYSQL_PASSWORD: ilch2_test_password
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=10
+        ports:
+          - 3306:3306
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          coverage: xdebug
+          tools: composer
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-php${{ matrix.php-versions }}
+      - name: Install dependencies
+        run: composer install --prefer-dist
+      - name: Verify MariaDB connection
+        env:
+          HOST: 127.0.0.1
+          PORT: ${{ job.services.mariadb.ports[3306] }}
         run: |
           while ! mysqladmin ping -h"$HOST" -P"$PORT" --silent; do
             sleep 1
