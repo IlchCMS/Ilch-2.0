@@ -35,10 +35,12 @@ class Index extends \Ilch\Controller\Frontend
 
         // Get trainings, calculate next date if it's a recurrent event and sort them by date.
         $trainings = $trainingMapper->getTraining([], $groupIds);
-        foreach ($trainings as $training) {
-            $trainingMapper->calculateNextTrainingDate($training);
+        if ($trainings) {
+            foreach ($trainings as $training) {
+                $trainingMapper->calculateNextTrainingDate($training);
+            }
+            usort($trainings, fn (TrainingModel $a, TrainingModel $b) => strcmp($a->getDate(), $b->getDate()));
         }
-        usort($trainings, fn(TrainingModel $a, TrainingModel $b) => strcmp($a->getDate(), $b->getDate()));
 
         $this->getView()->set('entrantsMapper', $entrantsMapper)
             ->set('trainings', $trainings);
