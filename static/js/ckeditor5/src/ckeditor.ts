@@ -14,6 +14,7 @@ import {
     ClassicEditor,
     Code,
     CodeBlock,
+    Emoji,
     Essentials,
     FindAndReplace,
     FontBackgroundColor,
@@ -36,6 +37,7 @@ import {
     Link,
     List,
     MediaEmbed,
+    Mention,
     Paragraph,
     PasteFromOffice,
     RemoveFormat,
@@ -62,10 +64,6 @@ import {
     Undo
 } from 'ckeditor5';
 import type { EditorConfig } from 'ckeditor5';
-import {
-    Emoji, EmojiActivity, EmojiFlags, EmojiFood, EmojiNature, EmojiObjects, EmojiPeople,
-    EmojiPlaces, EmojiSymbols
-} from './plugins/ckeditor5-emoji/src';
 import { IlchPs } from './plugins/ilchps/plugin';
 import IlchMedia from './plugins/ilchmedia/ilchmedia';
 
@@ -87,14 +85,6 @@ class Editor extends ClassicEditor {
         Code,
         CodeBlock,
         Emoji,
-        EmojiPeople,
-        EmojiNature,
-        EmojiPlaces,
-        EmojiFood,
-        EmojiActivity,
-        EmojiObjects,
-        EmojiSymbols,
-        EmojiFlags,
         Essentials,
         FindAndReplace,
         FontBackgroundColor,
@@ -119,6 +109,7 @@ class Editor extends ClassicEditor {
         Link,
         List,
         MediaEmbed,
+        Mention,
         Paragraph,
         PasteFromOffice,
         RemoveFormat,
