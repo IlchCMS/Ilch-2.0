@@ -67,17 +67,17 @@ jobs:
     strategy:
       matrix:
         php-versions: ['8.4']
-        mariadb-versions: ['10.5']
+        mariadb-versions: ['10.5', 'latest']
 
     services:
       mariadb:
         image: mariadb:${{ matrix.mariadb-versions }}
         env:
-          MYSQL_RANDOM_ROOT_PASSWORD: yes
-          MYSQL_DATABASE: ilch2_test
-          MYSQL_USER: ilch2_test_user
-          MYSQL_PASSWORD: ilch2_test_password
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=10
+          MARIADB_RANDOM_ROOT_PASSWORD: yes
+          MARIADB_DATABASE: ilch2_test
+          MARIADB_USER: ilch2_test_user
+          MARIADB_PASSWORD: ilch2_test_password
+        options: --health-cmd="mariadb-admin ping" --health-interval=10s --health-timeout=10s --health-retries=10
         ports:
           - 3306:3306
 
