@@ -114,6 +114,9 @@ $(document).ready(function(){
                             styles: true
                         }
                     ]
+                },
+                emoji: {
+                    definitionsUrl: baseUrl + '/static/js/ckeditor5/emoji-definitions.json'
                 }
             };
         } else if(toolbar === 'ilch_html_frontend') {
@@ -204,6 +207,9 @@ $(document).ready(function(){
                         48,
                         72
                     ]
+                },
+                emoji: {
+                    definitionsUrl: baseUrl + '/static/js/ckeditor5/emoji-definitions.json'
                 }
             };
         };
