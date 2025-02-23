@@ -35,6 +35,7 @@ $accesses = $this->get('accesses');
     <link href="<?=$this->getStaticUrl('js/highlight/default.min.css') ?>" rel="stylesheet" type="text/css">
 
     <script>
+        const baseUrl = "<?=BASE_URL ?>";
         // Set a bunch of variables to later display translated messages. Used in ../application/modules/admin/static/js/functions.js
         var enableSelectedEntries = <?=json_encode($this->getTrans('enableSelectedEntries')) ?>;
         var deleteSelectedEntries = <?=json_encode($this->getTrans('deleteSelectedEntries')) ?>;
