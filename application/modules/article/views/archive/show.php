@@ -41,11 +41,11 @@ if ($this->get('date')) {
 
         <?php if (strpos($content, '[PREVIEWSTOP]') !== false): ?>
             <?php $contentParts = explode('[PREVIEWSTOP]', $content); ?>
-            <?=$this->purify(reset($contentParts)) ?>
+            <div class="ck-content"><?=$this->purify(reset($contentParts)) ?></div>
             <br />
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>" class="float-end"><?=$this->getTrans('readMore') ?></a>
         <?php else: ?>
-            <?=$this->purify($content) ?>
+            <div class="ck-content"><?=$this->purify($content) ?></div>
         <?php endif; ?>
         <hr />
         <div>
