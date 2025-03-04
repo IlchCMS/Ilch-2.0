@@ -36,7 +36,7 @@ $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('
 
         <?php if (strpos($content, '[PREVIEWSTOP]') !== false): ?>
             <?php $contentParts = explode('[PREVIEWSTOP]', $content); ?>
-            <div class="ck-content"><?=$this->purify($contentParts) ?></div>
+            <div class="ck-content"><?=$this->purify(reset($contentParts)) ?></div>
             <br />
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>" class="float-end"><?=$this->getTrans('readMore') ?></a>
         <?php else: ?>
