@@ -68,7 +68,7 @@ class Upload
      */
     public function getExtension(): string
     {
-        return strtolower(pathinfo($this->file, PATHINFO_EXTENSION));
+        return pathinfo($this->file, PATHINFO_EXTENSION);
     }
 
     /**
@@ -271,7 +271,7 @@ class Upload
      */
     public function isAllowedExtension(): bool
     {
-        return in_array($this->getExtension(), explode(' ', $this->getAllowedExtensions()));
+        return in_array(strtolower($this->getExtension()), explode(' ', strtolower($this->getAllowedExtensions())));
     }
 
     /**

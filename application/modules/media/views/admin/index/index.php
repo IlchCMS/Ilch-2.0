@@ -101,7 +101,7 @@
                             <td><a href="<?=$this->getUrl(['action' => 'refresh', 'id' => $media->getId()]) ?>"><i class="fa-solid fa-arrows-rotate" title="<?=$this->getTrans('refreshThumbnail') ?>"></i></a></td>
                             <td><?=$this->escape($media->getEnding()) ?></td>
                             <td>
-                                <?php if (in_array($media->getEnding(), explode(' ', $this->get('media_ext_img')))): ?>
+                                <?php if (in_array(strtolower($media->getEnding()), explode(' ', strtolower($this->get('media_ext_img'))))) : ?>
                                     <a href="<?=$this->getBaseUrl($media->getUrl()) ?>" title="<?=$this->escape($media->getName()) ?>">
                                         <?php if (file_exists($media->getUrlThumb())): ?>
                                             <img class="img-preview" src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>" alt="<?=$this->escape($media->getName()) ?>">
