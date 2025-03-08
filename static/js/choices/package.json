@@ -4,7 +4,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "choices.js": "^11.0.3"
+    "choices.js": "^11.0.6"
   },
   "scripts": {
     "build": "rm -rf build && mkdir -p build && cp node_modules/choices.js/public/assets/scripts/choices.min.js build/ && cp node_modules/choices.js/public/assets/styles/choices.min.css build/"

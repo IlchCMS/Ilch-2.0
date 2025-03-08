@@ -54,7 +54,8 @@ class Settings extends \Ilch\Controller\Admin
 
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'image_height' => 'required|numeric|integer|min:1',
-                'image_width' => 'required|numeric|integer|min:1'
+                'image_width' => 'required|numeric|integer|min:1',
+                'userNotification' => 'required|numeric|integer|min:0|max:1',
             ]);
 
             if ($validation->isValid()) {
@@ -65,6 +66,7 @@ class Settings extends \Ilch\Controller\Admin
                     $this->getConfig()->set('teams_height', $this->getRequest()->getPost('image_height'));
                     $this->getConfig()->set('teams_width', $this->getRequest()->getPost('image_width'));
                     $this->getConfig()->set('teams_filetypes', strtolower($this->getRequest()->getPost('image_filetypes')));
+                    $this->getConfig()->set('teams_userNotification', $this->getRequest()->getPost('userNotification'));
 
                     $this->redirect()
                         ->withMessage('saveSuccess')
@@ -82,6 +84,7 @@ class Settings extends \Ilch\Controller\Admin
 
         $this->getView()->set('teams_height', $this->getConfig()->get('teams_height'))
             ->set('teams_width', $this->getConfig()->get('teams_width'))
-            ->set('teams_filetypes', $this->getConfig()->get('teams_filetypes'));
+            ->set('teams_filetypes', $this->getConfig()->get('teams_filetypes'))
+            ->set('userNotification', $this->getConfig()->get('teams_userNotification'));
     }
 }

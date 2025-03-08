@@ -554,6 +554,7 @@ class Frontend extends Base
             <script>
                 hljs.highlightAll();
                 var iframeUrlUserGallery = "' . $this->getUrl('user/iframe/indexckeditor/type/imageckeditor/') . '";
+                const baseUrl = "' . BASE_URL . '";
                 $(function () {
                     const tooltipTriggerList = document.querySelectorAll(\'[data-bs-toggle="tooltip"]\')
                     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
