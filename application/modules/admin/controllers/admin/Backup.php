@@ -263,4 +263,49 @@ class Backup extends \Ilch\Controller\Admin
 
         $this->redirect(['action' => 'index']);
     }
+
+    public function refreshAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            // Look for new backup files that have been uploaded to the backups directory.
+            $backupMapper = new BackupMapper();
+            $backups = $backupMapper->getBackups();
+            $directory = ROOT_PATH . '/backups/';
+            $backupsInDirectory = glob($directory . '*.sql*');
+            $newBackupFiles = [];
+
+            foreach ($backupsInDirectory as $backupInDirectory) {
+                $found = false;
+                foreach($backups as $backup) {
+                    if (strpos($backupInDirectory, $backup->getName()) !== false) {
+                        $found = true;
+                        break;
+                    }
+                }
+
+                if (!$found) {
+                    $newBackupFiles[] = $backupInDirectory;
+                }
+            }
+
+            foreach ($newBackupFiles as $newBackupFile) {
+                $backupMapper = new BackupMapper();
+                $backupModel = new BackupModel();
+
+                $backupFileInfo = pathinfo($newBackupFile);
+                // Create a filename that is not longer than 255 chars.
+                $newFilename = substr($backupFileInfo['filename'], 0, 254 - 64 - strlen('_.' . $backupFileInfo['extension']));
+                $newFilename = $newFilename . '_' . bin2hex(random_bytes(32)) . '.' . $backupFileInfo['extension'];
+                // Rename the file to add a secure random part to it's filename before adding it to the table of backups.
+                rename($newBackupFile, $backupFileInfo['dirname'] . DIRECTORY_SEPARATOR . $newFilename);
+                $backupModel->setName($newFilename);
+                $backupModel->setDate('0000-00-00');
+                $backupMapper->save($backupModel);
+            }
+
+            $this->addMessage('backupRefreshSuccess');
+        }
+
+        $this->redirect(['action' => 'index']);
+    }
 }

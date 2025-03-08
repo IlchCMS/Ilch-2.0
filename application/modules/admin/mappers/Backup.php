@@ -12,6 +12,8 @@ class Backup extends \Ilch\Mapper
 {
     /**
      * Gets all backups.
+     *
+     * @return BackupModel[]|null
      */
     public function getBackups(): ?array
     {

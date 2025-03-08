@@ -1,4 +1,5 @@
 <h1><?=$this->getTrans('menuBackup') ?></h1>
+<p><a href="<?=$this->getUrl(['action' => 'refresh'], null, true) ?>" class="btn btn-primary"><?=$this->getTrans('backupRefresh') ?></a></p>
 <form method="POST">
     <?=$this->getTokenField() ?>
     <?php if ($this->get('backups') != '') : ?>
@@ -36,7 +37,7 @@
                         <td><span class="fa-solid fa-database text-danger" title="<?=$this->getTrans('backupCannotImport') ?>"></span></td>
                     <?php endif; ?>
                     <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $backup->getId()]) ?></td>
-                    <td><?=$this->escape($backup->getDate()) ?></td>
+                    <td><?=($backup->getDate() !== '0000-00-00 00:00:00') ? $this->escape($backup->getDate()) : $this->getTrans('backupUnknownDate') ?></td>
                     <td><?=(file_exists(ROOT_PATH . '/backups/' . $backup->getName())) ? formatBytes(filesize(ROOT_PATH . '/backups/' . $backup->getName())) : '' ?></td>
                     <td><?=$backupPublicName ?></td>
                 </tr>
