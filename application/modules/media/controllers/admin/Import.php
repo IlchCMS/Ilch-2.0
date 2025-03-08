@@ -96,7 +96,7 @@ class Import extends \Ilch\Controller\Admin
                 $model = new MediaModel();
                 $model->setUrl($upload->getUrl());
                 $model->setUrlThumb($upload->getUrlThumb());
-                $model->setEnding($upload->getEnding());
+                $model->setEnding($upload->getExtension());
                 $model->setName($upload->getName());
                 $model->setDatetime($ilchdate->toDb());
                 if ($id) {

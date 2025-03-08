@@ -31,10 +31,11 @@
                         <?php
                         $upload = new \Ilch\Upload();
                         $upload->setFile($media);
+                        $upload->setAllowedExtensions($this->get('media_ext_img'));
                         ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_medias', $media) ?></td>
-                            <td><?=$this->escape($upload->getEnding()) ?></td>
+                            <td><?=$this->escape($upload->getExtension()) ?></td>
                             <td>
                                 <?php if ($upload->isAllowedExtension()): ?>
                                     <img class="img-preview" src="<?=$this->getBaseUrl($media) ?>" alt="">
