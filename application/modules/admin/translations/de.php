@@ -187,6 +187,7 @@ return [
     'backupUnknownDate' => 'unbekannt',
     'backupRefresh' => 'Verzeichnis durchsuchen',
     'backupRefreshSuccess' => 'Backup-Übersicht wurde erfolgreich aktualisiert.',
+    'backupRefreshError' => 'Ein gefundenes Backup konnte nicht umbenannt werden. Prüfen Sie bitte die Zugriffsrechte.',
     'menuCustomCSS' => 'Benutzerdefinierte CSS',
     'menuHtaccess' => 'htaccess',
     'modrewriteLinesAdded' => 'Einträge für Mod-Rewrite hinzugefügt.',

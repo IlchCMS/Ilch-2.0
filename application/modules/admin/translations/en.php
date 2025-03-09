@@ -187,6 +187,7 @@ return [
     'backupUnknownDate' => 'unknown',
     'backupRefresh' => 'Search directory',
     'backupRefreshSuccess' => 'Backup overview has been updated successfully.',
+    'backupRefreshError' => 'A found backup could not be renamed. Please check the access rights.',
     'menuCustomCSS' => 'Custom CSS',
     'menuHtaccess' => 'htaccess',
     'modrewriteLinesAdded' => 'Added lines for mod rewrite.',

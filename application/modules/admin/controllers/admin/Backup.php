@@ -289,18 +289,23 @@ class Backup extends \Ilch\Controller\Admin
             }
 
             foreach ($newBackupFiles as $newBackupFile) {
-                $backupMapper = new BackupMapper();
-                $backupModel = new BackupModel();
-
                 $backupFileInfo = pathinfo($newBackupFile);
                 // Create a filename that is not longer than 255 chars.
                 $newFilename = substr($backupFileInfo['filename'], 0, 254 - 64 - strlen('_.' . $backupFileInfo['extension']));
                 $newFilename = $newFilename . '_' . bin2hex(random_bytes(32)) . '.' . $backupFileInfo['extension'];
                 // Rename the file to add a secure random part to it's filename before adding it to the table of backups.
-                rename($newBackupFile, $backupFileInfo['dirname'] . DIRECTORY_SEPARATOR . $newFilename);
-                $backupModel->setName($newFilename);
-                $backupModel->setDate('0000-00-00');
-                $backupMapper->save($backupModel);
+                if (rename($newBackupFile, $backupFileInfo['dirname'] . '/' . $newFilename)) {
+                    $backupModel = new BackupModel();
+                    $backupMapper = new BackupMapper();
+
+                    $backupModel->setName($newFilename);
+                    $backupModel->setDate('0000-00-00');
+                    $backupMapper->save($backupModel);
+                } else {
+                    // Renaming the backup file failed.
+                    $this->addMessage('backupRefreshError', 'danger');
+                    $this->redirect(['action' => 'index']);
+                }
             }
 
             $this->addMessage('backupRefreshSuccess');
