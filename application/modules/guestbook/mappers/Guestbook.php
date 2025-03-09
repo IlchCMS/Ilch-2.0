@@ -53,6 +53,43 @@ class Guestbook extends \Ilch\Mapper
         return $entry;
     }
 
+
+    /**
+     * @param int|GuestbookModel $id
+     * @param int $setfree
+     * @return boolean
+     */
+    public function updateSetfree($id, int $setfree = -1): bool
+    {
+        if ($setfree !== -1) {
+            $setfreeNow = $setfree;
+        } else {
+            if (is_a($id, GuestbookModel::class)) {
+                $setfree = $id->getFree();
+            } else {
+                $setfree = (int) $this->db()->select('setfree')
+                    ->from('gbook')
+                    ->where(['id' => (int)$id])
+                    ->execute()
+                    ->fetchCell();
+            }
+
+            if ($setfree === 1) {
+                $setfreeNow = 0;
+            } else {
+                $setfreeNow = 1;
+            }
+        }
+        if (is_a($id, GuestbookModel::class)) {
+            $id = $id->getId();
+        }
+
+        return $this->db()->update('gbook')
+            ->values(['setfree' => $setfreeNow])
+            ->where(['id' => (int)$id])
+            ->execute();
+    }
+
     /**
      * Inserts or updates gustebook entry.
      *

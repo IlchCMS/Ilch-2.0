@@ -71,21 +71,7 @@ class Index extends \Ilch\Controller\Admin
 
             if ($this->getRequest()->getPost('action') === 'setfree') {
                 foreach ($this->getRequest()->getPost('check_entries') as $entryId) {
-                    $model = new GuestbookModel();
-                    $model->setId($entryId);
-                    $model->setFree(1);
-                    $guestbookMapper->save($model);
-                }
-
-                $this->redirect(['action' => 'index']);
-            }
-
-            if ($this->getRequest()->getPost('action') === 'setfree') {
-                foreach ($this->getRequest()->getPost('check_entries') as $entryId) {
-                    $model = new GuestbookModel();
-                    $model->setId($entryId);
-                    $model->setFree(1);
-                    $guestbookMapper->save($model);
+                    $guestbookMapper->updateSetfree($entryId);
                 }
 
                 $this->redirect(['action' => 'index']);
@@ -131,10 +117,7 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id')) && is_numeric($this->getRequest()->getParam('id'))) {
             $guestbookMapper = new GuestbookMapper();
 
-            $model = new GuestbookModel();
-            $model->setId($this->getRequest()->getParam('id'));
-            $model->setFree(1);
-            $guestbookMapper->save($model);
+            $guestbookMapper->updateSetfree($this->getRequest()->getParam('id'));
         }
 
         if ($this->getRequest()->getParam('showsetfree')) {
