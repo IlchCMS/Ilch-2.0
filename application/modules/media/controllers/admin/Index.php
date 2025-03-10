@@ -7,6 +7,7 @@
 
 namespace Modules\Media\Controllers\Admin;
 
+use Ilch\Upload;
 use Modules\Media\Mappers\Media as MediaMapper;
 use Modules\Media\Models\Media as MediaModel;
 use Ilch\Date as IlchDate;
@@ -161,9 +162,8 @@ class Index extends \Ilch\Controller\Admin
                 return;
             }
 
-            $upload = new \Ilch\Upload();
+            $upload = new Upload();
             $upload->setFile($_FILES['upl']['name']);
-            $upload->setTypes($this->getConfig()->get('media_ext_img'));
             $upload->setPath($this->getConfig()->get('media_uploadpath'));
             // Early return if extension is not allowed. Should normally already be done client-side.
             $upload->setAllowedExtensions($allowedExtensions);
@@ -175,7 +175,7 @@ class Index extends \Ilch\Controller\Admin
             $model = new MediaModel();
             $model->setUrl($upload->getUrl());
             $model->setUrlThumb($upload->getUrlThumb());
-            $model->setEnding($upload->getEnding());
+            $model->setEnding($upload->getExtension());
             $model->setName($upload->getName());
             $model->setDatetime($ilchdate->toDb());
             $mediaMapper->save($model);
@@ -196,7 +196,7 @@ class Index extends \Ilch\Controller\Admin
         $image = $mediaMapper->getByWhere(['id' => $this->getRequest()->getParam('id')]);
 
         if ($image !== null) {
-            $upload = new \Ilch\Upload();
+            $upload = new Upload();
             $upload->setURL($image->getUrl());
             $upload->setPath($this->getConfig()->get('media_uploadpath'));
             $result = $upload->createThumbnail();

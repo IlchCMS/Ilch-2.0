@@ -11,100 +11,38 @@ use Thumb\Thumbnail;
 /**
  * Ilch/Upload class.
  */
-class Upload extends \Ilch\Controller\Base
+class Upload
 {
     /**
      * @var string $file
      */
-    protected $file;
-
-    /**
-     * @var string $ending
-     * @deprecated
-     */
-    protected $ending;
-
-    /**
-     * @var string $name
-     * @deprecated
-     */
-    protected $name;
-
-    /**
-     * @var string $fileName
-     * @deprecated
-     */
-    protected $fileName;
+    protected string $file;
 
     /**
      * @var string $url
      */
-    protected $url;
+    protected string $url;
 
     /**
      * @var string $urlThumb
      */
-    protected $urlThumb;
-
-    /**
-     * @var string $types
-     * @deprecated
-     */
-    protected $types;
+    protected string $urlThumb;
 
     /**
      * @var string $allowedExtensions
      */
-    protected $allowedExtensions;
+    protected string $allowedExtensions;
 
     /**
      * @var string $path
      */
-    protected $path;
+    protected string $path;
 
     /**
-     * @var string $path
-     * @deprecated
-     */
-    protected $mediaExtImage;
-
-    /**
-     * @var string $size
-     * @deprecated
-     */
-    protected $size;
-
-    /**
-     * __construct
-     * @deprecated
-     */
-    public function __construct()
-    {
-        $this->reset();
-    }
-
-    /**
-     * Resets
-     * @deprecated
-     */
-    public function reset(): Upload
-    {
-        $this->file = null;
-        $this->ending = null;
-        $this->name = null;
-        $this->fileName = null;
-        $this->url = null;
-        $this->urlThumb = null;
-        $this->path = null;
-        $this->mediaExtImage = null;
-        $this->size = null;
-        return $this;
-    }
-
-    /**
-     * @param string $file
+     * Set file. This is a complete path with filename and extension.
      *
-     * @return Upload File
+     * @param string $file
+     * @return Upload
      */
     public function setFile(string $file): Upload
     {
@@ -114,6 +52,8 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
+     * Get file. This is a complete path with filename and extension.
+     *
      * @return string
      */
     public function getFile(): string
@@ -122,51 +62,13 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
-     * @param string $ending
-     *
-     * @return Upload Ending
-     * @deprecated Just use setFile instead.
-     */
-    public function setEnding(string $ending): Upload
-    {
-        $this->ending = $ending;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     * @deprecated Use getExtension instead.
-     */
-    public function getEnding(): string
-    {
-        $this->ending = strtolower(pathinfo($this->file, PATHINFO_EXTENSION));
-
-        return $this->ending;
-    }
-
-    /**
      * Get the extension of file. This gets determined from the value of file.
      *
      * @return string
-     * @since 2.2.9
      */
     public function getExtension(): string
     {
-        return strtolower(pathinfo($this->file, PATHINFO_EXTENSION));
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return Upload Name
-     * @deprecated Just use setFile instead.
-     */
-    public function setName(string $name): Upload
-    {
-        $this->name = $name;
-
-        return $this;
+        return pathinfo($this->file, PATHINFO_EXTENSION);
     }
 
     /**
@@ -176,37 +78,14 @@ class Upload extends \Ilch\Controller\Base
      */
     public function getName(): string
     {
-        $this->name = pathinfo($this->file, PATHINFO_FILENAME);
-
-        return $this->name;
+        return pathinfo($this->file, PATHINFO_FILENAME);
     }
 
     /**
-     * @param string $fileName
+     * Set the url.
      *
-     * @return Upload fileName
-     * @deprecated
-     */
-    public function setFileName(string $fileName): Upload
-    {
-        $this->fileName = $fileName;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     * @deprecated
-     */
-    public function getFileName(): string
-    {
-        return $this->fileName;
-    }
-
-    /**
      * @param string $url
-     *
-     * @return Upload url
+     * @return Upload
      */
     public function setUrl(string $url): Upload
     {
@@ -216,6 +95,8 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
+     * Get the url.
+     *
      * @return string
      */
     public function getUrl(): string
@@ -224,31 +105,10 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
-     * @param string $types
+     * Set allowed file exensions.
      *
-     * @return Upload types
-     * @deprecated Use setAllowedExtensions instead.
-     */
-    public function setTypes(string $types): Upload
-    {
-        $this->types = $types;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     * @deprecated Use getAllowedExtensions instead.
-     */
-    public function getTypes(): string
-    {
-        return $this->types;
-    }
-
-    /**
-     * @param string $allowedExtensions
-     *
-     * @return Upload allowedExtensions
+     * @param string $allowedExtensions The file extensions are separated by spaces.
+     * @return Upload
      */
     public function setAllowedExtensions(string $allowedExtensions): Upload
     {
@@ -258,6 +118,8 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
+     * Get allowed file extensions. The file extensions are separated by spaces.
+     *
      * @return string
      */
     public function getAllowedExtensions(): string
@@ -266,9 +128,10 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
-     * @param string $path
+     * Set the destination path of the file.
      *
-     * @return Upload path
+     * @param string $path
+     * @return Upload
      */
     public function setPath(string $path): Upload
     {
@@ -278,6 +141,8 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
+     * Get the destination path of the file.
+     *
      * @return string
      */
     public function getPath(): string
@@ -286,9 +151,10 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
-     * @param string $urlThumb
+     * Set the thumbnail url of the file.
      *
-     * @return Upload urlThumb
+     * @param string $urlThumb
+     * @return Upload
      */
     public function setUrlThumb(string $urlThumb): Upload
     {
@@ -298,6 +164,8 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
+     * Get the thumbnail url of the file.
+     *
      * @return string
      */
     public function getUrlThumb(): string
@@ -347,7 +215,7 @@ class Upload extends \Ilch\Controller\Base
         // The tweak-factor might be overly careful and could therefore be lowered if necessary.
         // After testing with >10k pictures the tweak factor got lowered to 1.9 (90 %) from 2.5 (150 %)
         // With a tweak factor of 1.9 there were still no out of memory errors.
-        return ($imageInfo[0] * $imageInfo[1] * ($imageInfo['bits'] / 8) * $imageInfo['channels'] * 1.9);
+        return (int)($imageInfo[0] * $imageInfo[1] * ($imageInfo['bits'] / 8) * $imageInfo['channels'] * 1.9);
     }
 
     /**
@@ -383,12 +251,13 @@ class Upload extends \Ilch\Controller\Base
      */
     public function upload()
     {
+        $extension = $this->getExtension();
         $hash = uniqid() . $this->getName();
-        $this->setUrl($this->path.$hash.'.'.$this->getEnding());
-        $this->setUrlThumb($this->path.'thumb_'.$hash.'.'.$this->getEnding());
+        $this->setUrl($this->path . $hash . '.' . $extension);
+        $this->setUrlThumb($this->path . 'thumb_' . $hash . '.' . $extension);
 
-        if (move_uploaded_file($_FILES['upl']['tmp_name'], $this->path . $hash . '.' . $this->getEnding()) && in_array($this->getEnding(), explode(' ', $this->types))) {
-            if (!$this->enoughFreeMemory($this->path.$hash.'.'.$this->getEnding())) {
+        if (move_uploaded_file($_FILES['upl']['tmp_name'], $this->path . $hash . '.' . $extension) && $this->isAllowedExtension()) {
+            if (!$this->enoughFreeMemory($this->path . $hash . '.' . $extension)) {
                 return;
             }
             $this->createThumbnail();
@@ -402,14 +271,14 @@ class Upload extends \Ilch\Controller\Base
      */
     public function isAllowedExtension(): bool
     {
-        return in_array($this->getEnding(), explode(' ', $this->getAllowedExtensions()));
+        return in_array(strtolower($this->getExtension()), explode(' ', strtolower($this->getAllowedExtensions())));
     }
 
     /**
      * Convert for example the memory_limit of php (example: 128M) to bytes.
      *
      * @param string $size_str
-     * @return float|int
+     * @return int|string
      * @since 2.0.0
      */
     public function returnBytes(string $size_str)
@@ -434,13 +303,15 @@ class Upload extends \Ilch\Controller\Base
      */
     public function save()
     {
-        $hash = uniqid() . $this->getName();
-        $this->setUrl($this->path.$hash.'.'.$this->getEnding());
-        $this->setUrlThumb($this->path.'thumb_'.$hash.'.'.$this->getEnding());
+        $name = $this->getName();
+        $extension = $this->getExtension();
+        $hash = uniqid() . $name;
+        $this->setUrl($this->path . $hash . '.' . $extension);
+        $this->setUrlThumb($this->path . 'thumb_' . $hash . '.' . $extension);
 
-        rename($this->path.$this->getName().'.'.$this->getEnding(), $this->path.$hash.'.'.$this->getEnding());
-        if (in_array($this->getEnding(), explode(' ', $this->types))) {
-            if (!$this->enoughFreeMemory($this->path.$hash.'.'.$this->getEnding())) {
+        rename($this->path . $name . '.' . $extension, $this->path . $hash . '.' . $extension);
+        if ($this->isAllowedExtension()) {
+            if (!$this->enoughFreeMemory($this->path . $hash . '.' . $extension)) {
                 return;
             }
             $this->createThumbnail();
@@ -465,7 +336,7 @@ class Upload extends \Ilch\Controller\Base
         $thumb->Thumbsize = 300;
         $thumb->Createthumb($this->getUrl(), 'file');
 
-        $this->setUrlThumb($this->path.'thumb_'.basename($this->getUrl()));
+        $this->setUrlThumb($this->path . 'thumb_' . basename($this->getUrl()));
         return true;
     }
 }

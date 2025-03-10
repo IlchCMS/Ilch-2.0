@@ -6,6 +6,7 @@
 
 namespace Modules\User\Controllers;
 
+use Ilch\Upload;
 use Modules\User\Mappers\Media as MediaMapper;
 use Ilch\Date as IlchDate;
 use Modules\User\Models\Media as MediaModel;
@@ -44,7 +45,7 @@ class Iframe extends \Ilch\Controller\Frontend
         $ilchdate = new IlchDate();
         $mediaMapper = new MediaMapper();
 
-        $allowedExtensions = $this->getConfig()->get('media_ext_img');
+        $allowedExtensions = $this->getConfig()->get('usergallery_filetypes');
         $this->getView()->set('allowedExtensions', $allowedExtensions);
 
         if (!is_writable(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath'))) {
@@ -56,9 +57,8 @@ class Iframe extends \Ilch\Controller\Frontend
                 mkdir(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId());
             }
 
-            $upload = new \Ilch\Upload();
+            $upload = new Upload();
             $upload->setFile($_FILES['upl']['name']);
-            $upload->setTypes($this->getConfig()->get('usergallery_filetypes'));
             $upload->setPath($this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId().'/');
             // Early return if extension is not allowed. Should normally already be done client-side.
             $upload->setAllowedExtensions($allowedExtensions);
@@ -71,7 +71,7 @@ class Iframe extends \Ilch\Controller\Frontend
             $model->setUserId($this->getUser()->getId());
             $model->setUrl($upload->getUrl());
             $model->setUrlThumb($upload->getUrlThumb());
-            $model->setEnding($upload->getEnding());
+            $model->setEnding($upload->getExtension());
             $model->setName($upload->getName());
             $model->setDatetime($ilchdate->toDb());
             $mediaMapper->save($model);

@@ -7,6 +7,7 @@
 
 namespace Modules\Media\Controllers\Admin;
 
+use Ilch\Upload;
 use Modules\Media\Mappers\Media as MediaMapper;
 use Modules\Media\Models\Media as MediaModel;
 use Ilch\Date as IlchDate;
@@ -58,7 +59,6 @@ class Import extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('import'), ['action' => 'index']);
 
         $directory = $this->getConfig()->get('media_uploadpath');
-        $filetypes = $this->getConfig()->get('media_ext_img');
         $directoriesAsCategories = $this->getConfig()->get('media_directoriesAsCategories');
         $globMediaArray = glob_recursive($directory . '*');
 
@@ -87,16 +87,16 @@ class Import extends \Ilch\Controller\Admin
                     }
                 }
 
-                $upload = new \Ilch\Upload();
+                $upload = new Upload();
                 $upload->setFile($media);
-                $upload->setTypes($filetypes);
+                $upload->setAllowedExtensions($this->getConfig()->get('media_ext_img'));
                 $upload->setPath(\dirname($media) . '/');
                 $upload->save();
 
                 $model = new MediaModel();
                 $model->setUrl($upload->getUrl());
                 $model->setUrlThumb($upload->getUrlThumb());
-                $model->setEnding($upload->getEnding());
+                $model->setEnding($upload->getExtension());
                 $model->setName($upload->getName());
                 $model->setDatetime($ilchdate->toDb());
                 if ($id) {
@@ -120,7 +120,7 @@ class Import extends \Ilch\Controller\Admin
         $newMediaArray = [];
         foreach ($globMediaArray as $globMedia) {
             if (is_file($globMedia)) {
-                $upload = new \Ilch\Upload();
+                $upload = new Upload();
                 $upload->setFile($globMedia);
 
                 $existsUrl = $mediaMapper->getByWhere(['url' => $globMedia]);
