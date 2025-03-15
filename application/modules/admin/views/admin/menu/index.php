@@ -173,27 +173,16 @@ function buildMenu($parentId, $menuData, View $view) {
         });
 
         function setChoices(selectedValues) {
-            let selectElement = $(accessElement);
-
             accessChoices.removeActiveItems();
 
             let values = [];
             if (typeof selectedValues === 'string') {
                 values = selectedValues.split(',').map(value => value.trim());
-
-
             } else if (typeof selectedValues === 'object') {
                 values = selectedValues.map(value => value.trim());
-
-
             }
-            selectElement.val(null).trigger('change');
-            selectElement.val(values).trigger('change');
-            accessChoices.setValue(values);
 
-            values.forEach(value => {
-                accessChoices.setChoiceByValue(value);
-            });
+            accessChoices.setChoiceByValue(values);
         }
 
         setChoices();
@@ -403,7 +392,7 @@ function buildMenu($parentId, $menuData, View $view) {
                 $('.dyn').html('');
             } else if ($(this).val() == '1') {
                 $('.dyn').html('<div class="row mb-3"><label for="href" class="col-xl-4 col-form-label"><?=$this->getTrans('address') ?></label>\n\
-                                <div class="col-xl-8"><input type="text" class="form-control" id="href" value="http://" /></div></div>\n\
+                                <div class="col-xl-8"><input type="text" class="form-control" id="href" value="https://" /></div></div>\n\
                                 <div class="row mb-3"><label for="target" class="col-xl-4 col-form-label"><?=$this->getTrans('target') ?></label>\n\
                                 <div class="col-xl-8"><select class="form-select" id="target"><?php foreach ($targets as $target => $translation) {
                     echo '<option value="' . $target . '">' . $this->getTrans($translation) . '</option>';
@@ -464,9 +453,7 @@ function buildMenu($parentId, $menuData, View $view) {
             $('#boxkey').val($(this).parent().find('.hidden_boxkey').val());
             $('#modulekey').val($(this).parent().find('.hidden_modulekey').val());
             $('#menukey').val($(this).parent().find('.hidden_menukey').val());
-
-            $(accessElement).val($(this).parent().find('.hidden_access').val());
-            setChoices($(accessElement).val());
+            setChoices($(this).parent().find('.hidden_access').val());
         });
     });
 </script>
