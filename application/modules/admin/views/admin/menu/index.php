@@ -1,4 +1,5 @@
 <?php
+
 use Ilch\View;
 use Modules\Admin\Mappers\Menu as MenuMapper;
 use Modules\Admin\Models\MenuItem;
@@ -16,7 +17,8 @@ $targets = [
     '_top' => 'targetTop',
 ];
 
-function rec(MenuMapper $menuMapper, View $view) {
+function rec(MenuMapper $menuMapper, View $view)
+{
     $items = $menuMapper->getMenuItems($view->get('menu')->getId());
 
     // prepare array with parent-child relations
@@ -33,7 +35,8 @@ function rec(MenuMapper $menuMapper, View $view) {
     buildMenu(0, $menuData, $view);
 }
 
-function buildMenu($parentId, $menuData, View $view) {
+function buildMenu($parentId, $menuData, View $view)
+{
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
     if (isset($menuData['parents'][$parentId])) {
@@ -64,6 +67,7 @@ function buildMenu($parentId, $menuData, View $view) {
                     <input type="hidden" class="hidden_siteid" name="items[' . $menuData['items'][$itemId]->getId() . '][siteid]" value="' . $menuData['items'][$itemId]->getSiteId() . '" />
                     <input type="hidden" class="hidden_boxkey" name="items[' . $menuData['items'][$itemId]->getId() . '][boxkey]" value="' . $boxKey . '" />
                     <input type="hidden" class="hidden_modulekey" name="items[' . $menuData['items'][$itemId]->getId() . '][modulekey]" value="' . $menuData['items'][$itemId]->getModuleKey() . '" />
+                    <input type="hidden" class="hidden_menukey" name="items[' . $menuData['items'][$itemId]->getId() . '][menukey]" value="' . $menuData['items'][$itemId]->getParentId() . '" />
                     <input type="hidden" class="hidden_access" name="items[' . $menuData['items'][$itemId]->getId() . '][access]" value="' . $menuData['items'][$itemId]->getAccess() . '" />
                     <span></span>
                 </span>
