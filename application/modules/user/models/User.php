@@ -37,16 +37,16 @@ class User extends \Ilch\Model
     /**
      * The firstname of the user.
      *
-     * @var string
+     * @var string|null
      */
-    protected string $firstname = '';
+    protected ?string $firstname = null;
 
     /**
      * The lastname of the user.
      *
-     * @var string
+     * @var string|null
      */
-    protected string $lastname = '';
+    protected ?string $lastname = null;
 
     /**
      * The gender of the user.
@@ -58,9 +58,9 @@ class User extends \Ilch\Model
     /**
      * The city of the user.
      *
-     * @var string
+     * @var string|null
      */
-    protected string $city = '';
+    protected ?string $city = null;
 
     /**
      * The \Ilch\Date of when the user got created.
@@ -72,16 +72,16 @@ class User extends \Ilch\Model
     /**
      * The avatar of the user.
      *
-     * @var string
+     * @var string|null
      */
-    protected string $avatar = '';
+    protected ?string $avatar = null;
 
     /**
      * The signature of the user.
      *
-     * @var string
+     * @var string|null
      */
-    protected string $signature = '';
+    protected ?string $signature = null;
 
     /**
      * The password of the user.
@@ -95,36 +95,36 @@ class User extends \Ilch\Model
      *
      * @var string
      */
-    protected string $locale = '';
+    protected $locale;
 
     /**
      * The opt_mail of the user.
      *
-     * @var int
+     * @var int|null
      */
-    protected int $opt_mail = 1;
+    protected ?int $opt_mail = null;
 
     /**
      * The opt_comments of the user.
      * Whether the user allows comments on the profile or not.
      *
-     * @var int
+     * @var int|null
      */
-    protected int $opt_comments = 1;
+    protected ?int $opt_comments = null;
 
     /**
      * The admin_comments of the user.
      * Whether the admin allows comments on the profile of this user or not.
-     * @var int
+     * @var int|null
      */
-    protected int $admin_comments = 1;
+    protected ?int $admin_comments = null;
 
     /**
      * The opt_gallery of the user.
      *
-     * @var int
+     * @var int|null
      */
-    protected int $opt_gallery = 1;
+    protected ?int $opt_gallery = null;
 
     /**
      * The \Ilch\Date of when the user got created.
@@ -291,9 +291,9 @@ class User extends \Ilch\Model
     /**
      * Returns the locale of the user.
      *
-     * @return string
+     * @return string|null
      */
-    public function getLocale(): string
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
@@ -314,9 +314,9 @@ class User extends \Ilch\Model
     /**
      * Returns the opt_mail of the user.
      *
-     * @return int
+     * @return int|null
      */
-    public function getOptMail(): int
+    public function getOptMail(): ?int
     {
         return $this->opt_mail;
     }
@@ -338,9 +338,9 @@ class User extends \Ilch\Model
      * Returns the opt_comments of the user.
      * Whether the user allows comments on the profile or not.
      *
-     * @return int
+     * @return int|null
      */
-    public function getOptComments(): int
+    public function getOptComments(): ?int
     {
         return $this->opt_comments;
     }
@@ -362,9 +362,9 @@ class User extends \Ilch\Model
      * Get admin_comments of the user.
      * Whether the admin allows comments on the profile of this user or not.
      *
-     * @return int
+     * @return int|null
      */
-    public function getAdminComments(): int
+    public function getAdminComments(): ?int
     {
         return $this->admin_comments;
     }
@@ -385,9 +385,9 @@ class User extends \Ilch\Model
     /**
      * Returns the opt_gallery of the user.
      *
-     * @return int
+     * @return int|null
      */
-    public function getOptGallery(): int
+    public function getOptGallery(): ?int
     {
         return $this->opt_gallery;
     }
@@ -622,9 +622,9 @@ class User extends \Ilch\Model
     /**
      * Returns the firstname of the user.
      *
-     * @return string
+     * @return string|null
      */
-    public function getFirstName(): string
+    public function getFirstName(): ?string
     {
         return $this->firstname;
     }
@@ -645,9 +645,9 @@ class User extends \Ilch\Model
     /**
      * Returns the lastname of the user.
      *
-     * @return string
+     * @return string|null
      */
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
         return $this->lastname;
     }
@@ -691,9 +691,9 @@ class User extends \Ilch\Model
     /**
      * Returns the avatar of the user.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAvatar(): string
+    public function getAvatar(): ?string
     {
         return $this->avatar;
     }
@@ -714,9 +714,9 @@ class User extends \Ilch\Model
     /**
      * Returns the signature of the user.
      *
-     * @return string
+     * @return string|null
      */
-    public function getSignature(): string
+    public function getSignature(): ?string
     {
         return $this->signature;
     }
@@ -737,9 +737,9 @@ class User extends \Ilch\Model
     /**
      * Returns the city of the user.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }

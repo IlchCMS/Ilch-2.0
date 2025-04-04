@@ -338,50 +338,41 @@ class User extends \Ilch\Mapper
     public function save(UserModel $user): int
     {
         $fields = [];
-        $name = $user->getName();
-        $password = $user->getPassword();
-        $email = $user->getEmail();
-        $dateConfirmed = $user->getDateConfirmed();
-        $dateLastActivity = $user->getDateLastActivity();
-        $dateCreated = $user->getDateCreated();
-        $confirmed = $user->getConfirmed();
-        $confirmedCode = $user->getConfirmedCode();
-        $selector = $user->getSelector();
 
-        if (!empty($name)) {
+        if (!empty($user->getName())) {
             $fields['name'] = $user->getName();
         }
 
-        if (!empty($password)) {
+        if (!empty($user->getPassword())) {
             $fields['password'] = $user->getPassword();
         }
 
-        if (!empty($email)) {
+        if (!empty($user->getEmail())) {
             $fields['email'] = $user->getEmail();
         }
 
-        if (!empty($dateCreated)) {
+        if (!empty($user->getDateCreated())) {
             $fields['date_created'] = $user->getDateCreated();
         }
 
-        if (!empty($dateConfirmed)) {
+        if (!empty($user->getDateConfirmed())) {
             $fields['date_confirmed'] = $user->getDateConfirmed();
         }
 
-        if (!empty($dateLastActivity)) {
+        if (!empty($user->getDateLastActivity())) {
             $fields['date_last_activity'] = $user->getDateLastActivity();
         }
 
-        if ($confirmed !== null) {
-            $fields['confirmed'] = $confirmed;
+        if ($user->getConfirmed() !== null) {
+            $fields['confirmed'] = $user->getConfirmed();
         }
 
-        if ($confirmedCode !== null) {
-            $fields['confirmed_code'] = $confirmedCode;
+        if ($user->getConfirmedCode() !== null) {
+            $fields['confirmed_code'] = $user->getConfirmedCode();
         }
 
-        if ($selector !== null) {
-            $fields['selector'] = $selector;
+        if ($user->getSelector() !== null) {
+            $fields['selector'] = $user->getSelector();
         }
 
         if ($user->getExpires() !== null) {
@@ -415,17 +406,13 @@ class User extends \Ilch\Mapper
             ->fetchCell();
 
         if ($userId) {
-            /*
-             * User does exist already, update.
-             */
+            // User does exist already, update.
             $this->db()->update('users')
                 ->values($fields)
                 ->where(['id' => $userId])
                 ->execute();
         } else {
-            /*
-             * User does not exist yet, insert.
-             */
+            // User does not exist yet, insert.
             $userId = $this->db()->insert('users')
                 ->values($fields)
                 ->execute();
