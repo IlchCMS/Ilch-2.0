@@ -1229,6 +1229,10 @@ class Config extends \Ilch\Config\Install
                 // Update vendor folder to remove harvesthq/chosen.
                 replaceVendorDirectory();
                 break;
+            case "2.2.10":
+                // Update vendor folder to update Bootstrap to version 5.3.4.
+                replaceVendorDirectory();
+                break;
         }
 
         return 'Update function executed.';
