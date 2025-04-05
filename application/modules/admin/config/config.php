@@ -1230,7 +1230,7 @@ class Config extends \Ilch\Config\Install
                 replaceVendorDirectory();
                 break;
             case "2.2.10":
-                // Update vendor folder to update Bootstrap to version 5.3.4.
+                // Update vendor folder to update Bootstrap to version 5.3.5.
                 replaceVendorDirectory();
                 break;
         }
