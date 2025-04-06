@@ -11,10 +11,10 @@ class View extends Design\Base
     /**
      * Loads a view script.
      *
-     * @param  string $viewScript
+     * @param string $viewScript
      * @return string
      */
-    public function loadScript($viewScript)
+    public function loadScript(string $viewScript): string
     {
         ob_start();
 
@@ -29,9 +29,9 @@ class View extends Design\Base
      * Loads a view file.
      *
      * @param string $file
-     * @param mixed[] $data
+     * @param array $data
      */
-    public function load($file, $data = [])
+    public function load(string $file, array $data = [])
     {
         $request = $this->getRequest();
         $view = new \Ilch\View(
@@ -52,7 +52,7 @@ class View extends Design\Base
      * @param string $deleteKey
      * @return string
      */
-    public function getSaveBar($saveKey = 'saveButton', $nameKey = null, $deleteKey = '')
+    public function getSaveBar(string $saveKey = 'saveButton', string $nameKey = null, string $deleteKey = ''): string
     {
         $html = '<div class="content_savebox">
                     <button type="submit" class="save_button btn btn-secondary" name="save'.$nameKey.'" value="save">
@@ -76,7 +76,7 @@ class View extends Design\Base
      * @param array $actions
      * @return string
      */
-    public function getListBar($actions = [])
+    public function getListBar(array $actions = []): string
     {
         $html = '<div class="content_savebox">
                     <input type="hidden" class="content_savebox_hidden" name="action" value="" />
@@ -97,7 +97,7 @@ class View extends Design\Base
      * @param array $url
      * @return string
      */
-    public function getEditIcon($url)
+    public function getEditIcon(array $url): string
     {
         return '<a href="'.$this->getUrl($url).'" title="'.$this->getTrans('edit').'"><span class="fa-solid fa-pen-to-square text-success"></span></a>';
     }
@@ -108,7 +108,7 @@ class View extends Design\Base
      * @param array $url
      * @return string
      */
-    public function getDeleteIcon($url)
+    public function getDeleteIcon(array $url): string
     {
         return '<a href="'.$this->getUrl($url, null, true).'" title="'.$this->getTrans('delete').'" class="delete_button"><span class="fa-regular fa-trash-can text-danger"></span></a>';
     }
@@ -118,9 +118,9 @@ class View extends Design\Base
      *
      * @param string $name
      * @param string $id
-     * @return integer
+     * @return string
      */
-    public function getDeleteCheckbox($name, $id)
+    public function getDeleteCheckbox(string $name, string $id): string
     {
         return '<input type="checkbox" name="'.$name.'[]" value="'.$id.'" />';
     }
@@ -131,7 +131,7 @@ class View extends Design\Base
      * @param string $childs
      * @return string
      */
-    public function getCheckAllCheckbox($childs)
+    public function getCheckAllCheckbox(string $childs): string
     {
         return '<input type="checkbox" class="check_all" data-childs="'.$childs.'" />';
     }
@@ -139,12 +139,12 @@ class View extends Design\Base
     /**
      * Returns the input data from the last request.
      *
-     * @param string $key     Array key
+     * @param string|null $key     Array key
      * @param string $default Default value if key not found
      *
      * @return mixed
      */
-    public function originalInput($key = null, $default = '')
+    public function originalInput(string $key = null, string $default = '')
     {
         return $this->getRequest()->getOldInput($key, $default);
     }
@@ -154,7 +154,7 @@ class View extends Design\Base
      *
      * @return \Ilch\Validation\ErrorBag
      */
-    public function validation()
+    public function validation(): Validation\ErrorBag
     {
         return $this->getRequest()->getErrors();
     }
