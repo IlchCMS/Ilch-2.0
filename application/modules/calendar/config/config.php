@@ -266,7 +266,7 @@ class Config extends \Ilch\Config\Install
                 // no break
             case "1.11.3":
                 // Remove old version of fullcalendar as this version comes with version 6.1.17.
-                removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar-6.1.17/');
+                removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar-6.1.15/');
                 // no break
         }
 
