@@ -71,8 +71,8 @@ function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
     /** @var \Modules\Downloads\Mappers\File $fileMapper */
     $fileMapper = $obj->get('fileMapper');
 
-    $subItems = $downloadsMapper->getDownloadsItemsByParent('1', $item->getId());
-    $fileCount = $fileMapper->getCountOfFilesByCategory($item->getId());
+    $subItems = $downloadsMapper->getDownloadsItemsByParent($item->getId());
+    $fileCount = $fileMapper->getCountOfFilesByItemId($item->getId());
 
     if ($item->getType() === 0) {
         echo '<div class="page-header">
@@ -80,7 +80,7 @@ function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
               </h4><hr>';
     }
     if ($item->getType() != 0) {
-        $lastFile = $fileMapper->getLastFileByDownloadsId($item->getId()) ;
+        $lastFile = $fileMapper->getLastFileByItemId($item->getId()) ;
         $image = $obj->getBaseUrl('application/modules/media/static/img/nomedia.png');
         if ($lastFile && $lastFile->getFileImage() != '') {
             $image = $obj->getBaseUrl($lastFile->getFileImage()) ;

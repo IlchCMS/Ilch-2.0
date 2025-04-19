@@ -76,7 +76,7 @@ class Downloads extends Admin
                 $catId = $this->getRequest()->getParam('id');
                 $model = new FileModel();
                 $model->setFileId($fileId);
-                $model->setCat($catId);
+                $model->setItemId($catId);
                 $model->setFileTitle($file->getName());
                 $fileMapper->save($model);
             }
@@ -84,7 +84,7 @@ class Downloads extends Admin
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('downloads_downloadsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('downloads_downloadsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
-        $this->getView()->set('files', $fileMapper->getFileByDownloadsId($id, $pagination));
+        $this->getView()->set('files', $fileMapper->getFilesByItemId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
         $this->getView()->set('downloadsTitle', $downloadsTitle->getTitle());
     }

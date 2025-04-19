@@ -47,11 +47,11 @@ class File extends Model
     protected $file_image;
 
     /**
-     * The cat of the file.
+     * The item id of the file.
      *
      * @var string
      */
-    protected $cat;
+    protected $item_id;
 
     /**
      * The visits of the file.
@@ -133,13 +133,13 @@ class File extends Model
     }
 
     /**
-     * Gets the cat of the file.
+     * Gets the item id of the file.
      *
      * @return string
      */
-    public function getCat(): string
+    public function getItemId(): string
     {
-        return $this->cat;
+        return $this->item_id;
     }
 
     /**
@@ -223,13 +223,13 @@ class File extends Model
     }
 
     /**
-     * Sets the cat of the file.
+     * Sets the item id of the file.
      *
-     * @param string $cat
+     * @param int $itemId
      */
-    public function setCat(string $cat)
+    public function setItemId(int $itemId)
     {
-        $this->cat = $cat;
+        $this->item_id = $itemId;
     }
 
     /**

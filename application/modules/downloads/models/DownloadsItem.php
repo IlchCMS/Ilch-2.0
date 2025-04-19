@@ -38,13 +38,6 @@ class DownloadsItem extends Model
     protected $type;
 
     /**
-     * DownloadsId of the item.
-     *
-     * @var int
-     */
-    protected $downloadsId;
-
-    /**
      * ParentId of the item.
      *
      * @var int
@@ -123,26 +116,6 @@ class DownloadsItem extends Model
     public function setType(int $type)
     {
         $this->type = $type;
-    }
-
-    /**
-     * Gets the Downloads id.
-     *
-     * @return int|null
-     */
-    public function getDownloadsId(): ?int
-    {
-        return $this->downloadsId;
-    }
-
-    /**
-     * Sets the Downloads id.
-     *
-     * @param int $id
-     */
-    public function setDownloadsId(int $id)
-    {
-        $this->downloadsId = $id;
     }
 
     /**

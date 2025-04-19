@@ -13,18 +13,48 @@ use Modules\Downloads\Models\DownloadsItem;
 class Downloads extends Mapper
 {
     /**
+     * Gets all Downloads items by Downloads id.
+     *
+     * @return array|null
+     */
+    public function getDownloadsItems(): ?array
+    {
+        $items = [];
+        $itemRows = $this->db()->select('*')
+            ->from('downloads_items')
+            ->order(['sort' => 'ASC'])
+            ->execute()
+            ->fetchRows();
+
+        if (empty($itemRows)) {
+            return null;
+        }
+
+        foreach ($itemRows as $itemRow) {
+            $itemModel = new DownloadsItem();
+            $itemModel->setId($itemRow['id']);
+            $itemModel->setType($itemRow['type']);
+            $itemModel->setTitle($itemRow['title']);
+            $itemModel->setDesc($itemRow['description']);
+            $itemModel->setParentId($itemRow['parent_id']);
+            $items[] = $itemModel;
+        }
+
+        return $items;
+    }
+
+    /**
      * Gets all Downloads items by parent item id.
      *
-     * @param int $downloadsId
      * @param int $itemId
      * @return array|null
      */
-    public function getDownloadsItemsByParent(int $downloadsId, int $itemId): ?array
+    public function getDownloadsItemsByParent(int $itemId): ?array
     {
         $items = [];
         $itemRows = $this->db()->select('*')
                 ->from('downloads_items')
-                ->where(['downloads_id' => $downloadsId, 'parent_id' => $itemId])
+                ->where(['parent_id' => $itemId])
                 ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchRows();
@@ -40,41 +70,6 @@ class Downloads extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemId);
-            $itemModel->setDownloadsId($downloadsId);
-            $items[] = $itemModel;
-        }
-
-        return $items;
-    }
-
-    /**
-     * Gets all Downloads items by type.
-     *
-     * @param int $type
-     * @return array|null
-     */
-    public function getDownloadsCatItem(int $type): ?array
-    {
-        $items = [];
-        $itemRows = $this->db()->select('*')
-                ->from('downloads_items')
-                ->where(['type' => $type])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
-
-        if (empty($itemRows)) {
-            return null;
-        }
-
-        foreach ($itemRows as $itemRow) {
-            $itemModel = new DownloadsItem();
-            $itemModel->setId($itemRow['id']);
-            $itemModel->setType($itemRow['type']);
-            $itemModel->setTitle($itemRow['title']);
-            $itemModel->setDesc($itemRow['description']);
-            $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setDownloadsId($itemRow['downloads_id']);
             $items[] = $itemModel;
         }
 
@@ -106,7 +101,6 @@ class Downloads extends Mapper
         $itemModel->setTitle($itemRows['title']);
         $itemModel->setDesc($itemRows['description']);
         $itemModel->setParentId($itemRows['parent_id']);
-        $itemModel->setDownloadsId($itemRows['downloads_id']);
 
         return $itemModel;
     }
@@ -121,7 +115,6 @@ class Downloads extends Mapper
     {
         $fields = [
             'title' => $downloadsItem->getTitle(),
-            'downloads_id' => $downloadsItem->getDownloadsId(),
             'sort' => $downloadsItem->getSort(),
             'parent_id' => $downloadsItem->getParentId(),
             'type' => $downloadsItem->getType(),
@@ -164,39 +157,5 @@ class Downloads extends Mapper
         $this->db()->delete('downloads_items')
             ->where(['id' => $downloadsItem->getId()])
             ->execute();
-    }
-
-    /**
-     * Gets all Downloads items by Downloads id.
-     *
-     * @param int $downloadsId
-     * @return array|null
-     */
-    public function getDownloadsItems(int $downloadsId): ?array
-    {
-        $items = [];
-        $itemRows = $this->db()->select('*')
-                ->from('downloads_items')
-                ->where(['downloads_id' => $downloadsId])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
-
-        if (empty($itemRows)) {
-            return null;
-        }
-
-        foreach ($itemRows as $itemRow) {
-            $itemModel = new DownloadsItem();
-            $itemModel->setId($itemRow['id']);
-            $itemModel->setType($itemRow['type']);
-            $itemModel->setTitle($itemRow['title']);
-            $itemModel->setDesc($itemRow['description']);
-            $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setDownloadsId($downloadsId);
-            $items[] = $itemModel;
-        }
-
-        return $items;
     }
 }

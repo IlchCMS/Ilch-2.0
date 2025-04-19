@@ -52,7 +52,7 @@ class Index extends Admin
             if ($this->getRequest()->getPost('save')) {
                 $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
                 $items = $this->getRequest()->getPost('items');
-                $oldItems = $downloadsMapper->getDownloadsItems(1);
+                $oldItems = $downloadsMapper->getDownloadsItems();
 
                 /*
                  * Deletes old entries from database.
@@ -83,7 +83,6 @@ class Index extends Admin
                             $downloadsItem->setId($item['id']);
                         }
 
-                        $downloadsItem->setDownloadsId(1);
                         $downloadsItem->setType($item['type']);
                         $downloadsItem->setTitle($item['title']);
                         $downloadsItem->setDesc($item['desc']);
@@ -120,7 +119,7 @@ class Index extends Admin
             $this->redirect(['action' => 'index']);
         }
 
-        $downloadsItems = $downloadsMapper->getDownloadsItemsByParent(1, 0);
+        $downloadsItems = $downloadsMapper->getDownloadsItemsByParent(0);
         $this->getView()->set('downloadsItems', $downloadsItems);
         $this->getView()->set('downloadsMapper', $downloadsMapper);
         $this->getView()->set('fileMapper', $fileMapper);

@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'downloads',
-        'version' => '1.14.2',
+        'version' => '1.14.3',
         'icon_small' => 'fa-regular fa-circle-down',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -49,21 +49,22 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_downloads_files` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `file_id` VARCHAR(150) NOT NULL,
+                  `file_id` INT(11) NOT NULL,
                   `file_title` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `file_description` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `file_image` VARCHAR(255) NOT NULL DEFAULT \'\',
-                  `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
+                  `item_id` INT(11) NOT NULL,
                   `visits` INT(11) NOT NULL DEFAULT 0,
-                  PRIMARY KEY (`id`)
+                  PRIMARY KEY (`id`) USING BTREE,
+                  INDEX `FK_[prefix]_downloads_files_[prefix]_downloads_items` (`item_id`) USING BTREE,
+                  CONSTRAINT `FK_[prefix]_downloads_files_[prefix]_downloads_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_downloads_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-                
+
                 CREATE TABLE IF NOT EXISTS `[prefix]_downloads_items` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `downloads_id` INT(11) NOT NULL,
                   `sort` INT(11) NULL DEFAULT 0,
                   `parent_id` INT(11) NULL DEFAULT 0,
-                  `type` INT(11) NOT NULL,
+                  `type` TINYINT(1) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
                   `description` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
@@ -104,6 +105,44 @@ class Config extends \Ilch\Config\Install
             case "1.13.4":
             case "1.13.5":
             case "1.14.0":
+            case "1.14.1":
+            case "1.14.2":
+                // Remove the unused column "downloads_id" of the "downloads_items" table. This one always had the value 1.
+                $this->db()->query('ALTER TABLE `[prefix]_downloads_items` DROP COLUMN `downloads_id`;');
+
+                // Change the data type of the "type" column in the "downloads_items" table from "INT(11)" to "TINYINT(1)".
+                $this->db()->query('ALTER TABLE `[prefix]_downloads_items` MODIFY COLUMN `type` TINYINT(1) NOT NULL;');
+
+                // Change the data type of the "cat" column in the "downloads_files" table from "MEDIUMINT(9)" to "INT(11)". Relation with id column of the downloads_items table.
+                // Rename the column "cat" to a more fitting name.
+                $this->db()->query('ALTER TABLE `[prefix]_downloads_files` CHANGE COLUMN `cat` `item_id` INT(11) NOT NULL;');
+
+                // Change the data type of the "file_id" column in the "downloads_files" table from "VARCHAR(150)" to "INT(11)". Relation with id column of the media table.
+                $this->db()->query('ALTER TABLE `[prefix]_downloads_files` MODIFY COLUMN `file_id` INT(11) NOT NULL;');
+
+                // Delete (orphaned) rows with an "item_id" that does not exist in the "downloads_items" table.
+                $filesItemIds = $this->db()->select('item_id')
+                    ->from('downloads_files')
+                    ->execute()
+                    ->fetchList();
+
+                $itemsIds = $this->db()->select('id')
+                    ->from('downloads_items')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($filesItemIds ?? [], $itemsIds ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('downloads_files')
+                        ->where(['item_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Add FKC to the "downloads_files" table.
+                if (!$this->db()->ifForeignKeyConstraintExists('downloads_files', 'FK_[prefix]_downloads_files_[prefix]_downloads_items')) {
+                    $this->db()->query('ALTER TABLE `[prefix]_downloads_files` ADD CONSTRAINT `FK_[prefix]_downloads_files_[prefix]_downloads_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_downloads_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                }
+                // no break
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

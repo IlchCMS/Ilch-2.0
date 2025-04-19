@@ -16,8 +16,8 @@ function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
     /** @var \Modules\Downloads\Mappers\File $fileMapper */
     $fileMapper = $obj->get('fileMapper');
 
-    $subItems = $downloadsMapper->getDownloadsItemsByParent('1', $item->getId());
-    $fileCount = $fileMapper->getCountOfFilesByCategory($item->getId());
+    $subItems = $downloadsMapper->getDownloadsItemsByParent($item->getId());
+    $fileCount = $fileMapper->getCountOfFilesByItemId($item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
     if (empty($subItems)) {
@@ -122,7 +122,7 @@ function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
             </div>
         </div>
         <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
-        <?=$this->getSaveBar('saveButton') ?>
+        <?=$this->getSaveBar() ?>
     </div>
 </form>
 
