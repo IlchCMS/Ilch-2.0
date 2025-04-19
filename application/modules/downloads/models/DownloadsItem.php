@@ -19,44 +19,44 @@ class DownloadsItem extends Model
     /**
      * Id of the item.
      *
-     * @var int
+     * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * Sort of the item.
      *
      * @var int
      */
-    protected $sort;
+    protected int $sort = 0;
 
     /**
      * Type of the item.
      *
-     * @var int
+     * @var int|null
      */
-    protected $type;
+    protected ?int $type = null;
 
     /**
      * ParentId of the item.
      *
      * @var int
      */
-    protected $parentId;
+    protected int $parentId = 0;
 
     /**
      * Title of the item.
      *
-     * @var string
+     * @var string|null
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * Description of the item.
      *
-     * @var string
+     * @var string|null
      */
-    protected $desc;
+    protected ?string $desc = null;
 
     /**
      * Gets the id.

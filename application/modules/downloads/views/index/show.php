@@ -30,11 +30,6 @@ $pagination = $this->get('pagination');
 
     .card-footer {
         padding: 5px !important;
-        color: #BBB;
-    }
-
-    .card-footer:hover {
-        color: #000;
     }
 
     .thumbnail {

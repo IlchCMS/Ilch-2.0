@@ -137,7 +137,7 @@ class File extends Mapper
     }
 
     /**
-     * Inserts or updates File entry.
+     * Inserts or updates file entry.
      *
      * @param FileModel $model
      */

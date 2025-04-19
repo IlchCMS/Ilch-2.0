@@ -45,18 +45,14 @@ class Index extends Admin
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
 
-        /*
-         * Saves the item tree to database.
-         */
+        // Saves the item tree to database.
         if ($this->getRequest()->isPost()) {
             if ($this->getRequest()->getPost('save')) {
                 $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
                 $items = $this->getRequest()->getPost('items');
                 $oldItems = $downloadsMapper->getDownloadsItems();
 
-                /*
-                 * Deletes old entries from database.
-                 */
+                // Deletes old entries from database.
                 if (!empty($oldItems)) {
                     foreach ($oldItems as $oldItem) {
                         if (!isset($items[$oldItem->getId()])) {
