@@ -10,8 +10,8 @@
     <div id='calendar'></div>
 </div>
 
-<script src="<?=$this->getModuleUrl('static/js/fullcalendar-6.1.15/dist/index.global.min.js') ?>"></script>
-<script src="<?=$this->getModuleUrl('static/js/fullcalendar-6.1.15/packages/core/locales-all.global.min.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar-6.1.17/dist/index.global.min.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar-6.1.17/packages/core/locales-all.global.min.js') ?>"></script>
 <script>
     if (typeof languagecalendar === 'undefined') {
         var languagecalendar = '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>';
