@@ -53,7 +53,7 @@ tbody tr td {
                         <?php endif; ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_downloads', $file->getId()) ?></td>
-                            <td><?=$this->getEditIcon(['controller' => 'file', 'action' => 'treatfile', 'downloads' => $file->getCat(), 'id' => $file->getId()]) ?></td>
+                            <td><?=$this->getEditIcon(['controller' => 'file', 'action' => 'treatfile', 'downloads' => $file->getItemId(), 'id' => $file->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $file->getId(), 'downloads' => $this->getRequest()->getParam('id')]) ?></td>
                             <td><img class="file img-thumbnail img-fluid" src="<?=$image ?>" alt="<?=$this->escape($file->getFileTitle()) ?>" />
                             </td>

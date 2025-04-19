@@ -21,7 +21,7 @@ class Index extends Frontend
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
 
-        $downloadsItems = $downloadsMapper->getDownloadsItemsByParent(1, 0);
+        $downloadsItems = $downloadsMapper->getDownloadsItemsByParent(0);
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('downloads'));
@@ -60,7 +60,7 @@ class Index extends Frontend
         $pagination->setRowsPerPage(!$this->getConfig()->get('downloads_downloadsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('downloads_downloadsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('files', $fileMapper->getFileByDownloadsId($id, $pagination));
+        $this->getView()->set('files', $fileMapper->getFilesByItemId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
     }
 
@@ -79,7 +79,7 @@ class Index extends Frontend
                 ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index']);
 
         if ($file !== null) {
-            $download = $downloadsMapper->getDownloadsById($file->getCat());
+            $download = $downloadsMapper->getDownloadsById($file->getItemId());
 
             $this->getLayout()->getTitle()
                     ->add($download->getTitle())

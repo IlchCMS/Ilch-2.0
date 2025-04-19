@@ -22,7 +22,7 @@ class File extends Mapper
      */
     public function getFileById(int $id): ?FileModel
     {
-        $fileRow = $this->db()->select(['g.file_id', 'g.cat', 'fileid' => 'g.id', 'g.visits', 'g.file_title', 'g.file_description', 'g.file_image', 'm.url', 'm.id', 'm.url_thumb'])
+        $fileRow = $this->db()->select(['g.file_id', 'g.item_id', 'fileid' => 'g.id', 'g.visits', 'g.file_title', 'g.file_description', 'g.file_image', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'downloads_files'])
             ->join(['m' => 'media'], 'g.file_id = m.id', 'LEFT')
             ->where(['g.id' => $id])
@@ -40,24 +40,24 @@ class File extends Mapper
         $entryModel->setFileImage($fileRow['file_image']);
         $entryModel->setFileTitle($fileRow['file_title']);
         $entryModel->setFileDesc($fileRow['file_description']);
-        $entryModel->setCat($fileRow['cat']);
+        $entryModel->setItemId($fileRow['item_id']);
         $entryModel->setVisits($fileRow['visits']);
 
         return $entryModel;
     }
 
     /**
-     * Get the last file by it's id.
+     * Get the last file by the item id.
      *
-     * @param int $id
+     * @param int $itemId
      * @return FileModel|null
      */
-    public function getLastFileByDownloadsId(int $id): ?FileModel
+    public function getLastFileByItemId(int $itemId): ?FileModel
     {
-        $fileRow = $this->db()->select(['g.file_id', 'g.cat', 'fileid' => 'g.id', 'g.visits', 'g.file_title', 'g.file_description', 'g.file_image', 'm.url', 'm.id', 'm.url_thumb'])
+        $fileRow = $this->db()->select(['g.file_id', 'g.item_id', 'fileid' => 'g.id', 'g.visits', 'g.file_title', 'g.file_description', 'g.file_image', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'downloads_files'])
             ->join(['m' => 'media'], 'g.file_id = m.id', 'LEFT')
-            ->where(['g.cat' => $id])
+            ->where(['g.item_id' => $itemId])
             ->order(['g.id' => 'DESC'])
             ->limit(1)
             ->execute()
@@ -79,52 +79,33 @@ class File extends Mapper
     }
 
     /**
-     * Get the count of files by category.
+     * Get the count of files by the item id.
      *
-     * @param int $catId id of the category
+     * @param int $itemId id of the item
      * @return int count of files
      */
-    public function getCountOfFilesByCategory(int $catId): int
+    public function getCountOfFilesByItemId(int $itemId): int
     {
         return (int)$this->db()->select('Count(*)')
             ->from(['downloads_files'])
-            ->where(['cat' => $catId])
+            ->where(['item_id' => $itemId])
             ->execute()
             ->fetchCell();
     }
 
     /**
-     * Inserts or updates File entry.
+     * Get the files by the item id.
      *
-     * @param FileModel $model
-     */
-    public function save(FileModel $model)
-    {
-        if ($model->getId()) {
-            $this->db()->update('downloads_files')
-                ->values(['file_id' => $model->getFileId(), 'cat' => $model->getCat(), 'file_title' => $model->getFileTitle()])
-                ->where(['id' => $model->getId()])
-                ->execute();
-        } else {
-            $this->db()->insert('downloads_files')
-                ->values(['file_id' => $model->getFileId(), 'cat' => $model->getCat(), 'file_title' => $model->getFileTitle()])
-                ->execute();
-        }
-    }
-
-    /**
-     * Get files by category id.
-     *
-     * @param int $id category id
+     * @param int $itemId id of the item
      * @param Pagination|null $pagination
      * @return array
      */
-    public function getFileByDownloadsId(int $id, ?Pagination $pagination = null): array
+    public function getFilesByItemId(int $itemId, ?Pagination $pagination = null): array
     {
-        $sql = $this->db()->select(['g.cat', 'fileid' => 'g.id', 'g.file_title', 'g.file_image', 'g.file_description', 'g.visits', 'm.url', 'm.url_thumb'])
+        $sql = $this->db()->select(['g.item_id', 'fileid' => 'g.id', 'g.file_title', 'g.file_image', 'g.file_description', 'g.visits', 'm.url', 'm.url_thumb'])
             ->from(['g' => 'downloads_files'])
             ->join(['m' => 'media'], 'g.file_image = m.url', 'LEFT')
-            ->where(['g.cat' => $id])
+            ->where(['g.item_id' => $itemId])
             ->order(['g.id' => 'DESC']);
 
         if ($pagination !== null) {
@@ -148,11 +129,30 @@ class File extends Mapper
             $fileModel->setFileImage($entry['url_thumb'] ?? '');
             $fileModel->setFileDesc($entry['file_description']);
             $fileModel->setVisits($entry['visits']);
-            $fileModel->setCat($entry['cat']);
+            $fileModel->setItemId($entry['item_id']);
             $entries[] = $fileModel;
         }
 
         return $entries;
+    }
+
+    /**
+     * Inserts or updates file entry.
+     *
+     * @param FileModel $model
+     */
+    public function save(FileModel $model)
+    {
+        if ($model->getId()) {
+            $this->db()->update('downloads_files')
+                ->values(['file_id' => $model->getFileId(), 'item_id' => $model->getItemId(), 'file_title' => $model->getFileTitle()])
+                ->where(['id' => $model->getId()])
+                ->execute();
+        } else {
+            $this->db()->insert('downloads_files')
+                ->values(['file_id' => $model->getFileId(), 'item_id' => $model->getItemId(), 'file_title' => $model->getFileTitle()])
+                ->execute();
+        }
     }
 
     /**

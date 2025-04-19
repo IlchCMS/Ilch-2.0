@@ -19,51 +19,44 @@ class DownloadsItem extends Model
     /**
      * Id of the item.
      *
-     * @var int
+     * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * Sort of the item.
      *
      * @var int
      */
-    protected $sort;
+    protected int $sort = 0;
 
     /**
      * Type of the item.
      *
-     * @var int
+     * @var int|null
      */
-    protected $type;
-
-    /**
-     * DownloadsId of the item.
-     *
-     * @var int
-     */
-    protected $downloadsId;
+    protected ?int $type = null;
 
     /**
      * ParentId of the item.
      *
      * @var int
      */
-    protected $parentId;
+    protected int $parentId = 0;
 
     /**
      * Title of the item.
      *
-     * @var string
+     * @var string|null
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * Description of the item.
      *
-     * @var string
+     * @var string|null
      */
-    protected $desc;
+    protected ?string $desc = null;
 
     /**
      * Gets the id.
@@ -123,26 +116,6 @@ class DownloadsItem extends Model
     public function setType(int $type)
     {
         $this->type = $type;
-    }
-
-    /**
-     * Gets the Downloads id.
-     *
-     * @return int|null
-     */
-    public function getDownloadsId(): ?int
-    {
-        return $this->downloadsId;
-    }
-
-    /**
-     * Sets the Downloads id.
-     *
-     * @param int $id
-     */
-    public function setDownloadsId(int $id)
-    {
-        $this->downloadsId = $id;
     }
 
     /**

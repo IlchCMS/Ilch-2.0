@@ -14,63 +14,63 @@ class File extends Model
     /**
      * The id of the image.
      *
-     * @var int
+     * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The fileId of the file.
      *
-     * @var string
+     * @var int
      */
-    protected $file_id;
+    protected int $file_id;
 
     /**
      * Title of the file.
      *
      * @var string
      */
-    protected $file_title;
+    protected string $file_title;
 
     /**
      * Description of the file.
      *
      * @var string
      */
-    protected $file_desc;
+    protected string $file_desc;
 
     /**
      * Image of the file.
      *
      * @var string
      */
-    protected $file_image;
+    protected string $file_image;
 
     /**
-     * The cat of the file.
+     * The item id of the file.
      *
-     * @var string
+     * @var int
      */
-    protected $cat;
+    protected int $item_id;
 
     /**
      * The visits of the file.
      *
-     * @var string
+     * @var int
      */
-    protected $visits;
+    protected int $visits;
 
     /**
      * The imageUrl of the file.
      *
      * @var string
      */
-    protected $file_url;
+    protected string $file_url;
 
     /**
      * @var string
      */
-    private $filethumb;
+    private string $filethumb;
 
     /**
      * Gets the id of the file.
@@ -133,13 +133,13 @@ class File extends Model
     }
 
     /**
-     * Gets the cat of the file.
+     * Gets the item id of the file.
      *
      * @return string
      */
-    public function getCat(): string
+    public function getItemId(): string
     {
-        return $this->cat;
+        return $this->item_id;
     }
 
     /**
@@ -223,13 +223,13 @@ class File extends Model
     }
 
     /**
-     * Sets the cat of the file.
+     * Sets the item id of the file.
      *
-     * @param string $cat
+     * @param int $itemId
      */
-    public function setCat(string $cat)
+    public function setItemId(int $itemId)
     {
-        $this->cat = $cat;
+        $this->item_id = $itemId;
     }
 
     /**
