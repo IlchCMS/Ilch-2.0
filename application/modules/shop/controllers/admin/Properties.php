@@ -186,7 +186,8 @@ class Properties extends Admin
                 }
 
                 foreach ($this->getRequest()->getPost('propertyTrans_property_id') as $i => $property_id) {
-                    if (!$this->getRequest()->getPost('propertyTrans_locale')[$i] || !$this->getRequest()->getPost('propertyTrans_text')[$i]) {
+                    // Skip if no translations have been entered.
+                    if (!isset($this->getRequest()->getPost('propertyTrans_locale')[$i]) || !isset($this->getRequest()->getPost('propertyTrans_text')[$i])) {
                         continue;
                     }
                     $propertyTranslationModel = new PropertytranslationModel();
@@ -201,9 +202,9 @@ class Properties extends Admin
 
                 // Get currently existing property values and delete no longer existing ones.
                 // Don't delete values that are currently in use.
-                $propertyValues = $propertyValueMapper->getValuesByPropertyId($propertyId);
+                $propertyValues = $propertyValueMapper->getValuesByPropertyId($propertyId) ?? [];
                 $valueInUse = false;
-                foreach($propertyValues ?? [] as $propertyValue) {
+                foreach($propertyValues as $propertyValue) {
                     if (in_array($propertyValue->getId(), $this->getRequest()->getPost('values-ids'))) {
                         continue;
                     }
@@ -222,7 +223,7 @@ class Properties extends Admin
                 $positions = explode(',', $this->getRequest()->getPost('hiddenMenu'));
                 foreach ($this->getRequest()->getPost('values') as $index => $value) {
                     $propertyValueModel = new PropertyvalueModel();
-                    if ($this->getRequest()->getPost('values-ids')[$index]) {
+                    if (isset($this->getRequest()->getPost('values-ids')[$index])) {
                         $propertyValueModel->setId($this->getRequest()->getPost('values-ids')[$index]);
                     }
                     $propertyValueModel->setPropertyId($propertyId);
@@ -232,8 +233,8 @@ class Properties extends Admin
                 }
 
                 // Get currently existing property value translations and delete no longer existing ones.
-                $propertyValuesTranslations = $propertyValuesTranslationsMapper->getTranslations(['value_id' => array_keys($propertyValues)]);
-                foreach($propertyValuesTranslations ?? [] as $propertyValueTranslation) {
+                $propertyValuesTranslations = $propertyValues ? $propertyValuesTranslationsMapper->getTranslations(['value_id' => array_keys($propertyValues)]) ?? [] : [];
+                foreach($propertyValuesTranslations as $propertyValueTranslation) {
                     if (in_array($propertyValueTranslation->getId(), $this->getRequest()->getPost('propertyValueTrans_id'))) {
                         continue;
                     }
@@ -241,7 +242,7 @@ class Properties extends Admin
                 }
 
                 // Save property value translations.
-                foreach($this->getRequest()->getPost('propertyValueTrans_id') as $i => $value) {
+                foreach($this->getRequest()->getPost('propertyValueTrans_id') ?? [] as $i => $value) {
                     if (!$this->getRequest()->getPost('propertyValueTrans_locale')[$i] || !$this->getRequest()->getPost('propertyValueTrans_text')[$i]) {
                         continue;
                     }
