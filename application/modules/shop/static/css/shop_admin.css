@@ -138,5 +138,26 @@ input.btn.keep:hover {
     background-color: #dff0d8;
 }
 .media-body .alert {
-    padding:0px 5px
+    padding:0 5px
+}
+.variant-properties-selection.just-padding {
+    padding: 0;
+}
+
+.variant-properties-selection.list-group.list-group-root {
+    padding: 0;
+    border-radius: 0;
+}
+
+.variant-properties-selection.list-group.list-group-root .list-group {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+.variant-properties-selection.list-group.list-group-root > .list-group > .list-group-item {
+    padding-left: 45px;
+}
+
+.variant-properties-selection.list-group-item .fa-solid {
+    margin-right: 5px;
 }

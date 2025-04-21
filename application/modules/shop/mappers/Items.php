@@ -20,10 +20,12 @@ class Items extends Mapper
      */
     public function getShopItems(array $where = []): array
     {
-        $itemsArray = $this->db()->select('*')
-            ->from('shop_items')
+        $itemsArray = $this->db()->select(['items.id', 'items.code', 'items.cat_id', 'items.name', 'items.itemnumber', 'items.stock', 'items.unitName', 'items.cordon', 'items.cordonText', 'items.cordonColor', 'items.price', 'items.tax', 'items.shippingCosts', 'items.shippingTime', 'items.image', 'items.image1', 'items.image2', 'items.image3', 'items.info', 'items.desc', 'items.status',])
+            ->from(['items' => 'shop_items'])
+            ->join(['isVariant' => 'shop_properties_variants'], ['items.id = isVariant.item_variant_id'], 'LEFT', ['isVariant' => 'isVariant.id'])
+            ->join(['hasVariants' => 'shop_properties_variants'], ['items.id = hasVariants.item_id'], 'LEFT', ['hasVariants' => 'hasVariants.id'])
             ->where($where)
-            ->order(['name' => 'ASC'])
+            ->order(['items.name' => 'ASC'])
             ->execute()
             ->fetchRows();
 
@@ -55,8 +57,9 @@ class Items extends Mapper
             $itemModel->setInfo($itemRow['info']);
             $itemModel->setDesc($itemRow['desc']);
             $itemModel->setStatus($itemRow['status']);
-
-            $items[] = $itemModel;
+            $itemModel->setIsVariant($itemRow['isVariant'] ?? false);
+            $itemModel->setHasVariants($itemRow['hasVariants'] ?? false);
+            $items[$itemRow['id']] = $itemModel;
         }
 
         return $items;
@@ -66,12 +69,29 @@ class Items extends Mapper
      * Gets item by id.
      *
      * @param int $id
-     * @return ItemsModel|false
+     * @return ItemsModel|null
      */
-    public function getShopItemById(int $id)
+    public function getShopItemById(int $id): ?ItemsModel
     {
-        $shopItem = $this->getShopItems(['id' => $id]);
+        $shopItem = $this->getShopItems(['items.id' => $id]);
+
+        if (empty($shopItem)) {
+            return null;
+        }
+
         return reset($shopItem);
+    }
+
+    /**
+     * Gets items by ids.
+     *
+     * @param array $ids
+     * @return ItemsModel[]
+     * @since 1.4.0
+     */
+    public function getShopItemsByIds(array $ids): array
+    {
+        return $this->getShopItems(['items.id' => $ids]);
     }
 
     /**
@@ -207,6 +227,22 @@ class Items extends Mapper
         $newStock = $dbStock - $quantity;
 
         $this->updateStock($id, $newStock);
+    }
+
+    /**
+     * Change status of the item(s).
+     *
+     * @param int[] $ids array of item ids
+     * @param bool $status
+     * @return int affected rows
+     * @since 1.4.0
+     */
+    public function changeStatus(array $ids, bool $status): int
+    {
+        return $this->db()->update('shop_items')
+            ->values(['status' => $status])
+            ->where(['id' => $ids])
+            ->execute();
     }
 
     /**

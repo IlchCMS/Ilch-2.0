@@ -18,6 +18,11 @@ use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
 use Modules\Shop\Mappers\Settings as SettingsMapper;
+use Modules\Shop\Mappers\Properties as PropertiesMapper;
+use Modules\Shop\Mappers\Propertyvariants as PropertyvariantsMapper;
+use Modules\Shop\Mappers\Propertyvalues as PropertyvaluesMapper;
+use Modules\Shop\Mappers\Propertytranslations as PropertytranslationsMapper;
+use Modules\Shop\Mappers\Propertyvaluestranslations as PropertyvaluestranslationsMapper;
 use Modules\Shop\Models\Order as OrdersModel;
 use Modules\Shop\Models\Orderdetails as OrderdetailsModel;
 use Modules\Shop\Models\Customer as CustomerModel;
@@ -287,7 +292,7 @@ class Index extends Frontend
 
                     $model->setEmail($this->getRequest()->getPost('email'));
 
-                    $items = $itemsMapper->getShopItems(['id' => $itemIds]);
+                    $items = $itemsMapper->getShopItemsByIds($itemIds);
                     $itemDetails = [];
                     foreach ($items as $item) {
                         $itemDetails[$item->getId()]['price'] = $item->getPrice();
@@ -350,7 +355,7 @@ class Index extends Frontend
                     foreach ($arrayOrder as $product) {
                         $itemIds[] = $product['id'];
                     }
-                    $items = $itemsMapper->getShopItems(['id' => $itemIds]);
+                    $items = $itemsMapper->getShopItemsByIds($itemIds);
 
                     $itemsAssoc = [];
                     foreach ($items as $item) {
@@ -468,6 +473,11 @@ class Index extends Frontend
         $currencyMapper = new CurrencyMapper();
         $itemsMapper = new ItemsMapper();
         $userMapper = new UserMapper();
+        $propertiesMapper = new PropertiesMapper();
+        $propertyVariantsMapper = new PropertyvariantsMapper();
+        $propertyValuesMapper = new PropertyValuesMapper();
+        $propertyTranslationMapper = new PropertyTranslationsMapper();
+        $propertyValuesTranslationsMapper = new PropertyvaluestranslationsMapper();
 
         if (empty($this->getRequest()->getParam('id')) || !is_numeric($this->getRequest()->getParam('id'))) {
             $this->redirect(['action' => 'index']);
@@ -512,7 +522,82 @@ class Index extends Frontend
             $this->redirect(['action' => 'index']);
         }
 
+        $propertyVariants = $propertyVariantsMapper->getPropertiesVariants(['item_id' => $this->getRequest()->getParam('id')]);
+
+        // Get the other variants of the parent item/product if the previous query didn't return a result and this is a variant.
+        if (!$propertyVariants && $shopItem->isVariant()) {
+            // Get the item id of this variant to get other variants with the same item id.
+            $propertyVariants = $propertyVariantsMapper->getPropertiesVariants(['item_variant_id' => $this->getRequest()->getParam('id')]);
+            $propertyVariants = $propertyVariantsMapper->getPropertiesVariants(['item_id' => reset($propertyVariants)->getItemId()]);
+        }
+
+        // Remove variants that are disabled and therefore shall not be shown.
+        if ($propertyVariants) {
+            $itemVariantIds = [];
+            foreach ($propertyVariants as $propertyVariant) {
+                $itemVariantIds[] = $propertyVariant->getItemVariantId();
+            }
+            $items = $itemsMapper->getShopItems(['items.id' => $itemVariantIds, 'items.status' => 1]);
+
+            foreach($propertyVariants as $propertyVariant) {
+                if (!isset($items[$propertyVariant->getItemVariantId()])) {
+                    unset($propertyVariants[$propertyVariant->getId()]);
+                }
+            }
+        }
+
+        $propertyIds = [];
+        $valueIds = [];
+        $variants = [];
+
+        foreach ($propertyVariants as $propertyVariant) {
+            $propertyIds[] = $propertyVariant->getPropertyId();
+            $valueIds[] = $propertyVariant->getValueId();
+        }
+
+        if ($propertyVariants) {
+            $properties = $propertiesMapper->getProperties(['id' => $propertyIds]);
+            $propertyValues = $propertyValuesMapper->getValues(['property_id' => $propertyIds]);
+
+            // Get the translations for the values.
+            $propertyTranslations = $propertyTranslationMapper->getTranslationsByLocaleAndPropertyIds($this->getTranslator()->getLocale(), $propertyIds);
+            $propertyValuesTranslations = $propertyValuesTranslationsMapper->getTranslationsByLocaleAndValueIds($this->getTranslator()->getLocale(), $valueIds) ?? [];
+
+            foreach ($propertyVariants as $propertyVariant) {
+                if (!$propertyTranslations) {
+                    // Fallback to the name of the property if no translations were found.
+                    $variants[$propertyVariant->getItemVariantId()]['property'] ?? $variants[$propertyVariant->getItemVariantId()]['property'] = $properties[$propertyVariant->getPropertyId()]->getName();
+                }
+
+                foreach($propertyTranslations as $propertyTranslation) {
+                    if ($propertyTranslation->getPropertyId() == $propertyVariant->getPropertyId()) {
+                        $variants[$propertyVariant->getItemVariantId()]['property'] = $propertyTranslation->getText();
+                        break;
+                    }
+
+                    // Fallback to the name of the property if no translation was found.
+                    $variants[$propertyVariant->getItemVariantId()]['property'] ?? $variants[$propertyVariant->getItemVariantId()]['property'] = $properties[$propertyVariant->getPropertyId()]->getName();
+                }
+
+                if (!$propertyValuesTranslations) {
+                    // Fallback to the value of the property if no translations were found.
+                    $variants[$propertyVariant->getItemVariantId()]['value'] ?? $variants[$propertyVariant->getItemVariantId()]['value'] = $propertyValues[$propertyVariant->getValueId()]->getValue();
+                }
+
+                foreach($propertyValuesTranslations as $propertyValueTranslation) {
+                    if ($propertyValueTranslation->getValueId() == $propertyVariant->getValueId()) {
+                        $variants[$propertyVariant->getItemVariantId()]['value'] = $propertyValueTranslation->getText();
+                        break;
+                    }
+
+                    // Fallback to the value of the property if no translation was found.
+                    $variants[$propertyVariant->getItemVariantId()]['value'] ?? $variants[$propertyVariant->getItemVariantId()]['value'] = $propertyValues[$propertyVariant->getValueId()]->getValue();
+                }
+            }
+        }
+
         $this->getView()->set('shopItem', $shopItem);
+        $this->getView()->set('variants', $variants);
         $this->getView()->set('currency', $currency->getName());
     }
 }
