@@ -265,7 +265,7 @@ class Items extends Admin
                 }
 
                 foreach($this->getRequest()->getPost('valueCheckbox') ?? [] as $propertyValue) {
-                    if (!$usedValueIds[$propertyValue]) {
+                    if (!isset($usedValueIds[$propertyValue])) {
                         // Variant doesn't already exist. Save the variant as a new product.
                         // Set initial values suitable for a variant of a product.
                         $variantModel->setName($this->getRequest()->getPost('name') . ', ' . $propertiesValues[$propertyValue]->getValue());
