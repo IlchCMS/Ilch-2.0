@@ -467,6 +467,9 @@ class Config extends Install
                     CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
                     CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties_values` FOREIGN KEY (`value_id`) REFERENCES `[prefix]_shop_properties_values` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
+
+                // Delete unused items model.
+                unlink(ROOT_PATH . '/application/modules/shop/models/Items.php');
                 // no break
         }
     }
