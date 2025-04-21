@@ -49,8 +49,8 @@ class Config extends Install
             DROP TABLE IF EXISTS `[prefix]_shop_currencies`;
             DROP TABLE IF EXISTS `[prefix]_shop_properties_trans`;
             DROP TABLE IF EXISTS `[prefix]_shop_properties_values_trans`;
-            DROP TABLE IF EXISTS `[prefix]_shop_properties_values`;
             DROP TABLE IF EXISTS `[prefix]_shop_properties_variants`;
+            DROP TABLE IF EXISTS `[prefix]_shop_properties_values`;
             DROP TABLE IF EXISTS `[prefix]_shop_properties`;
             DROP TABLE IF EXISTS `[prefix]_shop_items`;
             DROP TABLE IF EXISTS `[prefix]_shop_addresses`;
