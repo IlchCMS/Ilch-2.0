@@ -35,6 +35,12 @@ class Orders extends Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'items', 'action' => 'index'])
             ],
             [
+                'name' => 'menuProperties',
+                'active' => false,
+                'icon' => 'fa-solid fa-list-check',
+                'url' => $this->getLayout()->getUrl(['controller' => 'properties', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuCustomers',
                 'active' => false,
                 'icon' => 'fa-solid fa-users',

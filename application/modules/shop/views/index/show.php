@@ -1,6 +1,9 @@
 <?php
 
+/** @var \Modules\Shop\Models\Item $shopItem */
 $shopItem = $this->get('shopItem');
+
+$variants = $this->get('variants');
 $status = '';
 
 /* shopcart session */
@@ -167,6 +170,23 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
                     <th><?=$this->getTrans('shippingTime') ?></th>
                     <td><?=$this->getTrans('approx') ?> <?=$this->escape($shopItem->getShippingTime()) ?> <?=$this->getTrans('days') ?></td>
                 </tr>
+                <?php if ($variants) : ?>
+                <tr>
+                    <th><?=$this->getTrans('variants') ?></th>
+                    <td>
+                        <div class="dropdown variant-dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <?=$this->getTrans('pleaseSelect') ?>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <?php foreach ($variants as $itemVariantId => $variant) : ?>
+                                    <li><a class="dropdown-item" href="<?=$this->getUrl('shop/index/show/id/' . $itemVariantId) ?>"><?=$this->escape($variant['property'] . ': ' . $variant['value'] ?? $variant['']) ?></a></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <?php endif; ?>
                 <tr>
                     <td colspan="2"><b><?=$this->getTrans('shortInfo') ?></b><br /><br /><small class="ck-content"><?=$this->purify($shopItem->getInfo()) ?></small></td>
                 </tr>
