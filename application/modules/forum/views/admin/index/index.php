@@ -289,45 +289,19 @@ $(document).ready (
             $('#type').val($(this).parent().find('.hidden_type').val());
             $('#type').change();
 
-            let hidden_prefixes_Element = $('#assignedPrefixes');
-            let hidden_prefixes_values = $(this).parent().find('.hidden_prefixes').val().split(',').map(value => value.trim());
-            hidden_prefixes_Element.val(null).trigger('change');
-            hidden_prefixes_Element.val(hidden_prefixes_values).trigger('change');
-            choicesAssignedPrefixes.setValue(hidden_prefixes_values);
+            if ($('#type').val() === '1') {
+                let hidden_prefixes_values = $(this).parent().find('.hidden_prefixes').val().split(',').map(value => value.trim());
+                choicesAssignedPrefixes.setChoiceByValue(hidden_prefixes_values);
 
-            hidden_prefixes_values.forEach(value => {
-                choicesAssignedPrefixes.setChoiceByValue(value);
-            });
+                let hidden_read_access_values = $(this).parent().find('.hidden_read_access').val().split(',').map(value => value.trim());
+                choicesAssignedGroupsRead.setChoiceByValue(hidden_read_access_values);
 
-            let hidden_read_access_Element = $('#assignedGroupsRead');
-            let hidden_read_access_values = $(this).parent().find('.hidden_read_access').val().split(',').map(value => value.trim());
-            hidden_read_access_Element.val(null).trigger('change');
-            hidden_read_access_Element.val(hidden_read_access_values).trigger('change');
-            choicesAssignedGroupsRead.setValue(hidden_read_access_values);
+                let hidden_reply_access_values = $(this).parent().find('.hidden_reply_access').val().split(',').map(value => value.trim());
+                choicesAssignedGroupsReply.setChoiceByValue(hidden_reply_access_values);
 
-            hidden_read_access_values.forEach(value => {
-                choicesAssignedGroupsRead.setChoiceByValue(value);
-            });
-
-            let hidden_reply_access_Element = $('#assignedGroupsReply');
-            let hidden_reply_access_values = $(this).parent().find('.hidden_reply_access').val().split(',').map(value => value.trim());
-            hidden_reply_access_Element.val(null).trigger('change');
-            hidden_reply_access_Element.val(hidden_reply_access_values).trigger('change');
-            choicesAssignedGroupsReply.setValue(hidden_reply_access_values);
-
-            hidden_reply_access_values.forEach(value => {
-                choicesAssignedGroupsReply.setChoiceByValue(value);
-            });
-
-            let hidden_create_access_Element = $('#assignedGroupsCreate');
-            let hidden_create_access_values = $(this).parent().find('.hidden_create_access').val().split(',').map(value => value.trim());
-            hidden_create_access_Element.val(null).trigger('change');
-            hidden_create_access_Element.val(hidden_create_access_values).trigger('change');
-            choicesAssignedGroupsCreate.setValue(hidden_create_access_values);
-
-            hidden_create_access_values.forEach(value => {
-                choicesAssignedGroupsCreate.setChoiceByValue(value);
-            });
+                let hidden_create_access_values = $(this).parent().find('.hidden_create_access').val().split(',').map(value => value.trim());
+                choicesAssignedGroupsCreate.setChoiceByValue(hidden_create_access_values);
+            }
 
             $('#id').val($(this).closest('li').attr('id'));
         });
