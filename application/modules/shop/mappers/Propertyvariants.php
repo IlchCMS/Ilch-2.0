@@ -54,6 +54,23 @@ class Propertyvariants extends Mapper
     }
 
     /**
+     * Get the variant.
+     *
+     * @param array $where
+     * @return PropertyVariantModel|null
+     */
+    public function getPropertyVariant(array $where = []): ?PropertyVariantModel
+    {
+        $propertyVariant = $this->getPropertiesVariants($where);
+
+        if (empty($propertyVariant)) {
+            return null;
+        }
+
+        return reset($propertyVariant);
+    }
+
+    /**
      * Check if an entry exists.
      *
      * @param array $where
