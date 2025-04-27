@@ -13,6 +13,9 @@ $propertiesValues = $this->get('propertiesValues');
 /** @var string[] $propertiesValuesTranslations */
 $propertiesValuesTranslations = $this->get('propertiesValuesTranslations');
 
+/** @var \Modules\Shop\Models\Propertyvariant[] $propertyVariants */
+$propertyVariants = $this->get('propertyVariants');
+
 /** @var \Modules\Shop\Mappers\Category $categoryMapper */
 $categoryMapper = $this->get('categoryMapper');
 
@@ -434,7 +437,7 @@ $shopItem = $this->get('shopItem');
     </form>
 
     <h1><?=$this->getTrans('variants') ?></h1>
-    <?php if ($this->get('propertyVariants')) : ?>
+    <?php if ($propertyVariants) : ?>
         <p><?=$this->getTrans('variantsFollowingVariantsExist') ?></p>
         <form method="POST" action="<?=$this->getUrl(['controller' => 'items', 'action' => 'index']) ?>" id="propertyVariantsForm">
             <?=$this->getTokenField() ?>
@@ -540,7 +543,7 @@ $shopItem = $this->get('shopItem');
     </div>
 
     <div class="content_savebox">
-        <?php if ($this->get('propertyVariants')) : ?>
+        <?php if ($propertyVariants) : ?>
             <div class="btn-group dropup">
                 <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
                     <?=$this->getTrans('selected') ?>
