@@ -308,5 +308,6 @@ return [
     'variantsDesc' => 'Sie können Varianten von Produkten erstellen, indem Sie vorher erstellte Eigenschaften wie z.B. Größe oder Farbe auswählen.',
     'isVariant' => 'Dies ist eine Variante eines anderen Produktes.',
     'hasVariants' => 'Von diesem Produkt existieren weitere Varianten.',
+    'toProduct' => 'Zum Produkt.',
     'translationAlreadyExisting' => 'Es kann nur eine Übersetzung pro Sprache angelegt werden.',
 ];

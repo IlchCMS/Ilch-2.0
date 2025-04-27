@@ -308,5 +308,6 @@ return [
     'variantsDesc' => 'You can create variants of a product by selecting previously created properties like size or color.',
     'isVariant' => 'This is a variant of another product.',
     'hasVariants' => 'There are other variants of this product.',
+    'toProduct' => 'To the product.',
     'translationAlreadyExisting' => 'There can only be one translation per language.',
 ];

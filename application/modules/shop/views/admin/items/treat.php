@@ -16,8 +16,17 @@ $propertiesValuesTranslations = $this->get('propertiesValuesTranslations');
 /** @var \Modules\Shop\Models\Propertyvariant[] $propertyVariants */
 $propertyVariants = $this->get('propertyVariants');
 
+/** @var \Modules\Shop\Models\Propertyvariant $propertyVariant */
+$propertyVariant = $this->get('propertyVariant');
+
 /** @var \Modules\Shop\Mappers\Category $categoryMapper */
 $categoryMapper = $this->get('categoryMapper');
+
+/** @var \Modules\Shop\Models\Category[] $categories */
+$categories = $this->get('categories');
+
+/** @var \Modules\Shop\Models\Item[] $shopItems */
+$shopItems = $this->get('shopItems');
 
 /** @var \Modules\Shop\Models\Item $shopItem */
 $shopItem = $this->get('shopItem');
@@ -29,8 +38,8 @@ $shopItem = $this->get('shopItem');
     <?=(!empty($shopItem)) ? $this->getTrans('edit') : $this->getTrans('add'); ?>
 </h1>
 
-<?php if ($this->get('cats') != '') : ?>
-    <?=$shopItem && $shopItem->isVariant() ? '<p>' . $this->getTrans('isVariant') . '</p>': '' ?>
+<?php if ($categories != '') : ?>
+    <?=$shopItem && $shopItem->isVariant() ? '<p>' . $this->getTrans('isVariant') . ' <a href="' . $this->getUrl(['controller' => 'items', 'action' => 'treat', 'id' => $propertyVariant->getItemId()], 'admin') . '">' . $this->getTrans('toProduct') . '</a></p>': '' ?>
     <form method="POST" action="" id="shopItemForm">
         <?=$this->getTokenField() ?>
 
@@ -56,7 +65,7 @@ $shopItem = $this->get('shopItem');
             <div class="col-xl-5">
                 <select class="form-select" id="catId" name="catId">
                     <?php
-                    foreach ($this->get('cats') as $model) {
+                    foreach ($categories as $model) {
                         $selected = '';
 
                         if ($shopItem != '' && $shopItem->getCatId() == $model->getId()) {
@@ -470,7 +479,7 @@ $shopItem = $this->get('shopItem');
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($this->get('shopItems') as $shopItem) : ?>
+                    <?php foreach ($shopItems as $shopItem) : ?>
                         <?php
                         $shopCats = $categoryMapper->getCategoryById($shopItem->getCatId());
                         $shopImgPath = '/application/modules/shop/static/img/';

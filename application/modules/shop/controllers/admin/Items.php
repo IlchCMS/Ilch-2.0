@@ -177,8 +177,10 @@ class Items extends Admin
                 }
             }
 
+            $shopItem = $itemsMapper->getShopItemById($this->getRequest()->getParam('id'));
+            $this->getView()->set('propertyVariant', ($shopItem && $shopItem->isVariant()) ? $propertiesVariantsMapper->getPropertyVariant(['item_variant_id' => $this->getRequest()->getParam('id')]) : null);
             $this->getView()->set('shopItems', $itemIds ? $itemsMapper->getShopItemsByIds($itemIds) : []);
-            $this->getView()->set('shopItem', $itemsMapper->getShopItemById($this->getRequest()->getParam('id')));
+            $this->getView()->set('shopItem', $shopItem);
             $this->getView()->set('propertyVariants', $propertyVariants);
         } else {
             $this->getLayout()->getAdminHmenu()
@@ -295,7 +297,7 @@ class Items extends Admin
             }
         }
 
-        $this->getView()->set('cats', $categoryMapper->getCategories());
+        $this->getView()->set('categories', $categoryMapper->getCategories());
         $this->getView()->set('categoryMapper', $categoryMapper);
         $this->getView()->set('currency', $currency->getName());
         $this->getView()->set('settings', $settingsMapper->getSettings());
