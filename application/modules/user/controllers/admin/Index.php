@@ -128,9 +128,9 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('userList', $entries)
             ->set('showDelUserMsg', $this->getRequest()->getParam('showDelUserMsg'))
             ->set('errorMsg', $this->getRequest()->getParam('errorMsg'))
-            ->set('badge', \count($userMapper->getUserList(['confirmed' => 0])))
-            ->set('badgeLocked', \count($userMapper->getUserList(['locked' => 1])))
-            ->set('badgeSelectsDelete', \count($userMapper->getUserList(['selectsdelete >' => '1000-01-01 00:00:00'])))
+            ->set('badge', $userMapper->getUserCount(['confirmed' => 0]))
+            ->set('badgeLocked', $userMapper->getUserCount(['locked' => 1]))
+            ->set('badgeSelectsDelete', $userMapper->getUserCount(['selectsdelete >' => '1000-01-01 00:00:00']))
             ->set('timetodelete', $this->getConfig()->get('userdeletetime'))
             ->set('pagination', $pagination);
     }

@@ -3,10 +3,6 @@ $profil = $this->get('profil');
 $profileFields = $this->get('profileFields');
 $profileFieldsContent = $this->get('profileFieldsContent');
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
-$birthday = '';
-if (!empty($profil->getBirthday())) {
-    $birthday = new \Ilch\Date($profil->getBirthday());
-}
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
@@ -35,32 +31,6 @@ if (!empty($profil->getBirthday())) {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-xl-2 col-form-label" for="first-name">
-                        <?=$this->getTrans('profileFirstName') ?>
-                    </label>
-                    <div class="col-xl-8">
-                        <input type="text"
-                               class="form-control"
-                               name="first-name"
-                               id="first-name"
-                               placeholder="<?=$this->escape($profil->getFirstName()) ?>"
-                               value="<?=($this->originalInput('firstname') != '') ? $this->escape($this->originalInput('firstname')) : $this->escape($profil->getFirstName()) ?>" />
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-xl-2 col-form-label" for="last-name">
-                        <?=$this->getTrans('profileLastName') ?>
-                    </label>
-                    <div class="col-xl-8">
-                        <input type="text"
-                               class="form-control"
-                               name="last-name"
-                               id="last-name"
-                               placeholder="<?=$this->escape($profil->getLastName()) ?>"
-                               value="<?=($this->originalInput('lastname') != '') ? $this->escape($this->originalInput('lastname')) : $this->escape($profil->getLastName()) ?>" />
-                    </div>
-                </div>
-                <div class="row mb-3">
                     <label class="col-xl-2 col-form-label" for="gender">
                         <?=$this->getTrans('profileGender') ?>
                     </label>
@@ -73,34 +43,6 @@ if (!empty($profil->getBirthday())) {
                         </select>
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <label class="col-xl-2 col-form-label" for="city">
-                        <?=$this->getTrans('profileCity') ?>
-                    </label>
-                    <div class="col-xl-8">
-                       <input type="text"
-                              class="form-control"
-                              name="city"
-                              id="city"
-                              placeholder="<?=$this->escape($profil->getCity()) ?>"
-                              value="<?=($this->originalInput('city') != '') ? $this->escape($this->originalInput('city')) : $this->escape($profil->getCity()) ?>" />
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-xl-2 col-form-label" for="birthday">
-                        <?=$this->getTrans('profileBirthday') ?>
-                    </label>
-                    <div id="birthday" class="col-xl-8 input-group ilch-date date form_datetime">
-                        <input type="text"
-                               class="form-control"
-                               id="birthday"
-                               name="birthday"
-                               value="<?=($birthday != '') ? $birthday->format('d.m.Y') : '' ?>">
-                        <span class="input-group-text">
-                            <span class="fa-solid fa-calendar"></span>
-                        </span>
-                    </div>
-                </div>
                 <?php foreach ($profileFields as $profileField) :
                     $profileFieldName = $profileField->getKey();
                     foreach ($profileFieldsTranslation as $profileFieldTranslation) {
@@ -111,7 +53,7 @@ if (!empty($profil->getBirthday())) {
                     }
                     if ($profileField->getType() != 1) :
                         $value = ($profileField->getType() == 4) ? [] : '';
-                        $index = 'profileField'.$profileField->getId();
+                        $index = 'profileField' . $profileField->getId();
                         if ($this->originalInput($index) != '') {
                             $value = $this->escape($this->originalInput($index));
                         } else {
@@ -235,27 +177,6 @@ $(document).ready(function() {
         tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
         tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
     }
-
-    new tempusDominus.TempusDominus(document.getElementById('birthday'), {
-        restrictions: {
-          maxDate: new Date()
-        },
-        display: {
-            calendarWeeks: true,
-            buttons: {
-                today: true,
-                close: true
-            },
-            components: {
-                clock: false
-            }
-        },
-        localization: {
-            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-            startOfTheWeek: 1,
-            format: "dd.MM.yyyy"
-        }
-    });
 
     let datetimeElements = document.getElementsByClassName('form_datetime');
     Array.from(datetimeElements).forEach((datetimeElement) => {

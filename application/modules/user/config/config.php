@@ -96,11 +96,7 @@ class Config extends \Ilch\Config\Install
                 `name` VARCHAR(255) NOT NULL,
                 `password` VARCHAR(255) NOT NULL,
                 `email` VARCHAR(255) NOT NULL,
-                `first_name` VARCHAR(255) NOT NULL DEFAULT "",
-                `last_name` VARCHAR(255) NOT NULL DEFAULT "",
                 `gender` TINYINT(1) NOT NULL DEFAULT 0,
-                `city` VARCHAR(255) NOT NULL DEFAULT "",
-                `birthday` DATE NULL DEFAULT NULL,
                 `avatar` VARCHAR(255) NOT NULL DEFAULT "",
                 `signature` VARCHAR(255) NOT NULL DEFAULT "",
                 `locale` VARCHAR(255) NOT NULL DEFAULT "",
@@ -150,6 +146,7 @@ class Config extends \Ilch\Config\Install
                 `show` TINYINT(1) NOT NULL DEFAULT 1,
                 `hidden` TINYINT(1) NOT NULL DEFAULT 0,
                 `registration` TINYINT(1) NOT NULL DEFAULT 0,
+                `core` TINYINT(1) NOT NULL DEFAULT 0,
                 `position` INT(11) UNSIGNED NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
@@ -351,33 +348,45 @@ class Config extends \Ilch\Config\Install
                 (2, "User"),
                 (3, "Guest");
 
-            INSERT INTO `[prefix]_profile_fields` (`id`, `key`, `type`, `icon`, `addition`, `options`, `show`, `position`) VALUES
-                (1, "website", 2, "fa-solid fa-globe", "", "", 1, 0),
-                (2, "facebook", 2, "fa-brands fa-facebook", "https://www.facebook.com/", "", 1, 1),
-                (3, "x", 2, "fa-brands fa-x-twitter", "https://x.com/", "", 1, 2),
-                (4, "google+", 2, "fa-brands fa-google-plus", "https://plus.google.com/", "", 1, 3),
-                (5, "steam", 2, "fa-brands fa-steam-square", "https://steamcommunity.com/id/", "", 1, 4),
-                (6, "twitch", 2, "fa-brands fa-twitch", "https://www.twitch.tv/", "", 1, 5),
-                (7, "teamspeak", 2, "fa-solid fa-headphones", "ts3server://", "", 1, 6),
-                (8, "discord", 2, "fa-brands fa-discord", "https://discord.gg/", "", 1, 7);
+            INSERT INTO `[prefix]_profile_fields` (`id`, `key`, `type`, `icon`, `addition`, `options`, `show`, `core`, `position`) VALUES
+                (1, "first_name", 0, "fa-solid fa-globe", "", "", 1, 1, 0),
+                (2, "last_name", 0, "fa-solid fa-globe", "", "", 1, 1, 1),
+                (3, "city", 0, "fa-solid fa-globe", "", "", 1, 1, 2),
+                (4, "birthday", 6, "fa-solid fa-globe", "", "", 1, 1, 3),
+                (5, "website", 2, "fa-solid fa-globe", "", "", 1, 4),
+                (6, "facebook", 2, "fa-brands fa-facebook", "https://www.facebook.com/", "", 1, 5),
+                (7, "x", 2, "fa-brands fa-x-twitter", "https://x.com/", "", 1, 6),
+                (8, "google+", 2, "fa-brands fa-google-plus", "https://plus.google.com/", "", 1, 7),
+                (9, "steam", 2, "fa-brands fa-steam-square", "https://steamcommunity.com/id/", "", 1, 8),
+                (10, "twitch", 2, "fa-brands fa-twitch", "https://www.twitch.tv/", "", 1, 9),
+                (11, "teamspeak", 2, "fa-solid fa-headphones", "ts3server://", "", 1, 10),
+                (12, "discord", 2, "fa-brands fa-discord", "https://discord.gg/", "", 1, 11);
 
             INSERT INTO `[prefix]_profile_trans` (`field_id`, `locale`, `name`) VALUES
-                (1, "de_DE", "Webseite"),
-                (1, "en_EN", "Website"),
-                (2, "de_DE", "Facebook"),
-                (2, "en_EN", "Facebook"),
-                (3, "de_DE", "X"),
-                (3, "en_EN", "X"),
-                (4, "de_DE", "Google+"),
-                (4, "en_EN", "Google+"),
-                (5, "de_DE", "Steam"),
-                (5, "en_EN", "Steam"),
-                (6, "de_DE", "Twitch"),
-                (6, "en_EN", "Twitch"),
-                (7, "de_DE", "Teamspeak"),
-                (7, "en_EN", "Teamspeak"),
-                (8, "de_DE", "Discord"),
-                (8, "en_EN", "Discord");
+                (1, "de_DE", "Vorname"),
+                (1, "en_EN", "Firstname"),
+                (2, "de_DE", "Nachname"),
+                (2, "en_EN", "Lastname"),
+                (3, "de_DE", "Wohnort"),
+                (3, "en_EN", "City"),
+                (4, "de_DE", "Geburtstag"),
+                (4, "en_EN", "Birthday"),
+                (5, "de_DE", "Webseite"),
+                (5, "en_EN", "Website"),
+                (6, "de_DE", "Facebook"),
+                (6, "en_EN", "Facebook"),
+                (7, "de_DE", "X"),
+                (7, "en_EN", "X"),
+                (8, "de_DE", "Google+"),
+                (8, "en_EN", "Google+"),
+                (9, "de_DE", "Steam"),
+                (9, "en_EN", "Steam"),
+                (10, "de_DE", "Twitch"),
+                (10, "en_EN", "Twitch"),
+                (11, "de_DE", "Teamspeak"),
+                (11, "en_EN", "Teamspeak"),
+                (12, "de_DE", "Discord"),
+                (12, "en_EN", "Discord");
 
             INSERT INTO `[prefix]_user_menu` (`id`, `key`, `icon`, `position`) VALUES
                 (1, "user/panel/index", "fa-solid fa-house", 1),
@@ -1066,6 +1075,69 @@ class Config extends \Ilch\Config\Install
                 if ($databaseConfig->get('user_commentsOnProfiles') !== '0') {
                     $databaseConfig->set('user_commentsOnProfiles', '1');
                 }
+                break;
+            case '2.2.10':
+                // Create profile fields from previously hardcoded columns "first_name", "last_name", "city" and "birthday".
+
+                // Add new "core" column to mark profile fields as for ilch required ones that cannot be deleted.
+                if (!$this->db()->queryCell("SHOW COLUMNS FROM `[prefix]_profile_fields` LIKE 'core';")) {
+                    $this->db()->query('ALTER TABLE `[prefix]_profile_fields` ADD COLUMN `core` TINYINT(1) DEFAULT 0 AFTER `registration`;');
+                }
+
+                // Get current profile_fields and adjust their positions to make them appear after the to be created core profile fields.
+                $currentProfileFields = $this->db()->select(['id', 'position'])
+                    ->from('profile_fields')
+                    ->execute()
+                    ->fetchList('position', 'id');
+
+                foreach ($currentProfileFields as $id => $position) {
+                    $this->db()->update('profile_fields')
+                        ->values(['position' => (int)$position + 4])
+                        ->where(['id' => $id])
+                        ->execute();
+                }
+
+                // Create "core" profile fields from previously hardcoded columns "first_name", "last_name", "city" and "birthday".
+                $this->db()->insert('profile_fields')
+                    ->columns(['key', 'type', 'core', 'position'])
+                    ->values([['first_name', 0, 1, 0], ['last_name', 0, 1, 1], ['city', 0, 1, 2], ['birthday', 6, 1, 3]])
+                    ->execute();
+                $lastId = $this->db()->getLastInsertId();
+
+                // Add translations
+                $this->db()->insert('profile_trans')
+                    ->columns(['field_id', 'locale', 'name'])
+                    ->values([[$lastId, 'de_DE', 'Vorname'], [$lastId, 'en_EN', 'Firstname'],
+                        [$lastId + 1, 'de_DE', 'Nachname'], [$lastId + 1, 'en_EN', 'Lastname'],
+                        [$lastId + 2, 'de_DE', 'Wohnort'], [$lastId + 2, 'en_EN', 'City'],
+                        [$lastId + 3, 'de_DE', 'Geburtstag'], [$lastId + 3, 'en_EN', 'Birthday']])
+                    ->execute();
+
+                // Get existing user details.
+                $existingUserDetails = $this->db()->select(['id', 'last_name', 'first_name', 'city', 'birthday'])
+                    ->from('users')
+                    ->execute()
+                    ->fetchRows('id');
+
+                $values = [];
+                foreach ($existingUserDetails as $userId => $userDetails) {
+                    $values[] = [$lastId, $userId, $userDetails['first_name']];
+                    $values[] = [$lastId + 1, $userId, $userDetails['last_name']];
+                    $values[] = [$lastId + 2, $userId, $userDetails['city']];
+                    $values[] = [$lastId + 3, $userId, $userDetails['birthday']];
+                }
+
+                // Save existing user details in the profile_content table.
+                $values = array_chunk($values, 25);
+                foreach($values as $valuesChunk) {
+                    $this->db()->insert('profile_content')
+                        ->columns(['field_id', 'user_id', 'value'])
+                        ->values($valuesChunk)
+                        ->execute();
+                }
+
+                // Drop no longer needed columns in the users table.
+                $this->db()->query('ALTER TABLE `[prefix]_users` DROP COLUMN `first_name`, DROP COLUMN `last_name`, DROP COLUMN `city`, DROP COLUMN `birthday`;');
                 break;
         }
 

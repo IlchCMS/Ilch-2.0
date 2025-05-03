@@ -123,20 +123,11 @@ class Panel extends BaseController
                 'email' => 'required|email'
             ]);
 
-            $birthday = '';
-            if ($this->getRequest()->getPost('birthday') != '') {
-                $birthday = new IlchDate($this->getRequest()->getPost('birthday'));
-            }
-
             if ($validation->isValid()) {
                 $model = new UserModel();
                 $model->setId($this->getUser()->getId())
                     ->setEmail($post['email'])
-                    ->setFirstName($post['firstname'])
-                    ->setLastName($post['lastname'])
-                    ->setGender($post['gender'])
-                    ->setCity($post['city'])
-                    ->setBirthday($birthday);
+                    ->setGender($post['gender']);
                 $profilMapper->save($model);
 
                 foreach ($profileFields as $profileField) {

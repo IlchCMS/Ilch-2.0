@@ -51,9 +51,9 @@ $iconArray = ['fa-regular fa-pen-to-square', 'fa-solid fa-heading', 'fa-solid fa
                 <tr id="<?=$profileField->getId() ?>">
 
                     <?php if ($profileField->getHidden() == 0) : ?>
-                        <td><?=$this->getDeleteCheckbox('check_users', $profileField->getId()) ?></td>
+                        <td><?=(!$profileField->getCore()) ? $this->getDeleteCheckbox('check_users', $profileField->getId()) : '' ?></td>
                         <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $profileField->getId()]) ?></td>
-                        <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $profileField->getId()]) ?></td>
+                        <td><?=(!$profileField->getCore()) ? $this->getDeleteIcon(['action' => 'delete', 'id' => $profileField->getId()]) : '' ?></td>
                     <?php else: ?>
                         <td colspan="3"></td>
                     <?php endif; ?>
