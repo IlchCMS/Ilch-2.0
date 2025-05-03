@@ -353,14 +353,14 @@ class Config extends \Ilch\Config\Install
                 (2, "last_name", 0, "fa-solid fa-globe", "", "", 1, 1, 1),
                 (3, "city", 0, "fa-solid fa-globe", "", "", 1, 1, 2),
                 (4, "birthday", 6, "fa-solid fa-globe", "", "", 1, 1, 3),
-                (5, "website", 2, "fa-solid fa-globe", "", "", 1, 4),
-                (6, "facebook", 2, "fa-brands fa-facebook", "https://www.facebook.com/", "", 1, 5),
-                (7, "x", 2, "fa-brands fa-x-twitter", "https://x.com/", "", 1, 6),
-                (8, "google+", 2, "fa-brands fa-google-plus", "https://plus.google.com/", "", 1, 7),
-                (9, "steam", 2, "fa-brands fa-steam-square", "https://steamcommunity.com/id/", "", 1, 8),
-                (10, "twitch", 2, "fa-brands fa-twitch", "https://www.twitch.tv/", "", 1, 9),
-                (11, "teamspeak", 2, "fa-solid fa-headphones", "ts3server://", "", 1, 10),
-                (12, "discord", 2, "fa-brands fa-discord", "https://discord.gg/", "", 1, 11);
+                (5, "website", 2, "fa-solid fa-globe", "", "", 1, 0, 4),
+                (6, "facebook", 2, "fa-brands fa-facebook", "https://www.facebook.com/", "", 1, 0, 5),
+                (7, "x", 2, "fa-brands fa-x-twitter", "https://x.com/", "", 1, 0, 6),
+                (8, "google+", 2, "fa-brands fa-google-plus", "https://plus.google.com/", "", 1, 0, 7),
+                (9, "steam", 2, "fa-brands fa-steam-square", "https://steamcommunity.com/id/", "", 1, 0, 8),
+                (10, "twitch", 2, "fa-brands fa-twitch", "https://www.twitch.tv/", "", 1, 0, 9),
+                (11, "teamspeak", 2, "fa-solid fa-headphones", "ts3server://", "", 1, 0, 10),
+                (12, "discord", 2, "fa-brands fa-discord", "https://discord.gg/", "", 1, 0, 11);
 
             INSERT INTO `[prefix]_profile_trans` (`field_id`, `locale`, `name`) VALUES
                 (1, "de_DE", "Vorname"),
