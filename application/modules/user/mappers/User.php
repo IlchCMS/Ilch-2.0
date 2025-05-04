@@ -352,6 +352,7 @@ class User extends \Ilch\Mapper
     public function save(UserModel $user): int
     {
         $fields = [];
+        $userJustCreated = false;
 
         if (!empty($user->getName())) {
             $fields['name'] = $user->getName();
@@ -400,11 +401,7 @@ class User extends \Ilch\Mapper
             $fields['selectsdelete'] = $user->getSelectsDelete();
         }
 
-        $fields['first_name'] = $user->getFirstName();
-        $fields['last_name'] = $user->getLastName();
         $fields['gender'] = $user->getGender();
-        $fields['city'] = $user->getCity();
-        $fields['birthday'] = $user->getBirthday();
         $fields['avatar'] = $user->getAvatar();
         $fields['signature'] = $user->getSignature();
         $fields['locale'] = $user->getLocale();
@@ -427,6 +424,7 @@ class User extends \Ilch\Mapper
                 ->execute();
         } else {
             // User does not exist yet, insert.
+            $userJustCreated = true;
             $userId = $this->db()->insert('users')
                 ->values($fields)
                 ->execute();
@@ -442,6 +440,48 @@ class User extends \Ilch\Mapper
                     ->values(['user_id' => $userId, 'group_id' => $group->getId()])
                     ->execute();
             }
+        }
+
+        // Save "first_name", "last_name", "city" and "birthday" in the "profile_content" table.
+        $coreProfileFields = $this->db()->select(['pf.id', 'pf.core', 'pf.key'])
+            ->from(['pf' => 'profile_fields'])
+            ->where(['pf.core' => 1])
+            ->execute()
+            ->fetchRows('key');
+
+        if (!$userJustCreated) {
+            // User did already exist, insert or update.
+            $profileFieldIds = array_column($coreProfileFields, 'id');
+            $profileContentIds = $this->db()->select(['field_id'])
+                ->from('profile_content')
+                ->where(['user_id' => $userId, 'field_id' => $profileFieldIds])
+                ->execute()
+                ->fetchList();
+
+            foreach (['first_name' => $user->getFirstName(), 'last_name' => $user->getLastName(), 'city' => $user->getCity(), 'birthday' => $user->getBirthday()] as $key => $value) {
+                if ($value === null) {
+                    continue;
+                }
+                if (in_array($coreProfileFields[$key]['id'], $profileContentIds)) {
+                    $this->db()->update('profile_content')
+                        ->values(['value' => $value])
+                        ->where(['user_id' => $userId, 'field_id' => $coreProfileFields[$key]['id']])
+                        ->execute();
+                } else {
+                    $this->db()->insert('profile_content')
+                        ->values(['user_id' => $userId, 'field_id' => $coreProfileFields[$key]['id'], 'value' => $value])
+                        ->execute();
+                }
+            }
+        } else {
+            // User got just created, insert.
+            $this->db()->insert('profile_content')
+                ->columns(['user_id', 'field_id', 'value'])
+                ->values([['user_id' => $userId, 'field_id' => $coreProfileFields['first_name']['id'], 'value' => $user->getFirstName()],
+                    ['user_id' => $userId, 'field_id' => $coreProfileFields['last_name']['id'], 'value' => $user->getLastName()],
+                    ['user_id' => $userId, 'field_id' => $coreProfileFields['city']['id'], 'value' => $user->getCity()],
+                    ['user_id' => $userId, 'field_id' => $coreProfileFields['birthday']['id'], 'value' => $user->getBirthday()]])
+                ->execute();
         }
 
         return $userId;
