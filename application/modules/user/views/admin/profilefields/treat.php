@@ -67,7 +67,7 @@ $iconArray = [
         </label>
         <div class="col-xl-4">
             <div class="input-group">
-                <select class="form-select" id="profileFieldType" name="profileField[type]">
+                <select class="form-select" id="profileFieldType" name="profileField[type]"<?=$profileField->getCore() ? ' disabled' : '' ?>>
                     <?php foreach ($type as $key => $value) : ?>
                         <option value="<?=$key ?>"
                             <?=($profileField->getId() && $profileField->getType() == $key) ? ' selected' : '' ?>
@@ -162,7 +162,8 @@ $iconArray = [
                        class="form-control required"
                        id="profileFieldKey"
                        name="profileField[key]"
-                       value="<?=$this->escape($profileField->getKey()) ?>" />
+                       value="<?=$this->escape($profileField->getKey()) ?>"
+                       <?=$profileField->getCore() ? 'disabled' : '' ?> />
                 <span class="input-group-text">
                     <span class="fa-solid fa-info" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-placement="right" data-bs-title="<?=$this->getTrans('profileFieldKeyDesc') ?>"></span>
                 </span>

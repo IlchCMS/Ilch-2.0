@@ -138,6 +138,14 @@ class ProfileFields extends Admin
                 $profileFieldData['options'] = '';
             }
 
+            // Get the current state of the profile field to check if it is a core field and to restore the values from disabled inputs from the current state.
+            // Any posted values for "key" and "type" will be ignored.
+            $currentStateProfilfield = $profileFieldsMapper->getProfileFieldById($profileFieldId);
+            if ($currentStateProfilfield->getCore()) {
+                $profileFieldData['key'] = $currentStateProfilfield->getKey();
+                $profileFieldData['type'] = $currentStateProfilfield->getType();
+                $profileFieldData['core'] = $currentStateProfilfield->getCore();
+            }
             $profileField = $profileFieldsMapper->loadFromArray($profileFieldData);
             $profileFieldId = $profileFieldsMapper->save($profileField);
 
