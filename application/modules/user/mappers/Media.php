@@ -24,14 +24,14 @@ class Media extends \Ilch\Mapper
         if ($pagination) {
             $sqlCountOfRows = 'SELECT COUNT(*)
                 FROM `[prefix]_users_media`
-                WHERE user_id = '.$userId.' AND ending IN ('.implode(',', $this->db()->escapeArray(explode(' ', $ending), true)).')';
+                WHERE user_id = ' . $userId.' AND ending IN ('.implode(',', $this->db()->escapeArray(explode(' ', $ending), true)) . ')';
 
             $pagination->setRows($this->db()->querycell($sqlCountOfRows));
         }
 
         $sql = 'SELECT *
                 FROM `[prefix]_users_media`
-                WHERE user_id = '.$userId.' AND ending IN ('
+                WHERE user_id = ' . $userId.' AND ending IN ('
                     .implode(',', $this->db()->escapeArray(explode(' ', $ending), true))
                     .')
                 ORDER by id DESC

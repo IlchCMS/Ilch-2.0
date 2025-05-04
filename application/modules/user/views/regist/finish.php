@@ -1,4 +1,4 @@
-<?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
+<?php include APPLICATION_PATH . '/modules/user/views/regist/navi.php'; ?>
 
 <div class="regist card panel-default">
     <div class="card-header">

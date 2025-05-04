@@ -97,15 +97,12 @@ class Panel extends BaseController
 
             $post = [
                 'email' => trim($this->getRequest()->getPost('email')),
-                'firstname' => trim($this->getRequest()->getPost('first-name')),
-                'lastname' => trim($this->getRequest()->getPost('last-name')),
-                'gender' => trim($this->getRequest()->getPost('gender')),
-                'city' => trim($this->getRequest()->getPost('city'))
+                'gender' => trim($this->getRequest()->getPost('gender'))
             ];
 
             foreach ($profileFields as $profileField) {
                 if ($profileField->getType() != 1) {
-                    $index = 'profileField'.$profileField->getId();
+                    $index = 'profileField' . $profileField->getId();
                     if ($this->getRequest()->getPost($index) === null) {
                         // This is for example the case if an external module added a profile field.
                         // Skip this profile field so the value doesn't get deleted.
@@ -132,7 +129,7 @@ class Panel extends BaseController
 
                 foreach ($profileFields as $profileField) {
                     if ($profileField->getType() != 1) {
-                        $index = 'profileField'.$profileField->getId();
+                        $index = 'profileField' . $profileField->getId();
                         $profileFieldsContent = new ProfileFieldContentModel();
                         $profileFieldsContent->setFieldId($profileField->getId())
                             ->setUserId($this->getUser()->getId())
@@ -181,7 +178,7 @@ class Panel extends BaseController
                     $height = $imageInfo[1];
 
                     if ($file_size <= $avatarSize) {
-                        $avatar = $path.$this->getUser()->getId().'.'.$endung;
+                        $avatar = $path.$this->getUser()->getId() . '.' . $endung;
 
                         if ($this->getUser()->getAvatar() != '') {
                             $settingMapper = new SettingMapper();
@@ -358,12 +355,12 @@ class Panel extends BaseController
                     unlink($this->getUser()->getAvatar());
                 }
 
-                if (is_dir(APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId)) {
-                    $path = APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId;
+                if (is_dir(APPLICATION_PATH . '/modules/user/static/upload/gallery/' . $userId)) {
+                    $path = APPLICATION_PATH . '/modules/user/static/upload/gallery/' . $userId;
                     $files = array_diff(scandir($path), ['.', '..']);
 
                     foreach ($files as $file) {
-                        unlink(realpath($path).'/'.$file);
+                        unlink(realpath($path) . '/' . $file);
                     }
 
                     rmdir($path);

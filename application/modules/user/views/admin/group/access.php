@@ -104,7 +104,7 @@
                             <th><?=$this->getTrans($accessType) ?></th>
                             <?php
                             foreach ($accessLevelsTrans as $transKey) {
-                                echo '<th class="text-center">'.$this->getTrans($transKey).'</th>';
+                                echo '<th class="text-center">' . $this->getTrans($transKey) . '</th>';
                             }
                             ?>
                         </tr>
@@ -156,9 +156,9 @@
                                         <input type="radio"
                                            <?php
                                             if ($accessType === 'module') {
-                                                echo 'name="groupAccess['.$accessType.']['.$type->getKey().']"';
+                                                echo 'name="groupAccess[' . $accessType.'][' . $type->getKey() . ']"';
                                             } else {
-                                                echo 'name="groupAccess['.$accessType.']['.$type->getId().']"';
+                                                echo 'name="groupAccess[' . $accessType.'][' . $type->getId() . ']"';
                                             }
                                             ?>
                                            value="<?=$accessLevel ?>"
@@ -188,7 +188,7 @@
                             <th><?=$activeaccess ?></th>
                             <?php
                             foreach ($accessLevelsTrans as $transKey) {
-                                echo '<th class="text-center">'.$this->getTrans($transKey).'</th>';
+                                echo '<th class="text-center">' . $this->getTrans($transKey) . '</th>';
                             }
                             ?>
                         </tr>
@@ -206,7 +206,7 @@
                                     <td class="text-center">
                                         <input type="radio"
                                            <?php
-                                           echo 'name="accessAccess['.$group->getId().']"';
+                                           echo 'name="accessAccess[' . $group->getId() . ']"';
                                            ?>
                                            value="<?=$accessLevel ?>"
                                            <?=($accessLevel == $typeAccessLevel) ? 'checked' : '' ?> />
