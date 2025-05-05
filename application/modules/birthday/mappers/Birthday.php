@@ -24,10 +24,10 @@ class Birthday extends Mapper
     {
         $userMapper = new UserMapper();
 
-        $sql = 'SELECT pfc.user_id, pfc.field_id, pfc.value
-                FROM `[prefix]_profile_content` AS pfc
-                INNER JOIN `[prefix]_profile_fields` AS pf ON (pfc.field_id = pf.id AND pf.key = "birthday" AND pf.core = 1)
-                WHERE DAY(value) = DAY(CURDATE()) AND MONTH(value) = MONTH(CURDATE())';
+        $sql = 'SELECT `pfc`.`user_id`, `pfc`.`field_id`, `pfc`.`value`
+                FROM `[prefix]_profile_content` AS `pfc`
+                INNER JOIN `[prefix]_profile_fields` AS `pf` ON (`pfc`.`field_id` = `pf`.`id` AND `pf`.`key` = "birthday" AND `pf`.`core` = 1)
+                WHERE DAY(`value`) = DAY(CURDATE()) AND MONTH(`value`) = MONTH(CURDATE())';
 
         if ($limit != '') {
             $sql .= ' LIMIT ' . (int)$limit;
