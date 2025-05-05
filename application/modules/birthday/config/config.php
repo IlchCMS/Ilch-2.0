@@ -8,9 +8,9 @@ namespace Modules\Birthday\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = [
+    public array $config = [
         'key' => 'birthday',
-        'version' => '1.7.0',
+        'version' => '1.7.1',
         'icon_small' => 'fa-solid fa-cake-candles',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -34,8 +34,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'ilchCore' => '2.2.11',
+        'phpVersion' => '7.4'
     ];
 
     public function install()
@@ -68,6 +68,7 @@ class Config extends \Ilch\Config\Install
                 foreach($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'birthday' AND `locale` = '%s';", $value['description'], $key));
                 }
+                // no break
             case '1.4.0':
             case '1.5.0':
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-cake-candles' WHERE `key` = 'birthday';");

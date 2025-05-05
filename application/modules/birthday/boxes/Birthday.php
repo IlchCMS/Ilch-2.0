@@ -6,13 +6,15 @@
 
 namespace Modules\Birthday\Boxes;
 
+use Ilch\Box;
+use Ilch\Date;
 use Modules\Birthday\Mappers\Birthday as BirthdayMapper;
 
-class Birthday extends \Ilch\Box
+class Birthday extends Box
 {
     public function render()
     {
-        $date = new \Ilch\Date();
+        $date = new Date();
         $birthdayMapper = new BirthdayMapper();
 
         if ($this->getUser() || $this->getConfig()->get('bday_visibleForGuest')) {

@@ -19,7 +19,7 @@ $date = new \Ilch\Date();
                     <div class="row">
                         <div class="col-xl-2 confetti">
                             <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>">
-                                <img class="img-thumbnail mx-auto" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()) ?>" title="<?=$this->escape($birthdaylist->getName()) ?>" width="69" height="69">
+                                <img class="img-thumbnail mx-auto" style="margin-bottom: 0;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()) ?>" alt="<?=$this->escape($birthdaylist->getName()) ?>" width="69" height="69">
                             </a>
                         </div>
                         <div class="col-xl-10">
@@ -60,7 +60,7 @@ $date = new \Ilch\Date();
                         <?php if ($birthdaylist->getBirthday() != '' && $this->escape(date('n', strtotime($birthdaylist->getBirthday()))) == $x): ?>
                             <div style="padding: 0 2px 2px 0; float: left;">
                                 <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>">
-                                    <img class="thumbnail" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()) ?>" title="<?=$this->escape($birthdaylist->getName()) ?> (<?=date("d.m", strtotime($this->escape($birthdaylist->getBirthday()))) ?>)" width="69" height="69">
+                                    <img class="thumbnail" style="margin-bottom: 0;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()) ?>" alt="<?=$this->escape($birthdaylist->getName()) ?> (<?=date("d.m", strtotime($this->escape($birthdaylist->getBirthday()))) ?>)" width="69" height="69">
                                 </a>
                             </div>
                         <?php endif; ?>

@@ -6,10 +6,11 @@
 
 namespace Modules\Birthday\Controllers;
 
+use Ilch\Controller\Frontend;
 use Ilch\Validation;
 use Modules\Birthday\Mappers\Birthday as BirthdayMapper;
 
-class Birthdays extends \Ilch\Controller\Frontend
+class Birthdays extends Frontend
 {
     public function indexAction()
     {

@@ -6,10 +6,11 @@
 
 namespace Modules\Birthday\Controllers;
 
+use Ilch\Controller\Frontend;
 use Modules\Birthday\Mappers\Birthday as BirthdayMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-class Index extends \Ilch\Controller\Frontend
+class Index extends Frontend
 {
     public function indexAction()
     {

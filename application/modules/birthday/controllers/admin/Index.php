@@ -6,9 +6,10 @@
 
 namespace Modules\Birthday\Controllers\Admin;
 
+use Ilch\Controller\Admin;
 use Ilch\Validation;
 
-class Index extends \Ilch\Controller\Admin
+class Index extends Admin
 {
     public function init()
     {
