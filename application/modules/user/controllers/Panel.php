@@ -134,6 +134,15 @@ class Panel extends BaseController
                         $profileFieldsContent->setFieldId($profileField->getId())
                             ->setUserId($this->getUser()->getId())
                             ->setValue($post[$index]);
+
+                        if ($profileField->getType() == 6) {
+                            // Special handling for date fields to store the value in a specific format.
+                            $date = $post[$index] ? new IlchDate($post[$index]) : null;
+                            $date = $date ? $date->format('Y-m-d') : '';
+                            $profileFieldsContent->setValue($date);
+                        } else {
+                            $profileFieldsContent->setValue($post[$index]);
+                        }
                         $profileFieldsContentMapper->save($profileFieldsContent);
                     }
                 }

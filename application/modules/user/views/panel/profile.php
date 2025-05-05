@@ -123,23 +123,23 @@ $profileFieldsTranslation = $this->get('profileFieldsTranslation');
                                 </div>
                             <?php elseif ($profileField->getType() == 6) : ?>
                                 <!-- date -->
-                                <div class="col-xl-2">
-                                    <div class="input-group">
-                                        <input type="text"
-                                               class="form-control ilch-date date form_datetime"
-                                               name="<?=$index ?>"
-                                               id="<?=$index ?>"
-                                               placeholder="<?=$value ?>"
-                                               value="<?=$value ?>">
-                                        <span class="input-group-text">
-                                            <span class="fa-solid fa-calendar"></span>
-                                        </span>
-                                    <?php if ($profileField->getShow() == 0) : ?>
-                                        <span class="input-group-text" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
-                                            <span class="fa-solid fa-eye-slash"></span>
-                                        </span>
-                                    <?php endif; ?>
-                                    </div>
+                                <?php $value = $value ? new \Ilch\Date($value) : '' ?>
+                                <?php $placeholder = new \Ilch\Date() ?>
+                                <div class="col-xl-2 input-group date form_datetime">
+                                    <input type="text"
+                                           class="form-control"
+                                           name="<?=$index ?>"
+                                           id="<?=$index ?>"
+                                           placeholder="<?=$placeholder->format('d.m.Y') ?>"
+                                           value="<?=($value) ? $value->format('d.m.Y') : '' ?>">
+                                    <span class="input-group-text">
+                                        <span class="fa-solid fa-calendar"></span>
+                                    </span>
+                                <?php if ($profileField->getShow() == 0) : ?>
+                                    <span class="input-group-text" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
+                                        <span class="fa-solid fa-eye-slash"></span>
+                                    </span>
+                                <?php endif; ?>
                                 </div>
                             <?php else : ?>
                                 <!-- field -->
