@@ -111,6 +111,7 @@ $directoriesStaticJs = [
             'build/ckeditor.js',
             'LICENSE.md',
             'styles.css',
+            'emoji-definitions.json',
         ]
     ],
     'choices' => [
