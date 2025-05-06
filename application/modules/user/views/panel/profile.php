@@ -125,7 +125,7 @@ $profileFieldsTranslation = $this->get('profileFieldsTranslation');
                                 <!-- date -->
                                 <?php $value = $value ? new \Ilch\Date($value) : '' ?>
                                 <?php $placeholder = new \Ilch\Date() ?>
-                                <div class="col-xl-2 input-group date form_datetime">
+                                <div <?=($profileField->getCore() && $profileField->getKey() === 'birthday') ? 'id="core-birthday" ' : '' ?>class="col-xl-2 input-group date form_datetime">
                                     <input type="text"
                                            class="form-control"
                                            name="<?=$index ?>"
@@ -191,7 +191,7 @@ $(document).ready(function() {
 
     let datetimeElements = document.getElementsByClassName('form_datetime');
     Array.from(datetimeElements).forEach((datetimeElement) => {
-        new tempusDominus.TempusDominus(datetimeElement, {
+        let datepicker = new tempusDominus.TempusDominus(datetimeElement, {
             display: {
                 calendarWeeks: true,
                 buttons: {
@@ -208,6 +208,10 @@ $(document).ready(function() {
                 format: "dd.MM.yyyy"
             }
         });
+
+        if (datetimeElement.id === 'core-birthday') {
+            datepicker.updateOptions({restrictions: { maxDate: new Date()}});
+        }
     });
 
     $("[rel='tooltip']").tooltip();
