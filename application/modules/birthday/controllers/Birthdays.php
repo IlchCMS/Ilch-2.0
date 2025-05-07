@@ -24,8 +24,8 @@ class Birthdays extends Frontend
             $input = $this->getRequest()->getQuery();
             $validation = Validation::create(
                 $input, [
-                    'start' => 'required|date',
-                    'end'   => 'required|date',
+                    'start' => 'required|date:Y-m-d\TH\\:i\\:sP',
+                    'end'   => 'required|date:Y-m-d\TH\\:i\\:sP',
                 ]
             );
 

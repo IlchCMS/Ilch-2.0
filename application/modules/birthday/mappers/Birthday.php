@@ -57,10 +57,11 @@ class Birthday extends Mapper
     public function getEntriesForJson(string $start, string $end): ?array
     {
         if ($start && $end) {
-
-            $sql = 'SELECT *
-                    FROM `[prefix]_users`
-                    WHERE DayOfYear(`birthday`)
+            $sql = 'SELECT `us`.`id`, `us`.`name`, `pfc`.`value`
+                    FROM `[prefix]_users` AS us
+                    INNER JOIN `[prefix]_profile_fields` AS `pf` ON (`pf`.`key` = "birthday" AND `pf`.`core` = 1)
+                    INNER JOIN `[prefix]_profile_content` AS `pfc` ON (`pfc`.`field_id` = `pf`.`id` AND `pfc`.`user_id` = `us`.`id`)
+                    WHERE DayOfYear(`value`)
                         BETWEEN DayOfYear("' . $this->db()->escape($start) .'")
                         AND DayOfYear("' .  $this->db()->escape($end) . '")';
         } else {
@@ -78,7 +79,7 @@ class Birthday extends Mapper
             $entryModel = new UserModel();
             $entryModel->setId($entries['id']);
             $entryModel->setName($entries['name']);
-            $entryModel->setBirthday($entries['birthday']);
+            $entryModel->setBirthday($entries['value']);
             $entry[] = $entryModel;
         }
 
