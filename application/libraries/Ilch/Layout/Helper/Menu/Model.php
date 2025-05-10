@@ -117,84 +117,89 @@ class Model
      */
     public function getItems(string $tpl = '', array $options = []): string
     {
+        // Zugriffsrechte aufbauen
         $groupIds = [3];
-        $adminAccess = '';
+        $adminAccess = false;
         if ($this->layout->getUser()) {
-            $groupIds = [];
-            foreach ($this->layout->getUser()->getGroups() as $groups) {
-                $groupIds[] = $groups->getId();
-            }
+            $groupIds = array_map(
+                fn($group) => $group->getId(),
+                $this->layout->getUser()->getGroups()
+            );
 
-            if ($this->layout->getUser()->isAdmin()) {
-                $adminAccess = true;
-            }
+            $adminAccess = $this->layout->getUser()->isAdmin();
         }
 
-        $items = $this->menuMapper->getMenuItemsByParent($this->getId(), 0);
-        if (empty($items)) {
+        // Alle Items auf einmal laden (statt rekursiv getMenuItemsByParent)
+        $allItems = $this->menuMapper->getMenuItems($this->getId());
+        if (empty($allItems)) {
+            return '';
+        }
+
+        // Parent-Child-Struktur vorbereiten
+        $menuData = [
+            'items' => [],
+            'parents' => []
+        ];
+
+        foreach ($allItems as $item) {
+            $menuData['items'][$item->getId()] = $item;
+            $menuData['parents'][$item->getParentId()][] = $item->getId();
+        }
+
+        // Root-Elemente prüfen (Elternelement 0)
+        if (empty($menuData['parents'][0])) {
             return '';
         }
 
         $config = \Ilch\Registry::get('config');
-
-        $html = '';
         $locale = '';
 
-        if ((bool)$config->get('multilingual_acp') && $this->layout->getTranslator()->getLocale() != $config->get('content_language')) {
+        if ((bool)$config->get('multilingual_acp') &&
+            $this->layout->getTranslator()->getLocale() != $config->get('content_language')) {
             $locale = $this->layout->getTranslator()->getLocale();
         }
 
-        /** @var MenuItem $item */
-        foreach ($items as $item) {
+        $html = '';
+
+        foreach ($menuData['parents'][0] as $itemId) {
+            $item = $menuData['items'][$itemId];
+
             if (!is_in_array($groupIds, explode(',', $item->getAccess())) || $adminAccess) {
                 if ($item->isBox()) {
-                    // Do not render boxes if boxes.render is set to false
                     if (array_dot($options, 'boxes.render') === false) {
                         continue;
                     }
+
                     if ($item->getBoxId()) {
                         if (!$this->accessMapper->hasAccess('Module', $item->getBoxId(), $this->accessMapper::TYPE_BOX)) {
                             continue;
                         }
-                        $box = $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId(), $locale);
 
-                        if (!$box) {
-                            // Get box without locale if no box with the requested locale was found. Display an "unlocalized"
-                            // one instead of failing with an error or showing nothing.
-                            $box = $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId());
-                        }
+                        $box = $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId(), $locale)
+                            ?: $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId());
 
-                        // purify content of user created box
                         $contentHtml = $this->layout->purify($box->getContent());
                     } else {
                         $box = $this->loadBoxFromModule($item);
                         $contentHtml = $box->getContent();
                     }
-                } else { //is Menu
-                    $subItems = $this->menuMapper->getMenuItems($item->getMenuId());
-
-                    // prepare array with parent-child relations
-                    $menuData = [
-                        'items' => [],
-                        'parents' => []
-                    ];
-
-                    foreach ($subItems as $subItem) {
-                        $menuData['items'][$subItem->getId()] = $subItem;
-                        $menuData['parents'][$subItem->getParentId()][] = $subItem->getId();
-                    }
-
+                } else { // Menüeintrag
                     $contentHtml = '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-root')) . '>';
                     $contentHtml .= $this->buildMenu($item->getId(), $menuData, $locale, $options, $item->getType());
                     $contentHtml .= '</ul>';
                 }
 
-                $html .= str_replace(['%s', '%c'], [$this->layout->escape($item->getTitle()), $contentHtml], $tpl);
+                $html .= str_replace(
+                    ['%s', '%c'],
+                    [$this->layout->escape($item->getTitle()), $contentHtml],
+                    $tpl
+                );
             }
         }
 
         return $html;
     }
+
 
     /**
      * Gets the menu items as html-string.
