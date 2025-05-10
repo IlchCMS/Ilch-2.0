@@ -54,10 +54,10 @@ class Mail extends \Ilch\Controller\Frontend
 
                 $layout = $_SESSION['layout'] ?? '';
 
-                if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/usermail.php')) {
-                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/usermail.php');
+                if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/user/layouts/mail/usermail.php')) {
+                    $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/user/layouts/mail/usermail.php');
                 } else {
-                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/usermail.php');
+                    $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/user/layouts/mail/usermail.php');
                 }
                 $messageReplace = [
                     '{senderMail}' => $this->getLayout()->escape($sender->getEmail()),

@@ -42,13 +42,13 @@
     <div id="gallery">
         <div class="row">
         <?php foreach ($this->get('image') as $image): ?>
-            <?php $commentsCount = $commentMapper->getCountComments('user/gallery/showimage/user/'.$this->getRequest()->getParam('user').'/id/'.$image->getId()); ?>
+            <?php $commentsCount = $commentMapper->getCountComments('user/gallery/showimage/user/' . $this->getRequest()->getParam('user') . '/id/' . $image->getId()); ?>
             <div class="col-xs-6 col-lg-4 col-xl-3 col-md-4">
                 <div class="card panel-default">
                     <div class="card-image img-thumbnail">
                         <a href="<?=$this->getUrl(['action' => 'showimage', 'user' => $this->getRequest()->getParam('user'), 'id' => $image->getId()]) ?>">
                         <?php if (file_exists($image->getImageThumb())): ?>
-                            <img src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$image->getImageTitle() ?>" />
+                            <img src="<?=$this->getUrl() . '/' . $image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$image->getImageTitle() ?>" />
                         <?php else: ?>
                             <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" class="panel-image-preview" alt="<?=$image->getImageTitle() ?>" />
                         <?php endif; ?>
