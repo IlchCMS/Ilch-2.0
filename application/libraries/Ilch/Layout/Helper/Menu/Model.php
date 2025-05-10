@@ -117,7 +117,7 @@ class Model
      */
     public function getItems(string $tpl = '', array $options = []): string
     {
-        // Zugriffsrechte aufbauen
+        // Build access permissions
         $groupIds = [3];
         $adminAccess = false;
         if ($this->layout->getUser()) {
@@ -129,13 +129,13 @@ class Model
             $adminAccess = $this->layout->getUser()->isAdmin();
         }
 
-        // Alle Items auf einmal laden (statt rekursiv getMenuItemsByParent)
+        // Load all items at once
         $allItems = $this->menuMapper->getMenuItems($this->getId());
         if (empty($allItems)) {
             return '';
         }
 
-        // Parent-Child-Struktur vorbereiten
+        // Prepare parent-child structure
         $menuData = [
             'items' => [],
             'parents' => []
@@ -146,7 +146,7 @@ class Model
             $menuData['parents'][$item->getParentId()][] = $item->getId();
         }
 
-        // Root-Elemente prüfen (Elternelement 0)
+        // Check for root elements (parent ID 0)
         if (empty($menuData['parents'][0])) {
             return '';
         }
@@ -174,16 +174,18 @@ class Model
                         if (!$this->accessMapper->hasAccess('Module', $item->getBoxId(), $this->accessMapper::TYPE_BOX)) {
                             continue;
                         }
-
+                        // Get box without locale if no box with the requested locale was found. Display an "unlocalized"
+                        // one instead of failing with an error or showing nothing.
                         $box = $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId(), $locale)
                             ?: $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId());
 
+                        // purify content of user created box
                         $contentHtml = $this->layout->purify($box->getContent());
                     } else {
                         $box = $this->loadBoxFromModule($item);
                         $contentHtml = $box->getContent();
                     }
-                } else { // Menüeintrag
+                } else { // Menu item
                     $contentHtml = '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-root')) . '>';
                     $contentHtml .= $this->buildMenu($item->getId(), $menuData, $locale, $options, $item->getType());
                     $contentHtml .= '</ul>';
@@ -199,7 +201,6 @@ class Model
 
         return $html;
     }
-
 
     /**
      * Gets the menu items as html-string.

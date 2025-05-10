@@ -1,0 +1,2 @@
+Alle Stellen wo "Sample/sample" verwendet wird wüssen mit den entsprechenden Modulkeys ersetzt werden.
+Dies gilt ebenfalls für Dateinamen. (siehe mappers/models Ordner)
