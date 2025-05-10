@@ -162,7 +162,10 @@ class Menu extends \Ilch\Controller\Admin
             $this->addMessage('saveSuccess');
         }
 
-        $menuItems = $menuMapper->getMenuItemsByParent($menuId, 0);
+        $menuItems = array_filter(
+            $menuMapper->getMenuItems($menuId),
+            fn($item) => $item->getParentId() === 0
+        );
         $menu = $menuMapper->getMenu($menuId);
         $menus = $menuMapper->getMenus();
 
