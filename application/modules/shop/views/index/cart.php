@@ -81,7 +81,7 @@ if (!empty($_SESSION['shopping_cart'])) {
         }
 
         $itemsAssoc = [];
-        $items = $itemsMapper->getShopItems(['id' => $itemIds]);
+        $items = $itemsMapper->getShopItemsByIds($itemIds);
         foreach ($items as $item) {
             $itemsAssoc[$item->getId()] = $item;
         }

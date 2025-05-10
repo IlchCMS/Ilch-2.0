@@ -13,8 +13,14 @@ use Modules\Shop\Mappers\Currency as CurrencyMapper;
 use Modules\Shop\Mappers\Items as ItemsMapper;
 use Modules\Shop\Mappers\Orders as OrdersMapper;
 use Modules\Shop\Mappers\Settings as SettingsMapper;
+use Modules\Shop\Mappers\Properties as PropertiesMapper;
+use Modules\Shop\Mappers\Propertytranslations as PropertytranslationsMapper;
+use Modules\Shop\Mappers\Propertyvalues as PropertyvaluesMapper;
+use Modules\Shop\Mappers\Propertyvaluestranslations as PropertyvaluestranslationsMapper;
+use Modules\Shop\Mappers\Propertyvariants as PropertyvariantsMapper;
 use Modules\Shop\Models\Item as ItemsModel;
 use Ilch\Validation;
+use Modules\Shop\Models\Propertyvariant;
 
 class Items extends Admin
 {
@@ -38,6 +44,12 @@ class Items extends Admin
                     'icon' => 'fa-solid fa-circle-plus',
                     'url' => $this->getLayout()->getUrl(['controller' => 'items', 'action' => 'treat'])
                 ]
+            ],
+            [
+                'name' => 'menuProperties',
+                'active' => false,
+                'icon' => 'fa-solid fa-list-check',
+                'url' => $this->getLayout()->getUrl(['controller' => 'properties', 'action' => 'index'])
             ],
             [
                 'name' => 'menuCustomers',
@@ -123,6 +135,7 @@ class Items extends Admin
             } else {
                 $this->addMessage('deleteItemsFailed', 'danger');
             }
+            $this->redirect(['action' => 'index']);
         }
 
         $this->getView()->set('categoryMapper', $categoryMapper);
@@ -136,7 +149,13 @@ class Items extends Admin
         $currencyMapper = new CurrencyMapper();
         $itemsMapper = new ItemsMapper();
         $settingsMapper = new SettingsMapper();
+        $propertiesMapper = new PropertiesMapper();
+        $propertiesTranslationsMapper = new PropertytranslationsMapper();
+        $propertyValuesMapper = new PropertyvaluesMapper();
+        $propertyvaluestranslationsMapper = new PropertyvaluestranslationsMapper();
+        $propertiesVariantsMapper = new PropertyvariantsMapper();
 
+        $propertyVariants = null;
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'));
 
         if ($this->getRequest()->getParam('id')) {
@@ -149,12 +168,44 @@ class Items extends Admin
                 ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuItems'), ['controller' => 'items', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
-            $this->getView()->set('shopItem', $itemsMapper->getShopItemById($this->getRequest()->getParam('id')));
+
+            $propertyVariants = $propertiesVariantsMapper->getPropertiesVariants(['item_id' => $this->getRequest()->getParam('id')]);
+            $itemIds = [];
+            if ($propertyVariants) {
+                foreach ($propertyVariants as $propertyVariant) {
+                    $itemIds[] = $propertyVariant->getItemVariantId();
+                }
+            }
+
+            $shopItem = $itemsMapper->getShopItemById($this->getRequest()->getParam('id'));
+            $this->getView()->set('propertyVariant', ($shopItem && $shopItem->isVariant()) ? $propertiesVariantsMapper->getPropertyVariant(['item_variant_id' => $this->getRequest()->getParam('id')]) : null);
+            $this->getView()->set('shopItems', $itemIds ? $itemsMapper->getShopItemsByIds($itemIds) : []);
+            $this->getView()->set('shopItem', $shopItem);
+            $this->getView()->set('propertyVariants', $propertyVariants);
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuItems'), ['controller' => 'items', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+        }
+
+        // Get the properties and their values.
+        $properties = $propertiesMapper->getProperties();
+        $propertiesIds = array_keys($properties);
+        $propertiesValues = $propertiesIds ? $propertyValuesMapper->getValues(['property_id' => $propertiesIds]) : [];
+
+        // Get the translations for the properties.
+        $propertiesTranslations = $propertiesIds ? $propertiesTranslationsMapper->getTranslationsByLocaleAndPropertyIds($this->getTranslator()->getLocale(), $propertiesIds) : [];
+        $propertyTranslationAssoc = [];
+        foreach($propertiesTranslations as $propertyTranslation) {
+            $propertyTranslationAssoc[$propertyTranslation->getPropertyId()] = $propertyTranslation->getText();
+        }
+
+        // Get the translations for the values.
+        $propertyValuesTranslations = $propertiesValues ? $propertyvaluestranslationsMapper->getTranslationsByLocaleAndValueIds($this->getTranslator()->getLocale(), array_keys($propertiesValues)) ?? [] : [];
+        $propertyValueTranslationAssoc = [];
+        foreach($propertyValuesTranslations as $propertyValueTranslation) {
+            $propertyValueTranslationAssoc[$propertyValueTranslation->getValueId()] = $propertyValueTranslation->getText();
         }
 
         if ($this->getRequest()->isPost()) {
@@ -178,12 +229,8 @@ class Items extends Admin
             $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
             if ($validation->isValid()) {
+                // Prepare the basic model for the product.
                 $model = new ItemsModel();
-
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
-                }
-
                 $model->setCatId($this->getRequest()->getPost('catId'));
                 $model->setName($this->getRequest()->getPost('name'));
                 $model->setItemnumber($this->getRequest()->getPost('itemnumber'));
@@ -204,9 +251,43 @@ class Items extends Admin
                 $model->setDesc($this->getRequest()->getPost('desc'));
                 $model->setStatus($this->getRequest()->getPost('status'));
 
-                $itemsMapper->save($model);
+                $variantModel = null;
+                if ($this->getRequest()->getPost('valueCheckbox')) {
+                    $variantModel = clone($model);
+                }
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
+
+                $itemId = $itemsMapper->save($model);
+
+                $usedValueIds = [];
+                foreach ($propertyVariants as $propertyVariant) {
+                    $usedValueIds[$propertyVariant->getValueId()] = $propertyVariant;
+                }
+
+                foreach($this->getRequest()->getPost('valueCheckbox') ?? [] as $propertyValue) {
+                    if (!isset($usedValueIds[$propertyValue])) {
+                        // Variant doesn't already exist. Save the variant as a new product.
+                        // Set initial values suitable for a variant of a product.
+                        $variantModel->setName($this->getRequest()->getPost('name') . ', ' . $propertiesValues[$propertyValue]->getValue());
+                        $variantModel->setItemnumber($this->getRequest()->getPost('itemnumber') . $propertiesValues[$propertyValue]->getValue());
+                        $variantModel->setStock(0);
+                        $variantModel->setStatus(0);
+                        $itemVariantId = $itemsMapper->save($variantModel);
+
+                        // Create variant.
+                        $newPropertyVariant = new PropertyVariant();
+                        $newPropertyVariant->setItemId($itemId);
+                        $newPropertyVariant->setItemVariantId($itemVariantId);
+                        $newPropertyVariant->setPropertyId($propertiesValues[$propertyValue]->getPropertyId());
+                        $newPropertyVariant->setValueId($propertyValue);
+                        $propertiesVariantsMapper->save($newPropertyVariant);
+                    }
+                }
+
                 $this->addMessage('saveSuccess');
-                $this->redirect(['action' => 'index']);
+                $this->redirect(['action' => 'treat', 'id' => $itemId]);
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
                 $this->redirect()
@@ -216,9 +297,14 @@ class Items extends Admin
             }
         }
 
-        $this->getView()->set('cats', $categoryMapper->getCategories());
+        $this->getView()->set('categories', $categoryMapper->getCategories());
+        $this->getView()->set('categoryMapper', $categoryMapper);
         $this->getView()->set('currency', $currency->getName());
         $this->getView()->set('settings', $settingsMapper->getSettings());
+        $this->getView()->set('properties', $properties);
+        $this->getView()->set('propertiesTranslations', $propertyTranslationAssoc);
+        $this->getView()->set('propertiesValues', $propertiesValues);
+        $this->getView()->set('propertiesValuesTranslations', $propertyValueTranslationAssoc);
     }
 
     public function delShopAction()

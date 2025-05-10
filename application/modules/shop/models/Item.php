@@ -159,6 +159,22 @@ class Item extends Model
     protected $status = 0;
 
     /**
+     * Holds if this item is a variant.
+     *
+     * @var bool
+     * @since 1.4.0
+     */
+    protected bool $isVariant = false;
+
+    /**
+     * Holds if this item has variants.
+     *
+     * @var bool
+     * @since 1.4.0
+     */
+    protected bool $hasVariants = false;
+
+    /**
      * Gets the id of the item.
      *
      * @return int|null
@@ -638,6 +654,54 @@ class Item extends Model
     {
         $this->status = $status;
 
+        return $this;
+    }
+
+    /**
+     * Get if this item is a variant.
+     *
+     * @return bool
+     * @since 1.4.0
+     */
+    public function isVariant(): bool
+    {
+        return $this->isVariant;
+    }
+
+    /**
+     * Set if this item is a variant.
+     *
+     * @param bool $isVariant
+     * @return $this
+     * @since 1.4.0
+     */
+    public function setIsVariant(bool $isVariant): Item
+    {
+        $this->isVariant = $isVariant;
+        return $this;
+    }
+
+    /**
+     * Get if this item has variants.
+     *
+     * @return bool
+     * @since 1.4.0
+     */
+    public function hasVariants(): bool
+    {
+        return $this->hasVariants;
+    }
+
+    /**
+     * Set if this item has variants.
+     *
+     * @param bool $hasVariants
+     * @return $this
+     * @since 1.4.0
+     */
+    public function setHasVariants(bool $hasVariants): Item
+    {
+        $this->hasVariants = $hasVariants;
         return $this;
     }
 }

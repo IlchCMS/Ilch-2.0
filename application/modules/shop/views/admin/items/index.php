@@ -1,4 +1,10 @@
-<?php $categoryMapper = $this->get('categoryMapper'); ?>
+<?php
+/** @var \Modules\Shop\Mappers\Category $categoryMapper */
+$categoryMapper = $this->get('categoryMapper');
+
+/** @var \Modules\Shop\Models\Item[] $shopitems */
+$shopitems = $this->get('shopItems');
+?>
 <link href="<?=$this->getModuleUrl('static/css/shop_admin.css') ?>" rel="stylesheet">
 
 <div class="d-flex align-items-start heading-filter-wrapper">
@@ -24,6 +30,8 @@
                     <col class="icon_width">
                     <col class="icon_width">
                     <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="icon_width">
                     <col>
                     <col>
                     <col>
@@ -33,6 +41,8 @@
                 <thead>
                     <tr>
                         <th><?=$this->getCheckAllCheckbox('check_shops') ?></th>
+                        <th></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th class="text-center"><?=$this->getTrans('status') ?></th>
@@ -45,7 +55,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('shopItems') as $shopItem) : ?>
+                    <?php foreach ($shopitems as $shopItem) : ?>
                         <?php
                         $shopCats = $categoryMapper->getCategoryById($shopItem->getCatId());
                         $shopImgPath = '/application/modules/shop/static/img/';
@@ -59,6 +69,8 @@
                             <td><?=$this->getDeleteCheckbox('check_shops', $shopItem->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $shopItem->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delshop', 'id' => $shopItem->getId()]) ?></td>
+                            <td><?=$shopItem->hasVariants() ? '<i class="fa-solid fa-swatchbook" title="' . $this->getTrans('hasVariants') . '"></i>' : '' ?></td>
+                            <td><?=$shopItem->isVariant() ? '<i class="fa-solid fa-swatchbook" title="' . $this->getTrans('isVariant') . '"></i>' : '' ?></td>
                             <td class="text-center">
                             <?php
                             if ($shopItem->getStatus() == 1) {
@@ -68,7 +80,7 @@
                             }
                             ?>
                             </td>
-                            <td class="text-center"><a href="<?=$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) ?>"><img src="<?=$img ?>" class="item_image <?=($shopItem->getCordon() == 1) ? $shopItem->getCordonColor() : ''; ?>" alt="<?=$this->escape($shopItem->getName()) ?>"/></a></td>
+                            <td class="text-center"><a href="<?=$this->getUrl(['action' => 'treat', 'id' => $shopItem->getId()]) ?>"><img src="<?=$img ?>" class="item_image<?=($shopItem->getCordon() == 1) ? ' ' . $shopItem->getCordonColor() : ''; ?>" alt="<?=$this->escape($shopItem->getName()) ?>"/></a></td>
                             <td><?=$this->escape($shopItem->getName()) ?></td>
                             <td><?=$this->escape($shopItem->getItemnumber()) ?></td>
                             <td><?=($shopCats) ? $this->escape($shopCats->getTitle()) : ''; ?></td>

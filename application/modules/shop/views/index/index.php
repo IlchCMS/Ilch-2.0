@@ -1,9 +1,16 @@
 <?php
+/** @var \Modules\Article\Models\Category[] $categories */
 $categories = $this->get('categories');
+
 $countAllItems = $this->get('countAllItems');
 $countCats = $this->get('countCats');
+
+/** @var \Modules\Shop\Models\Item[] $shopItems */
 $shopItems = $this->get('shopItems');
+
+/** @var \Modules\Shop\Mappers\Items $itemsMapper */
 $itemsMapper = $this->get('itemsMapper');
+
 $readAccess = $this->get('readAccess');
 $adminAccess = $this->get('adminAccess');
 $status = '';
@@ -145,7 +152,10 @@ if(!empty($_SESSION['shopping_cart'])) {
             <img src="<?=$img ?>" alt="<?=$this->escape($shopItem->getName()) ?>" />
             <div class="caption text-center mb-3">
                 <h4><?=$this->escape($shopItem->getName()) ?></h4>
-                <p><?=$shopItem->getPrice() ?> <?=$this->escape($this->get('currency')) ?></p>
+                <p>
+                   <?=$shopItem->getPrice() ?> <?=$this->escape($this->get('currency')) ?><br>
+                   <?=$shopItem->hasVariants() ? $this->getTrans('hasVariants') : '<br>' ?>
+                </p>
                 <?php if ($shopItem->getStock() >= 1) { ?>
                     <form class="form" method="post" action="#shopAnker">
                         <?=$this->getTokenField() ?>

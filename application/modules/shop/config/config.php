@@ -14,7 +14,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'shop',
-        'version' => '1.3.4',
+        'version' => '1.4.0',
         'icon_small' => 'fa-solid fa-cart-shopping',
         'author' => 'blackcoder & LordSchirmer',
         'link' => 'https://ilch.de',
@@ -44,15 +44,20 @@ class Config extends Install
     {
         $this->db()->queryMulti('DELETE FROM `[prefix]_config` WHERE `key` = "shop_currency"');
 
-        $this->db()->queryMulti('DROP TABLE `[prefix]_shop_access`;
-            DROP TABLE `[prefix]_shop_cats`;
-            DROP TABLE `[prefix]_shop_currencies`;
-            DROP TABLE `[prefix]_shop_items`;
-            DROP TABLE `[prefix]_shop_addresses`;
-            DROP TABLE `[prefix]_shop_orderdetails`;
-            DROP TABLE `[prefix]_shop_orders`;
-            DROP TABLE `[prefix]_shop_customers`;
-            DROP TABLE `[prefix]_shop_settings`;');
+        $this->db()->queryMulti('DROP TABLE IF EXISTS `[prefix]_shop_access`;
+            DROP TABLE IF EXISTS `[prefix]_shop_cats`;
+            DROP TABLE IF EXISTS `[prefix]_shop_currencies`;
+            DROP TABLE IF EXISTS `[prefix]_shop_properties_trans`;
+            DROP TABLE IF EXISTS `[prefix]_shop_properties_values_trans`;
+            DROP TABLE IF EXISTS `[prefix]_shop_properties_variants`;
+            DROP TABLE IF EXISTS `[prefix]_shop_properties_values`;
+            DROP TABLE IF EXISTS `[prefix]_shop_properties`;
+            DROP TABLE IF EXISTS `[prefix]_shop_items`;
+            DROP TABLE IF EXISTS `[prefix]_shop_addresses`;
+            DROP TABLE IF EXISTS `[prefix]_shop_orderdetails`;
+            DROP TABLE IF EXISTS `[prefix]_shop_orders`;
+            DROP TABLE IF EXISTS `[prefix]_shop_customers`;
+            DROP TABLE IF EXISTS `[prefix]_shop_settings`;');
 
         $this->db()->queryMulti("DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'shop';");
 
@@ -194,6 +199,60 @@ class Config extends Install
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
+                CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `name` VARCHAR(255) NULL DEFAULT NULL,
+                    `enabled` TINYINT(4) NULL DEFAULT NULL,
+                    PRIMARY KEY (`id`) USING BTREE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties_trans` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `property_id` INT(11) NOT NULL,
+                    `locale` VARCHAR(255) NULL DEFAULT NULL,
+                    `text` VARCHAR(255) NULL DEFAULT NULL,
+                    PRIMARY KEY (`id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_properties_trans_[prefix]_shop_properties` (`property_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_properties_trans_[prefix]_shop_properties` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties_values` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `property_id` INT(11) NOT NULL,
+                    `position` INT(11) NOT NULL,
+                    `value` VARCHAR(255) NULL DEFAULT NULL,
+                    PRIMARY KEY (`id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_properties_values_[prefix]_shop_properties` (`property_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_properties_values_[prefix]_shop_properties` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties_values_trans` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `value_id` INT(11) NOT NULL,
+                    `locale` VARCHAR(255) NULL DEFAULT NULL,
+                    `text` VARCHAR(255) NULL DEFAULT NULL,
+                    PRIMARY KEY (`id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_properties_values_trans_[prefix]_shop_properties_values` (`value_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_properties_values_trans_[prefix]_shop_properties_values` FOREIGN KEY (`value_id`) REFERENCES `[prefix]_shop_properties_values` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties_variants` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `item_id` INT(11) NOT NULL,
+                    `item_variant_id` INT(11) NOT NULL,
+                    `property_id` INT(11) NOT NULL,
+                    `value_id` INT(11) NOT NULL,
+                    PRIMARY KEY (`id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties` (`property_id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_items` (`item_id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_items_2` (`item_variant_id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties_values` (`value_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_shop_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_items_2` FOREIGN KEY (`item_variant_id`) REFERENCES `[prefix]_shop_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties_values` FOREIGN KEY (`value_id`) REFERENCES `[prefix]_shop_properties_values` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+                
                 INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
                     ("shop", "order_confirmed_mail", "Bestellung eingegangen", "<p>Sehr geehrte(r) <b>{name}</b>,</p>
                         <p>&nbsp;</p>
@@ -348,6 +407,70 @@ class Config extends Install
             case '1.2.0':
             case '1.2.1':
             case '1.2.2':
+            case '1.3.0':
+            case '1.3.1':
+            case '1.3.2':
+            case '1.3.3':
+            case '1.3.4':
+                // Create the new tables needed for the product variants feature.
+                // shop_properties, shop_properties_trans, shop_properties_values, shop_properties_values_trans and shop_properties_variants.
+                $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `name` VARCHAR(255) NULL DEFAULT NULL,
+                    `enabled` TINYINT(4) NULL DEFAULT NULL,
+                    PRIMARY KEY (`id`) USING BTREE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties_trans` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `property_id` INT(11) NOT NULL,
+                    `locale` VARCHAR(255) NULL DEFAULT NULL,
+                    `text` VARCHAR(255) NULL DEFAULT NULL,
+                    PRIMARY KEY (`id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_properties_trans_[prefix]_shop_properties` (`property_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_properties_trans_[prefix]_shop_properties` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties_values` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `property_id` INT(11) NOT NULL,
+                    `position` INT(11) NOT NULL,
+                    `value` VARCHAR(255) NULL DEFAULT NULL,
+                    PRIMARY KEY (`id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_properties_values_[prefix]_shop_properties` (`property_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_properties_values_[prefix]_shop_properties` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties_values_trans` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `value_id` INT(11) NOT NULL,
+                    `locale` VARCHAR(255) NULL DEFAULT NULL,
+                    `text` VARCHAR(255) NULL DEFAULT NULL,
+                    PRIMARY KEY (`id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_properties_values_trans_[prefix]_shop_properties_values` (`value_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_properties_values_trans_[prefix]_shop_properties_values` FOREIGN KEY (`value_id`) REFERENCES `[prefix]_shop_properties_values` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties_variants` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `item_id` INT(11) NOT NULL,
+                    `item_variant_id` INT(11) NOT NULL,
+                    `property_id` INT(11) NOT NULL,
+                    `value_id` INT(11) NOT NULL,
+                    PRIMARY KEY (`id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties` (`property_id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_items` (`item_id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_items_2` (`item_variant_id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties_values` (`value_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_shop_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_items_2` FOREIGN KEY (`item_variant_id`) REFERENCES `[prefix]_shop_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties_values` FOREIGN KEY (`value_id`) REFERENCES `[prefix]_shop_properties_values` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
+
+                // Delete unused items model.
+                unlink(ROOT_PATH . '/application/modules/shop/models/Items.php');
+                // no break
         }
     }
 }
