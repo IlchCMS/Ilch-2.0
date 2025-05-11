@@ -17,7 +17,7 @@ $userCache = [];
                 <label for="startDate" class="col-xl-2 col-form-label">
                     <?=$this->getTrans('startDate') ?>:
                 </label>
-                <div id="startDate" class="col-xl-4 input-group ilch-date date form_datetime">
+                <div id="startDate" class="col-xl-4 input-group date form_datetime">
                     <input type="text"
                            class="form-control"
                            id="startDate"
@@ -33,7 +33,7 @@ $userCache = [];
                 <label for="endDate" class="col-xl-2 col-form-label">
                     <?=$this->getTrans('endDate') ?>:
                 </label>
-                <div id="endDate" class="col-xl-4 input-group ilch-date date form_datetime">
+                <div id="endDate" class="col-xl-4 input-group date form_datetime">
                     <input type="text"
                            class="form-control"
                            id="endDate"

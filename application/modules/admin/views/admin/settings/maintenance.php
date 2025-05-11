@@ -21,7 +21,7 @@
         <label for="maintenanceEndDateTime" class="col-lg-2 col-form-label">
             <?=$this->getTrans('maintenanceEndDateTime') ?>:
         </label>
-        <div id="maintenanceEndDateTime" class="col-xl-2 input-group ilch-date date form_datetime">
+        <div id="maintenanceEndDateTime" class="col-xl-2 input-group date form_datetime">
             <input type="text"
                    class="form-control"
                    id="maintenanceEndDateTime"

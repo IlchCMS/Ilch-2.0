@@ -54,7 +54,7 @@ if ($this->get('article')) {
         <label for="date_created" class="col-xl-2 col-form-label">
             <?=$this->getTrans('date') ?>:
         </label>
-        <div id="date_created" class="col-xl-4 input-group ilch-date date form_datetime">
+        <div id="date_created" class="col-xl-4 input-group date form_datetime">
             <input type="text"
                    class="form-control"
                    id="date_created"
