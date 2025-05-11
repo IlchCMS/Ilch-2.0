@@ -118,46 +118,6 @@ class Menu extends Mapper
     }
 
     /**
-     * Gets all menu items by parent item id.
-     * @param int $menuId
-     * @param int $itemId
-     * @return array|null
-     */
-    public function getMenuItemsByParent(int $menuId, int $itemId): ?array
-    {
-        $items = [];
-        $itemRows = $this->db()->select('*')
-            ->from('menu_items')
-            ->where(['menu_id' => $menuId, 'parent_id' => $itemId])
-            ->order(['sort' => 'ASC'])
-            ->execute()
-            ->fetchRows();
-
-        if (empty($itemRows)) {
-            return null;
-        }
-
-        foreach ($itemRows as $itemRow) {
-            $itemModel = new MenuItem();
-            $itemModel->setId($itemRow['id']);
-            $itemModel->setType($itemRow['type']);
-            $itemModel->setSiteId($itemRow['page_id']);
-            $itemModel->setBoxId($itemRow['box_id']);
-            $itemModel->setBoxKey($itemRow['box_key']);
-            $itemModel->setHref($itemRow['href']);
-            $itemModel->setTarget($itemRow['target']);
-            $itemModel->setTitle($itemRow['title']);
-            $itemModel->setModuleKey($itemRow['module_key']);
-            $itemModel->setAccess($itemRow['access']);
-            $itemModel->setParentId($itemId);
-            $itemModel->setMenuId($menuId);
-            $items[] = $itemModel;
-        }
-
-        return $items;
-    }
-
-    /**
      * Save one menu item.
      *
      * @param MenuItem $menuItem
