@@ -9,6 +9,12 @@ namespace Ilch\Layout\Helper\Menu;
 
 use Ilch\Accesses;
 use Ilch\Layout\Base as Layout;
+use Ilch\Registry;
+use Ilch\View;
+use Modules\Admin\Mappers\Box as BoxMapper;
+use Modules\Admin\Mappers\Menu as MenuMapper;
+use Modules\Admin\Mappers\Page as PageMapper;
+use Modules\Admin\Models\Box as BoxModel;
 use Modules\Admin\Models\MenuItem;
 
 class Model
@@ -16,46 +22,46 @@ class Model
     /**
      * @var Layout
      */
-    protected $layout;
+    protected Layout $layout;
 
     /**
      * Id of the menu.
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * Title of the menu.
      *
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
-     * @var \Modules\Admin\Mappers\Menu
+     * @var MenuMapper
      */
-    protected $menuMapper;
+    protected MenuMapper $menuMapper;
 
     /**
-     * @var \Modules\Admin\Mappers\Box
+     * @var BoxMapper
      */
-    protected $boxMapper;
+    protected BoxMapper $boxMapper;
 
     /**
-     * @var \Modules\Admin\Mappers\Page
+     * @var PageMapper
      */
-    protected $pageMapper;
+    protected PageMapper $pageMapper;
 
     /**
      * @var string
      */
-    protected $currentUrl = '';
+    protected string $currentUrl = '';
 
     /**
      * @var Accesses
      */
-    protected $accessMapper;
+    protected Accesses $accessMapper;
 
     /**
      * Injects the layout.
@@ -65,9 +71,9 @@ class Model
     public function __construct(Layout $layout)
     {
         $this->layout = $layout;
-        $this->menuMapper = new \Modules\Admin\Mappers\Menu();
-        $this->boxMapper = new \Modules\Admin\Mappers\Box();
-        $this->pageMapper = new \Modules\Admin\Mappers\Page();
+        $this->menuMapper = new MenuMapper();
+        $this->boxMapper = new BoxMapper();
+        $this->pageMapper = new PageMapper();
         $this->accessMapper = new Accesses($layout->getRequest());
         $this->currentUrl = $layout->getCurrentUrl();
     }
@@ -155,11 +161,10 @@ class Model
             return '';
         }
 
-        $config = \Ilch\Registry::get('config');
+        $config = Registry::get('config');
         $locale = '';
 
-        if ((bool)$config->get('multilingual_acp') &&
-            $this->layout->getTranslator()->getLocale() != $config->get('content_language')) {
+        if ((bool)$config->get('multilingual_acp') && $this->layout->getTranslator()->getLocale() != $config->get('content_language')) {
             $locale = $this->layout->getTranslator()->getLocale();
         }
 
@@ -180,16 +185,16 @@ class Model
                         }
                         // Get box without locale if no box with the requested locale was found. Display an "unlocalized"
                         // one instead of failing with an error or showing nothing.
-                        $box = $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId(), $locale)
-                            ?: $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId());
+                        $box = $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId(), $locale) ?: $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId());
 
-                        // purify content of user created box
+                        // Purify content of user created box
                         $contentHtml = $this->layout->purify($box->getContent());
                     } else {
                         $box = $this->loadBoxFromModule($item);
                         $contentHtml = $box->getContent();
                     }
-                } else { // Menu item
+                } else {
+                    // Menu item
                     $contentHtml = '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-root')) . '>';
                     $contentHtml .= $this->buildMenu($item->getId(), $menuData, $locale, $options, $item->getType());
                     $contentHtml .= '</ul>';
@@ -220,7 +225,7 @@ class Model
     {
         $html = '';
         $groupIds = [3];
-        $adminAccess = '';
+        $adminAccess = false;
 
         if ($this->layout->getUser()) {
             $groupIds = [];
@@ -236,27 +241,12 @@ class Model
         if (isset($menuData['parents'][$parentId])) {
             foreach ($menuData['parents'][$parentId] as $itemId) {
                 $liClasses = [];
-                $aClasses = [];
 
                 // list classes
                 if ($parentType === $menuData['items'][$itemId]::TYPE_MENU || array_dot($options, 'menus.allow-nesting') === false) {
                     $liClasses[] = array_dot($options, 'menus.li-class-root');
                 } else {
                     $liClasses[] = array_dot($options, 'menus.li-class-child');
-                }
-
-                // link classes
-                if ($parentType === $menuData['items'][$itemId]::TYPE_MENU || array_dot($options, 'menus.a-class')) {
-                    $aClasses[] = array_dot($options, 'menus.a-class');
-                } else {
-                    $aClasses[] = array_dot($options, 'menus.a-class');
-                }
-
-                // span classes
-                if ($parentType === $menuData['items'][$itemId]::TYPE_MENU || array_dot($options, 'menus.span-class')) {
-                    $aClasses[] = array_dot($options, 'menus.span-class');
-                } else {
-                    $aClasses[] = array_dot($options, 'menus.span-class');
                 }
 
                 $target = '';
@@ -274,7 +264,7 @@ class Model
 
                     $href = $this->layout->getUrl($page ? $page->getPerma() : '');
                 } elseif ($menuData['items'][$itemId]->isModuleLink()) {
-                    if (!$this->accessMapper->hasAccess('Module', $menuData['items'][$itemId]->getModuleKey(), $this->accessMapper::TYPE_MODULE)) {
+                    if (!$this->accessMapper->hasAccess('Module', $menuData['items'][$itemId]->getModuleKey())) {
                         continue;
                     }
 
@@ -344,16 +334,16 @@ class Model
 
     /**
      * @param MenuItem $item
-     * @return \Modules\Admin\Models\Box
+     * @return BoxModel
      */
-    protected function loadBoxFromModule(MenuItem $item): \Modules\Admin\Models\Box
+    protected function loadBoxFromModule(MenuItem $item): BoxModel
     {
         $parts = explode('_', $item->getBoxKey());
         $moduleKey = $parts[0];
         $boxKey = $parts[1];
 
         $class = '\\Modules\\' . ucfirst($moduleKey) . '\\Boxes\\' . ucfirst($boxKey);
-        $view = new \Ilch\View($this->layout->getRequest(), $this->layout->getTranslator(), $this->layout->getRouter());
+        $view = new View($this->layout->getRequest(), $this->layout->getTranslator(), $this->layout->getRouter());
         $this->layout->getTranslator()->load(APPLICATION_PATH . '/modules/' . $moduleKey . '/translations');
         /** @var \Ilch\Box $boxObj */
         $boxObj = new $class(
@@ -377,7 +367,7 @@ class Model
         $view->setBoxUrl('application/modules/' . $moduleKey);
 
         $output = $view->loadScript($viewPath);
-        $box = new \Modules\Admin\Models\Box();
+        $box = new BoxModel();
         $box->setContent($output);
         return $box;
     }
