@@ -269,7 +269,7 @@ class Backup extends \Ilch\Controller\Admin
         if ($this->getRequest()->isSecure()) {
             // Look for new backup files that have been uploaded to the backups directory.
             $backupMapper = new BackupMapper();
-            $backups = $backupMapper->getBackups();
+            $backups = $backupMapper->getBackups() ?? [];
             $directory = ROOT_PATH . '/backups/';
             $backupsInDirectory = glob($directory . '*.sql*');
             $newBackupFiles = [];
