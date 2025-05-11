@@ -36,18 +36,22 @@ class Model
      * @var \Modules\Admin\Mappers\Menu
      */
     protected $menuMapper;
+
     /**
      * @var \Modules\Admin\Mappers\Box
      */
     protected $boxMapper;
+
     /**
      * @var \Modules\Admin\Mappers\Page
      */
     protected $pageMapper;
+
     /**
      * @var string
      */
     protected $currentUrl = '';
+
     /**
      * @var Accesses
      */
