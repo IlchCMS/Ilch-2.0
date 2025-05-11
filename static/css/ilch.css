@@ -42,12 +42,6 @@ img {
     height: auto;
 }
 
-.ilch-date {
-    min-width: 210px;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-}
-
 .badge {
     vertical-align: middle !important;
 }
