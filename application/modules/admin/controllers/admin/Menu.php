@@ -6,7 +6,9 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
+use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Mappers\Menu as MenuMapper;
+use Modules\Admin\Mappers\Module as ModuleMapper;
 use Modules\Admin\Mappers\Page as PageMapper;
 use Modules\Admin\Models\MenuItem;
 use Modules\Admin\Models\Menu as MenuModel;
@@ -183,13 +185,19 @@ class Menu extends \Ilch\Controller\Admin
 
         if (!$menu) {
             $this->addMessage('menuNotFound', 'danger');
-            $this->redirect(['action' => 'index']);
+
+            // Don't redirect to index if the default menu with the id 1 is missing. Redirect to the next existing menu.
+            if ($this->getRequest()->getParam('menu')) {
+                $this->redirect(['action' => 'index']);
+            }
+
+            $this->redirect(['action' => 'index', 'menu' => $menus[0]->getId()]);;
         }
 
         $userGroupList = $userGroupMapper->getGroupList();
 
-        $moduleMapper = new \Modules\Admin\Mappers\Module();
-        $boxMapper = new \Modules\Admin\Mappers\Box();
+        $moduleMapper = new ModuleMapper();
+        $boxMapper = new BoxMapper();
 
         $locale = '';
 
