@@ -7,26 +7,30 @@
 
 namespace Ilch\Layout\Helper\Menu;
 
+use Ilch\Database\Mysql;
+use Ilch\Layout\Base;
+use Ilch\Registry;
+
 class Mapper
 {
     /**
-     * @var \Ilch\Database\Mysql
+     * @var Mysql
      */
     protected $db;
 
     /**
-     * @var \Ilch\Layout\Base
+     * @var Base
      */
-    protected $layout;
+    protected Base $layout;
 
     /**
      * Injects layout and gets database.
      *
-     * @param \Ilch\Layout\Base $layout
+     * @param Base $layout
      */
-    public function __construct(\Ilch\Layout\Base $layout)
+    public function __construct(Base $layout)
     {
-        $this->db = \Ilch\Registry::get('db');
+        $this->db = Registry::get('db');
         $this->layout = $layout;
     }
 
@@ -38,13 +42,15 @@ class Mapper
     public function getMenus(): array
     {
         $menus = [];
-        $menuRows = $this->db->select(['id'])
+        $menuRows = $this->db->select(['id', 'title'])
             ->from('menu')
             ->execute()
             ->fetchRows();
 
         foreach ($menuRows as $menuRow) {
-            $menu = $this->getMenu($menuRow['id']);
+            $menu = new Model($this->layout);
+            $menu->setId($menuRow['id']);
+            $menu->setTitle($menuRow['title']);
             $menus[] = $menu;
         }
 

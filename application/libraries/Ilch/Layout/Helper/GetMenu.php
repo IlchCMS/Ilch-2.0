@@ -31,7 +31,7 @@ class GetMenu
     ];
 
     /** @var Layout */
-    private $layout;
+    private Layout $layout;
 
     /**
      * Injects the layout.
@@ -55,9 +55,7 @@ class GetMenu
     {
         $helperMapper = new MapperHelper($this->layout);
         $menuMapper = new MenuMapper();
-        $menu = $helperMapper->getMenu($menuMapper->getMenuIdForPosition($menuId) ?? 0);
-
-        //TODO: optimize loading of menus (less queries!!!)
+        $menu = $helperMapper->getMenu($menuMapper->getMenuIdForPosition($menuId) ?? 1);
 
         return $menu->getItems($tpl, array_replace_recursive(self::DEFAULT_OPTIONS, $options));
     }

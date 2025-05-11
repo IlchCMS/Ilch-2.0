@@ -8,12 +8,13 @@
 namespace Ilch\Layout\Helper;
 
 use Ilch\Layout\Base as Layout;
-use Ilch\Layout\Helper\Menu\Mapper;
+use Ilch\Layout\Helper\Menu\Mapper as MenuMapper;
+use Ilch\Layout\Helper\Menu\Model as MenuModel;
 
 class GetMenus
 {
     /** @var Layout */
-    private $layout;
+    private Layout $layout;
 
     /**
      * Injects the layout.
@@ -28,11 +29,11 @@ class GetMenus
     /**
      * Gets all menus.
      *
-     * @return \Ilch\Layout\Helper\Menu\Model[]
+     * @return MenuModel[]
      */
     public function getMenus(): array
     {
-        $helperMapper = new Mapper($this->layout);
+        $helperMapper = new MenuMapper($this->layout);
 
         return $helperMapper->getMenus();
     }
