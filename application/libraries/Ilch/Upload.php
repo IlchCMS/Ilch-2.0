@@ -257,6 +257,20 @@ class Upload
         $this->setUrlThumb($this->path . 'thumb_' . $hash . '.' . $extension);
 
         if (move_uploaded_file($_FILES['upl']['tmp_name'], $this->path . $hash . '.' . $extension) && $this->isAllowedExtension()) {
+            if (!in_array($extension, ['jpg', 'jpeg', 'gif', 'png'])) {
+                // EasyPhpThumbnail only supports these image types.
+                return;
+            }
+
+            // Don't create a thumbnail if the image is already thumbnail size.
+            $imageSize = getimagesize($this->path . $hash . '.' . $extension);
+            if ($imageSize !== false) {
+                if ($imageSize[0] <= 300 && $imageSize[1] <= 300) {
+                    $this->setUrlThumb($this->path . $hash . '.' . $extension);
+                    return;
+                }
+            }
+
             if (!$this->enoughFreeMemory($this->path . $hash . '.' . $extension)) {
                 return;
             }
