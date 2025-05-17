@@ -1,1 +1,0 @@
-(t=>{const{translation:{dictionary:a,getPluralForm:n}}={translation:{dictionary:{},getPluralForm:null}};t.translation||={dictionary:{},getPluralForm:null},t.translation.dictionary=Object.assign(t.translation.dictionary,a),t.translation.getPluralForm=n})(window.CKEDITOR_TRANSLATIONS||={});

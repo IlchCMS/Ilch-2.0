@@ -1232,6 +1232,9 @@ class Config extends \Ilch\Config\Install
             case "2.2.10":
                 // Update vendor folder to update Bootstrap to version 5.3.5 and PHPMailer to version 6.10.0.
                 replaceVendorDirectory();
+
+                // Remove no longer existing "translation.umd.js" from CKEditor 5.
+                unlink(ROOT_PATH . '/static/js/ckeditor/translations/translation.umd.js');
                 break;
         }
 
