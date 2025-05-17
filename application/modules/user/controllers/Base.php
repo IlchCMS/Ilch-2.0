@@ -20,14 +20,14 @@ class Base extends \Ilch\Controller\Frontend
     public function init()
     {
         $UserMenuMapper = new UserMenuMapper();
-        $profilMapper = new UserMapper();
-        
+        $userMapper = new UserMapper();
+
         $menu = $UserMenuMapper->getUserMenu();
         $menuLinks = $UserMenuMapper->getUserMenuSettingsLinks($this->getTranslator()->getLocale());
-        
+
         $this->getView()->set('usermenu', $menu);
         $this->getView()->set('usermenusettingslinks', $menuLinks);
-        $this->getView()->set('profil', $profilMapper->getUserById($this->getUser()->getId()));
+        $this->getView()->set('profil', $userMapper->getUserById($this->getUser()->getId()));
         $this->getView()->set('galleryAllowed', $this->getConfig()->get('usergallery_allowed'));
     }
 }

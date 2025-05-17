@@ -17,7 +17,7 @@
                 } elseif (strtotime($date) <= strtotime('-2 day') && strtotime($date) >= strtotime('-6 day')) {
                     echo $this->getTrans($date->format('l', true)).$date->format(' H.i', true);
                 } elseif (strtotime($date) <= strtotime('-1 day')) {
-                    echo $this->getTrans('profileYesterday').' '.$date->format('H:i', true);
+                    echo $this->getTrans('profileYesterday') . ' ' . $date->format('H:i', true);
                 } else {
                     echo $date->format('H:i', true);
                 }

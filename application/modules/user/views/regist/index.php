@@ -1,5 +1,5 @@
 <?php if ($this->get('regist_accept') == '1'): ?>
-    <?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
+    <?php include APPLICATION_PATH . '/modules/user/views/regist/navi.php'; ?>
     <form method="POST">
         <?=$this->getTokenField() ?>
         <div class="card panel-default">

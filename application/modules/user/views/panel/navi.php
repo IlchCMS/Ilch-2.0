@@ -34,7 +34,7 @@ function getTransKey($usermenuId)
         <ul class="nav flex-column">
             <?php foreach ($this->get('usermenu') as $usermenu) {
     $class = '';
-    if ($usermenu->getKey() == 'user/panel/'.$this->getRequest()->getActionName()) {
+    if ($usermenu->getKey() == 'user/panel/' . $this->getRequest()->getActionName()) {
         $class = 'active';
     }
 

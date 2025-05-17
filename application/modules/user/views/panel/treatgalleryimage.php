@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-xl-12 profile">
-        <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
+        <?php include APPLICATION_PATH . '/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('treatImage') ?></h1>
@@ -12,8 +12,8 @@
                 <?=$this->getTokenField() ?>
                 <div id="gallery">
                     <div class="col-lg-5">
-                        <a href="<?=$this->getUrl().'/'.$image->getImageUrl() ?>">
-                            <img class="img-thumbnail" src="<?=$this->getUrl().'/'.$image->getImageUrl() ?>"/>
+                        <a href="<?=$this->getUrl() . '/' . $image->getImageUrl() ?>">
+                            <img class="img-thumbnail" src="<?=$this->getUrl() . '/' . $image->getImageUrl() ?>"/>
                         </a>
                     </div>
                     <div class="col-lg-7">

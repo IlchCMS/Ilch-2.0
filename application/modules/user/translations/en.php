@@ -316,6 +316,7 @@ return [
     'profileFieldKey' => 'Key',
     'profileFieldName' => 'Name',
     'profileFieldType' => 'Type',
+    'profileFieldCore' => 'System profile field',
     'profileFieldRegistration' => 'Registration',
     'profileFieldField' => 'Text field',
     'profileFieldCat' => 'Category',
@@ -351,6 +352,7 @@ return [
     'profileFieldOptions' => 'Selection options',
     'profileFieldShowTitle' => 'Show profile field',
     'profileFieldHideTitle' => 'Hide profile field',
+    'profileFieldCoreTitle' => 'This profile field is required by Ilch.',
     'profileFieldRegistrationTitle' => 'Will be requested during registration.',
 
     'picturesPerPage' => 'Pictures per page',
