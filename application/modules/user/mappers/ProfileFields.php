@@ -97,7 +97,6 @@ class ProfileFields extends \Ilch\Mapper
      * Inserts or updates a ProfileField model in the database.
      *
      * @param ProfileFieldModel $profileField
-     *
      * @return int The id of the updated or inserted profile-field.
      */
     public function save(ProfileFieldModel $profileField): int
@@ -113,6 +112,7 @@ class ProfileFields extends \Ilch\Mapper
             $fields['options'] = $profileField->getOptions();
             $fields['show'] = $profileField->getShow();
             $fields['registration'] = $profileField->getRegistration();
+            $fields['core'] = $profileField->getCore();
             $fields['position'] = $profileField->getPosition();
         }
 
@@ -166,15 +166,15 @@ class ProfileFields extends \Ilch\Mapper
 
     /**
      * Deletes a given profile-field with the given id.
+     * Doesn't delete core profile fields.
      *
      * @param int $id
-     *
      * @return bool True if success, otherwise false.
      */
     public function deleteProfileField(int $id): bool
     {
         return $this->db()->delete('profile_fields')
-            ->where(['id' => $id])
+            ->where(['id' => $id, 'core' => 0])
             ->execute();
     }
 
@@ -182,7 +182,6 @@ class ProfileFields extends \Ilch\Mapper
      * Returns whether a profile-field exists.
      *
      * @param int $id
-     *
      * @return bool True if a profile-field with this id exists, false otherwise.
      */
     public function profileFieldWithIdExists(int $id): bool
@@ -194,7 +193,6 @@ class ProfileFields extends \Ilch\Mapper
 
     /**
      * Returns the count of profile-fields.
-     *
      *
      * @return int The count of profile-fields.
      */
@@ -250,6 +248,10 @@ class ProfileFields extends \Ilch\Mapper
 
         if (isset($profileFieldRow['registration'])) {
             $profileField->setRegistration($profileFieldRow['registration']);
+        }
+
+        if (isset($profileFieldRow['core'])) {
+            $profileField->setCore($profileFieldRow['core']);
         }
 
         if (isset($profileFieldRow['position'])) {

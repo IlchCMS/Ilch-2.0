@@ -18,7 +18,7 @@ $profileIconFields = $this->get('profileIconFields');
 /** @var ProfileFieldTranslation[] $profileFieldsTranslation */
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 $group = $this->get('group');
-$groupText = (!empty($group)) ? ' ('.$this->getTrans('group') . ': ' . $this->escape($group->getName()) . ')' : '';
+$groupText = (!empty($group)) ? ' (' . $this->getTrans('group') . ': ' . $this->escape($group->getName()) . ')' : '';
 $userGroupList_allowed = $this->get('userGroupList_allowed');
 $userAvatarList_allowed = $this->get('userAvatarList_allowed');
 ?>

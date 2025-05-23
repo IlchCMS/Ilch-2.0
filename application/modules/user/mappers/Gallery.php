@@ -134,7 +134,7 @@ class Gallery extends \Ilch\Mapper
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_users_gallery_items`
-                WHERE `user_id` = '.$id.' AND `parent_id` = 0';
+                WHERE `user_id` = ' . $id.' AND `parent_id` = 0';
 
         return $this->db()->queryCell($sql);
     }

@@ -117,22 +117,6 @@ foreach ($profil->getGroups() as $group) {
         <h1><?=$this->getTrans('profileDetails') ?></h1>
         <div class="row">
             <div class="col-xl-3 detail bold">
-                <?=$this->getTrans('profileFirstName') ?>
-            </div>
-            <div class="col-xl-9 detail">
-                <?=$this->escape($profil->getFirstName()) ?>
-            </div>
-        </div>
-         <div class="row">
-            <div class="col-xl-3 detail bold">
-                <?=$this->getTrans('profileLastName') ?>
-            </div>
-            <div class="col-xl-9 detail">
-                <?=$this->escape($profil->getLastName()) ?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xl-3 detail bold">
                 <?=$this->getTrans('profileGender') ?>
             </div>
             <div class="col-xl-9 detail">
@@ -147,25 +131,6 @@ foreach ($profil->getGroups() as $group) {
                 } ?>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xl-3 detail bold">
-                <?=$this->getTrans('profileCity') ?>
-            </div>
-            <div class="col-xl-9 detail">
-                <?=$this->escape($profil->getCity()) ?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xl-3 detail bold">
-                <?=$this->getTrans('profileBirthday') ?>
-            </div>
-            <div class="col-xl-9 detail">
-                <?php if ($profil->getBirthday() != '') {
-                    echo $birthday->format('d-m-Y', true) . ' (' . floor(($date->format('Ymd') - str_replace("-", "", $this->escape($profil->getBirthday()))) / 10000) . ')';
-                } ?>
-            </div>
-        </div>
-
         <?php foreach ($profileFields as $profileField) {
             if (!$profileField->getShow()) {
                 continue;
@@ -194,6 +159,15 @@ foreach ($profil->getGroups() as $group) {
                 <div class="clearfix"></div>
                 <br />
                 <h1><?=$this->escape($profileFieldName) ?></h1>
+            <?php elseif ($profileField->getCore() == 1 && $profileField->getType() == 6 && $profileField->getKey() == 'birthday' && !empty($value)) : ?>
+                <div class="row">
+                    <div class="col-xl-3 detail bold">
+                        <?=$this->escape($profileFieldName) ?>
+                    </div>
+                    <div class="col-xl-9 detail">
+                        <?=$this->escape($value . ' (' . floor(($date->format('Ymd') - $birthday->format('Ymd')) / 10000) . ')') ?>
+                    </div>
+                </div>
             <?php elseif ($profileField->getType() != 1 && !empty($value)) : ?>
                 <div class="row">
                     <div class="col-xl-3 detail bold">

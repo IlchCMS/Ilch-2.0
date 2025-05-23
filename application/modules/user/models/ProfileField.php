@@ -75,6 +75,14 @@ class ProfileField extends Model
     protected int $registration = 0;
 
     /**
+     * Marker if the profile field is core.
+     * 0: not core, 1: core
+     *
+     * @var int
+     */
+    protected int $core = 0;
+
+    /**
      * The position of the profile-field.
      *
      * @var int
@@ -287,6 +295,32 @@ class ProfileField extends Model
     public function setRegistration(int $registration): ProfileField
     {
         $this->registration = $registration;
+        return $this;
+    }
+
+    /**
+     * Get value of core.
+     * 0: not core, 1: core
+     *
+     * @return int
+     * @since 2.2.11
+     */
+    public function getCore(): int
+    {
+        return $this->core;
+    }
+
+    /**
+     * Set value of core.
+     * 0: not core, 1: core
+     *
+     * @param int $core
+     * @return $this
+     * @since 2.2.11
+     */
+    public function setCore(int $core): ProfileField
+    {
+        $this->core = $core;
         return $this;
     }
 
