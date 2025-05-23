@@ -135,8 +135,7 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
 
         $db->query('SET FOREIGN_KEY_CHECKS = 0;');
         foreach ($tableList as $table) {
-            $sql = 'DROP TABLE IF EXISTS ' . $table;
-            $db->query($sql);
+            $db->drop($table, true);
         }
         $db->query('SET FOREIGN_KEY_CHECKS = 1;');
     }
