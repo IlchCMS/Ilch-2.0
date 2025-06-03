@@ -1233,6 +1233,30 @@ class Config extends \Ilch\Config\Install
                 // Update vendor folder to update Bootstrap to version 5.3.5 and PHPMailer to version 6.10.0.
                 replaceVendorDirectory();
                 break;
+            case "2.2.11":
+                // Change updateserver to one without the domain blackcoder.de
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                if (strpos($databaseConfig->get('updateserver'), 'blackcoder.de') !== false) {
+                    $databaseConfig->set('updateserver', 'https://www.ilch.de/ilch2_updates/stable/');
+                }
+
+                // Remove updateservers with the domain blackcoder.de
+                $this->db()->query("DELETE FROM `[prefix]_admin_updateservers` WHERE `url` LIKE '%blackcoder.de%';");
+
+                // Make sure that at least the default updateserver is in the list of updateservers.
+                $defaultUpdateserverExists = $this->db()->select('url')
+                    ->from('admin_updateservers')
+                    ->where(['url' => 'https://www.ilch.de/ilch2_updates/stable/'])
+                    ->execute()
+                    ->fetchCell();
+
+                if (!$defaultUpdateserverExists) {
+                    $this->db()->insert('admin_updateservers')
+                        ->values(['url' => 'https://www.ilch.de/ilch2_updates/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
+                        ->execute();
+                }
+
+                break;
         }
 
         return 'Update function executed.';
