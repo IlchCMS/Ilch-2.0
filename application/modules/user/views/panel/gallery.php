@@ -12,31 +12,31 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
         $class = 'mjs-nestedSortable-leaf';
     }
 
-    echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
+    echo '<li id="list_' . $item->getId() . '" class="' . $class . '">';
     echo '<div><span class="disclose"><i class="fa-solid fa-circle-minus"></i>
-                    <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
-                    <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$item->getTitle().'" />
-                    <input type="hidden" class="hidden_desc" name="items['.$item->getId().'][desc]" value="'.$item->getDesc().'" />
-                    <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
+                    <input type="hidden" class="hidden_id" name="items[' . $item->getId() . '][id]" value="' . $item->getId() . '" />
+                    <input type="hidden" class="hidden_title" name="items[' . $item->getId() . '][title]" value="' . $item->getTitle() . '" />
+                    <input type="hidden" class="hidden_desc" name="items[' . $item->getId() . '][desc]" value="' . $item->getDesc() . '" />
+                    <input type="hidden" class="hidden_type" name="items[' . $item->getId() . '][type]" value="' . $item->getType() . '" />
                     <span></span>
                 </span>
-                <span class="title">'.$item->getTitle().'</span>
+                <span class="title">' . $item->getTitle() . '</span>
                 <span class="item_delete">
                     <i class="fa-solid fa-times-circle"></i>
                 </span><span class="item_edit">
                     <i class="fa-regular fa-pen-to-square"></i>
                 </span>
                 <span class="upload" style="float:right; margin-right: 6px;">
-                    <a href="javascript:media('.$item->getId().')">
+                    <a href="javascript:media(' . $item->getId() . ')">
                         <i class="fa-solid fa-cloud-arrow-up"></i>
                     </a>
                 </span>
                 <span class="view" style="float:right; margin-right: 6px;">
-                    <a href="'.$obj->getUrl(['action' => 'treatgallery', 'id' => $item->getId()]).'">
+                    <a href="' . $obj->getUrl(['action' => 'treatgallery', 'id' => $item->getId()]) . '">
                         <i class="fa-solid fa-eye"></i>
                     </a>
                 </span>
-                <span class="count" style="float:right; margin-right: 6px;">'.$imageMapper->getCountImageById($item->getId()).'</span>
+                <span class="count" style="float:right; margin-right: 6px;">' . $imageMapper->getCountImageById($item->getId()) . '</span>
             </div>';
 
     if (!empty($subItems)) {
@@ -57,11 +57,11 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 
 <div class="row">
     <div class="col-xl-12 profile">
-        <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
+        <?php include APPLICATION_PATH . '/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('menuGallery') ?></h1>
-            <?php if ($profil->getOptGallery() != 0 && $this->get('galleryAllowed') != 0): ?>
+            <?php if ($profil->getOptGallery() != 0 && $this->get('galleryAllowed') != 0) : ?>
                 <form id="galleryForm" method="POST">
                     <?=$this->getTokenField() ?>
                     <div class="row">
@@ -125,7 +125,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                         </div>
                     </div>
                 </form>
-            <?php else: ?>
+            <?php else : ?>
                 <?=$this->getTrans('usergalleryNotAllowed') ?>
             <?php endif; ?>
         </div>
@@ -275,9 +275,9 @@ $(document).ready (
 </script>
 <script>
 <?=$this->getMedia()
-        ->addActionButton($this->getUrl('user/panel/treatgallery/id/'.$this->getRequest()->getParam('id')))
-        ->addMediaButton($this->getUrl('user/iframe/multi/type/multi/id/'.$this->getRequest()->getParam('id')))
-        ->addUploadController($this->getUrl('user/iframe/upload'))
+    ->addActionButton($this->getUrl('user/panel/treatgallery/id/' . $this->getRequest()->getParam('id')))
+    ->addMediaButton($this->getUrl('user/iframe/multi/type/multi/id/' . $this->getRequest()->getParam('id')))
+    ->addUploadController($this->getUrl('user/iframe/upload'))
 ?>
 
 function reload() {

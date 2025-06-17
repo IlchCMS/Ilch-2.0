@@ -4,16 +4,16 @@ $profil = $this->get('profil');
 function getTransKey($usermenuId)
 {
     switch ($usermenuId) {
-    case 1:
-        return 'panel';
-    case 2:
-        return 'dialog';
-    case 3:
-        return 'gallery';
-    case 4:
-        return 'friends';
-    case 5:
-        return 'settingsSettings';
+        case 1:
+            return 'panel';
+        case 2:
+            return 'dialog';
+        case 3:
+            return 'gallery';
+        case 4:
+            return 'friends';
+        case 5:
+            return 'settingsSettings';
     }
 }
 ?>
@@ -33,16 +33,16 @@ function getTransKey($usermenuId)
     <div class="profile-usermenu">
         <ul class="nav flex-column">
             <?php foreach ($this->get('usermenu') as $usermenu) {
-    $class = '';
-    if ($usermenu->getKey() == 'user/panel/'.$this->getRequest()->getActionName()) {
-        $class = 'active';
-    }
+                $class = '';
+                if ($usermenu->getKey() == 'user/panel/' . $this->getRequest()->getActionName()) {
+                    $class = 'active';
+                }
 
-    if ($usermenu->getKey() === 'user/panel/gallery' && ($this->get('galleryAllowed') == 0 || $profil->getOptGallery() == 0)) {
-    } else {
-        echo '<li class="nav-item ' . $class . '"><a href="' . $this->getUrl($usermenu->getKey()) . '" class="nav-link">' . $this->getTrans(getTransKey($usermenu->getId())) . ' <i class="' . $usermenu->getIcon() . ' float-end"></i></a></li>';
-    }
-} ?>
+                if ($usermenu->getKey() === 'user/panel/gallery' && ($this->get('galleryAllowed') == 0 || $profil->getOptGallery() == 0)) {
+                } else {
+                    echo '<li class="nav-item ' . $class . '"><a href="' . $this->getUrl($usermenu->getKey()) . '" class="nav-link">' . $this->getTrans(getTransKey($usermenu->getId())) . ' <i class="' . $usermenu->getIcon() . ' float-end"></i></a></li>';
+                }
+            } ?>
         </ul>
     </div>
 </div>

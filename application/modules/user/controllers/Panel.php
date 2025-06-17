@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -26,7 +27,6 @@ use Modules\User\Mappers\NotificationPermission as NotificationPermissionMapper;
 use Modules\User\Models\NotificationPermission as NotificationPermissionModel;
 use Ilch\Date as IlchDate;
 use Ilch\Validation;
-
 use Modules\User\Mappers\AuthToken as AuthTokenMapper;
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
@@ -105,7 +105,7 @@ class Panel extends BaseController
 
             foreach ($profileFields as $profileField) {
                 if ($profileField->getType() != 1) {
-                    $index = 'profileField'.$profileField->getId();
+                    $index = 'profileField' . $profileField->getId();
                     if ($this->getRequest()->getPost($index) === null) {
                         // This is for example the case if an external module added a profile field.
                         // Skip this profile field so the value doesn't get deleted.
@@ -141,7 +141,7 @@ class Panel extends BaseController
 
                 foreach ($profileFields as $profileField) {
                     if ($profileField->getType() != 1) {
-                        $index = 'profileField'.$profileField->getId();
+                        $index = 'profileField' . $profileField->getId();
                         $profileFieldsContent = new ProfileFieldContentModel();
                         $profileFieldsContent->setFieldId($profileField->getId())
                             ->setUserId($this->getUser()->getId())
@@ -190,7 +190,7 @@ class Panel extends BaseController
                     $height = $imageInfo[1];
 
                     if ($file_size <= $avatarSize) {
-                        $avatar = $path.$this->getUser()->getId().'.'.$endung;
+                        $avatar = $path . $this->getUser()->getId() . '.' . $endung;
 
                         if ($this->getUser()->getAvatar() != '') {
                             $settingMapper = new SettingMapper();
@@ -367,12 +367,12 @@ class Panel extends BaseController
                     unlink($this->getUser()->getAvatar());
                 }
 
-                if (is_dir(APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId)) {
-                    $path = APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId;
+                if (is_dir(APPLICATION_PATH . '/modules/user/static/upload/gallery/' . $userId)) {
+                    $path = APPLICATION_PATH . '/modules/user/static/upload/gallery/' . $userId;
                     $files = array_diff(scandir($path), ['.', '..']);
 
                     foreach ($files as $file) {
-                        unlink(realpath($path).'/'.$file);
+                        unlink(realpath($path) . '/' . $file);
                     }
 
                     rmdir($path);
@@ -458,7 +458,7 @@ class Panel extends BaseController
 
                     $dialogMapper->unhideDialog($c_id, $user_one);
 
-                    $this->redirect(['action' => 'dialog','id'=> $c_id]);
+                    $this->redirect(['action' => 'dialog','id' => $c_id]);
                 } else {
                     $dialogMapper->markAllAsRead($c_id, $this->getUser()->getId());
                 }
@@ -740,7 +740,7 @@ class Panel extends BaseController
 
         if ($this->getRequest()->getPost('action') === 'delete') {
             $mediaMapper = new MediaMapper();
-            
+
             foreach ($this->getRequest()->getPost('check_gallery') as $imageId) {
                 $mediaMapper->delMediaById($imageId);
             }

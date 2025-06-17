@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -25,16 +26,16 @@ class Dialog extends \Ilch\Mapper
     {
         $sql = 'SELECT u.id, u.avatar, c.c_id, u.name, c.time, h.c_id AS hidden
         FROM [prefix]_users_dialog c
-        LEFT JOIN [prefix]_users_dialog_hidden AS h ON h.c_id = c.c_id AND h.user_id = '.$userid.'
+        LEFT JOIN [prefix]_users_dialog_hidden AS h ON h.c_id = c.c_id AND h.user_id = ' . $userid . '
         LEFT JOIN [prefix]_users AS u ON
         CASE
-        WHEN c.user_one = '.$userid.'
+        WHEN c.user_one = ' . $userid . '
         THEN c.user_two = u.id
-        WHEN c.user_two = '.$userid.'
+        WHEN c.user_two = ' . $userid . '
         THEN c.user_one = u.id
         END
         WHERE
-        (c.user_one = '.$userid.' OR c.user_two = '.$userid.')';
+        (c.user_one = ' . $userid . ' OR c.user_two = ' . $userid . ')';
         $sql .= ($showHidden) ? ' AND h.permanent = 0' : ' AND h.c_id IS NULL';
         $sql .= ' ORDER BY c.time DESC';
 
@@ -91,9 +92,9 @@ class Dialog extends \Ilch\Mapper
         FROM [prefix]_users_dialog c
         LEFT JOIN [prefix]_users u ON
         CASE
-        WHEN c.user_two = '.$cId.'
+        WHEN c.user_two = ' . $cId . '
         THEN c.user_two = u.id
-        WHEN c.user_one = '.$cId.'
+        WHEN c.user_one = ' . $cId . '
         THEN c.user_one = u.id
         END';
 
@@ -315,8 +316,7 @@ class Dialog extends \Ilch\Mapper
                 ->execute()
                 ->fetchAssoc();
 
-            if (($dialog['id_user_one'] == $userId && empty($dialog['id_user_two']))
-                || ($dialog['id_user_two'] == $userId && empty($dialog['id_user_one']))) {
+            if (($dialog['id_user_one'] == $userId && empty($dialog['id_user_two'])) || ($dialog['id_user_two'] == $userId && empty($dialog['id_user_one']))) {
                 // Delete dialog if other user is not existing.
                 return $this->db()->delete('users_dialog', ['c_id' => $c_id])
                     ->execute();
@@ -358,8 +358,7 @@ class Dialog extends \Ilch\Mapper
                 continue;
             }
 
-            if (($dialog['id_user_one'] == $userId && empty($dialog['id_user_two']))
-                || ($dialog['id_user_two'] == $userId && empty($dialog['id_user_one']))) {
+            if (($dialog['id_user_one'] == $userId && empty($dialog['id_user_two'])) || ($dialog['id_user_two'] == $userId && empty($dialog['id_user_one']))) {
                 // Delete dialog if other user is not existing.
                 $this->db()->delete('users_dialog', ['c_id' => $dialog['c_id']])
                     ->execute();
