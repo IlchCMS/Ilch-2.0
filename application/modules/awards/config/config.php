@@ -47,7 +47,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->delete('awards_userNotification');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_awards` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -68,7 +68,7 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB COLLATE=utf8mb4_unicode_ci;';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate($installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -139,5 +139,7 @@ class Config extends \Ilch\Config\Install
             case '1.12.1':
                 // no break
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
