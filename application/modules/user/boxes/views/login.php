@@ -1,4 +1,4 @@
-<?php if ($this->getUser() !== null): ?>
+<?php if ($this->getUser() !== null) : ?>
     <?=$this->getTrans('hello') ?> <b><?=$this->escape($this->getUser()->getName()) ?></b>,
     <br />
     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'panel', 'action' => 'index']) ?>">
@@ -6,7 +6,7 @@
     </a>
     <br />
     <div class="ilch--new-message"></div>
-    <?php if ($this->get('userAccesses') || $this->getUser()->isAdmin()): ?>
+    <?php if ($this->get('userAccesses') || $this->getUser()->isAdmin()) : ?>
         <a target="_blank" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'admin', 'action' => 'index']) ?>">
             <?=$this->getTrans('admincenter') ?>
         </a>
@@ -15,7 +15,7 @@
     <a href="<?=$this->getUrl(['module' => 'admin/admin', 'controller' => 'login', 'action' => 'logout', 'from_frontend' => 1]) ?>">
         <?=$this->getTrans('logout') ?>
     </a>
-<?php else: ?>
+<?php else : ?>
     <script>$(document).ready(function(){
     $('.providers').on('click', function (e) {
         e.preventDefault();
@@ -72,10 +72,10 @@
                     <?=$this->getTrans('login') ?>
                 </button>
                 <span class="social-logins">
-                    <?php if (count($this->get('providers')) > 0): ?>
+                    <?php if (count($this->get('providers')) > 0) : ?>
                         <i class="fa-solid fa-fw fa-angle-right"></i>
                     <?php endif; ?>
-                    <?php foreach ($this->get('providers') as $provider): ?>
+                    <?php foreach ($this->get('providers') as $provider) : ?>
                         <a
                             class="btn btn-link providers provider-<?= $provider->getKey() ?>"
                             href="<?= $this->getUrl([
@@ -91,13 +91,13 @@
             </div>
         </div>
     </form>
-    <?php if ($this->get('regist_accept') == '1'): ?>
+    <?php if ($this->get('regist_accept') == '1') : ?>
         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'regist', 'action' => 'index']) ?>"><?=$this->getTrans('register') ?></a><br />
     <?php endif; ?>
     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword']) ?>"><?=$this->getTrans('forgotPassword') ?></a>
 <?php endif; ?>
 
-<?php if ($this->getUser() !== null): ?>
+<?php if ($this->getUser() !== null) : ?>
     <script>
         $(document).ready(function () {
             let notificationsDiv = $(".ilch--new-message"),

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -48,18 +49,18 @@ class Iframe extends \Ilch\Controller\Frontend
         $allowedExtensions = $this->getConfig()->get('usergallery_filetypes');
         $this->getView()->set('allowedExtensions', $allowedExtensions);
 
-        if (!is_writable(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath'))) {
+        if (!is_writable(ROOT_PATH . '/' . $this->getConfig()->get('usergallery_uploadpath'))) {
             $this->addMessage('writableMedia', 'danger');
         }
 
         if ($this->getRequest()->isPost()) {
-            if (!is_dir(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId())) {
-                mkdir(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId());
+            if (!is_dir(ROOT_PATH . '/' . $this->getConfig()->get('usergallery_uploadpath') . $this->getUser()->getId())) {
+                mkdir(ROOT_PATH . '/' . $this->getConfig()->get('usergallery_uploadpath') . $this->getUser()->getId());
             }
 
             $upload = new Upload();
             $upload->setFile($_FILES['upl']['name']);
-            $upload->setPath($this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId().'/');
+            $upload->setPath($this->getConfig()->get('usergallery_uploadpath') . $this->getUser()->getId() . '/');
             // Early return if extension is not allowed. Should normally already be done client-side.
             $upload->setAllowedExtensions($allowedExtensions);
             if (!file_exists($_FILES['upl']['tmp_name']) || !$upload->isAllowedExtension()) {
@@ -78,11 +79,11 @@ class Iframe extends \Ilch\Controller\Frontend
         }
     }
 
-    public function indexckeditorAction() 
+    public function indexckeditorAction()
     {
         $this->getLayout()->setFile('modules/admin/layouts/iframe');
         $mediaMapper = new MediaMapper();
-        
+
         $pagination = new \Ilch\Pagination();
         $pagination->setRowsPerPage(!$this->getConfig()->get('user_picturesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('user_picturesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));

@@ -187,7 +187,7 @@ class ProfileFields extends \Ilch\Mapper
      */
     public function profileFieldWithIdExists(int $id): bool
     {
-        return (boolean) $this->db()->select('COUNT(*)', 'profile_fields', ['id' => $id])
+        return (bool) $this->db()->select('COUNT(*)', 'profile_fields', ['id' => $id])
             ->execute()
             ->fetchCell();
     }

@@ -18,7 +18,7 @@ $profileIconFields = $this->get('profileIconFields');
 /** @var ProfileFieldTranslation[] $profileFieldsTranslation */
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 $group = $this->get('group');
-$groupText = (!empty($group)) ? ' ('.$this->getTrans('group') . ': ' . $this->escape($group->getName()) . ')' : '';
+$groupText = (!empty($group)) ? ' (' . $this->getTrans('group') . ': ' . $this->escape($group->getName()) . ')' : '';
 $userGroupList_allowed = $this->get('userGroupList_allowed');
 $userAvatarList_allowed = $this->get('userAvatarList_allowed');
 ?>
@@ -65,9 +65,9 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
                             $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($userlist->getId());
                             ?>
                             <tr>
-                                <?php if ($userAvatarList_allowed): ?>
+                                <?php if ($userAvatarList_allowed) : ?>
                                 <td>
-                                    <img class="profile-image" src="<?=$this->getBaseUrl().$this->escape($userlist->getAvatar()) ?>" title="<?=$this->escape($userlist->getName()) ?>" alt="<?=$this->escape($this->getTrans('userAvatars') . ' ' . $userlist->getName()) ?>">
+                                    <img class="profile-image" src="<?=$this->getBaseUrl() . $this->escape($userlist->getAvatar()) ?>" title="<?=$this->escape($userlist->getName()) ?>" alt="<?=$this->escape($this->getTrans('userAvatars') . ' ' . $userlist->getName()) ?>">
                                 </td>
                                 <?php endif; ?>
                                 <td>
@@ -88,34 +88,34 @@ $userAvatarList_allowed = $this->get('userAvatarList_allowed');
                                     <?php endif; ?>
 
                                     <?php foreach ($profileIconFields as $profileIconField) {
-                                if ($profileIconField->getShow()) {
-                                    foreach ($profileFieldsContent as $profileFieldContent) {
-                                        if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
-                                            $profileFieldName = $profileIconField->getKey();
-                                            foreach ($profileFieldsTranslation as $profileFieldTrans) {
-                                                if ($profileIconField->getId() == $profileFieldTrans->getFieldId()) {
-                                                    $profileFieldName = $profileFieldTrans->getName();
+                                        if ($profileIconField->getShow()) {
+                                            foreach ($profileFieldsContent as $profileFieldContent) {
+                                                if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
+                                                    $profileFieldName = $profileIconField->getKey();
+                                                    foreach ($profileFieldsTranslation as $profileFieldTrans) {
+                                                        if ($profileIconField->getId() == $profileFieldTrans->getFieldId()) {
+                                                            $profileFieldName = $profileFieldTrans->getName();
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    // Using this code instead of for example str_replace to only replace the addition once.
+                                                    // Example: addition = "https://discord.gg/", value = "https://discord.gg/username". The user entered the complete URL instead of just the username.
+                                                    $profileFieldContentValue = $profileFieldContent->getValue();
+                                                    if ($profileIconField->getAddition()) {
+                                                        $pos = strpos($profileFieldContent->getValue(), $profileIconField->getAddition());
+
+                                                        if ($pos !== false) {
+                                                            $profileFieldContentValue = substr_replace($profileFieldContent->getValue(), '', $pos, strlen($profileIconField->getAddition()));
+                                                        }
+                                                    }
+
+                                                    echo '<a href="' . $profileIconField->getAddition() . $profileFieldContentValue . '" target="_blank" rel="noopener" class="' . $profileIconField->getIcon() . ' fa-lg user-link" title="' . $profileFieldName . '"></a>';
                                                     break;
                                                 }
                                             }
-
-                                            // Using this code instead of for example str_replace to only replace the addition once.
-                                            // Example: addition = "https://discord.gg/", value = "https://discord.gg/username". The user entered the complete URL instead of just the username.
-                                            $profileFieldContentValue = $profileFieldContent->getValue();
-                                            if ($profileIconField->getAddition()) {
-                                                $pos = strpos($profileFieldContent->getValue(), $profileIconField->getAddition());
-
-                                                if ($pos !== false) {
-                                                    $profileFieldContentValue = substr_replace($profileFieldContent->getValue(), '', $pos, strlen($profileIconField->getAddition()));
-                                                }
-                                            }
-
-                                            echo '<a href="' . $profileIconField->getAddition() . $profileFieldContentValue . '" target="_blank" rel="noopener" class="' . $profileIconField->getIcon() . ' fa-lg user-link" title="' . $profileFieldName . '"></a>';
-                                            break;
                                         }
                                     }
-                                }
-                            }
                                     ?>
                                 </td>
                                 <?php if ($userGroupList_allowed) : ?>

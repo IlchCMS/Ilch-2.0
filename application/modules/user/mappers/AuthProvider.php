@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -21,7 +22,7 @@ class AuthProvider extends \Ilch\Mapper
 
         $result = $this->db()->select()
             ->fields(['p.key', 'p.name', 'p.icon', 'p.module'])
-            ->from(['p' =>'auth_providers'])
+            ->from(['p' => 'auth_providers'])
             ->join(['m' => 'auth_providers_modules'], ['p.key = m.provider', 'p.module = m.module'], 'LEFT', [
                 'm.auth_controller',
                 'm.auth_action',
@@ -36,9 +37,9 @@ class AuthProvider extends \Ilch\Mapper
             );
 
         if ($active === true) {
-            $result = $result->where(['p.module !=' => '']);
+            $result->where(['p.module !=' => '']);
         }
-        
+
         $result = $result->order(['p.name' => 'ASC'])
             ->execute();
 
@@ -135,7 +136,7 @@ class AuthProvider extends \Ilch\Mapper
         } catch (\Exception $e) {
             return false;
         }
-        
+
         return true;
     }
 
