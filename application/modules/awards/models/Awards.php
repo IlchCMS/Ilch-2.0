@@ -62,6 +62,7 @@ class Awards extends \Ilch\Model
     /**
      * @param array $entries
      * @return $this
+     * @since 1.12.2
      */
     public function setByArray(array $entries): Awards
     {
@@ -251,6 +252,7 @@ class Awards extends \Ilch\Model
     /**
      * @param bool $withId
      * @return array
+     * @since 1.12.2
      */
     public function getArray(bool $withId = true): array
     {
