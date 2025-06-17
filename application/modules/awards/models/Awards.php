@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -16,47 +17,75 @@ class Awards extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The date of the awards.
      *
      * @var string
      */
-    protected $date;
+    protected $date = '';
 
     /**
      * The rank of the awards.
      *
      * @var int
      */
-    protected $rank;
+    protected $rank = 1;
 
     /**
      * The image of the awards.
      *
      * @var string
      */
-    protected $image;
+    protected $image = '';
 
     /**
      * The event of the awards.
      *
      * @var string
      */
-    protected $event;
+    protected $event = '';
 
     /**
      * The page of the awards.
      *
      * @var string
      */
-    protected $url;
+    protected $url = '';
 
     /**
      * @var array
      */
-    protected $recipients;
+    protected $recipients = [];
+
+    /**
+     * @param array $entries
+     * @return $this
+     */
+    public function setByArray(array $entries): Awards
+    {
+        if (!empty($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (!empty($entries['date'])) {
+            $this->setDate($entries['date']);
+        }
+        if (!empty($entries['rank'])) {
+            $this->setRank($entries['rank']);
+        }
+        if (!empty($entries['image'])) {
+            $this->setImage($entries['image']);
+        }
+        if (!empty($entries['event'])) {
+            $this->setEvent($entries['event']);
+        }
+        if (!empty($entries['url'])) {
+            $this->setURL($entries['url']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id of the awards.
@@ -217,5 +246,23 @@ class Awards extends \Ilch\Model
         $this->recipients = $recipients;
 
         return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'date' =>   $this->getDate(),
+                'rank' =>   $this->getRank(),
+                'image' =>  $this->getImage(),
+                'event' =>  $this->getEvent(),
+                'url' =>    $this->getURL()
+            ]
+        );
     }
 }

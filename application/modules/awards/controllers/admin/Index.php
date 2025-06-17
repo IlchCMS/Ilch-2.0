@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -47,8 +48,7 @@ class Index extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuAwards',
             $items
         );
@@ -76,7 +76,7 @@ class Index extends \Ilch\Controller\Admin
 
         $awards = $awardsMapper->getAwards();
         foreach ($awards as $award) {
-            foreach($award->getRecipients() as $recipient) {
+            foreach ($award->getRecipients() as $recipient) {
                 if ($recipient->getTyp() == 1) {
                     $userIds[] = $recipient->getUtId();
                 } else {
@@ -104,31 +104,31 @@ class Index extends \Ilch\Controller\Admin
         $awardsMapper = new AwardsMapper();
         $userMapper = new UserMapper();
 
+        $awardsModel = new AwardsModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $awards = $awardsMapper->getAwardsById($this->getRequest()->getParam('id'));
+            $awardsModel = $awardsMapper->getAwardsById($this->getRequest()->getParam('id'));
 
-            if (!$awards) {
+            if (!$awardsModel) {
                 $this->redirect()
                     ->withMessage('awardNotFound', 'danger')
                     ->to(['action' => 'index']);
             }
-
-            $this->getView()->set('awards', $awards);
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+        $this->getView()->set('award', $awardsModel);
 
         if ($this->getRequest()->isPost()) {
             // Add BASE_URL if image starts with application to get a complete URL for validation
             $image = trim($this->getRequest()->getPost('image'));
             if (!empty($image) && strncmp($image, 'application', 11) === 0) {
-                $image = BASE_URL.'/'.$image;
+                $image = BASE_URL . '/' . $image;
             }
 
             $post = [
@@ -145,7 +145,7 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             $validation = Validation::create($post, [
-                'date'  => 'required',
+                'date'  => 'required|date:d.m.Y',
                 'rank'  => 'required|numeric|integer|min:1',
                 'image' => 'url',
                 'utId'  => 'required',
@@ -158,7 +158,6 @@ class Index extends \Ilch\Controller\Admin
             if ($validation->isValid()) {
                 $recipientMapper = new RecipientsMapper();
 
-                $awardsModel = new AwardsModel();
                 if ($this->getRequest()->getParam('id')) {
                     $awardsModel->setId($this->getRequest()->getParam('id'));
                 }
@@ -170,7 +169,7 @@ class Index extends \Ilch\Controller\Admin
                 $idOrAffectedRows = $awardsMapper->save($awardsModel);
 
                 $recipientModels = [];
-                foreach($post['utId'] as $value) {
+                foreach ($post['utId'] as $value) {
                     $recipientModel = new RecipientModel();
                     $recipientModel->setAwardId((!$this->getRequest()->getParam('id')) ? $idOrAffectedRows : $awardsModel->getId())
                         ->setUtId(substr($value, 2))
@@ -184,7 +183,7 @@ class Index extends \Ilch\Controller\Admin
                     $notificationsMapper = new NotificationsMapper();
                     $notificationModels = [];
 
-                    foreach($recipientModels as $recipientModel) {
+                    foreach ($recipientModels as $recipientModel) {
                         $users = [];
                         if ($recipientModel->getTyp() === 2) {
                             // The recipient is a team.

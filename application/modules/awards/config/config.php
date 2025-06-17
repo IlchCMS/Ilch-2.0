@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'awards',
-        'version' => '1.12.1',
+        'version' => '1.12.2',
         'icon_small' => 'fa-solid fa-trophy',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -71,18 +72,27 @@ class Config extends \Ilch\Config\Install
     {
         switch ($installedVersion) {
             case "1.0":
+                // no break
             case "1.1":
                 $this->db()->query('ALTER TABLE `[prefix]_awards` ADD `image` VARCHAR(255) NOT NULL AFTER `rank`;');
+                // no break
             case "1.2":
+                // no break
             case "1.3":
+                // no break
             case "1.4":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_awards` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+                // no break
             case '1.5.0':
+                // no break
             case '1.6.0':
+                // no break
             case '1.7.0':
+                // no break
             case '1.8.0':
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-trophy' WHERE `key` = 'awards';");
+                // no break
             case '1.9.0':
                 // Create new table awards_recipients.
                 $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_awards_recipients` (
@@ -105,7 +115,7 @@ class Config extends \Ilch\Config\Install
                 }
 
                 $existingRecipients = array_chunk($existingRecipients, 25);
-                foreach($existingRecipients as $existingRecipientsChunk) {
+                foreach ($existingRecipients as $existingRecipientsChunk) {
                     $this->db()->insert('awards_recipients')
                         ->columns(['award_id', 'ut_id', 'typ'])
                         ->values($existingRecipientsChunk)
@@ -114,12 +124,20 @@ class Config extends \Ilch\Config\Install
 
                 // Delete no longer needed columns of the awards table
                 $this->db()->query('ALTER TABLE `[prefix]_awards` DROP COLUMN `ut_id`, DROP COLUMN `typ`');
+                // no break
             case '1.10.0':
+                // no break
             case '1.10.1':
+                // no break
             case '1.11.0':
                 // Enable notification of users if they receive an award by default.
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('awards_userNotification', 1);
+                // no break
+            case '1.12.0':
+                // no break
+            case '1.12.1':
+                // no break
         }
     }
 }
