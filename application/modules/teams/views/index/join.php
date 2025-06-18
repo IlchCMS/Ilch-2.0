@@ -128,7 +128,7 @@ $teams = $this->get('teams');
                 <?=$this->getTrans('birthday') ?>
             </label>
             <?php if ($this->getUser() && $this->getUser()->getBirthday() && $this->getUser()->getBirthday() != '0000-00-00') : ?>
-                <div class="col-xl-2 input-group ilch-date">
+                <div class="col-xl-2 input-group">
                     <?php $birthday = new \Ilch\Date($this->getUser()->getBirthday()); ?>
                     <input type="text"
                            class="form-control"
@@ -141,7 +141,7 @@ $teams = $this->get('teams');
                     </span>
                 </div>
             <?php else : ?>
-                <div id="birthday" class="col-xl-2 input-group ilch-date date form_datetime">
+                <div id="birthday" class="col-xl-2 input-group date form_datetime">
                     <input type="text"
                            class="form-control"
                            id="birthday"
@@ -216,7 +216,7 @@ $teams = $this->get('teams');
 
 <script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
 <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0): ?>
+<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
     <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script>
