@@ -48,7 +48,7 @@ $entry = $this->get('war');
             <label for="warTimeInput" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('warTime') ?>:
             </label>
-            <div id="warTime" class="input-group ilch-date date form_datetime col-xl-4">
+            <div id="warTime" class="input-group date form_datetime col-xl-4">
                 <input type="text"
                        class="form-control"
                        id="warTimeInput"
