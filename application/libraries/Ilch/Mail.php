@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -81,7 +82,7 @@ class Mail
 
     public function PHPMailer()
     {
-        return new PHPMailer;
+        return new PHPMailer();
     }
 
     /**
@@ -390,7 +391,7 @@ class Mail
                 $mail->SMTPAuth = true;
                 //$mail->SMTPDebug = 2;
                 $mail->Host = $config->get('smtp_server'); // SMTP server
-                $mail->Port = (integer)$config->get('smtp_port'); // set the SMTP port
+                $mail->Port = (int)$config->get('smtp_port'); // set the SMTP port
                 if ($config->get('smtp_secure')) {
                     $mail->SMTPSecure = $config->get('smtp_secure');
                 }

@@ -1,4 +1,5 @@
 <?php
+
 /** @var \Ilch\Layout\Admin $this */
 
 /** @var \Ilch\Config\Database $config */

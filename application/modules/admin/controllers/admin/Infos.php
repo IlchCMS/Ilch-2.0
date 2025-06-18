@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -67,8 +68,7 @@ class Infos extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuInfos',
             $items
         );
@@ -142,7 +142,7 @@ class Infos extends \Ilch\Controller\Admin
     {
         $logsMapper = new LogsMapper();
         $userMapper = new UserMapper();
-        $where = ['date >' => date('Y-m-d', strtotime( '-7 days' )), 'date <=' => date('Y-m-d 23:59:59')];
+        $where = ['date >' => date('Y-m-d', strtotime('-7 days')), 'date <=' => date('Y-m-d 23:59:59')];
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
@@ -159,7 +159,7 @@ class Infos extends \Ilch\Controller\Admin
 
         $logs = $logsMapper->getLogsBy($where);
         $logsByDay = [];
-        foreach($logs as $log) {
+        foreach ($logs as $log) {
             $date = new \Ilch\Date($log->getDate());
             $date = $date->format('d.m.Y');
             $logsByDay[$date][] = $log;
@@ -195,9 +195,9 @@ class Infos extends \Ilch\Controller\Admin
         $pubkey = openssl_pkey_get_public($certificate);
         $publicKeyArray = openssl_pkey_get_details($pubkey);
         $keyType = '';
-        $keyType = $publicKeyArray['type']==OPENSSL_KEYTYPE_RSA ? 'RSA' : $keyType;
-        $keyType = $publicKeyArray['type']==OPENSSL_KEYTYPE_DSA ? 'DSA' : $keyType;
-        $keyType = $publicKeyArray['type']==OPENSSL_KEYTYPE_DH ?  'DH'  : $keyType;
+        $keyType = $publicKeyArray['type'] == OPENSSL_KEYTYPE_RSA ? 'RSA' : $keyType;
+        $keyType = $publicKeyArray['type'] == OPENSSL_KEYTYPE_DSA ? 'DSA' : $keyType;
+        $keyType = $publicKeyArray['type'] == OPENSSL_KEYTYPE_DH ?  'DH'  : $keyType;
 
         $this->getView()->set('certificate', openssl_x509_parse($certificate));
         // Strip off begin- and end certificate-lines and base64-decode the rest before calling openssl_digest
@@ -214,6 +214,5 @@ class Infos extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('hmenuKeyboardShortcuts'), ['action' => 'shortcuts']);
-
     }
 }

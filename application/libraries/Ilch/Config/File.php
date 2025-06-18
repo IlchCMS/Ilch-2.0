@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -62,7 +63,7 @@ class File
     {
         $fileString = '<?php';
         $fileString .= "\n";
-        $fileString .= '$config = '.var_export_short_syntax($this->configData).';';
+        $fileString .= '$config = ' . var_export_short_syntax($this->configData) . ';';
         $fileString .= "\n";
         $fileString .= '';
         file_put_contents($fileName, $fileString);
