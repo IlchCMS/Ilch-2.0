@@ -44,7 +44,7 @@ $entry = $this->get('calendar');
         <label for="start" class="col-xl-2 col-form-label">
             <?=$this->getTrans('start') ?>:
         </label>
-        <div id="start" class="col-xl-4 input-group ilch-date date form_datetime_1">
+        <div id="start" class="col-xl-4 input-group date form_datetime_1">
             <input type="text"
                    class="form-control"
                    id="start"
@@ -60,7 +60,7 @@ $entry = $this->get('calendar');
         <label for="end" class="col-xl-2 col-form-label">
             <?=$this->getTrans('end') ?>:
         </label>
-        <div id="end" class="col-xl-4 input-group ilch-date date form_datetime_2">
+        <div id="end" class="col-xl-4 input-group date form_datetime_2">
             <input type="text"
                    class="form-control"
                    id="end"
@@ -141,7 +141,7 @@ $entry = $this->get('calendar');
         <label for="repeatUntil" class="col-xl-2 col-form-label">
             <?=$this->getTrans('repeatUntil') ?>:
         </label>
-        <div id="repeatUntil" class="col-xl-4 input-group ilch-date date form_datetime_3">
+        <div id="repeatUntil" class="col-xl-4 input-group date form_datetime_3">
             <input type="text"
                    class="form-control"
                    id="repeatUntil"
