@@ -56,7 +56,7 @@ $periodAppendix = [
         <label for="start" class="col-md-2 col-form-label">
             <?=$this->getTrans('start') ?>:
         </label>
-        <div class="col-xl-2 input-group ilch-date date form_datetime" id="date">
+        <div class="col-xl-2 input-group date form_datetime" id="date">
             <?php
             $datecreate = '';
             if ($training->getDate()) {
@@ -81,7 +81,7 @@ $periodAppendix = [
         <label for="end" class="col-xl-2 col-form-label">
             <?=$this->getTrans('end') ?>:
         </label>
-        <div id="end" class="col-xl-4 input-group ilch-date date form_datetime_2">
+        <div id="end" class="col-xl-4 input-group date form_datetime_2">
             <input type="text"
                    class="form-control"
                    id="end"
@@ -138,7 +138,7 @@ $periodAppendix = [
             <label for="repeatUntil" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('repeatUntil') ?>:
             </label>
-            <div id="repeatUntil" class="col-xl-4 input-group ilch-date date form_datetime_3">
+            <div id="repeatUntil" class="col-xl-4 input-group date form_datetime_3">
                 <input type="text"
                        class="form-control"
                        id="repeatUntil"

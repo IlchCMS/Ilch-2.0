@@ -323,7 +323,7 @@ class Training extends \Ilch\Mapper
 
         // Calculate the date for the next recurring training.
         $end = new Date($training->getRepeatUntil());
-        $datePeriod = new DatePeriod($begin, $interval ,$end);
+        $datePeriod = new DatePeriod($begin, $interval, $end);
         $givenDate = new Date();
 
         foreach ($datePeriod as $date) {
@@ -337,7 +337,7 @@ class Training extends \Ilch\Mapper
 
         // Calculate the end date for the next recurring training.
         $begin = new Date($training->getEnd());
-        $datePeriod = new DatePeriod($begin, $interval ,$end);
+        $datePeriod = new DatePeriod($begin, $interval, $end);
         $nextTrainingDate = new Date($training->getDate());
 
         foreach ($datePeriod as $date) {
