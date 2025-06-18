@@ -81,7 +81,7 @@ $event = $this->get('event');
             <label for="start" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('startTime') ?>
             </label>
-            <div id="start" class="col-xl-4 input-group ilch-date date form_datetime">
+            <div id="start" class="col-xl-4 input-group date form_datetime">
                 <input type="text"
                        class="form-control"
                        id="start"
@@ -98,7 +98,7 @@ $event = $this->get('event');
             <label for="end" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('endTime') ?>
             </label>
-            <div id="end" class="col-xl-4 input-group ilch-date date form_datetime">
+            <div id="end" class="col-xl-4 input-group date form_datetime">
                 <input type="text"
                        class="form-control"
                        id="end"
