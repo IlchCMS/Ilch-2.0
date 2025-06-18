@@ -66,6 +66,41 @@ class Away extends \Ilch\Model
     protected int $show = 0;
 
     /**
+     * @param array $entries
+     * @return $this
+     * @since 1.8.1
+     */
+    public function setByArray(array $entries): Away
+    {
+        if (!empty($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (!empty($entries['user_id'])) {
+            $this->setUserId($entries['user_id']);
+        }
+        if (!empty($entries['reason'])) {
+            $this->setReason($entries['reason']);
+        }
+        if (!empty($entries['start'])) {
+            $this->setStart($entries['start']);
+        }
+        if (!empty($entries['end'])) {
+            $this->setEnd($entries['end']);
+        }
+        if (!empty($entries['text'])) {
+            $this->setText($entries['text']);
+        }
+        if (!empty($entries['status'])) {
+            $this->setStatus($entries['status']);
+        }
+        if (!empty($entries['show'])) {
+            $this->setShow($entries['show']);
+        }
+
+        return $this;
+    }
+
+    /**
      * Gets the id of the away.
      *
      * @return int
@@ -247,5 +282,26 @@ class Away extends \Ilch\Model
         $this->show = $show;
 
         return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.8.1
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'user_id' =>    $this->getUserId(),
+                'reason' =>     $this->getReason(),
+                'start' =>      $this->getStart(),
+                'end' =>        $this->getEnd(),
+                'text' =>       $this->getText(),
+                'show' =>       $this->getShow(),
+                'status' =>     $this->getStatus()
+            ]
+        );
     }
 }

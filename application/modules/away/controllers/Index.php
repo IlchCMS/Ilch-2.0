@@ -60,9 +60,13 @@ class Index extends \Ilch\Controller\Frontend
                 ];
 
                 $awayModel = new AwayModel();
+
+                if ($currentlyEditingAway) {
+                    $awayModel->setId($currentlyEditingAway->getId());
+                    $awayModel->setStatus($currentlyEditingAway->getStatus());
+                }
                 if ($currentlyEditingAway && $this->getUser() && ($currentlyEditingAway->getUserId() == $this->getUser()->getId())) {
                     // Entry found and the current user is the autor. Set id to update an existing entry. Reset status to reported.
-                    $awayModel->setId($awayId);
                     $awayModel->setStatus(2);
                 }
                 $awayModel->setUserId($this->getUser()->getId())
