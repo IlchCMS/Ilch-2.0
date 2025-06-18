@@ -17,7 +17,7 @@ $history = $this->get('history');
         <label for="date" class="col-lg-2 col-form-label">
             <?=$this->getTrans('date') ?>:
         </label>
-        <div id="date" class="col-lg-2 input-group ilch-date date form_datetime">
+        <div id="date" class="col-lg-2 input-group date form_datetime">
             <?php
             $getDate = new \Ilch\Date($history->getDate() ?? 'now');
             ?>
@@ -60,7 +60,7 @@ $history = $this->get('history');
         <label for="symbol" class="col-xl-2 col-form-label">
             <?=$this->getTrans('symbol') ?>:
         </label>
-        <div class="col-xl-2 input-group ilch-date">
+        <div class="col-xl-2 input-group">
             <span class="input-group-text">
                 <span id="chosensymbol" class="<?=$this->originalInput('symbol', $history->getType())  ?>"></span>
             </span>
@@ -79,7 +79,7 @@ $history = $this->get('history');
         <label for="color" class="col-xl-2 col-form-label">
             <?=$this->getTrans('color') ?>:
         </label>
-        <div class="col-xl-2 input-group ilch-date">
+        <div class="col-xl-2 input-group">
             <input class="form-control color {hash:true}"
                    id="color"
                    name="color"
