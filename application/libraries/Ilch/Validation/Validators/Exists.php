@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  */
@@ -91,7 +92,7 @@ class Exists extends Base
         $conditions = $this->getConditions();
 
         if (count($conditions) % 2 !== 0) {
-            throw new InvalidArgumentException(get_class($this).': Wrong parameter count.');
+            throw new InvalidArgumentException(get_class($this) . ': Wrong parameter count.');
         }
 
         $chunks = array_chunk($conditions, 2);

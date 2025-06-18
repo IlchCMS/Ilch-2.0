@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  */
@@ -58,7 +59,7 @@ class Unique extends Base
         $ignoreId = $this->getParameter(2);
         $ignoreIdColumn = $this->getParameter(3) ?? 'id';
 
-        $whereLeft = 'LOWER(`'.$column.'`)';
+        $whereLeft = 'LOWER(`' . $column . '`)';
         $whereMiddle = '=';
         $whereRight = $db->escape(strtolower($this->getValue()), true);
 
@@ -69,7 +70,7 @@ class Unique extends Base
             ->where([$where]);
 
         if ($ignoreId !== null) {
-            $result = $result->andWhere([$ignoreIdColumn.' !=' => $ignoreId]);
+            $result = $result->andWhere([$ignoreIdColumn . ' !=' => $ignoreId]);
         }
 
         $result = $result->execute();

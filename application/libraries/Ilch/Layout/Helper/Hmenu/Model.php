@@ -82,4 +82,4 @@ class Model
 
         return $begin . $html . $end;
     }
-  }
+}

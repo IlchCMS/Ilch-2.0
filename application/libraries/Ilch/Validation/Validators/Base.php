@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  */
@@ -118,8 +119,7 @@ abstract class Base
         }
 
         if (($this->minParams !== null && is_array($this->getParameters()) && count($this->getParameters()) < $this->minParams)) {
-            throw new InvalidArgumentException(get_class($this).' expects at least '.$this->minParams.' parameter(s) given: '
-                .count($this->getParameters()));
+            throw new InvalidArgumentException(get_class($this) . ' expects at least ' . $this->minParams . ' parameter(s) given: ' . count($this->getParameters()));
         }
     }
 

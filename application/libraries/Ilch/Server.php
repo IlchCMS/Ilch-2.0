@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -24,7 +25,7 @@ class Server
             return;
         }
     }
-    
+
     public function getFile()
     {
     }
