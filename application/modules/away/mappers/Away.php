@@ -35,14 +35,7 @@ class Away extends \Ilch\Mapper
         $away = [];
         foreach ($entryArray as $entries) {
             $entryModel = new AwayModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setUserId($entries['user_id']);
-            $entryModel->setReason($entries['reason']);
-            $entryModel->setStart($entries['start']);
-            $entryModel->setEnd($entries['end']);
-            $entryModel->setText($entries['text']);
-            $entryModel->setStatus($entries['status']);
-            $entryModel->setShow($entries['show']);
+            $entryModel->setByArray($entries);
             $away[] = $entryModel;
         }
 
@@ -64,7 +57,7 @@ class Away extends \Ilch\Mapper
 
     public function existsTable($table): bool
     {
-        return $this->db()->ifTableExists('[prefix]_'.$table);
+        return $this->db()->ifTableExists('[prefix]_' . $table);
     }
 
     /**
@@ -74,18 +67,7 @@ class Away extends \Ilch\Mapper
      */
     public function save(AwayModel $away)
     {
-        $fields = [
-            'user_id' => $away->getUserId(),
-            'reason' => $away->getReason(),
-            'start' => $away->getStart(),
-            'end' => $away->getEnd(),
-            'text' => $away->getText(),
-            'show' => $away->getShow()
-        ];
-
-        if ($away->getStatus()) {
-            $fields['status'] = $away->getStatus();
-        }
+        $fields = $away->getArray(false);
 
         if ($away->getId()) {
             $this->db()->update('away')

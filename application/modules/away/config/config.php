@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'away',
-        'version' => '1.8.0',
+        'version' => '1.8.1',
         'icon_small' => 'fa-solid fa-calendar-xmark',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -118,6 +118,13 @@ class Config extends \Ilch\Config\Install
                 }
                 // no break
             case "1.6.1":
+                // no break
+            case "1.7.0":
+                // no break
+            case "1.7.1":
+                // no break
+            case "1.8.0":
+                // no break
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
