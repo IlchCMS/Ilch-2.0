@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -21,16 +22,17 @@ class Awards extends Mapper
      * Gets the Awards entries.
      *
      * @param array $where
+     * @param array $orderBy
      * @return AwardsModel[]|array
      */
-    public function getAwards(array $where = []): array
+    public function getAwards(array $where = [], array $orderBy = ['date' => 'DESC']): array
     {
         $awardsArray = $this->db()->select(['a.id', 'a.date', 'a.rank', 'a.image', 'a.event', 'a.url'])
             ->from(['a' => 'awards'])
             ->where($where)
             ->join(['r' => 'awards_recipients'], 'a.id = r.award_id', 'INNER', ['utIds' => 'GROUP_CONCAT(r.ut_id)', 'types' => 'GROUP_CONCAT(r.typ)'])
             ->group(['a.id'])
-            ->order(['date' => 'DESC'])
+            ->order($orderBy)
             ->execute()
             ->fetchRows();
 
@@ -41,23 +43,18 @@ class Awards extends Mapper
         $awards = [];
         foreach ($awardsArray as $entries) {
             $awardsModel = new AwardsModel();
-            $awardsModel->setId($entries['id'])
-                ->setDate($entries['date'])
-                ->setRank($entries['rank'])
-                ->setImage($entries['image'])
-                ->setEvent($entries['event'])
-                ->setURL($entries['url']);
+            $awardsModel->setByArray($entries);
 
             $recipients = [];
             $types = explode(',', $entries['types']);
-            foreach(explode(',', $entries['utIds']) as $key => $id) {
+            foreach (explode(',', $entries['utIds']) as $key => $id) {
                 $recipientModel = new RecipientModel();
                 $recipientModel->setAwardId($entries['id'])
                     ->setUtId($id)
                     ->setTyp($types[$key]);
                 $recipients[] = $recipientModel;
-                $awardsModel->setRecipients($recipients);
             }
+            $awardsModel->setRecipients($recipients);
 
             $awards[] = $awardsModel;
         }
@@ -73,38 +70,12 @@ class Awards extends Mapper
      */
     public function getAwardsById(int $id): ?AwardsModel
     {
-        $awardsRow = $this->db()->select(['a.id', 'a.date', 'a.rank', 'a.image', 'a.event', 'a.url'])
-            ->from(['a' => 'awards'])
-            ->where(['a.id' => $id])
-            ->join(['r' => 'awards_recipients'], 'a.id = r.award_id', 'INNER', ['utIds' => 'GROUP_CONCAT(r.ut_id)', 'types' => 'GROUP_CONCAT(r.typ)'])
-            ->group(['a.id'])
-            ->execute()
-            ->fetchAssoc();
+        $awards = $this->getAwards(['a.id' => $id], []);
 
-        if (empty($awardsRow)) {
-            return null;
+        if ($awards) {
+            return reset($awards);
         }
-
-        $awardsModel = new AwardsModel();
-        $awardsModel->setId($awardsRow['id'])
-            ->setDate($awardsRow['date'])
-            ->setRank($awardsRow['rank'])
-            ->setImage($awardsRow['image'])
-            ->setEvent($awardsRow['event'])
-            ->setURL($awardsRow['url']);
-
-        $recipients = [];
-        $types = explode(',', $awardsRow['types']);
-        foreach(explode(',', $awardsRow['utIds']) as $key => $id) {
-            $recipientModel = new RecipientModel();
-            $recipientModel->setAwardId($awardsRow['id'])
-                ->setUtId($id)
-                ->setTyp($types[$key]);
-            $recipients[] = $recipientModel;
-            $awardsModel->setRecipients($recipients);
-        }
-
-        return $awardsModel;
+        return null;
     }
 
     /**
@@ -115,13 +86,7 @@ class Awards extends Mapper
      */
     public function save(AwardsModel $awards)
     {
-        $fields = [
-            'date' => $awards->getDate(),
-            'rank' => $awards->getRank(),
-            'image' => $awards->getImage(),
-            'event' => $awards->getEvent(),
-            'url' => $awards->getURL()
-        ];
+        $fields = $awards->getArray(false);
 
         if ($awards->getId()) {
             return $this->db()->update('awards')
@@ -144,7 +109,7 @@ class Awards extends Mapper
      */
     public function existsTable($table): bool
     {
-        return $this->db()->ifTableExists('[prefix]_'.$table);
+        return $this->db()->ifTableExists('[prefix]_' . $table);
     }
 
     /**

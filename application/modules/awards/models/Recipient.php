@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -18,14 +19,14 @@ class Recipient extends Model
      *
      * @var int
      */
-    protected $award_id;
+    protected $award_id = 0;
 
     /**
      * The utId of the awards.
      *
      * @var int
      */
-    protected $utId;
+    protected $utId = 0;
 
     /**
      * The type of the awards.
