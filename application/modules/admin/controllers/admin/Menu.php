@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -191,7 +192,7 @@ class Menu extends \Ilch\Controller\Admin
                 $this->redirect(['action' => 'index']);
             }
 
-            $this->redirect(['action' => 'index', 'menu' => $menus[0]->getId()]);;
+            $this->redirect(['action' => 'index', 'menu' => $menus[0]->getId()]);
         }
 
         $userGroupList = $userGroupMapper->getGroupList();

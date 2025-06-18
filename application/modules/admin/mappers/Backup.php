@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -61,7 +62,7 @@ class Backup extends \Ilch\Mapper
         $backupModel->setId($result['id']);
         $backupModel->setName($result['name']);
         $backupModel->setDate($result['date']);
-        
+
         return $backupModel;
     }
 

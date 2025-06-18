@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -75,7 +76,7 @@ class Settings extends \Ilch\Controller\Admin
         ];
 
         if ($this->getRequest()->getActionName() === 'maintenance') {
-            $items[1]['active'] = true;  
+            $items[1]['active'] = true;
         } elseif ($this->getRequest()->getActionName() === 'customcss') {
             $items[2]['active'] = true;
         } elseif ($this->getRequest()->getActionName() === 'htaccess') {
@@ -87,11 +88,10 @@ class Settings extends \Ilch\Controller\Admin
         } elseif ($this->getRequest()->getActionName() === 'mail') {
             $items[8]['active'] = true;
         } else {
-            $items[0]['active'] = true; 
+            $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuSettings',
             $items
         );
@@ -120,7 +120,7 @@ class Settings extends \Ilch\Controller\Admin
                 'captcha' => 'required|numeric|integer|min:0|max:3'
             ];
 
-            if ((int)$this->getRequest()->getPost('captcha') >= 1){
+            if ((int)$this->getRequest()->getPost('captcha') >= 1) {
                 $validationRules['captcha_apikey'] = 'required';
                 $validationRules['captcha_seckey'] = 'required';
             }
@@ -256,7 +256,7 @@ HTACCESS;
                 $htaccess = explode(PHP_EOL, $htaccess);
                 // Writing the htaccess file and removing the mod rewrite default lines if necessary
                 $filePointer = fopen(ROOT_PATH . '/.htaccess', 'wb');
-                foreach($htaccess as $line) {
+                foreach ($htaccess as $line) {
                     if ($removeModRewrite && (strpos($line, '# Begin Mod Rewrite default lines') !== false)) {
                         $this->addMessage('modrewriteLinesRemoved', 'info');
                         $remove = true;
@@ -301,8 +301,8 @@ HTACCESS;
         $update = new IlchTransfer();
         $update->setTransferUrl($this->getConfig()->get('updateserver') . 'updates.json');
         $update->setVersionNow($version);
-        $update->setCurlOpt(CURLOPT_SSL_VERIFYPEER, TRUE);
-        $update->setCurlOpt(CURLOPT_SSL_VERIFYHOST, 2); 
+        $update->setCurlOpt(CURLOPT_SSL_VERIFYPEER, true);
+        $update->setCurlOpt(CURLOPT_SSL_VERIFYHOST, 2);
         $update->setCurlOpt(CURLOPT_CAINFO, ROOT_PATH . '/certificate/cacert.pem');
         $update->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
         $update->setCurlOpt(CURLOPT_FAILONERROR, true);
@@ -341,7 +341,7 @@ HTACCESS;
                 }
                 if (!empty($update->getMissingRequirements()['phpExtensions'])) {
                     $messageString = $this->getTranslator()->trans('phpExtensionError');
-                    $messageString .= ' ('.implode(', ', $update->getMissingRequirements()['phpExtensions']) . ')';
+                    $messageString .= ' (' . implode(', ', $update->getMissingRequirements()['phpExtensions']) . ')';
                     $missingRequirementsMessages[] = $messageString;
                 }
                 $this->getView()->set('missingRequirements', true);
@@ -384,7 +384,7 @@ HTACCESS;
         if ($this->getRequest()->isSecure()) {
             // Delete downloaded updates
             $files = glob('updates/*');
-            foreach($files as $file) {
+            foreach ($files as $file) {
                 if (is_file($file)) {
                     unlink($file);
                 }

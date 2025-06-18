@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -84,8 +85,7 @@ class Backup extends \Ilch\Controller\Admin
             $items[4]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuSettings',
             $items
         );
@@ -174,7 +174,7 @@ class Backup extends \Ilch\Controller\Admin
             return;
         }
 
-        set_time_limit(0); 
+        set_time_limit(0);
         $path = ROOT_PATH . '/backups/';
 
         $id = $this->getRequest()->getParam('id');
@@ -195,11 +195,11 @@ class Backup extends \Ilch\Controller\Admin
                     } else {
                         header('Content-type: application/x-sql');
                     }
-                    header('Content-Disposition: filename="' . $publicFileName. '"');
+                    header('Content-Disposition: filename="' . $publicFileName . '"');
                     header('Content-length: ' . filesize($fullPath));
                     // RFC2616 section 14.9.1: Indicates that all or part of the response message is intended for a single user and MUST NOT be cached by a shared cache, such as a proxy server.
                     header('Cache-control: private');
-                    while(!feof($fd)) {
+                    while (!feof($fd)) {
                         $buffer = fread($fd, 2048);
                         echo $buffer;
                     }
@@ -276,7 +276,7 @@ class Backup extends \Ilch\Controller\Admin
 
             foreach ($backupsInDirectory as $backupInDirectory) {
                 $found = false;
-                foreach($backups as $backup) {
+                foreach ($backups as $backup) {
                     if (strpos($backupInDirectory, $backup->getName()) !== false) {
                         $found = true;
                         break;
