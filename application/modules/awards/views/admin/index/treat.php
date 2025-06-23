@@ -11,14 +11,6 @@ $award = $this->get('award');
 $teams = $this->get('teams');
 /** @var \Modules\Users\Models\User[] $users */
 $users = $this->get('users');
-
-if ($award->getId()) {
-    $getDate = new \Ilch\Date($award->getDate());
-    $date = $getDate->format('d.m.Y', true);
-} else {
-    $getDate = new \Ilch\Date();
-    $date = $getDate->format('d.m.Y', true);
-}
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/awards.css') ?>" rel="stylesheet">
@@ -36,7 +28,7 @@ if ($award->getId()) {
                    class="form-control"
                    name="date"
                    id="date"
-                   value="<?=$this->escape($this->originalInput('date', $date)) ?>"
+                   value="<?=$this->escape($this->originalInput('date', ($award->getId() ? (new \Ilch\Date($award->getDate()))->format('d.m.Y') : (new \Ilch\Date())->format('d.m.Y')))) ?>"
                    readonly>
             <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
