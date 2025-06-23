@@ -77,7 +77,6 @@ class Index extends \Ilch\Controller\Frontend
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
                 ->add($eventModel->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $eventModel->getId()])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $eventModel->getId()]);
-
         } else {
             $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('menuEvents'))
