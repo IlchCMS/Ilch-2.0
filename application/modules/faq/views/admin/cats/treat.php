@@ -7,7 +7,7 @@ $cat = $this->get('cat');
 ?>
 
 <h1>
-    <?=($cat) ? $this->getTrans('edit') : $this->getTrans('add') ?>
+    <?=$this->getTrans($cat->getId() ? 'edit' : 'add') ?>
 </h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -30,7 +30,9 @@ $cat = $this->get('cat');
         <div class="col-xl-3">
             <select class="choices-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <option value="all" <?=in_array('all', $this->originalInput('groups', $this->get('groups'))) ? 'selected="selected"' : '' ?>><?=$this->getTrans('groupAll') ?></option>
-                <?php foreach ($this->get('userGroupList') as $groupList) : ?>
+                <?php 
+                /** @var Modules\User\Models\Group $groupList */
+                foreach ($this->get('userGroupList') as $groupList) : ?>
                     <?php if ($groupList->getId() != 1) : ?>
                         <option value="<?=$groupList->getId() ?>" <?=in_array($groupList->getId(), $this->originalInput('groups', $this->get('groups'))) ? 'selected=""' : '' ?>><?=$groupList->getName() ?></option>
                     <?php endif; ?>
@@ -38,7 +40,7 @@ $cat = $this->get('cat');
             </select>
         </div>
     </div>
-    <?=($cat->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=$this->getSaveBar($cat->getId() ? 'updateButton' : 'addButton') ?>
 </form>
 
 <script>

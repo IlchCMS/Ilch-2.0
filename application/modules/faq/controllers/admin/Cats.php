@@ -91,6 +91,12 @@ class Cats extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $model = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'), null);
+
+            if (!$model) {
+                $this->redirect()
+                    ->withMessage('entryNotFound')
+                    ->to(['controller' => 'index', 'action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
