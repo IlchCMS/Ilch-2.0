@@ -78,7 +78,6 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($eventModel->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $eventModel->getId()])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $eventModel->getId()]);
 
-            $this->getView()->set('event', $eventModel);
         } else {
             $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('menuEvents'))
@@ -86,6 +85,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+        $this->getView()->set('event', $eventModel);
 
         $imageAllowedFiletypes = $this->getConfig()->get('event_filetypes');
         $imageHeight = $this->getConfig()->get('event_height');
