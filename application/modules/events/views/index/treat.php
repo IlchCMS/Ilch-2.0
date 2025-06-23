@@ -77,6 +77,10 @@ $event = $this->get('event');
                 </select>
             </div>
         </div>
+        <?php 
+            $startDate = new \Ilch\Date($this->originalInput('start', $event->getStart()));
+            $endDate = new \Ilch\Date($this->originalInput('end', $event->getEnd()));
+        ?>
         <div class="row mb-3<?=$this->validation()->hasError('start') ? ' has-error' : '' ?>">
             <label for="start" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('startTime') ?>
@@ -87,7 +91,7 @@ $event = $this->get('event');
                        id="start"
                        name="start"
                        size="16"
-                       value="<?=$event != '' ? date('d.m.Y H:i', strtotime($event->getStart())) : ($this->originalInput('start') != '' ? date('d.m.Y H:i', strtotime($this->originalInput('start'))) : '') ?>"
+                       value="<?=$startDate->format('d.m.Y H:i') ?>"
                        readonly>
                 <span class="input-group-text">
                     <span class="fa-regular fa-calendar"></span>
@@ -104,7 +108,7 @@ $event = $this->get('event');
                        id="end"
                        name="end"
                        size="16"
-                       value="<?=($event != '') ? date('d.m.Y H:i', strtotime($event->getEnd())) : ($this->originalInput('end') != '' ? date('d.m.Y H:i', strtotime($this->originalInput('end'))) : '') ?>"
+                       value="<?=$endDate->format('d.m.Y H:i') ?>"
                        readonly>
                 <span class="input-group-text">
                     <span class="fa-solid fa-xmark"></span>
