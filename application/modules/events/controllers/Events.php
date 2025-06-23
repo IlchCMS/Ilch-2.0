@@ -7,6 +7,7 @@
 
 namespace Modules\Events\Controllers;
 
+use Ilch\Validation;
 use Modules\Events\Mappers\Events as EventsMapper;
 use Modules\User\Mappers\User as UserMapper;
 
@@ -30,8 +31,21 @@ class Events extends \Ilch\Controller\Frontend
                 $readAccess[] = $us->getId();
             }
         }
+        $eventList = [];
+        $input = $this->getRequest()->getQuery();
+        $validation = Validation::create(
+            $input,
+            [
+                'start' => 'required|date:Y-m-d\TH\\:i\\:sP',
+                'end'   => 'required|date:Y-m-d\TH\\:i\\:sP',
+            ]
+        );
 
-        $this->getView()->set('eventList', $eventsMapper->getEntriesForJson($this->getRequest()->getQuery('start') ?? '', $this->getRequest()->getQuery('end') ?? ''))
+        if ($validation->isValid()) {
+            $eventList = $eventsMapper->getEntriesForJson($input['start'], $input['end']);
+        }
+
+        $this->getView()->set('eventList', $eventList)
             ->set('readAccess', $readAccess);
     }
 }
