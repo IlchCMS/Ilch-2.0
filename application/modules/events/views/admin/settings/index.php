@@ -22,7 +22,7 @@
                 foreach ($this->get('userGroupList') as $group) : ?>
                     <?php if ($group->getId() != 1 && $group->getId() != 3) : ?>
                         <option value="<?=$group->getId() ?>"
-                            <?php $addEntriesAccessesIds = explode(',', $this->get('event_add_entries_accesses'));
+                            <?php $addEntriesAccessesIds = $this->originalInput('event_add_entries_accesses', explode(',', $this->get('event_add_entries_accesses')));
                             foreach ($addEntriesAccessesIds as $addEntriesAccessesId) {
                                 if ($group->getId() == $addEntriesAccessesId) {
                                     echo 'selected="selected"';
@@ -52,7 +52,7 @@
                 foreach ($this->get('userGroupList') as $group) : ?>
                     <?php if ($group->getId() != 1) : ?>
                         <option value="<?=$group->getId() ?>"
-                            <?php $addEntriesAccessesIds = explode(',', $this->get('event_show_members_accesses'));
+                            <?php $addEntriesAccessesIds = $this->originalInput('event_show_members_accesses', explode(',', $this->get('event_show_members_accesses')));
                             foreach ($addEntriesAccessesIds as $addEntriesAccessesId) {
                                 if ($group->getId() == $addEntriesAccessesId) {
                                     echo 'selected="selected"';
@@ -77,7 +77,7 @@
                    id="event_upcoming_event_limit"
                    name="event_upcoming_event_limit"
                    min="1"
-                   value="<?=$this->get('event_upcoming_event_limit') ?>"
+                   value="<?=$this->originalInput('event_upcoming_event_limit', $this->get('event_upcoming_event_limit')) ?>"
                    required />
         </div>
     </div>
@@ -91,7 +91,7 @@
                    id="event_current_event_limit"
                    name="event_current_event_limit"
                    min="1"
-                   value="<?=$this->get('event_current_event_limit') ?>"
+                   value="<?=$this->originalInput('event_current_event_limit', $this->get('event_current_event_limit')) ?>"
                    required />
         </div>
     </div>
@@ -105,7 +105,7 @@
                    id="event_past_event_limit"
                    name="event_past_event_limit"
                    min="1"
-                   value="<?=$this->get('event_past_event_limit') ?>"
+                   value="<?=$this->originalInput('event_past_event_limit', $this->get('event_past_event_limit')) ?>"
                    required />
         </div>
     </div>
@@ -119,7 +119,7 @@
                    id="event_height"
                    name="event_height"
                    min="1"
-                   value="<?=$this->get('event_height') ?>"
+                   value="<?=$this->originalInput('event_height', $this->get('event_height')) ?>"
                    required />
         </div>
     </div>
@@ -133,7 +133,7 @@
                    id="event_width"
                    name="event_width"
                    min="1"
-                   value="<?=$this->get('event_width') ?>"
+                   value="<?=$this->originalInput('event_width', $this->get('event_width')) ?>"
                    required />
         </div>
     </div>
@@ -147,7 +147,7 @@
                    id="event_size"
                    name="event_size"
                    min="1"
-                   value="<?=$this->get('event_size') ?>"
+                   value="<?=$this->originalInput('event_size', $this->get('event_size')) ?>"
                    required />
         </div>
     </div>
@@ -160,7 +160,7 @@
                    class="form-control required"
                    id="event_filetypes"
                    name="event_filetypes"
-                   value="<?=$this->get('event_filetypes') ?>"
+                   value="<?=$this->originalInput('event_filetypes', $this->get('event_filetypes')) ?>"
                    required />
         </div>
     </div>
@@ -177,8 +177,8 @@
             <input type="text"
                    class="form-control"
                    id="event_google_maps_api_key"
-                   name="event_google_maps_api_key"
-                   value="<?=$this->get('event_google_maps_api_key') ?>" />
+                   name="c"
+                   value="<?=$this->originalInput('event_google_maps_api_key', $this->get('event_google_maps_api_key')) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('event_google_maps_map_typ') ? ' has-error' : '' ?>">
@@ -188,7 +188,7 @@
         <div class="col-xl-2">
             <select class="form-select" id="event_google_maps_map_typ" name="event_google_maps_map_typ">
                 <?php foreach (['ROADMAP', 'SATELLITE', 'HYBRID', 'TERRAIN'] as $type) : ?>
-                    <option<?=($this->get('event_google_maps_map_typ') === $type) ? ' selected="selected"' : '' ?> value="<?=$type ?>>"><?=$type ?></option>
+                    <option<?=($this->originalInput('event_google_maps_map_typ', $this->get('event_google_maps_map_typ')) === $type) ? ' selected="selected"' : '' ?> value="<?=$type ?>>"><?=$type ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -203,7 +203,7 @@
                    id="event_google_maps_zoom"
                    name="event_google_maps_zoom"
                    min="1"
-                   value="<?=$this->get('event_google_maps_zoom') ?>"
+                   value="<?=$this->originalInput('event_google_maps_zoom', $this->get('event_google_maps_zoom')) ?>"
                    required />
         </div>
     </div>
@@ -219,7 +219,7 @@
                    id="event_box_event_limit"
                    name="event_box_event_limit"
                    min="1"
-                   value="<?=$this->get('event_box_event_limit') ?>"
+                   value="<?=$this->originalInput('event_box_event_limit', $this->get('event_box_event_limit')) ?>"
                    required />
         </div>
     </div>
