@@ -144,7 +144,7 @@ if ($this->getUser()) {
                        class="form-control"
                        id="reason"
                        name="reason"
-                       value="<?= $this->originalInput('reason') ? $this->originalInput('reason') : (($currentlyEditingAway) ? $currentlyEditingAway->getReason() : '') ?>" />
+                       value="<?=$this->originalInput('reason', $currentlyEditingAway->getReason()) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('when') ? ' has-error' : '' ?>">

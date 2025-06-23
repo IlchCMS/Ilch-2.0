@@ -40,15 +40,9 @@ $userCache = $this->get('userCache') ?>
                             <td><?=$this->getDeleteCheckbox('check_aways', $away->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $away->getId()]) ?></td>
                             <td>
-                                <?php if ($away->getStatus() == 1) : ?>
-                                    <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
-                                        <span class="fa-regular fa-square-check text-info"></span>
-                                    </a>
-                                <?php else : ?>
-                                    <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
-                                        <span class="fa-regular fa-square text-info"></span>
-                                    </a>
-                                <?php endif; ?>
+                                <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
+                                    <span class="fa-regular fa-square<?=($away->getStatus() == 1) ? '-check' : '' ?> text-info"></span>
+                                </a>
                             </td>
                             <?php if (!empty($user)) : ?>
                                 <td><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>" target="_blank"><?=$user->getName() ?></a></td>
