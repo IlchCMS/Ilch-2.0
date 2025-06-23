@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -25,5 +26,3 @@ class Index extends \Ilch\Controller\Frontend
         }
     }
 }
-
-
