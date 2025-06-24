@@ -58,7 +58,7 @@ class Config extends \Ilch\Config\Install
         }
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case '1.0':
@@ -78,5 +78,7 @@ class Config extends \Ilch\Config\Install
             case '1.7.0':
             case '1.7.1':
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
