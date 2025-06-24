@@ -1,4 +1,10 @@
-<?php $linkus = $this->get('linkus'); ?>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Linkus\Models\Linkus|null $linkus */
+$linkus = $this->get('linkus');
+?>
 
 <h1>
     <?php if ($linkus != ''): ?>

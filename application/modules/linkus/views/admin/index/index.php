@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('manage') ?></h1>
 <?php if ($this->get('linkus') != ''): ?>
     <form method="POST" action="">
@@ -19,7 +23,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('linkus') as $linkus): ?>
+                    <?php
+                    /** @var \Modules\Linkus\Models\Linkus $linkus */
+                    foreach ($this->get('linkus') as $linkus): ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_linkus', $linkus->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $linkus->getId()]) ?></td>
