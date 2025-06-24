@@ -84,6 +84,12 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
             $model = $faqMapper->getFaqById($this->getRequest()->getParam('id'));
+
+            if (!$model) {
+                $this->redirect()
+                    ->withMessage('entryNotFound')
+                    ->to(['controller' => 'index', 'action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
