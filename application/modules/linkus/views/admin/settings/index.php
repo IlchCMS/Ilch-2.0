@@ -1,4 +1,7 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 if (!$this->validation()->hasErrors()) {
     $showHtml = (bool)$this->get('linkus_html') == '1';
     $showBBCode = (bool)$this->get('linkus_bbcode') == '1';

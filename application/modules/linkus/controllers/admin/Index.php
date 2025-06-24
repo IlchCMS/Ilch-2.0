@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -89,7 +90,7 @@ class Index extends \Ilch\Controller\Admin
             // Add BASE_URL to get a complete URL for validation
             $banner = trim($this->getRequest()->getPost('banner'));
             if (!empty($banner)) {
-                $banner = BASE_URL.'/'.urlencode($banner);
+                $banner = BASE_URL . '/' . urlencode($banner);
             }
 
             $post = [
