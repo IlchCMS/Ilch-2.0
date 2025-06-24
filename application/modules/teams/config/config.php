@@ -259,6 +259,7 @@ class Config extends \Ilch\Config\Install
             case "1.25.0":
                 // no break
         }
-        return 'Update function executed.';
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
