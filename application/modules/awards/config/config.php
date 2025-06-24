@@ -68,7 +68,7 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB COLLATE=utf8mb4_unicode_ci;';
     }
 
-    public function getUpdate($installedVersion): string
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
