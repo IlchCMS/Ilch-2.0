@@ -1,3 +1,10 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+?>
 <h1><?=$this->getTrans('manageTemplates') ?></h1>
 <?php if (!empty($this->get('articles'))): ?>
     <form method="POST">
@@ -21,7 +28,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($this->get('articles') as $article): ?>
+                <?php
+                /** @var \Modules\Article\Models\Article $article */
+                foreach ($this->get('articles') as $article): ?>
                     <tr>
                         <td><?=$this->getDeleteCheckbox('check_articles', $article->getId()) ?></td>
                         <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $article->getId()]) ?></td>
@@ -35,7 +44,7 @@
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-    <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
+    <?=$pagination->getHtml($this, ['action' => 'index']) ?>
 <?php else : ?>
     <?=$this->getTrans('noTemplates') ?>
 <?php endif; ?>

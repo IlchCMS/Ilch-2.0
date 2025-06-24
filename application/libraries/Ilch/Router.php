@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -293,9 +294,7 @@ class Router
         /*
          * Select default strategy delivered by router.
          */
-        if (is_string($strategy)
-            && strtolower(substr($strategy, 0, 5)) === 'match' && method_exists($this, $strategy)
-        ) {
+        if (is_string($strategy) && strtolower(substr($strategy, 0, 5)) === 'match' && method_exists($this, $strategy)) {
             $callback = [$this, $strategy];
         }
 

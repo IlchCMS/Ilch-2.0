@@ -30,6 +30,7 @@
                     <?=$this->getTokenField() ?>
                     <div class="d-none d-md-block col-xl-3 col-lg-3 col-md-3 verticalLine install_step">
                         <?php
+                        /** @var int $done */
                         $done = 1;
                         /** @var array $menu */
                         $menu = $this->get('menu');

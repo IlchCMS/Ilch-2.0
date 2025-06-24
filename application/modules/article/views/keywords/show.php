@@ -1,8 +1,17 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Article\Models\Article[]|null $articles */
 $articles = $this->get('articles');
+/** @var \Modules\Article\Mappers\Category $categoryMapper */
 $categoryMapper = $this->get('categoryMapper');
+/** @var \Modules\Comment\Mappers\Comment $commentMapper */
 $commentMapper = $this->get('commentMapper');
 $keyword = $this->getRequest()->getParam('keyword');
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
 ?>
 
 <h1><?=$this->getTrans('keyword') ?>: <i><?=$this->escape($keyword) ?></i></h1>
@@ -77,14 +86,14 @@ $keyword = $this->getRequest()->getParam('keyword');
             $keywordsListArray = explode(', ', $keywordsList);
             $keywordsList = [];
             foreach ($keywordsListArray as $keyword) {
-                $keywordsList[] = '<a href="'.$this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => urlencode($keyword)]).'">'.$this->escape($keyword).'</a>';
+                $keywordsList[] = '<a href="' . $this->getUrl(['controller' => 'keywords', 'action' => 'show', 'keyword' => urlencode($keyword)]) . '">' . $this->escape($keyword) . '</a>';
             }
             echo implode(', ', $keywordsList); ?>
         </div>
         <br /><br /><br />
     <?php endforeach; ?>
     <div class="float-end">
-        <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'keyword' => urlencode($keyword)]) ?>
+        <?=$pagination->getHtml($this, ['action' => 'show', 'keyword' => urlencode($keyword)]) ?>
     </div>
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>

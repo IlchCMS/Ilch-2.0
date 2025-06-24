@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -39,7 +40,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('contact_welcomeMessage', '');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_contact_receivers` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -49,7 +50,7 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "2.1.42":
@@ -60,5 +61,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-regular fa-envelope' WHERE `key` = 'contact';");
                 break;
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

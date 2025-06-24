@@ -1,12 +1,11 @@
-<h1>
-    <?php
-    if ($this->get('receiver') != '') {
-        echo $this->getTrans('edit');
-    } else {
-        echo $this->getTrans('add');
-    }
-    ?>
-</h1>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Contact\Models\Receiver $receiver */
+$receiver = $this->get('receiver');
+?>
+<h1><?=$this->getTrans($receiver->getId() ? 'edit' : 'add') ?></h1>
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
@@ -18,7 +17,7 @@
                    class="form-control"
                    id="name"
                    name="name"
-                   value="<?=($this->get('receiver') != '') ? $this->escape($this->get('receiver')->getName()) : $this->escape($this->originalInput('name')) ?>" />
+                   value="<?=$this->escape($this->originalInput('name', $receiver->getName())) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('email') ? ' has-error' : '' ?>">
@@ -30,8 +29,8 @@
                    class="form-control"
                    id="email"
                    name="email"
-                   value="<?=($this->get('receiver') != '') ? $this->escape($this->get('receiver')->getEmail()) : $this->escape($this->originalInput('email')) ?>" />
+                   value="<?=$this->escape($this->originalInput('email', $receiver->getEmail())) ?>" />
         </div>
     </div>
-    <?=($this->get('receiver') != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=$this->getSaveBar($receiver->getId() ? 'updateButton' : 'addButton') ?>
 </form>

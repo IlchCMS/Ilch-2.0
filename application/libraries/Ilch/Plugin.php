@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -25,11 +26,11 @@ class Plugin
      */
     public function detectPlugins()
     {
-        foreach (glob(APPLICATION_PATH.'/modules/*/plugins/*') as $pluginPath) {
+        foreach (glob(APPLICATION_PATH . '/modules/*/plugins/*') as $pluginPath) {
             $pluginName = str_replace('.php', '', basename($pluginPath));
             $pluginPathParts = explode('/', $pluginPath);
             $pluginPathPartsCount = count($pluginPathParts);
-            $this->detectedPlugins[$pluginName][] = $pluginPathParts[$pluginPathPartsCount-3];
+            $this->detectedPlugins[$pluginName][] = $pluginPathParts[$pluginPathPartsCount - 3];
         }
     }
 
@@ -45,7 +46,7 @@ class Plugin
         }
 
         foreach ($this->detectedPlugins[$pluginName] as $module) {
-            $pluginClass = '\\Modules\\'.ucfirst($module).'\\Plugins\\'.$pluginName.'';
+            $pluginClass = '\\Modules\\' . ucfirst($module) . '\\Plugins\\' . $pluginName . '';
             new $pluginClass($this->pluginData);
         }
     }
