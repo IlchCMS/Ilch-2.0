@@ -30,8 +30,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuComments',
             $items
         );
