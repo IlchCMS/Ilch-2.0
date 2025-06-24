@@ -1,4 +1,7 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 $articleMapper = $this->get('articleMapper');
 $archive = $this->get('archive');
 ?>

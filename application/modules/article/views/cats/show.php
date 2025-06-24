@@ -1,4 +1,7 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 $articles = $this->get('articles');
 $categoryMapper = $this->get('categoryMapper');
 $commentMapper = $this->get('commentMapper');

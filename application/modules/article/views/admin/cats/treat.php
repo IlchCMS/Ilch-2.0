@@ -1,4 +1,11 @@
-<h1><?=($this->get('cat') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Article\Models\Category $cat */
+$cat = $this->get('cat');
+?>
+<h1><?=($cat != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
@@ -10,8 +17,8 @@
                    class="form-control"
                    id="name"
                    name="name"
-                   value="<?=($this->get('cat') != '') ? $this->escape($this->get('cat')->getName()) : $this->originalInput('name') ?>" />
+                   value="<?=($cat != '') ? $this->escape($cat->getName()) : $this->originalInput('name') ?>" />
         </div>
     </div>
-    <?=($this->get('cat') != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=($cat != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
 </form>

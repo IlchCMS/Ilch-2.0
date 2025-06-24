@@ -1,10 +1,18 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <?php if ($this->get('hasReadAccess')) : ?>
     <?php
+    /** @var \Modules\Article\Models\Article $article */
     $article = $this->get('article');
+    /** @var \Modules\Article\Mappers\Category $categoryMapper */
     $categoryMapper = $this->get('categoryMapper');
+    /** @var \Modules\User\Mappers\User $userMapper */
     $userMapper = $this->get('userMapper');
     $content = str_replace('[PREVIEWSTOP]', '', $article->getContent());
     $preview = $this->getRequest()->getParam('preview');
+    /** @var \Ilch\Config\Database $config */
     $config = $this->get('config');
     $date = new \Ilch\Date($article->getDateCreated() ?? '');
 

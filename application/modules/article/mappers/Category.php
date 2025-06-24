@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -95,7 +96,7 @@ class Category extends \Ilch\Mapper
                 ->fetchAssoc();
 
             return $this->db()->insert('articles_cats')
-                ->values(['name' => $category->getName(), 'sort' => $lastSort['maxSort']+1])
+                ->values(['name' => $category->getName(), 'sort' => $lastSort['maxSort'] + 1])
                 ->execute();
         }
     }

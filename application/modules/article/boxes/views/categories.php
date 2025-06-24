@@ -1,4 +1,7 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 $articleMapper = $this->get('articleMapper');
 $cats = $this->get('cats');
 ?>

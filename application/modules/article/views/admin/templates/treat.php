@@ -1,7 +1,13 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Article\Models\Article $article */
+$article = $this->get('article');
+
 $articleID = '';
-if ($this->get('article') != '') {
-    $articleID = $this->get('article')->getId();
+if ($article != '') {
+    $articleID = $article->getId();
 }
 ?>
 <h1><?=$this->getTrans('editTemplate') ?></h1>
@@ -16,7 +22,7 @@ if ($this->get('article') != '') {
                    class="form-control"
                    id="teaser"
                    name="teaser"
-                   value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getTeaser()) : $this->originalInput('teaser') ?>" />
+                   value="<?=($article != '') ? $this->escape($article->getTeaser()) : $this->originalInput('teaser') ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
@@ -28,7 +34,7 @@ if ($this->get('article') != '') {
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getTitle()) : $this->originalInput('title') ?>" />
+                   value="<?=($article != '') ? $this->escape($article->getTitle()) : $this->originalInput('title') ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('content') ? ' has-error' : '' ?>">
@@ -36,7 +42,7 @@ if ($this->get('article') != '') {
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="content"
-                      toolbar="ilch_html"><?=($this->get('article') != '') ? $this->get('article')->getContent(): $this->originalInput('content') ?></textarea>
+                      toolbar="ilch_html"><?=($article != '') ? $article->getContent(): $this->originalInput('content') ?></textarea>
         </div>
     </div>
     <?php if ($this->get('multilingual')): ?>
@@ -75,7 +81,7 @@ if ($this->get('article') != '') {
                        class="form-control"
                        id="selectedImage"
                        name="image"
-                       value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getImage()) : $this->originalInput('image') ?>" />
+                       value="<?=($article != '') ? $this->escape($article->getImage()) : $this->originalInput('image') ?>" />
                 <span class="input-group-text"><a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a></span>
             </div>
         </div>
@@ -89,7 +95,7 @@ if ($this->get('article') != '') {
                    class="form-control"
                    name="imageSource"
                    id="imageSource"
-                   value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getImageSource()) : '' ?>" />
+                   value="<?=($article != '') ? $this->escape($article->getImageSource()) : '' ?>" />
         </div>
     </div>
     <h1><?=$this->getTrans('seo') ?></h1>
@@ -100,7 +106,7 @@ if ($this->get('article') != '') {
         <div class="col-xl-4">
             <textarea class="form-control"
                       id="description"
-                      name="description"><?=($this->get('article') != '') ? $this->escape($this->get('article')->getDescription()) : '' ?></textarea>
+                      name="description"><?=($article != '') ? $this->escape($article->getDescription()) : '' ?></textarea>
         </div>
     </div>
     <div class="row mb-3">
@@ -113,7 +119,7 @@ if ($this->get('article') != '') {
                    name="keywords"
                    id="keywords"
                    data-placeholder="<?=$this->getTrans('seoKeywords') ?>"
-                   value="<?=($this->get('article')) ? $this->escape($this->get('article')->getKeywords()) : $this->originalInput('keywords') ?>" />
+                   value="<?=($article) ? $this->escape($article->getKeywords()) : $this->originalInput('keywords') ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('permaLink') ? ' has-error' : '' ?>">
@@ -127,7 +133,7 @@ if ($this->get('article') != '') {
                        type="text"
                        id="permaLink"
                        name="permaLink"
-                       value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getPerma()) : $this->get('post')['permaLink'] ?>" />
+                       value="<?=($article != '') ? $this->escape($article->getPerma()) : $this->get('post')['permaLink'] ?>" />
             </div>
         </div>
     </div>

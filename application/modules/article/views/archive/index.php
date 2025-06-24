@@ -1,8 +1,18 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Article\Models\Article[]|null $articles */
 $articles = $this->get('articles');
+/** @var \Modules\Article\Mappers\Category $categoryMapper */
 $categoryMapper = $this->get('categoryMapper');
+/** @var \Modules\Comment\Mappers\Comment $commentMapper */
 $commentMapper = $this->get('commentMapper');
+/** @var \Modules\user\Mappers\User $userMapper */
 $userMapper = $this->get('userMapper');
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
 ?>
 
 <h1><?=$this->getTrans('menuArchives') ?></h1>
@@ -17,7 +27,7 @@ $userMapper = $this->get('userMapper');
             $categories = '';
             foreach ($catIds as $catId) {
                 $articlesCats = $categoryMapper->getCategoryById($catId);
-                $categories .= '<a href="'.$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]).'">'.$this->escape($articlesCats->getName()).'</a>, ';
+                $categories .= '<a href="' . $this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]) . '">' . $this->escape($articlesCats->getName()) . '</a>, ';
             }
         ?>
             <li class="list-group-item">
@@ -62,7 +72,7 @@ $userMapper = $this->get('userMapper');
         <?php endforeach; ?>
     </ul>
     <div class="float-end">
-        <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'id' => $this->getRequest()->getParam('id')]) ?>
+        <?=$pagination->getHtml($this, ['action' => 'index', 'id' => $this->getRequest()->getParam('id')]) ?>
     </div>
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>

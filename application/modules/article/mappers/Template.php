@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -24,7 +25,7 @@ class Template extends \Ilch\Mapper
             ->from('articles_templates');
 
         if ($locale !== null) {
-            $select = $select->where(['locale' => $this->db()->escape($locale)]);
+            $select->where(['locale' => $this->db()->escape($locale)]);
         }
 
         if ($pagination !== null) {
