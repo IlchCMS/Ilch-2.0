@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -32,7 +33,7 @@ class Settings extends \Ilch\Controller\Admin
             $items
         );
     }
-    
+
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
@@ -40,9 +41,21 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('contact_welcomeMessage', $this->getRequest()->getPost('welcomeMessage'));
-            $this->addMessage('saveSuccess');
-            $this->redirect(['action' => 'index']);
+            $validation = Validation::create($this->getRequest()->getPost(), []);
+
+            if ($validation->isValid()) {
+                $this->getConfig()->set('contact_welcomeMessage', $this->getRequest()->getPost('welcomeMessage'));
+
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'index']);
+            }
         }
 
         $this->getView()->set('welcomeMessage', $this->getConfig()->get('contact_welcomeMessage'));
