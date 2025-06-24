@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('settings') ?>
     <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
         <i class="fa-solid fa-info"></i>

@@ -1,3 +1,10 @@
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+?>
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('media') ?></h1>
@@ -66,7 +73,7 @@
             <span class="fa-solid fa-gears"></span> <?=$this->getTrans('advancedSearch') ?>
         </button>
     </div>
-    <?=$this->get('pagination')->getHtml($this, $this->get('rows')) ?>
+    <?=$pagination->getHtml($this, $this->get('rows')) ?>
     <form method="POST">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -94,7 +101,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('medias') as $media): ?>
+                    <?php
+                    /** @var \Modules\Media\Models\Media $media */
+                    foreach ($this->get('medias') as $media): ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_medias', $media->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $media->getId()]) ?></td>
@@ -127,7 +136,9 @@
                                     </button>
                                     <ul class="dropdown-menu listChooser" role="menu">
                                         <?php if ($this->get('catnames') != ''): ?>
-                                            <?php foreach ($this->get('catnames') as $name): ?>
+                                            <?php
+                                            /** @var \Modules\Media\Models\Media $name */
+                                            foreach ($this->get('catnames') as $name): ?>
                                                 <li>
                                                     <a class="dropdown-item" data-hiddenkey="assignCategory" href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId()]) ?>"><?=$this->escape($name->getCatName()) ?></a>
                                                 </li>
@@ -150,7 +161,9 @@
                     </div>
                     <div class="modal-body">
                         <ul class="list-unstyled">
-                            <?php foreach ($this->get('catnames') as $name): ?>
+                            <?php
+                                /** @var \Modules\Media\Models\Media $name */
+                                foreach ($this->get('catnames') as $name): ?>
                                 <li><button name="assignedCategory" class="btn btn-secondary list-group-item" type="submit" value="<?=$name->getId() ?>"><?=$this->escape($name->getCatName()) ?></button></li>
                             <?php endforeach; ?>
                         </ul>
@@ -165,7 +178,7 @@
             </div>
         </div>
 
-        <?=$this->get('pagination')->getHtml($this, $this->get('rows')) ?>
+        <?=$pagination->getHtml($this, $this->get('rows')) ?>
         <?=$this->getListBar(['delete' => 'delete', 'assignCategory' => 'assignCategory']) ?>
     </form>
 <?php else: ?>
