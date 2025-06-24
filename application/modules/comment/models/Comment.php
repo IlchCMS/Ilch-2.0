@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -12,7 +13,7 @@ class Comment extends \Ilch\Model
      * @var integer
      */
     protected $id;
-	
+
     /**
      * @var integer
      */
@@ -32,17 +33,17 @@ class Comment extends \Ilch\Model
      * @var integer
      */
     protected $userId;
-	
+
     /**
      * @var \DateTime
      */
     protected $dateCreated;
-	
+
     /**
      * @var integer
      */
     protected $up;
-	
+
     /**
      * @var integer
      */
@@ -72,7 +73,7 @@ class Comment extends \Ilch\Model
 
         return $this;
     }
-	
+
     /**
      * @return integer
      */
@@ -152,7 +153,7 @@ class Comment extends \Ilch\Model
 
         return $this;
     }
-	
+
     /**
      * @return \DateTime
      */
