@@ -195,6 +195,6 @@ class Config extends \Ilch\Config\Install
             case "1.10.2":
         }
 
-        return 'Update function executed.';
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
