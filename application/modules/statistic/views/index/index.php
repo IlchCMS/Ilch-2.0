@@ -7,6 +7,7 @@ $modulesMapper = new \Modules\Admin\Mappers\Module();
 $languageCodes = new \Modules\Statistic\Plugins\languageCodes();
 $date = new \Ilch\Date();
 $dateCmsInstalled = new \Ilch\Date($this->get('dateCmsInstalled'));
+/** @var \Modules\User\Models\User $registNewUser */
 $registNewUser = $this->get('registNewUser');
 
 /** @var Modules\Statistic\Models\Statisticconfig $statistic_config */
