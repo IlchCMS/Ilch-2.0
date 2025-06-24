@@ -13,7 +13,7 @@ $licenseText = $this->get('licenseText');
 ?>
 <div class="row mb-3">
     <div class="col-xl-12">
-        <?php if ($this->get('licenseMissing')) : ?>
+        <?php if ($licenseMissing) : ?>
             <div class="alert alert-danger" role="alert">
                 <?=$this->getTrans('licenseMissing') ?>
             </div>
@@ -23,7 +23,7 @@ $licenseText = $this->get('licenseText');
             </div>
         <?php endif; ?>
     </div>
-    <?php if (!$this->get('licenseMissing')) : ?>
+    <?php if (!$licenseMissing) : ?>
         <label class="col-xl-12 checkbox inline<?=$this->validation()->hasError('licenseAccepted') ? ' text-danger' : '' ?>" style="margin-left: 20px;">
             <input type="checkbox" class="<?=$this->validation()->hasError('licenseAccepted') ? 'is-invalid' : '' ?>" name="licenseAccepted" value="1" <?=$this->originalInput('licenseAccepted', $this->get('licenseAccepted')) ? 'checked' : '' ?>> <?=$this->getTrans('acceptLicense') ?>
         </label>
