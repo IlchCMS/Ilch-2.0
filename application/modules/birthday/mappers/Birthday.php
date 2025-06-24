@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -52,11 +53,10 @@ class Birthday extends \Ilch\Mapper
     public function getEntriesForJson($start, $end)
     {
         if ($start && $end) {
-
             $sql = 'SELECT *
                     FROM `[prefix]_users`
                     WHERE DayOfYear(`birthday`)
-                        BETWEEN DayOfYear("' . $this->db()->escape($start) .'")
+                        BETWEEN DayOfYear("' . $this->db()->escape($start) . '")
                         AND DayOfYear("' .  $this->db()->escape($end) . '")';
         } else {
             return null;

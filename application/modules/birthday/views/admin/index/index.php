@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getModuleUrl('static/css/birthday.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('settings') ?></h1>
@@ -23,9 +27,9 @@
         </div>
         <div class="col-xl-2">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="visibleForGuest-on" name="visibleForGuest" value="1" <?php if ($this->get('visibleForGuest')) { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="visibleForGuest-on" name="visibleForGuest" value="1" <?=($this->get('visibleForGuest')) ? 'checked="checked"' : '' ?> />
                 <label for="visibleForGuest-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="visibleForGuest-off" name="visibleForGuest" value="0" <?php if (!$this->get('visibleForGuest')) { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="visibleForGuest-off" name="visibleForGuest" value="0" <?=(!$this->get('visibleForGuest')) ? 'checked="checked"' : '' ?> />
                 <label for="visibleForGuest-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
