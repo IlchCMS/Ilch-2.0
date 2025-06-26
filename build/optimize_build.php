@@ -165,7 +165,10 @@ function getFilesRecursive(string $dirname, ?array $filter = null): array
 function removeEmptySubFolders(string $path): bool
 {
     $empty = true;
-    foreach (glob($path . DIRECTORY_SEPARATOR . "*") as $file) {
+    foreach (scandir($path) as $file) {
+        if ($file === '.' || $file === '..') {
+            continue;
+        }
         $empty &= is_dir($file) && removeEmptySubFolders($file);
     }
     return $empty && rmdir($path);
