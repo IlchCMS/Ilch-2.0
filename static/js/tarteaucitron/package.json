@@ -4,7 +4,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "tarteaucitronjs": "^1.21.0"
+    "tarteaucitronjs": "^1.22.0"
   },
   "scripts": {
     "build": "rm -rf build && mkdir -p build && cp node_modules/tarteaucitronjs/*.min.js build/ && mkdir -p build/lang && cp -r node_modules/tarteaucitronjs/lang/*.min.js build/lang && mkdir -p build/css && cp node_modules/tarteaucitronjs/css/*.min.css build/css/"
