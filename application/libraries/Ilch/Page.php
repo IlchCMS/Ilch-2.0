@@ -164,20 +164,28 @@ class Page
 
         if (($this->fileConfig->get('dbUser')) !== null) {
             // Always allow access to registration (previously no access for guests to the user module lead to them being unable to register)
-            $accesses = ($this->request->getModuleName() === 'user' && ($this->request->getControllerName() === 'regist' || $this->request->getControllerName() === 'login')) || $this->accesses->hasAccess('Module');
+            $accesses = (
+                (
+                $this->request->getModuleName() === 'user' && ($this->request->getControllerName() === 'regist' || $this->request->getControllerName() === 'login')) ||
+                (
+                    ($this->request->getModuleName() == 'admin' && $this->accesses->hasAccess('Admin')) ||
+                    ($this->request->isAdmin() && $this->accesses->hasAccess('Admin_' . $this->request->getModuleName(), $this->request->getModuleName())) ||
+                    (!$this->request->isAdmin() && $this->accesses->hasAccess('Module'))
+                )
+            );
         } else {
             $accesses = true;
         }
 
         if (!empty($viewOutput)) {
-            if ($this->request->isAdmin()) {
-                $controller->getLayout()->setContent($viewOutput);
-            } elseif ($accesses) {
+            if ($accesses) {
                 $controller->getLayout()->setContent($viewOutput);
             } else {
                 $this->translator->load(APPLICATION_PATH . '/modules/user/translations/');
+                $this->translator->load(APPLICATION_PATH . '/modules/error/translations/');
 
-                $controller->getLayout()->setContent($this->accesses->getErrorPage($this->translator->trans('noAccessPage')));
+                $url = new \Ilch\Controller\Base($this->layout, $this->view, $this->request, $this->router, $this->translator);
+                $url->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => $this->translator->trans('access'), 'errorText' => $this->translator->trans('noAccessPage'), 'errorCode' => 403], '');
             }
         }
 
@@ -218,16 +226,20 @@ class Page
         if (!is_dir(APPLICATION_PATH . '/modules/' . $this->request->getModuleName())) {
             $errorModule = $this->request->getModuleName();
 
+            $this->translator->load(APPLICATION_PATH . '/modules/error/translations/');
+
             $url = new \Ilch\Controller\Base($this->layout, $this->view, $this->request, $this->router, $this->translator);
-            $url->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Module', 'errorText' => $errorModule]);
+            $url->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Module', 'errorText' => $errorModule, 'errorState' => $this->translator->trans('notFound')], '');
         }
 
         // Check if controller exists.
         if (!class_exists($controller)) {
             $errorController = $this->request->getControllerName();
 
+            $this->translator->load(APPLICATION_PATH . '/modules/error/translations/');
+
             $url = new \Ilch\Controller\Base($this->layout, $this->view, $this->request, $this->router, $this->translator);
-            $url->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Controller', 'errorText' => $errorController]);
+            $url->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Controller', 'errorText' => $errorController, 'errorState' => $this->translator->trans('notFound')], '');
         } else {
             $controller = new $controller($this->layout, $this->view, $this->request, $this->router, $this->translator);
             $action = $this->request->getActionName() . 'Action';
