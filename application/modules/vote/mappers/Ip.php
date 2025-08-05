@@ -119,4 +119,15 @@ class Ip extends \Ilch\Mapper
             ->values($fields)
             ->execute();
     }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.14.2
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
+    }
 }

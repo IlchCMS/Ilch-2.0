@@ -14,7 +14,7 @@ class Config extends \Ilch\Config\Install
      */
     public array $config = [
         'key' => 'vote',
-        'version' => '1.14.1',
+        'version' => '1.14.2',
         'icon_small' => 'fa-solid fa-bars-progress',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -38,7 +38,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.2.0',
+        'ilchCore' => '2.2.13',
         'phpVersion' => '7.4'
     ];
 
@@ -225,6 +225,7 @@ class Config extends \Ilch\Config\Install
             case '1.12.0':
             case '1.12.1':
             case '1.13.0':
+            case '1.14.1':
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
