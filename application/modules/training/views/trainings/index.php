@@ -18,12 +18,12 @@ if ($trainingList) {
         $e['url'] = $this->getUrl('training/index/show/id/' . $training->getId());
 
         $startDate = new \Ilch\Date($calendar->getStart());
-    $endDate = $calendar->getEnd() != '1000-01-01 00:00:00'
-        ? new \Ilch\Date($calendar->getEnd())
-        : new \Ilch\Date('9999-12-31 23:59:59');
-    $repeatUntil = $calendar->getRepeatUntil() && $calendar->getRepeatUntil() != '1000-01-01 00:00:00'
-        ? new \Ilch\Date($calendar->getRepeatUntil())
-        : new \Ilch\Date('9999-12-31 23:59:59');
+        $endDate = $calendar->getEnd() != '1000-01-01 00:00:00'
+            ? new \Ilch\Date($calendar->getEnd())
+            : new \Ilch\Date('9999-12-31 23:59:59');
+        $repeatUntil = $calendar->getRepeatUntil() && $calendar->getRepeatUntil() != '1000-01-01 00:00:00'
+            ? new \Ilch\Date($calendar->getRepeatUntil())
+            : new \Ilch\Date('9999-12-31 23:59:59');
 
         // Add only or initial (in case of recurring events) event.
         $trainings[] = $e;

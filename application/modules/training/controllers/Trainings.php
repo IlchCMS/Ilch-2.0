@@ -16,7 +16,6 @@ class Trainings extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        
         $trainingMapper = new TrainingMapper();
         $userMapper = new UserMapper();
         $calendarMapper = new CalendarMapper();
