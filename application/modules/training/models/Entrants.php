@@ -12,16 +12,16 @@ class Entrants extends \Ilch\Model
     /**
      * The trainingId of the training entrants.
      *
-     * @var int|null
+     * @var int
      */
-    protected ?int $trainId = null;
+    protected int $trainId = 0;
 
     /**
      * The userId of the training entrants.
      *
-     * @var int|null
+     * @var int
      */
-    protected ?int $userId = null;
+    protected int $userId = 0;
 
     /**
      * The note of the training entrants.
@@ -51,9 +51,9 @@ class Entrants extends \Ilch\Model
     /**
      * Gets the trainId of the training entrants.
      *
-     * @return int|null
+     * @return int
      */
-    public function getTrainId(): ?int
+    public function getTrainId(): int
     {
         return $this->trainId;
     }
@@ -73,9 +73,9 @@ class Entrants extends \Ilch\Model
     /**
      * Gets the user of the training entrants.
      *
-     * @return int|null
+     * @return int
      */
-    public function getUserId(): ?int
+    public function getUserId(): int
     {
         return $this->userId;
     }

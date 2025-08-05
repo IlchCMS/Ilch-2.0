@@ -381,7 +381,7 @@ class Training extends \Ilch\Mapper
      *
      * @param int $trainingId
      * @param string|array $access example: "1,2,3"
-     * @param boolean $addAdmin
+     * @param bool $addAdmin
      */
     public function saveAccess(int $trainingId, $access, bool $addAdmin = true)
     {
@@ -444,5 +444,16 @@ class Training extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.10.2
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename) && $this->db()->truncate($this->tablenameAccess);
     }
 }

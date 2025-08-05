@@ -77,6 +77,10 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $model =  $trainingMapper->getTrainingById($this->getRequest()->getParam('id'), null);
+
+            if (!$model) {
+                $this->redirect(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index'])
@@ -101,6 +105,12 @@ class Index extends \Ilch\Controller\Admin
                 'gameServer' => 'required|integer|min:0|max:1',
                 'groups' => 'required',
                 'calendarShow' => 'required|integer|min:0|max:1',
+                'periodType' => 'required',
+
+                //'place' => '',
+                //'voiceServerPW' => '',
+                //'gameServerPW' => '',
+                //'text' => '',
             ];
 
             if ($this->getRequest()->getPost('periodType') == 'days') {
@@ -165,10 +175,10 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $trainingMapper = new TrainingMapper();
             $entrantsMapper = new EntrantsMapper();
-            $trainingMapper->delete($this->getRequest()->getParam('id', 0));
+            $trainingMapper->delete($this->getRequest()->getParam('id'));
             $entrantsMapper->deleteAllUser($this->getRequest()->getParam('id'));
             $this->addMessage('deleteSuccess');
         }

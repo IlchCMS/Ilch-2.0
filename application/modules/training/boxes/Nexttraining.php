@@ -18,6 +18,7 @@ class Nexttraining extends \Ilch\Box
         $trainingMapper = new TrainingMapper();
         $entrantsMapper = new EntrantsMapper();
         $userMapper = new UserMapper();
+        /** @var \Ilch\Config\Database $config */
         $config = \Ilch\Registry::get('config');
 
         $groupIds = [3];

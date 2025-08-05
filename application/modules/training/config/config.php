@@ -38,7 +38,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.2.0',
+        'ilchCore' => '2.2.13',
         'phpVersion' => '7.4'
     ];
 
@@ -299,6 +299,9 @@ class Config extends \Ilch\Config\Install
                 // Update voice_server and game_server column.
                 $this->db()->queryMulti('ALTER TABLE `[prefix]_training` MODIFY COLUMN `voice_server` TINYINT(1) NOT NULL DEFAULT 0;
                             ALTER TABLE `[prefix]_training` MODIFY COLUMN `game_server` TINYINT(1) NOT NULL DEFAULT 0;');
+                // no break
+            case "1.10.0":
+            case "1.10.1":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

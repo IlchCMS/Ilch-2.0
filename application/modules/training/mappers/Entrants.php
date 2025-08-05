@@ -119,4 +119,15 @@ class Entrants extends \Ilch\Mapper
                 ->where(['train_id' => $trainId])
                 ->execute();
     }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.10.2
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
+    }
 }
