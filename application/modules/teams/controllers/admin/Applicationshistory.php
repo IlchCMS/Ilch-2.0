@@ -62,7 +62,7 @@ class Applicationshistory extends \Ilch\Controller\Admin
         }
 
         $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
-        $pagination->setPage($this->getRequest()->getParam('page'));
+        $pagination->setPage($this->getRequest()->getParam('page', 1));
 
         $this->getView()->set('teamsMapper', $teamsMapper)
             ->set('joins', $joinsMapper->getApplicationHistory($pagination))
@@ -74,7 +74,7 @@ class Applicationshistory extends \Ilch\Controller\Admin
         $joinsMapper = new JoinsMapper();
         $teamsMapper = new TeamsMapper();
 
-        $join = $joinsMapper->getJoinInHistoryById($this->getRequest()->getParam('id'));
+        $join = $joinsMapper->getJoinInHistoryById($this->getRequest()->getParam('id', 0));
 
         if (!$join) {
             $this->redirect()
@@ -99,14 +99,14 @@ class Applicationshistory extends \Ilch\Controller\Admin
         $pagination = new \Ilch\Pagination();
 
         $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
-        $pagination->setPage($this->getRequest()->getParam('page'));
+        $pagination->setPage($this->getRequest()->getParam('page', 1));
 
-        $joins = $joinsMapper->getApplicationHistoryByUserId($this->getRequest()->getParam('userId'), $pagination);
+        $joins = $joinsMapper->getApplicationHistoryByUserId($this->getRequest()->getParam('userId'. 1), $pagination);
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuTeams'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuApplicationsHistory'), ['controller' => 'applications', 'action' => 'index'])
-            ->add($joins[0]->getName(), ['action' => 'showuserhistory', 'userId' => $this->getRequest()->getParam('userId')]);
+            ->add($joins ? $joins[0]->getName() : '', ['action' => 'showuserhistory', 'userId' => $this->getRequest()->getParam('userId', 0)]);
 
         $this->getView()->set('joinsMapper', $joinsMapper)
             ->set('teamsMapper', $teamsMapper)
