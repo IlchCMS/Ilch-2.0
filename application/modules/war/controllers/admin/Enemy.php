@@ -92,7 +92,7 @@ class Enemy extends Admin
         }
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_enemiesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_enemiesPerPage'));
-        $pagination->setPage($this->getRequest()->getParam('page'));
+        $pagination->setPage($this->getRequest()->getParam('page', 1));
 
         $this->getView()->set('enemies', $enemyMapper->getEnemyList($pagination))
             ->set('pagination', $pagination);
@@ -137,17 +137,13 @@ class Enemy extends Admin
             ];
 
             $validator = [
-                'enemyName' => 'required|unique:war_enemy,name',
-                'enemyTag' => 'required|unique:war_enemy,tag',
+                'enemyName' => 'required|unique:' . $enemyMapper->tablename . ',name,' . $enemyModel->getId(),
+                'enemyTag' => 'required|unique:' . $enemyMapper->tablename . ',tag,' . $enemyModel->getId(),
                 'enemyHomepage' => 'url',
                 'enemyImage' => 'url',
-                'enemyContactEmail' => 'email'
+                'enemyContactEmail' => 'email',
+                //'enemyContactName' => '',
             ];
-
-            if ($enemyModel->getId()) {
-                $validator['enemyName'] = 'required';
-                $validator['enemyTag'] = 'required';
-            }
 
             $validation = Validation::create($post, $validator);
 
@@ -177,7 +173,7 @@ class Enemy extends Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $enemyMapper = new EnemyMapper();
             $enemyMapper->delete((int)$this->getRequest()->getParam('id'));
 

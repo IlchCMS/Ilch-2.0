@@ -79,21 +79,21 @@ class War extends Model
      *
      * @var string
      */
-    protected $warXonx = '';
+    protected $warXonx = 'new';
 
     /**
      * The War Game.
      *
      * @var string
      */
-    protected $warGame = '';
+    protected $warGame = 'new';
 
     /**
      * The War Matchtype.
      *
      * @var string
      */
-    protected $warMatchtype = '';
+    protected $warMatchtype = 'new';
 
     /**
      * The War Report.
@@ -107,7 +107,7 @@ class War extends Model
      *
      * @var int
      */
-    protected $warStatus = '';
+    protected $warStatus = 1;
 
     /**
      * The show value (hide or show in calendar) of the training.

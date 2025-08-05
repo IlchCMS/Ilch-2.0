@@ -5,7 +5,7 @@
 /** @var string $icon */
 $icon = $this->get('icon');
 ?>
-<h1><?=(!$icon) ? $this->getTrans('createNewGameIcon') : $this->getTrans('treatGameIcon') ?></h1>
+<h1><?=$this->getTrans(!$icon ? 'createNewGameIcon' : 'treatGameIcon') ?></h1>
 <form id="warIcon_form" method="POST" action="" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('gameName') ? ' has-error' : '' ?>">
@@ -42,7 +42,7 @@ $icon = $this->get('icon');
             <div class="form-text" id="iconHelpBlock"><?=$this->getTrans('iconSize') ?>: 16 Pixel <?=$this->getTrans('iconWidth') ?>, 16 Pixel <?=$this->getTrans('iconHeight') ?>. <?=$this->getTrans('allowedFileExtensions') ?>: png</div>
         </div>
     </div>
-    <?=($icon) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=$this->getSaveBar($icon ? 'updateButton' : 'addButton') ?>
 </form>
 
 <script>

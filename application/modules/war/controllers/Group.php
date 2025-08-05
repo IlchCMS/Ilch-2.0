@@ -46,10 +46,10 @@ class Group extends Frontend
         $gamesMapper = new GamesMapper();
         $pagination = new Pagination();
 
-        $group = $groupMapper->getGroupById($this->getRequest()->getParam('id'));
+        $group = $groupMapper->getGroupById($this->getRequest()->getParam('id', 0));
         if ($group) {
             $pagination->setRowsPerPage(!$this->getConfig()->get('war_warsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_warsPerPage'));
-            $pagination->setPage($this->getRequest()->getParam('page'));
+            $pagination->setPage($this->getRequest()->getParam('page', 1));
 
             $user = null;
             if ($this->getUser()) {

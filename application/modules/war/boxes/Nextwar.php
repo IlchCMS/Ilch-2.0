@@ -18,6 +18,7 @@ class Nextwar extends Box
     {
         $warMapper = new WarMapper();
         $userMapper = new UserMapper();
+        /** @var \Ilch\Config\Database $config */
         $config = Registry::get('config');
 
         $user = null;

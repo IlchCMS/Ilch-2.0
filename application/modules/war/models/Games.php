@@ -28,23 +28,23 @@ class Games extends Model
     /**
      * The Game map.
      *
-     * @var string
+     * @var int
      */
-    protected $map = '';
+    protected $map = 0;
 
     /**
      * The Group Points.
      *
-     * @var string
+     * @var int
      */
-    protected $groupPoints = '';
+    protected $groupPoints = 0;
 
     /**
      * The Enemy Points.
      *
-     * @var string
+     * @var int
      */
-    protected $enemyPoints = '';
+    protected $enemyPoints = 0;
 
     /**
      * Sets Model by Array.
@@ -122,9 +122,9 @@ class Games extends Model
     /**
      * Gets the map.
      *
-     * @return string
+     * @return int
      */
-    public function getMap(): string
+    public function getMap(): int
     {
         return $this->map;
     }
@@ -132,10 +132,10 @@ class Games extends Model
     /**
      * Sets the map.
      *
-     * @param string $map
+     * @param int $map
      * @return $this
      */
-    public function setMap(string $map): Games
+    public function setMap(int $map): Games
     {
         $this->map = $map;
 
@@ -145,9 +145,9 @@ class Games extends Model
     /**
      * Gets the groupPoints.
      *
-     * @return string
+     * @return int
      */
-    public function getGroupPoints(): string
+    public function getGroupPoints(): int
     {
         return $this->groupPoints;
     }
@@ -155,10 +155,10 @@ class Games extends Model
     /**
      * Sets the groupPoints.
      *
-     * @param string $groupPoints
+     * @param int $groupPoints
      * @return $this
      */
-    public function setGroupPoints(string $groupPoints): Games
+    public function setGroupPoints(int $groupPoints): Games
     {
         $this->groupPoints = $groupPoints;
 
@@ -168,9 +168,9 @@ class Games extends Model
     /**
      * Gets the enemyPoints.
      *
-     * @return string
+     * @return int
      */
-    public function getEnemyPoints(): string
+    public function getEnemyPoints(): int
     {
         return $this->enemyPoints;
     }
@@ -178,10 +178,10 @@ class Games extends Model
     /**
      * Sets the enemyPoints.
      *
-     * @param string $enemyPoints
+     * @param int $enemyPoints
      * @return $this
      */
-    public function setEnemyPoints(string $enemyPoints): Games
+    public function setEnemyPoints(int $enemyPoints): Games
     {
         $this->enemyPoints = $enemyPoints;
 

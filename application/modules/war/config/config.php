@@ -48,7 +48,7 @@ class Config extends Install
                 ]
             ]
         ],
-        'ilchCore' => '2.2.0',
+        'ilchCore' => '2.2.13',
         'phpVersion' => '7.4'
     ];
 

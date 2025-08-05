@@ -67,11 +67,11 @@ class Settings extends Admin
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'warsPerPage' => 'numeric|integer|min:1',
-                'enemiesPerPage' => 'numeric|integer|min:1',
-                'groupsPerPage' => 'numeric|integer|min:1',
-                'boxNextWarLimit' => 'numeric|integer|min:1',
-                'boxLastWarLimit' => 'numeric|integer|min:1'
+                'warsPerPage' => 'required|numeric|integer|min:1',
+                'enemiesPerPage' => 'required|numeric|integer|min:1',
+                'groupsPerPage' => 'required|numeric|integer|min:1',
+                'boxNextWarLimit' => 'required|numeric|integer|min:1',
+                'boxLastWarLimit' => 'required|numeric|integer|min:1'
             ]);
 
             if ($validation->isValid()) {
