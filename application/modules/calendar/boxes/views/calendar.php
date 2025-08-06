@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getBoxUrl('static/css/calendar.css') ?>" rel="stylesheet">
 
 <div class="calendar">
@@ -57,7 +61,7 @@
                 info.event.remove();
             },
             loading: function( isLoading ) {
-                if(isLoading) {// isLoading gives boolean value
+                if(isLoading) {// isLoading gives bool value
                     //show your loader here 
                 } else {
                     let titleframe = $('#calendarbox<?=$this->get('uniqid') ?> .fc-toolbar-title');

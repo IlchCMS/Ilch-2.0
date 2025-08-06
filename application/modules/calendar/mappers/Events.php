@@ -30,7 +30,7 @@ class Events extends \Ilch\Mapper
      * @param array $where
      * @param array $orderBy
      * @param Pagination|null $pagination
-     * @return array|null
+     * @return EntriesModel[]|null
      */
     public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
@@ -69,7 +69,7 @@ class Events extends \Ilch\Mapper
      * Gets the Events entries.
      *
      * @param array $where
-     * @return array|null
+     * @return EntriesModel[]|null
      */
     public function getEntries(array $where = []): ?array
     {
@@ -105,7 +105,7 @@ class Events extends \Ilch\Mapper
      */
     public function save(EntriesModel $model): int
     {
-        $fields = $model->getArray();
+        $fields = $model->getArray(false);
 
         if ($model->getId()) {
             $this->db()->update($this->tablename)
@@ -135,5 +135,16 @@ class Events extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => (int)$id])
             ->execute();
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.11.5
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
     }
 }

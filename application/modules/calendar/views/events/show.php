@@ -28,8 +28,12 @@ $periodTypes = [
 ];
 
 $startDate = new \Ilch\Date($calendar->getStart());
-$endDate = $calendar->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($calendar->getEnd()) : 1;
-$repeatUntil = $calendar->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($calendar->getRepeatUntil()) : 1;
+$endDate = $calendar->getEnd() != '1000-01-01 00:00:00'
+    ? new \Ilch\Date($calendar->getEnd())
+    : new \Ilch\Date('9999-12-31 23:59:59');
+$repeatUntil = $calendar->getRepeatUntil() && $calendar->getRepeatUntil() != '1000-01-01 00:00:00'
+    ? new \Ilch\Date($calendar->getRepeatUntil())
+    : new \Ilch\Date('9999-12-31 23:59:59');
 
 if ($iteration != '') {
     $recurrence = $calendarMapper->repeat($calendar->getPeriodType(), $startDate, $endDate, $repeatUntil, $calendar->getPeriodDay())[$iteration];
@@ -37,7 +41,7 @@ if ($iteration != '') {
     $endDate = $recurrence['end'];
 }
 
-$endDate = is_numeric($endDate) ? null : $endDate;
+$endDate = is_numeric($endDate) || $endDate == '9999-12-31 23:59:59' ? null : $endDate;
 ?>
 
 <h1><?=$this->escape($calendar->getTitle()) ?></h1>
