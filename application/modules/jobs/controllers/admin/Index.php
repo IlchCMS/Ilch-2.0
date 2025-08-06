@@ -75,6 +75,12 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $jobsModel = $jobsMapper->getJobsById($this->getRequest()->getParam('id'));
+
+            if (!$jobsModel) {
+                $this->redirect()
+                    ->withMessage('entryNotFound')
+                    ->to(['controller' => 'index', 'action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuJobs'), ['action' => 'index'])
@@ -99,21 +105,20 @@ class Index extends \Ilch\Controller\Admin
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-                $this->redirect()
-                    ->withInput()
-                    ->withErrors($validation->getErrorBag())
-                    ->to(array_merge(['action' => 'treat'], ($jobsModel->getId() ? ['id' => $jobsModel->getId()] : [])));
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(array_merge(['action' => 'treat'], ($jobsModel->getId() ? ['id' => $jobsModel->getId()] : [])));
         }
     }
 
     public function updateAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $jobsMapper = new JobsMapper();
-            $jobsMapper->update($this->getRequest()->getParam('id') ?? 0);
+            $jobsMapper->update($this->getRequest()->getParam('id'));
 
             $this->addMessage('saveSuccess');
         }
@@ -123,9 +128,9 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $jobsMapper = new JobsMapper();
-            $jobsMapper->delete($this->getRequest()->getParam('id') ?? 0);
+            $jobsMapper->delete($this->getRequest()->getParam('id'));
 
             $this->addMessage('deleteSuccess');
         }
