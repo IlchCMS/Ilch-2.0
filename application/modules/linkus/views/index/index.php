@@ -9,8 +9,8 @@ $config = \Ilch\Registry::get('config');
 ?>
 
 <h1><?=$this->getTrans('menuLinkus') ?></h1>
-<?php if ($linkus != ''): ?>
-    <?php foreach ($linkus as $linkusModel): ?>
+<?php if ($linkus != '') : ?>
+    <?php foreach ($linkus as $linkusModel) : ?>
         <div class="row col-xl-12">
               <h4><?=$this->escape($linkusModel->getTitle()) ?></h4>
               <div class="col-xl-12 text-center">
@@ -18,7 +18,7 @@ $config = \Ilch\Registry::get('config');
                   <br /><br />
               </div>
 
-              <?php if ($config->get('linkus_html') == 1): ?>
+              <?php if ($config->get('linkus_html') == 1) : ?>
                   <div class="col-xl-6 text-center">
                       <?=$this->getTrans('htmlForWebsite') ?>
                       <textarea class="form-control bg-body-tertiary"
@@ -30,7 +30,7 @@ $config = \Ilch\Registry::get('config');
                   </div>
               <?php endif; ?>
 
-              <?php if ($config->get('linkus_bbcode') == 1): ?>
+              <?php if ($config->get('linkus_bbcode') == 1) : ?>
                   <div class="col-xl-6 text-center">
                       <?=$this->getTrans('bbcodeForForum') ?>
                       <textarea class="form-control bg-body-tertiary"
@@ -43,7 +43,7 @@ $config = \Ilch\Registry::get('config');
         </div>
         <hr />
     <?php endforeach; ?>
-<?php else: ?>
+<?php else : ?>
     <div class="col-xl-12">
         <?=$this->getTrans('noLinkus') ?>
     </div>

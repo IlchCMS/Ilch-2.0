@@ -7,6 +7,8 @@
 
 namespace Modules\Linkus\Config;
 
+use Ilch\Config\Database;
+
 class Config extends \Ilch\Config\Install
 {
     public $config = [
@@ -25,7 +27,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Provides HTML code or BBCode for others to link to your website.',
             ],
         ],
-        'ilchCore' => '2.2.0',
+        'ilchCore' => '2.2.13',
         'phpVersion' => '7.4'
     ];
 
@@ -41,8 +43,10 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->drop('linkus', true);
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'linkus_html';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'linkus_bbcode'");
+
+        $databaseConfig = new Database($this->db());
+        $databaseConfig->delete('linkus_html')
+            ->delete('linkus_bbcode');
     }
 
     public function getInstallSql(): string

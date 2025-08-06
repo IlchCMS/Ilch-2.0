@@ -55,13 +55,13 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('linkus_html', $this->getRequest()->getPost('showHtml'));
                 $this->getConfig()->set('linkus_bbcode', $this->getRequest()->getPost('showBBCode'));
                 $this->addMessage('saveSuccess');
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-                $this->redirect()
-                  ->withInput()
-                  ->withErrors($validation->getErrorBag())
-                  ->to(['action' => 'index']);
+                $this->redirect(['action' => 'index']);
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
         $this->getView()->set('linkus_html', $this->getConfig()->get('linkus_html'));

@@ -3,7 +3,7 @@
 /** @var \Ilch\View $this */
 ?>
 <h1><?=$this->getTrans('manage') ?></h1>
-<?php if ($this->get('linkus') != ''): ?>
+<?php if ($this->get('linkus') != '') : ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -25,7 +25,7 @@
                 <tbody>
                     <?php
                     /** @var \Modules\Linkus\Models\Linkus $linkus */
-                    foreach ($this->get('linkus') as $linkus): ?>
+                    foreach ($this->get('linkus') as $linkus) : ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_linkus', $linkus->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $linkus->getId()]) ?></td>
@@ -42,6 +42,6 @@
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noLinkus') ?>
 <?php endif; ?>

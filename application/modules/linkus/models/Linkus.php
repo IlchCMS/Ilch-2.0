@@ -14,28 +14,48 @@ class Linkus extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The title of the linkus.
      *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * The banner of the linkus.
      *
      * @var string
      */
-    protected $banner;
+    protected $banner = '';
+
+    /**
+     * @param array $entries
+     * @return $this
+     * @since 1.7.3
+     */
+    public function setByArray(array $entries): Linkus
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['title'])) {
+            $this->setTitle($entries['title']);
+        }
+        if (isset($entries['banner'])) {
+            $this->setBanner($entries['banner']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id of the linkus.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -46,9 +66,9 @@ class Linkus extends \Ilch\Model
      * @param int $id
      * @return this
      */
-    public function setId($id)
+    public function setId(int $id): Linkus
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -58,7 +78,7 @@ class Linkus extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -69,9 +89,9 @@ class Linkus extends \Ilch\Model
      * @param string $title
      * @return this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Linkus
     {
-        $this->title = (string)$title;
+        $this->title = $title;
 
         return $this;
     }
@@ -81,7 +101,7 @@ class Linkus extends \Ilch\Model
      *
      * @return string
      */
-    public function getBanner()
+    public function getBanner(): string
     {
         return $this->banner;
     }
@@ -92,10 +112,28 @@ class Linkus extends \Ilch\Model
      * @param string $banner
      * @return this
      */
-    public function setBanner($banner)
+    public function setBanner(string $banner): Linkus
     {
-        $this->banner = (string)$banner;
+        $this->banner = $banner;
 
         return $this;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     * @since 1.7.3
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'title' => $this->getTitle(),
+                'banner' => $this->getBanner()
+            ]
+        );
     }
 }
