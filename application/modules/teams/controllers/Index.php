@@ -7,18 +7,18 @@
 
 namespace Modules\Teams\Controllers;
 
-use Modules\Teams\Mappers\Teams as TeamsMapper;
-use Modules\Teams\Mappers\Joins as JoinsMapper;
-use Modules\Teams\Models\Joins as JoinsModel;
-use Modules\User\Mappers\User as UserMapper;
-use Modules\User\Mappers\Group as GroupMapper;
+use Ilch\Validation;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
+use Modules\Admin\Models\Notification as NotificationModel;
+use Modules\Teams\Mappers\Joins as JoinsMapper;
+use Modules\Teams\Mappers\Teams as TeamsMapper;
+use Modules\Teams\Models\Joins as JoinsModel;
+use Modules\User\Mappers\Group as GroupMapper;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
-use Modules\Admin\Mappers\Notifications as NotificationsMapper;
-use Modules\Admin\Models\Notification as NotificationModel;
-use Ilch\Validation;
+use Modules\User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -229,10 +229,10 @@ class Index extends \Ilch\Controller\Frontend
             ->set('teams', $teamsMapper->getTeams());
         if ($captchaNeeded) {
             if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
-                $googlecaptcha = new \Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
+                $googlecaptcha = new \Ilch\Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
                 $this->getView()->set('googlecaptcha', $googlecaptcha);
             } else {
-                $defaultcaptcha = new \Captcha\DefaultCaptcha();
+                $defaultcaptcha = new \Ilch\Captcha\DefaultCaptcha();
                 $this->getView()->set('defaultcaptcha', $defaultcaptcha);
             }
         }

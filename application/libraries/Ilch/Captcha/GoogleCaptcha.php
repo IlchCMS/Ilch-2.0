@@ -5,7 +5,7 @@
  * @since 2.1.43
  */
 
-namespace Captcha;
+namespace Ilch\Captcha;
 
 // Get your Keys from https://www.google.com/recaptcha/admin/create
 

@@ -6,18 +6,18 @@
 
 namespace Modules\User\Controllers;
 
+use Ilch\Validation;
+use Modules\Admin\Mappers\Emails as EmailsMapper;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
+use Modules\Admin\Models\Notification as NotificationModel;
+use Modules\User\Mappers\Group as GroupMapper;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
 use Modules\User\Mappers\User as UserMapper;
-use Modules\User\Mappers\Group as GroupMapper;
 use Modules\User\Models\ProfileFieldContent as ProfileFieldContentModel;
 use Modules\User\Models\User as UserModel;
 use Modules\User\Service\Password as PasswordService;
-use Modules\Admin\Mappers\Emails as EmailsMapper;
-use Modules\Admin\Mappers\Notifications as NotificationsMapper;
-use Modules\Admin\Models\Notification as NotificationModel;
-use Ilch\Validation;
 
 class Regist extends \Ilch\Controller\Frontend
 {
@@ -223,10 +223,10 @@ class Regist extends \Ilch\Controller\Frontend
 
         if ($captchaNeeded) {
             if (\in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
-                $googlecaptcha = new \Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
+                $googlecaptcha = new \Ilch\Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
                 $this->getView()->set('googlecaptcha', $googlecaptcha);
             } else {
-                $defaultcaptcha = new \Captcha\DefaultCaptcha();
+                $defaultcaptcha = new \Ilch\Captcha\DefaultCaptcha();
                 $this->getView()->set('defaultcaptcha', $defaultcaptcha);
             }
         }

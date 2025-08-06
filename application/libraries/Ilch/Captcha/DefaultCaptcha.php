@@ -5,7 +5,7 @@
  * @since 2.1.43
  */
 
-namespace Captcha;
+namespace Ilch\Captcha;
 
 use Ilch\View;
 

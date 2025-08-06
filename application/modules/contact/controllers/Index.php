@@ -6,8 +6,8 @@
 
 namespace Modules\Contact\Controllers;
 
-use Modules\Contact\Mappers\Receiver as ReceiverMapper;
 use Ilch\Validation;
+use Modules\Contact\Mappers\Receiver as ReceiverMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -102,10 +102,10 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('receivers', $receiverMapper->getReceivers());
         if ($captchaNeeded) {
             if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
-                $googlecaptcha = new \Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
+                $googlecaptcha = new \Ilch\Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
                 $this->getView()->set('googlecaptcha', $googlecaptcha);
             } else {
-                $defaultcaptcha = new \Captcha\DefaultCaptcha();
+                $defaultcaptcha = new \Ilch\Captcha\DefaultCaptcha();
                 $this->getView()->set('defaultcaptcha', $defaultcaptcha);
             }
         }

@@ -6,11 +6,11 @@
 
 namespace Modules\Partner\Controllers;
 
-use Modules\Partner\Mappers\Partner as PartnerMapper;
-use Modules\Partner\Models\Partner as PartnerModel;
+use Ilch\Validation;
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 use Modules\Admin\Models\Notification as NotificationModel;
-use Ilch\Validation;
+use Modules\Partner\Mappers\Partner as PartnerMapper;
+use Modules\Partner\Models\Partner as PartnerModel;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -74,10 +74,10 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($captchaNeeded) {
             if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
-                $googlecaptcha = new \Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
+                $googlecaptcha = new \Ilch\Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
                 $this->getView()->set('googlecaptcha', $googlecaptcha);
             } else {
-                $defaultcaptcha = new \Captcha\DefaultCaptcha();
+                $defaultcaptcha = new \Ilch\Captcha\DefaultCaptcha();
                 $this->getView()->set('defaultcaptcha', $defaultcaptcha);
             }
         }

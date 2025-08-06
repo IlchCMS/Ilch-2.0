@@ -7,11 +7,11 @@
 
 namespace Modules\Guestbook\Controllers;
 
-use Modules\Guestbook\Mappers\Guestbook as GuestbookMapper;
-use Modules\Guestbook\Models\Entry as GuestbookModel;
+use Ilch\Validation;
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 use Modules\Admin\Models\Notification as NotificationModel;
-use Ilch\Validation;
+use Modules\Guestbook\Mappers\Guestbook as GuestbookMapper;
+use Modules\Guestbook\Models\Entry as GuestbookModel;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -114,10 +114,10 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($captchaNeeded) {
             if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
-                $googlecaptcha = new \Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
+                $googlecaptcha = new \Ilch\Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
                 $this->getView()->set('googlecaptcha', $googlecaptcha);
             } else {
-                $defaultcaptcha = new \Captcha\DefaultCaptcha();
+                $defaultcaptcha = new \Ilch\Captcha\DefaultCaptcha();
                 $this->getView()->set('defaultcaptcha', $defaultcaptcha);
             }
         }

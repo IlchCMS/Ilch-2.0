@@ -30,8 +30,6 @@
         "psr-4": {
             "Ilch\\": "application/libraries/Ilch/",
             "Captcha\\": "application/libraries/Captcha/"
-
-
         },
         "files": [
             "application/libraries/Ilch/Functions.php"

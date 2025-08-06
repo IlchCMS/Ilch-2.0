@@ -6,7 +6,7 @@
 
 namespace Ilch\Validation\Validators;
 
-use Captcha\GoogleCaptcha;
+use Ilch\Captcha\GoogleCaptcha;
 use Ilch\Registry;
 
 /**

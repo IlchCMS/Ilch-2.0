@@ -5,7 +5,7 @@
 
 namespace Ilch\Validation\Validators;
 
-use Captcha\DefaultCaptcha;
+use Ilch\Captcha\DefaultCaptcha;
 
 /**
  * Captcha validation class.

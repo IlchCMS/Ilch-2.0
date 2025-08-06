@@ -7,10 +7,10 @@
 
 namespace Modules\Shoutbox\Boxes;
 
+use Ilch\Validation;
 use Modules\Shoutbox\Mappers\Shoutbox as ShoutboxMapper;
 use Modules\Shoutbox\Models\Shoutbox as ShoutboxModel;
 use Modules\User\Mappers\User as UserMapper;
-use Ilch\Validation;
 
 class Shoutbox extends \Ilch\Box
 {
@@ -79,10 +79,10 @@ class Shoutbox extends \Ilch\Box
         ]);
         if ($captchaNeeded) {
             if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
-                $googlecaptcha = new \Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
+                $googlecaptcha = new \Ilch\Captcha\GoogleCaptcha($this->getConfig()->get('captcha_apikey'), null, (int)$this->getConfig()->get('captcha'));
                 $this->getView()->set('googlecaptcha', $googlecaptcha);
             } else {
-                $defaultcaptcha = new \Captcha\DefaultCaptcha();
+                $defaultcaptcha = new \Ilch\Captcha\DefaultCaptcha();
                 $this->getView()->set('defaultcaptcha', $defaultcaptcha);
             }
         }

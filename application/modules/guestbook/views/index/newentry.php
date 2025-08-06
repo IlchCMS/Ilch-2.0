@@ -5,9 +5,9 @@
 /** @var \Ilch\Pagination $pagination */
 $pagination = $this->get('pagination');
 
-/** @var \Captcha\DefaultCaptcha $defaultcaptcha */
+/** @var \Ilch\Captcha\DefaultCaptcha $defaultcaptcha */
 $defaultcaptcha = $this->get('defaultcaptcha');
-/** @var \Captcha\GoogleCaptcha $googlecaptcha */
+/** @var \Ilch\Captcha\GoogleCaptcha $googlecaptcha */
 $googlecaptcha = $this->get('googlecaptcha');
 ?>
 <h1><?=$this->getTrans('menuGuestbook') ?></h1>

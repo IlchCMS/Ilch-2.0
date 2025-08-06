@@ -10,7 +10,7 @@
  *
  */
 
-namespace Captcha;
+namespace Ilch\Captcha;
 
 session_start();
 
