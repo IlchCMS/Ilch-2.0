@@ -28,8 +28,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Ilch\\": "application/libraries/Ilch/",
-            "Captcha\\": "application/libraries/Captcha/"
+            "Ilch\\": "application/libraries/Ilch/"
+
         },
         "files": [
             "application/libraries/Ilch/Functions.php"
