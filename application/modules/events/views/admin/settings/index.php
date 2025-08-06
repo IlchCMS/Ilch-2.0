@@ -166,7 +166,7 @@
     </div>
 
     <h1><?=$this->getTrans('menuGoogleMaps') ?></h1>
-    <div class="row mb-3">
+    <div class="row mb-3<?=$this->validation()->hasError('event_google_maps_api_key') ? ' has-error' : '' ?>">
         <label for="event_google_maps_api_key" class="col-xl-2 col-form-label">
             <?=$this->getTrans('googleMapsAPIKey') ?>:
             <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#googleMapsAPIInfoModal">

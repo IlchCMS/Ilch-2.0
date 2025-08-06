@@ -20,18 +20,19 @@ class Events extends \Ilch\Controller\Frontend
 
         $this->getLayout()->setFile('modules/calendar/layouts/events');
 
+        $eventList = [];
+
         $user = null;
         if ($this->getUser()) {
             $user = $userMapper->getUserById($this->getUser()->getId());
         }
-
         $readAccess = [3];
         if ($user) {
             foreach ($user->getGroups() as $us) {
                 $readAccess[] = $us->getId();
             }
         }
-        $eventList = [];
+
         $input = $this->getRequest()->getQuery();
         $validation = Validation::create(
             $input,

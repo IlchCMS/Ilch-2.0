@@ -108,7 +108,7 @@ class Currency extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'name' => 'required|unique:events_currencies,name,' . $this->getRequest()->getParam('id') . ',id'
+                'name' => 'required|unique:' . $currencyMapper->tablename . ',name,' . $this->getRequest()->getParam('id', 0) . ',id'
             ]);
 
             if ($validation->isValid()) {
@@ -131,7 +131,7 @@ class Currency extends \Ilch\Controller\Admin
 
     public function deleteAction()
     {
-        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id')) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $eventMapper = new EventMapper();
             $currencyMapper = new CurrencyMapper();
 

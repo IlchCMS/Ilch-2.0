@@ -77,7 +77,7 @@ $event = $this->get('event');
                 </select>
             </div>
         </div>
-        <?php 
+        <?php
             $startDate = new \Ilch\Date($this->originalInput('start', $event->getStart()));
             $endDate = new \Ilch\Date($this->originalInput('end', $event->getEnd()));
         ?>
@@ -127,7 +127,7 @@ $event = $this->get('event');
                        class="form-control"
                        id="title"
                        name="title"
-                       value="<?=$this->escape($this->originalInput('title', $event->getTitle())) ?>" />
+                       value="<?=$this->originalInput('title', $event->getTitle(), true) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
@@ -139,7 +139,7 @@ $event = $this->get('event');
                        class="form-control"
                        id="place"
                        name="place"
-                       value="<?=$this->escape($this->originalInput('place', $event->getPlace())) ?>" />
+                       value="<?=$this->originalInput('place', $event->getPlace(), true) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('type') ? ' has-error' : '' ?>">
@@ -163,7 +163,7 @@ $event = $this->get('event');
                        id="type"
                        name="type"
                        placeholder="<?=$this->getTrans('typePlaceholder') ?>"
-                       value="<?=$this->escape($this->originalInput('type', $event->getType())) ?>" />
+                       value="<?=$this->originalInput('type', $event->getType(), true) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('website') ? ' has-error' : '' ?>">
@@ -176,7 +176,7 @@ $event = $this->get('event');
                        id="website"
                        name="website"
                        placeholder="https://"
-                       value="<?=$this->escape($this->originalInput('website', $event->getWebsite())) ?>" />
+                       value="<?=$this->originalInput('website', $event->getWebsite(), true) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
@@ -188,7 +188,7 @@ $event = $this->get('event');
                           id="ck_1"
                           name="text"
                           toolbar="ilch_html_frontend"
-                          rows="5"><?=$this->escape($this->originalInput('text', $event->getText())) ?></textarea>
+                          rows="5"><?=$this->originalInput('text', $event->getText(), true) ?></textarea>
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('price') ? ' has-error' : '' ?>">
@@ -203,7 +203,7 @@ $event = $this->get('event');
                 <select class="form-select" id="priceArt" name="priceArt">
                     <option <?=($this->originalInput('priceArt', $event->getPriceArt()) == 0) ? 'selected="selected"' : '' ?> value="0"><?=$this->getTrans('select') ?></option>
                     <option <?=($this->originalInput('priceArt', $event->getPriceArt()) == 1) ? 'selected="selected"' : '' ?> value="1"><?=$this->getTrans('ticket') ?></option>
-c                </select>
+                </select>
             </div>
             <div class="col-xl-4">
                 <input type="number"
@@ -237,7 +237,7 @@ c                </select>
                        value="<?=$this->originalInput('userLimit', $event->getUserLimit()) ?>" />
             </div>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-3<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
             <label for="access" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('visibleFor') ?>
             </label>
@@ -252,7 +252,7 @@ c                </select>
             </div>
         </div>
         <?php if ($this->get('calendarShow') == 1) : ?>
-            <div class="row mb-3">
+            <div class="row mb-3<?=$this->validation()->hasError('calendarShow') ? ' has-error' : '' ?>">
                 <div class="offset-xl-2 col-xl-10">
                     <input type="checkbox"
                            id="calendarShow"

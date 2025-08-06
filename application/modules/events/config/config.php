@@ -73,20 +73,20 @@ class Config extends \Ilch\Config\Install
         $this->db()->drop('events_currencies', true);
 
         $databaseConfig = new IlchDatabase($this->db());
-        $databaseConfig->delete('event_add_entries_accesses');
-        $databaseConfig->delete('event_show_members_accesses');
-        $databaseConfig->delete('event_box_event_limit');
-        $databaseConfig->delete('event_upcoming_event_limit');
-        $databaseConfig->delete('event_current_event_limit');
-        $databaseConfig->delete('event_past_event_limit');
-        $databaseConfig->delete('event_uploadpath');
-        $databaseConfig->delete('event_height');
-        $databaseConfig->delete('event_width');
-        $databaseConfig->delete('event_size');
-        $databaseConfig->delete('event_filetypes');
-        $databaseConfig->delete('event_google_maps_api_key');
-        $databaseConfig->delete('event_google_maps_map_typ');
-        $databaseConfig->delete('event_google_maps_zoom');
+        $databaseConfig->delete('event_add_entries_accesses')
+            ->delete('event_show_members_accesses')
+            ->delete('event_box_event_limit')
+            ->delete('event_upcoming_event_limit')
+            ->delete('event_current_event_limit')
+            ->delete('event_past_event_limit')
+            ->delete('event_uploadpath')
+            ->delete('event_height')
+            ->delete('event_width')
+            ->delete('event_size')
+            ->delete('event_filetypes')
+            ->delete('event_google_maps_api_key')
+            ->delete('event_google_maps_map_typ')
+            ->delete('event_google_maps_zoom');
 
         $this->db()->queryMulti("
             DELETE FROM `[prefix]_comments` WHERE `key` LIKE 'events/%';");

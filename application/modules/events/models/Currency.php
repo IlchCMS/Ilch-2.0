@@ -14,7 +14,7 @@ class Currency extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The name of the currency.
@@ -24,11 +24,28 @@ class Currency extends \Ilch\Model
     protected $name = '';
 
     /**
+     * @param array $entries
+     * @return $this
+     * @since 1.23.6
+     */
+    public function setByArray(array $entries): Currency
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['name'])) {
+            $this->setName($entries['name']);
+        }
+
+        return $this;
+    }
+
+    /**
      * Gets the id of the currency.
      *
-     * @return int|null
+     * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -69,5 +86,20 @@ class Currency extends \Ilch\Model
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.23.6
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'name'    => $this->getName(),
+            ]
+        );
     }
 }

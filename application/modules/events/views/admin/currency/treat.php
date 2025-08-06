@@ -15,7 +15,7 @@ $currency = $this->get('currency');
                    id="name"
                    name="name"
                    placeholder="<?=$this->getTrans('name') ?>"
-                   value="<?=$this->escape($this->originalInput('name', $currency->getName())) ?>" />
+                   value="<?=$this->originalInput('name', $currency->getName(), true) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar() ?>

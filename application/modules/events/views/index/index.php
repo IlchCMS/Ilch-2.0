@@ -58,9 +58,9 @@ $entrantsMapper = $this->get('entrantsMapper');
                                     <ul>
                                         <?php if ($event->getUserLimit() > 0) : ?>
                                             <li class="col-3"><?=$this->getTrans('guest') ?></li>
-                                            <li class="col-3""><?=$agree ?> <i class="fa-solid fa-check"></i></li>
-                                            <li class="col-3""><?=$maybe ?> <i class="fa-solid fa-question"></i></li>
-                                            <li class="col-3""><?=$event->getUserLimit() ?> <i class="fa-solid fa-users"></i></li>
+                                            <li class="col-3"><?=$agree ?> <i class="fa-solid fa-check"></i></li>
+                                            <li class="col-3"><?=$maybe ?> <i class="fa-solid fa-question"></i></li>
+                                            <li class="col-3"><?=$event->getUserLimit() ?> <i class="fa-solid fa-users"></i></li>
                                         <?php else : ?>
                                             <li class="col-4"><?=$this->getTrans('guest') ?></li>
                                             <li class="col-4"><?=$agree ?> <i class="fa-solid fa-check"></i></li>

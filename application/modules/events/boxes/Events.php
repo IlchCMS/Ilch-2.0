@@ -17,6 +17,7 @@ class Events extends \Ilch\Box
         $eventMapper = new EventMapper();
         $userMapper = new UserMapper();
 
+        /** @var \Ilch\Config\Database $config */
         $config = \Ilch\Registry::get('config');
 
         $user = null;

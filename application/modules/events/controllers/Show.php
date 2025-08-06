@@ -265,7 +265,7 @@ class Show extends \Ilch\Controller\Frontend
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id')) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $commentMapper = new CommentMapper();
 
             $commentMapper->delete($this->getRequest()->getParam('id'));
