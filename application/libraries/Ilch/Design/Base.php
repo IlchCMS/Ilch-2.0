@@ -598,7 +598,7 @@ abstract class Base
      */
     public function getCaptchaField(): string
     {
-        return '<img src="' . $this->getUrl() . '/application/libraries/Captcha/Captcha.php" id="captcha" />';
+        return '<img src="' . $this->getUrl() . '/application/libraries/Ilch/Captcha/Captcha.php" id="captcha" />';
     }
 
     /**

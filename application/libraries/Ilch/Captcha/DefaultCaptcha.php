@@ -77,7 +77,7 @@ class DefaultCaptcha
                        placeholder="' . $view->getTrans('captcha') . '" />
                 <span class="input-group-text">
                     <a href="javascript:void(0)" onclick="
-                        document.getElementById(\'captcha\').src=\'' . $view->getUrl() . '/application/libraries/Captcha/Captcha.php?\'+Math.random();
+                        document.getElementById(\'captcha\').src=\'' . $view->getUrl() . '/application/libraries/Ilch/Captcha/Captcha.php?\'+Math.random();
                         document.getElementById(\'captcha-form\').focus();"
                         id="change-image">
                         <i class="fa-solid fa-arrows-rotate"></i>
