@@ -72,10 +72,10 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuLinkus'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuLinkus'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-           $model = $linkusMapper->getLinkusById($this->getRequest()->getParam('id'));
+            $model = $linkusMapper->getLinkusById($this->getRequest()->getParam('id'));
 
             if (!$model) {
                 $this->redirect()

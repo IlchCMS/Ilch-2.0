@@ -43,7 +43,7 @@ class Linkus extends \Ilch\Mapper
         $select = $this->db()->select('*')
             ->from($this->tablename)
             ->where($where)
-            ->order($orderBy);;
+            ->order($orderBy);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
