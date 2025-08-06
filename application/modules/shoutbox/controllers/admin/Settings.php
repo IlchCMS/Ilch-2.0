@@ -52,7 +52,9 @@ class Settings extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'limit'         => 'required|min:1',
-                'maxtextlength' => 'required|min:20'
+                'maxtextlength' => 'required|min:20',
+
+                //'writeAccess' => '',
             ]);
 
             if ($validation->isValid()) {
