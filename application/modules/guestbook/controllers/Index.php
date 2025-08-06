@@ -26,7 +26,7 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index']);
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('gbook_entriesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('gbook_entriesPerPage'));
-        $pagination->setPage($this->getRequest()->getParam('page'));
+        $pagination->setPage($this->getRequest()->getParam('page', 1));
 
         $this->getView()->set('entries', $guestbookMapper->getEntries(['setfree' => 1], $pagination));
         $this->getView()->set('pagination', $pagination);
@@ -71,10 +71,10 @@ class Index extends \Ilch\Controller\Frontend
 
             if ($validation->isValid()) {
                 $model = new GuestbookModel();
-                $model->setName($this->getRequest()->getPost('name'))
-                    ->setEmail($this->getRequest()->getPost('email'))
-                    ->setText($this->getRequest()->getPost('text'))
-                    ->setHomepage($this->getRequest()->getPost('homepage'))
+                $model->setName($this->getRequest()->getPost('name', '', true))
+                    ->setEmail($this->getRequest()->getPost('email', '', true))
+                    ->setText($this->getRequest()->getPost('text', '', true))
+                    ->setHomepage($this->getRequest()->getPost('homepage', '', true))
                     ->setDatetime($ilchDate->toDb())
                     ->setFree($this->getConfig()->get('gbook_autosetfree'));
                 $guestbookMapper->save($model);

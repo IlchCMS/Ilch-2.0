@@ -54,7 +54,7 @@ class Index extends \Ilch\Controller\Admin
         $pagination = new \Ilch\Pagination();
 
         $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
-        $pagination->setPage($this->getRequest()->getParam('page'));
+        $pagination->setPage($this->getRequest()->getParam('page', 1));
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])
@@ -98,7 +98,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id')) && is_numeric($this->getRequest()->getParam('id'))) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $guestbookMapper = new GuestbookMapper();
 
             $guestbookMapper->delete($this->getRequest()->getParam('id'));
@@ -114,7 +114,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function setfreeAction()
     {
-        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id')) && is_numeric($this->getRequest()->getParam('id'))) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $guestbookMapper = new GuestbookMapper();
 
             $guestbookMapper->updateSetfree($this->getRequest()->getParam('id'));

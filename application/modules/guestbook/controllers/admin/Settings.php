@@ -44,7 +44,9 @@ class Settings extends \Ilch\Controller\Admin
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'entrySettings' => 'required|numeric|integer|min:0|max:1',
                 'notificationOnNewEntry' => 'required|numeric|integer|min:0|max:1',
-                'entriesPerPage' => 'numeric|integer|min:1'
+                'entriesPerPage' => 'numeric|integer|min:1',
+
+                //'welcomeMessage' => '',
             ]);
 
             if ($validation->isValid()) {
@@ -53,14 +55,15 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('gbook_entriesPerPage', $this->getRequest()->getPost('entriesPerPage'));
                 $this->getConfig()->set('gbook_welcomeMessage', $this->getRequest()->getPost('welcomeMessage'));
 
-                $this->addMessage('saveSuccess');
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
                 $this->redirect()
-                  ->withInput()
-                  ->withErrors($validation->getErrorBag())
-                  ->to(['action' => 'index']);
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
         $this->getView()->set('setfree', $this->getConfig()->get('gbook_autosetfree'));

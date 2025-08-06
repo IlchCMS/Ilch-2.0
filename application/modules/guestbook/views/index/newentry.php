@@ -36,7 +36,7 @@ $googlecaptcha = $this->get('googlecaptcha');
                    name="name"
                    id="name"
                    placeholder="<?=$this->getTrans('name') ?>"
-                   value="<?=$this->escape($this->originalInput('name')) ?>" />
+                   value="<?=$this->originalInput('name', '', true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?= $this->validation()->hasError('email') ? ' has-error' : '' ?>">
@@ -49,7 +49,7 @@ $googlecaptcha = $this->get('googlecaptcha');
                    name="email"
                    id="email"
                    placeholder="<?=$this->getTrans('emailVisibleForAdmins') ?>"
-                   value="<?=$this->escape($this->originalInput('email')) ?>" />
+                   value="<?=$this->originalInput('email', '', true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?= $this->validation()->hasError('homepage') ? ' has-error' : '' ?>">
@@ -62,7 +62,7 @@ $googlecaptcha = $this->get('googlecaptcha');
                   name="homepage"
                   id="homepage"
                   placeholder="<?=$this->getTrans('page') ?>"
-                  value="<?=$this->escape($this->originalInput('homepage')) ?>" />
+                  value="<?=$this->originalInput('homepage', '', true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?= $this->validation()->hasError('text') ? ' has-error' : '' ?>">
@@ -74,7 +74,7 @@ $googlecaptcha = $this->get('googlecaptcha');
                       id="ck_1"
                       name="text"
                       id="text"
-                      toolbar="ilch_html_frontend"><?=$this->escape($this->originalInput('text')) ?></textarea>
+                      toolbar="ilch_html_frontend"><?=$this->originalInput('text', '', true) ?></textarea>
         </div>
     </div>
     <?php if ($this->get('captchaNeeded') && $defaultcaptcha) : ?>
