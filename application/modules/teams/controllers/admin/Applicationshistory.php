@@ -101,7 +101,7 @@ class Applicationshistory extends \Ilch\Controller\Admin
         $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
         $pagination->setPage($this->getRequest()->getParam('page', 1));
 
-        $joins = $joinsMapper->getApplicationHistoryByUserId($this->getRequest()->getParam('userId'. 1), $pagination);
+        $joins = $joinsMapper->getApplicationHistoryByUserId($this->getRequest()->getParam('userId', 1), $pagination);
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuTeams'), ['controller' => 'index', 'action' => 'index'])
