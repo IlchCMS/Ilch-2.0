@@ -28,7 +28,7 @@ $users = $this->get('users');
                    class="form-control"
                    name="date"
                    id="date"
-                   value="<?=$this->escape($this->originalInput('date', ($award->getId() ? (new \Ilch\Date($award->getDate()))->format('d.m.Y') : (new \Ilch\Date())->format('d.m.Y')))) ?>"
+                   value="<?=$this->originalInput('date', ($award->getId() ? (new \Ilch\Date($award->getDate()))->format('d.m.Y') : (new \Ilch\Date())->format('d.m.Y')), true) ?>"
                    readonly>
             <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
@@ -46,7 +46,7 @@ $users = $this->get('users');
                    name="rank"
                    min="1"
                    placeholder="1"
-                   value="<?=$this->escape($this->originalInput('rank', $award->getRank())) ?>" />
+                   value="<?=$this->originalInput('rank', $award->getRank(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('image') ? ' has-error' : '' ?>">
@@ -60,7 +60,7 @@ $users = $this->get('users');
                        id="selectedImage"
                        name="image"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
-                       value="<?=$this->escape($this->originalInput('image', $award->getImage())) ?>" />
+                       value="<?=$this->originalInput('image', $award->getImage(), true) ?>" />
                 <span class="input-group-text">
                     <span id="clearImage" class="fa-solid fa-xmark"></span>
                 </span>
@@ -126,7 +126,7 @@ $users = $this->get('users');
                    class="form-control"
                    id="event"
                    name="event"
-                   value="<?=$this->escape($this->originalInput('event', $award->getEvent())) ?>" />
+                   value="<?=$this->originalInput('event', $award->getEvent(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('page') ? ' has-error' : '' ?>">
@@ -139,7 +139,7 @@ $users = $this->get('users');
                    name="page"
                    id="page"
                    placeholder="https://"
-                   value="<?=$this->escape($this->originalInput('page', $award->getURL())) ?>" />
+                   value="<?=$this->originalInput('page', $award->getURL(), true) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar($award->getId() ? 'updateButton' : 'addButton') ?>

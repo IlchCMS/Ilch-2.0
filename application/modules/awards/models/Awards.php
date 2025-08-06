@@ -55,7 +55,7 @@ class Awards extends \Ilch\Model
     protected $url = '';
 
     /**
-     * @var array
+     * @var Recipient[]
      */
     protected $recipients = [];
 
@@ -93,7 +93,7 @@ class Awards extends \Ilch\Model
      *
      * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -229,7 +229,7 @@ class Awards extends \Ilch\Model
     /**
      * Get the recipients of this award.
      *
-     * @return array
+     * @return Recipient[]
      */
     public function getRecipients(): array
     {
@@ -239,7 +239,7 @@ class Awards extends \Ilch\Model
     /**
      * Sets the recipients of this award.
      *
-     * @param array $recipients
+     * @param Recipient[] $recipients
      * @return $this
      */
     public function setRecipients(array $recipients): Awards
@@ -250,21 +250,29 @@ class Awards extends \Ilch\Model
     }
 
     /**
+     * Sets the recipients of this award.
+     *
+     * @param Recipient $recipients
+     * @return $this
+     */
+    public function addRecipient(Recipient $recipient): Awards
+    {
+        $this->recipients[] = $recipient;
+
+        return $this;
+    }
+
+    /**
      * @param bool $withId
      * @return array
      * @since 1.12.2
      */
-    public function getArray(bool $withId = true): array
+    public function getArray(): array
     {
-        return array_merge(
-            ($withId ? ['id' => $this->getId()] : []),
-            [
-                'date' =>   $this->getDate(),
-                'rank' =>   $this->getRank(),
-                'image' =>  $this->getImage(),
-                'event' =>  $this->getEvent(),
-                'url' =>    $this->getURL()
-            ]
-        );
+        return [
+            'award_id' =>   $this->getId(),
+            'ut_id' =>   $this->getUtId(),
+            'typ' =>  $this->getTyp(),
+        ];
     }
 }

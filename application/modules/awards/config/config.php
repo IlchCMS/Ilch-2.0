@@ -26,7 +26,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can award users or teams an award.',
             ],
         ],
-        'ilchCore' => '2.2.0',
+        'ilchCore' => '2.2.13',
         'phpVersion' => '7.4'
     ];
 
@@ -40,8 +40,8 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE IF EXISTS `[prefix]_awards_recipients`;
-            DROP TABLE IF EXISTS `[prefix]_awards`;');
+        $this->db()->drop('awards_recipients', true);
+        $this->db()->drop('awards', true);
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->delete('awards_userNotification');
