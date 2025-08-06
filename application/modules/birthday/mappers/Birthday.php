@@ -13,7 +13,7 @@ use Modules\User\Models\User as UserModel;
 class Birthday extends \Ilch\Mapper
 {
     /**
-     * @return UserMapper[]
+     * @return UserModel[]
      */
     public function getBirthdayUserList($limit = null)
     {

@@ -18,7 +18,7 @@
                    id="numberOfBirthdaysShow"
                    name="numberOfBirthdaysShow"
                    min="1"
-                   value="<?=$this->get('numberOfBirthdaysShow') ?>">
+                   value="<?=$this->originalInput('visibleForGuest', $this->get('visibleForGuest')) ?>">
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('visibleForGuest') ? ' has-error' : '' ?>">
@@ -27,9 +27,9 @@
         </div>
         <div class="col-xl-2">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="visibleForGuest-on" name="visibleForGuest" value="1" <?=($this->get('visibleForGuest')) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="visibleForGuest-on" name="visibleForGuest" value="1" <?=$this->originalInput('visibleForGuest', $this->get('visibleForGuest')) === '1' ? 'checked="checked"' : '' ?> />
                 <label for="visibleForGuest-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="visibleForGuest-off" name="visibleForGuest" value="0" <?=(!$this->get('visibleForGuest')) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="visibleForGuest-off" name="visibleForGuest" value="0" <?=$this->originalInput('visibleForGuest', $this->get('visibleForGuest')) !== '1' ? 'checked="checked"' : '' ?> />
                 <label for="visibleForGuest-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>

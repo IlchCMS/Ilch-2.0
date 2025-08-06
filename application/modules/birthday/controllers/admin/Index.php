@@ -43,10 +43,17 @@ class Index extends \Ilch\Controller\Admin
             if ($validation->isValid()) {
                 $this->getConfig()->set('bday_boxShow', $this->getRequest()->getPost('numberOfBirthdaysShow'));
                 $this->getConfig()->set('bday_visibleForGuest', $this->getRequest()->getPost('visibleForGuest'));
-                $this->addMessage('saveSuccess');
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
+
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
         $this->getView()->set('numberOfBirthdaysShow', $this->getConfig()->get('bday_boxShow'));

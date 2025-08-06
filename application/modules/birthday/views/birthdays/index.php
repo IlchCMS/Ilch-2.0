@@ -2,6 +2,8 @@
 
 /** @var \Ilch\View $this */
 
+header('Content-Type: application/json');
+
 $events = [];
 
 // birthday entries
@@ -12,7 +14,7 @@ if ($this->get('birthdayList')) {
         if ($user->getBirthday() != '' && $user->getBirthday() != '0000-00-00') {
             $e = [];
             $e['title'] = $this->escape($user->getName());
-            $e['start'] = $year->format('Y').'-'.date('m-d', strtotime($user->getBirthday()));
+            $e['start'] = $year->format('Y') . '-' . date('m-d', strtotime($user->getBirthday()));
             $e['allDay'] = true;
             $e['color'] = '#257e4a';
             $e['url'] = $this->getUrl('user/profil/index/user/' . $user->getId());

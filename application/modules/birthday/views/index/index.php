@@ -13,7 +13,7 @@ $date = new \Ilch\Date();
 <link href="<?=$this->getModuleUrl('static/css/birthday.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuBirthdayList') ?></h1>
-<?php if ($birthdayListNOW != ''): ?>
+<?php if ($birthdayListNOW != '') : ?>
     <div class="card card-primary">
         <div class="card-header">
             <strong><?=$this->getTrans('birthdayToday') ?></strong>
@@ -21,7 +21,7 @@ $date = new \Ilch\Date();
                 <strong><?=date('d.m.Y', strtotime($date->format('Y-m-d'))) ?></strong>
             </span>
         </div>
-        <?php foreach ($birthdayListNOW as $user): ?>
+        <?php foreach ($birthdayListNOW as $user) : ?>
             <div class="card-body row">
                 <div class="col-xl-12">
                     <div class="row">
@@ -33,7 +33,7 @@ $date = new \Ilch\Date();
                         <div class="col-xl-10">
                             <a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>"><strong><?=$this->escape($user->getName()) ?></strong></a><br />
                             <?=$this->getTrans('will') ?> <?=floor(($date->format('Ymd') - str_replace("-", "", $this->escape($user->getBirthday()))) / 10000) ?> <?=$this->getTrans('yearsOld') ?><br />
-                            <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($user->getID())): ?>
+                            <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($user->getID())) : ?>
                                 <a href="<?=$this->getUrl('user/panel/dialognew/id/' . $user->getId()) ?>"><?=$this->getTrans('writeCongratulations') ?></a>
                             <?php endif; ?>
                         </div>
@@ -45,11 +45,11 @@ $date = new \Ilch\Date();
     <br />
 <?php endif; ?>
 
-<?php if ($birthdayList != ''): ?>
+<?php if ($birthdayList != '') : ?>
     <?php $monthsUserCount = 0; ?>
-    <?php for ($x = 1; $x < 13; $x++): ?>
-        <?php foreach ($birthdayList as $user): ?>
-            <?php if ($user->getBirthday() != '' && $this->escape(date('n', strtotime($user->getBirthday()))) == $x): ?>
+    <?php for ($x = 1; $x < 13; $x++) : ?>
+        <?php foreach ($birthdayList as $user) : ?>
+            <?php if ($user->getBirthday() != '' && $this->escape(date('n', strtotime($user->getBirthday()))) == $x) : ?>
                 <?php $monthsUserCount++; ?>
             <?php endif; ?>
         <?php endforeach; ?>
@@ -63,9 +63,9 @@ $date = new \Ilch\Date();
             </span>
             </div>
             <div class="card-body">
-                <?php if ($monthsUserCount != ''): ?>
-                    <?php foreach ($birthdayList as $user): ?>
-                        <?php if ($user->getBirthday() != '' && $this->escape(date('n', strtotime($user->getBirthday()))) == $x): ?>
+                <?php if ($monthsUserCount != '') : ?>
+                    <?php foreach ($birthdayList as $user) : ?>
+                        <?php if ($user->getBirthday() != '' && $this->escape(date('n', strtotime($user->getBirthday()))) == $x) : ?>
                             <div style="padding: 0 2px 2px 0; float: left;">
                                 <a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>">
                                     <img class="thumbnail" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($user->getAvatar()) ?>" title="<?=$this->escape($user->getName()) ?> (<?=date("d.m", strtotime($this->escape($user->getBirthday()))) ?>)" width="69" height="69">
@@ -73,7 +73,7 @@ $date = new \Ilch\Date();
                             </div>
                         <?php endif; ?>
                     <?php endforeach; ?>
-                <?php else: ?>
+                <?php else : ?>
                     <?=$this->getTrans('noBirthdayMonth') ?>
                 <?php endif; ?>
             </div>
