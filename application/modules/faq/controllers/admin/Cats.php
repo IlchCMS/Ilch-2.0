@@ -129,13 +129,12 @@ class Cats extends \Ilch\Controller\Admin
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-                $this->redirect()
-                    ->withInput($this->getRequest()->getPost())
-                    ->withErrors($validation->getErrorBag())
-                    ->to(array_merge(['action' => 'treat'], ($model->getId() ? ['id' => $model->getId()] : [])));
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput($this->getRequest()->getPost())
+                ->withErrors($validation->getErrorBag())
+                ->to(array_merge(['action' => 'treat'], ($model->getId() ? ['id' => $model->getId()] : [])));
         }
 
         if ($model->getId()) {
@@ -150,7 +149,7 @@ class Cats extends \Ilch\Controller\Admin
 
     public function delCatAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $faqMapper = new FaqMapper();
             $countFaqs = count($faqMapper->getFaqsByCatId($this->getRequest()->getParam('id')) ?? []);
 

@@ -25,7 +25,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'A FAQ module (frequently asked questions) with categories, options regarding the sorting and a search function.',
             ],
         ],
-        'ilchCore' => '2.2.0',
+        'ilchCore' => '2.2.13',
         'phpVersion' => '7.4'
     ];
 

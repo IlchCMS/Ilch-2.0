@@ -20,7 +20,7 @@ $cat = $this->get('cat');
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=$this->escape($this->originalInput('title', $cat->getTitle())) ?>" />
+                   value="<?=$this->originalInput('title', $cat->getTitle(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
@@ -30,7 +30,7 @@ $cat = $this->get('cat');
         <div class="col-xl-3">
             <select class="choices-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <option value="all" <?=in_array('all', $this->originalInput('groups', $this->get('groups'))) ? 'selected="selected"' : '' ?>><?=$this->getTrans('groupAll') ?></option>
-                <?php 
+                <?php
                 /** @var Modules\User\Models\Group $groupList */
                 foreach ($this->get('userGroupList') as $groupList) : ?>
                     <?php if ($groupList->getId() != 1) : ?>
