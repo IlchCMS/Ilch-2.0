@@ -68,7 +68,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function deleteAction()
     {
-        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
+        if ($this->getRequest()->isSecure()) {
             $shoutboxMapper = new ShoutboxMapper();
             $shoutboxMapper->delete($this->getRequest()->getParam('id'));
 

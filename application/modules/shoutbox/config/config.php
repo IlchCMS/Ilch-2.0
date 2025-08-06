@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'shoutbox',
-        'version' => '1.6.3',
+        'version' => '1.6.2',
         'icon_small' => 'fa-solid fa-bullhorn',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -35,8 +35,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.2.13',
-        'phpVersion' => '7.4'
+        'ilchCore' => '2.2.0',
+        'phpVersion' => '7.3'
     ];
 
     public function install()
@@ -100,9 +100,6 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->delete('shoutbox_maxwordlength');
                 // no break
             case "1.5.1":
-            case "1.6.0":
-            case "1.6.1":
-            case "1.6.2":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

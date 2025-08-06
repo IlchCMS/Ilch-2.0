@@ -5,7 +5,6 @@
 
 $userMapper = new \Modules\User\Mappers\User();
 
-/** @var \Ilch\Config\Database $config */
 $config = \Ilch\Registry::get('config');
 ?>
 <style>
