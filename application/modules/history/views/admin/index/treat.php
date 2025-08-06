@@ -9,7 +9,7 @@ $history = $this->get('history');
 <link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
 <h1>
-    <?=($history->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
+    <?=$this->getTrans($history->getId() ? 'edit' : 'add') ?>
 </h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -41,7 +41,7 @@ $history = $this->get('history');
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=$this->originalInput('title', $history->getTitle()) ?>" />
+                   value="<?=$this->originalInput('title', $history->getTitle(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
@@ -84,13 +84,13 @@ $history = $this->get('history');
                    id="color"
                    name="color"
                    data-jscolor=""
-                   value="<?=$this->originalInput('color', $history->getColor()) ? : '#75ce66' ?>">
+                   value="<?=$this->originalInput('color', $history->getColor()) ?>">
             <span class="input-group-text">
                 <span class="fa-solid fa-undo" onclick="document.getElementById('color').jscolor.fromString('75ce66')"></span>
             </span>
         </div>
     </div>
-    <?=($history->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=$this->getSaveBar($history->getId() ? 'updateButton' : 'addButton') ?>
 </form>
 
 <div class="modal fade" id="symbolDialog" tabindex="-1" role="dialog" aria-labelledby="symbolDialogTitle" aria-hidden="true">
