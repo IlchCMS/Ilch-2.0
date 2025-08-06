@@ -11,6 +11,24 @@ namespace Modules\Away\Mappers;
 class Groups extends \Ilch\Mapper
 {
     /**
+     * @var string
+     * @since 1.8.1
+     */
+    public $tablename = 'away_groups';
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return boolean
+     * @throws \Ilch\Database\Exception
+     * @since 1.8.1
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
      * Get all groups that are subscribed to notifications.
      *
      * @return array|null
@@ -18,7 +36,7 @@ class Groups extends \Ilch\Mapper
     public function getGroups(): ?array
     {
         return $this->db()->select('*')
-            ->from('away_groups')
+            ->from($this->tablename)
             ->execute()
             ->fetchList();
     }
@@ -33,11 +51,11 @@ class Groups extends \Ilch\Mapper
     public function save(array $groups): int
     {
         $affectedRows = 0;
-        $this->db()->truncate('away_groups');
+        $this->db()->truncate($this->tablename);
         $chunks = array_chunk($groups, 25);
 
         foreach ($chunks as $chunk) {
-            $affectedRows += $this->db()->insert('away_groups')
+            $affectedRows += $this->db()->insert($this->tablename)
                 ->columns(['group_id'])
                 ->values($chunk)
                 ->execute();
@@ -61,12 +79,23 @@ class Groups extends \Ilch\Mapper
         $chunks = array_chunk($groupsToAdd, 25);
 
         foreach ($chunks as $chunk) {
-            $affectedRows += $this->db()->insert('away_groups')
+            $affectedRows += $this->db()->insert($this->tablename)
                 ->columns(['group_id'])
                 ->values($chunk)
                 ->execute();
         }
 
         return $affectedRows;
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.8.1
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
     }
 }

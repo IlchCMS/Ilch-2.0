@@ -7,6 +7,7 @@
 
 namespace Modules\Away\Controllers;
 
+use Ilch\Validation;
 use Modules\Away\Mappers\Away as AwayMapper;
 
 class Aways extends \Ilch\Controller\Frontend
@@ -17,6 +18,21 @@ class Aways extends \Ilch\Controller\Frontend
 
         $this->getLayout()->setFile('modules/calendar/layouts/events');
 
-        $this->getView()->set('awayList', $awayMapper->getEntriesForJson($this->getRequest()->getQuery('start'), $this->getRequest()->getQuery('end')));
+        $awayList = [];
+
+        $input = $this->getRequest()->getQuery();
+        $validation = Validation::create(
+            $input,
+            [
+                'start' => 'required|date:Y-m-d\TH\\:i\\:sP',
+                'end'   => 'required|date:Y-m-d\TH\\:i\\:sP',
+            ]
+        );
+
+        if ($validation->isValid()) {
+            $awayList = $awayMapper->getEntriesForJson($input['start'], $input['end']);
+        }
+
+        $this->getView()->set('awayList', $awayList);
     }
 }

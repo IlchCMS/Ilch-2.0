@@ -27,10 +27,15 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuAway'), ['action' => 'index']);
 
-        $currentlyEditingAway = null;
-        $awayId = $this->getRequest()->getParam('id');
-        if ($awayId && is_numeric($awayId)) {
-            $currentlyEditingAway = $awayMapper->getAwayById($awayId);
+        $awayModel = new AwayModel();
+        if ($this->getRequest()->getParam('id')) {
+            $awayModel = $awayMapper->getAwayById($this->getRequest()->getParam('id'));
+
+            if (!$awayModel) {
+                $this->redirect()
+                    ->withMessage('awardNotFound', 'danger')
+                    ->to(['action' => 'index']);
+            }
         }
 
         $userCache = [];
@@ -51,30 +56,17 @@ class Index extends \Ilch\Controller\Frontend
             ]);
 
             if ($validation->isValid()) {
-                $post = [
-                    'reason' => trim($this->getRequest()->getPost('reason')),
-                    'start' => new \Ilch\Date(trim($this->getRequest()->getPost('start'))),
-                    'end' => new \Ilch\Date(trim($this->getRequest()->getPost('end'))),
-                    'text' => trim($this->getRequest()->getPost('text')),
-                    'calendarShow' => trim($this->getRequest()->getPost('calendarShow'))
-                ];
-
-                $awayModel = new AwayModel();
-
-                if ($currentlyEditingAway) {
-                    $awayModel->setId($currentlyEditingAway->getId());
-                    $awayModel->setStatus($currentlyEditingAway->getStatus());
-                }
-                if ($currentlyEditingAway && $this->getUser() && ($currentlyEditingAway->getUserId() == $this->getUser()->getId())) {
+                if ($this->getRequest()->getParam('id') && $this->getUser() && ($awayModel->getUserId() == $this->getUser()->getId())) {
                     // Entry found and the current user is the autor. Set id to update an existing entry. Reset status to reported.
                     $awayModel->setStatus(2);
                 }
                 $awayModel->setUserId($this->getUser()->getId())
-                    ->setReason($post['reason'])
-                    ->setStart($post['start'])
-                    ->setEnd($post['end'])
-                    ->setText($post['text'])
-                    ->setShow((int)$post['calendarShow'] ?? 0);
+                    ->setReason($this->getRequest()->getPost('reason', '', true))
+                    ->setStart($this->getRequest()->getPost('start', '', true))
+                    ->setEnd($this->getRequest()->getPost('end', '', true))
+                    ->setText($this->getRequest()->getPost('text', '', true))
+                    ->setShow((int)$this->getRequest()->getPost('text', 0));
+
                 $awayMapper->save($awayModel);
 
                 // Notify administrators and users if enabled.
@@ -83,9 +75,9 @@ class Index extends \Ilch\Controller\Frontend
                     $adminNotificationsMapper = new AdminNotificationsMapper();
 
                     $notification->setModule('away');
-                    $notification->setMessage($currentlyEditingAway ? $this->getLayout()->getTrans('awayUserUpdatedEntryMessage') : $this->getLayout()->getTrans('awayAdminNewEntryMessage'));
+                    $notification->setMessage($this->getRequest()->getParam('id') ? $this->getLayout()->getTrans('awayUserUpdatedEntryMessage') : $this->getLayout()->getTrans('awayAdminNewEntryMessage'));
                     $notification->setURL($this->getLayout()->getUrl(['module' => 'away', 'controller' => 'index', 'action' => 'index'], 'admin'));
-                    $notification->setType($currentlyEditingAway ? 'awayUserUpdatedEntry' : 'awayAdminNewEntry');
+                    $notification->setType($this->getRequest()->getParam('id') ? 'awayUserUpdatedEntry' : 'awayAdminNewEntry');
                     $adminNotificationsMapper->addNotification($notification);
                 }
 
@@ -107,9 +99,9 @@ class Index extends \Ilch\Controller\Frontend
                         $notification = new UserNotificationModel();
                         $notification->setUserId($user->getId());
                         $notification->setModule('away');
-                        $notification->setMessage($currentlyEditingAway ? $this->getLayout()->getTrans('awayUserUpdatedEntryMessage') : $this->getLayout()->getTrans('awayNewEntryMessage'));
+                        $notification->setMessage($this->getRequest()->getParam('id') ? $this->getLayout()->getTrans('awayUserUpdatedEntryMessage') : $this->getLayout()->getTrans('awayNewEntryMessage'));
                         $notification->setURL($this->getLayout()->getUrl(['module' => 'away', 'controller' => 'index', 'action' => 'index']));
-                        $notification->setType($currentlyEditingAway ? 'awayUserUpdatedEntry' : 'awayNewEntry');
+                        $notification->setType($this->getRequest()->getParam('id') ? 'awayUserUpdatedEntry' : 'awayNewEntry');
                         $notifications[] = $notification;
                     }
 
@@ -124,7 +116,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(array_merge(['action' => 'index'], $awayId ? ['id' => $awayId] : []));
+                ->to(array_merge(['action' => 'index'], $this->getRequest()->getParam('id')  ? ['id' => $this->getRequest()->getParam('id') ] : []));
         }
 
         $aways = $awayMapper->getAway();
@@ -141,12 +133,12 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('userCache', $userCache);
         $this->getView()->set('aways', $aways);
-        $this->getView()->set('currentlyEditingAway', $currentlyEditingAway);
+        $this->getView()->set('currentlyEditingAway', $awayModel);
     }
 
     public function updateAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $awayMapper = new AwayMapper();
             $awayMapper->update($this->getRequest()->getParam('id'));
 
@@ -186,7 +178,7 @@ class Index extends \Ilch\Controller\Frontend
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $awayMapper = new AwayMapper();
             $awayMapper->delete($this->getRequest()->getParam('id'));
 

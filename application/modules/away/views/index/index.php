@@ -144,7 +144,7 @@ if ($this->getUser()) {
                        class="form-control"
                        id="reason"
                        name="reason"
-                       value="<?=$this->originalInput('reason', $currentlyEditingAway->getReason()) ?>" />
+                       value="<?=$this->originalInput('reason', $currentlyEditingAway->getReason(), true) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('when') ? ' has-error' : '' ?>">
@@ -157,7 +157,7 @@ if ($this->getUser()) {
                        id="start"
                        name="start"
                        size="16"
-                       value="<?=$this->escape($this->originalInput('start', ($currentlyEditingAway->getId() ? (new \Ilch\Date($currentlyEditingAway->getStart()))->format('d.m.Y') : ''))) ?>"
+                       value="<?=$this->originalInput('start', ($currentlyEditingAway->getId() ? (new \Ilch\Date($currentlyEditingAway->getStart()))->format('d.m.Y') : ''), true) ?>"
                        readonly>
                 <span class="input-group-text">
                     <span class="fa-solid fa-calendar"></span>
@@ -169,7 +169,7 @@ if ($this->getUser()) {
                        id="end"
                        name="end"
                        size="16"
-                       value="<?=$this->escape($this->originalInput('end', ($currentlyEditingAway->getId() ? (new \Ilch\Date($currentlyEditingAway->getEnd()))->format('d.m.Y') : ''))) ?>"
+                       value="<?=$this->originalInput('end', ($currentlyEditingAway->getId() ? (new \Ilch\Date($currentlyEditingAway->getEnd()))->format('d.m.Y') : ''), true) ?>"
                        readonly>
                 <span class="input-group-text">
                     <span class="fa-solid fa-calendar"></span>
@@ -184,7 +184,7 @@ if ($this->getUser()) {
                 <textarea class="form-control"
                           name="text"
                           id="text"
-                          rows="3"><?=$this->originalInput('text', $currentlyEditingAway->getText()) ?></textarea>
+                          rows="3"><?=$this->originalInput('text', $currentlyEditingAway->getText(), true) ?></textarea>
             </div>
         </div>
         <?php if ($this->get('calendarShow') == 1) : ?>
@@ -195,7 +195,7 @@ if ($this->getUser()) {
                            name="calendarShow"
                            value="1"
                            <?=$this->originalInput('calendarShow', $currentlyEditingAway->getShow()) ? 'checked' : '' ?> />
-                    <label for="calendarShow">s
+                    <label for="calendarShow">
                         <?=$this->getTrans('calendarShow') ?>
                     </label>
                 </div>

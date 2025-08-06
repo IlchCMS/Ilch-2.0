@@ -26,7 +26,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'User can enter when they are away (e.g. on holidays). There is an overview of this and the entries can be mananged in the admincenter.',
             ],
         ],
-        'ilchCore' => '2.2.7',
+        'ilchCore' => '2.2.13',
         'phpVersion' => '7.4'
     ];
 
@@ -55,8 +55,8 @@ class Config extends \Ilch\Config\Install
 
     public function getInstallSql(): string
     {
-        $installSql =
-            'CREATE TABLE IF NOT EXISTS `[prefix]_away` (
+        $installSql = '
+            CREATE TABLE IF NOT EXISTS `[prefix]_away` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
             `user_id` INT(11) NOT NULL,
             `reason` VARCHAR(100) NOT NULL,

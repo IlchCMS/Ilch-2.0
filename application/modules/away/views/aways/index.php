@@ -2,6 +2,8 @@
 
 /** @var \Ilch\View $this */
 
+header('Content-Type: application/json');
+
 $events = [];
 
 // away entries
