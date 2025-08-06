@@ -1,4 +1,5 @@
 <?php
+
 /** @var \Ilch\View $this */
 $userMapper = $this->get('userMapper');
 ?>
