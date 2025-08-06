@@ -1,4 +1,11 @@
-<h1><?=($this->get('partner') != '' ? $this->getTrans('edit') : $this->getTrans('add')) ?></h1>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Partner\Models\Partner $partner */
+$partner = $this->get('partner');
+?>
+<h1><?=$this->getTrans($partner->getId() ? 'edit' : 'add') ?></h1>
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
@@ -11,25 +18,25 @@
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getName()) : $this->escape($this->originalInput('name')) ?>" />
+                   value="<?=$this->originalInput('name', $partner->getName(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3">
         <label for="link" class="col-xl-2 col-form-label">
             <?=$this->getTrans('link') ?>:
         </label>
-        <div class="col-xl-3<?=$this->validation()->hasError('link') ? ' has-error' : '' ?>">
+        <div class="col-xl-3<?=$this->validation()->hasError('link') || $this->validation()->hasError('target') ? ' has-error' : '' ?>">
             <input type="text"
                    class="form-control"
                    id="link"
                    name="link"
                    placeholder="http://"
-                   value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getLink()) : $this->escape($this->originalInput('link')) ?>" />
+                   value="<?=$this->originalInput('link', $partner->getLink(), true) ?>" />
         </div>
         <div class="col-xl-3">
             <select class="form-select" id="target" name="target">
-                <option value="0"<?=($this->get('partner') != '' and $this->get('partner')->getTarget() == 0) ? ' selected="selected"' : '' ?>><?=$this->getTrans('targetBlank') ?></option>
-                <option value="1"<?=($this->get('partner') != '' and $this->get('partner')->getTarget() == 1) ? ' selected="selected"' : '' ?>><?=$this->getTrans('targetSelf') ?></option>
+                <option value="0"<?=$this->originalInput('target', $partner->getTarget()) == 0 ? ' selected="selected"' : '' ?>><?=$this->getTrans('targetBlank') ?></option>
+                <option value="1"<?=$this->originalInput('target', $partner->getTarget()) == 1 ? ' selected="selected"' : '' ?>><?=$this->getTrans('targetSelf') ?></option>
             </select>
         </div>
     </div>
@@ -44,12 +51,12 @@
                        id="selectedImage_1"
                        name="banner"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
-                       value="<?=($this->get('partner') != '') ? $this->escape($this->get('partner')->getBanner()) : $this->escape($this->originalInput('banner')) ?>" />
+                       value="<?=$this->originalInput('banner', $partner->getBanner(), true) ?>" />
                 <span class="input-group-text"><a id="media" href="javascript:media_1()"><i class="fa-regular fa-image"></i></a></span>
             </div>
         </div>
     </div>
-    <?=($this->get('partner') != '' ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton')) ?>
+    <?=$this->getSaveBar($partner->getId() ? 'updateButton' : 'addButton') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>

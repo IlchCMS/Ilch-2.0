@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('menuPartnerAdd') ?></h1>
 <form id="partnerForm" name="partnerForm" method="POST">
     <?=$this->getTokenField() ?>
@@ -22,7 +26,7 @@
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?=($this->originalInput('name') != '' ? $this->escape($this->originalInput('name')) : '') ?>" />
+                   value="<?=$this->originalInput('name', '', true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('link') ? ' has-error' : '' ?>">
@@ -35,7 +39,7 @@
                    id="link"
                    name="link"
                    placeholder="https://"
-                   value="<?=($this->originalInput('link') != '' ? $this->escape($this->originalInput('link')) : '') ?>" />
+                   value="<?=$this->originalInput('link', '', true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('banner') ? ' has-error' : '' ?>">
@@ -48,24 +52,24 @@
                    id="banner"
                    name="banner"
                    placeholder="https://"
-                   value="<?=($this->originalInput('banner') != '' ? $this->escape($this->originalInput('banner')) : '') ?>" />
+                   value="<?=$this->originalInput('banner', '', true) ?>" />
         </div>
     </div>
     <?php if ($this->get('captchaNeeded') && $this->get('defaultcaptcha')) : ?>
         <?=$this->get('defaultcaptcha')->getCaptcha($this) ?>
     <?php endif; ?>
-    <div class="row mb-3">
+    <div class="row mb-3<?=$this->validation()->hasError('captcha') || $this->validation()->hasError('token') ? ' has-error' : '' ?>">
         <div class="offset-xl-2 col-xl-8">
             <?php
-                if ($this->get('captchaNeeded')) {
-                    if ($this->get('googlecaptcha')) {
-                        echo $this->get('googlecaptcha')->setForm('partnerForm')->getCaptcha($this, 'addButton', 'Partner');
-                    } else {
-                        echo $this->getSaveBar('addButton', 'Partner');
-                    }
+            if ($this->get('captchaNeeded')) {
+                if ($this->get('googlecaptcha')) {
+                    echo $this->get('googlecaptcha')->setForm('partnerForm')->getCaptcha($this, 'addButton', 'Partner');
                 } else {
                     echo $this->getSaveBar('addButton', 'Partner');
                 }
+            } else {
+                echo $this->getSaveBar('addButton', 'Partner');
+            }
             ?>
         </div>
     </div>
