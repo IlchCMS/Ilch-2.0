@@ -127,7 +127,7 @@ class Index extends \Ilch\Controller\Admin
                 'paragraph' => 'required',
                 'title' => 'required',
                 'text' => 'required',
-                'cat' => 'required|integer|exists:' . $ruleMapper->tablename
+                'cat' => 'required|numeric|integer|exists:' . $ruleMapper->tablename
             ]);
 
             if ($validation->isValid()) {
@@ -171,7 +171,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $ruleMapper = new RuleMapper();
 
             if ($ruleMapper->getRulesItemsByParent($this->getRequest()->getParam('id'), null) == null) {
