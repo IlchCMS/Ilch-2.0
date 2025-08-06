@@ -27,13 +27,17 @@
         "symfony/yaml": "^5.4.39"
     },
     "autoload": {
-        "psr-0": {
-            "": "application/libraries/"
+        "psr-4": {
+            "Ilch\\": "application/libraries/Ilch/",
+            "Captcha\\": "application/libraries/Captcha/"
+
+
         },
         "files": [
             "application/libraries/Ilch/Functions.php"
         ]
     },
+
     "autoload-dev": {
         "psr-4": {
             "PHPUnit\\": "tests/PHPUnit"
