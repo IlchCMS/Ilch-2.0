@@ -76,7 +76,9 @@ if (empty($modulesOnUpdateServer)) {
 }
 
 // Sort the modules by name
-usort($modulesOnUpdateServer, 'custom_sort');
+$items = is_array($modulesOnUpdateServer) ? $modulesOnUpdateServer : (array) $modulesOnUpdateServer;
+usort($items, 'custom_sort');
+
 ?>
 
 <div id="modules" class="table-responsive">
