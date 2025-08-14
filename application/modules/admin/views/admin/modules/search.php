@@ -95,7 +95,7 @@ usort($items, 'custom_sort');
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($modulesOnUpdateServer as $moduleOnUpdateServer):  ?>
+            <?php foreach ($items as $moduleOnUpdateServer):  ?>
                 <?php
                 if (!empty($moduleOnUpdateServer->phpExtensions)) {
                     $extensionCheck = [];
