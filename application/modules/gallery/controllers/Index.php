@@ -55,7 +55,7 @@ class Index extends Frontend
         }
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('gallery_picturesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('gallery_picturesPerPage'));
-        $pagination->setPage($this->getRequest()->getParam('page'));
+        $pagination->setPage($this->getRequest()->getParam('page', 1));
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('gallery'))

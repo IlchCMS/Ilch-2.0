@@ -56,6 +56,10 @@ class Gallery extends Admin
         $id = $this->getRequest()->getParam('id');
         $galleryTitle = $galleryMapper->getGalleryById($id);
 
+        if (!$galleryTitle) {
+            $this->redirect(['action' => 'index']);
+        }
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('gallery'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans($galleryTitle->getTitle()), ['action' => 'treatgallery', 'id' => $id]);
@@ -78,7 +82,7 @@ class Gallery extends Admin
         }
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('gallery_picturesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('gallery_picturesPerPage'));
-        $pagination->setPage($this->getRequest()->getParam('page'));
+        $pagination->setPage($this->getRequest()->getParam('page', 1));
         $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
         $this->getView()->set('galleryTitle', $galleryTitle->getTitle());
@@ -88,9 +92,9 @@ class Gallery extends Admin
     {
         $imageMapper = new ImageMapper();
 
-        $id = $this->getRequest()->getParam('id');
+        $id = $this->getRequest()->getParam('id', 0);
 
-        if ($this->getRequest()->getPost()) {
+        if ($this->getRequest()->getPost() && !empty($id)) {
             $imageTitle = $this->getRequest()->getPost('imageTitle');
             $imageDesc = $this->getRequest()->getPost('imageDesc');
             $model = new \Modules\Gallery\Models\Image();
@@ -107,7 +111,7 @@ class Gallery extends Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $imageMapper = new ImageMapper();
 
             $id = $this->getRequest()->getParam('id');

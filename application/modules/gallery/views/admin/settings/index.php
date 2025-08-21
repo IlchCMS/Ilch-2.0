@@ -15,7 +15,7 @@
                    id="picturesPerPageInput"
                    name="picturesPerPage"
                    min="1"
-                   value="<?=$this->escape($this->originalInput('picturesPerPage', $this->get('picturesPerPage'))) ?>" />
+                   value="<?=$this->originalInput('picturesPerPage', $this->get('picturesPerPage'), true) ?>" />
         </div>
     </div>
     <h1><?=$this->getTrans('box') ?>: <?=$this->getTrans('pictureOfX') ?></h1>
@@ -29,7 +29,9 @@
                     name="pictureOfXSource[]"
                     data-placeholder="<?=$this->getTrans('selectGalleries') ?>"
                     multiple>
-                <?php foreach ($this->get('galleries') as $gallery) : ?>
+                <?php
+                /** @var \Modules\Gallery\Models\GalleryItem $gallery */
+                foreach ($this->get('galleries') as $gallery) : ?>
                     <option value="<?=$gallery->getId() ?>" <?=in_array($gallery->getId(), $this->originalInput('pictureOfXSource', $this->get('pictureOfXSource')) ?? []) ? 'selected="selected"' : '' ?>>
                         <?=$this->escape($gallery->getTitle()) ?>
                     </option>
@@ -143,7 +145,7 @@
                    id="venoboxBorder"
                    name="venoboxBorder"
                    pattern="[0-9]+px"
-                   value="<?=$this->escape($this->originalInput('venoboxBorder', $this->get('venoboxBorder'))) ?>" />
+                   value="<?=$this->originalInput('venoboxBorder', $this->get('venoboxBorder'), true) ?>" />
             <div class="form-text"> &nbsp; <?=$this->getTrans('venoboxExampleText') ?></div>
         </div>
     </div>

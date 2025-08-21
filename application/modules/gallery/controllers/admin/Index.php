@@ -53,6 +53,7 @@ class Index extends Admin
                     $validation = Validation::create($item, [
                         'type' => 'required|numeric|integer',
                         'title' => 'required',
+                        //'desc' => '',
                     ]);
                     if (!$validation->isValid()) {
                         $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);

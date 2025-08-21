@@ -2,23 +2,21 @@
 
 /** @var \Ilch\View $this */
 
-/** @var \Modules\Gallery\Mappers\Gallery $galleryMapper */
-$galleryMapper = $this->get('galleryMapper');
 /** @var \Modules\Gallery\Models\GalleryItem[]|null $galleryItems */
 $galleryItems = $this->get('galleryItems');
-/** @var \Modules\Gallery\Mappers\Image $imageMapper */
-$imageMapper = $this->get('imageMapper');
 $catTitle = '';
 $catID = $catTitle;
 
 /**
  * @param \Modules\Gallery\Models\GalleryItem $item
- * @param \Modules\Gallery\Mappers\Gallery $galleryMapper
  * @param \Ilch\View $obj
  * @return void
  */
-function recCategory(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers\Gallery $galleryMapper, \Ilch\View $obj)
+function recCategory(\Modules\Gallery\Models\GalleryItem $item, \Ilch\View $obj)
 {
+    /** @var \Modules\Gallery\Mappers\Gallery $galleryMapper */
+    $galleryMapper = $obj->get('galleryMapper');
+
     $subItems = $galleryMapper->getGalleryItemsByParent($item->getId());
 
     if ($item->getType() === 0) {
@@ -28,22 +26,25 @@ function recCategory(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery
     }
     if (!empty($subItems)) {
         foreach ($subItems as $subItem) {
-            recCategory($subItem, $galleryMapper, $obj);
+            recCategory($subItem, $obj);
         }
     }
 }
 
 /**
  * @param \Modules\Gallery\Models\GalleryItem $item
- * @param \Modules\Gallery\Mappers\Gallery $galleryMapper
  * @param \Ilch\View $obj
- * @param \Modules\Gallery\Mappers\Image $imageMapper
  * @param string $catID
  * @param string $catTitle
  * @return void
  */
-function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers\Gallery $galleryMapper, \Ilch\View $obj, \Modules\Gallery\Mappers\Image $imageMapper, string $catID, string $catTitle)
+function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Ilch\View $obj, string $catID, string $catTitle)
 {
+    /** @var \Modules\Gallery\Mappers\Gallery $galleryMapper */
+    $galleryMapper = $obj->get('galleryMapper');
+    /** @var \Modules\Gallery\Mappers\Image $imageMapper */
+    $imageMapper = $obj->get('imageMapper');
+
     $subItems = $galleryMapper->getGalleryItemsByParent($item->getId());
     if ($item->getType() === 0) {
         $catID = $obj->escape($item->getId());
@@ -84,7 +85,7 @@ function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\
     }
     if (!empty($subItems)) {
         foreach ($subItems as $subItem) {
-            recGallery($subItem, $galleryMapper, $obj, $imageMapper, $catID, $catTitle);
+            recGallery($subItem, $obj, $catID, $catTitle);
         }
     }
 }
@@ -106,7 +107,7 @@ function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\
             <li class="active"><a class="dropdown-item" href="#filter" data-filter="*"><i class="fa-solid fa-image" class="dropdown-item"></i> <?=$this->getTrans('allCat') ?></a></li>
             <?php if (!empty($galleryItems)) : ?>
                 <?php foreach ($galleryItems as $item) : ?>
-                    <?php recCategory($item, $galleryMapper, $this); ?>
+                    <?php recCategory($item, $this); ?>
                 <?php endforeach; ?>
             <?php endif; ?>
           </ul>
@@ -124,7 +125,7 @@ function recGallery(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\
     <ul class="media-list">
         <?php if (!empty($galleryItems)) : ?>
             <?php foreach ($galleryItems as $item) : ?>
-                <?php recGallery($item, $galleryMapper, $this, $imageMapper, $catID, $catTitle); ?>
+                <?php recGallery($item, $this, $catID, $catTitle); ?>
             <?php endforeach; ?>
         <?php endif; ?>
     </ul>

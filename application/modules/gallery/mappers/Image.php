@@ -18,113 +18,40 @@ use Modules\Gallery\Models\Image as ImageModel;
 class Image extends Mapper
 {
     /**
-     * @param int $id
-     * @return ImageModel|null
+     * @var string
+     * @since 1.23.4
      */
-    public function getImageById(int $id): ?ImageModel
+    public $tablename = 'gallery_imgs';
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return boolean
+     * @throws \Ilch\Database\Exception
+     * @since 1.23.4
+     */
+    public function checkDB(): bool
     {
-        $imageRow = $this->db()->select(['g.image_id', 'g.gallery_id', 'imgid' => 'g.id', 'g.visits', 'g.image_title', 'g.image_description', 'm.url', 'm.id', 'm.url_thumb'])
-            ->from(['g' => 'gallery_imgs'])
-            ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT')
-            ->where(['g.id' => $id])
-            ->execute()
-            ->fetchAssoc();
-
-        if (empty($imageRow)) {
-            return null;
-        }
-
-        $imageModel = new ImageModel();
-        $imageModel->setId($imageRow['imgid']);
-        $imageModel->setImageId($imageRow['image_id']);
-        $imageModel->setImageUrl((string)$imageRow['url']);
-        $imageModel->setImageThumb((string)$imageRow['url_thumb']);
-        $imageModel->setImageTitle($imageRow['image_title']);
-        $imageModel->setImageDesc($imageRow['image_description']);
-        $imageModel->setGalleryId($imageRow['gallery_id']);
-        $imageModel->setVisits($imageRow['visits']);
-
-        return $imageModel;
+        return $this->db()->ifTableExists($this->tablename);
     }
 
     /**
-     * Get last image by gallery id.
+     * Gets the Entries by params.
      *
-     * @param int $id
-     * @return ImageModel|null
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return ImageModel[]|null
+     * @since 1.23.4
      */
-    public function getLastImageByGalleryId(int $id): ?ImageModel
+    public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
     {
-        $imageRow = $this->db()->select(['g.image_id', 'g.gallery_id', 'g.visits', 'g.image_title', 'g.image_description', 'm.id', 'm.url_thumb'])
-            ->from(['g' => 'gallery_imgs'])
-            ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT')
-            ->where(['g.gallery_id' => $id])
-            ->order(['g.id' => 'DESC'])
-            ->limit(1)
-            ->execute()
-            ->fetchAssoc();
-
-        if (empty($imageRow)) {
-            return null;
-        }
-
-        $imageModel = new ImageModel();
-        $imageModel->setImageId($imageRow['image_id']);
-        $imageModel->setImageThumb((string)$imageRow['url_thumb']);
-        $imageModel->setImageTitle($imageRow['image_title']);
-        $imageModel->setImageDesc($imageRow['image_description']);
-        $imageModel->setVisits($imageRow['visits']);
-
-        return $imageModel;
-    }
-
-    /**
-     * Get count of images by id of category.
-     *
-     * @param int $id
-     * @return int
-     */
-    public function getCountImageById(int $id): int
-    {
-        return (int)$this->db()->select('COUNT(*)', 'gallery_imgs')
-            ->where(['gallery_id' => $id])
-            ->execute()
-            ->fetchCell();
-    }
-
-    /**
-     * Inserts or updates Image entry.
-     *
-     * @param ImageModel $model
-     */
-    public function save(ImageModel $model)
-    {
-        if ($model->getId()) {
-            $this->db()->update('gallery_imgs')
-                ->values(['image_id' => $model->getImageId(), 'gallery_id' => $model->getGalleryId()])
-                ->where(['id' => $model->getId()])
-                ->execute();
-        } else {
-            $this->db()->insert('gallery_imgs')
-                ->values(['image_id' => $model->getImageId(), 'gallery_id' => $model->getGalleryId()])
-                ->execute();
-        }
-    }
-
-    /**
-     * Get images by gallery id.
-     *
-     * @param int $id
-     * @param Pagination|null $pagination
-     * @return array
-     */
-    public function getImageByGalleryId(int $id, ?Pagination $pagination = null): array
-    {
-        $select = $this->db()->select(['g.image_id', 'g.gallery_id', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
-            ->from(['g' => 'gallery_imgs'])
-            ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT')
-            ->where(['g.gallery_id' => $id])
-            ->order(['g.id' => 'DESC']);
+        $select = $this->db()->select();
+        $select->fields(['g.image_id', 'g.gallery_id', 'imgid' => 'g.id', 'g.visits', 'g.image_title', 'g.image_description'])
+            ->from(['g' => $this->tablename])
+            ->join(['m' => 'media'], 'g.image_id = m.id', 'LEFT', ['m.url', 'm.id', 'm.url_thumb'])
+            ->where($where)
+            ->order($orderBy);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -135,22 +62,101 @@ class Image extends Mapper
             $result = $select->execute();
         }
 
-        $imageArray = $result->fetchRows();
-        $entry = [];
-
-        foreach ($imageArray as $entries) {
-            $entryModel = new ImageModel();
-            $entryModel->setImageUrl((string)$entries['url']);
-            $entryModel->setImageThumb((string)$entries['url_thumb']);
-            $entryModel->setId($entries['imgid']);
-            $entryModel->setImageTitle($entries['image_title']);
-            $entryModel->setImageDesc($entries['image_description']);
-            $entryModel->setVisits($entries['visits']);
-            $entryModel->setGalleryId($entries['gallery_id']);
-            $entry[] = $entryModel;
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
+            return null;
         }
+        $entrys = [];
 
-        return $entry;
+        foreach ($entryArray as $entries) {
+            $entryModel = new ImageModel();
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
+    /**
+     * @param int $id
+     * @return ImageModel|null
+     */
+    public function getImageById(int $id): ?ImageModel
+    {
+        $imageRow = $this->getEntriesBy(['g.id' => $id]);
+
+        if ($imageRow) {
+            return reset($imageRow);
+        }
+        return null;
+    }
+
+    /**
+     * Get last image by gallery id.
+     *
+     * @param int $id
+     * @return ImageModel|null
+     */
+    public function getLastImageByGalleryId(int $id): ?ImageModel
+    {
+        $imageRow = $this->getEntriesBy(['g.gallery_id' => $id], ['g.id' => 'DESC']);
+
+        if ($imageRow) {
+            return reset($imageRow);
+        }
+        return null;
+    }
+
+    /**
+     * Get count of images by id of category.
+     *
+     * @param int $id
+     * @return int
+     */
+    public function getCountImageById(int $id): int
+    {
+        return (int)$this->db()->select('COUNT(*)', $this->tablename)
+            ->where(['gallery_id' => $id])
+            ->execute()
+            ->fetchCell();
+    }
+
+    /**
+     * Inserts or updates Image entry.
+     *
+     * @param ImageModel $model
+     * @return int
+     */
+    public function save(ImageModel $model): int
+    {
+        if ($model->getId()) {
+            $this->db()->update($this->tablename)
+                ->values(['image_id' => $model->getImageId(), 'gallery_id' => $model->getGalleryId()])
+                ->where(['id' => $model->getId()])
+                ->execute();
+            return $model->getId();
+        } else {
+            return $this->db()->insert($this->tablename)
+                ->values(['image_id' => $model->getImageId(), 'gallery_id' => $model->getGalleryId()])
+                ->execute();
+        }
+    }
+
+    /**
+     * Get images by gallery id.
+     *
+     * @param int $id
+     * @param Pagination|null $pagination
+     * @return ImageModel[]
+     */
+    public function getImageByGalleryId(int $id, ?Pagination $pagination = null): array
+    {
+        $imageArray = $this->getEntriesBy(['g.gallery_id' => $id], ['g.id' => 'DESC'], $pagination);
+
+        if (!$imageArray) {
+            return [];
+        }
+        return $imageArray;
     }
 
     /**
@@ -162,7 +168,7 @@ class Image extends Mapper
     public function getListOfValidIds(array $where = []): array
     {
         return $this->db()->select('id')
-            ->from('gallery_imgs')
+            ->from($this->tablename)
             ->where($where, 'or')
             ->execute()
             ->fetchList();
@@ -172,11 +178,11 @@ class Image extends Mapper
      * Delete entries for images by id.
      *
      * @param int $id
-     * @return Result|int
+     * @return bool
      */
-    public function deleteById(int $id)
+    public function deleteById(int $id): bool
     {
-        return $this->db()->delete('gallery_imgs')
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
     }
@@ -185,27 +191,41 @@ class Image extends Mapper
      * Updates visits.
      *
      * @param ImageModel $model
+     * @return bool
      */
-    public function saveVisits(ImageModel $model)
+    public function saveVisits(ImageModel $model): bool
     {
         if ($model->getVisits()) {
-            $this->db()->update('gallery_imgs')
+            return $this->db()->update($this->tablename)
                 ->values(['visits' => $model->getVisits()])
                 ->where(['image_id' => $model->getImageId()])
                 ->execute();
         }
+        return false;
     }
 
     /**
      * Updates image meta.
      *
      * @param ImageModel $model
+     * @return bool
      */
-    public function saveImageTreat(ImageModel $model)
+    public function saveImageTreat(ImageModel $model): bool
     {
-        $this->db()->update('gallery_imgs')
+        return $this->db()->update($this->tablename)
             ->values(['image_title' => $model->getImageTitle(), 'image_description' => $model->getImageDesc()])
             ->where(['id' => $model->getId()])
             ->execute();
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.23.4
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
     }
 }

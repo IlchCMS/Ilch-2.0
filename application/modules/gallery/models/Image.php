@@ -71,6 +71,41 @@ class Image extends Model
     protected $image_url = '';
 
     /**
+     * @param array $entries
+     * @return $this
+     * @since 1.23.4
+     */
+    public function setByArray(array $entries): Image
+    {
+        if (!empty($entries['imgid']) || !empty($entries['id'])) {
+            $this->setId($entries['imgid'] ?? $entries['id']);
+        }
+        if (!empty($entries['image_id'])) {
+            $this->setImageId($entries['image_id']);
+        }
+        if (!empty($entries['url'])) {
+            $this->setImageUrl($entries['url']);
+        }
+        if (!empty($entries['url_thumb'])) {
+            $this->setImageThumb($entries['url_thumb']);
+        }
+        if (!empty($entries['image_title'])) {
+            $this->setImageTitle($entries['image_title']);
+        }
+        if (!empty($entries['image_description'])) {
+            $this->setImageDesc($entries['image_description']);
+        }
+        if (!empty($entries['gallery_id'])) {
+            $this->setGalleryId($entries['gallery_id']);
+        }
+        if (!empty($entries['visits'])) {
+            $this->setVisits($entries['visits']);
+        }
+
+        return $this;
+    }
+
+    /**
      * Gets the id of the image.
      *
      * @return int
@@ -228,5 +263,26 @@ class Image extends Model
     public function setImageUrl(string $imageUrl)
     {
         $this->image_url = $imageUrl;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.23.4
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'image_id' =>    $this->getImageId(),
+                'image_title' =>     $this->getImageTitle(),
+                'image_description' =>      $this->getImageDesc(),
+                'gallery_id' =>        $this->getGalleryId(),
+                'visits' =>       $this->getVisits(),
+                'show' =>       $this->getShow(),
+                'status' =>     $this->getStatus()
+            ]
+        );
     }
 }
