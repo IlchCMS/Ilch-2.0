@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -22,7 +23,8 @@ class Birthdays extends \Ilch\Controller\Frontend
         if ($this->getUser() || $this->getConfig()->get('bday_visibleForGuest')) {
             $input = $this->getRequest()->getQuery();
             $validation = Validation::create(
-                $input, [
+                $input,
+                [
                     'start' => 'required|date:Y-m-d\TH\\:i\\:sP',
                     'end'   => 'required|date:Y-m-d\TH\\:i\\:sP',
                 ]
