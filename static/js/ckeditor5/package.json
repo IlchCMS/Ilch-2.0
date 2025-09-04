@@ -8,10 +8,10 @@
   "main": "./build/ckeditor.js",
   "types": "./build/ckeditor.d.ts",
   "dependencies": {
-    "ckeditor5": "^45.1.0"
+    "ckeditor5": "^45.2.2"
   },
   "devDependencies": {
-    "@ckeditor/ckeditor5-core": "45.1.0",
+    "@ckeditor/ckeditor5-core": "45.2.2",
     "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
