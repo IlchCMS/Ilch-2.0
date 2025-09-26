@@ -1,12 +1,21 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Article\Models\Article[]|null $articles */
 $articles = $this->get('articles');
+/** @var \Modules\Article\Mappers\Category $categoryMapper */
 $categoryMapper = $this->get('categoryMapper');
+/** @var \Modules\Comment\Mappers\Comment $commentMapper */
 $commentMapper = $this->get('commentMapper');
 
 $date = null;
 if ($this->get('date')) {
     $date = $this->get('date');
 }
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
 ?>
 
 <h1><?=$this->getTrans('monthArchives') ?><?=($date) ? ': <i>'.$this->getTrans($date->format('F', true)).$date->format(' Y', true).'</i>' : '' ?></h1>
@@ -91,7 +100,7 @@ if ($this->get('date')) {
         <br /><br /><br />
     <?php endforeach; ?>
         <div class="float-end">
-            <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]) ?>
+            <?=$pagination->getHtml($this, ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]) ?>
         </div>
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>

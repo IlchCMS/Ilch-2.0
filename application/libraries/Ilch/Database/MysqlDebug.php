@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -54,7 +55,7 @@ class MysqlDebug extends Mysql
         } catch (Exception $e) {
             $ex = $e;
             $rowCount = 0;
-            $mysqliResult = new \mysqli_result();
+            $mysqliResult = new \mysqli_result($this->conn);
             $this->exceptionsCollector->addThrowable($e);
         }
 

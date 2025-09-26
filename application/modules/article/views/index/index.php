@@ -1,7 +1,16 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Article\Models\Article[]|null $articles */
 $articles = $this->get('articles');
+/** @var \Modules\Article\Mappers\Category $categoryMapper */
 $categoryMapper = $this->get('categoryMapper');
+/** @var \Modules\Comment\Mappers\Comment $commentMapper */
 $commentMapper = $this->get('commentMapper');
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
 ?>
 
 <h1><?=$this->getTrans('menuArticle') ?></h1>
@@ -16,7 +25,7 @@ $commentMapper = $this->get('commentMapper');
         $categories = '';
         foreach ($catIds as $catId) {
             $articlesCats = $categoryMapper->getCategoryById($catId);
-            $categories .= '<a href="'.$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]).'">'.$this->escape($articlesCats->getName()).'</a>, ';
+            $categories .= '<a href="' . $this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]) . '">' . $this->escape($articlesCats->getName()) . '</a>, ';
         }
     ?>
         <?php if ($article->getTeaser()): ?>
@@ -86,7 +95,7 @@ $commentMapper = $this->get('commentMapper');
         <br /><br /><br />
     <?php endforeach; ?>
         <div class="float-end">
-            <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
+            <?=$pagination->getHtml($this, ['action' => 'index']) ?>
         </div>
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>

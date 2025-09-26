@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('cats') ?></h1>
 <?php if (!empty($this->get('cats'))): ?>
 <form method="POST">
@@ -18,7 +22,9 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->get('cats') as $cat): ?>
+            <?php
+            /** @var \Modules\Media\Models\Media $cat */
+            foreach ($this->get('cats') as $cat): ?>
                 <tr>
                     <td><?=$this->getDeleteCheckbox('check_cats', $cat->getId()) ?></td>
                     <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>

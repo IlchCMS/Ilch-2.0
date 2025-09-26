@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -14,7 +15,7 @@ class Menu extends \Ilch\Model
      * @var integer
      */
     protected $id;
-    
+
     /**
      * Title of the menu.
      *
@@ -41,7 +42,7 @@ class Menu extends \Ilch\Model
     {
         return $this->id;
     }
-    
+
     /**
      * Sets the menu title.
      *

@@ -1,4 +1,7 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 $articles = $this->get('articles');
 ?>
 

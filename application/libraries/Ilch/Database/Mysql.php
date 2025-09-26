@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -16,7 +17,7 @@ class Mysql
     const FORMAT_DATE = 'Y-m-d';
 
     public static $errorHandling = self::THROW_EXCEPTIONS;
-    
+
     /**
      * @var string|null
      */
@@ -457,7 +458,7 @@ class Mysql
         if (\count($parts) > 2) {
             throw new \InvalidArgumentException('Invalid field expression: ' . $field);
         }
-        
+
         return $this->quote($parts[0], true) . '.' . $this->quote($parts[1], true);
     }
 

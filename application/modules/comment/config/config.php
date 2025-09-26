@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -47,7 +48,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('comment_excludeFloodProtection', '1');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_comments` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -63,8 +64,11 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
+        switch ($installedVersion) {
+        }
 
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

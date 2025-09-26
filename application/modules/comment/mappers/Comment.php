@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -57,7 +58,7 @@ class Comment extends \Ilch\Mapper
 
         $commentsArray = $this->db()->select('*')
             ->from('comments')
-            ->where(['key LIKE' => $key.'%'])
+            ->where(['key LIKE' => $key . '%'])
             ->execute()
             ->fetchRows();
 
@@ -180,7 +181,7 @@ class Comment extends \Ilch\Mapper
 
         return $comments;
     }
-    
+
     /**
      * Gets the count of all comments with given $key.
      *
@@ -193,7 +194,7 @@ class Comment extends \Ilch\Mapper
 
         return $this->db()->select('COUNT(*)')
             ->from('comments')
-            ->where(['key LIKE' => $key.'%'])
+            ->where(['key LIKE' => $key . '%'])
             ->execute()
             ->fetchCell();
     }
@@ -249,8 +250,7 @@ class Comment extends \Ilch\Mapper
     public function save(CommentModel $comment)
     {
         $this->db()->insert('comments')
-            ->values
-            (
+            ->values(
                 [
                     'key' => $this->addMissingSlashIfNeeded($comment->getKey()),
                     'text' => $comment->getText(),
@@ -274,7 +274,7 @@ class Comment extends \Ilch\Mapper
                 ->where(['id' => $id])
                 ->execute();
             $id = $this->getCommentIdbyFKid($id);
-        } while($id);
+        } while ($id);
     }
 
     /**
@@ -285,7 +285,7 @@ class Comment extends \Ilch\Mapper
     public function deleteByKey(string $key)
     {
         $this->db()->delete('comments')
-            ->where(['key LIKE' => $key.'%'])
+            ->where(['key LIKE' => $key . '%'])
             ->execute();
     }
 

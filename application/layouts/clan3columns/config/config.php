@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'name' => 'Ilch-Clan',
-        'version' => '1.2.0',
+        'version' => '1.2.1',
         'ilchCore' => '2.2.0',
         'author' => 'Ilch.de',
         'link' => 'https://ilch.de',

@@ -1,5 +1,12 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Article\Mappers\Article $articleMapper */
 $articleMapper = $this->get('articleMapper');
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
 ?>
 
 <h1><?=$this->getTrans('manage') ?></h1>
@@ -39,7 +46,9 @@ $articleMapper = $this->get('articleMapper');
             </thead>
             <tbody>
                 <?php if (!empty($this->get('articles'))): ?>
-                    <?php foreach ($this->get('articles') as $article): ?>
+                    <?php
+                        /** @var \Modules\Article\Models\Article $article */
+                        foreach ($this->get('articles') as $article): ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_articles', $article->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $article->getId()]) ?></td>
@@ -73,4 +82,4 @@ $articleMapper = $this->get('articleMapper');
     </div>
     <?=$this->getListBar(['delete' => 'delete']) ?>
 </form>
-<?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
+<?=$pagination->getHtml($this, ['action' => 'index']) ?>
