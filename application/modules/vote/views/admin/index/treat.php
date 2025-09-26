@@ -61,7 +61,7 @@ $voteRes = $this->get('voteRes');
                    type="text"
                    id="question"
                    name="question"
-                   value="<?=$this->escape($this->originalInput('question', $vote->getQuestion())) ?>" />
+                   value="<?=$this->originalInput('question', $vote->getQuestion(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('multiplereply') ? ' has-error' : '' ?>">
