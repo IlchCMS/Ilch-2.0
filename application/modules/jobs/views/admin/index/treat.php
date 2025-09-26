@@ -33,7 +33,7 @@ $job = $this->get('job');
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=$this->escape($this->originalInput('title', $job->getTitle())) ?>" />
+                   value="<?=$this->originalInput('title', $job->getTitle(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
@@ -45,7 +45,7 @@ $job = $this->get('job');
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?=$this->escape($this->originalInput('text', $job->getText())) ?></textarea>
+                      rows="5"><?=$this->originalInput('text', $job->getText()) ?></textarea>
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('email') ? ' has-error' : '' ?>">
@@ -57,7 +57,7 @@ $job = $this->get('job');
                    class="form-control"
                    id="email"
                    name="email"
-                   value="<?=$this->escape($this->originalInput('email', $job->getEmail())) ?>" />
+                   value="<?=$this->originalInput('email', $job->getEmail(), true) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar($job->getId() ? 'updateButton' : 'addButton') ?>

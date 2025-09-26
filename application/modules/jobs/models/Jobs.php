@@ -48,6 +48,31 @@ class Jobs extends \Ilch\Model
     protected $show = true;
 
     /**
+     * @param array $entries
+     * @return $this
+     * @since 1.7.2
+     */
+    public function setByArray(array $entries): Jobs
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['title'])) {
+            $this->setTitle($entries['title']);
+        }
+        if (isset($entries['text'])) {
+            $this->setText($entries['text']);
+        }
+        if (isset($entries['email'])) {
+            $this->setEmail($entries['email']);
+        }
+        if (isset($entries['show'])) {
+            $this->setShow($entries['show']);
+        }
+        return $this;
+    }
+
+    /**
      * Gets the id of the jobs.
      *
      * @return int
@@ -160,5 +185,25 @@ class Jobs extends \Ilch\Model
         $this->show = $show;
 
         return $this;
+    }
+
+    /**
+     * Gets the Array of Model.
+     *
+     * @param bool $withId
+     * @return array
+     * @since 1.7.2
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'title' => $this->getTitle(),
+                'text' => $this->getText(),
+                'email' => $this->getEmail(),
+                'show' => $this->getShow()
+            ]
+        );
     }
 }
