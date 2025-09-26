@@ -16,7 +16,7 @@ $entry = $this->get('enemy'); ?>
                    class="form-control"
                    id="enemyNameInput"
                    name="enemyName"
-                   value="<?=$this->escape($this->originalInput('enemyName', ($entry->getId() ? $entry->getEnemyName() : ''))) ?>" />
+                   value="<?=$this->originalInput('enemyName', $entry->getEnemyName(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('enemyTag') ? ' has-error' : '' ?>">
@@ -28,7 +28,7 @@ $entry = $this->get('enemy'); ?>
                    class="form-control"
                    id="enemyTagInput"
                    name="enemyTag"
-                   value="<?=$this->escape($this->originalInput('enemyTag', ($entry->getId() ? $entry->getEnemyTag() : ''))) ?>" />
+                   value="<?=$this->originalInput('enemyTag', $entry->getEnemyTag(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('enemyHomepage') ? ' has-error' : '' ?>">
@@ -40,7 +40,7 @@ $entry = $this->get('enemy'); ?>
                    class="form-control"
                    id="enemyHomepageInput"
                    name="enemyHomepage"
-                   value="<?=$this->escape($this->originalInput('enemyHomepage', ($entry->getId() ? $entry->getEnemyHomepage() : ''))) ?>" />
+                   value="<?=$this->originalInput('enemyHomepage', $entry->getEnemyHomepage(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('enemyImage') ? ' has-error' : '' ?>">
@@ -54,7 +54,7 @@ $entry = $this->get('enemy'); ?>
                        id="selectedImage"
                        name="enemyImage"
                        placeholder="<?=$this->getTrans('enemyImageInfo') ?>"
-                       value="<?=$this->escape($this->originalInput('enemyImage', ($entry->getId() ? $entry->getEnemyImage() : ''))) ?>" />
+                       value="<?=$this->originalInput('enemyImage', $entry->getEnemyImage(), true) ?>" />
                 <span class="input-group-text">
                     <a id="media" href="javascript:media()"><i class="fa-regular fa-image"></i></a>
                 </span>
@@ -70,7 +70,7 @@ $entry = $this->get('enemy'); ?>
                    class="form-control"
                    id="enemyContactNameInput"
                    name="enemyContactName"
-                   value="<?=$this->escape($this->originalInput('enemyContactName', ($entry->getId() ? $entry->getEnemyContactName() : ''))) ?>" />
+                   value="<?=$this->originalInput('enemyContactName', $entry->getEnemyContactName(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('enemyContactEmail') ? ' has-error' : '' ?>">
@@ -82,10 +82,10 @@ $entry = $this->get('enemy'); ?>
                    class="form-control"
                    id="enemyContactEmailInput"
                    name="enemyContactEmail"
-                   value="<?=$this->escape($this->originalInput('enemyContactEmail', ($entry->getId() ? $entry->getEnemyContactEmail() : ''))) ?>" />
+                   value="<?=$this->originalInput('enemyContactEmail', $entry->getEnemyContactEmail(), true) ?>" />
         </div>
     </div>
-    <?=($entry->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=$this->getSaveBar($entry->getId() ? 'updateButton' : 'addButton') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>

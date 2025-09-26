@@ -103,7 +103,7 @@ class Index extends Admin
         }
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_warsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_warsPerPage'));
-        $pagination->setPage($this->getRequest()->getParam('page'));
+        $pagination->setPage($this->getRequest()->getParam('page', 1));
 
         if ($this->getRequest()->getParam('filterLastNext')) {
             $this->getView()->set('wars', $warMapper->getWarListByStatus($this->getRequest()->getParam('filterLastNext'), $pagination));
@@ -162,12 +162,15 @@ class Index extends Admin
                 'warXonx'           => 'required',
                 'warGame'           => 'required',
                 'warMatchtype'      => 'required',
-                'warEnemy'          => 'required',
-                'warGroup'          => 'required',
+                'warEnemy'          => 'required|numeric|integer|exists:' . $enemyMapper->tablename,
+                'warGroup'          => 'required|numeric|integer|exists:' . $groupMapper->tablename,
                 'warTime'           => 'required|date:d.m.Y H\:i',
                 'warMap'            => 'required',
                 'warServer'         => 'required',
-                'lastAcceptTime'    => 'numeric|integer'
+                'lastAcceptTime'    => 'numeric|numeric|integer',
+                'warStatus'         => 'numeric|numeric|integer|min:1|max:2',
+                //'warPassword'    => '',
+                //'warReport'    => '',
             ];
 
             if ($warMapper->existsTable('calendar')) {
@@ -197,14 +200,30 @@ class Index extends Admin
                     $enemyPoints = $this->getRequest()->getPost('warResultEnemys');
 
                     for ($i = 0; $i < count($maps); $i++) {
-                        if (!empty($ids[$i])) {
-                            $gameModel->setId($ids[$i]);
+                        $validationGame = Validation::create(
+                            [
+                                'map' => (int)$maps[$i],
+                                'groupPoints' => (int)$groupPoints[$i],
+                                'enemyPoints' => (int)$groupPoints[$i]
+                            ],
+                            [
+                                'map' => 'required|numeric|integer|min:1|exists:' . $mapsMapper->tablename,
+                                'groupPoints' => 'required|numeric|integer',
+                                'enemyPoints' => 'required|numeric|integer'
+                            ]
+                        );
+                        if ($validationGame->isValid()) {
+                            if (!empty($ids[$i])) {
+                                $gameModel->setId((int)$ids[$i]);
+                            } else {
+                                $gameModel->setId(0);
+                            }
+                            $gameModel->setWarId($warModel->getId())
+                                ->setMap((int)$maps[$i])
+                                ->setGroupPoints((int)$groupPoints[$i])
+                                ->setEnemyPoints((int)$enemyPoints[$i]);
+                            $gameMapper->save($gameModel);
                         }
-                        $gameModel->setWarId($warModel->getId())
-                            ->setMap($maps[$i])
-                            ->setGroupPoints($groupPoints[$i])
-                            ->setEnemyPoints($enemyPoints[$i]);
-                        $gameMapper->save($gameModel);
                     }
                 }
 
@@ -269,7 +288,7 @@ class Index extends Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $warMapper = new WarMapper();
             $warMapper->delete((int)$this->getRequest()->getParam('id'));
 
@@ -280,7 +299,7 @@ class Index extends Admin
 
     public function updateAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $warMapper = new WarMapper();
             $warMapper->updateShow((int)$this->getRequest()->getParam('id'), $this->getRequest()->getParam('status_man') ?? -1);
 

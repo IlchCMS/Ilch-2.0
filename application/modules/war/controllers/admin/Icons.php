@@ -162,7 +162,7 @@ class Icons extends Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('key'))) {
             if (in_array($this->getRequest()->getParam('key'), $this->icons)) {
                 unlink(ROOT_PATH . '/application/modules/war/static/img/' . $this->getRequest()->getParam('key') . '.png');
             }
