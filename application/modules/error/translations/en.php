@@ -9,4 +9,5 @@ return [
     'notFound' => 'not Found',
     'back' => 'Back to mainpage',
     'error' => 'Error',
+    'access' => 'Access',
 ];

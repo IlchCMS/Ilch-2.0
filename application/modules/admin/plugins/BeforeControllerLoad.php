@@ -58,7 +58,9 @@ class BeforeControllerLoad
             $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
         } elseif ($user && $request->getModuleName() === 'admin' && $request->getControllerName() !== 'login' && $request->getControllerName() !== 'page' && $request->getActionName() !== 'logout' && !$user->isAdmin()) {
             if (!$pluginData['accesses']->hasAccess('Admin')) {
-                $pluginData['controller']->redirect()->withMessage('noRights', 'danger')->to([], 'frontend');
+                $translator->load(APPLICATION_PATH . '/modules/user/translations');
+                $translator->load(APPLICATION_PATH . '/modules/error/translations');
+                $pluginData['controller']->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => $translator->trans('access'), 'errorText' => $translator->trans('noAccessPage'), 'errorCode' => 403], '');
             }
         }
     }
