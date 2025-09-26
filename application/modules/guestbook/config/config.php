@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'guestbook',
-        'version' => '1.14.3',
+        'version' => '1.14.4',
         'icon_small' => 'fa-solid fa-book',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -28,8 +28,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'A guestbook with optional welcome message. New entries can be shown only after approval if wished.',
             ],
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'ilchCore' => '2.2.13',
+        'phpVersion' => '7.4'
     ];
 
     public function install()
@@ -42,10 +42,10 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $databaseConfig = new Database($this->db());
-        $databaseConfig->delete('gbook_autosetfree');
-        $databaseConfig->delete('gbook_notificationOnNewEntry');
-        $databaseConfig->delete('gbook_welcomeMessage');
-        $databaseConfig->delete('gbook_entriesPerPage');
+        $databaseConfig->delete('gbook_autosetfree')
+            ->delete('gbook_notificationOnNewEntry')
+            ->delete('gbook_welcomeMessage')
+            ->delete('gbook_entriesPerPage');
 
         $this->db()->drop('gbook', true);
     }
@@ -92,6 +92,10 @@ class Config extends \Ilch\Config\Install
             case "1.12.0":
             case "1.13.0":
             case "1.13.1":
+            case "1.14.0":
+            case "1.14.1":
+            case "1.14.2":
+            case "1.14.3":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
