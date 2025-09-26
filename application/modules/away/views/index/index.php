@@ -144,37 +144,32 @@ if ($this->getUser()) {
                        class="form-control"
                        id="reason"
                        name="reason"
-                       value="<?= $this->originalInput('reason') ? $this->originalInput('reason') : (($currentlyEditingAway) ? $currentlyEditingAway->getReason() : '') ?>" />
+                       value="<?=$this->originalInput('reason', $currentlyEditingAway->getReason(), true) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('when') ? ' has-error' : '' ?>">
-            <?php if ($currentlyEditingAway) {
-                $startDate = new \Ilch\Date($currentlyEditingAway->getStart());
-                $endDate = new \Ilch\Date($currentlyEditingAway->getEnd());
-            }
-            ?>
             <label for="start" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('when') ?>:
             </label>
-            <div id="start" class="col-xl-3 input-group ilch-date date form_datetime float-start">
+            <div id="start" class="col-xl-3 input-group date form_datetime float-start">
                 <input type="text"
                        class="form-control"
                        id="start"
                        name="start"
                        size="16"
-                       value="<?= $this->originalInput('start') ? $this->originalInput('start') : (($currentlyEditingAway) ? $startDate->format('d.m.Y', true) : '') ?>"
+                       value="<?=$this->originalInput('start', ($currentlyEditingAway->getId() ? (new \Ilch\Date($currentlyEditingAway->getStart()))->format('d.m.Y') : ''), true) ?>"
                        readonly>
                 <span class="input-group-text">
                     <span class="fa-solid fa-calendar"></span>
                 </span>
             </div>
-            <div id="end" class="col-xl-3 input-group ilch-date date form_datetime">
+            <div id="end" class="col-xl-3 input-group date form_datetime">
                 <input type="text"
                        class="form-control"
                        id="end"
                        name="end"
                        size="16"
-                       value="<?= $this->originalInput('end') ? $this->originalInput('end') : (($currentlyEditingAway) ? $endDate->format('d.m.Y', true) : '') ?>"
+                       value="<?=$this->originalInput('end', ($currentlyEditingAway->getId() ? (new \Ilch\Date($currentlyEditingAway->getEnd()))->format('d.m.Y') : ''), true) ?>"
                        readonly>
                 <span class="input-group-text">
                     <span class="fa-solid fa-calendar"></span>
@@ -189,7 +184,7 @@ if ($this->getUser()) {
                 <textarea class="form-control"
                           name="text"
                           id="text"
-                          rows="3"><?=$this->originalInput('text') ? $this->originalInput('text') : (($currentlyEditingAway) ? $currentlyEditingAway->getText() : '') ?></textarea>
+                          rows="3"><?=$this->originalInput('text', $currentlyEditingAway->getText(), true) ?></textarea>
             </div>
         </div>
         <?php if ($this->get('calendarShow') == 1) : ?>
@@ -199,7 +194,7 @@ if ($this->getUser()) {
                            id="calendarShow"
                            name="calendarShow"
                            value="1"
-                           <?=($this->originalInput('calendarShow') != '') ? 'checked' : ($currentlyEditingAway ? ($currentlyEditingAway->getShow() ? 'checked' : '') : '') ?> />
+                           <?=$this->originalInput('calendarShow', $currentlyEditingAway->getShow()) ? 'checked' : '' ?> />
                     <label for="calendarShow">
                         <?=$this->getTrans('calendarShow') ?>
                     </label>

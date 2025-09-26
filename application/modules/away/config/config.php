@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'away',
-        'version' => '1.8.0',
+        'version' => '1.8.1',
         'icon_small' => 'fa-solid fa-calendar-xmark',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -26,7 +26,7 @@ class Config extends \Ilch\Config\Install
                 'description' => 'User can enter when they are away (e.g. on holidays). There is an overview of this and the entries can be mananged in the admincenter.',
             ],
         ],
-        'ilchCore' => '2.2.7',
+        'ilchCore' => '2.2.13',
         'phpVersion' => '7.4'
     ];
 
@@ -55,8 +55,8 @@ class Config extends \Ilch\Config\Install
 
     public function getInstallSql(): string
     {
-        $installSql =
-            'CREATE TABLE IF NOT EXISTS `[prefix]_away` (
+        $installSql = '
+            CREATE TABLE IF NOT EXISTS `[prefix]_away` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
             `user_id` INT(11) NOT NULL,
             `reason` VARCHAR(100) NOT NULL,
@@ -118,6 +118,13 @@ class Config extends \Ilch\Config\Install
                 }
                 // no break
             case "1.6.1":
+                // no break
+            case "1.7.0":
+                // no break
+            case "1.7.1":
+                // no break
+            case "1.8.0":
+                // no break
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

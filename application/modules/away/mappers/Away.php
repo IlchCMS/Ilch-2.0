@@ -14,45 +14,84 @@ use Modules\Away\Models\Away as AwayModel;
 class Away extends \Ilch\Mapper
 {
     /**
+     * @var string
+     * @since 1.8.1
+     */
+    public $tablename = 'away';
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return boolean
+     * @throws \Ilch\Database\Exception
+     * @since 1.8.1
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by params.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return AwardsModel[]|null
+     * @since 1.8.1
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
+    {
+        $select = $this->db()->select();
+        $select->fields('*')
+            ->from($this->tablename)
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
+            return null;
+        }
+        $entrys = [];
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new AwayModel();
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
+    /**
      * Gets the Away.
      *
      * @param array $where
-     * @return AwayModel[]|array
+     * @return AwayModel[]
      */
     public function getAway(array $where = []): array
     {
-        $entryArray = $this->db()->select('*')
-            ->from('away')
-            ->where($where)
-            ->order(['start' => 'ASC'])
-            ->execute()
-            ->fetchRows();
+        $entryArray = $this->getEntriesBy($where, ['start' => 'ASC']);
 
         if (empty($entryArray)) {
             return [];
         }
-
-        $away = [];
-        foreach ($entryArray as $entries) {
-            $entryModel = new AwayModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setUserId($entries['user_id']);
-            $entryModel->setReason($entries['reason']);
-            $entryModel->setStart($entries['start']);
-            $entryModel->setEnd($entries['end']);
-            $entryModel->setText($entries['text']);
-            $entryModel->setStatus($entries['status']);
-            $entryModel->setShow($entries['show']);
-            $away[] = $entryModel;
-        }
-
-        return $away;
+        return $entryArray;
     }
 
     /**
      * Gets away.
      *
-     * @param integer $id
+     * @param int $id
      * @return AwayModel|null
      */
     public function getAwayById(int $id): ?AwayModel
@@ -64,36 +103,28 @@ class Away extends \Ilch\Mapper
 
     public function existsTable($table): bool
     {
-        return $this->db()->ifTableExists('[prefix]_'.$table);
+        return $this->db()->ifTableExists('[prefix]_' . $table);
     }
 
     /**
      * Inserts or updates away model.
      *
      * @param AwayModel $away
+     * @return int
      */
-    public function save(AwayModel $away)
+    public function save(AwayModel $away): int
     {
-        $fields = [
-            'user_id' => $away->getUserId(),
-            'reason' => $away->getReason(),
-            'start' => $away->getStart(),
-            'end' => $away->getEnd(),
-            'text' => $away->getText(),
-            'show' => $away->getShow()
-        ];
-
-        if ($away->getStatus()) {
-            $fields['status'] = $away->getStatus();
-        }
+        $fields = $away->getArray(false);
 
         if ($away->getId()) {
-            $this->db()->update('away')
+            $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $away->getId()])
                 ->execute();
+
+                return $away->getId();
         } else {
-            $this->db()->insert('away')
+            return $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
@@ -104,61 +135,40 @@ class Away extends \Ilch\Mapper
      *
      * @param string $start
      * @param string $end
-     * @return AwayModel[]|array|null
+     * @return AwayModel[]|null
      * @throws Exception
      */
     public function getEntriesForJson(string $start, string $end): ?array
     {
-        if ($start && $end) {
-            $start = new Date($start);
-            $end = new Date($end);
-
-            $sql = sprintf("SELECT * FROM `[prefix]_away` WHERE `start` >= '%s' AND `end` <= '%s' AND `show` = 1 ORDER BY `start` ASC;", $start, $end);
-        } else {
+        if (empty($start) && empty($end)) {
             return null;
         }
+        $start = new Date($start);
+        $end = new Date($end);
 
-        $entryArray = $this->db()->queryArray($sql);
-
-        if (empty($entryArray)) {
-            return null;
-        }
-
-        $away = [];
-        foreach ($entryArray as $entries) {
-            $entryModel = new AwayModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setReason($entries['reason']);
-            $entryModel->setStart($entries['start']);
-            $entryModel->setEnd($entries['end']);
-            $entryModel->setStatus($entries['status']);
-            $entryModel->setShow($entries['show']);
-            $away[] = $entryModel;
-        }
-
-        return $away;
+        return $this->getEntriesBy(['start >=' => $start, 'end <=' => $end, 'show' => 1], ['start' => 'ASC']);
     }
 
     /**
      * Updates away with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function update(int $id)
     {
         $show = (int) $this->db()->select('status')
-                        ->from('away')
+                        ->from($this->tablename)
                         ->where(['id' => $id])
                         ->execute()
                         ->fetchCell();
 
         if ($show == 1) {
-            $this->db()->update('away')
+            $this->db()->update($this->tablename)
                 ->values(['status' => 0])
                 ->where(['id' => $id])
                 ->execute();
         } else {
-            $this->db()->update('away')
+            $this->db()->update($this->tablename)
                 ->values(['status' => 1])
                 ->where(['id' => $id])
                 ->execute();
@@ -168,12 +178,24 @@ class Away extends \Ilch\Mapper
     /**
      * Deletes away with given id.
      *
-     * @param integer $id
+     * @param int $id
+     * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('away')
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.8.1
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
     }
 }
