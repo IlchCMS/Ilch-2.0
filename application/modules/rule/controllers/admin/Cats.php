@@ -158,7 +158,7 @@ class Cats extends \Ilch\Controller\Admin
 
     public function delCatAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $ruleMapper = new RuleMapper();
 
             if ($ruleMapper->getRulesItemsByParent($this->getRequest()->getParam('id'), null) == null) {

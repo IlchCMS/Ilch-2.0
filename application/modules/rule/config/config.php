@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'rule',
-        'version' => '1.9.2',
+        'version' => '1.9.3',
         'icon_small' => 'fa-solid fa-gavel',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -25,8 +25,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Can be used to write down a ruleset, which can be shown on the websites. Supports paragraphs, easy changing the order and adjusting read access.',
             ],
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'ilchCore' => '2.2.13',
+        'phpVersion' => '7.4'
     ];
 
     public function install()
@@ -161,6 +161,9 @@ class Config extends \Ilch\Config\Install
                 // no break
             case "1.8.0":
             case "1.8.1":
+            case "1.9.0":
+            case "1.9.1":
+            case "1.9.2":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
