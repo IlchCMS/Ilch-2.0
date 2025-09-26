@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'link',
-        'version' => '1.11.1',
+        'version' => '1.11.2',
         'icon_small' => 'fa-solid fa-arrow-up-right-from-square',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -25,8 +25,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'With this you can link other websites with banners and descriptions. Further they can be categorized.',
             ],
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'ilchCore' => '2.2.13',
+        'phpVersion' => '7.4'
     ];
 
     public function install()
@@ -96,6 +96,8 @@ class Config extends \Ilch\Config\Install
                 // no break
             case "1.10.0":
             case "1.10.1":
+            case "1.11.0":
+            case "1.11.1":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

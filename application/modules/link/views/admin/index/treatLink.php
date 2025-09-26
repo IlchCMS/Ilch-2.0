@@ -8,7 +8,7 @@ $link = $this->get('link');
 /** @var Modules\Link\Models\Category[]|null $cats */
 $cats = $this->get('cats');
 ?>
-<h1><?=($link->getId()) ? $this->getTrans('menuActionEditLink') : $this->getTrans('menuActionNewLink') ?></h1>
+<h1><?=$this->getTrans($link->getId() ? 'menuActionEditLink' : 'menuActionNewLink') ?></h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
@@ -21,7 +21,7 @@ $cats = $this->get('cats');
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?=$this->escape($this->originalInput('Name', $link->getName())) ?>" />
+                   value="<?=$this->originalInput('Name', $link->getName(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('link') ? ' has-error' : '' ?>">
@@ -34,7 +34,7 @@ $cats = $this->get('cats');
                    id="link"
                    name="link"
                    placeholder="https://"
-                   value="<?=$this->escape($this->originalInput('link', $link->getLink())) ?>" />
+                   value="<?=$this->originalInput('link', $link->getLink(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('banner') ? ' has-error' : '' ?>">
@@ -48,7 +48,7 @@ $cats = $this->get('cats');
                        id="selectedImage_1"
                        name="banner"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
-                       value="<?=$this->escape($this->originalInput('banner', $link->getBanner())) ?>" />
+                       value="<?=$this->originalInput('banner', $link->getBanner(), true) ?>" />
                 <span class="input-group-text"><a id="media" href="javascript:media_1()"><i class="fa-regular fa-image"></i></a></span>
             </div>
         </div>
@@ -62,7 +62,7 @@ $cats = $this->get('cats');
                       id="desc"
                       name="desc" 
                       cols="45" 
-                      rows="3"><?=$this->escape($this->originalInput('desc', $link->getDesc())) ?></textarea>
+                      rows="3"><?=$this->originalInput('desc', $link->getDesc(), true) ?></textarea>
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('catId') ? ' has-error' : '' ?>">
