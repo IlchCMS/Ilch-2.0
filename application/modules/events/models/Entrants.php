@@ -14,28 +14,48 @@ class Entrants extends \Ilch\Model
      *
      * @var int
      */
-    protected $eventId;
+    protected $eventId = 0;
 
     /**
      * The userId of the event entrants.
      *
      * @var int
      */
-    protected $userId;
+    protected $userId = 0;
 
     /**
      * The user status of the event entrants.
      *
      * @var int
      */
-    protected $status;
+    protected $status = 0;
+
+    /**
+     * @param array $entries
+     * @return $this
+     * @since 1.23.6
+     */
+    public function setByArray(array $entries): Entrants
+    {
+        if (isset($entries['event_id'])) {
+            $this->setEventId($entries['event_id']);
+        }
+        if (isset($entries['user_id'])) {
+            $this->setUserId($entries['user_id']);
+        }
+        if (isset($entries['status'])) {
+            $this->setStatus($entries['status']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the eventid of the event entrants.
      *
-     * @return int|null
+     * @return int
      */
-    public function getEventId(): ?int
+    public function getEventId(): int
     {
         return $this->eventId;
     }
@@ -57,9 +77,9 @@ class Entrants extends \Ilch\Model
     /**
      * Gets the user of the event entrants.
      *
-     * @return int|null
+     * @return int
      */
-    public function getUserId(): ?int
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -81,9 +101,9 @@ class Entrants extends \Ilch\Model
     /**
      * Gets the status from user of the event entrants.
      *
-     * @return int|null
+     * @return int
      */
-    public function getStatus(): ?int
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -100,5 +120,19 @@ class Entrants extends \Ilch\Model
         $this->status = $status;
 
         return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.23.6
+     */
+    public function getArray(): array
+    {
+        return [
+            'event_id' => $this->getEventId(),
+            'user_id' => $this->getUserId(),
+            'status' => $this->getStatus()
+            ];
     }
 }
