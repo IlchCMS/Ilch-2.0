@@ -16,70 +16,85 @@ use Modules\Gallery\Models\GalleryItem;
 class Gallery extends Mapper
 {
     /**
+     * @var string
+     * @since 1.23.4
+     */
+    public $tablename = 'gallery_items';
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return boolean
+     * @throws \Ilch\Database\Exception
+     * @since 1.23.4
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by params.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return GalleryItem[]|null
+     * @since 1.23.4
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
+    {
+        $select = $this->db()->select();
+        $select->fields(['id', 'sort', 'parent_id', 'type', 'title', 'description'])
+            ->from($this->tablename)
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
+            return null;
+        }
+        $entrys = [];
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new GalleryItem();
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
+    /**
      * Gets all gallery items by parent item id.
      *
      * @param int $itemId
-     * @return array|null
+     * @return GalleryItem[]|null
      * @since 1.20.0 Removal of galleryId parameter.
      */
     public function getGalleryItemsByParent(int $itemId): ?array
     {
-        $items = [];
-        $itemRows = $this->db()->select('*')
-                ->from('gallery_items')
-                ->where(['parent_id' => $itemId])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
-
-        if (empty($itemRows)) {
-            return null;
-        }
-
-        foreach ($itemRows as $itemRow) {
-            $itemModel = new GalleryItem();
-            $itemModel->setId($itemRow['id']);
-            $itemModel->setType($itemRow['type']);
-            $itemModel->setTitle($itemRow['title']);
-            $itemModel->setDesc($itemRow['description']);
-            $itemModel->setParentId($itemId);
-            $items[] = $itemModel;
-        }
-
-        return $items;
+        return $this->getEntriesBy(['parent_id' => $itemId]);
     }
 
     /**
      * Gets all gallery items by type.
      *
      * @param int $type
-     * @return array|GalleryItem[]
+     * @return GalleryItem[]
      */
     public function getGalleryCatItem(int $type): array
     {
-        $itemRows = $this->db()->select('*')
-                ->from('gallery_items')
-                ->where(['type' => $type])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
-
-        if (empty($itemRows)) {
-            return [];
-        }
-
-        $items = [];
-        foreach ($itemRows as $itemRow) {
-            $itemModel = new GalleryItem();
-            $itemModel->setId($itemRow['id']);
-            $itemModel->setType($itemRow['type']);
-            $itemModel->setTitle($itemRow['title']);
-            $itemModel->setDesc($itemRow['description']);
-            $itemModel->setParentId($itemRow['parent_id']);
-            $items[] = $itemModel;
-        }
-
-        return $items;
+        return $this->getEntriesBy(['type' => $type], ['sort' => 'ASC']);
     }
 
     /**
@@ -90,27 +105,14 @@ class Gallery extends Mapper
      */
     public function getGalleryById(int $id): ?GalleryItem
     {
-        $itemRows = $this->db()->select('*')
-                ->from('gallery_items')
-                ->where(['id' => $id])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchAssoc();
+        $itemRows = $this->getEntriesBy(['id' => $id], ['sort' => 'ASC']);
 
-        if (empty($itemRows)) {
-            return null;
+        if ($itemRows) {
+            return reset($itemRows);
         }
 
-        $itemModel = new GalleryItem();
-        $itemModel->setId($itemRows['id']);
-        $itemModel->setType($itemRows['type']);
-        $itemModel->setTitle($itemRows['title']);
-        $itemModel->setDesc($itemRows['description']);
-        $itemModel->setParentId($itemRows['parent_id']);
-
-        return $itemModel;
+        return null;
     }
-
 
     /**
      * Save one gallery item.
@@ -120,40 +122,33 @@ class Gallery extends Mapper
      */
     public function saveItem(GalleryItem $galleryItem): int
     {
-        $fields = [
-            'title' => $galleryItem->getTitle(),
-            'sort' => $galleryItem->getSort(),
-            'parent_id' => $galleryItem->getParentId(),
-            'type' => $galleryItem->getType(),
-            'description' => $galleryItem->getDesc()
-        ];
-
-        foreach ($fields as $key => $value) {
-            if ($value === null) {
-                unset($fields[$key]);
-            }
-        }
-
-        $itemId = (int)$this->db()->select('id')
-            ->from('gallery_items')
-            ->where(['id' => $galleryItem->getId()])
-            ->execute()
-            ->fetchCell();
-
-        if ($itemId) {
-            $this->db()->update('gallery_items')
-                ->values($fields)
-                ->where(['id' => $itemId])
-                ->execute();
-        } else {
-            $itemId = $this->db()->insert('gallery_items')
-                ->values($fields)
-                ->execute();
-        }
-
-        return $itemId;
+        return $this->save($galleryItem);
     }
 
+    /**
+     * Inserts or updates galleryItem model.
+     *
+     * @param GalleryItem $galleryItem
+     * @return int
+     * @since 1.23.4
+     */
+    public function save(GalleryItem $galleryItem): int
+    {
+        $fields = $galleryItem->getArray(false);
+
+        if ($galleryItem->getId()) {
+            $this->db()->update($this->tablename)
+                ->values($fields)
+                ->where(['id' => $galleryItem->getId()])
+                ->execute();
+
+                return $galleryItem->getId();
+        } else {
+            return $this->db()->insert($this->tablename)
+                ->values($fields)
+                ->execute();
+        }
+    }
 
     /**
      * Sort Gallery.
@@ -168,7 +163,7 @@ class Gallery extends Mapper
             $id = $id->getId();
         }
 
-        return $this->db()->update('gallery_items')
+        return $this->db()->update($this->tablename)
             ->values(['sort' => $pos, 'parent_id' => $parent])
             ->where(['id' => $id])
             ->execute();
@@ -177,43 +172,38 @@ class Gallery extends Mapper
     /**
      * Delete the given gallery item.
      *
-     * @param GalleryItem $galleryItem
+     * @param int|GalleryItem $id
+     * @return bool
      */
-    public function deleteItem(GalleryItem $galleryItem)
+    public function deleteItem($id): bool
     {
-        $this->db()->delete('gallery_items')
-            ->where(['id' => $galleryItem->getId()])
+        if (is_a($id, GalleryItem::class)) {
+            $id = $id->getId();
+        }
+
+        return $this->db()->delete($this->tablename)
+            ->where(['id' => $id])
             ->execute();
     }
 
     /**
      * Gets all gallery items.
      *
-     * @return array|null
+     * @return GalleryItem[]|null
      */
     public function getGalleryItems(): ?array
     {
-        $items = [];
-        $itemRows = $this->db()->select('*')
-                ->from('gallery_items')
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
+        return $this->getEntriesBy([], ['sort' => 'ASC']);
+    }
 
-        if (empty($itemRows)) {
-            return null;
-        }
-
-        foreach ($itemRows as $itemRow) {
-            $itemModel = new GalleryItem();
-            $itemModel->setId($itemRow['id']);
-            $itemModel->setType($itemRow['type']);
-            $itemModel->setTitle($itemRow['title']);
-            $itemModel->setDesc($itemRow['description']);
-            $itemModel->setParentId($itemRow['parent_id']);
-            $items[] = $itemModel;
-        }
-
-        return $items;
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.23.4
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
     }
 }

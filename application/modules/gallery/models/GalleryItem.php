@@ -59,6 +59,35 @@ class GalleryItem extends Model
     protected $desc = '';
 
     /**
+     * @param array $entries
+     * @return $this
+     * @since 1.23.4
+     */
+    public function setByArray(array $entries): GalleryItem
+    {
+        if (!empty($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (!empty($entries['type'])) {
+            $this->setType($entries['type']);
+        }
+        if (!empty($entries['title'])) {
+            $this->setTitle($entries['title']);
+        }
+        if (!empty($entries['description'])) {
+            $this->setDesc($entries['description']);
+        }
+        if (!empty($entries['parent_id'])) {
+            $this->setParentId($entries['parent_id']);
+        }
+        if (!empty($entries['sortid'])) {
+            $this->setSort($entries['sort']);
+        }
+
+        return $this;
+    }
+
+    /**
      * Gets the id.
      *
      * @return int
@@ -176,5 +205,24 @@ class GalleryItem extends Model
     public function setDesc(string $desc)
     {
         $this->desc = $desc;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.23.4
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'sort' =>           $this->getSort(),
+                'parent_id' =>      $this->getParentId(),
+                'type' =>           $this->getType(),
+                'title' =>          $this->getTitle(),
+                'description' =>    $this->getDesc(),
+            ]
+        );
     }
 }
