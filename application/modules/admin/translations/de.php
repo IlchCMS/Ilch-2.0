@@ -66,6 +66,8 @@ return [
     'grecaptcha' => 'Google ReCaptcha',
     'captcha_apikey' => 'Websiteschlüssel',
     'captcha_seckey' => 'Geheimen Schlüssel',
+    'captcha_score' => 'Mindest-Score (reCAPTCHA v3)',
+    'captcha_score_info' => 'Score zwischen 0.0 (Bot) und 1.0 (Mensch). Empfohlen: 0.5',
     'captcha_apikey_info' => 'Um die folgenden Felder auszuf&uuml;llen, musst du zun&auml;chst eine App auf %s erstellen.',
     'htmlPurifier' => 'HTMLPurifier',
     'htmlPurifierDescription' => '<p>Aus Sicherheitsgründen wird eingegebener Code z.B. in Artikeln oder selbst erstellen Boxen/Seiten "gefiltert" ausgegeben.

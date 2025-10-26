@@ -31,7 +31,10 @@ class Grecaptcha extends Base
         $config = Registry::get('config');
 
         $googlecaptcha = new GoogleCaptcha($config->get('captcha_apikey'), $config->get('captcha_seckey'), (int)$config->get('captcha'));
-        $this->setIsValid($googlecaptcha->validate($this->getValue(), $this->getParameter(0)));
+        
+        // Use configured score for reCAPTCHA v3
+        $score = (float)$config->get('captcha_score', 0.5);
+        $this->setIsValid($googlecaptcha->validate($this->getValue(), $this->getParameter(0), $score));
 
         return $this;
     }
