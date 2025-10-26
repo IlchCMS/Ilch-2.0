@@ -295,11 +295,16 @@ class GoogleCaptcha
 
         $str = '';
         if ($this->getVersion() === 3) {
+            // Escape JavaScript values to prevent XSS
+            $escapedKey = htmlspecialchars($this->getKey() ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $escapedFormId = htmlspecialchars($this->getForm(), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $escapedAction = htmlspecialchars('save' . $nameKey, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            
             $str .= '<script async src="https://www.google.com/recaptcha/api.js?render=' . urlencode($this->getKey() ?? '') . '"></script>
             <script>
                 // Modern reCAPTCHA v3 implementation with better error handling
                 document.addEventListener("DOMContentLoaded", function() {
-                    const form = document.getElementById("' . $this->getForm() . '");
+                    const form = document.getElementById("' . $escapedFormId . '");
                     if (!form) return;
                     
                     form.addEventListener("submit", function(event) {
@@ -311,9 +316,15 @@ class GoogleCaptcha
                         }
                         
                         grecaptcha.ready(function() {
-                            grecaptcha.execute("' . $this->getKey() . '", {
-                                action: "save' . $nameKey . '"
+                            grecaptcha.execute("' . $escapedKey . '", {
+                                action: "' . $escapedAction . '"
                             }).then(function(token) {
+                                // Validate token before submission
+                                if (!token || token.length > 2000) {
+                                    console.error("Invalid reCAPTCHA token");
+                                    return;
+                                }
+                                
                                 // Add token and action as hidden inputs
                                 const tokenInput = document.createElement("input");
                                 tokenInput.type = "hidden";
@@ -324,7 +335,7 @@ class GoogleCaptcha
                                 const actionInput = document.createElement("input");
                                 actionInput.type = "hidden";
                                 actionInput.name = "action";
-                                actionInput.value = "save' . $nameKey . '";
+                                actionInput.value = "' . $escapedAction . '";
                                 form.appendChild(actionInput);
                                 
                                 // Submit form
@@ -339,10 +350,14 @@ class GoogleCaptcha
                 });
             </script>';
         } elseif ($this->getVersion() === 2) {
+            // Escape JavaScript values to prevent XSS
+            $escapedFormId = htmlspecialchars($this->getForm(), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $escapedAction = htmlspecialchars('save' . $nameKey, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            
             $str .= '<script src="https://www.google.com/recaptcha/api.js" async defer></script>
             <script>
                 document.addEventListener("DOMContentLoaded", function() {
-                    const form = document.getElementById("' . $this->getForm() . '");
+                    const form = document.getElementById("' . $escapedFormId . '");
                     if (!form) return;
                     
                     form.addEventListener("submit", function(event) {
@@ -359,6 +374,12 @@ class GoogleCaptcha
                             return;
                         }
                         
+                        // Validate response before submission
+                        if (response.length > 2000) {
+                            console.error("Invalid reCAPTCHA response");
+                            return;
+                        }
+                        
                         // Add token and action as hidden inputs
                         const tokenInput = document.createElement("input");
                         tokenInput.type = "hidden";
@@ -369,7 +390,7 @@ class GoogleCaptcha
                         const actionInput = document.createElement("input");
                         actionInput.type = "hidden";
                         actionInput.name = "action";
-                        actionInput.value = "save' . $nameKey . '";
+                        actionInput.value = "' . $escapedAction . '";
                         form.appendChild(actionInput);
                         
                         // Submit form
@@ -410,6 +431,24 @@ class GoogleCaptcha
             return false;
         }
 
+        // Validate input: token must be non-empty string
+        if (empty($token) || !is_string($token)) {
+            return false;
+        }
+
+        // Sanitize token to prevent XSS and other attacks
+        $token = trim($token);
+        if (strlen($token) > 2000) {
+            return false; // Token is too long
+        }
+
+        // Get remote IP with fallback
+        $remoteIp = $_SERVER['REMOTE_ADDR'] ?? '';
+        // Sanitize IP address
+        if (!empty($remoteIp) && !filter_var($remoteIp, FILTER_VALIDATE_IP)) {
+            $remoteIp = '';
+        }
+
         // Use cURL for better error handling and security
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
@@ -417,18 +456,26 @@ class GoogleCaptcha
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
             'secret' => $this->getSecret(),
             'response' => $token,
-            'remoteip' => $_SERVER['REMOTE_ADDR'] ?? ''
+            'remoteip' => $remoteIp
         ]));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($ch, CURLOPT_USERAGENT, 'Ilch CMS reCAPTCHA Validator');
         
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curlError = curl_error($ch);
         curl_close($ch);
 
-        if ($response === false || $httpCode !== 200) {
+        // Check for cURL errors
+        if ($response === false || !empty($curlError)) {
+            return false;
+        }
+
+        if ($httpCode !== 200) {
             return false;
         }
 
@@ -437,11 +484,38 @@ class GoogleCaptcha
             return false;
         }
 
+        // Verify hostname for additional security
+        if (isset($recaptcha['hostname'])) {
+            $currentHost = $_SERVER['HTTP_HOST'] ?? '';
+            if (!empty($currentHost) && !empty($recaptcha['hostname'])) {
+                // Check if hostnames match exactly or if reCAPTCHA hostname is a subdomain
+                if ($recaptcha['hostname'] !== $currentHost) {
+                    // Check if hostname from reCAPTCHA ends with . + current host
+                    $expectedSuffix = '.' . $currentHost;
+                    if (substr($recaptcha['hostname'], -strlen($expectedSuffix)) !== $expectedSuffix) {
+                        // Hostname mismatch - potential security issue
+                        return false;
+                    }
+                }
+            }
+        }
+
         if ($this->getVersion() === 3) {
-            return ($recaptcha['success'] && 
-                   isset($recaptcha['score']) && 
-                   $recaptcha['score'] >= $score && 
-                   (($action && isset($recaptcha['action']) && $recaptcha['action'] == $action) || !$action));
+            // Validate score and action match
+            if (!isset($recaptcha['score'])) {
+                return false;
+            }
+            
+            if (!is_numeric($recaptcha['score']) || $recaptcha['score'] < $score) {
+                return false;
+            }
+            
+            // Validate action if provided
+            if ($action !== null && (!isset($recaptcha['action']) || $recaptcha['action'] !== $action)) {
+                return false;
+            }
+            
+            return $recaptcha['success'];
         } elseif ($this->getVersion() === 2) {
             return $recaptcha['success'];
         }
