@@ -181,6 +181,7 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('captcha', (int)$this->getConfig()->get('captcha'));
         $this->getView()->set('captcha_apikey', $this->getConfig()->get('captcha_apikey'));
         $this->getView()->set('captcha_seckey', $this->getConfig()->get('captcha_seckey'));
+        $this->getView()->set('captcha_score', $this->getConfig()->get('captcha_score', 0.5));
         $this->getView()->set('groupList', $groupMapper->getGroupList());
         $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'));
         $this->getView()->set('updateservers', $updateserversMapper->getUpdateservers());
