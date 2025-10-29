@@ -9,6 +9,8 @@ namespace Captcha;
 
 // Get your Keys from https://www.google.com/recaptcha/admin/create
 
+use Ilch\Registry;
+
 class GoogleCaptcha
 {
     /**
@@ -261,7 +263,30 @@ class GoogleCaptcha
         }
 
         $recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->getSecret()) . '&response=' . urlencode($token));
+
+
         $recaptcha = json_decode($recaptcha);
+
+        $logEntry = [
+            'timestamp' => date('c'),
+            'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
+            'action' => $recaptcha->action ?? 'none',
+            'score' => $recaptcha->score ?? 'n/a',
+            'success' => $recaptcha->success ?? false,
+            'hostname' => $recaptcha->hostname ?? 'unknown',
+            'errors' => $recaptcha->{'error-codes'} ?? [],
+        ];
+        $config = Registry::get('config');
+
+        if ((int)$config->get('captcha_logging') === 1) {
+            file_put_contents(
+                __DIR__ . '/recaptcha_score_log.json',
+                json_encode($logEntry, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL,
+                FILE_APPEND
+            );
+        }
+
+
         if (!$recaptcha) {
             return false;
         }

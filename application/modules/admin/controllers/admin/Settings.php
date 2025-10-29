@@ -71,7 +71,13 @@ class Settings extends \Ilch\Controller\Admin
                 'active' => false,
                 'icon' => 'fa-regular fa-newspaper',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'mail'])
-            ]
+            ],
+            [
+                'name' => 'reCAPTCHA-Log',
+                'active' => false,
+                'icon' => 'fa-solid fa-shield-halved',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'recaptchaLog'])
+            ],
         ];
 
         if ($this->getRequest()->getActionName() === 'maintenance') {
@@ -86,7 +92,10 @@ class Settings extends \Ilch\Controller\Admin
             $items[6]['active'] = true;
         } elseif ($this->getRequest()->getActionName() === 'mail') {
             $items[8]['active'] = true;
-        } else {
+        } elseif ($this->getRequest()->getActionName() === 'recaptchaLog') {
+            $items[9]['active'] = true;
+        }
+        else {
             $items[0]['active'] = true; 
         }
 
@@ -140,6 +149,7 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('captcha', $this->getRequest()->getPost('captcha'));
                 $this->getConfig()->set('captcha_apikey', $this->getRequest()->getPost('captcha_apikey'));
                 $this->getConfig()->set('captcha_seckey', $this->getRequest()->getPost('captcha_seckey'));
+                $this->getConfig()->set('captcha_logging', $this->getRequest()->getPost('captcha_logging') ? 1 : 0);
                 if ($this->getRequest()->getPost('hmenuFixed') === '1') {
                     $this->getConfig()->set('admin_layout_hmenu', 'hmenu-fixed');
                 } elseif ($this->getRequest()->getPost('hmenuFixed') === '0') {
@@ -176,6 +186,7 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('captcha', (int)$this->getConfig()->get('captcha'));
         $this->getView()->set('captcha_apikey', $this->getConfig()->get('captcha_apikey'));
         $this->getView()->set('captcha_seckey', $this->getConfig()->get('captcha_seckey'));
+        $this->getView()->set('captcha_logging', (int)$this->getConfig()->get('captcha_logging'));
         $this->getView()->set('groupList', $groupMapper->getGroupList());
         $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'));
         $this->getView()->set('updateservers', $updateserversMapper->getUpdateservers());
@@ -534,4 +545,42 @@ HTACCESS;
         $this->getView()->set('urlsConsideredSafe', $urlsConsideredSafe);
         $this->getView()->set('additionalDomains', ($this->getConfig()->get('htmlPurifier_additionalDomains')) ? explode('|', $this->getConfig()->get('htmlPurifier_additionalDomains')) : []);
     }
+
+    public function recaptchaLogAction()
+    {
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+            ->add('reCAPTCHA-Log', ['action' => 'recaptchaLog']);
+
+        $logPath = ROOT_PATH . '/application/libraries/Captcha/recaptcha_score_log.json';
+
+        // === Log löschen, wenn POST kommt ===
+        if ($this->getRequest()->isPost() && $this->getRequest()->getPost('clear_log') == '1') {
+            if (file_exists($logPath)) {
+                file_put_contents($logPath, ''); // Datei leeren
+            }
+            $this->addMessage('reCAPTCHA-Log wurde gelöscht.', 'success');
+            $this->redirect()->to(['action' => 'recaptchaLog']);
+            return;
+        }
+
+
+        $entries = [];
+
+        if (file_exists($logPath)) {
+            $lines = array_reverse(file($logPath)); // Neueste zuerst
+            foreach ($lines as $line) {
+                $entry = json_decode($line, true);
+                if ($entry) {
+                    $entries[] = $entry;
+                }
+                if (count($entries) >= 100) {
+                    break;
+                }
+            }
+        }
+
+        $this->getView()->set('entries', $entries);
+    }
+
 }
