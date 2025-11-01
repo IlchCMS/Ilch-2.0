@@ -552,7 +552,7 @@ HTACCESS;
             ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
             ->add('reCAPTCHA-Log', ['action' => 'recaptchaLog']);
 
-        $logPath = ROOT_PATH . '/application/libraries/Captcha/recaptcha_score_log.json';
+        $logPath = ROOT_PATH . '/logs/google_captcha.log';
 
         // === Log löschen, wenn POST kommt ===
         if ($this->getRequest()->isPost() && $this->getRequest()->getPost('clear_log') == '1') {

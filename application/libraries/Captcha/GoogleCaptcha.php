@@ -265,44 +265,77 @@ class GoogleCaptcha
      */
     public function validate(string $token, ?string $action = null, float $score = 0.5): bool
     {
-        if (!$this->getSecret()) {
+        if (!$this->getSecret() || $token === '') {
             return false;
         }
 
-        $recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->getSecret()) . '&response=' . urlencode($token));
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        $postFields = http_build_query([
+            'secret' => $this->getSecret(),
+            'response' => $token,
+            'remoteip' => $_SERVER['REMOTE_ADDR'] ?? null,
+        ]);
 
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $postFields,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 5,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYHOST => 2,
+        ]);
 
-        $recaptcha = json_decode($recaptcha);
+        $response = curl_exec($ch);
+        $curlErr = curl_errno($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($curlErr || !$response || $httpCode >= 400) {
+            return false;
+        }
+
+        $recaptcha = json_decode($response);
+        if (json_last_error() !== JSON_ERROR_NONE || !is_object($recaptcha)) {
+            return false;
+        }
 
         $logEntry = [
             'timestamp' => date('c'),
-            'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
-            'action' => $recaptcha->action ?? 'none',
-            'score' => $recaptcha->score ?? 'n/a',
-            'success' => $recaptcha->success ?? false,
-            'hostname' => $recaptcha->hostname ?? 'unknown',
-            'errors' => $recaptcha->{'error-codes'} ?? [],
+            'ip' => filter_var($_SERVER['REMOTE_ADDR'] ?? '', FILTER_VALIDATE_IP) ?: 'unknown',
+            'action' => isset($recaptcha->action) ? (string)$recaptcha->action : 'none',
+            'score' => isset($recaptcha->score) ? (float)$recaptcha->score : null,
+            'success' => isset($recaptcha->success) ? (bool)$recaptcha->success : false,
+            'hostname' => isset($recaptcha->hostname) ? (string)$recaptcha->hostname : 'unknown',
+            'errors' => isset($recaptcha->{'error-codes'}) ? (array)$recaptcha->{'error-codes'} : [],
         ];
+
         $config = Registry::get('config');
-
         if ((int)$config->get('captcha_logging') === 1) {
-            file_put_contents(
-                __DIR__ . '/recaptcha_score_log.json',
-                json_encode($logEntry, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL,
-                FILE_APPEND
-            );
-        }
-
-
-        if (!$recaptcha) {
-            return false;
+            $logsDir = dirname(__DIR__, 3) . '/logs';
+            if (!is_dir($logsDir)) {
+                @mkdir($logsDir, 0755, true);
+            }
+            $logPath = $logsDir . '/google_captcha.log';
+            @file_put_contents($logPath, json_encode($logEntry, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL, FILE_APPEND | LOCK_EX);
         }
 
         if ($this->getVersion() === 3) {
-            return ($recaptcha->success && $recaptcha->score >= $score && (($action && $recaptcha->action == $action) || !$action));
-        } elseif ($this->getVersion() === 2) {
-            return $recaptcha->success;
+            if (empty($recaptcha->success)) {
+                return false;
+            }
+            if (!isset($recaptcha->score) || !is_numeric($recaptcha->score)) {
+                return false;
+            }
+            $respScore = (float)$recaptcha->score;
+            $actionOk = $action === null || (isset($recaptcha->action) && $recaptcha->action === $action);
+            return $respScore >= $score && $actionOk;
         }
+
+        if ($this->getVersion() === 2) {
+            return (bool)($recaptcha->success ?? false);
+        }
+
         return false;
     }
 }
