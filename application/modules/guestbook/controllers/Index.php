@@ -61,7 +61,7 @@ class Index extends \Ilch\Controller\Frontend
 
             if ($captchaNeeded) {
                 if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
-                    $validationRules['token'] = 'required|grecaptcha:saveGuestbook';
+                    $validationRules['token'] = 'required|grecaptcha:saveGuestbook,0.5';
                 } else {
                     $validationRules['captcha'] = 'required|captcha';
                 }
