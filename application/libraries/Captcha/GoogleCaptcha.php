@@ -205,54 +205,110 @@ class GoogleCaptcha
      * @param string|null $nameKey
      * @return string
      */
-    public function getCaptcha(\Ilch\View $view, string $saveKey = 'saveButton', ?string $nameKey = 'grecaptcha'): string
+    public function getCaptcha(\Ilch\View $view, string $saveKey = 'saveButton', ?string $nameKey = 'grecaptcha', string $layout = 'default'): string
     {
+        // Layout-Parameter strikt whitelisten
+        $layout = ($layout === 'compact') ? 'compact' : 'default';
+
         $nameKey = $nameKey ?? '';
         if (!$this->getForm()) {
             $this->setForm('form' . $nameKey);
         }
+        $formId = $this->getForm();
+
+        // Instanz-scope für CSS/JS (verhindert Kollisionen bei mehreren Captchas auf einer Seite)
+        $wrapId = 'gc-wrap-' . bin2hex(random_bytes(4));
 
         $str = '';
+
+        // v3: Invisible, Token-Erzeugung via execute(action)
         if ($this->getVersion() === 3) {
             $str .= '<script async src="https://www.google.com/recaptcha/api.js?render=' . urlencode($this->getKey() ?? '') . '"></script>
-            <script>
-                $(\'#' . $this->getForm() . '\').submit(function(event) {
-                    event.preventDefault();
-                    grecaptcha.ready(function() {
-                        grecaptcha.execute(\'' . $this->getKey() . '\', {action: \'save' . $nameKey . '\'}).then(function(token) {
-                            $(\'#' . $this->getForm() . '\').prepend(\'<input type="hidden" name="token" value="\' + token + \'">\');
-                            $(\'#' . $this->getForm() . '\').prepend(\'<input type="hidden" name="action" value="save' . $nameKey . '">\');
-                            $(\'#' . $this->getForm() . '\').unbind(\'submit\').submit();
-                        });;
+        <script>
+            $(\'#' . $formId . '\').off(\'submit.grecaptcha\').on(\'submit.grecaptcha\', function(event) {
+                event.preventDefault();
+                grecaptcha.ready(function() {
+                    grecaptcha.execute(\'' . $this->getKey() . '\', {action: \'save' . $nameKey . '\'}).then(function(token) {
+                        var $f = $(\'#' . $formId . '\');
+                        $f.find(\'input[name="token"]\').remove();
+                        $f.find(\'input[name="action"]\').remove();
+                        $f.prepend(\'<input type="hidden" name="token" value="\' + token + \'">\');
+                        $f.prepend(\'<input type="hidden" name="action" value="save' . $nameKey . '">\');
+                        $f.off(\'submit.grecaptcha\').trigger(\'submit\');
                     });
                 });
-            </script>';
-        } elseif ($this->getVersion() === 2) {
-            $str .= '<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-            <script>
-                $(\'#' . $this->getForm() . '\').submit(function(event) {
-                    event.preventDefault();
-                    $(\'#' . $this->getForm() . '\').prepend(\'<input type="hidden" name="token" value="\' + grecaptcha.getResponse() + \'">\');
-                    $(\'#' . $this->getForm() . '\').prepend(\'<input type="hidden" name="action" value="save' . $nameKey . '">\');
-                    $(\'#' . $this->getForm() . '\').unbind(\'submit\').submit();
-                });
-            </script>';
-            //g-recaptcha-response
-        }
+            });
+        </script>';
 
-        $str .= '<div class="g-recaptcha"' . ($this->getVersion() === 2 ? 'data-sitekey="' . $this->getKey() . '"' : '') . '>';
-        $str .= '</div>';
-        $str .= $view->getSaveBar($saveKey, $nameKey);
-        if ($this->getVersion() === 3) {
+            // Wrapper + (optionaler) Info-Hinweis + SaveBar
+            $str .= '<div id="' . $wrapId . '" class="ilch-grecaptcha ilch-grecaptcha-v3' . ($layout === 'compact' ? ' ilch-grecaptcha--compact' : '') . '">';
+
+            // v3 hat kein sichtbares Widget – wir zeigen nur die SaveBar + (optional) Info
+            $str .= $view->getSaveBar($saveKey, $nameKey);
+
             if ($this->getHide()) {
-                $str .= '<p style="font-size: 0.7em;" class="text-muted grecaptcha-info">' . $view->getTrans('grecaptcha_info', 'https://policies.google.com/privacy', 'https://policies.google.com/terms') . '</p>';
-                $str .= '<style>.grecaptcha-badge {
-                   visibility: hidden;
-                }</style>';
+                // Hinweis + Badge verstecken (wie bisher), im kompakten Modus etwas enger
+                $str .= '<p class="text-muted grecaptcha-info" style="font-size:' . ($layout === 'compact' ? '0.65em' : '0.7em') . ';">' .
+                    $view->getTrans('grecaptcha_info', 'https://policies.google.com/privacy', 'https://policies.google.com/terms') .
+                    '</p>';
+                $str .= '<style>#' . $wrapId . ' .grecaptcha-badge{visibility:hidden}</style>';
             }
+            // Kompakt-Styles für v3 (nur Abstände)
+            if ($layout === 'compact') {
+                $str .= '<style>
+                #' . $wrapId . ' .grecaptcha-info { margin-top: .25rem; margin-bottom: .25rem; }
+                #' . $wrapId . ' .btn { line-height: 1.1; }
+            </style>';
+            }
+
+            $str .= '</div>';
+            return $str;
         }
 
-        return $str;
+        // v2: sichtbares Widget → ggf. kleiner skalieren im compact-Layout
+        if ($this->getVersion() === 2) {
+            $str .= '<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script>
+            $(\'#' . $formId . '\').off(\'submit.grecaptcha\').on(\'submit.grecaptcha\', function(event) {
+                event.preventDefault();
+                var resp = grecaptcha.getResponse();
+                var $f = $(\'#' . $formId . '\');
+                $f.find(\'input[name="token"]\').remove();
+                $f.find(\'input[name="action"]\').remove();
+                $f.prepend(\'<input type="hidden" name="token" value="\' + resp + \'">\');
+                $f.prepend(\'<input type="hidden" name="action" value="save' . $nameKey . '">\');
+                $f.off(\'submit.grecaptcha\').trigger(\'submit\');
+            });
+        </script>';
+
+            // Wrapper mit optionaler Kompakt-Skalierung
+            $str .= '<div id="' . $wrapId . '" class="ilch-grecaptcha ilch-grecaptcha-v2' . ($layout === 'compact' ? ' ilch-grecaptcha--compact' : '') . '">';
+
+            // Sichtbares Widget
+            $str .= '<div class="g-recaptcha" data-sitekey="' . htmlspecialchars((string)$this->getKey(), ENT_QUOTES, 'UTF-8') . '"></div>';
+
+            // Kompakte Styles nur für diese Instanz
+            if ($layout === 'compact') {
+                $str .= '<style>
+                /* Widget proportional verkleinern, ohne Überlauf */
+                #' . $wrapId . ' .g-recaptcha {
+                    transform: scale(0.90);
+                    transform-origin: 0 0;
+                }
+                /* Abstände kompakter */
+                #' . $wrapId . ' .btn { line-height: 1.1; }
+            </style>';
+            }
+
+            // SaveBar (Submit)
+            $str .= $view->getSaveBar($saveKey, $nameKey);
+            $str .= '</div>';
+
+            return $str;
+        }
+
+        // Fallback (unbekannte Version → nichts rendern)
+        return $view->getSaveBar($saveKey, $nameKey);
     }
 
     /**

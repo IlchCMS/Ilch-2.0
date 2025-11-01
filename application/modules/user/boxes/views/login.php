@@ -37,7 +37,7 @@ $formId = 'loginFormBox_' . bin2hex(random_bytes(4));
         });
     </script>
 
-    <form id="<?=$formId?>" name="<?=$formId?>"
+    <form id="<?=$formId?>" name="<?=$formId?>" class="box-login"
           action="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>"
           method="post">
         <input type="hidden" name="login_redirect_url" value="<?=$this->escape($this->get('redirectUrl')) ?>" />
@@ -64,7 +64,7 @@ $formId = 'loginFormBox_' . bin2hex(random_bytes(4));
         </div>
 
         <?php if ($this->get('captchaNeeded') && $defaultcaptcha): ?>
-            <?=$defaultcaptcha->getCaptcha($this) ?>
+            <?=$defaultcaptcha->getCaptcha($this, 'compact') ?>
         <?php endif; ?>
 
         <div class="row mb-3">
@@ -72,8 +72,8 @@ $formId = 'loginFormBox_' . bin2hex(random_bytes(4));
                 <?php
                 if ($this->get('captchaNeeded')) {
                     if ($googlecaptcha) {
-                        // nameKey 'Login' -> erzeugt Action 'saveLogin' (passt zu 'grecaptcha:saveLogin')
-                        echo $googlecaptcha->setForm($formId)->getCaptcha($this, 'login', 'Login');
+
+                        echo $googlecaptcha->setForm($formId)->getCaptcha($this, 'login', 'Login', 'compact');
                     } else {
                         echo '<button type="submit" class="btn btn-outline-secondary" name="login">' .
                             $this->getTrans('login') . '</button>';
