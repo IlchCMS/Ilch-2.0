@@ -47,36 +47,43 @@ class GoogleCaptcha
     /**
      * Start Google Captcha.
      *
-     * @param array|string|null $key
-     * @param string|null $secret
-     * @param int|null $version
-     * @param bool|null $hide
+     * Akzeptiert entweder einen String als Site‑Key oder ein assoziatives Options‑Array.
+     *
+     * @param array{key?:string,secret?:string,version?:int,hide?:bool}|string|null $key Options array or site key
+     * @param string|null $secret Explicit secret (wird ignoriert, wenn im Options‑Array gesetzt)
+     * @param int|null $version Captcha‑Version (2 oder 3)
+     * @param bool|null $hide Hide widget (nur relevant für Version 3)
      */
     public function __construct($key = null, ?string $secret = null, ?int $version = null, ?bool $hide = null)
     {
-        // if params were passed as array
         if (is_array($key)) {
-            $keyArray = $key;
-            foreach ($keyArray as $arrayKey => $arrayVal) {
-                if (isset($$arrayKey)) {
-                    $$arrayKey = $arrayVal;
-                }
+            $opts = $key;
+            if (array_key_exists('key', $opts) && $opts['key'] !== null) {
+                $this->setKey((string)$opts['key']);
+            }
+            if (array_key_exists('secret', $opts)) {
+                $this->setSecret($opts['secret'] === null ? null : (string)$opts['secret']);
+            }
+            if (array_key_exists('version', $opts) && $opts['version'] !== null) {
+                $this->setVersion((int)$opts['version']);
+            }
+            if (array_key_exists('hide', $opts) && $opts['hide'] !== null) {
+                $this->setHide((bool)$opts['hide']);
+            }
+        } else {
+            if (isset($key)) {
+                $this->setKey((string)$key);
+            }
+            if (isset($secret)) {
+                $this->setSecret($secret);
+            }
+            if (isset($version)) {
+                $this->setVersion($version);
+            }
+            if (isset($hide)) {
+                $this->setHide($hide);
             }
         }
-
-        if (isset($key)) {
-            $this->setKey($key);
-        }
-        if (isset($secret)) {
-            $this->setSecret($secret);
-        }
-        if (isset($version)) {
-            $this->setVersion($version);
-        }
-        if (isset($hide)) {
-            $this->setHide($hide);
-        }
-        return $this;
     }
 
     /**
