@@ -7,12 +7,11 @@ if (!is_array($eintraege)) {
 }
 ?>
 
-<h1>reCAPTCHA Score-Log</h1>
+<h1><?= $this->getTrans('captchaLogTable') ?></h1>
 
 <?php if (!$protokollAktiv): ?>
     <div class="alert alert-warning">
-        <strong>Hinweis:</strong> Das Captcha-Logging ist derzeit <strong>deaktiviert</strong>.
-        Aktiviere <em>„captcha_logging“</em> in den Einstellungen, um neue Einträge zu protokollieren.
+        <?= $this->getTrans('captchaWarning') ?>
     </div>
 <?php else: ?>
     <form method="post"
@@ -21,7 +20,7 @@ if (!is_array($eintraege)) {
         <?= $this->getTokenField() ?>
         <input type="hidden" name="clear_log" value="1">
         <button class="btn btn-danger mb-3" type="submit">
-            <i class="fa fa-trash"></i> Log löschen
+            <i class="fa fa-trash"></i><?= $this->getTrans('captchaDeleteLog') ?>
         </button>
     </form>
 <?php endif; ?>
@@ -51,13 +50,13 @@ if (!is_array($eintraege)) {
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
-            <th>Datum</th>
-            <th>Score</th>
-            <th>Aktion</th>
-            <th>IP</th>
-            <th>Hostname</th>
-            <th>Erfolg</th>
-            <th>Fehler</th>
+            <th><?= $this->getTrans('captchaDate') ?></th>
+            <th><?= $this->getTrans('captchaScore') ?></th>
+            <th><?= $this->getTrans('captchaAction') ?></th>
+            <th><?= $this->getTrans('captchaIp') ?></th>
+            <th><?= $this->getTrans('captchaHostname') ?></th>
+            <th><?= $this->getTrans('captchaSuccess') ?></th>
+            <th><?= $this->getTrans('captchaErrors') ?></th>
         </tr>
         </thead>
         <tbody>
@@ -118,7 +117,6 @@ if (!is_array($eintraege)) {
 
 <?php else: ?>
     <div class="alert alert-secondary mt-3">
-        Es werden derzeit keine reCAPTCHA-Scores protokolliert. Sobald das Logging aktiviert ist,
-        erscheinen hier neue Einträge.
+        <?= $this->getTrans('captchaNoLogEntries') ?>
     </div>
 <?php endif; ?>

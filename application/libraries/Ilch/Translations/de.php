@@ -127,4 +127,21 @@ return [
     'choicesRemoveItemIconText' => 'Element entfernen',
     'choicesRemoveItemLabelText' => 'Element entfernen: ${value}',
     'choicesMaxItemText' => 'Es können nur ${maxItemCount} Werte hinzugefügt werden',
+
+    // Globally needed translations for Captcha-Log-Table.
+    'captcha_logging' => 'Captcha Score Logging aktivieren',
+    'enableCaptchaLogging' => 'Score-Logging aktivieren',
+    'enableCaptchaLoggingInfo' => 'Ermöglicht das Speichern von Score und IP im Logfile (empfohlen zur Analyse)',
+    'captchaDate' => 'Datum',
+    'captchaScore' => 'Google Score',
+    'captchaAction' => 'Aktion',
+    'captchaIp' => 'IP-Adresse',
+    'captchaHostname' => 'Hostname',
+    'captchaSuccess' => 'Erfolg',
+    'captchaErrors' => 'Fehler',
+    'captchaDeleteLog' => 'Captcha-Log löschen',
+    'captchaWarning' => '<strong>Hinweis:</strong> Das Captcha-Logging ist derzeit <strong>deaktiviert</strong>.
+        Aktiviere <em>„captcha_logging“</em> in den Einstellungen, um neue Einträge zu protokollieren.',
+    'captchaLogTable' => 'Captcha-V3-Log',
+    'captchaNoLogEntries' => 'Es werden derzeit keine reCAPTCHA-Scores protokolliert. Sobald das Logging aktiviert ist, erscheinen hier neue Einträge.',
 ];

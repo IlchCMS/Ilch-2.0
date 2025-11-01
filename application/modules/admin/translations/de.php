@@ -446,9 +446,4 @@ return [
     'layoutNotFoundOrInvalid' => 'Layout nicht gefunden oder ungültig.',
     'orphanedSettings' => 'Es wurden Einstellungen für nicht vorhandene Layouts gefunden. Diese können unten gelöscht werden.',
     'deleteOrphanedSettings' => 'Lösche verwaiste Einstellungen',
-
-    'captcha_logging' => 'Captcha Score Logging aktivieren',
-    'enableCaptchaLogging' => 'Score-Logging aktivieren',
-    'enableCaptchaLoggingInfo' => 'Ermöglicht das Speichern von Score und IP im Logfile (empfohlen zur Analyse)',
-
 ];
