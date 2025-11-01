@@ -247,6 +247,25 @@
             </select>
         </div>
     </div>
+    <div class="row mb-3">
+        <label for="captcha_logging" class="col-xl-2 col-form-label">
+            <?= $this->getTrans('enableCaptchaLogging') ?>:
+        </label>
+        <div class="col-xl-4">
+            <div class="form-check">
+                <input class="form-check-input"
+                       type="checkbox"
+                       id="captcha_logging"
+                       name="captcha_logging"
+                       value="1"
+                    <?= ($this->get('captcha_logging') ? 'checked="checked"' : '') ?>>
+                <label class="form-check-label" for="captcha_logging">
+                    <?= $this->getTrans('enableCaptchaLoggingInfo') ?>
+                </label>
+            </div>
+        </div>
+    </div>
+
 
     <h1><?= $this->getTrans('htmlPurifier') ?></h1>
     <p><?= $this->getTrans('htmlPurifierDescription') ?></p>

@@ -20,6 +20,7 @@ class Login extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
+
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuLogin'), ['action' => 'index']);
 
@@ -28,27 +29,47 @@ class Login extends \Ilch\Controller\Frontend
         if ($this->getRequest()->isPost()) {
             $redirectUrl = $this->getRequest()->getPost('login_redirect_url');
 
+
+            $captchaBenoetigt = function_exists('captchaNeeded') ? captchaNeeded() : true;
+
+
+            $googleCaptchaAktiv = $captchaBenoetigt
+                && in_array((int)$this->getConfig()->get('captcha'), [2, 3], true);
+
+
             Validation::setCustomFieldAliases([
                 'login_emailname' => 'nameEmail',
-                'login_password' => 'password',
+                'login_password'  => 'password',
+                'grecaptcha'      => 'token',
             ]);
 
-            $validation = Validation::create($this->getRequest()->getPost(), [
+
+            $regeln = [
                 'login_emailname' => 'required',
-                'login_password' => 'required'
-            ]);
+                'login_password'  => 'required',
+            ];
+
+
+            if ($googleCaptchaAktiv) {
+                $regeln['token'] = 'required|grecaptcha:saveLogin,0.7';
+            }
+
+            $validation = Validation::create($this->getRequest()->getPost(), $regeln);
 
             if ($validation->isValid()) {
                 $userMapper = new UserMapper();
                 $userMapper->deleteselectsdelete(($this->getConfig()->get('userdeletetime')));
 
-                $result  = LoginService::factory()->perform($this->getRequest()->getPost('login_emailname'), $this->getRequest()->getPost('login_password'));
+                $result  = LoginService::factory()->perform(
+                    $this->getRequest()->getPost('login_emailname'),
+                    $this->getRequest()->getPost('login_password')
+                );
 
                 if ($result->isSuccessful()) {
                     $cookieStolenMapper = new CookieStolenMapper();
 
                     if ($cookieStolenMapper->containsCookieStolen($result->getUser()->getId())) {
-                        // The user receives a strongly worded warning that his cookie might be stolen.
+                        // Der Benutzer bekommt einen Warnhinweis, dass sein Cookie evtl. gestohlen wurde.
                         $cookieStolenMapper->deleteCookieStolen($result->getUser()->getId());
                         $this->addMessage($this->getTranslator()->trans('cookieStolen'), 'danger');
                     } else {
@@ -65,7 +86,11 @@ class Login extends \Ilch\Controller\Frontend
                     }
                 } else {
                     $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
-                    $redirectUrl = ['module' => 'user', 'controller' => 'login', 'action' => 'index'];
+                    $redirectUrl = [
+                        'module' => 'user',
+                        'controller' => 'login',
+                        'action' => 'index'
+                    ];
                 }
 
                 $this->redirect($redirectUrl);
@@ -83,14 +108,35 @@ class Login extends \Ilch\Controller\Frontend
             unset($_SESSION['redirect']);
         }
 
+        $captchaBenoetigt = function_exists('captchaNeeded') ? captchaNeeded() : true;
+        $this->getView()->set('captchaNeeded', $captchaBenoetigt);
+
+        if ($captchaBenoetigt) {
+            if (in_array((int)$this->getConfig()->get('captcha'), [2, 3], true)) {
+                // Google reCAPTCHA
+                $googlecaptcha = new \Captcha\GoogleCaptcha(
+                    $this->getConfig()->get('captcha_apikey'),
+                    null,
+                    (int)$this->getConfig()->get('captcha')
+                );
+                $this->getView()->set('googlecaptcha', $googlecaptcha);
+            } else {
+                // Fallback Captcha
+                $defaultcaptcha = new \Captcha\DefaultCaptcha();
+                $this->getView()->set('defaultcaptcha', $defaultcaptcha);
+            }
+        }
+
         $authProvider = new AuthProvider();
 
+        // View-Daten setzen
         $this->getView()->setArray([
-            'providers' => $authProvider->getProviders(),
+            'providers'     => $authProvider->getProviders(),
             'regist_accept' => $this->getConfig()->get('regist_accept'),
-            'redirectUrl' => $redirectUrl
+            'redirectUrl'   => $redirectUrl
         ]);
     }
+
 
     public function newpasswordAction()
     {

@@ -9,6 +9,8 @@ namespace Captcha;
 
 // Get your Keys from https://www.google.com/recaptcha/admin/create
 
+use Ilch\Registry;
+
 class GoogleCaptcha
 {
     /**
@@ -45,36 +47,43 @@ class GoogleCaptcha
     /**
      * Start Google Captcha.
      *
-     * @param array|string|null $key
-     * @param string|null $secret
-     * @param int|null $version
-     * @param bool|null $hide
+     * Akzeptiert entweder einen String als Site‑Key oder ein assoziatives Options‑Array.
+     *
+     * @param array{key?:string,secret?:string,version?:int,hide?:bool}|string|null $key Options array or site key
+     * @param string|null $secret Explicit secret (wird ignoriert, wenn im Options‑Array gesetzt)
+     * @param int|null $version Captcha‑Version (2 oder 3)
+     * @param bool|null $hide Hide widget (nur relevant für Version 3)
      */
     public function __construct($key = null, ?string $secret = null, ?int $version = null, ?bool $hide = null)
     {
-        // if params were passed as array
         if (is_array($key)) {
-            $keyArray = $key;
-            foreach ($keyArray as $arrayKey => $arrayVal) {
-                if (isset($$arrayKey)) {
-                    $$arrayKey = $arrayVal;
-                }
+            $opts = $key;
+            if (array_key_exists('key', $opts) && $opts['key'] !== null) {
+                $this->setKey((string)$opts['key']);
+            }
+            if (array_key_exists('secret', $opts)) {
+                $this->setSecret($opts['secret'] === null ? null : (string)$opts['secret']);
+            }
+            if (array_key_exists('version', $opts) && $opts['version'] !== null) {
+                $this->setVersion((int)$opts['version']);
+            }
+            if (array_key_exists('hide', $opts) && $opts['hide'] !== null) {
+                $this->setHide((bool)$opts['hide']);
+            }
+        } else {
+            if (isset($key)) {
+                $this->setKey((string)$key);
+            }
+            if (isset($secret)) {
+                $this->setSecret($secret);
+            }
+            if (isset($version)) {
+                $this->setVersion($version);
+            }
+            if (isset($hide)) {
+                $this->setHide($hide);
             }
         }
-
-        if (isset($key)) {
-            $this->setKey($key);
-        }
-        if (isset($secret)) {
-            $this->setSecret($secret);
-        }
-        if (isset($version)) {
-            $this->setVersion($version);
-        }
-        if (isset($hide)) {
-            $this->setHide($hide);
-        }
-        return $this;
     }
 
     /**
@@ -196,54 +205,110 @@ class GoogleCaptcha
      * @param string|null $nameKey
      * @return string
      */
-    public function getCaptcha(\Ilch\View $view, string $saveKey = 'saveButton', ?string $nameKey = 'grecaptcha'): string
+    public function getCaptcha(\Ilch\View $view, string $saveKey = 'saveButton', ?string $nameKey = 'grecaptcha', string $layout = 'default'): string
     {
+        // Layout-Parameter strikt whitelisten
+        $layout = ($layout === 'compact') ? 'compact' : 'default';
+
         $nameKey = $nameKey ?? '';
         if (!$this->getForm()) {
             $this->setForm('form' . $nameKey);
         }
+        $formId = $this->getForm();
+
+        // Instanz-scope für CSS/JS (verhindert Kollisionen bei mehreren Captchas auf einer Seite)
+        $wrapId = 'gc-wrap-' . bin2hex(random_bytes(4));
 
         $str = '';
+
+        // v3: Invisible, Token-Erzeugung via execute(action)
         if ($this->getVersion() === 3) {
             $str .= '<script async src="https://www.google.com/recaptcha/api.js?render=' . urlencode($this->getKey() ?? '') . '"></script>
-            <script>
-                $(\'#' . $this->getForm() . '\').submit(function(event) {
-                    event.preventDefault();
-                    grecaptcha.ready(function() {
-                        grecaptcha.execute(\'' . $this->getKey() . '\', {action: \'save' . $nameKey . '\'}).then(function(token) {
-                            $(\'#' . $this->getForm() . '\').prepend(\'<input type="hidden" name="token" value="\' + token + \'">\');
-                            $(\'#' . $this->getForm() . '\').prepend(\'<input type="hidden" name="action" value="save' . $nameKey . '">\');
-                            $(\'#' . $this->getForm() . '\').unbind(\'submit\').submit();
-                        });;
+        <script>
+            $(\'#' . $formId . '\').off(\'submit.grecaptcha\').on(\'submit.grecaptcha\', function(event) {
+                event.preventDefault();
+                grecaptcha.ready(function() {
+                    grecaptcha.execute(\'' . $this->getKey() . '\', {action: \'save' . $nameKey . '\'}).then(function(token) {
+                        var $f = $(\'#' . $formId . '\');
+                        $f.find(\'input[name="token"]\').remove();
+                        $f.find(\'input[name="action"]\').remove();
+                        $f.prepend(\'<input type="hidden" name="token" value="\' + token + \'">\');
+                        $f.prepend(\'<input type="hidden" name="action" value="save' . $nameKey . '">\');
+                        $f.off(\'submit.grecaptcha\').trigger(\'submit\');
                     });
                 });
-            </script>';
-        } elseif ($this->getVersion() === 2) {
-            $str .= '<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-            <script>
-                $(\'#' . $this->getForm() . '\').submit(function(event) {
-                    event.preventDefault();
-                    $(\'#' . $this->getForm() . '\').prepend(\'<input type="hidden" name="token" value="\' + grecaptcha.getResponse() + \'">\');
-                    $(\'#' . $this->getForm() . '\').prepend(\'<input type="hidden" name="action" value="save' . $nameKey . '">\');
-                    $(\'#' . $this->getForm() . '\').unbind(\'submit\').submit();
-                });
-            </script>';
-            //g-recaptcha-response
-        }
+            });
+        </script>';
 
-        $str .= '<div class="g-recaptcha"' . ($this->getVersion() === 2 ? 'data-sitekey="' . $this->getKey() . '"' : '') . '>';
-        $str .= '</div>';
-        $str .= $view->getSaveBar($saveKey, $nameKey);
-        if ($this->getVersion() === 3) {
+            // Wrapper + (optionaler) Info-Hinweis + SaveBar
+            $str .= '<div id="' . $wrapId . '" class="ilch-grecaptcha ilch-grecaptcha-v3' . ($layout === 'compact' ? ' ilch-grecaptcha--compact' : '') . '">';
+
+            // v3 hat kein sichtbares Widget – wir zeigen nur die SaveBar + (optional) Info
+            $str .= $view->getSaveBar($saveKey, $nameKey);
+
             if ($this->getHide()) {
-                $str .= '<p style="font-size: 0.7em;" class="text-muted grecaptcha-info">' . $view->getTrans('grecaptcha_info', 'https://policies.google.com/privacy', 'https://policies.google.com/terms') . '</p>';
-                $str .= '<style>.grecaptcha-badge {
-                   visibility: hidden;
-                }</style>';
+                // Hinweis + Badge verstecken (wie bisher), im kompakten Modus etwas enger
+                $str .= '<p class="text-muted grecaptcha-info" style="font-size:' . ($layout === 'compact' ? '0.65em' : '0.7em') . ';">' .
+                    $view->getTrans('grecaptcha_info', 'https://policies.google.com/privacy', 'https://policies.google.com/terms') .
+                    '</p>';
+                $str .= '<style>#' . $wrapId . ' .grecaptcha-badge{visibility:hidden}</style>';
             }
+            // Kompakt-Styles für v3 (nur Abstände)
+            if ($layout === 'compact') {
+                $str .= '<style>
+                #' . $wrapId . ' .grecaptcha-info { margin-top: .25rem; margin-bottom: .25rem; }
+                #' . $wrapId . ' .btn { line-height: 1.1; }
+            </style>';
+            }
+
+            $str .= '</div>';
+            return $str;
         }
 
-        return $str;
+        // v2: sichtbares Widget → ggf. kleiner skalieren im compact-Layout
+        if ($this->getVersion() === 2) {
+            $str .= '<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script>
+            $(\'#' . $formId . '\').off(\'submit.grecaptcha\').on(\'submit.grecaptcha\', function(event) {
+                event.preventDefault();
+                var resp = grecaptcha.getResponse();
+                var $f = $(\'#' . $formId . '\');
+                $f.find(\'input[name="token"]\').remove();
+                $f.find(\'input[name="action"]\').remove();
+                $f.prepend(\'<input type="hidden" name="token" value="\' + resp + \'">\');
+                $f.prepend(\'<input type="hidden" name="action" value="save' . $nameKey . '">\');
+                $f.off(\'submit.grecaptcha\').trigger(\'submit\');
+            });
+        </script>';
+
+            // Wrapper mit optionaler Kompakt-Skalierung
+            $str .= '<div id="' . $wrapId . '" class="ilch-grecaptcha ilch-grecaptcha-v2' . ($layout === 'compact' ? ' ilch-grecaptcha--compact' : '') . '">';
+
+            // Sichtbares Widget
+            $str .= '<div class="g-recaptcha" data-sitekey="' . htmlspecialchars((string)$this->getKey(), ENT_QUOTES, 'UTF-8') . '"></div>';
+
+            // Kompakte Styles nur für diese Instanz
+            if ($layout === 'compact') {
+                $str .= '<style>
+                /* Widget proportional verkleinern, ohne Überlauf */
+                #' . $wrapId . ' .g-recaptcha {
+                    transform: scale(0.90);
+                    transform-origin: 0 0;
+                }
+                /* Abstände kompakter */
+                #' . $wrapId . ' .btn { line-height: 1.1; }
+            </style>';
+            }
+
+            // SaveBar (Submit)
+            $str .= $view->getSaveBar($saveKey, $nameKey);
+            $str .= '</div>';
+
+            return $str;
+        }
+
+        // Fallback (unbekannte Version → nichts rendern)
+        return $view->getSaveBar($saveKey, $nameKey);
     }
 
     /**
@@ -256,21 +321,77 @@ class GoogleCaptcha
      */
     public function validate(string $token, ?string $action = null, float $score = 0.5): bool
     {
-        if (!$this->getSecret()) {
+        if (!$this->getSecret() || $token === '') {
             return false;
         }
 
-        $recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->getSecret()) . '&response=' . urlencode($token));
-        $recaptcha = json_decode($recaptcha);
-        if (!$recaptcha) {
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        $postFields = http_build_query([
+            'secret' => $this->getSecret(),
+            'response' => $token,
+            'remoteip' => $_SERVER['REMOTE_ADDR'] ?? null,
+        ]);
+
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $postFields,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 5,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYHOST => 2,
+        ]);
+
+        $response = curl_exec($ch);
+        $curlErr = curl_errno($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($curlErr || !$response || $httpCode >= 400) {
             return false;
+        }
+
+        $recaptcha = json_decode($response);
+        if (json_last_error() !== JSON_ERROR_NONE || !is_object($recaptcha)) {
+            return false;
+        }
+
+        $logEntry = [
+            'timestamp' => date('c'),
+            'ip' => filter_var($_SERVER['REMOTE_ADDR'] ?? '', FILTER_VALIDATE_IP) ?: 'unknown',
+            'action' => isset($recaptcha->action) ? (string)$recaptcha->action : 'none',
+            'score' => isset($recaptcha->score) ? (float)$recaptcha->score : null,
+            'success' => isset($recaptcha->success) ? (bool)$recaptcha->success : false,
+            'hostname' => isset($recaptcha->hostname) ? (string)$recaptcha->hostname : 'unknown',
+            'errors' => isset($recaptcha->{'error-codes'}) ? (array)$recaptcha->{'error-codes'} : [],
+        ];
+
+        $config = Registry::get('config');
+        if ((int)$config->get('captcha_logging') === 1) {
+            $logsDir = dirname(__DIR__, 3) . '/logs';
+            if (!is_dir($logsDir)) {
+                @mkdir($logsDir, 0755, true);
+            }
+            $logPath = $logsDir . '/google_captcha.log';
+            @file_put_contents($logPath, json_encode($logEntry, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL, FILE_APPEND | LOCK_EX);
         }
 
         if ($this->getVersion() === 3) {
-            return ($recaptcha->success && $recaptcha->score >= $score && (($action && $recaptcha->action == $action) || !$action));
-        } elseif ($this->getVersion() === 2) {
-            return $recaptcha->success;
+            if (empty($recaptcha->success)) {
+                return false;
+            }
+            if (!isset($recaptcha->score) || !is_numeric($recaptcha->score)) {
+                return false;
+            }
+            $respScore = (float)$recaptcha->score;
+            $actionOk = $action === null || (isset($recaptcha->action) && $recaptcha->action === $action);
+            return $respScore >= $score && $actionOk;
         }
+
+        if ($this->getVersion() === 2) {
+            return (bool)($recaptcha->success ?? false);
+        }
+
         return false;
     }
 }

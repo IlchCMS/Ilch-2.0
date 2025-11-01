@@ -113,4 +113,21 @@ return [
     'choicesRemoveItemIconText' => 'Remove item',
     'choicesRemoveItemLabelText' => 'Remove item: ${value}',
     'choicesMaxItemText' => 'Only ${maxItemCount} values can be added',
+
+    // Globally needed translations for Captcha-Log-Table.
+    'captcha_logging' => 'Enable Captcha score logging',
+    'enableCaptchaLogging' => 'Enable score logging',
+    'enableCaptchaLoggingInfo' => 'Allows storing score and IP in the logfile (recommended for analysis)',
+    'captchaDate' => 'Date',
+    'captchaScore' => 'Google score',
+    'captchaAction' => 'Action',
+    'captchaIp' => 'IP address',
+    'captchaHostname' => 'Hostname',
+    'captchaSuccess' => 'Success',
+    'captchaErrors' => 'Errors',
+    'captchaDeleteLog' => 'Delete Captcha log',
+    'captchaWarning' => '<strong>Note:</strong> Captcha logging is currently <strong>disabled</strong>.
+        Enable <em>“captcha_logging”</em> in the settings to record new entries.',
+    'captchaLogTable' => 'Captcha v3 log',
+    'captchaNoLogEntries' => 'No reCAPTCHA scores are being logged at the moment. Once logging is enabled, new entries will appear here.',
 ];

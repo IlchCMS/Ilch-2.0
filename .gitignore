@@ -23,3 +23,5 @@ tests/cache/
 .user.ini
 robots.txt
 web.config
+
+/logs/google_captcha.log
