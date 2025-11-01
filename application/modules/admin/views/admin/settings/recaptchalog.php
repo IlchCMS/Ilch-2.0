@@ -1,30 +1,55 @@
+<?php
+$protokollAktiv = !empty($this->get('captcha_logging'));
+
+$eintraege = $this->get('entries');
+if (!is_array($eintraege)) {
+    $eintraege = [];
+}
+?>
 
 <h1>reCAPTCHA Score-Log</h1>
 
-<form method="post" action="<?= $this->getUrl(['action' => 'recaptchaLog']) ?>" onsubmit="return confirm('Wirklich löschen?');">
-    <?=$this->getTokenField() ?>
-    <input type="hidden" name="clear_log" value="1">
-    <button class="btn btn-danger mb-3" type="submit">
-        <i class="fa fa-trash"></i> Log löschen
-    </button>
-</form>
+<?php if (!$protokollAktiv): ?>
+    <div class="alert alert-warning">
+        <strong>Hinweis:</strong> Das Captcha-Logging ist derzeit <strong>deaktiviert</strong>.
+        Aktiviere <em>„captcha_logging“</em> in den Einstellungen, um neue Einträge zu protokollieren.
+    </div>
+<?php else: ?>
+    <form method="post"
+          action="<?= $this->getUrl(['action' => 'recaptchaLog']) ?>"
+          onsubmit="return confirm('Wirklich löschen?');">
+        <?= $this->getTokenField() ?>
+        <input type="hidden" name="clear_log" value="1">
+        <button class="btn btn-danger mb-3" type="submit">
+            <i class="fa fa-trash"></i> Log löschen
+        </button>
+    </form>
+<?php endif; ?>
 
-<?php
-$total = count($this->get('entries'));
-$suspicious = count(array_filter($this->get('entries'), function ($e) {
-    return isset($e['score']) && $e['score'] < 0.3;
-}));
-$average = array_sum(array_column($this->get('entries'), 'score')) / max(1, $total);
-?>
+<?php if ($protokollAktiv): ?>
+    <?php
+    $gesamt = count($eintraege);
 
-<div class="alert alert-info">
-    <strong><?= $total ?></strong> Captcha-Prüfungen geladen |
-    Durchschnittlicher Score: <strong><?= number_format($average, 2) ?></strong> |
-    Verdächtige (Score &lt; 0.3): <strong><?= $suspicious ?></strong>
-</div>
+    $nurScores = array_values(array_filter(
+        array_column($eintraege, 'score'),
+        static function ($s) { return is_numeric($s); }
+    ));
 
-<table class="table table-bordered table-striped">
-    <thead>
+    $durchschnitt = $nurScores ? array_sum($nurScores) / count($nurScores) : 0.0;
+
+    $verdaechtig = count(array_filter($eintraege, static function ($e) {
+        return isset($e['score']) && is_numeric($e['score']) && $e['score'] < 0.3;
+    }));
+    ?>
+
+    <div class="alert alert-info">
+        <strong><?= (int)$gesamt ?></strong> Captcha-Prüfungen geladen |
+        Durchschnittlicher Score: <strong><?= number_format((float)$durchschnitt, 2) ?></strong> |
+        Verdächtige (Score &lt; 0.3): <strong><?= (int)$verdaechtig ?></strong>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
         <tr>
             <th>Datum</th>
             <th>Score</th>
@@ -34,37 +59,66 @@ $average = array_sum(array_column($this->get('entries'), 'score')) / max(1, $tot
             <th>Erfolg</th>
             <th>Fehler</th>
         </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($this->get('entries') as $entry): ?>
+        </thead>
+        <tbody>
+        <?php foreach ($eintraege as $eintrag): ?>
             <tr>
                 <td>
                     <?php
-                    $dt = new \DateTime($entry['timestamp']);
-                    echo $dt->format('d.m.Y H:i');
+                    // Datum sicher formatieren
+                    try {
+                        $dtRoh = isset($eintrag['timestamp']) ? (string)$eintrag['timestamp'] : 'now';
+                        $dt = new \DateTime($dtRoh);
+                        echo htmlspecialchars($dt->format('d.m.Y H:i'), ENT_QUOTES, 'UTF-8');
+                    } catch (\Exception $ex) {
+                        echo '<span class="text-muted">unbekannt</span>';
+                    }
                     ?>
                 </td>
 
                 <td>
                     <?php
-                        $score = $entry['score'];
-                        if (!is_numeric($score)) {
-                            echo '<span class="badge bg-secondary">n/a</span>';
-                        } elseif ($score < 0.3) {
-                            echo '<span class="badge bg-danger">' . $score . '</span>';
-                        } elseif ($score < 0.7) {
-                            echo '<span class="badge bg-warning text-dark">' . $score . '</span>';
-                        } else {
-                            echo '<span class="badge bg-success">' . $score . '</span>';
-                        }
+                    // Score farblich kennzeichnen
+                    $score = $eintrag['score'] ?? null;
+                    if (!is_numeric($score)) {
+                        echo '<span class="badge bg-secondary">n/a</span>';
+                    } elseif ($score < 0.3) {
+                        echo '<span class="badge bg-danger">' . htmlspecialchars((string)$score, ENT_QUOTES, 'UTF-8') . '</span>';
+                    } elseif ($score < 0.7) {
+                        echo '<span class="badge bg-warning text-dark">' . htmlspecialchars((string)$score, ENT_QUOTES, 'UTF-8') . '</span>';
+                    } else {
+                        echo '<span class="badge bg-success">' . htmlspecialchars((string)$score, ENT_QUOTES, 'UTF-8') . '</span>';
+                    }
                     ?>
                 </td>
-                <td><?= htmlspecialchars($entry['action']) ?></td>
-                <td><?= htmlspecialchars($entry['ip']) ?></td>
-                <td><?= htmlspecialchars($entry['hostname']) ?></td>
-                <td><?= $entry['success'] ? '✅' : '❌' ?></td>
-                <td><?= isset($entry['errors']) && is_array($entry['errors']) ? implode(', ', $entry['errors']) : '-' ?></td>
+
+                <td><?= htmlspecialchars((string)($eintrag['action'] ?? ''), ENT_QUOTES, 'UTF-8') ?></td>
+                <td><?= htmlspecialchars((string)($eintrag['ip'] ?? ''), ENT_QUOTES, 'UTF-8') ?></td>
+                <td><?= htmlspecialchars((string)($eintrag['hostname'] ?? ''), ENT_QUOTES, 'UTF-8') ?></td>
+                <td><?= !empty($eintrag['success']) ? '✅' : '❌' ?></td>
+                <td>
+                    <?php
+                    $fehler = $eintrag['errors'] ?? null;
+                    if (is_array($fehler) && $fehler) {
+                        // Fehlerliste sicher ausgeben
+                        echo htmlspecialchars(implode(', ', array_map('strval', $fehler)), ENT_QUOTES, 'UTF-8');
+                    } else {
+                        echo '-';
+                    }
+                    ?>
+                </td>
             </tr>
         <?php endforeach; ?>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+
+    <?php if ($gesamt === 0): ?>
+        <div class="alert alert-secondary">Keine Einträge vorhanden.</div>
+    <?php endif; ?>
+
+<?php else: ?>
+    <div class="alert alert-secondary mt-3">
+        Es werden derzeit keine reCAPTCHA-Scores protokolliert. Sobald das Logging aktiviert ist,
+        erscheinen hier neue Einträge.
+    </div>
+<?php endif; ?>

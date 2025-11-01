@@ -579,7 +579,7 @@ HTACCESS;
                 }
             }
         }
-
+        $this->getView()->set('captcha_logging', (int)$this->getConfig()->get('captcha_logging'));
         $this->getView()->set('entries', $entries);
     }
 
