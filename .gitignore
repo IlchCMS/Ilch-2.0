@@ -23,3 +23,5 @@ tests/cache/
 .user.ini
 robots.txt
 web.config
+
+/application/libraries/Captcha/recaptcha_score_log.json
