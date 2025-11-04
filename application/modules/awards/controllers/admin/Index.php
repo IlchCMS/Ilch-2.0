@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -47,8 +48,7 @@ class Index extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuAwards',
             $items
         );
@@ -76,7 +76,7 @@ class Index extends \Ilch\Controller\Admin
 
         $awards = $awardsMapper->getAwards();
         foreach ($awards as $award) {
-            foreach($award->getRecipients() as $recipient) {
+            foreach ($award->getRecipients() as $recipient) {
                 if ($recipient->getTyp() == 1) {
                     $userIds[] = $recipient->getUtId();
                 } else {
@@ -104,48 +104,39 @@ class Index extends \Ilch\Controller\Admin
         $awardsMapper = new AwardsMapper();
         $userMapper = new UserMapper();
 
+        $awardsModel = new AwardsModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $awards = $awardsMapper->getAwardsById($this->getRequest()->getParam('id'));
+            $awardsModel = $awardsMapper->getAwardsById($this->getRequest()->getParam('id'));
 
-            if (!$awards) {
+            if (!$awardsModel) {
                 $this->redirect()
                     ->withMessage('awardNotFound', 'danger')
                     ->to(['action' => 'index']);
             }
-
-            $this->getView()->set('awards', $awards);
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+        $this->getView()->set('award', $awardsModel);
 
         if ($this->getRequest()->isPost()) {
             // Add BASE_URL if image starts with application to get a complete URL for validation
-            $image = trim($this->getRequest()->getPost('image'));
+            $image = $this->getRequest()->getPost('image', null, true);
             if (!empty($image) && strncmp($image, 'application', 11) === 0) {
-                $image = BASE_URL.'/'.$image;
+                $image = BASE_URL . '/' . $image;
             }
-
-            $post = [
-                'date' => trim($this->getRequest()->getPost('date')),
-                'rank' => trim($this->getRequest()->getPost('rank')),
-                'image' => $image,
-                'utId' => $this->getRequest()->getPost('utId'),
-                'event' => trim($this->getRequest()->getPost('event')),
-                'page' => trim($this->getRequest()->getPost('page'))
-            ];
 
             Validation::setCustomFieldAliases([
                 'utId' => 'invalidUserTeam',
             ]);
 
-            $validation = Validation::create($post, [
-                'date'  => 'required',
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'date'  => 'required|date:d.m.Y',
                 'rank'  => 'required|numeric|integer|min:1',
                 'image' => 'url',
                 'utId'  => 'required',
@@ -153,38 +144,33 @@ class Index extends \Ilch\Controller\Admin
                 'page' => 'url'
             ]);
 
-            $post['image'] = trim($this->getRequest()->getPost('image'));
-
             if ($validation->isValid()) {
-                $recipientMapper = new RecipientsMapper();
-
-                $awardsModel = new AwardsModel();
                 if ($this->getRequest()->getParam('id')) {
                     $awardsModel->setId($this->getRequest()->getParam('id'));
                 }
-                $awardsModel->setDate(new \Ilch\Date($post['date']))
-                    ->setRank($post['rank'])
-                    ->setImage($post['image'])
-                    ->setEvent($post['event'])
-                    ->setURL($post['page']);
-                $idOrAffectedRows = $awardsMapper->save($awardsModel);
+                $awardsModel->setDate(new \Ilch\Date($this->getRequest()->getPost('date', null, true)))
+                    ->setRank($this->getRequest()->getPost('rank', 0, true))
+                    ->setImage($this->getRequest()->getPost('image', '', true))
+                    ->setEvent($this->getRequest()->getPost('event', '', true))
+                    ->setURL($this->getRequest()->getPost('page', '', true));
 
-                $recipientModels = [];
-                foreach($post['utId'] as $value) {
+                foreach ($this->getRequest()->getPost('utId') as $value) {
                     $recipientModel = new RecipientModel();
-                    $recipientModel->setAwardId((!$this->getRequest()->getParam('id')) ? $idOrAffectedRows : $awardsModel->getId())
-                        ->setUtId(substr($value, 2))
+                    $recipientModel->setUtId(substr($value, 2))
                         ->setTyp(substr($value, 0, 1));
-                    $recipientModels[] = $recipientModel;
+
+                    $awardsModel->addRecipient($recipientModel);
                 }
-                $recipientMapper->saveMulti($recipientModels);
+
+                $id = $awardsMapper->save($awardsModel);
+                $awardsModel->setId($id);
 
                 // Notify the recipient of the award if this is enabled. Don't send a notification if this post is from editing an award.
                 if ($this->getConfig()->get('awards_userNotification') && !$this->getRequest()->getParam('id')) {
                     $notificationsMapper = new NotificationsMapper();
                     $notificationModels = [];
 
-                    foreach($recipientModels as $recipientModel) {
+                    foreach ($awardsModel->getRecipients() as $recipientModel) {
                         $users = [];
                         if ($recipientModel->getTyp() === 2) {
                             // The recipient is a team.
@@ -199,7 +185,7 @@ class Index extends \Ilch\Controller\Admin
                             $notificationModel->setUserId($recipientModel->getUtId())
                                 ->setModule('awards')
                                 ->setMessage($this->getTranslator()->trans('awardReceived'))
-                                ->setURL($this->getLayout()->getUrl(['module' => 'awards', 'controller' => 'index', 'action' => 'show', 'id' => $recipientModel->getAwardId()], ''))
+                                ->setURL($this->getLayout()->getUrl(['module' => 'awards', 'controller' => 'index', 'action' => 'show', 'id' => $awardsModel], ''))
                                 ->setType('awardReceived');
                             $notificationModels[] = $notificationModel;
                         }
@@ -210,7 +196,7 @@ class Index extends \Ilch\Controller\Admin
                             $notificationModel->setUserId($user->getId())
                                 ->setModule('awards')
                                 ->setMessage($this->getTranslator()->trans('awardReceivedAsTeam'))
-                                ->setURL($this->getLayout()->getUrl(['module' => 'awards', 'controller' => 'index', 'action' => 'show', 'id' => $recipientModel->getAwardId()], ''))
+                                ->setURL($this->getLayout()->getUrl(['module' => 'awards', 'controller' => 'index', 'action' => 'show', 'id' => $awardsModel], ''))
                                 ->setType('awardReceivedAsTeam');
                             $notificationModels[] = $notificationModel;
                         }
@@ -242,7 +228,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $awardsMapper = new AwardsMapper();
             $awardsMapper->delete($this->getRequest()->getParam('id'));
 

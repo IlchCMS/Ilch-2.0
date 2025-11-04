@@ -1,5 +1,12 @@
 <?php
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Awards\Models\Awards[] $awards */
+$awards = $this->get('awards');
+
+/** @var \Modules\Teams\Models\Teams[] $teams */
 $teams = $this->get('teams');
+/** @var \Modules\Users\Models\User[] $users */
 $users = $this->get('users');
 $recipientToDisplayLimit = 6;
 ?>
@@ -7,7 +14,7 @@ $recipientToDisplayLimit = 6;
 <link href="<?=$this->getModuleUrl('static/css/awards.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuAwards') ?></h1>
-<?php if ($this->get('awards')): ?>
+<?php if ($awards) : ?>
     <div class="row">
         <div class="col-xl-12">
             <div class="award">
@@ -16,41 +23,41 @@ $recipientToDisplayLimit = 6;
                 </div>
             </div>
         </div>
-        <?php foreach ($this->get('awards') as $award): ?>
+        <?php foreach ($awards as $award) : ?>
             <div class="col-xl-6">
                 <div class="award">
                     <div class="rank" align="center">
                         <a href="<?=$this->getUrl(['action' => 'show', 'id' => $award->getId()]) ?>">
-                        <?php if ($award->getRank() == 1): ?>
+                        <?php if ($award->getRank() == 1) : ?>
                             <i class="fa-solid fa-trophy img_gold" title="<?=$this->getTrans('rank') ?> <?=$award->getRank() ?>"></i>
-                        <?php elseif ($award->getRank() == 2): ?>
+                        <?php elseif ($award->getRank() == 2) : ?>
                             <i class="fa-solid fa-trophy img_silver" title="<?=$this->getTrans('rank') ?> <?=$award->getRank() ?>"></i>
-                        <?php elseif ($award->getRank() == 3): ?>
+                        <?php elseif ($award->getRank() == 3) : ?>
                             <i class="fa-solid fa-trophy img_bronze" title="<?=$this->getTrans('rank') ?> <?=$award->getRank() ?>"></i>
-                        <?php else: ?>
+                        <?php else : ?>
                             <span title="<?=$this->getTrans('rank') ?> <?=$award->getRank() ?>"><?=$award->getRank() ?></span>
                         <?php endif; ?>
                         </a>
                     </div>
                     <div class="rank_info">
                         <?php $recipientsDisplayed = 0 ?>
-                        <?php foreach($award->getRecipients() as $recipient) : ?>
-                            <?php if ($recipientsDisplayed >= $recipientToDisplayLimit): ?>
+                        <?php foreach ($award->getRecipients() as $recipient) : ?>
+                            <?php if ($recipientsDisplayed >= $recipientToDisplayLimit) : ?>
                                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $award->getId()]) ?>">...</a>
                                 <?php break; ?>
                             <?php endif; ?>
-                            <?php if ($recipient->getTyp() == 2): ?>
-                                <?php foreach($teams[$award->getId()] as $team) : ?>
+                            <?php if ($recipient->getTyp() == 2) : ?>
+                                <?php foreach ($teams[$award->getId()] as $team) : ?>
                                     <?php if ($team->getId() === $recipient->getUtId()) : ?>
                                         <i class="fa-solid fa-users"></i> <a href="<?=$this->getUrl('teams/index/index') ?>" target="_blank"><?=$this->escape($team->getName()) ?></a>
                                         <?php $recipientsDisplayed++ ?>
                                         <?php break; ?>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
-                            <?php else: ?>
-                                <?php foreach($users[$award->getId()] as $user) : ?>
+                            <?php else : ?>
+                                <?php foreach ($users[$award->getId()] as $user) : ?>
                                     <?php if ($user->getId() === $recipient->getUtId()) : ?>
-                                        <i class="fa-solid fa-user"></i> <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a>
+                                        <i class="fa-solid fa-user"></i> <a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a>
                                         <?php $recipientsDisplayed++ ?>
                                         <?php break; ?>
                                     <?php endif; ?>
@@ -63,17 +70,17 @@ $recipientToDisplayLimit = 6;
                         <br />
                         <?=date('d.m.Y', strtotime($award->getDate())) ?><br />
 
-                        <?php if ($award->getEvent() != ''): ?>
-                            <?php if ($award->getURL() != ''): ?>
+                        <?php if ($award->getEvent() != '') : ?>
+                            <?php if ($award->getURL() != '') : ?>
                                 <a href="<?=$this->escape($award->getURL()) ?>" title="<?=$this->escape($award->getEvent()) ?>" target="_blank" rel="noopener"><?=$this->escape($award->getEvent()) ?></a>
-                            <?php else: ?>
+                            <?php else : ?>
                                 <?=$this->escape($award->getEvent()) ?>
                             <?php endif; ?>
-                        <?php else: ?>
+                        <?php else : ?>
                             <br />
                         <?php endif; ?>
                     </div>
-                    <?php if ($award->getImage() != ''): ?>
+                    <?php if ($award->getImage() != '') : ?>
                         <div class="rank_image">
                             <img src="<?=(strncmp($award->getImage(), 'application', 11) === 0) ? $this->getBaseUrl($award->getImage()) : $this->escape($award->getImage()) ?>" alt="<?=$this->getTrans('rank') ?> <?=$award->getRank() ?>" title="<?=$this->getTrans('rank') ?> <?=$award->getRank() ?>" />
                         </div>
@@ -82,6 +89,6 @@ $recipientToDisplayLimit = 6;
             </div>
         <?php endforeach; ?>
     </div>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noAwards') ?>
 <?php endif; ?>
