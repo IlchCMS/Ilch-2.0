@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2.0
  * @package ilch
@@ -134,7 +135,7 @@ class Gallery extends \Ilch\Mapper
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_users_gallery_items`
-                WHERE `user_id` = '.$id.' AND `parent_id` = 0';
+                WHERE `user_id` = ' . $id . ' AND `parent_id` = 0';
 
         return $this->db()->queryCell($sql);
     }
@@ -181,7 +182,7 @@ class Gallery extends \Ilch\Mapper
 
         return $itemId;
     }
- 
+
     /**
      * Delete the given gallery item.
      *

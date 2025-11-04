@@ -22,18 +22,18 @@
         <li class="float-end nav-item"><button type="submit" class="btn btn-primary" name="save" value="save"><?=$this->getTrans('add') ?></button></li>
     </ul>
 
-    <?php if ($this->get('medias') != ''): ?>
+    <?php if ($this->get('medias') != '') : ?>
         <div id="ilchmedia">
             <div class="container-fluid">
                 <div class="row">
-                    <?php foreach ($this->get('medias') as $media): ?>
-                        <?php if (in_array(strtolower($media->getEnding()), explode(' ', strtolower($this->get('usergallery_filetypes'))))): ?>
+                    <?php foreach ($this->get('medias') as $media) : ?>
+                        <?php if (in_array(strtolower($media->getEnding()), explode(' ', strtolower($this->get('usergallery_filetypes'))))) : ?>
                             <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
                                 <img class="image img-thumbnail img-fluid thumbnail"
                                      data-url="<?=$media->getUrl() ?>"
-                                     <?php if (file_exists($media->getUrlThumb())): ?>
+                                     <?php if (file_exists($media->getUrlThumb())) : ?>
                                         src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
-                                     <?php else: ?>
+                                     <?php else : ?>
                                         src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
                                      <?php endif; ?>
                                      alt="<?=$media->getName() ?>">
@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-    <?php else: ?>
+    <?php else : ?>
         <?=$this->getTrans('noMedias') ?>
     <?php endif; ?>
 </form>

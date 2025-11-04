@@ -23,8 +23,8 @@
                             <div class="slimScrollDiv chat-list-scroll<?=$this->get('dialog') ? '' : ' noscroll' ?>">
                                 <div class="chat-list-wrapper">
                                     <ul class="chat-list">
-                                        <?php if ($this->get('dialogs') != ''): ?>
-                                            <?php foreach ($this->get('dialogs') as $dialog): ?>
+                                        <?php if ($this->get('dialogs') != '') : ?>
+                                            <?php foreach ($this->get('dialogs') as $dialog) : ?>
                                                 <?php
                                                 $date = new \Ilch\Date($dialog->getTime());
 
@@ -73,7 +73,7 @@
                                                     <?=$this->getDeleteIcon(['action' => 'deletedialog', 'id' => $dialog->getCId()]) ?>
                                                 </li>
                                             <?php endforeach; ?>
-                                        <?php else: ?>
+                                        <?php else : ?>
                                             <div class="no-dialog">
                                                 <?=$this->getTrans('noDialog') ?>
                                             </div>
@@ -86,7 +86,7 @@
                         </div>
 
                         <div class="col-12 col-md-7 col-xl-8 right-column<?=$this->get('dialog') ? '' : ' hidden-list-message' ?>">
-                            <?php if ($this->get('dialog')): ?>
+                            <?php if ($this->get('dialog')) : ?>
                                 <div class="message-info">
                                     <span class="back-chat-list">
                                         <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialog']) ?>">
@@ -104,9 +104,9 @@
                             <div class="slimScrollDiv message-list-scroll<?=$this->get('dialog') ? ' noscroll' : '' ?>">
                                 <div class="message-list-wrapper" style="overflow: hidden; width: auto; height: 100%;">
                                     <ul class="message-list">
-                                        <?php if ($this->get('dialog') != ''): ?>
+                                        <?php if ($this->get('dialog') != '') : ?>
                                             <div class="message_box"></div>
-                                        <?php else: ?>
+                                        <?php else : ?>
                                             <div class="no-dialog"><?=$this->getTrans('selectDialog') ?></div>
                                         <?php endif; ?>
                                     </ul>
@@ -115,7 +115,7 @@
                                 <div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(51, 51, 51);"></div>
                             </div>
 
-                            <?php if ($this->get('dialog')): ?>
+                            <?php if ($this->get('dialog')) : ?>
                                 <div class="compose-box">
                                     <div class="row">
                                         <div class="col-12 chat-textarea<?=(empty($this->get('dialog')->getId())) ? ' disabled' : '' ?>">

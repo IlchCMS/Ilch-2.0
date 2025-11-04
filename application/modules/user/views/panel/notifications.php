@@ -7,7 +7,7 @@ $index = 0;
 
 <div class="row">
     <div class="col-xl-12 profile">
-        <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
+        <?php include APPLICATION_PATH . '/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('settingsNotifications') ?></h1>
@@ -35,7 +35,7 @@ $index = 0;
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($notificationPermissions as $notificationPermission): ?>
+                            <?php foreach ($notificationPermissions as $notificationPermission) : ?>
                                 <?php
                                 if ($notificationPermission->getGranted()) {
                                     $value = 'true';
@@ -55,14 +55,17 @@ $index = 0;
                                     <td><?=($notificationPermission->getType() !== '') ? $this->escape($this->getTrans($notificationPermission->getType())) : $this->getTrans('notificationsAllTypes') ?></td>
                                     <td><?=$this->escape($notificationPermission->getModule()) ?></td>
                                 </tr>
-                                <?php $index++; endforeach; ?>
+                                <?php
+                                $index++;
+                            endforeach;
+                            ?>
                             </tbody>
                         </table>
                     </div>
 
                     <?=$this->getListBar(['delete' => 'delete']) ?>
                 </form>
-            <?php else: ?>
+            <?php else : ?>
                 <?=$this->getTrans('noNotificationPermissions') ?>
             <?php endif; ?>
         </div>

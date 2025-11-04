@@ -16,7 +16,7 @@
         <div class="col-xl-9">
             <select id="moduleInput" name="module" class="form-select">
                 <option value=""><?= $this->getTrans('deactivateAuthProvider') ?></option>
-                <?php foreach ($this->get('modules') as $module): ?>
+                <?php foreach ($this->get('modules') as $module) : ?>
                     <option
                         value="<?= $module->getModule() ?>"
                         <?= $module->getModule() === $this->get('provider')->getModule() ? 'selected="selected"' : '' ?>

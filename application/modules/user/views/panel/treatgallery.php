@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-xl-12 profile">
-        <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
+        <?php include APPLICATION_PATH . '/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
             <h1>
@@ -12,7 +12,7 @@
                 </a>
             </h1>
             <?=$this->get('pagination')->getHtml($this, ['action' => 'treatgallery', 'id' => $this->getRequest()->getParam('id')]) ?>
-            <?php if ($this->get('image')): ?>
+            <?php if ($this->get('image')) : ?>
                 <form method="POST">
                     <?=$this->getTokenField() ?>
                     <div class="table-responsive">
@@ -36,14 +36,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($this->get('image') as $image): ?>
+                                <?php foreach ($this->get('image') as $image) : ?>
                                     <tr>
                                         <td><?=$this->getDeleteCheckbox('check_gallery', $image->getImageId()) ?></td>
                                         <td><?=$this->getEditIcon(['action' => 'treatgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getId()]) ?></td>
                                         <td><?=$this->getDeleteIcon(['action' => 'delgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getImageId()]) ?></td>
-                                        <?php if (file_exists($image->getImageThumb())): ?>
-                                            <td><img class="image img-thumbnail img-fluid thumbnail" src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>"/></td>
-                                        <?php else: ?>
+                                        <?php if (file_exists($image->getImageThumb())) : ?>
+                                            <td><img class="image img-thumbnail img-fluid thumbnail" src="<?=$this->getUrl() . '/' . $image->getImageThumb() ?>"/></td>
+                                        <?php else : ?>
                                             <td><img class="image img-thumbnail img-fluid thumbnail" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"/></td>
                                         <?php endif; ?>
                                         <td><?=$this->escape($image->getImageTitle()) ?></td>
@@ -55,7 +55,7 @@
                     </div>
                     <?=$this->getListBar(['delete' => 'delete']) ?>
                 </form>
-            <?php else: ?>
+            <?php else : ?>
                 <?=$this->getTrans('noImages') ?>
             <?php endif; ?>
         </div>

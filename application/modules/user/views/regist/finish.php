@@ -1,4 +1,4 @@
-<?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
+<?php include APPLICATION_PATH . '/modules/user/views/regist/navi.php'; ?>
 
 <div class="regist card panel-default">
     <div class="card-header">
@@ -11,11 +11,11 @@
         <div class="col-xl-10">
             <?=$this->getTranslator()->trans('registerThanks', $this->escape($_SESSION['name'] ?? '')) ?>
             <br /><br />
-        <?php if ($this->get('regist_confirm') == '1'): ?>
+        <?php if ($this->get('regist_confirm') == '1') : ?>
             <?=$this->getTranslator()->trans('registerMailSent', $this->escape($_SESSION['email'] ?? '')) ?>
-        <?php elseif ($this->get('regist_setfree') == '1'): ?>
+        <?php elseif ($this->get('regist_setfree') == '1') : ?>
             <?=$this->getTrans('registerSetfree') ?>
-        <?php else: ?>
+        <?php else : ?>
             <?=$this->getTrans('readyToLogin') ?>
         <?php endif; ?>
         </div>
