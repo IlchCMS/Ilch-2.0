@@ -1,9 +1,16 @@
-<?php if ($this->get('birthdayListNOW') != ''): ?>
-    <?php foreach ($this->get('birthdayListNOW') as $birthdaylist): ?>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var null|Modules\User\Models\User[] $birthdayListNOW */
+$birthdayListNOW = $this->get('birthdayListNOW');
+?>
+<?php if ($birthdayListNOW != '') : ?>
+    <?php foreach ($birthdayListNOW as $user) : ?>
         <i class="fa-solid fa-cake-candles"></i>
-        <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>"><?=$this->escape($birthdaylist->getName()) ?></a> (<?=floor(($this->get('birthdayDateNowYMD') - str_replace("-", "", $this->escape($birthdaylist->getBirthday()))) / 10000) ?>)<br />
+        <a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>"><?=$this->escape($user->getName()) ?></a> (<?=floor(($this->get('birthdayDateNowYMD') - str_replace("-", "", $this->escape($user->getBirthday()))) / 10000) ?>)<br />
     <?php endforeach; ?>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noBirthdayToday') ?>
 <?php endif; ?>
 <hr />
