@@ -1,11 +1,13 @@
-<?php $linkus = $this->get('linkus'); ?>
+<?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Linkus\Models\Linkus|null $linkus */
+$linkus = $this->get('linkus');
+?>
 
 <h1>
-    <?php if ($linkus != ''): ?>
-        <?=$this->getTrans('edit') ?>
-    <?php else: ?>
-        <?=$this->getTrans('add') ?>
-    <?php endif; ?>
+    <?=$this->getTrans($linkus->getId() ? 'edit' : 'add') ?>
 </h1>
 <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
@@ -18,7 +20,7 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=($linkus != '') ? $this->escape($linkus->getTitle()) : $this->escape($this->get('post')['title']) ?>" />
+                   value="<?=$this->originalInput('title', $linkus->getTitle(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('banner') ? ' has-error' : '' ?>">
@@ -31,13 +33,13 @@
                        class="form-control"
                        id="selectedImage_1"
                        name="banner"
-                       value="<?=($linkus != '') ? $this->escape($linkus->getBanner()) : $this->escape($this->get('post')['banner']) ?>"
+                       value="<?=$this->originalInput('banner', $linkus->getBanner(), true) ?>"
                        readonly />
                 <span class="input-group-text"><a id="media" href="javascript:media_1()"><i class="fa-regular fa-image"></i></a></span>
             </div>
         </div>
     </div>
-    <?=($linkus != '') ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=$this->getSaveBar($linkus->getId() ? 'updateButton' : 'addButton') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>

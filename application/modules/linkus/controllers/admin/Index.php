@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -67,33 +68,36 @@ class Index extends \Ilch\Controller\Admin
     public function treatAction()
     {
         $linkusMapper = new LinkusMapper();
+        $model = new LinkusModel();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuLinkus'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuLinkus'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
-            $this->getView()->set('linkus', $linkusMapper->getLinkusById($this->getRequest()->getParam('id')));
+            $model = $linkusMapper->getLinkusById($this->getRequest()->getParam('id'));
+
+            if (!$model) {
+                $this->redirect()
+                    ->withMessage('entryNotFound')
+                    ->to(['controller' => 'index', 'action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuLinkus'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
-
-        $post = [
-            'title' => '',
-            'banner' => '',
-        ];
+        $this->getView()->set('linkus', $model);
 
         if ($this->getRequest()->isPost()) {
             // Add BASE_URL to get a complete URL for validation
             $banner = trim($this->getRequest()->getPost('banner'));
             if (!empty($banner)) {
-                $banner = BASE_URL.'/'.urlencode($banner);
+                $banner = BASE_URL . '/' . urlencode($banner);
             }
 
             $post = [
-                'title' => trim($this->getRequest()->getPost('title')),
+                'title' => $this->getRequest()->getPost('title', '', true),
                 'banner' => $banner,
             ];
 
@@ -102,30 +106,25 @@ class Index extends \Ilch\Controller\Admin
                 'banner' => 'required|url',
             ]);
 
-            $post['banner'] = trim($this->getRequest()->getPost('banner'));
-
             if ($validation->isValid()) {
-                $model = new LinkusModel();
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
-                }
-                $model->setTitle($post['title']);
-                $model->setBanner($post['banner']);
+                $model->setTitle($this->getRequest()->getPost('title', '', true));
+                $model->setBanner($this->getRequest()->getPost('banner', '', true));
                 $linkusMapper->save($model);
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(array_merge(['action' => 'treat'], ($model->getId() ? ['id' => $model->getId()] : [])));
         }
-
-        $this->getView()->set('post', $post);
     }
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $linkusMapper = new LinkusMapper();
             $linkusMapper->delete($this->getRequest()->getParam('id'));
 

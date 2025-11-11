@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -11,81 +12,108 @@ use Modules\Linkus\Models\Linkus as LinkusModel;
 class Linkus extends \Ilch\Mapper
 {
     /**
-     * Gets the Linkus.
+     * @var string
+     * @since 1.7.3
+     */
+    public $tablename = 'linkus';
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return bool
+     * @throws \Ilch\Database\Exception
+     * @since 1.7.3
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by params.
      *
      * @param array $where
-     * @return LinkusModel[]|array
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return LinkusModel[]|null
+     * @since 1.7.3
      */
-    public function getLinkus($where = [])
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
     {
-        $entryArray = $this->db()->select('*')
-            ->from('linkus')
+        $select = $this->db()->select('*')
+            ->from($this->tablename)
             ->where($where)
-            ->order(['id' => 'ASC'])
-            ->execute()
-            ->fetchRows();
+            ->order($orderBy);
 
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
         if (empty($entryArray)) {
             return null;
         }
+        $entrys = [];
 
-        $linkus = [];
         foreach ($entryArray as $entries) {
             $entryModel = new LinkusModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setTitle($entries['title']);
-            $entryModel->setBanner($entries['banner']);
-            $linkus[] = $entryModel;
-        }
+            $entryModel->setByArray($entries);
 
-        return $linkus;
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
+    /**
+     * Gets the Linkus.
+     *
+     * @param array $where
+     * @return LinkusModel[]|null
+     */
+    public function getLinkus(array $where = [])
+    {
+        return $this->getEntriesBy($where, ['id' => 'ASC']);
     }
 
     /**
      * Gets Linkus.
      *
-     * @param integer $id
+     * @param int $id
      * @return LinkusModel|null
      */
-    public function getLinkusById($id)
+    public function getLinkusById(int $id)
     {
-        $linkusRow = $this->db()->select('*')
-            ->from('linkus')
-            ->where(['id' => $id])
-            ->execute()
-            ->fetchAssoc();
+        $linkusRow = $this->getEntriesBy(['id' => $id], []);
 
-        if (empty($linkusRow)) {
-            return null;
+        if ($linkusRow) {
+            return reset($linkusRow);
         }
-
-        $linkusModel = new LinkusModel();
-        $linkusModel->setId($linkusRow['id']);
-        $linkusModel->setTitle($linkusRow['title']);
-        $linkusModel->setBanner($linkusRow['banner']);
-
-        return $linkusModel;
+        return null;
     }
 
     /**
      * Inserts or updates Linkus model.
      *
      * @param LinkusModel $linkus
+     * @return int
      */
     public function save(LinkusModel $linkus)
     {
-        $fields = [
-            'title' => $linkus->getTitle(),
-            'banner' => $linkus->getBanner()
-        ];
+        $fields = $linkus->getArray();
 
         if ($linkus->getId()) {
-            $this->db()->update('linkus')
+            $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $linkus->getId()])
                 ->execute();
+                return $linkus->getId();
         } else {
-            $this->db()->insert('linkus')
+            return $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
@@ -94,12 +122,23 @@ class Linkus extends \Ilch\Mapper
     /**
      * Deletes linkus with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
-        $this->db()->delete('linkus')
+        $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.7.3
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
     }
 }
