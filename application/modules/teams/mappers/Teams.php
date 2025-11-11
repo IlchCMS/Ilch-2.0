@@ -212,7 +212,7 @@ class Teams extends \Ilch\Mapper
                 $showNow = 1;
             }
         }
-        if (is_a($id, EntriesModel::class)) {
+        if (is_a($id, TeamsModel::class)) {
             $id = $id->getId();
         }
 
@@ -233,10 +233,11 @@ class Teams extends \Ilch\Mapper
         $fields = $model->getArray(false);
 
         if ($model->getId()) {
-            return $this->db()->update($this->tablename)
+            $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $model->getId()])
                 ->execute();
+                return $model->getId();
         } else {
             return $this->db()->insert($this->tablename)
                 ->values($fields)
@@ -267,5 +268,16 @@ class Teams extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.25.1
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
     }
 }

@@ -13,7 +13,7 @@ $userGroupList = $this->get('userGroupList');
 <link href="<?=$this->getModuleUrl('static/css/teams.css') ?>" rel="stylesheet">
 
 <h1>
-    <?=($team->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
+    <?=$this->getTrans($team->getId() ? 'edit' : 'add') ?>
     <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
         <i class="fa-solid fa-info"></i>
     </a>
@@ -29,7 +29,7 @@ $userGroupList = $this->get('userGroupList');
                    class="form-control"
                    id="name"
                    name="name"
-                   value="<?=$this->escape($this->originalInput('name', $team->getName())) ?>" />
+                   value="<?=$this->originalInput('name', $team->getName(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('upl') ? ' has-error' : '' ?>">
@@ -61,7 +61,7 @@ $userGroupList = $this->get('userGroupList');
                     data-placeholder="<?=$this->getTrans('selectLeader') ?>"
                     multiple>
                 <?php
-                $leaderIds = explode(',', $team->getLeader()) ?? [];
+                $leaderIds = $this->originalInput('leader', explode(',', $team->getLeader()) ?? []);
                 /** @var \Modules\User\Models\User $user */
                 ?>
                 <?php foreach ($userList ?? [] as $user) : ?>
@@ -83,7 +83,7 @@ $userGroupList = $this->get('userGroupList');
                     data-placeholder="<?=$this->getTrans('selectCoLeader') ?>"
                     multiple>
                 <?php
-                $coLeaderIds = explode(',', $team->getCoLeader()) ?? [];
+                $coLeaderIds = $this->originalInput('coLeader', explode(',', $team->getCoLeader()) ?? []);
                 /** @var \Modules\User\Models\User $user */
                 ?>
                 <?php foreach ($userList ?? [] as $user) : ?>
@@ -106,7 +106,7 @@ $userGroupList = $this->get('userGroupList');
                     ?>
                     <?php foreach ($userGroupList ?? [] as $group) : ?>
                         <?php if ($group->getId() != 3) : ?>
-                            <option <?=($team->getGroupId() == $group->getId() ? 'selected="selected"' : '') ?> value="<?=$group->getId() ?>"><?=$this->escape($group->getName()) ?></option>
+                            <option <?=($this->originalInput('groupId', $team->getGroupId()) == $group->getId() ? 'selected="selected"' : '') ?> value="<?=$group->getId() ?>"><?=$this->escape($group->getName()) ?></option>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </optgroup>
@@ -155,7 +155,7 @@ $userGroupList = $this->get('userGroupList');
             </div>
         </div>
     </div>
-    <?=($team->getId()) ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
+    <?=$this->getSaveBar($team->getId() ? 'edit' : 'add') ?>
 </form>
 
 <?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('teamUsersInfoText')) ?>

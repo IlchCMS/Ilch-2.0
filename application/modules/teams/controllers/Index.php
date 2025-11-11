@@ -58,7 +58,7 @@ class Index extends \Ilch\Controller\Frontend
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
-        $team = $teamsMapper->getTeamById($this->getRequest()->getParam('id'));
+        $team = $teamsMapper->getTeamById($this->getRequest()->getParam('id', 0));
 
         if (!$team) {
             $this->redirect()
@@ -106,12 +106,15 @@ class Index extends \Ilch\Controller\Frontend
             ]);
 
             $validationRules = [
-                'name' => 'required|unique:teams_joins,name,0,undecided',
-                'email' => 'required|email|unique:teams_joins,email,0,undecided',
-                'teamId' => 'numeric|integer|min:1',
+                'name' => 'required|unique:' . $joinsMapper->tablename . ',name,0,undecided',
+                'email' => 'required|email|unique:' . $joinsMapper->tablename . ',email,0,undecided',
+                'teamId' => 'numeric|integer|numeric|exists:' . $teamsMapper->tablename,
                 'gender' => 'numeric|integer|min:1|max:3',
-                'birthday' => 'required',
-                'text' => 'required'
+                'birthday' => 'required|date:d.m.Y',
+                'text' => 'required',
+
+                //'place' => '',
+                //'skill' => '',
             ];
 
             if ($captchaNeeded) {

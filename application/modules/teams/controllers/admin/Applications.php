@@ -82,7 +82,7 @@ class Applications extends \Ilch\Controller\Admin
         $userMapper = new UserMapper();
 
         $userDeleted = false;
-        $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
+        $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id', 0));
 
         if (!$join) {
             $this->redirect()
@@ -117,7 +117,7 @@ class Applications extends \Ilch\Controller\Admin
             $emailsMapper = new EmailsMapper();
             $passwordService = new PasswordService();
 
-            $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
+            $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id', 0));
             if (!$join) {
                 $this->redirect()
                     ->withMessage('noTeam', 'danger')
@@ -221,7 +221,7 @@ class Applications extends \Ilch\Controller\Admin
             $emailsMapper = new EmailsMapper();
             $userMapper = new UserMapper();
 
-            $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
+            $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id', 0));
             if (!$join) {
                 $this->redirect()
                     ->withMessage('noTeam', 'danger')
@@ -278,7 +278,7 @@ class Applications extends \Ilch\Controller\Admin
 
     public function deleteAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $joinsMapper = new JoinsMapper();
 
             $joinsMapper->delete($this->getRequest()->getParam('id'));

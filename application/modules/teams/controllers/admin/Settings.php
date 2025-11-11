@@ -56,6 +56,7 @@ class Settings extends \Ilch\Controller\Admin
                 'image_height' => 'required|numeric|integer|min:1',
                 'image_width' => 'required|numeric|integer|min:1',
                 'userNotification' => 'required|numeric|integer|min:0|max:1',
+                //'image_filetypes' => '',
             ]);
 
             if ($validation->isValid()) {
