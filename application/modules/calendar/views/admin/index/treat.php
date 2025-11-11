@@ -38,18 +38,18 @@ $entry = $this->get('calendar');
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <h1>
-        <?=($entry->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
+        <?=$this->getTrans($entry->getId() ? 'edit' : 'add') ?>
     </h1>
     <div class="row mb-3<?=$this->validation()->hasError('start') ? ' has-error' : '' ?>">
         <label for="start" class="col-xl-2 col-form-label">
             <?=$this->getTrans('start') ?>:
         </label>
-        <div id="start" class="col-xl-4 input-group ilch-date date form_datetime_1">
+        <div id="start" class="col-xl-4 input-group date form_datetime_1">
             <input type="text"
                    class="form-control"
                    id="start"
                    name="start"
-                   value="<?=$this->escape($this->originalInput('start', ($entry->getId() ? (new \Ilch\Date($entry->getStart()))->format('d.m.Y H:i') : ''))) ?>"
+                   value="<?=$this->originalInput('start', ($entry->getId() ? (new \Ilch\Date($entry->getStart()))->format('d.m.Y H:i') : ''), true) ?>"
                    readonly>
             <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
@@ -60,12 +60,12 @@ $entry = $this->get('calendar');
         <label for="end" class="col-xl-2 col-form-label">
             <?=$this->getTrans('end') ?>:
         </label>
-        <div id="end" class="col-xl-4 input-group ilch-date date form_datetime_2">
+        <div id="end" class="col-xl-4 input-group date form_datetime_2">
             <input type="text"
                    class="form-control"
                    id="end"
                    name="end"
-                   value="<?=$this->escape($this->originalInput('end', ($entry->getId() ? ($entry->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getEnd()))->format('d.m.Y H:i') : '') : ''))) ?>">
+                   value="<?=$this->originalInput('end', ($entry->getId() ? ($entry->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getEnd()))->format('d.m.Y H:i') : '') : ''), true) ?>">
             <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
             </span>
@@ -80,7 +80,7 @@ $entry = $this->get('calendar');
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=$this->escape($this->originalInput('title', ($entry->getId() ? $entry->getTitle() : ''))) ?>" />
+                   value="<?=$this->originalInput('title', ($entry->getId() ? $entry->getTitle() : ''), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
@@ -92,7 +92,7 @@ $entry = $this->get('calendar');
                    class="form-control"
                    id="place"
                    name="place"
-                   value="<?=$this->escape($this->originalInput('place', ($entry->getId() ? $entry->getPlace() : ''))) ?>" />
+                   value="<?=$this->originalInput('place', ($entry->getId() ? $entry->getPlace() : ''), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('periodType') ? ' has-error' : '' ?>">
@@ -130,7 +130,7 @@ $entry = $this->get('calendar');
                    class="form-control"
                    id="periodDay"
                    name="periodDay"
-                   value="<?=$this->escape($this->originalInput('periodDay', ($this->originalInput('periodType', ($entry->getId() ? $entry->getPeriodType() : '')) == 'days' ? '0' : ($entry->getId() ? $entry->getPeriodDay() : '1')))) ?>" />
+                   value="<?=$this->originalInput('periodDay', ($this->originalInput('periodType', ($entry->getId() ? $entry->getPeriodType() : '')) == 'days' ? '0' : ($entry->getId() ? $entry->getPeriodDay() : '1')), true) ?>" />
             <span class="input-group-text" id="periodDayAppendix"><?=(!empty($entry->getPeriodType())) ? $this->getTrans($periodAppendix[$entry->getPeriodType()]) : '' ?></span>
         </div>
       </div>
@@ -141,12 +141,12 @@ $entry = $this->get('calendar');
         <label for="repeatUntil" class="col-xl-2 col-form-label">
             <?=$this->getTrans('repeatUntil') ?>:
         </label>
-        <div id="repeatUntil" class="col-xl-4 input-group ilch-date date form_datetime_3">
+        <div id="repeatUntil" class="col-xl-4 input-group date form_datetime_3">
             <input type="text"
                    class="form-control"
                    id="repeatUntil"
                    name="repeatUntil"
-                   value="<?=$this->escape($this->originalInput('repeatUntil', ($entry->getId() ? ($entry->getRepeatUntil() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getRepeatUntil()))->format('d.m.Y H:i') : '') : ''))) ?>"
+                   value="<?=$this->originalInput('repeatUntil', ($entry->getId() ? ($entry->getRepeatUntil() != '1000-01-01 00:00:00' ? (new \Ilch\Date($entry->getRepeatUntil()))->format('d.m.Y H:i') : '') : ''), true) ?>"
                    readonly>
             <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
@@ -164,7 +164,7 @@ $entry = $this->get('calendar');
                    id="color"
                    name="color"
                    data-jscolor=""
-                   value="<?=$this->escape($this->originalInput('color', ($entry->getId() ? $entry->getColor() : '#32333B'))) ?>">
+                   value="<?=$$this->originalInput('color', ($entry->getId() ? $entry->getColor() : '#32333B'), true) ?>">
             <span class="input-group-text">
                 <span class="fa-solid fa-arrow-rotate-left" onclick="document.getElementById('color').jscolor.fromString('32333B')"></span>
             </span>
@@ -196,10 +196,10 @@ $entry = $this->get('calendar');
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?=$this->escape($this->originalInput('text', ($entry->getId() ? $entry->getText() : ''))) ?></textarea>
+                      rows="5"><?=$this->originalInput('text', ($entry->getId() ? $entry->getText() : ''), true) ?></textarea>
         </div>
     </div>
-    <?=($entry->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=$this->getSaveBar($entry->getId() ? 'updateButton' : 'addButton') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
