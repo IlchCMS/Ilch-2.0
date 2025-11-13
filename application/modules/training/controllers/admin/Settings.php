@@ -37,7 +37,7 @@ class Settings extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'boxNexttrainingLimit' => 'numeric|integer|min:1'
+                'boxNexttrainingLimit' => 'required|numeric|integer|min:1'
             ]);
             if ($validation->isValid()) {
                 $this->getConfig()->set('training_boxNexttrainingLimit', $this->getRequest()->getPost('boxNexttrainingLimit'));
