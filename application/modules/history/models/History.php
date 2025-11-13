@@ -42,7 +42,7 @@ class History extends \Ilch\Model
      *
      * @var string
      */
-    protected $color = '';
+    protected $color = '#75ce66';
 
     /**
      * The text of the history.

@@ -91,7 +91,8 @@ class Index extends \Ilch\Controller\Admin
                 'date' => 'required|date:d.m.Y',
                 'title' => 'required',
                 'text' => 'required',
-                'color' => 'required'
+                'color' => 'required',
+                //'symbol' => '',
             ]);
 
             if ($validation->isValid()) {
@@ -115,7 +116,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $historyMapper = new HistoryMapper();
             $historyMapper->delete($this->getRequest()->getParam('id'));
 
