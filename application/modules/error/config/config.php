@@ -18,11 +18,11 @@ class Config extends \Ilch\Config\Install
     {
     }
 
-    public function getInstallSql()
+    public function getUpdate(string $installedVersion): string
     {
-    }
+        switch ($installedVersion) {
+        }
 
-    public function getUpdate(string $installedVersion)
-    {
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -163,7 +164,7 @@ class Redirect
             header($header);
         }
 
-        header('Location: '.$destination, true, $status);
+        header('Location: ' . $destination, true, $status);
         exit;
     }
 
@@ -231,7 +232,7 @@ class Redirect
         }
 
         foreach ($url as $key => $value) {
-            $urlParts[] = $key.'/'.$value;
+            $urlParts[] = $key . '/' . $value;
         }
 
         if ($this->request->isAdmin() && $route === null) {
@@ -239,15 +240,15 @@ class Redirect
         }
 
         $prefix = '';
-        
-        if ($route !== null && $route !== 'frontend') {
-            $prefix = $route. '/';
+
+        if ($route !== null && $route !== '') {
+            $prefix = $route . '/';
         }
 
         if ($modRewrite) {
-            return BASE_URL.'/'.$prefix.implode('/', $urlParts);
+            return BASE_URL . '/' . $prefix . implode('/', $urlParts);
         }
 
-        return BASE_URL.'/index.php/'.$prefix.implode('/', $urlParts);
+        return BASE_URL . '/index.php/' . $prefix . implode('/', $urlParts);
     }
 }
