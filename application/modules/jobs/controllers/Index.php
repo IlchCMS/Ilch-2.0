@@ -40,19 +40,14 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($job->getTitle(), ['action' => 'show', 'id' => $job->getId()]);
 
         if ($this->getRequest()->getPost('saveApply') && $this->getUser()) {
-            $post = [
-                'title' => trim($this->getRequest()->getPost('title')),
-                'text' => trim($this->getRequest()->getPost('text'))
-            ];
-
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'title' => 'required',
                 'text' => 'required'
             ]);
 
             if ($validation->isValid()) {
                 $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
-                $jobTitle = $this->getLayout()->escape($post['title']);
+                $jobTitle = $this->getRequest()->getPost('title', '', true);
                 $date = new \Ilch\Date();
                 $user = $userMapper->getUserById($this->getUser()->getId());
 
@@ -70,7 +65,7 @@ class Index extends \Ilch\Controller\Frontend
                 $messageReplace = [
                     '{applyAs}' => $this->getTranslator()->trans('applyAs') . ' ' . $jobTitle,
                     '{from}' => $this->getTranslator()->trans('mailFrom'),
-                    '{content}' => $this->getLayout()->alwaysPurify($post['text']),
+                    '{content}' => $this->getLayout()->alwaysPurify($this->getRequest()->getPost('text', '')),
                     '{senderMail}' => $this->getLayout()->escape($user->getEmail()),
                     '{senderName}' => $this->getLayout()->escape($user->getName()),
                     '{sitetitle}' => $siteTitle,
