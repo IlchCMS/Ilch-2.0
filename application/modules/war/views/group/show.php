@@ -6,7 +6,7 @@ use Ilch\Date;
 
 /** @var \Modules\War\Models\Group $group */
 $group = $this->get('group');
-/** @var \Modules\War\Mappers\War[]|null $wars */
+/** @var \Modules\War\Models\War[]|null $wars */
 $wars = $this->get('wars');
 
 /** @var \Modules\War\Mappers\Games $gamesMapper */

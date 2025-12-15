@@ -72,7 +72,7 @@ class Index extends Frontend
         $date = new Date();
         $datenow = new Date($date->format("Y-m-d H:i:s", true));
 
-        $war = $warMapper->getWarById($this->getRequest()->getParam('id'));
+        $war = $warMapper->getWarById($this->getRequest()->getParam('id', 0));
 
         if ($war) {
             $commentsKey = 'war/index/show/id/' . $war->getId();
@@ -119,7 +119,8 @@ class Index extends Frontend
                 if ($this->getRequest()->isPost()) {
                     if ($this->getRequest()->getPost('warAccept')) {
                         $validation = Validation::create($this->getRequest()->getPost(), [
-                            'warAccept'           => 'required|min:1|max:3'
+                            'warAccept'           => 'required|min:1|max:3',
+                            //'warComment'           => '',
                         ]);
 
                         if ($validation->isValid()) {
@@ -170,7 +171,6 @@ class Index extends Frontend
                 ->add($this->getTranslator()->trans('menuWarList'), ['action' => 'index'])
                 ->add(($group) ? $group->getGroupName() : '', ($group) ? ['controller' => 'group', 'action' => 'show', 'id' => $group->getId()] : '')
                 ->add($this->getTranslator()->trans('warPlay'), ['action' => 'show', 'id' => $war->getId()]);
-
 
             $this->getView()->set('userMapper', $userMapper)
                 ->set('userGroupIds', $userGroupMapper->getUsersForGroup($group ? $group->getGroupMember() : ''))

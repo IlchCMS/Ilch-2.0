@@ -5,7 +5,7 @@
 /** @var \Modules\War\Models\Group $entry */
 $entry = $this->get('group');
 ?>
-<h1><?=(!$entry->getId()) ? $this->getTrans('manageNewGroup') : $this->getTrans('treatGroup') ?></h1>
+<h1><?=$this->getTrans(!$entry->getId() ? 'manageNewGroup' : 'treatGroup') ?></h1>
 <form id="article_form" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('groupName') ? ' has-error' : '' ?>">
@@ -17,7 +17,7 @@ $entry = $this->get('group');
                    class="form-control"
                    id="groupNameInput"
                    name="groupName"
-                   value="<?=$this->escape($this->originalInput('groupName', ($entry->getId() ? $entry->getGroupName() : ''))) ?>" />
+                   value="<?=$this->originalInput('groupName', $entry->getGroupName(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('groupTag') ? ' has-error' : '' ?>">
@@ -29,7 +29,7 @@ $entry = $this->get('group');
                    class="form-control"
                    id="groupTagInput"
                    name="groupTag"
-                   value="<?=$this->escape($this->originalInput('groupTag', ($entry->getId() ? $entry->getGroupTag() : ''))) ?>" />
+                   value="<?=$this->originalInput('groupTag', $entry->getGroupTag(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('groupImage') ? ' has-error' : '' ?>">
@@ -43,7 +43,7 @@ $entry = $this->get('group');
                        id="selectedImage_1"
                        name="groupImage"
                        placeholder="<?=$this->getTrans('groupImage') ?>"
-                       value="<?=$this->escape($this->originalInput('groupImage', ($entry->getId() ? $entry->getGroupImage() : ''))) ?>" />
+                       value="<?=$this->originalInput('groupImage', $entry->getGroupImage(), true) ?>" />
                 <span class="input-group-text">
                     <a id="media" href="javascript:media_1()"><i class="fa-regular fa-image"></i></a>
                 </span>
@@ -61,7 +61,7 @@ $entry = $this->get('group');
                           id="groupDesc"
                           cols="50"
                           rows="5"
-                          placeholder="<?=$this->escape($this->originalInput('groupDesc', ($entry->getId() ? $entry->getGroupDesc() : ''))) ?>"></textarea>
+                          placeholder="<?=$this->originalInput('groupDesc', $entry->getGroupDesc(), true) ?>"></textarea>
             </div>
         </div>
     </div>
@@ -76,14 +76,14 @@ $entry = $this->get('group');
                     /** @var \Modules\User\Models\Group $group */
                     foreach ($this->get('userGroupList') as $group) : ?>
                         <?php if ($group->getId() != '3') : ?>
-                            <option value="<?=$group->getId() ?>" <?=($this->originalInput('userGroup', ($entry->getId() ? $entry->getGroupMember() : 0))) == $group->getId() ? 'selected=""' : '' ?>><?=$this->escape($group->getName()) ?></option>
+                            <option value="<?=$group->getId() ?>" <?=$this->originalInput('userGroup', $entry->getGroupMember()) == $group->getId() ? 'selected=""' : '' ?>><?=$this->escape($group->getName()) ?></option>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </optgroup>
             </select>
         </div>
     </div>
-    <?=($entry->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=$this->getSaveBar($entry->getId() ? 'updateButton' : 'addButton') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
