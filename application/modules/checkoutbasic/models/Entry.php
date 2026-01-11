@@ -12,7 +12,7 @@ class Entry extends \Ilch\Model
     /**
      * The id of the entry.
      *
-     * @var integer
+     * @var int
      */
     protected $id = 0;
 
@@ -73,7 +73,7 @@ class Entry extends \Ilch\Model
     /**
      * Gets the id of the entry.
      *
-     * @return integer
+     * @return int
      */
     public function getId(): int
     {
@@ -123,7 +123,7 @@ class Entry extends \Ilch\Model
     /**
      * Sets the id of the entry.
      *
-     * @param integer $id
+     * @param int $id
      * @return $this
      */
     public function setId(int $id): Entry
