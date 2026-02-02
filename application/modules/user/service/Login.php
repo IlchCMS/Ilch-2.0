@@ -57,6 +57,40 @@ class Login
             $user = $this->mapper->getUserByName($userNameOrEmail);
         }
 
+        $config = \Ilch\Registry::get('config');
+        $blacklistRaw = $config->get('emailBlacklist');
+
+        $blacklist = [];
+
+        if (!empty($blacklistRaw)) {
+            $lines = preg_split('/\r\n|\r|\n/', $blacklistRaw);
+
+            foreach ($lines as $line) {
+                $line = trim(strtolower($line));
+                if ($line !== '') {
+                    $blacklist[] = $line;
+                }
+            }
+        }
+
+        $emailToCheck = null;
+        $domainToCheck = null;
+
+        if ($user !== null) {
+            $emailToCheck = strtolower($user->getEmail());
+            $domainToCheck = substr(strrchr($emailToCheck, "@"), 1);
+        }
+
+        foreach ($blacklist as $blocked) {
+            if (
+                $blocked === $emailToCheck ||
+                ($domainToCheck !== null && str_ends_with($domainToCheck, $blocked))
+            ) {
+                // absichtlich gleicher Fehler wie bei Passwort falsch
+                return new LoginResult(false, $user, LoginResult::LOGIN_FAILED);
+            }
+        }
+
         if ($user == null || !$this->passwordService->verify($password, $user->getPassword())) {
             return new LoginResult(false, $user, LoginResult::LOGIN_FAILED);
         }
