@@ -66,6 +66,8 @@ return [
     'grecaptcha' => 'Google ReCaptcha',
     'captcha_apikey' => 'Site key',
     'captcha_seckey' => 'Secret key',
+    'captcha_score' => 'Minimum Score (reCAPTCHA v3)',
+    'captcha_score_info' => 'Score between 0.0 (bot) and 1.0 (human). Recommended: 0.5',
     'captcha_apikey_info' => 'The enter the following fields you first need to create an app on %s.',
     'htmlPurifier' => 'HTMLPurifier',
     'htmlPurifierDescription' => '<p>For security reasons entered code for example in articles or own boxes/pages will be outputted filtered.
