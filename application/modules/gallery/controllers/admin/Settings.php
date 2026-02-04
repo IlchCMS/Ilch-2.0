@@ -51,6 +51,11 @@ class Settings extends Admin
                 'pictureOfXRandom' => 'numeric|min:0|max:1',
                 'venoboxNumeration' => 'numeric|min:0|max:1',
                 'venoboxInfiniteGallery' => 'numeric|min:0|max:1',
+                //'pictureOfXSource' => '',
+                //'venoboxOverlayColor' => '',
+                //'venoboxBgcolor' => '',
+                //'venoboxBorder' => '',
+                //'venoboxTitleattr' => '',
             ]);
 
             if ($validation->isValid()) {
@@ -67,12 +72,14 @@ class Settings extends Admin
                 $this->getConfig()->set('gallery_venoboxBorder', $this->getRequest()->getPost('venoboxBorder'));
                 $this->getConfig()->set('gallery_venoboxTitleattr', $this->getRequest()->getPost('venoboxTitleattr'));
 
-                $this->addMessage('saveSuccess');
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
 
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $this->redirect()
+                ->withInput()
                 ->withErrors($validation->getErrorBag())
                 ->to(['action' => 'index']);
         }
