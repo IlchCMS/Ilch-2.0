@@ -30,6 +30,8 @@ use Modules\Admin\Mappers\Box as BoxMapper;
 class Frontend extends Base
 {
     private array $settings = [];
+    private ?\Ilch\Config\Database $config = null;
+    private bool $configLoaded = false;
 
     /**
      * Adds layout helper.
@@ -332,11 +334,14 @@ class Frontend extends Base
      */
     public function getConfigKey(string $key): string
     {
-        /** @var \Ilch\Config\Database $config */
-        $config = \Ilch\Registry::get('config');
+        // Config nur beim ersten Aufruf aus der Registry holen
+        if (!$this->configLoaded) {
+            $this->config = \Ilch\Registry::get('config');
+            $this->configLoaded = true;
+        }
 
-        if (!empty($config) && $key !== '') {
-            return $config->get($key) ?? '';
+        if ($this->config !== null && $key !== '') {
+            return $this->config->get($key) ?? '';
         }
 
         return '';
