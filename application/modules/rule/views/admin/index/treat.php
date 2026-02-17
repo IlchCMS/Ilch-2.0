@@ -14,7 +14,7 @@ $rulesparents = $this->get('rulesparents');
 /** @var Modules\User\Models\Group[]|null $userGroupList */
 $userGroupList = $this->get('userGroupList');
 ?>
-<h1><?=($rule->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
+<h1><?=$this->getTrans($rule->getId() ? 'edit' : 'add') ?></h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('paragraph') ? ' has-error' : '' ?>">
@@ -26,7 +26,7 @@ $userGroupList = $this->get('userGroupList');
                    class="form-control"
                    id="paragraph"
                    name="paragraph"
-                   value="<?=$this->escape($this->originalInput('paragraph', $rule->getParagraph())) ?>"
+                   value="<?=$this->originalInput('paragraph', $rule->getParagraph(), true) ?>"
                    required />
         </div>
     </div>
@@ -39,7 +39,7 @@ $userGroupList = $this->get('userGroupList');
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=$this->escape($this->originalInput('title', $rule->getTitle())) ?>"
+                   value="<?=$this->originalInput('title', $rule->getTitle(), true) ?>"
                    required />
         </div>
     </div>
@@ -80,10 +80,10 @@ $userGroupList = $this->get('userGroupList');
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?=$this->escape($this->originalInput('text', $rule->getText())) ?></textarea>
+                      rows="5"><?=$this->originalInput('text', $rule->getText()) ?></textarea>
         </div>
     </div>
-    <?=($rule->getId()) ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
+    <?=$this->getSaveBar($rule->getId() ? 'edit' : 'add') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>

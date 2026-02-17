@@ -197,7 +197,7 @@ class Rule extends \Ilch\Mapper
      *
      * @param int $ruleId
      * @param string|array $access example: "1,2,3"
-     * @param boolean $addAdmin
+     * @param bool $addAdmin
      */
     public function saveAccess(int $ruleId, $access, bool $addAdmin = true)
     {
@@ -248,5 +248,16 @@ class Rule extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.9.3
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename) && $this->db()->truncate($this->tablenameAccess);
     }
 }
