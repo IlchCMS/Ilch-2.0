@@ -1,32 +1,37 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1>
     <?=$this->getTrans('manage') ?>
     <a class="badge rounded-pill bg-secondary" data-bs-toggle="modal" data-bs-target="#infoModal">
         <i class="fa-solid fa-info"></i>
     </a>
 </h1>
-<?php if ($this->get('entries') != ''): ?>
+<ul class="nav nav-tabs">
+    <li class="nav-item <?=(!$this->getRequest()->getParam('showsetfree')) ? 'active' : '' ?>">
+        <a class="nav-link" href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>">
+            <?=$this->getTrans('entrys') ?>
+        </a>
+    </li>
+    <?php if ($this->get('badge') > 0) : ?>
+        <li class="nav-item <?=($this->getRequest()->getParam('showsetfree')) ? 'active' : '' ?>">
+            <a class="nav-link"href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
+                <?=$this->getTrans('setfree') ?> <span class="badge rounded-pill bg-secondary"><?=$this->get('badge') ?></span>
+            </a>
+        </li>
+    <?php endif; ?>
+</ul>
+<br />
+<?php if ($this->get('entries') != '') : ?>
     <form id="partnerIndexForm" method="POST">
         <?=$this->getTokenField() ?>
-        <ul class="nav nav-tabs">
-            <li class="nav-item <?=(!$this->getRequest()->getParam('showsetfree')) ? 'active' : '' ?>">
-                <a class="nav-link" href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>">
-                    <?=$this->getTrans('entrys') ?>
-                </a>
-            </li>
-            <?php if ($this->get('badge') > 0): ?>
-                <li class="nav-item <?=($this->getRequest()->getParam('showsetfree')) ? 'active' : '' ?>">
-                    <a class="nav-link"href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
-                        <?=$this->getTrans('setfree') ?> <span class="badge rounded-pill bg-secondary"><?=$this->get('badge') ?></span>
-                    </a>
-                </li>
-            <?php endif; ?>
-        </ul>
-        <br />
+
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
                     <col class="icon_width">
-                    <?php  if ($this->getRequest()->getParam('showsetfree')): ?>
+                    <?php  if ($this->getRequest()->getParam('showsetfree')) : ?>
                         <col class="icon_width">
                     <?php endif; ?>
                     <col class="icon_width">
@@ -38,7 +43,7 @@
                     <tr>
                         <th><?=$this->getCheckAllCheckbox('check_entries') ?></th>
                         <th></th>
-                        <?php  if ($this->getRequest()->getParam('showsetfree')): ?>
+                        <?php  if ($this->getRequest()->getParam('showsetfree')) : ?>
                             <th></th>
                         <?php endif; ?>
                         <th></th>
@@ -47,22 +52,24 @@
                     </tr>
                 </thead>
                 <tbody id="sortable">
-                    <?php foreach ($this->get('entries') as $entry): ?>
-                        <?php if (strncmp($entry->getBanner(), 'application', 11) === 0): ?>
+                    <?php
+                    /** @var \Modules\Partner\Models\Partner $entry */
+                    foreach ($this->get('entries') as $entry) : ?>
+                        <?php if (strncmp($entry->getBanner(), 'application', 11) === 0) : ?>
                             <?php $banner = $this->getBaseUrl($entry->getBanner()); ?>
-                        <?php else: ?>
+                        <?php else : ?>
                             <?php $banner = $entry->getBanner(); ?>
                         <?php endif; ?>
                         <tr id="<?=$entry->getId() ?>">
                             <td><?=$this->getDeleteCheckbox('check_entries', $entry->getId()) ?></td>
-                            <?php if ($this->getRequest()->getParam('showsetfree')): ?>
+                            <?php if ($this->getRequest()->getParam('showsetfree')) : ?>
                                 <td>
                                     <?php
                                     $freeArray = ['action' => 'setfree', 'id' => $entry->getId()];
                                     if ($this->get('badge') > 1) {
                                         $freeArray = ['action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1];
                                     }
-                                    echo '<a href="'.$this->getUrl($freeArray, null, true).'" title="'.$this->getTrans('setfree').'"><i class="fa-solid fa-check-square-o text-success"></i></a>';
+                                    echo '<a href="' . $this->getUrl($freeArray, null, true) . '" title="' . $this->getTrans('setfree') . '"><i class="fa-solid fa-check-square-o text-success"></i></a>';
                                     ?>
                                 </td>
                             <?php endif; ?>
@@ -129,7 +136,7 @@
             }
         );
     </script>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noPartners') ?>
 <?php endif; ?>
 
