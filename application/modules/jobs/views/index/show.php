@@ -52,7 +52,7 @@ $job = $this->get('job');
                           id="ck_1"
                           name="text"
                           toolbar="ilch_html_frontend"
-                          rows="5"><?=$this->originalInput('text') ?></textarea>
+                          rows="5"><?=$this->originalInput('text', '', true) ?></textarea>
             </div>
         </div>
         <div class="col-xl-12 text-end">

@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'jobs',
-        'version' => '1.7.1',
+        'version' => '1.7.2',
         'icon_small' => 'fa-solid fa-briefcase',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -35,8 +35,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'ilchCore' => '2.2.13',
+        'phpVersion' => '7.4'
     ];
 
     public function install()
@@ -82,7 +82,8 @@ class Config extends \Ilch\Config\Install
                 // no break
             case "1.6.0":
             case "1.6.1":
-                // no break
+            case "1.7.0":
+            case "1.7.1":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

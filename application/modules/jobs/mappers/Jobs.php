@@ -15,6 +15,64 @@ use Modules\Jobs\Models\Jobs as JobsModel;
 class Jobs extends \Ilch\Mapper
 {
     /**
+     * @var string
+     * @since 1.7.2
+     */
+    public $tablename = 'jobs';
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return bool
+     * @throws \Ilch\Database\Exception
+     * @since 1.7.2
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by params.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return JobsModel[]|null
+     * @since 1.7.2
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
+    {
+        $select = $this->db()->select('*')
+            ->from($this->tablename)
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
+            return null;
+        }
+        $entrys = [];
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new JobsModel();
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
+    /**
      * Gets the Jobs entries.
      *
      * @param array $where
@@ -22,28 +80,7 @@ class Jobs extends \Ilch\Mapper
      */
     public function getJobs(array $where = []): ?array
     {
-        $jobsArray = $this->db()->select('*')
-            ->from('jobs')
-            ->where($where)
-            ->execute()
-            ->fetchRows();
-
-        if (empty($jobsArray)) {
-            return null;
-        }
-
-        $jobs = [];
-        foreach ($jobsArray as $entries) {
-            $jobsModel = new JobsModel();
-            $jobsModel->setId($entries['id'])
-                ->setTitle($entries['title'])
-                ->setText($entries['text'])
-                ->setEmail($entries['email'])
-                ->setShow($entries['show']);
-            $jobs[] = $jobsModel;
-        }
-
-        return $jobs;
+        return $this->getEntriesBy($where, []);
     }
 
     /**
@@ -54,24 +91,12 @@ class Jobs extends \Ilch\Mapper
      */
     public function getJobsById(int $id): ?JobsModel
     {
-        $jobsRow = $this->db()->select('*')
-            ->from('jobs')
-            ->where(['id' => $id])
-            ->execute()
-            ->fetchAssoc();
+        $jobsRow = $this->getEntriesBy(['id' => $id], []);
 
-        if (empty($jobsRow)) {
-            return null;
+        if ($jobsRow) {
+            return reset($jobsRow);
         }
-
-        $jobsModel = new JobsModel();
-        $jobsModel->setId($jobsRow['id'])
-            ->setTitle($jobsRow['title'])
-            ->setText($jobsRow['text'])
-            ->setEmail($jobsRow['email'])
-            ->setShow($jobsRow['show']);
-
-        return $jobsModel;
+        return null;
     }
 
     /**
@@ -82,21 +107,16 @@ class Jobs extends \Ilch\Mapper
      */
     public function save(JobsModel $jobs): int
     {
-        $fields = [
-            'title' => $jobs->getTitle(),
-            'text' => $jobs->getText(),
-            'email' => $jobs->getEmail(),
-            'show' => $jobs->getShow()
-        ];
+        $fields = $jobs->getArray(false);
 
         if ($jobs->getId()) {
-            $this->db()->update('jobs')
+            $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $jobs->getId()])
                 ->execute();
             return $jobs->getId();
         } else {
-            return $this->db()->insert('jobs')
+            return $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
@@ -106,22 +126,23 @@ class Jobs extends \Ilch\Mapper
      * Updates jobs with given id.
      *
      * @param int $id
+     * @return bool
      */
-    public function update(int $id)
+    public function update(int $id): bool
     {
         $show = (int) $this->db()->select('show')
-                        ->from('jobs')
+                        ->from($this->tablename)
                         ->where(['id' => $id])
                         ->execute()
                         ->fetchCell();
 
         if ($show == 1) {
-            $this->db()->update('jobs')
+            return $this->db()->update($this->tablename)
                 ->values(['show' => 0])
                 ->where(['id' => $id])
                 ->execute();
         } else {
-            $this->db()->update('jobs')
+            return $this->db()->update($this->tablename)
                 ->values(['show' => 1])
                 ->where(['id' => $id])
                 ->execute();
@@ -136,8 +157,19 @@ class Jobs extends \Ilch\Mapper
      */
     public function delete(int $id): bool
     {
-        return $this->db()->delete('jobs')
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.7.2
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
     }
 }
