@@ -15,7 +15,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'gallery',
-        'version' => '1.23.3',
+        'version' => '1.24.0',
         'icon_small' => 'fa-regular fa-image',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -53,27 +53,65 @@ class Config extends Install
             ->set('gallery_pictureOfXSource', '')
             ->set('gallery_pictureOfXInterval', '')
             ->set('gallery_pictureOfXRandom', 0)
-            ->set('gallery_venoboxOverlayColor', '')
-            ->set('gallery_venoboxNumeration', 0)
-            ->set('gallery_venoboxInfiniteGallery', 0)
-            ->set('gallery_venoboxBgcolor', '')
+            // Venobox Basics
+            ->set('gallery_venoboxNumeration', 1)
+            ->set('gallery_venoboxInfiniteGallery', 1)
+            ->set('gallery_venoboxTitleattr', 1)
+            ->set('gallery_venoboxFitView', 0)
+            ->set('gallery_venoboxPopup', 0)
+            // Design & Colors
+            ->set('gallery_venoboxOverlayColor', 'rgba(23,23,23,0.85)')
+            ->set('gallery_venoboxBgcolor', '#ffffff')
             ->set('gallery_venoboxBorder', '0px')
-            ->set('gallery_venoboxTitleattr', '');
+            ->set('gallery_venoboxMaxWidth', '100%')
+            ->set('gallery_venoboxSpinner', 'bounce')
+            ->set('gallery_venoboxSpinColor', '#d2d2d2')
+            ->set('gallery_venoboxToolsBackground', '#1C1C1C')
+            ->set('gallery_venoboxToolsColor', '#d2d2d2')
+            // Navigation
+            ->set('gallery_venoboxNavigation', 1)
+            ->set('gallery_venoboxNavKeyboard', 1)
+            ->set('gallery_venoboxNavTouch', 1)
+            ->set('gallery_venoboxNavSpeed', 300)
+            // Share & Title
+            ->set('gallery_venoboxShare', 0)
+            ->set('gallery_venoboxShareStyle', 'bar')
+            ->set('gallery_venoboxTitlePosition', 'top')
+            ->set('gallery_venoboxTitleStyle', 'top')
+            ->set('gallery_venoboxRatio', '16x9');
     }
 
     public function uninstall()
     {
         $databaseConfig = new \Ilch\Config\Database($this->db());
-        $databaseConfig->delete('gallery_picturesPerPage')
+        $databaseConfig
+            ->delete('gallery_picturesPerPage')
             ->delete('gallery_pictureOfXSource')
             ->delete('gallery_pictureOfXInterval')
             ->delete('gallery_pictureOfXRandom')
-            ->delete('gallery_venoboxOverlayColor')
+            // Delete Venobox
             ->delete('gallery_venoboxNumeration')
             ->delete('gallery_venoboxInfiniteGallery')
+            ->delete('gallery_venoboxTitleattr')
+            ->delete('gallery_venoboxFitView')
+            ->delete('gallery_venoboxPopup')
+            ->delete('gallery_venoboxOverlayColor')
             ->delete('gallery_venoboxBgcolor')
             ->delete('gallery_venoboxBorder')
-            ->delete('gallery_venoboxTitleattr');
+            ->delete('gallery_venoboxMaxWidth')
+            ->delete('gallery_venoboxSpinner')
+            ->delete('gallery_venoboxSpinColor')
+            ->delete('gallery_venoboxToolsBackground')
+            ->delete('gallery_venoboxToolsColor')
+            ->delete('gallery_venoboxNavigation')
+            ->delete('gallery_venoboxNavKeyboard')
+            ->delete('gallery_venoboxNavTouch')
+            ->delete('gallery_venoboxNavSpeed')
+            ->delete('gallery_venoboxShare')
+            ->delete('gallery_venoboxShareStyle')
+            ->delete('gallery_venoboxTitlePosition')
+            ->delete('gallery_venoboxTitleStyle')
+            ->delete('gallery_venoboxRatio');
 
         $this->db()->drop('gallery_imgs', true);
         $this->db()->drop('gallery_items', true);
