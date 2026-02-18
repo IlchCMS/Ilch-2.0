@@ -89,6 +89,7 @@ $pagination = $this->get('pagination');
     const options = {
         selector: ".venobox",
         titleStyle: 'bar',
+
     <?php foreach ($this->get('venoboxOptions') as $param => $value) : ?>
         <?php if ($value === "0" || $value === "1") : ?>
             <?=$param ?>: <?=$value === "1" ? 'true' : 'false' ?>,
@@ -97,6 +98,7 @@ $pagination = $this->get('pagination');
         <?php endif; ?>
     <?php endforeach; ?>
     };
+
 
     new VenoBox(options);
 </script>
