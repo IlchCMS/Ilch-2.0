@@ -15,7 +15,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'gallery',
-        'version' => '1.23.3',
+        'version' => '1.23.4',
         'icon_small' => 'fa-regular fa-image',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -40,8 +40,8 @@ class Config extends Install
                 ]
             ]
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'ilchCore' => '2.2.13',
+        'phpVersion' => '7.4'
     ];
 
     public function install()
@@ -107,7 +107,7 @@ class Config extends Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
-    public function getUpdate(string $installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -206,6 +206,11 @@ class Config extends Install
             case "1.22.1":
             case "1.22.2":
             case "1.23.0":
+            case "1.23.1":
+            case "1.23.2":
+            case "1.23.3":
         }
+
+        return '"' . $this->config['key'] . '" Update function executed.';
     }
 }
