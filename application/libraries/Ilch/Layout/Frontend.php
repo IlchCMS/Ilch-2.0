@@ -30,6 +30,9 @@ use Modules\Admin\Mappers\Box as BoxMapper;
 class Frontend extends Base
 {
     private array $settings = [];
+    private ?\Ilch\Config\Database $config = null;
+    private bool $configLoaded = false;
+    private ?Accesses $accessMapper = null;
 
     /**
      * Adds layout helper.
@@ -49,6 +52,22 @@ class Frontend extends Base
         $this->addHelper('getHmenu', 'layout', new \Ilch\Layout\Helper\GetHmenu($this));
         $this->addHelper('getMenu', 'layout', new \Ilch\Layout\Helper\GetMenu($this));
         $this->addHelper('getMenus', 'layout', new \Ilch\Layout\Helper\GetMenus($this));
+    }
+
+
+    /**
+     * Gibt die gecachte Accesses-Instanz zurück.
+     * Erstellt sie beim ersten Aufruf und verwendet sie danach wieder.
+     *
+     * @return Accesses
+     */
+    private function getAccessMapper(): Accesses
+    {
+        if ($this->accessMapper === null) {
+            $this->accessMapper = new Accesses($this->getRequest());
+        }
+
+        return $this->accessMapper;
     }
 
     /**
@@ -332,11 +351,14 @@ class Frontend extends Base
      */
     public function getConfigKey(string $key): string
     {
-        /** @var \Ilch\Config\Database $config */
-        $config = \Ilch\Registry::get('config');
+        // Config nur beim ersten Aufruf aus der Registry holen
+        if (!$this->configLoaded) {
+            $this->config = \Ilch\Registry::get('config');
+            $this->configLoaded = true;
+        }
 
-        if (!empty($config) && $key !== '') {
-            return $config->get($key) ?? '';
+        if ($this->config !== null && $key !== '') {
+            return $this->config->get($key) ?? '';
         }
 
         return '';
@@ -352,12 +374,14 @@ class Frontend extends Base
      */
     public function getBox(string $moduleKey, string $boxKey = '', ?string $customView = null): string
     {
-        $accessMapper = new Accesses($this->getRequest());
         if (empty($boxKey)) {
             $boxKey = $moduleKey;
         }
 
-        if ($accessMapper->hasAccess('Module', $moduleKey) || ($moduleKey == 'user' && $boxKey == 'login') || ($moduleKey == 'admin' && in_array($boxKey, ['layoutswitch', 'langswitch']))) {
+        if ($this->getAccessMapper()->hasAccess('Module', $moduleKey)
+            || ($moduleKey == 'user' && $boxKey == 'login')
+            || ($moduleKey == 'admin' && in_array($boxKey, ['layoutswitch', 'langswitch']))
+        ) {
             $class = '\\Modules\\' . ucfirst($moduleKey) . '\\Boxes\\' . ucfirst($boxKey);
             $view = new \Ilch\View($this->getRequest(), $this->getTranslator(), $this->getRouter());
             $this->getTranslator()->load(APPLICATION_PATH . '/modules/' . $moduleKey . '/translations');
@@ -390,9 +414,7 @@ class Frontend extends Base
      */
     public function getSelfBoxById(int $id, ?string $tpl = null)
     {
-        $accessMapper = new Accesses($this->getRequest());
-
-        if ($accessMapper->hasAccess('Module', $id, $accessMapper::TYPE_BOX)) {
+        if ($this->getAccessMapper()->hasAccess('Module', $id, $this->getAccessMapper()::TYPE_BOX)) {
             /** @var \Ilch\Config\Database $config */
             $config = \Ilch\Registry::get('config');
             $locale = '';
@@ -423,8 +445,7 @@ class Frontend extends Base
      */
     public function getSelfPageById(int $id, ?string $tpl = null)
     {
-        $accessMapper = new Accesses($this->getRequest());
-        if ($accessMapper->hasAccess('Module', $id, $accessMapper::TYPE_PAGE)) {
+        if ($this->getAccessMapper()->hasAccess('Module', $id, $this->getAccessMapper()::TYPE_PAGE)) {
             /** @var \Ilch\Config\Database $config */
             $config = \Ilch\Registry::get('config');
             $locale = '';
@@ -466,9 +487,7 @@ class Frontend extends Base
             $dir = ucfirst($controllerParts[0]) . '\\';
         }
 
-        $accessMapper = new Accesses($this->getRequest());
-
-        if ($accessMapper->hasAccess('Module', $moduleName) && $this->getRequest()->getModuleName() != $moduleName) {
+        if ($this->getAccessMapper()->hasAccess('Module', $moduleName) && $this->getRequest()->getModuleName() != $moduleName) {
             $controller = '\\Modules\\' . ucfirst($moduleName) . '\\Controllers\\' . $dir . ucfirst($controllerName);
 
             $request = new Request(false);
@@ -513,13 +532,30 @@ class Frontend extends Base
      *
      * @return string
      */
+    /**
+     * Gets the header.
+     *
+     * @return string
+     */
     public function getHeader(): string
     {
+        $locale    = $this->getTranslator()->getLocale();
+        $shortLang = substr($locale, 0, 2);
+        $isEnglish = strncmp($locale, 'en', 2) === 0;
+        $user      = $this->getUser();
+        $isAdmin   = $user && $user->isAdmin();
+
+        $escapedTitle       = $this->escape($this->getTitle());
+        $escapedKeywords    = $this->escape($this->getKeywords());
+        $escapedDescription = $this->escape($this->getDescription());
+        $escapedFavicon     = $this->getBaseUrl($this->escape($this->getFavicon()));
+        $escapedAppleIcon   = $this->getBaseUrl($this->escape($this->getAppleIcon()));
+
         $html = '<meta charset="utf-8">
-            <title>' . $this->escape($this->getTitle()) . '</title>
-            <link rel="icon" href="' . $this->getBaseUrl($this->escape($this->getFavicon())) . '" type="image/x-icon">
-            <meta name="keywords" content="' . $this->escape($this->getKeywords()) . '" />
-            <meta name="description" content="' . $this->escape($this->getDescription()) . '" />';
+            <title>' . $escapedTitle . '</title>
+            <link rel="icon" href="' . $escapedFavicon . '" type="image/x-icon">
+            <meta name="keywords" content="' . $escapedKeywords . '" />
+            <meta name="description" content="' . $escapedDescription . '" />';
 
         if (is_array($this->get('metaTags'))) {
             foreach ($this->get('metaTags') as $key => $metaTag) {
@@ -538,30 +574,35 @@ class Frontend extends Base
         $html .= '
             <link href="' . $this->getStaticUrl('js/ckeditor5/build/ckeditor.css') . '" rel="stylesheet" type="text/css">
             <link href="' . $this->getStaticUrl('js/ckeditor5/styles.css') . '" rel="stylesheet" type="text/css">
-            <link rel="apple-touch-icon" href="' . $this->getBaseUrl($this->escape($this->getAppleIcon())) . '">
+            <link rel="apple-touch-icon" href="' . $escapedAppleIcon . '">
             <link href="' . $this->getVendorUrl('fortawesome/font-awesome/css/all.min.css') . '" rel="stylesheet">
             <link href="' . $this->getVendorUrl('fortawesome/font-awesome/css/v4-shims.min.css') . '" rel="stylesheet">
             <link href="' . $this->getStaticUrl('css/ilch.css') . '" rel="stylesheet">
             <link href="' . $this->getVendorUrl('npm-asset/jquery-ui/dist/themes/ui-lightness/jquery-ui.min.css') . '" rel="stylesheet">
             <link href="' . $this->getStaticUrl('js/highlight/default.min.css') . '" rel="stylesheet">
-            <link href="' . $this->getVendorUrl('twbs/bootstrap/dist/css/bootstrap.min.css') . '" rel="stylesheet">
+            <link href="' . $this->getVendorUrl('twbs/bootstrap/dist/css/bootstrap.min.css') . '" rel="stylesheet">';
+
+        $html .= '
             <script src="' . $this->getVendorUrl('npm-asset/jquery/dist/jquery.min.js') . '"></script>
             <script src="' . $this->getVendorUrl('npm-asset/jquery-ui/dist/jquery-ui.min.js') . '"></script>
             <script src="' . $this->getStaticUrl('js/ckeditor5/build/ckeditor.js') . '"></script>
             <script src="' . $this->getStaticUrl('js/jquery.mjs.nestedSortable.js') . '"></script>
             <script src="' . $this->getStaticUrl('../application/modules/admin/static/js/functions.js') . '"></script>
             <script src="' . $this->getStaticUrl('js/highlight/highlight.min.js') . '"></script>
+            <script src="' . $this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.bundle.min.js') . '"></script>';
+
+        $html .= '
             <script>
                 hljs.highlightAll();
                 var iframeUrlUserGallery = "' . $this->getUrl('user/iframe/indexckeditor/type/imageckeditor/') . '";
-                const baseUrl = "' . BASE_URL . '";
+                const baseUrl = ' . json_encode(BASE_URL, JSON_HEX_TAG | JSON_HEX_APOS) . ';
                 $(function () {
                     const tooltipTriggerList = document.querySelectorAll(\'[data-bs-toggle="tooltip"]\')
                     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
                 });
             </script>';
 
-        if ($this->getUser() && $this->getUser()->isAdmin()) {
+        if ($isAdmin) {
             $html .= '
                 <script>
                     var iframeUrlImageCkeditor = "' . $this->getUrl('admin/media/iframe/indexckeditor/type/imageckeditor/') . '";
@@ -571,8 +612,8 @@ class Frontend extends Base
                 </script>';
         }
 
-        if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) {
-            $html .= '<script src="' . $this->getStaticUrl('js/ckeditor5/build/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.umd.js') . '" charset="UTF-8"></script>';
+        if (!$isEnglish) {
+            $html .= '<script src="' . $this->getStaticUrl('js/ckeditor5/build/translations/' . $shortLang . '.umd.js') . '" charset="UTF-8"></script>';
         }
 
         if (is_array($this->get('scriptTags'))) {
@@ -587,57 +628,88 @@ class Frontend extends Base
         if (\Ilch\DebugBar::isInitialized()) {
             $html .= \Ilch\DebugBar::getInstance()->getJavascriptRenderer()->renderHead();
         }
-        if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) {
-            $html .= '<script src="' . $this->getStaticUrl('js/ckeditor5/build/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.umd.js') . '" charset="UTF-8"></script>';
-        }
-        if ($this->getConfigKey('cookie_consent') != 0) {
-            $html .= '
-                <script src="' . $this->getStaticUrl('js/tarteaucitron/build/tarteaucitron.min.js') . '"></script>
-                <style>
-                    #tarteaucitronPersonalize,
-                    #tarteaucitronSaveButton {
-                        background-color: ' . $this->escape($this->getConfigKey('cookie_consent_btn_bg_color')) . ' !important;
-                        color: ' . $this->escape($this->getConfigKey('cookie_consent_btn_text_color')) . ' !important;
-                    }
-                    
-                    #tarteaucitronMainLineOffset,
-                    #tarteaucitronInfo,
-                    #tarteaucitronSave {
-                        background-color: ' . $this->escape($this->getConfigKey('cookie_consent_popup_bg_color')) . ' !important;
-                        color: ' . $this->escape($this->getConfigKey('cookie_consent_popup_text_color')) . ' !important;
-                    }
-                </style>
-                <script>
-                    var tarteaucitronForceLanguage = "' . substr($this->getTranslator()->getLocale(), 0, 2) . '";
-                    tarteaucitronCustomText = {
-                        "close": "' . $this->getTrans('dismissBTNText') . '",
-                        "denyAll": "' . $this->getTrans('denyBTNText') . '",
-                        "allowAll": "' . $this->getTrans('allowBTNText') . '",
-                        "disclaimer": "' . $this->getTrans('policyInfoText') . '",
-                        "privacyUrl": "' . $this->getTrans('policyLinkText') . '",
-                    };
-                    tarteaucitron.init({
-                        privacyUrl: "' . $this->getUrl(['module' => 'privacy', 'controller' => 'index', 'action' => 'index']) . '",
-                        hashtag: "#tarteaucitron",
-                        cookieName: "tarteaucitron",
-                        orientation: "' . $this->escape($this->getConfigKey('cookie_consent_pos')) . '",
-                        cookieslist: true,
-                        removeCredit: true,
-                        iconPosition: "' . $this->escape($this->getConfigKey('cookie_icon_pos')) . '",
-                        ' . ($this->getConfigKey('cookieConsentType') == 'opt-in' ? 'highPrivacy: true,' : ($this->getConfigKey('cookieConsentType') == 'opt-out' ? 'highPrivacy: false,' : '')) . '
-                        ' . ($this->getConfigKey('cookieConsentType') == 'opt-in' ? 'AcceptAllCta: true,' : ($this->getConfigKey('cookieConsentType') == 'opt-out' ? 'AcceptAllCta: false,' : '')) . '
-                    })
-                </script>
-                ';
 
-            if ($this->getConfigKey('cookie_consent_services')) {
-                $services = explode(',', $this->getConfigKey('cookie_consent_services'));
-                $html .= '<script>';
-                foreach ($services as $service) {
-                    $html .= '(tarteaucitron.job = tarteaucitron.job || []).push("' . $this->escape($service) . '");';
-                }
-                $html .= '</script>';
+        if ($this->getConfigKey('cookie_consent') != 0) {
+            $html .= $this->buildCookieConsentHtml($shortLang);
+        }
+
+        return $html;
+    }
+
+    /**
+     * Baut das HTML für den Cookie-Consent-Banner zusammen.
+     *
+     * @param string $shortLang Zweistelliger Sprachcode (z.B. 'de', 'fr')
+     * @return string
+     */
+    private function buildCookieConsentHtml(string $shortLang): string
+    {
+        $btnBgColor    = $this->escape($this->getConfigKey('cookie_consent_btn_bg_color'));
+        $btnTextColor  = $this->escape($this->getConfigKey('cookie_consent_btn_text_color'));
+        $popupBgColor  = $this->escape($this->getConfigKey('cookie_consent_popup_bg_color'));
+        $popupTextColor = $this->escape($this->getConfigKey('cookie_consent_popup_text_color'));
+        $consentPos    = $this->escape($this->getConfigKey('cookie_consent_pos'));
+        $iconPos       = $this->escape($this->getConfigKey('cookie_icon_pos'));
+        $consentType   = $this->getConfigKey('cookieConsentType');
+        $privacyUrl    = $this->getUrl(['module' => 'privacy', 'controller' => 'index', 'action' => 'index']);
+
+        $html = '
+        <script src="' . $this->getStaticUrl('js/tarteaucitron/build/tarteaucitron.min.js') . '"></script>
+        <style>
+            #tarteaucitronPersonalize,
+            #tarteaucitronSaveButton {
+                background-color: ' . $btnBgColor . ' !important;
+                color: ' . $btnTextColor . ' !important;
             }
+
+            #tarteaucitronMainLineOffset,
+            #tarteaucitronInfo,
+            #tarteaucitronSave {
+                background-color: ' . $popupBgColor . ' !important;
+                color: ' . $popupTextColor . ' !important;
+            }
+        </style>
+        <script>
+            var tarteaucitronForceLanguage = "' . $shortLang . '";
+            tarteaucitronCustomText = {
+                "close": "' . $this->getTrans('dismissBTNText') . '",
+                "denyAll": "' . $this->getTrans('denyBTNText') . '",
+                "allowAll": "' . $this->getTrans('allowBTNText') . '",
+                "disclaimer": "' . $this->getTrans('policyInfoText') . '",
+                "privacyUrl": "' . $this->getTrans('policyLinkText') . '",
+            };
+            tarteaucitron.init({
+                privacyUrl: "' . $privacyUrl . '",
+                hashtag: "#tarteaucitron",
+                cookieName: "tarteaucitron",
+                orientation: "' . $consentPos . '",
+                cookieslist: true,
+                removeCredit: true,
+                iconPosition: "' . $iconPos . '",';
+
+        // High Privacy und AcceptAllCta basierend auf dem Consent-Typ
+        if ($consentType === 'opt-in') {
+            $html .= '
+                highPrivacy: true,
+                AcceptAllCta: true,';
+        } elseif ($consentType === 'opt-out') {
+            $html .= '
+                highPrivacy: false,
+                AcceptAllCta: false,';
+        }
+
+        $html .= '
+            })
+        </script>';
+
+        $servicesConfig = $this->getConfigKey('cookie_consent_services');
+        if ($servicesConfig) {
+            $services = explode(',', $servicesConfig);
+            $html .= '<script>';
+            foreach ($services as $service) {
+                $html .= '(tarteaucitron.job = tarteaucitron.job || []).push("' . $this->escape($service) . '");';
+            }
+            $html .= '</script>';
         }
 
         return $html;
@@ -650,9 +722,15 @@ class Frontend extends Base
      */
     public function getCustomCSS(): string
     {
-        if ($this->getConfigKey('custom_css') !== '') {
-            return '<style>' . $this->getConfigKey('custom_css') . '</style>';
+        $css = $this->getConfigKey('custom_css');
+
+        if ($css !== '') {
+
+            $css = str_replace('</style>', '', $css);
+
+            return '<style>' . $css . '</style>';
         }
+
         return '';
     }
 
