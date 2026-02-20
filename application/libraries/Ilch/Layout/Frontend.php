@@ -32,6 +32,7 @@ class Frontend extends Base
     private array $settings = [];
     private ?\Ilch\Config\Database $config = null;
     private bool $configLoaded = false;
+    private ?Accesses $accessMapper = null;
 
     /**
      * Adds layout helper.
@@ -51,6 +52,22 @@ class Frontend extends Base
         $this->addHelper('getHmenu', 'layout', new \Ilch\Layout\Helper\GetHmenu($this));
         $this->addHelper('getMenu', 'layout', new \Ilch\Layout\Helper\GetMenu($this));
         $this->addHelper('getMenus', 'layout', new \Ilch\Layout\Helper\GetMenus($this));
+    }
+
+
+    /**
+     * Gibt die gecachte Accesses-Instanz zurück.
+     * Erstellt sie beim ersten Aufruf und verwendet sie danach wieder.
+     *
+     * @return Accesses
+     */
+    private function getAccessMapper(): Accesses
+    {
+        if ($this->accessMapper === null) {
+            $this->accessMapper = new Accesses($this->getRequest());
+        }
+
+        return $this->accessMapper;
     }
 
     /**
@@ -357,12 +374,14 @@ class Frontend extends Base
      */
     public function getBox(string $moduleKey, string $boxKey = '', ?string $customView = null): string
     {
-        $accessMapper = new Accesses($this->getRequest());
         if (empty($boxKey)) {
             $boxKey = $moduleKey;
         }
 
-        if ($accessMapper->hasAccess('Module', $moduleKey) || ($moduleKey == 'user' && $boxKey == 'login') || ($moduleKey == 'admin' && in_array($boxKey, ['layoutswitch', 'langswitch']))) {
+        if ($this->getAccessMapper()->hasAccess('Module', $moduleKey)
+            || ($moduleKey == 'user' && $boxKey == 'login')
+            || ($moduleKey == 'admin' && in_array($boxKey, ['layoutswitch', 'langswitch']))
+        ) {
             $class = '\\Modules\\' . ucfirst($moduleKey) . '\\Boxes\\' . ucfirst($boxKey);
             $view = new \Ilch\View($this->getRequest(), $this->getTranslator(), $this->getRouter());
             $this->getTranslator()->load(APPLICATION_PATH . '/modules/' . $moduleKey . '/translations');
@@ -395,9 +414,7 @@ class Frontend extends Base
      */
     public function getSelfBoxById(int $id, ?string $tpl = null)
     {
-        $accessMapper = new Accesses($this->getRequest());
-
-        if ($accessMapper->hasAccess('Module', $id, $accessMapper::TYPE_BOX)) {
+        if ($this->getAccessMapper()->hasAccess('Module', $id, $this->getAccessMapper()::TYPE_BOX)) {
             /** @var \Ilch\Config\Database $config */
             $config = \Ilch\Registry::get('config');
             $locale = '';
@@ -428,8 +445,7 @@ class Frontend extends Base
      */
     public function getSelfPageById(int $id, ?string $tpl = null)
     {
-        $accessMapper = new Accesses($this->getRequest());
-        if ($accessMapper->hasAccess('Module', $id, $accessMapper::TYPE_PAGE)) {
+        if ($this->getAccessMapper()->hasAccess('Module', $id, $this->getAccessMapper()::TYPE_PAGE)) {
             /** @var \Ilch\Config\Database $config */
             $config = \Ilch\Registry::get('config');
             $locale = '';
@@ -471,9 +487,7 @@ class Frontend extends Base
             $dir = ucfirst($controllerParts[0]) . '\\';
         }
 
-        $accessMapper = new Accesses($this->getRequest());
-
-        if ($accessMapper->hasAccess('Module', $moduleName) && $this->getRequest()->getModuleName() != $moduleName) {
+        if ($this->getAccessMapper()->hasAccess('Module', $moduleName) && $this->getRequest()->getModuleName() != $moduleName) {
             $controller = '\\Modules\\' . ucfirst($moduleName) . '\\Controllers\\' . $dir . ucfirst($controllerName);
 
             $request = new Request(false);
