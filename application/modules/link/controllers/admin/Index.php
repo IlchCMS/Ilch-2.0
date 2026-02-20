@@ -148,16 +148,18 @@ class Index extends \Ilch\Controller\Admin
     public function deleteCatAction()
     {
         $linkMapper = new LinkMapper();
-        $countLinks = count($linkMapper->getLinksByCatId($this->getRequest()->getParam('id', -1)) ?? []);
+        if (!empty($this->getRequest()->getParam('id'))) {
+            $countLinks = count($linkMapper->getLinksByCatId($this->getRequest()->getParam('id')) ?? []);
 
-        if ($countLinks == 0) {
-            if ($this->getRequest()->isSecure()) {
-                $categorykMapper = new CategoryMapper();
-                $categorykMapper->delete($this->getRequest()->getParam('id', 0));
-                $this->addMessage('deleteSuccess');
+            if ($countLinks == 0) {
+                if ($this->getRequest()->isSecure()) {
+                    $categorykMapper = new CategoryMapper();
+                    $categorykMapper->delete($this->getRequest()->getParam('id', 0));
+                    $this->addMessage('deleteSuccess');
+                }
+            } else {
+                $this->addMessage('deleteFailed', 'danger');
             }
-        } else {
-            $this->addMessage('deleteFailed', 'danger');
         }
 
         $this->redirect(['action' => 'index']);
@@ -165,9 +167,9 @@ class Index extends \Ilch\Controller\Admin
 
     public function deleteLinkAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $linkMapper = new LinkMapper();
-            $linkMapper->delete($this->getRequest()->getParam('id', 0));
+            $linkMapper->delete($this->getRequest()->getParam('id'));
             $this->addMessage('deleteSuccess');
         }
 
@@ -220,27 +222,25 @@ class Index extends \Ilch\Controller\Admin
                 'name' => 'required',
                 'link' => 'required|url',
                 'banner' => 'url',
-            ], $this->getRequest()->getPost('catId') ? ['catId' => 'numeric|integer|min:0|exists:' . $categoryMapper->tablename . ',id'] : ['catId' => 'numeric|integer|min:0']));
-
-            $post['banner'] = $this->getRequest()->getPost('banner');
+                //'desc' => '',
+            ], $this->getRequest()->getPost('catId') ? ['catId' => 'required|numeric|integer|min:1|exists:' . $categoryMapper->tablename . ',id'] : ['catId' => 'required|numeric|integer|min:0']));
 
             if ($validation->isValid()) {
-                $model->setName($post['name'])
-                    ->setLink($post['link'])
-                    ->setBanner($post['banner'])
-                    ->setDesc($post['desc'])
-                    ->setCatId($post['catId']);
+                $model->setName($this->getRequest()->getPost('name', '', true))
+                    ->setLink($this->getRequest()->getPost('link', '', true))
+                    ->setBanner($this->getRequest()->getPost('banner', '', true))
+                    ->setDesc($this->getRequest()->getPost('desc', '', true))
+                    ->setCatId($this->getRequest()->getPost('catId', 0, true));
                 $linkMapper->save($model);
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-                $this->redirect()
-                    ->withInput()
-                    ->withErrors($validation->getErrorBag())
-                    ->to(array_merge(['action' => 'treatLink'], ($model->getId() ? ['id' => $model->getId()] : [])));
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(array_merge(['action' => 'treatLink'], ($model->getId() ? ['id' => $model->getId()] : [])));
         }
 
         $this->getView()->set('cats', $categoryMapper->getCategories() ?? []);
@@ -259,7 +259,9 @@ class Index extends \Ilch\Controller\Admin
             $model = $categorykMapper->getCategoryById($this->getRequest()->getParam('id'));
 
             if (!$model) {
-                $this->redirect(['action' => 'index']);
+                $this->redirect()
+                    ->withMessage('entryNotFound')
+                    ->to(['controller' => 'index', 'action' => 'index']);
             }
         } else {
             $this->getLayout()->getAdminHmenu()
@@ -270,7 +272,8 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'name' => 'required'
+                'name' => 'required',
+                //'desc' => ''
             ]);
 
             if ($validation->isValid()) {
@@ -283,13 +286,12 @@ class Index extends \Ilch\Controller\Admin
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(array_merge(['action' => 'index'], ($model->getParentId() ? ['cat_id' => $model->getParentId()] : [])));
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-                $this->redirect()
-                    ->withInput()
-                    ->withErrors($validation->getErrorBag())
-                    ->to(array_merge(['action' => 'treatCat'], ($model->getId() ? ['id' => $model->getId()] : [])));
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(array_merge(['action' => 'treatCat'], ($model->getId() ? ['id' => $model->getId()] : [])));
         }
     }
 }
