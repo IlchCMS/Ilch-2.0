@@ -708,9 +708,15 @@ class Frontend extends Base
      */
     public function getCustomCSS(): string
     {
-        if ($this->getConfigKey('custom_css') !== '') {
-            return '<style>' . $this->getConfigKey('custom_css') . '</style>';
+        $css = $this->getConfigKey('custom_css');
+
+        if ($css !== '') {
+
+            $css = str_replace('</style>', '', $css);
+
+            return '<style>' . $css . '</style>';
         }
+
         return '';
     }
 
