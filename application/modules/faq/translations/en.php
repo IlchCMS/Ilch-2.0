@@ -28,4 +28,6 @@ return [
     'search' => 'Search',
     'noSearchResult' => 'Sadly no search result.',
     'groupAll' => 'All',
+
+    'entryNotFound' => 'Entry not found',
 ];

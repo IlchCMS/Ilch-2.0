@@ -35,19 +35,18 @@ $readAccess = $this->get('readAccess');
     <?php endif; ?>
 <?php endif; ?>
 
-<?php if ($faqs) : ?>
-    <form role="search" method="POST">
-        <?=$this->getTokenField() ?>
-        <div class="row mb-3">
-            <div class="col-xl-6">
-                <input type="text" class="form-control" placeholder="<?=$this->getTrans('placeHolderSearch') ?>" name="search" id="search">
-            </div>
-            <div class="col-xl-6">
-                <button type="submit" class="btn btn-outline-secondary"><?=$this->getTrans('search') ?></button>
-            </div>
+<form role="search" method="POST">
+    <?=$this->getTokenField() ?>
+    <div class="row mb-3">
+        <div class="col-xl-6">
+            <input type="text" class="form-control" placeholder="<?=$this->getTrans('placeHolderSearch') ?>" name="search" id="search">
         </div>
-    </form>
-
+        <div class="col-xl-6">
+            <button type="submit" class="btn btn-outline-secondary"><?=$this->getTrans('search') ?></button>
+        </div>
+    </div>
+</form>
+<?php if ($faqs) : ?>
     <nav class="navbar navbar-expand-lg border rounded bg-body-tertiary mb-3">
         <div class="container-fluid">
             <a class="navbar-brand">Navigation</a>

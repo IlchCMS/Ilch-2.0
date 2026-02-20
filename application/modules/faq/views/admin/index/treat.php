@@ -10,7 +10,7 @@ $cats = $this->get('cats');
 ?>
 
 <h1>
-    <?=($faq) ? $this->getTrans('edit') : $this->getTrans('add') ?>
+    <?=$this->getTrans($faq->getId() ? 'edit' : 'add') ?>
 </h1>
 <?php if ($cats) : ?>
     <form method="POST" action="">
@@ -36,7 +36,7 @@ $cats = $this->get('cats');
                        class="form-control"
                        id="question"
                        name="question"
-                       value="<?=$this->escape($this->originalInput('question', $faq->getQuestion())) ?>" />
+                       value="<?=$this->originalInput('question', $faq->getQuestion(), true) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('answer') ? ' has-error' : '' ?>">
@@ -52,7 +52,7 @@ $cats = $this->get('cats');
                           toolbar="ilch_html"><?=$this->originalInput('answer', $faq->getAnswer()) ?></textarea>
             </div>
         </div>
-        <?=($faq->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+        <?=$this->getSaveBar($faq->getId() ? 'updateButton' : 'addButton') ?>
     </form>
 <?php else : ?>
     <?=$this->getTrans('noCategory') ?>

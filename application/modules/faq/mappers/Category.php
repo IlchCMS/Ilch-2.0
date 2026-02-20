@@ -25,7 +25,7 @@ class Category extends \Ilch\Mapper
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      * @throws \Ilch\Database\Exception
      * @since 1.9.0
      */
@@ -130,7 +130,7 @@ class Category extends \Ilch\Mapper
      */
     public function save(CategoryModel $model): int
     {
-        $fields = $model->getArray();
+        $fields = $model->getArray(false);
 
         if ($model->getId()) {
             $this->db()->update($this->tablename)
@@ -154,10 +154,10 @@ class Category extends \Ilch\Mapper
      *
      * @param int $warId
      * @param string|array $readAccess example: "1,2,3"
-     * @param boolean $addAdmin
+     * @param bool $addAdmin
      * @since 1.9.0
      */
-    public function saveReadAccess(int $warId, $readAccess, bool $addAdmin = true)
+    public function saveReadAccess(int $faqId, $readAccess, bool $addAdmin = true)
     {
         if (\is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
@@ -165,12 +165,9 @@ class Category extends \Ilch\Mapper
 
         // Delete possible old entries to later insert the new ones.
         $this->db()->delete($this->tablenameAccess)
-            ->where(['cat_id' => $warId])
+            ->where(['cat_id' => $faqId])
             ->execute();
 
-        $sql = 'INSERT INTO [prefix]_' . $this->tablenameAccess . ' (cat_id, group_id) VALUES';
-        $sqlWithValues = $sql;
-        $rowCount = 0;
         $groupIds = [];
         if (!empty($readAccess)) {
             if (!in_array('all', $readAccess)) {
@@ -181,25 +178,23 @@ class Category extends \Ilch\Mapper
             $groupIds[] = '1';
         }
 
+        $preparedRows = [];
         foreach ($groupIds as $groupId) {
-            // There is a limit of 1000 rows per insert, but according to some benchmarks found online
-            // the sweet spot seams to be around 25 rows per insert. So aim for that.
-            if ($rowCount >= 25) {
-                $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-                $this->db()->queryMulti($sqlWithValues);
-                $rowCount = 0;
-                $sqlWithValues = $sql;
+            $preparedRows[] = [$faqId, (int)$groupId];
+        }
+
+        if (count($preparedRows)) {
+            // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows
+            $chunks = array_chunk($preparedRows, 25);
+            foreach ($chunks as $chunk) {
+                $this->db()->insert($this->tablenameAccess)
+                    ->columns(['cat_id', 'group_id'])
+                    ->values($chunk)
+                    ->execute();
             }
-
-            $rowCount++;
-            $sqlWithValues .= '(' . $warId . ',' . (int)$groupId . '),';
         }
 
-        if ($sqlWithValues != $sql) {
-            // Insert remaining rows.
-            $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-            $this->db()->queryMulti($sqlWithValues);
-        }
+        return $groupIds;
     }
 
     /**
@@ -213,5 +208,16 @@ class Category extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.10.3
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename) && $this->db()->truncate($this->tablenameAccess);
     }
 }

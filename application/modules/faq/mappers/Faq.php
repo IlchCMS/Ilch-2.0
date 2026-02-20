@@ -180,4 +180,15 @@ class Faq extends \Ilch\Mapper
             ->where(['id' => $id])
             ->execute();
     }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.10.3
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
+    }
 }

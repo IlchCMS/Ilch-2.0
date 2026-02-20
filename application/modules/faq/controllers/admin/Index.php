@@ -84,6 +84,12 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
             $model = $faqMapper->getFaqById($this->getRequest()->getParam('id'));
+
+            if (!$model) {
+                $this->redirect()
+                    ->withMessage('entryNotFound')
+                    ->to(['controller' => 'index', 'action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
@@ -99,7 +105,7 @@ class Index extends \Ilch\Controller\Admin
             );
 
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'catId' => 'required|numeric|integer|min:1',
+                'catId' => 'required|numeric|integer|min:1|exists:' . $categoryMapper->tablename,
                 'question' => 'required',
                 'answer' => 'required'
             ]);
@@ -126,7 +132,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delFaqAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $faqMapper = new FaqMapper();
             $faqMapper->delete($this->getRequest()->getParam('id'));
 
