@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('manage') ?></h1>
 <?php if ($this->get('receivers') != ''): ?>
     <form method="POST">
@@ -21,7 +25,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('receivers') as $receiver): ?>
+                    <?php
+                    /** @var \Modules\Contact\Models\Receiver $receiver */
+                    foreach ($this->get('receivers') as $receiver): ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_receivers', $receiver->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $receiver->getId()]) ?></td>

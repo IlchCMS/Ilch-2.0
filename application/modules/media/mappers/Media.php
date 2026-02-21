@@ -147,11 +147,11 @@ class Media extends \Ilch\Mapper
     /**
      * Gets the Media List Scroll.
      *
-     * @param int $lastId
+     * @param int|null $lastId
      * @return MediaModel[]|array
      * @throws \Ilch\Database\Exception
      */
-    public function getMediaListScroll($lastId = NULL)
+    public function getMediaListScroll($lastId = null)
     {
         $mediaArray = $this->db()->select(['m.id', 'm.url', 'm.url_thumb', 'm.name', 'm.datetime', 'm.ending', 'm.cat', 'c.cat_name'])
             ->from(['m' => 'media'])

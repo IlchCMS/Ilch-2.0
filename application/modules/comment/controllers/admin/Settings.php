@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -28,14 +29,13 @@ class Settings extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuComments',
             $items
         );
     }
-    
-    public function indexAction() 
+
+    public function indexAction()
     {
         $groupMapper = new GroupMapper();
 

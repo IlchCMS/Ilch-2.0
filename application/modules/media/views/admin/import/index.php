@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('mediaFromImport') ?>
@@ -27,7 +31,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('media') as $media): ?>
+                    <?php
+                    /** @var string $media */
+                    foreach ($this->get('media') as $media): ?>
                         <?php
                         $upload = new \Ilch\Upload();
                         $upload->setFile($media);

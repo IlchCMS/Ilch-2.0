@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -105,7 +106,7 @@ class Result
 
     /**
      * Returns an object of the current row or null if no more rows are in the result
-     * @param null $className
+     * @param string|null $className
      * @param array $params
      * @return object|\stdClass
      */

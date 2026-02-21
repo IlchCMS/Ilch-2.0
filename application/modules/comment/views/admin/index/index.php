@@ -1,6 +1,12 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Comment\Mappers\Comment $commentMapper */
 $commentMapper = $this->get('commentMapper');
+/** @var \Modules\Admin\Mappers\Module $modulesMapper */
 $modulesMapper = $this->get('modulesMapper');
+/** @var string $locale */
 $locale = $this->get('locale');
 ?>
 
@@ -25,7 +31,7 @@ $locale = $this->get('locale');
                         <?php $modules = $modulesMapper->getModulesByKey($module, $locale); ?>
                         <?php $comments = $commentMapper->getCommentsLikeKey($module); ?>
                         <tr>
-                            <td><a href="<?=$this->getUrl('admin/comment/index/show/key/'.$module) ?>"><?=$modules->getName() ?></a>
+                            <td><a href="<?=$this->getUrl('admin/comment/index/show/key/' . $module) ?>"><?=$modules->getName() ?></a>
                             <td class="text-center"><?=count($comments) ?></td>
                         </tr>
                     <?php endforeach; ?>

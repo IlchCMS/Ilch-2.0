@@ -1,5 +1,10 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\User\Mappers\User $userMapper */
 $userMapper = $this->get('userMapper');
+/** @var \Modules\Article\Models\Article[]|null $articles */
 $articles = $this->get('articles');
 $date = new \Ilch\Date();
 
@@ -76,4 +81,4 @@ if ($articles) {
 
 $xml->save('rss.xml');
 
-Header('Location: '.$this->getURL().'rss.xml');
+Header('Location: ' . $this->getURL() . 'rss.xml');

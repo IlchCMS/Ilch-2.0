@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <h1><?=$this->getTrans('menuCats') ?></h1>
 <form method="POST">
     <?=$this->getTokenField() ?>
@@ -21,7 +25,9 @@
             </thead>
             <tbody>
                 <?php if (!empty($this->get('cats'))): ?>
-                    <?php foreach ($this->get('cats') as $cat): ?>
+                    <?php
+                        /** @var \Modules\Article\Models\Category $cat */
+                        foreach ($this->get('cats') as $cat): ?>
                         <tr>
                             <input type="hidden" name="items[]" value="<?=$cat->getId() ?>" />
                             <td><?=$this->getDeleteCheckbox('check_cats', $cat->getId()) ?></td>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -31,15 +32,12 @@ class Loader
         $lastClassPart = array_pop($classParts);
 
         //Fix for config.php files
-        if ($lastClassPart === 'Config'
-            && in_array($classParts[0], ['Modules', 'Layouts'], true)
-            && $classParts[count($classParts) - 1] === 'Config'
-        ) {
+        if ($lastClassPart === 'Config' && in_array($classParts[0], ['Modules', 'Layouts'], true) && $classParts[count($classParts) - 1] === 'Config') {
             $lastClassPart = 'config';
         }
         $classParts = array_map('strtolower', $classParts);
 
-        $filePath = APPLICATION_PATH . '/' . implode('/', $classParts) . '/'.$lastClassPart . '.php';
+        $filePath = APPLICATION_PATH . '/' . implode('/', $classParts) . '/' . $lastClassPart . '.php';
 
         /*
          * General loading handling.

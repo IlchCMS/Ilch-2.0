@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getBoxUrl('static/css/article.css') ?>" rel="stylesheet">
 
 <?php if (!empty($this->get('keywordsList'))): ?>

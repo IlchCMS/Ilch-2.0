@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -198,7 +199,7 @@ class Layout extends \Ilch\Model
     {
         $this->official = (bool)$official;
     }
-    
+
     /**
      * Gets the desc.
      *
@@ -282,6 +283,4 @@ class Layout extends \Ilch\Model
         $this->ilchCore = $ilchCore;
         return $this;
     }
-
-
 }

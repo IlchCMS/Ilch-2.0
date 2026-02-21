@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -90,7 +91,7 @@ class Insert extends QueryBuilder
             throw new \RuntimeException('table must be set');
         }
 
-        $sql = 'INSERT INTO ' . $this->db->quote('[prefix]_'.$this->table). ' (';
+        $sql = 'INSERT INTO ' . $this->db->quote('[prefix]_' . $this->table) . ' (';
         $sqlValues = [];
         $sqlFields = $sqlValues;
 

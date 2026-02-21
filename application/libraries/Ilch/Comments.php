@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -75,7 +76,7 @@ class Comments
                         <div class="media-body pe-2 ps-2">
                             <div class="clearfix">
                                 <div class="fload-start">
-                                    <a href="' . $obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) . '" title="' . $obj->escape($user->getName()) . '">'.
+                                    <a href="' . $obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) . '" title="' . $obj->escape($user->getName()) . '">' .
                                         $obj->escape($user->getName()) . '
                                     </a>
                                     <p class="text-muted small">
@@ -112,7 +113,7 @@ class Comments
                                 </div>';
             }
 
-            if ($obj->getUser() && $config->get('comment_reply') == 1 && $req < $config->get('comment_nesting')-1) {
+            if ($obj->getUser() && $config->get('comment_reply') == 1 && $req < $config->get('comment_nesting') - 1) {
                 $commentsHtml .= '
                                 <a href="javascript:slideReply(\'reply_' . $fk_comment->getId() . '\');" class="btn btn-sm btn-outline-secondary btn-hover-primary">
                                     <i class="fa-solid fa-reply"></i> ' . $obj->getTrans('reply') . '
@@ -137,7 +138,7 @@ class Comments
             if ($obj->getUser()) {
                 $commentsHtml .= '
                         <div class="replyHidden" id="reply_' . $fk_comment->getId() . '">
-                            <form method="POST">'.
+                            <form method="POST">' .
                                 $obj->getTokenField() . '
                                 <div>
                                     <div class="media-block">
@@ -147,7 +148,7 @@ class Comments
                                         <div class="media-body ps-2 pe-2">
                                             <div class="clearfix">
                                                 <div class="fload-start">
-                                                    <a href="' . $obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $obj->getUser()->getId()]) . '" title="' . $obj->escape($obj->getUser()->getName()) . '">'.
+                                                    <a href="' . $obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $obj->getUser()->getId()]) . '" title="' . $obj->escape($obj->getUser()->getName()) . '">' .
                                                         $obj->escape($obj->getUser()->getName()) . '
                                                     </a>
                                                     <p class="text-muted small">
@@ -167,7 +168,7 @@ class Comments
                                             </p>
                                             <div>
                                                 <div class="content_savebox">
-                                                    <button type="submit" class="btn btn-outline-secondary btn-sm" name="saveComment" value="save">'.
+                                                    <button type="submit" class="btn btn-outline-secondary btn-sm" name="saveComment" value="save">' .
                                                         $obj->getTrans('submit') . '
                                                     </button>
                                                 </div>
@@ -234,7 +235,7 @@ class Comments
         if ($layout->getUser()) {
             $commentsHtml .= '
         <div class="reply">
-            <form method="POST">'.
+            <form method="POST">' .
                 $layout->getTokenField() . '
                 <section class="comment-list">
                     <div class="card">
@@ -245,7 +246,7 @@ class Comments
                                 </a>
                                 <div class="media-body ps-2 pe-2">
                                     <div>
-                                        <a href="' . $layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]) . '" title="' . $layout->escape($layout->getUser()->getName()) . '">'.
+                                        <a href="' . $layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]) . '" title="' . $layout->escape($layout->getUser()->getName()) . '">' .
                 $layout->escape($layout->getUser()->getName()) . '
                                         </a>
                                         <p class="text-muted small">
@@ -260,7 +261,7 @@ class Comments
                                     </p>
                                     <div>
                                         <div class="content_savebox">
-                                            <button type="submit" class="btn btn-outline-secondary btn-sm" name="saveComment" value="save">'.
+                                            <button type="submit" class="btn btn-outline-secondary btn-sm" name="saveComment" value="save">' .
                 $layout->getTrans('submit') . '
                                             </button>
                                         </div>
@@ -345,7 +346,7 @@ class Comments
             if ($layout->getUser()) {
                 $commentsHtml .= '
                                 <div class="replyHidden" id="reply_' . $comment->getId() . '">
-                                    <form method="POST">'.
+                                    <form method="POST">' .
                                         $layout->getTokenField() . '
                                         <div>
                                             <div class="media-block">
@@ -355,7 +356,7 @@ class Comments
                                                 <div class="media-body ps-2 pe-2">
                                                     <div class="clearfix">
                                                         <div class="float-start">
-                                                            <a href="' . $layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]) . '" title="' . $layout->escape($layout->getUser()->getName()) . '">'.
+                                                            <a href="' . $layout->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $layout->getUser()->getId()]) . '" title="' . $layout->escape($layout->getUser()->getName()) . '">' .
                                                                 $layout->escape($layout->getUser()->getName()) . '
                                                             </a>
                                                             <p class="text-muted small">
@@ -375,7 +376,7 @@ class Comments
                                                     </p>
                                                     <div>
                                                         <div class="content_savebox">
-                                                            <button type="submit" class="btn btn-outline-secondary btn-sm" name="saveComment" value="save">'.
+                                                            <button type="submit" class="btn btn-outline-secondary btn-sm" name="saveComment" value="save">' .
                                                                 $layout->getTrans('submit') . '
                                                             </button>
                                                         </div>
@@ -435,7 +436,7 @@ function slideReply(thechosenone) {
         $dateCreated = $commentMapper->getDateOfLastCommentByUserId($userId);
         $isExcludedFromFloodProtection = is_in_array(array_keys($this->getUser($userId)->getGroups()), explode(',', $config->get('comment_excludeFloodProtection')));
 
-        if ($config->get('comment_floodInterval') > 0 && !$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time()-$config->get('comment_floodInterval')))) {
+        if ($config->get('comment_floodInterval') > 0 && !$isExcludedFromFloodProtection && ($dateCreated >= date('Y-m-d H:i:s', time() - $config->get('comment_floodInterval')))) {
             $translator = new \Ilch\Translator();
             $translator->load(APPLICATION_PATH . '/modules/comment/translations/');
             $_SESSION['messages'][] = ['text' => $translator->trans('floodError'), 'type' => 'danger'];

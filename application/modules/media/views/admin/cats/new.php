@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <style>
 div.input-group:last-child span.input-group-text-remove {
     display: none;

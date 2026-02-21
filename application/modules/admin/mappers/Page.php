@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -193,7 +194,7 @@ class Page extends \Ilch\Mapper
         $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
-        
+
         return $this->db()->delete($this->tablenameContent)
             ->where(['page_id' => $id])
             ->execute();

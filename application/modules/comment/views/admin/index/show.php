@@ -1,5 +1,10 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\User\Mappers\User $userMapper */
 $userMapper = $this->get('userMapper');
+/** @var \Modules\Admin\Models\Module|null $modules */
 $modules = $this->get('modules');
 $moduleName = $modules ? $modules->getName() : $this->escape($this->getRequest()->getParam('key'));
 ?>
@@ -29,7 +34,9 @@ $moduleName = $modules ? $modules->getName() : $this->escape($this->getRequest()
             </thead>
             <tbody>
                 <?php if ($this->get('comments')): ?>
-                    <?php foreach ($this->get('comments') as $comment): ?>
+                    <?php
+                        /** @var \Modules\Comment\Models\Comment $comment */
+                        foreach ($this->get('comments') as $comment): ?>
                         <?php
                         $user = $userMapper->getUserById($comment->getUserId());
                         if (!$user) {
@@ -42,7 +49,7 @@ $moduleName = $modules ? $modules->getName() : $this->escape($this->getRequest()
                             <td><?=$this->getDeleteCheckbox('check_comments', $comment->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'key' => $commentKey, 'id' => $comment->getId()]) ?></td>
                             <td><?=$date->format("d.m.Y H:i", true) ?></td>
-                            <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>
+                            <td><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>
                             <td><a href="<?=$this->getUrl($comment->getKey()) ?>#comment_<?=$comment->getId() ?>" target="_blank"><?=$moduleName ?></a></td>
                             <td><?=nl2br($this->escape($comment->getText())) ?></td>
                         </tr>

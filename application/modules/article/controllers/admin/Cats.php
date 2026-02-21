@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -63,7 +64,7 @@ class Cats extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $categoryMapper = new CategoryMapper();
-        
+
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])

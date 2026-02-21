@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -78,7 +79,6 @@ class Box extends \Ilch\Mapper
     public function getSelfBoxList(string $locale, $orderBy = ['b.id' => 'DESC'])
     {
         return $this->getSelfBoxEntriesBy(['bc.locale' => $this->db()->escape($locale)], $orderBy);
-
     }
 
     /**
@@ -238,7 +238,7 @@ class Box extends \Ilch\Mapper
      */
     public function modulesBoxExists(string $key, string $module): bool
     {
-        return (boolean)$this->db()->select('COUNT(*)')
+        return (bool)$this->db()->select('COUNT(*)')
             ->from($this->tablename)
             ->where(['key' => $key, 'module' => $module])
             ->execute()

@@ -1,4 +1,8 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Comment\Models\Comment[] $comments */
 $comments = $this->get('comments');
 ?>
 

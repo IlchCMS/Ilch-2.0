@@ -1,4 +1,5 @@
 <?php
+
 /** @var \Ilch\Layout\Admin $this */
 ?>
 <!DOCTYPE html>

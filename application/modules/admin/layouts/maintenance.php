@@ -1,4 +1,5 @@
 <?php
+
 $config = \Ilch\Registry::get('config');
 $translator = new \Ilch\Translator();
 $translator->load(APPLICATION_PATH . '/modules/admin/translations/');
@@ -41,9 +42,9 @@ $date = new \Ilch\Date();
                 <div class="hidden-xs">
                     <div class="countdownHead"><?=$translator->trans('maintenanceTime') ?></div>
                     <div class="countdown">
-                        <?php if (strtotime($config->get('maintenance_date')) > strtotime($date->format('Y-m-d H:i:00', true))): ?>
+                        <?php if (strtotime($config->get('maintenance_date')) > strtotime($date->format('Y-m-d H:i:00', true))) : ?>
                             <span id="countdown"></span>
-                        <?php else: ?>
+                        <?php else : ?>
                             <div class="countDays">
                                 <span class="position">
                                     <span style="top: 0px; opacity: 1;">00</span>

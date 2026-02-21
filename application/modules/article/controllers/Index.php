@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -94,7 +95,7 @@ class Index extends \Ilch\Controller\Frontend
             if ($this->getRequest()->getPost('cats')) {
                 $catIds = implode(',', $this->getRequest()->getPost('cats'));
             }
-            
+
             $groups = '';
             if (!empty($this->getRequest()->getPost('groups'))) {
                 $groups = implode(',', $this->getRequest()->getPost('groups'));
@@ -157,7 +158,7 @@ class Index extends \Ilch\Controller\Frontend
                 $key = sprintf(ArticleConfig::COMMENT_KEY_TPL, $this->getRequest()->getParam('id'));
 
                 if ($this->getRequest()->getPost('fkId')) {
-                    $key .= '/id_c/'.$this->getRequest()->getPost('fkId');
+                    $key .= '/id_c/' . $this->getRequest()->getPost('fkId');
                 }
 
                 $comments->saveComment($key, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
@@ -169,7 +170,7 @@ class Index extends \Ilch\Controller\Frontend
                 $comments = new Comments();
 
                 $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
-                $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id').'#comment_'.$commentId]);
+                $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id') . '#comment_' . $commentId]);
             }
         }
 
@@ -219,7 +220,7 @@ class Index extends \Ilch\Controller\Frontend
             if (!empty($article->getImage())) {
                 $metaTagModel = new MetaTagModel();
                 $metaTagModel->setName('og:image')
-                    ->setContent(BASE_URL.'/'.$article->getImage());
+                    ->setContent(BASE_URL . '/' . $article->getImage());
                 $this->getLayout()->add('metaTags', 'og:image', $metaTagModel);
             }
 

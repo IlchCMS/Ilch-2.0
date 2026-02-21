@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -28,7 +29,7 @@ class Updateserver extends \Ilch\Model
      * @var string
      */
     protected $operator;
-    
+
     /**
      * The country in which the updateserver is located.
      *

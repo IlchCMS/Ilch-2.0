@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -70,7 +71,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('article_box_keywords', '17,20,23,26');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_articles` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -140,7 +141,7 @@ class Config extends \Ilch\Config\Install
                 (1, 1, "Willkommen", "Willkommen beim Ilch CMS!", "<p>Dies ist dein erster Artikel mit dem Ilch - Content Management System</p><p>Bei Fragen oder Probleme im <a href=\"https://www.ilch.de/forum.html\">Ilch Forum</a>&nbsp;melden.</p><p>Viel Erfolg<br />Ilch</p>", "willkommen, ilch, cms, news", "willkommen.html");';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "2.1.60":
