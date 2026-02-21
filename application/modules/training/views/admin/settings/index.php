@@ -17,7 +17,7 @@
                    id="limitNextTrainingInput"
                    name="boxNexttrainingLimit"
                    min="1"
-                   value="<?=$this->escape($this->originalInput('boxNexttrainingLimit', $this->get('boxNexttrainingLimit'))) ?>" />
+                   value="<?=$this->originalInput('boxNexttrainingLimit', $this->get('boxNexttrainingLimit'), true) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar() ?>

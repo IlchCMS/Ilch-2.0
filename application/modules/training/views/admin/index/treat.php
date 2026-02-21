@@ -49,14 +49,14 @@ $periodAppendix = [
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=$this->escape($this->originalInput('title', $training->getTitle())) ?>" />
+                   value="<?=$this->originalInput('title', $training->getTitle(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('date') ? ' has-error' : '' ?>">
         <label for="start" class="col-md-2 col-form-label">
             <?=$this->getTrans('start') ?>:
         </label>
-        <div class="col-xl-2 input-group ilch-date date form_datetime" id="date">
+        <div class="col-xl-2 input-group date form_datetime" id="date">
             <?php
             $datecreate = '';
             if ($training->getDate()) {
@@ -70,7 +70,7 @@ $periodAppendix = [
                    class="form-control"
                    id="start"
                    name="date"
-                   value="<?=$this->escape($this->originalInput('date', $datecreate)) ?>"
+                   value="<?=$this->originalInput('date', $datecreate, true) ?>"
                    readonly>
             <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
@@ -81,12 +81,12 @@ $periodAppendix = [
         <label for="end" class="col-xl-2 col-form-label">
             <?=$this->getTrans('end') ?>:
         </label>
-        <div id="end" class="col-xl-4 input-group ilch-date date form_datetime_2">
+        <div id="end" class="col-xl-4 input-group date form_datetime_2">
             <input type="text"
                    class="form-control"
                    id="end"
                    name="end"
-                   value="<?=$this->escape($this->originalInput('end', ($training->getId() ? ($training->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($training->getEnd()))->format('d.m.Y H:i') : '') : ''))) ?>"
+                   value="<?=$this->originalInput('end', ($training->getId() ? ($training->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($training->getEnd()))->format('d.m.Y H:i') : '') : ''), true) ?>"
                    readonly>
             <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
@@ -99,9 +99,9 @@ $periodAppendix = [
         </label>
         <div class="col-xl-4">
             <select class="form-select" name="periodType" id="periodType">
-                <option value="" <?=($this->originalInput('periodType', ($training->getId() ? $training->getPeriodType() : ''))) == '' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
+                <option value="" <?=($this->originalInput('periodType', $training->getPeriodType())) == '' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
                 <?php foreach ($periodTypes as $key => $value) : ?>
-                    <option value="<?=$key ?>" <?=($this->originalInput('periodType', ($training->getId() ? $training->getPeriodType() : ''))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
+                    <option value="<?=$key ?>" <?=($this->originalInput('periodType', $training->getPeriodType())) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -128,7 +128,7 @@ $periodAppendix = [
                        class="form-control"
                        id="periodDay"
                        name="periodDay"
-                       value="<?=$this->escape($this->originalInput('periodDay', ($this->originalInput('periodType', ($training->getId() ? $training->getPeriodType() : '')) == 'days' ? '0' : ($training->getId() ? $training->getPeriodDay() : '1')))) ?>" />
+                       value="<?=$this->originalInput('periodDay', ($this->originalInput('periodType', ($training->getId() ? $training->getPeriodType() : '')) == 'days' ? '0' : ($training->getId() ? $training->getPeriodDay() : '1')), true) ?>" />
                 <span class="input-group-text" id="periodDayAppendix"><?=(!empty($training->getPeriodType())) ? $this->getTrans($periodAppendix[$training->getPeriodType()]) : '' ?></span>
             </div>
         </div>
@@ -138,12 +138,12 @@ $periodAppendix = [
             <label for="repeatUntil" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('repeatUntil') ?>:
             </label>
-            <div id="repeatUntil" class="col-xl-4 input-group ilch-date date form_datetime_3">
+            <div id="repeatUntil" class="col-xl-4 input-group date form_datetime_3">
                 <input type="text"
                        class="form-control"
                        id="repeatUntil"
                        name="repeatUntil"
-                       value="<?=$this->escape($this->originalInput('repeatUntil', ($training->getId() ? ($training->getRepeatUntil() != '1000-01-01 00:00:00' ? (new \Ilch\Date($training->getRepeatUntil()))->format('d.m.Y H:i') : '') : ''))) ?>"
+                       value="<?=$this->originalInput('repeatUntil', ($training->getId() ? ($training->getRepeatUntil() != '1000-01-01 00:00:00' ? (new \Ilch\Date($training->getRepeatUntil()))->format('d.m.Y H:i') : '') : ''), true) ?>"
                        readonly>
                 <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
@@ -160,7 +160,7 @@ $periodAppendix = [
                    class="form-control"
                    id="place"
                    name="place"
-                   value="<?=$this->escape($this->originalInput('place', $training->getPlace())) ?>" />
+                   value="<?=$this->originalInput('place', $training->getPlace(), true) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('contact') ? ' has-error' : '' ?>">
@@ -172,7 +172,7 @@ $periodAppendix = [
                 <?php
                 foreach ($this->get('users') as $user) {
                     $selected = '';
-                    if ($this->get('training') != '' && $this->get('training')->getContact() == $user->getId()) {
+                    if ($this->originalInput('contact', $training->getContact()) == $user->getId()) {
                         $selected = 'selected="selected"';
                     }
                     echo '<option ' . $selected . ' value="' . $user->getId() . '">' . $this->escape($user->getName()) . '</option>';
@@ -213,7 +213,7 @@ $periodAppendix = [
                        id="voiceServerIP"
                        name="voiceServerIP"
                        placeholder="IP:Port"
-                       value="<?=$this->escape($this->originalInput('voiceServerIP', $training->getVoiceServerIP())) ?>" />
+                       value="<?=$this->originalInput('voiceServerIP', $training->getVoiceServerIP(), true) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('voiceServerPW') ? ' has-error' : '' ?>">
@@ -226,7 +226,7 @@ $periodAppendix = [
                        id="voiceServerPW"
                        name="voiceServerPW"
                        placeholder="********"
-                       value="<?=$this->escape($this->originalInput('voiceServerPW', $training->getVoiceServerPW())) ?>" />
+                       value="<?=$this->originalInput('voiceServerPW', $training->getVoiceServerPW(), true) ?>" />
             </div>
         </div>
     </div>
@@ -262,7 +262,7 @@ $periodAppendix = [
                        id="gameServerIP"
                        name="gameServerIP"
                        placeholder="IP:Port"
-                       value="<?=$this->escape($this->originalInput('gameServerIP', $training->getGameServerIP())) ?>" />
+                       value="<?=$this->originalInput('gameServerIP', $training->getGameServerIP(), true) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('gameServerPW') ? ' has-error' : '' ?>">
@@ -275,7 +275,7 @@ $periodAppendix = [
                        id="gameServerPW"
                        name="gameServerPW"
                        placeholder="********"
-                       value="<?=$this->escape($this->originalInput('gameServerPW', $training->getGameServerPW())) ?>" />
+                       value="<?=$this->originalInput('gameServerPW', $training->getGameServerPW(), true) ?>" />
             </div>
         </div>
     </div>
@@ -288,7 +288,7 @@ $periodAppendix = [
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?=$this->escape($this->originalInput('text', $training->getText())) ?></textarea>
+                      rows="5"><?=$this->originalInput('text', $training->getText(), true) ?></textarea>
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('access') ? ' has-error' : '' ?>">
@@ -299,7 +299,7 @@ $periodAppendix = [
             <select class="choices-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <?php foreach ($this->get('userGroupList') as $groupList) : ?>
                     <?php if ($groupList->getId() != 1) : ?>
-                        <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
+                        <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->originalInput('groups', $this->get('groups')))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
                     <?php endif; ?>
                 <?php endforeach; ?>
             </select>
