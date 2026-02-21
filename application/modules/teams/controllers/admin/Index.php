@@ -253,7 +253,7 @@ class Index extends \Ilch\Controller\Admin
     public function updateAction()
     {
         $teamsMapper = new TeamsMapper();
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $teamsMapper->updateShow($this->getRequest()->getParam('id'));
 
             $this->addMessage('saveSuccess');
@@ -264,7 +264,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $teamsMapper = new TeamsMapper();
             $teamsMapper->delete($this->getRequest()->getParam('id'));
 

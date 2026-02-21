@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.25.0',
+        'version' => '1.25.1',
         'icon_small' => 'fa-solid fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -28,8 +28,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'You can add or edit teams and manage applications for these teams.',
             ],
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3',
+        'ilchCore' => '2.2.13',
+        'phpVersion' => '7.4',
         'folderRights' => [
             'static/upload/image'
         ]
@@ -256,7 +256,10 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('teams_userNotification', 1);
                 // no break
+            case "1.25.0":
+                // no break
         }
-        return 'Update function executed.';
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
