@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'history',
-        'version' => '1.10.1',
+        'version' => '1.10.2',
         'icon_small' => 'fa-solid fa-clock-rotate-left',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -25,8 +25,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'With this module you can tell the story of your website, club etc.',
             ],
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'ilchCore' => '2.2.13',
+        'phpVersion' => '7.4'
     ];
 
     public function install()
@@ -113,6 +113,11 @@ class Config extends \Ilch\Config\Install
                 }
                 // no break
             case "1.9.0":
+                // no break
+            case "1.10.0":
+                // no break
+            case "1.10.1":
+                // no break
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
