@@ -821,7 +821,7 @@ class Config extends \Ilch\Config\Install
                     }
 
                     $neededRows = array_chunk($neededRows, 25);
-                    foreach($neededRows as $neededRowsChunk) {
+                    foreach ($neededRows as $neededRowsChunk) {
                         $this->db()->insert('users_groups')
                             ->columns(['user_id', 'group_id'])
                             ->values($neededRowsChunk)

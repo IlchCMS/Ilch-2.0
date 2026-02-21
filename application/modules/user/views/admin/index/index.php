@@ -21,21 +21,21 @@
                 <?=$this->getTrans('users') ?>
             </a>
         </li>
-        <?php if ($this->get('badge') > 0): ?>
+        <?php if ($this->get('badge') > 0) : ?>
             <li class="nav-item">
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>" class="nav-link<?=($this->getRequest()->getParam('showsetfree')) ? ' active' : '' ?>">
                     <?=$this->getTrans('setfree') ?> <span class="badge rounded-pill bg-secondary text-white"><?=$this->get('badge') ?></span>
                 </a>
             </li>
         <?php endif; ?>
-        <?php if ($this->get('badgeLocked') > 0): ?>
+        <?php if ($this->get('badgeLocked') > 0) : ?>
             <li class="nav-item">
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showlocked' => 1]) ?>" class="nav-link<?=($this->getRequest()->getParam('showlocked')) ? ' active' : '' ?>">
                     <?=$this->getTrans('unlock') ?> <span class="badge rounded-pill bg-secondary text-white"><?=$this->get('badgeLocked') ?></span>
                 </a>
             </li>
         <?php endif; ?>
-        <?php if ($this->get('badgeSelectsDelete') > 0): ?>
+        <?php if ($this->get('badgeSelectsDelete') > 0) : ?>
             <li class="nav-item">
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showselectsdelete' => 1]) ?>" class="nav-link<?=($this->getRequest()->getParam('showselectsdelete')) ? ' active' : '' ?>">
                     <?=$this->getTrans('selectsdelete') ?> <span class="badge rounded-pill bg-secondary text-white"><?=$this->get('badgeSelectsDelete') ?></span>
@@ -53,7 +53,9 @@
                 <col class="col-xl-2">
                 <col class="col-xl-2">
                 <col class="col-xl-2">
-                <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><col class="col-xl-2"><?php endif; ?>
+                <?php if ($this->getRequest()->getParam('showselectsdelete')) : ?>
+                    <col class="col-xl-2">
+                <?php endif; ?>
                 <col class="col-xl-2">
                 <col>
             </colgroup>
@@ -66,14 +68,16 @@
                     <th class="sort"><?=$this->getTrans('userEmail') ?></th>
                     <th class="sort"><?=$this->getTrans('userDateCreated') ?></th>
                     <th class="sort"><?=$this->getTrans('userDateLastActivity') ?></th>
-                    <?php if ($this->getRequest()->getParam('showselectsdelete')): ?><th><?=$this->getTrans('selectsdeletetime') ?> <a class="badge" data-bs-toggle="modal" data-bs-target="#infoModal"><i class="fa-solid fa-info"></i></a></th><?php endif; ?>
+                    <?php if ($this->getRequest()->getParam('showselectsdelete')) : ?>
+                        <th><?=$this->getTrans('selectsdeletetime') ?> <a class="badge" data-bs-toggle="modal" data-bs-target="#infoModal"><i class="fa-solid fa-info"></i></a></th>
+                    <?php endif; ?>
                     <th><?=$this->getTrans('userGroups') ?></th>
                 </tr>
             </thead>
             <tbody>
             <?php
-            if ($this->get('userList') != ''):
-                foreach ($this->get('userList') as $user):
+            if ($this->get('userList') != '') :
+                foreach ($this->get('userList') as $user) :
                     $groups = '';
 
                     foreach ($user->getGroups() as $group) {
@@ -103,26 +107,26 @@
                     <tr class="filter">
                         <td><?=$this->getDeleteCheckbox('check_users', $user->getId()) ?></td>
                         <td>
-                            <?php if ($this->getRequest()->getParam('showselectsdelete')): ?>
+                            <?php if ($this->getRequest()->getParam('showselectsdelete')) : ?>
                                 <a href="<?=$this->getUrl(['action' => 'selectsdelete', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('deleteaccountreset') ?>"><i class="fa-solid fa-check text-success"></i></a>
-                            <?php elseif ($this->getRequest()->getParam('showsetfree')): ?>
+                            <?php elseif ($this->getRequest()->getParam('showsetfree')) : ?>
                                 <a href="<?=$this->getUrl(['action' => 'setfree', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('setfree') ?>"><i class="fa-solid fa-check text-success"></i></a>
-                            <?php elseif ($this->getRequest()->getParam('showlocked')): ?>
+                            <?php elseif ($this->getRequest()->getParam('showlocked')) : ?>
                                 <a href="<?=$this->getUrl(['action' => 'unlock', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('unlock') ?>"><i class="fa-solid fa-check text-success"></i></a>
-                            <?php else: ?>
-                                <?=((($user->isAdmin() and $this->getUser()->isAdmin()) or !$user->isAdmin())?$this->getEditIcon(['action' => 'treat', 'id' => $user->getId()]):'') ?>
+                            <?php else : ?>
+                                <?=((($user->isAdmin() && $this->getUser()->isAdmin()) || !$user->isAdmin()) ? $this->getEditIcon(['action' => 'treat', 'id' => $user->getId()]) : '') ?>
                             <?php endif; ?>
                         </td>
-                        <td><?=((($user->isAdmin() and $this->getUser()->isAdmin()) or !$user->isAdmin())?$this->getDeleteIcon(['action' => 'delete', 'id' => $user->getId()]):'') ?></td>
+                        <td><?=((($user->isAdmin() && $this->getUser()->isAdmin()) || !$user->isAdmin()) ? $this->getDeleteIcon(['action' => 'delete', 'id' => $user->getId()]) : '') ?></td>
                         <td><?=$this->escape($user->getName()) ?></td>
                         <td><?=$this->escape($user->getEmail()) ?></td>
                         <td><?=$this->escape($user->getDateCreated()) ?></td>
                         <td><?=$this->escape($user->getDateLastActivity()) ?></td>
-                        <?php if ($this->getRequest()->getParam('showselectsdelete')): ?>
+                        <?php if ($this->getRequest()->getParam('showselectsdelete')) : ?>
                             <?php
                             if ($this->get('timetodelete') > 0) {
                                 $date = new \Ilch\Date();
-                                $date->modify('-'.$this->get('timetodelete').' days');
+                                $date->modify('-' . $this->get('timetodelete') . ' days');
                                 $dateuser = new \Ilch\Date($user->getSelectsDelete());
                                 $classadd = ($dateuser->getTimestamp() <= $date->getTimestamp() ? 'danger' : 'success');
                             } else {
@@ -134,7 +138,7 @@
                         <td><?=$this->escape($groups) ?></td>
                     </tr>
                 <?php endforeach; ?>
-            <?php else: ?>
+            <?php else : ?>
                 <tr>
                     <td colspan="7"><?=$this->getTrans('noUsersExist') ?></td>
                 </tr>
@@ -145,13 +149,13 @@
     <?=$this->getListBar(['delete' => 'delete']) ?>
 </form>
 <?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('selectsdeletetimeInfoText')) ?>
-<?php if ($this->getRequest()->getParam('showselectsdelete')): ?>
+<?php if ($this->getRequest()->getParam('showselectsdelete')) : ?>
     <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'showselectsdelete' => 1]) ?>
-<?php elseif ($this->getRequest()->getParam('showsetfree')): ?>
+<?php elseif ($this->getRequest()->getParam('showsetfree')) : ?>
     <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'showsetfree' => 1]) ?>
-<?php elseif ($this->getRequest()->getParam('showlocked')): ?>
+<?php elseif ($this->getRequest()->getParam('showlocked')) : ?>
     <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'showlocked' => 1]) ?>
-<?php else: ?>
+<?php else : ?>
     <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
 <?php endif; ?>
 

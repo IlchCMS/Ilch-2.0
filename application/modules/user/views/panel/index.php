@@ -8,12 +8,12 @@ $openFriendRequests = $this->get('openFriendRequests');
 
 <div class="row">
     <div class="col-xl-12 profile">
-        <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
+        <?php include APPLICATION_PATH . '/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('welcome') ?> <?=$this->escape($profil->getName()) ?></h1>
 
-            <?php if (!empty($openFriendRequests)): ?>
+            <?php if (!empty($openFriendRequests)) : ?>
                 <h1><?=$this->getTrans('friendRequests') ?></h1>
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
@@ -30,7 +30,7 @@ $openFriendRequests = $this->get('openFriendRequests');
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($openFriendRequests as $openFriendRequest): ?>
+                        <?php foreach ($openFriendRequests as $openFriendRequest) : ?>
                             <tr>
                                 <td><a href="<?=$this->getUrl(['action' => 'approveFriendRequest', 'id' => $openFriendRequest->getUserId()], null, true) ?>" title="<?=$this->getTrans('approveFriendRequest') ?>"><i class="fa-solid fa-check text-success"></i></a></td>
                                 <td><a href="<?=$this->getUrl(['action' => 'removeFriend', 'id' => $openFriendRequest->getUserId()], null, true) ?>" title="<?=$this->getTrans('declineFriendRequest') ?>"><i class="fa-solid fa-ban text-danger"></i></a></td>
@@ -42,7 +42,7 @@ $openFriendRequests = $this->get('openFriendRequests');
                 </div>
             <?php endif; ?>
 
-            <?php if (!empty($notifications)): ?>
+            <?php if (!empty($notifications)) : ?>
                 <h1><?=$this->getTrans('notifications') ?></h1>
                 <form method="POST">
                     <?=$this->getTokenField() ?>
@@ -69,7 +69,7 @@ $openFriendRequests = $this->get('openFriendRequests');
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($notifications as $notification): ?>
+                            <?php foreach ($notifications as $notification) : ?>
                                 <?php $date = new \Ilch\Date($notification->getTimestamp()); ?>
                                 <tr>
                                     <td><?=$this->getDeleteCheckbox('check_notifications', $notification->getId()) ?></td>
@@ -86,7 +86,7 @@ $openFriendRequests = $this->get('openFriendRequests');
                     </div>
                     <?=$this->getListBar(['delete' => 'delete']) ?>
                 </form>
-            <?php else: ?>
+            <?php else : ?>
                 <p><?=$this->getTrans('notificationNoNotificiations') ?></p>
             <?php endif; ?>
         </div>

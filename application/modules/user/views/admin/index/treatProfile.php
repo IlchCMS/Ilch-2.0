@@ -71,7 +71,7 @@ foreach ($profileFields as $profileField) {
             }
         }
     }
-    if (!empty($value)): ?>
+    if (!empty($value)) : ?>
     <div class="row grid-striped">
         <div class="col-xl-2">
             <b><?=$this->escape($profileFieldName) ?></b>

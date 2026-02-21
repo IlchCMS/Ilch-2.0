@@ -1,4 +1,4 @@
-<?php if ($this->get('groupList') != ''): ?>
+<?php if ($this->get('groupList') != '') : ?>
     <form method="POST">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -30,10 +30,10 @@
                                 <input type="checkbox" name="check_groups[]" value="<?=$group->getId() ?>" />
                             </td>
                             <td>
-                                <?=((($this->getUser()->isAdmin() and $group->getId() == 1) or $group->getId() != 1)?$this->getEditIcon(['action' => 'treat', 'id' => $group->getId()]):'') ?>
+                                <?=((($this->getUser()->isAdmin() && $group->getId() == 1) || $group->getId() != 1) ? $this->getEditIcon(['action' => 'treat', 'id' => $group->getId()]) : '') ?>
                             </td>
                             <td>
-                                <?=((($this->getUser()->isAdmin() and $group->getId() == 1) or $group->getId() != 1)?$this->getDeleteIcon(['action' => 'delete', 'id' => $group->getId()]):'') ?>
+                                <?=((($this->getUser()->isAdmin() && $group->getId() == 1) || $group->getId() != 1) ? $this->getDeleteIcon(['action' => 'delete', 'id' => $group->getId()]) : '') ?>
                             </td>
                             <td><?=$this->escape($group->getName()) ?></td>
                             <td><?=count($assignedUsers) ?></td>
@@ -46,6 +46,6 @@
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noGroupsExist') ?>
 <?php endif; ?>

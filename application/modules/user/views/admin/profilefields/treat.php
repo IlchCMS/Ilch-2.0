@@ -135,7 +135,7 @@ $iconArray = [
         <label for="profileFieldIcon" class="col-xl-2 col-form-label">
             <?=$this->getTrans('profileFieldIcon') ?>:
         </label>
-        <div class="col-xl-4 input-group ilch-date">
+        <div class="col-xl-4 input-group">
             <span class="input-group-text">
                 <span id="chosensymbol" class="<?=$icon ?>"></span>
             </span>

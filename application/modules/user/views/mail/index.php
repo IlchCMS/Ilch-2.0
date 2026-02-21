@@ -1,6 +1,6 @@
-<?php if ($this->getUser() && $this->getUser()->getId() != $this->getRequest()->getParam('user')): ?>
+<?php if ($this->getUser() && $this->getUser()->getId() != $this->getRequest()->getParam('user')) : ?>
     <?php $user = $this->get('user'); ?>
-    <?php if ($user->getOptMail() == 1): ?>
+    <?php if ($user->getOptMail() == 1) : ?>
         <h1><?=$this->getTrans('mailTo') ?> <?=$user->getName() ?></h1>
         <form method="POST">
             <?=$this->getTokenField() ?>

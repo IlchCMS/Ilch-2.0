@@ -1,4 +1,7 @@
-<?php $ilchUpload = new \Ilch\Upload(); ?>
+<?php
+
+$ilchUpload = new \Ilch\Upload();
+?>
 
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
 

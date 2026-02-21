@@ -9,7 +9,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 
     if ($item->getType() === 0) {
         echo '<div class="page-header">
-              <h4>'.$obj->getTrans('cat').': '.$obj->escape($item->getTitle()).' <small>'.$obj->escape($item->getDesc()).'</small>
+              <h4>' . $obj->getTrans('cat') . ': ' . $obj->escape($item->getTitle()) . ' <small>' . $obj->escape($item->getDesc()) . '</small>
               </h4><hr>';
     }
 
@@ -25,21 +25,21 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                 <div class="lib-panel">
                     <div class="row box-shadow">
                         <div class="col-lg-4">
-                            <a href="'.$obj->getUrl(['action' => 'show', 'user' => $item->getUserId(), 'id' => $item->getId()]).'">
-                                <img class="lib-img-show" src="'.$image.'">
+                            <a href="' . $obj->getUrl(['action' => 'show', 'user' => $item->getUserId(), 'id' => $item->getId()]) . '">
+                                <img class="lib-img-show" src="' . $image . '">
                             </a>
                         </div>
                         <div class="col-lg-8">
                             <div class="lib-row lib-header">
-                                <a href="'.$obj->getUrl(['action' => 'show', 'user' => $item->getUserId(), 'id' => $item->getId()]).'" >
-                                    '.$obj->escape($item->getTitle()).'
+                                <a href="' . $obj->getUrl(['action' => 'show', 'user' => $item->getUserId(), 'id' => $item->getId()]) . '" >
+                                    ' . $obj->escape($item->getTitle()) . '
                                 </a>
-                                <p class="text-start">'.$obj->getTrans('images').': '. $imageMapper->getCountImageById($item->getId()) .'</p>
+                                <p class="text-start">' . $obj->getTrans('images') . ': ' . $imageMapper->getCountImageById($item->getId()) . '</p>
                                 <div class="lib-header-seperator"></div>
 
                             </div>
                             <div class="lib-row lib-desc">
-                                '.$obj->escape($item->getDesc()).'
+                                ' . $obj->escape($item->getDesc()) . '
                             </div>
                         </div>
                     </div>
@@ -60,11 +60,11 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 <h1><?=$this->getTrans('menuGallery') ?></h1>
 <div class="col-xl-12">
     <ul class="media-list">
-        <?php if (!empty($galleryItems)): ?>
-            <?php foreach ($galleryItems as $item): ?>
+        <?php if (!empty($galleryItems)) : ?>
+            <?php foreach ($galleryItems as $item) : ?>
                 <?php rec($item, $galleryMapper, $this, $imageMapper); ?>
             <?php endforeach; ?>
-        <?php else: ?>
+        <?php else : ?>
             <?=$this->getTrans('noImages') ?>
         <?php endif; ?>
     </ul>

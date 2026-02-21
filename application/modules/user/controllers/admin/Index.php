@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -170,10 +171,10 @@ class Index extends \Ilch\Controller\Admin
 
             $layout = $_SESSION['layout'] ?? '';
 
-            if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/manuallyconfirm.php')) {
-                $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/manuallyconfirm.php');
+            if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/user/layouts/mail/manuallyconfirm.php')) {
+                $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/user/layouts/mail/manuallyconfirm.php');
             } else {
-                $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/manuallyconfirm.php');
+                $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/user/layouts/mail/manuallyconfirm.php');
             }
 
             $messageReplace = [
@@ -322,7 +323,7 @@ class Index extends \Ilch\Controller\Admin
 
                     $name = $this->getLayout()->escape($user->getName());
                     $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
-                    $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
+                    $confirmCode = '<a href="' . BASE_URL . '/index.php/user/login/newpassword/selector/' . $selector . '/code/' . $confirmedCode . '" class="btn btn-primary btn-sm">' . $this->getTranslator()->trans('confirmMailButtonText') . '</a>';
                     $date = new \Ilch\Date();
                     $mailContent = $emailsMapper->getEmail('user', 'assign_password_mail', $user->getLocale());
 
@@ -331,10 +332,10 @@ class Index extends \Ilch\Controller\Admin
                         $layout = $_SESSION['layout'];
                     }
 
-                    if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php')) {
-                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php');
+                    if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/user/layouts/mail/passwordchange.php')) {
+                        $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/user/layouts/mail/passwordchange.php');
                     } else {
-                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/passwordchange.php');
+                        $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/user/layouts/mail/passwordchange.php');
                     }
                     $messageReplace = [
                         '{content}' => $this->getLayout()->purify($mailContent->getText()),
@@ -501,12 +502,12 @@ class Index extends \Ilch\Controller\Admin
                     unlink($deleteUser->getAvatar());
                 }
 
-                if (is_dir(APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId)) {
-                    $path = APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId;
+                if (is_dir(APPLICATION_PATH . '/modules/user/static/upload/gallery/' . $userId)) {
+                    $path = APPLICATION_PATH . '/modules/user/static/upload/gallery/' . $userId;
                     $files = array_diff(scandir($path), ['.', '..']);
 
                     foreach ($files as $file) {
-                        unlink(realpath($path).'/'.$file);
+                        unlink(realpath($path) . '/' . $file);
                     }
 
                     rmdir($path);

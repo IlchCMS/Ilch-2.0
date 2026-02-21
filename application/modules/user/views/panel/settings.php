@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-xl-12 profile">
-        <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
+        <?php include APPLICATION_PATH . '/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
                 <h1><?=$this->getTrans('menuSettings') ?></h1>
@@ -59,7 +59,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php if (count($this->get('providers')) > 0): ?>
+                    <?php if (count($this->get('providers')) > 0) : ?>
                     <div class="col-12 col-lg-4">
                         <div class="card card-default">
                             <div class="card-header">
@@ -72,13 +72,13 @@
                     </div>
                     <?php endif; ?>
                 </div>
-                <?php if ($this->get('usermenusettingslinks') != ''): ?>
+                <?php if ($this->get('usermenusettingslinks') != '') : ?>
                         <?php
                         $i = 0;
                         $countLinks = count($this->get('usermenusettingslinks'));
                         ?>
-                        <?php foreach ($this->get('usermenusettingslinks') as $usermenulinks): ?>
-                            <?php if ($i % 3 == 0): ?>
+                        <?php foreach ($this->get('usermenusettingslinks') as $usermenulinks) : ?>
+                            <?php if ($i % 3 == 0) : ?>
                                 <div class="settings-stretch row">
                             <?php endif; ?>
                             <div class="col-12 col-lg-4">
@@ -92,7 +92,7 @@
                                 </div>
                             </div>
                             <?php $i++ ?>
-                            <?php if ($i == 3 || $i == $countLinks): ?>
+                            <?php if ($i == 3 || $i == $countLinks) : ?>
                                 </div>
                                 <?php $i = 0; ?>
                             <?php endif; ?>

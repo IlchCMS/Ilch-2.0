@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -40,7 +41,7 @@ class AuthToken extends \Ilch\Model
 
         return $this;
     }
-    
+
     /**
      * Returns the token of the user.
      * SHA256 hash of the authenticator.
@@ -66,7 +67,7 @@ class AuthToken extends \Ilch\Model
 
         return $this;
     }
-    
+
     /**
      * Returns the id of the user.
      *
@@ -89,7 +90,7 @@ class AuthToken extends \Ilch\Model
 
         return $this;
     }
-    
+
     /**
      * Returns the date at which point of time the token expires.
      *

@@ -1,4 +1,6 @@
-<?php $commentMapper = new \Modules\Comment\Mappers\Comment(); ?>
+<?php
+$commentMapper = new \Modules\Comment\Mappers\Comment();
+?>
 
 <style>
 @media (max-width: 990px) {
@@ -38,18 +40,18 @@
 </style>
 
 <h1><?=$this->getTrans('menuGallery') ?></h1>
-<?php if ($this->get('image') != ''): ?>
+<?php if ($this->get('image') != '') : ?>
     <div id="gallery">
         <div class="row">
-        <?php foreach ($this->get('image') as $image): ?>
-            <?php $commentsCount = $commentMapper->getCountComments('user/gallery/showimage/user/'.$this->getRequest()->getParam('user').'/id/'.$image->getId()); ?>
+        <?php foreach ($this->get('image') as $image) : ?>
+            <?php $commentsCount = $commentMapper->getCountComments('user/gallery/showimage/user/' . $this->getRequest()->getParam('user') . '/id/' . $image->getId()); ?>
             <div class="col-xs-6 col-lg-4 col-xl-3 col-md-4">
                 <div class="card panel-default">
                     <div class="card-image img-thumbnail">
                         <a href="<?=$this->getUrl(['action' => 'showimage', 'user' => $this->getRequest()->getParam('user'), 'id' => $image->getId()]) ?>">
-                        <?php if (file_exists($image->getImageThumb())): ?>
-                            <img src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$image->getImageTitle() ?>" />
-                        <?php else: ?>
+                        <?php if (file_exists($image->getImageThumb())) : ?>
+                            <img src="<?=$this->getUrl() . '/' . $image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$image->getImageTitle() ?>" />
+                        <?php else : ?>
                             <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" class="panel-image-preview" alt="<?=$image->getImageTitle() ?>" />
                         <?php endif; ?>
                         </a>
@@ -63,7 +65,7 @@
         <?php endforeach; ?>
         </div>
     </div>
-<?php else: ?>
+<?php else : ?>
     <?=$this->getTrans('noImages') ?>
 <?php endif; ?>
 
