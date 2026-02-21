@@ -12,6 +12,64 @@ use Modules\Events\Models\Entrants as EntrantsModel;
 class Entrants extends \Ilch\Mapper
 {
     /**
+     * @var string
+     * @since 1.23.6
+     */
+    public $tablename = 'events_entrants';
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return boolean
+     * @throws \Ilch\Database\Exception
+     * @since 1.23.6
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by params.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return EntrantsModel[]|null
+     * @since 1.23.6
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['event_id' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
+    {
+        $select = $this->db()->select('*')
+            ->from($this->tablename)
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
+            return null;
+        }
+        $entrys = [];
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new EntrantsModel();
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
+    /**
      * Gets the Event entrants.
      *
      * @param int $eventId
@@ -21,22 +79,12 @@ class Entrants extends \Ilch\Mapper
      */
     public function getEventEntrants(int $eventId, int $userId): ?EntrantsModel
     {
-        $entryRow = $this->db()->select('*')
-            ->from('events_entrants')
-            ->where(['event_id' => $eventId, 'user_id' => $userId])
-            ->execute()
-            ->fetchAssoc();
+        $entryRow = $this->getEntriesBy(['event_id' => $eventId, 'user_id' => $userId], []);
 
-        if (empty($entryRow)) {
-            return null;
+        if ($entryRow) {
+            return reset($entryRow);
         }
-
-        $entryModel = new EntrantsModel();
-        $entryModel->setEventId($entryRow['event_id'])
-            ->setUserId($entryRow['user_id'])
-            ->setStatus($entryRow['status']);
-
-        return $entryModel;
+        return null;
     }
 
     /**
@@ -48,7 +96,7 @@ class Entrants extends \Ilch\Mapper
      */
     public function getCountOfEventEntrans(int $eventId): int
     {
-        return $this->db()->select('COUNT(*)', 'events_entrants')
+        return $this->db()->select('COUNT(*)', $this->tablename)
             ->where(['event_id' => $eventId])
             ->execute()
             ->fetchCell();
@@ -63,25 +111,12 @@ class Entrants extends \Ilch\Mapper
      */
     public function getEventEntrantsById(int $eventId): array
     {
-        $entryArray = $this->db()->select('*')
-            ->from('events_entrants')
-            ->where(['event_id' => $eventId])
-            ->execute()
-            ->fetchRows();
+        $entryArray = $this->getEntriesBy(['event_id' => $eventId], []);
 
-        if (empty($entryArray)) {
+        if (!$entryArray) {
             return [];
         }
-
-        $entry = [];
-        foreach ($entryArray as $entries) {
-            $entryModel = new EntrantsModel();
-            $entryModel->setUserId($entries['user_id'])
-                ->setStatus($entries['status']);
-            $entry[] = $entryModel;
-        }
-
-        return $entry;
+        return $entryArray;
     }
 
     /**
@@ -91,14 +126,10 @@ class Entrants extends \Ilch\Mapper
      */
     public function saveUserOnEvent(EntrantsModel $event)
     {
-        $fields = [
-            'event_id' => $event->getEventId(),
-            'user_id' => $event->getUserId(),
-            'status' => $event->getStatus()
-        ];
+        $fields = $event->getArray();
 
         $userId = (int) $this->db()->select('*')
-            ->from('events_entrants')
+            ->from($this->tablename)
             ->where(['user_id' => $event->getUserId(), 'event_id' => $event->getEventId()])
             ->execute()
             ->fetchCell();
@@ -107,15 +138,15 @@ class Entrants extends \Ilch\Mapper
             /*
              * User does exist already, update.
              */
-            $this->db()->update('events_entrants')
-                ->values(['status' => $event->getStatus()])
+            $this->db()->update($this->tablename)
+                ->values($fields)
                 ->where(['event_id' => $event->getEventId(), 'user_id' => $event->getUserId()])
                 ->execute();
         } else {
             /*
              * User does not exist yet, insert.
              */
-            $this->db()->insert('events_entrants')
+            $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
@@ -126,11 +157,23 @@ class Entrants extends \Ilch\Mapper
      *
      * @param int $eventId
      * @param int $userId
+     * @return bool
      */
-    public function deleteUserFromEvent(int $eventId, int $userId)
+    public function deleteUserFromEvent(int $eventId, int $userId): bool
     {
-        $this->db()->delete('events_entrants')
+        return $this->db()->delete($this->tablename)
             ->where(['user_id' => $userId, 'event_id' => $eventId])
             ->execute();
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.23.6
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
     }
 }

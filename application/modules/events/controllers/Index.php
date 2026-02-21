@@ -77,8 +77,6 @@ class Index extends \Ilch\Controller\Frontend
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
                 ->add($eventModel->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $eventModel->getId()])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $eventModel->getId()]);
-
-            $this->getView()->set('event', $eventModel);
         } else {
             $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('menuEvents'))
@@ -86,6 +84,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+        $this->getView()->set('event', $eventModel);
 
         $imageAllowedFiletypes = $this->getConfig()->get('event_filetypes');
         $imageHeight = $this->getConfig()->get('event_height');
@@ -100,15 +99,35 @@ class Index extends \Ilch\Controller\Frontend
                 'end'   => 'endTime'
             ]);
 
-            $validation = Validation::create($this->getRequest()->getPost(), [
-                'start' => 'required',
+            $validator = [
+                'start' => 'required|date:d.m.Y H\\:i',
+                'end' => 'date:d.m.Y H\\:i',
                 'title' => 'required',
                 'place' => 'required',
                 'website' => 'url',
                 'text' => 'required',
-                'userLimit' => 'numeric|min:0',
-                'calendarShow' => 'numeric|min:0|max:1'
-            ]);
+                'userLimit' => 'required|numeric|integer|min:0',
+                //'groups' => '',
+            ];
+
+            if ($this->getRequest()->getPost('creator')) {
+                $validator['creator'] = 'required|numeric|integer|min:1|exists:users,id';
+            }
+
+            if ($this->getRequest()->getPost('currency')) {
+                $validator['currency'] = 'required|numeric|integer|min:1|exists:' . $currencyMapper->tablename . ',id';
+            }
+            if ($this->getRequest()->getPost('priceArt')) {
+                $validator['priceArt'] = 'required';
+                $validator['price'] = 'required';
+                $validator['currency'] = 'required|numeric|integer|min:1|exists:' . $currencyMapper->tablename . ',id';
+            }
+
+            if ($this->getRequest()->getPost('calendarShow')) {
+                $validator['calendarShow'] = 'required|numeric|integer|min:0|max:1';
+            }
+
+            $validation = Validation::create($this->getRequest()->getPost(), $validator);
 
             if ($validation->isValid()) {
                 $imageError = false;
@@ -233,7 +252,7 @@ class Index extends \Ilch\Controller\Frontend
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id')) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $eventMapper = new EventMapper();
 
             $eventMapper->delete($this->getRequest()->getParam('id'));
