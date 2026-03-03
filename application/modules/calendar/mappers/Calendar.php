@@ -14,6 +14,7 @@ use Modules\Calendar\Models\Calendar as EntriesModel;
 class Calendar extends \Ilch\Mapper
 {
     public string $tablename = 'calendar';
+    public string $tablenameAccess = 'calendar_access';
 
     /**
      * returns if the module is installed.
@@ -31,7 +32,7 @@ class Calendar extends \Ilch\Mapper
      * @param array $where
      * @param array $orderBy
      * @param Pagination|null $pagination
-     * @return array|null
+     * @return EntriesModel|null
      */
     public function getEntriesBy(array $where = [], array $orderBy = ['c.id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
@@ -78,7 +79,7 @@ class Calendar extends \Ilch\Mapper
      * Gets the Calendar entries.
      *
      * @param array $where
-     * @return null|array
+     * @return null|EntriesModel[]
      */
     public function getEntries(array $where = []): ?array
     {
@@ -112,7 +113,7 @@ class Calendar extends \Ilch\Mapper
      * @param Date|string $start
      * @param Date|string $end
      * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
-     * @return array|null
+     * @return EntriesModel[]|null
      */
     public function getEntriesForJson($start, $end, $groupIds = '3'): ?array
     {
@@ -128,6 +129,7 @@ class Calendar extends \Ilch\Mapper
                 $end = new Date($end);
             }
             $select = $this->db()->select();
+
             return $this->getEntriesBy(
                 [
                     $select->orX(
@@ -160,7 +162,7 @@ class Calendar extends \Ilch\Mapper
      */
     public function save(EntriesModel $model): int
     {
-        $fields = $model->getArray();
+        $fields = $model->getArray(false);
 
         if ($model->getId()) {
             $this->db()->update($this->tablename)
@@ -194,13 +196,10 @@ class Calendar extends \Ilch\Mapper
         }
 
         // Delete possible old entries to later insert the new ones.
-        $this->db()->delete($this->tablename . '_access')
+        $this->db()->delete($this->tablenameAccess)
             ->where(['calendar_id' => $calendarId])
             ->execute();
 
-        $sql = 'INSERT INTO [prefix]_' . $this->tablename . '_access (calendar_id, group_id) VALUES';
-        $sqlWithValues = $sql;
-        $rowCount = 0;
         $groupIds = [];
         if (!empty($readAccess)) {
             if (!in_array('all', $readAccess)) {
@@ -211,23 +210,23 @@ class Calendar extends \Ilch\Mapper
             $groupIds[] = '1';
         }
 
+        $preparedRows = [];
         foreach ($groupIds as $groupId) {
-            // There is a limit of 1000 rows per insert, but according to some benchmarks found online
-            // the sweet spot seams to be around 25 rows per insert. So aim for that.
-            if ($rowCount >= 25) {
-                $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-                $this->db()->queryMulti($sqlWithValues);
-                $rowCount = 0;
-                $sqlWithValues = $sql;
-            }
-
-            $rowCount++;
-            $sqlWithValues .= '(' . $calendarId . ',' . (int)$groupId . '),';
+            $preparedRows[] = [$calendarId, (int)$groupId];
         }
 
-        // Insert remaining rows.
-        $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-        $this->db()->queryMulti($sqlWithValues);
+        if (count($preparedRows)) {
+            // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows
+            $chunks = array_chunk($preparedRows, 25);
+            foreach ($chunks as $chunk) {
+                $this->db()->insert($this->tablenameAccess)
+                    ->columns(['calendar_id', 'group_id'])
+                    ->values($chunk)
+                    ->execute();
+            }
+        }
+
+        return $groupIds;
     }
 
     /**
@@ -243,6 +242,17 @@ class Calendar extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => (int)$id])
             ->execute();
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.11.5
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
     }
 
     /**

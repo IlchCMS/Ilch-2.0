@@ -7,6 +7,7 @@
 
 namespace Modules\Calendar\Controllers;
 
+use Ilch\Validation;
 use Modules\Calendar\Mappers\Calendar as CalendarMapper;
 use Modules\User\Mappers\User as UserMapper;
 
@@ -31,7 +32,22 @@ class Events extends \Ilch\Controller\Frontend
             }
         }
 
-        $this->getView()->set('calendarList', $calendarMapper->getEntriesForJson($this->getRequest()->getQuery('start') ?? '', $this->getRequest()->getQuery('end') ?? '', $readAccess))
+        $calendarList = [];
+
+        $input = $this->getRequest()->getQuery();
+        $validation = Validation::create(
+            $input,
+            [
+                'start' => 'required|date:Y-m-d\TH\\:i\\:sP',
+                'end'   => 'required|date:Y-m-d\TH\\:i\\:sP',
+            ]
+        );
+
+        if ($validation->isValid()) {
+            $calendarList = $calendarMapper->getEntriesForJson($input['start'], $input['end'], $readAccess);
+        }
+
+        $this->getView()->set('calendarList', $calendarList)
             ->set('calendarMapper', $calendarMapper);
     }
 
@@ -40,7 +56,7 @@ class Events extends \Ilch\Controller\Frontend
         $calendarMapper = new CalendarMapper();
         $userMapper = new UserMapper();
 
-        $calendar = $calendarMapper->getCalendarById($this->getRequest()->getParam('id'));
+        $calendar = $calendarMapper->getCalendarById($this->getRequest()->getParam('id', 0));
 
         if ($calendar) {
             $user = null;
@@ -50,7 +66,7 @@ class Events extends \Ilch\Controller\Frontend
                 $adminAccess = $this->getUser()->isAdmin();
             }
 
-            $readAccess = [3];
+            $readAccess = ['all', 3];
             if ($user) {
                 foreach ($user->getGroups() as $us) {
                     $readAccess[] = $us->getId();

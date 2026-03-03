@@ -96,6 +96,8 @@ class Index extends \Ilch\Controller\Admin
                 'title' => 'required',
                 'start' => 'required|date:d.m.Y H\:i',
                 'color' => 'required',
+                //'place' => '',
+                //'text' => '',
             ];
 
             if ($this->getRequest()->getPost('periodType') == 'days') {
@@ -129,15 +131,15 @@ class Index extends \Ilch\Controller\Admin
                 }
 
                 $calendarModel->setUid(($this->getRequest()->getParam('id')) ? $calendarModel->getUid() : generateUUID())
-                    ->setTitle($this->getRequest()->getPost('title'))
-                    ->setPlace($this->getRequest()->getPost('place'))
-                    ->setStart(new Date($this->getRequest()->getPost('start')))
-                    ->setEnd($this->getRequest()->getPost('end') ? new Date($this->getRequest()->getPost('end')) : '1000-01-01 00:00:00')
-                    ->setText($this->getRequest()->getPost('text'))
-                    ->setColor($this->getRequest()->getPost('color'))
-                    ->setPeriodDay($this->getRequest()->getPost('periodDay'))
-                    ->setPeriodType($this->getRequest()->getPost('periodType'))
-                    ->setRepeatUntil($this->getRequest()->getPost('repeatUntil') ? new Date($this->getRequest()->getPost('repeatUntil')) : '1000-01-01 00:00:00')
+                    ->setTitle($this->getRequest()->getPost('title', '', true))
+                    ->setPlace($this->getRequest()->getPost('place', 0, true))
+                    ->setStart(new Date($this->getRequest()->getPost('start', '', true)))
+                    ->setEnd($this->getRequest()->getPost('end', '', true) ? new Date($this->getRequest()->getPost('end', '', true)) : '1000-01-01 00:00:00')
+                    ->setText($this->getRequest()->getPost('text', '', true))
+                    ->setColor($this->getRequest()->getPost('color', '', true))
+                    ->setPeriodDay($this->getRequest()->getPost('periodDay', 0, true))
+                    ->setPeriodType($this->getRequest()->getPost('periodType', '', true))
+                    ->setRepeatUntil($this->getRequest()->getPost('repeatUntil', '', true) ? new Date($this->getRequest()->getPost('repeatUntil', '', true)) : '1000-01-01 00:00:00')
                     ->setReadAccess($groups);
                 $calendarMapper->save($calendarModel);
 
@@ -165,7 +167,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $calendarMapper = new CalendarMapper();
             $calendarMapper->delete($this->getRequest()->getParam('id'));
 
