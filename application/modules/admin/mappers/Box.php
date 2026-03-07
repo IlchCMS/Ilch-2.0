@@ -238,7 +238,7 @@ class Box extends \Ilch\Mapper
      */
     public function modulesBoxExists(string $key, string $module): bool
     {
-        return (boolean)$this->db()->select('COUNT(*)')
+        return (bool)$this->db()->select('COUNT(*)')
             ->from($this->tablename)
             ->where(['key' => $key, 'module' => $module])
             ->execute()
