@@ -30,8 +30,32 @@ class Grecaptcha extends Base
     {
         $config = Registry::get('config');
 
+        // Sanitize token value to prevent XSS and other attacks
+        $token = $this->getValue();
+        if (!is_string($token)) {
+            $this->setIsValid(false);
+            return $this;
+        }
+
+        // Trim and validate token length
+        $token = trim($token);
+        if (empty($token) || strlen($token) > 2000) {
+            $this->setIsValid(false);
+            return $this;
+        }
+
         $googlecaptcha = new GoogleCaptcha($config->get('captcha_apikey'), $config->get('captcha_seckey'), (int)$config->get('captcha'));
-        $this->setIsValid($googlecaptcha->validate($this->getValue(), $this->getParameter(0)));
+        
+        // Use configured score for reCAPTCHA v3
+        $score = (float)$config->get('captcha_score', 0.5);
+        
+        // Validate action from parameter if provided
+        $action = $this->getParameter(0);
+        if (!empty($action) && !is_string($action)) {
+            $action = null;
+        }
+        
+        $this->setIsValid($googlecaptcha->validate($token, $action, $score));
 
         return $this;
     }
