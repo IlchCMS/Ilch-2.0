@@ -14,7 +14,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'shop',
-        'version' => '1.4.0',
+        'version' => '1.4.1',
         'icon_small' => 'fa-solid fa-cart-shopping',
         'author' => 'blackcoder & LordSchirmer',
         'link' => 'https://ilch.de',
@@ -471,6 +471,7 @@ class Config extends Install
                 // Delete unused items model.
                 unlink(ROOT_PATH . '/application/modules/shop/models/Items.php');
                 // no break
+            case '1.4.0':
         }
     }
 }
