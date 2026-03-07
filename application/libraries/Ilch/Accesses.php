@@ -109,7 +109,6 @@ class Accesses
                 $getAccessTo = $keyParts[0];
             }
         }
-
         $this->getUser();
 
         if ($getAccessTo === 'Module') {
@@ -223,19 +222,5 @@ class Accesses
             }
             return in_array('2', $entrie);
         }
-    }
-
-    /**
-     * @param string $text
-     * @return string
-     */
-    public function getErrorPage(string $text = ''): string
-    {
-        return '<div class="centering text-center error-container">
-                    <div class="text-center">
-                        <h2 class="without-margin"><span class="text-warning">403</span> Access denied.</h2>
-                        <h4 class="text-warning">' . $text . '</h4>
-                    </div>
-                 </div>';
     }
 }
