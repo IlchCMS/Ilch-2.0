@@ -52,7 +52,7 @@ class View extends Design\Base
      * @param string $deleteKey
      * @return string
      */
-    public function getSaveBar(string $saveKey = 'saveButton', string $nameKey = null, string $deleteKey = ''): string
+    public function getSaveBar(string $saveKey = 'saveButton', ?string $nameKey = null, string $deleteKey = ''): string
     {
         $html = '<div class="content_savebox">
                     <button type="submit" class="save_button btn btn-secondary" name="save' . $nameKey . '" value="save">
