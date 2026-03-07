@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -29,7 +30,7 @@ class Index extends \Ilch\Controller\Frontend
             ]);
 
             $validationRules = [
-                'receiver' => 'required',
+                'receiver' => 'required|exists:contact_receivers',
                 'senderName' => 'required',
                 'senderEmail' => 'required|email',
                 'message' => 'required',
@@ -48,7 +49,7 @@ class Index extends \Ilch\Controller\Frontend
 
             if ($validation->isValid()) {
                 $receiver = $receiverMapper->getReceiverById($this->getRequest()->getPost('receiver'));
-                $subject = $this->getLayout()->escape($this->getTranslator()->trans('contactWebsite').' | '.$this->getConfig()->get('page_title'));
+                $subject = $this->getLayout()->escape($this->getTranslator()->trans('contactWebsite') . ' | ' . $this->getConfig()->get('page_title'));
                 $content = $this->getLayout()->escape($this->getRequest()->getPost('message'));
                 $date = new \Ilch\Date();
                 $senderMail = $this->getRequest()->getPost('senderEmail');
@@ -56,10 +57,10 @@ class Index extends \Ilch\Controller\Frontend
 
                 $layout = $_SESSION['layout'] ?? '';
 
-                if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/contact/layouts/mail/contact.php')) {
-                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/contact/layouts/mail/contact.php');
+                if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/contact/layouts/mail/contact.php')) {
+                    $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/contact/layouts/mail/contact.php');
                 } else {
-                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/contact/layouts/mail/contact.php');
+                    $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/contact/layouts/mail/contact.php');
                 }
 
                 // $content gets encoded with rawurlencode() for "encodedContent" to later add it to the mailto URI.

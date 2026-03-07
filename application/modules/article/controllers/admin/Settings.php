@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -70,7 +71,7 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('article_disableComments', $this->getRequest()->getPost('disableComments'));
                 $this->getConfig()->set('article_box_articleLimit', $this->getRequest()->getPost('boxArticleLimit'));
                 $this->getConfig()->set('article_box_archiveLimit', $this->getRequest()->getPost('boxArchiveLimit'));
-                
+
                 $this->getConfig()->set('article_box_keywords', implode(',', [
                     $this->getRequest()->getPost('boxKeywordsH2'),
                     $this->getRequest()->getPost('boxKeywordsH3'),

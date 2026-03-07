@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -20,7 +21,7 @@ class MenuItem extends \Ilch\Model
      * @var integer
      */
     protected $id;
-    
+
     /**
      * Sort of the item.
      *
@@ -48,7 +49,7 @@ class MenuItem extends \Ilch\Model
      * @var integer
      */
     protected $siteId;
-    
+
     /**
      * Boxid of the item.
      *
@@ -184,7 +185,7 @@ class MenuItem extends \Ilch\Model
     {
         $this->siteId = (int)$id;
     }
-    
+
     /**
      * Gets the boxid.
      *

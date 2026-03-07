@@ -55,7 +55,7 @@ class Transfer
     /**
      * Gets the TransferUrl.
      *
-     * @return false|resource
+     * @return false|resource|\CurlHandle
      */
     public function getTransferUrl()
     {

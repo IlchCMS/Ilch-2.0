@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
 <style>
 .container-fluid {
@@ -27,7 +31,9 @@
             <div class="container-fluid">
                 <?php if ($this->getRequest()->getParam('type') === 'image' || $this->getRequest()->getParam('type') === 'multi'): ?>
                     <div class="row">
-                    <?php foreach ($this->get('medias') as $media): ?>
+                    <?php
+            /** @var \Modules\Media\Models\Media $media */
+            foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array(strtolower($media->getEnding()), explode(' ', strtolower($this->get('media_ext_img'))))): ?>
                             <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
                                 <img class="image img-thumbnail img-fluid thumbnail"
@@ -59,7 +65,9 @@
 
                 <?php if ($this->getRequest()->getParam('type') === 'media'): ?>
                     <div class="row">
-                    <?php foreach ($this->get('medias') as $media): ?>
+                    <?php
+            /** @var \Modules\Media\Models\Media $media */
+            foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array(strtolower($media->getEnding()), explode(' ', strtolower($this->get('media_ext_video'))))): ?>
                             <div class="col-xl-2 col-md-3 col-4">
                                 <img class="image img-thumbnail img-fluid thumbnail"
@@ -76,7 +84,9 @@
 
                 <?php if ($this->getRequest()->getParam('type') === 'file'): ?>
                     <div class="row">
-                    <?php foreach ($this->get('medias') as $media): ?>
+                    <?php
+            /** @var \Modules\Media\Models\Media $media */
+            foreach ($this->get('medias') as $media): ?>
                         <?php if (in_array(strtolower($media->getEnding()), explode(' ', strtolower($this->get('media_ext_file'))))): ?>
                             <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
                                 <img class="image img-thumbnail img-fluid thumbnail"

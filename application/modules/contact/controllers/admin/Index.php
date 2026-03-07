@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -77,18 +78,25 @@ class Index extends \Ilch\Controller\Admin
     public function treatAction()
     {
         $receiverMapper = new ReceiverMapper();
+        $receiverModel = new ReceiverModel();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuContact'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
 
-            $this->getView()->set('receiver', $receiverMapper->getReceiverById($this->getRequest()->getParam('id')));
+            $receiverModel = $receiverMapper->getReceiverById($this->getRequest()->getParam('id'));
+            if (!$receiverModel) {
+                $this->redirect()
+                    ->withMessage('entryNotFound', 'danger')
+                    ->to(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuContact'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+            $this->getView()->set('receiver', $receiverModel);
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
@@ -97,15 +105,9 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $model = new ReceiverModel();
-
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
-                }
-
-                $model->setName($this->getRequest()->getPost('name'));
-                $model->setEmail($this->getRequest()->getPost('email'));
-                $receiverMapper->save($model);
+                $receiverModel->setName($this->getRequest()->getPost('name'));
+                $receiverModel->setEmail($this->getRequest()->getPost('email'));
+                $receiverMapper->save($receiverModel);
 
                 $this->redirect(['action' => 'index']);
             } else {
