@@ -20,7 +20,6 @@ use Modules\Admin\Mappers\Box as BoxMapper;
 /**
  * Class Frontend
  * @package Ilch\Layout
-
  * @method \Ilch\Layout\Helper\Title\Model getTitle() get the title model
  * @method \Ilch\Layout\Helper\Header\Model header() get the header model
  * @method string getMenu(int $menuId, string $tpl = '', array $options = []) rendering of a menu
@@ -46,14 +45,12 @@ class Frontend extends Base
     public function __construct(Request $request, Translator $translator, Router $router, ?string $baseUrl = null)
     {
         parent::__construct($request, $translator, $router, $baseUrl);
-
         $this->addHelper('getTitle', 'layout', new \Ilch\Layout\Helper\GetTitle());
         $this->addHelper('header', 'layout', new \Ilch\Layout\Helper\Header($this));
         $this->addHelper('getHmenu', 'layout', new \Ilch\Layout\Helper\GetHmenu($this));
         $this->addHelper('getMenu', 'layout', new \Ilch\Layout\Helper\GetMenu($this));
         $this->addHelper('getMenus', 'layout', new \Ilch\Layout\Helper\GetMenus($this));
     }
-
 
     /**
      * Returns the cached Accesses instance.
@@ -457,6 +454,10 @@ class Frontend extends Base
             $pageMapper = new PageMapper();
             $page = $pageMapper->getPageByIdLocale($id, $locale);
 
+            if ($page === null) {
+                return $tpl ? '' : null;
+            }
+
             if ($tpl) {
                 return str_replace(['%s', '%c'], [$this->escape($page->getTitle()), $page->getContent()], $tpl);
             } else {
@@ -534,17 +535,17 @@ class Frontend extends Base
      */
     public function getHeader(): string
     {
-        $locale    = $this->getTranslator()->getLocale();
+        $locale = $this->getTranslator()->getLocale();
         $shortLang = substr($locale, 0, 2);
         $isEnglish = strncmp($locale, 'en', 2) === 0;
-        $user      = $this->getUser();
-        $isAdmin   = $user && $user->isAdmin();
+        $user = $this->getUser();
+        $isAdmin = $user && $user->isAdmin();
 
-        $escapedTitle       = $this->escape($this->getTitle());
-        $escapedKeywords    = $this->escape($this->getKeywords());
+        $escapedTitle = $this->escape($this->getTitle());
+        $escapedKeywords = $this->escape($this->getKeywords());
         $escapedDescription = $this->escape($this->getDescription());
-        $escapedFavicon     = $this->getBaseUrl($this->escape($this->getFavicon()));
-        $escapedAppleIcon   = $this->getBaseUrl($this->escape($this->getAppleIcon()));
+        $escapedFavicon = $this->getBaseUrl($this->escape($this->getFavicon()));
+        $escapedAppleIcon = $this->getBaseUrl($this->escape($this->getAppleIcon()));
 
         $html = '<meta charset="utf-8">
             <title>' . $escapedTitle . '</title>
@@ -639,14 +640,14 @@ class Frontend extends Base
      */
     private function buildCookieConsentHtml(string $shortLang): string
     {
-        $btnBgColor    = $this->escape($this->getConfigKey('cookie_consent_btn_bg_color'));
-        $btnTextColor  = $this->escape($this->getConfigKey('cookie_consent_btn_text_color'));
-        $popupBgColor  = $this->escape($this->getConfigKey('cookie_consent_popup_bg_color'));
+        $btnBgColor = $this->escape($this->getConfigKey('cookie_consent_btn_bg_color'));
+        $btnTextColor = $this->escape($this->getConfigKey('cookie_consent_btn_text_color'));
+        $popupBgColor = $this->escape($this->getConfigKey('cookie_consent_popup_bg_color'));
         $popupTextColor = $this->escape($this->getConfigKey('cookie_consent_popup_text_color'));
-        $consentPos    = $this->escape($this->getConfigKey('cookie_consent_pos'));
-        $iconPos       = $this->escape($this->getConfigKey('cookie_icon_pos'));
-        $consentType   = $this->getConfigKey('cookieConsentType');
-        $privacyUrl    = $this->getUrl(['module' => 'privacy', 'controller' => 'index', 'action' => 'index']);
+        $consentPos = $this->escape($this->getConfigKey('cookie_consent_pos'));
+        $iconPos = $this->escape($this->getConfigKey('cookie_icon_pos'));
+        $consentType = $this->getConfigKey('cookieConsentType');
+        $privacyUrl = $this->getUrl(['module' => 'privacy', 'controller' => 'index', 'action' => 'index']);
 
         $html = '
         <script src="' . $this->getStaticUrl('js/tarteaucitron/build/tarteaucitron.min.js') . '"></script>
@@ -720,12 +721,9 @@ class Frontend extends Base
         $css = $this->getConfigKey('custom_css');
 
         if ($css !== '') {
-
             $css = str_replace('</style>', '', $css);
-
             return '<style>' . $css . '</style>';
         }
-
         return '';
     }
 
@@ -806,22 +804,24 @@ class Frontend extends Base
     public function getLayoutSetting(string $key): string
     {
         if (empty($this->settings[$key])) {
-            // That specific setting seems to be not loaded. Try to load default value.
             $layoutPath = APPLICATION_PATH . '/layouts/' . $this->getLayoutKey();
-            if (is_dir($layoutPath)) {
-                $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
-                $config = new $configClass($this->getTranslator());
 
-                if (empty($config->config['settings'][$key])) {
-                    throw new \InvalidArgumentException('A setting with the key "' . $key . '" doesn\'t exist for this layout.');
-                }
-
-                if ($config->config['settings'][$key]['type'] === 'separator') {
-                    throw new \InvalidArgumentException($key . '" is a seperator and not a setting with a value.');
-                }
-
-                $this->settings[$key] = $config->config['settings'][$key]['default'];
+            if (!is_dir($layoutPath)) {
+                throw new \InvalidArgumentException('Layout directory not found for key "' . $this->getLayoutKey() . '".');
             }
+
+            $configClass = '\\Layouts\\' . ucfirst(basename($layoutPath)) . '\\Config\\Config';
+            $config = new $configClass($this->getTranslator());
+
+            if (empty($config->config['settings'][$key])) {
+                throw new \InvalidArgumentException('A setting with the key "' . $key . '" doesn\'t exist for this layout.');
+            }
+
+            if ($config->config['settings'][$key]['type'] === 'separator') {
+                throw new \InvalidArgumentException('"' . $key . '" is a separator and not a setting with a value.');
+            }
+
+            $this->settings[$key] = $config->config['settings'][$key]['default'];
         }
 
         if ($this->settings[$key] instanceof LayoutAdvSettingsModel) {
