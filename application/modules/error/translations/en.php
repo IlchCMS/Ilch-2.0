@@ -9,5 +9,5 @@ return [
     'notFound' => 'not found',
     'back' => 'Back to mainpage',
     'error' => 'Error',
-    'noAccessPage' => 'You have not the needed rights to access this page.',
+    'noAccessPage' => 'You do not have the necessary rights to view this page.',
 ];
