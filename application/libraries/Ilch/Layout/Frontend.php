@@ -380,6 +380,11 @@ class Frontend extends Base
             || ($moduleKey == 'admin' && in_array($boxKey, ['layoutswitch', 'langswitch']))
         ) {
             $class = '\\Modules\\' . ucfirst($moduleKey) . '\\Boxes\\' . ucfirst($boxKey);
+
+            if (!class_exists($class)) {
+                return '';
+            }
+
             $view = new \Ilch\View($this->getRequest(), $this->getTranslator(), $this->getRouter());
             $this->getTranslator()->load(APPLICATION_PATH . '/modules/' . $moduleKey . '/translations');
             $boxObj = new $class($this, $view, $this->getRequest(), $this->getRouter(), $this->getTranslator());
