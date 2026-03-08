@@ -58,7 +58,7 @@ class BeforeControllerLoad
             $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
         } elseif ($user && $request->getModuleName() === 'admin' && $request->getControllerName() !== 'login' && $request->getControllerName() !== 'page' && $request->getActionName() !== 'logout' && !$user->isAdmin()) {
             if (!$pluginData['accesses']->hasAccess('Admin')) {
-                $pluginData['controller']->redirect()->withMessage('noRights', 'danger')->to([], 'frontend');
+                $pluginData['controller']->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'errorCode' => 403], '');
             }
         }
     }
