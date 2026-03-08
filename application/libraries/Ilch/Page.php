@@ -181,8 +181,6 @@ class Page
             if ($accesses) {
                 $controller->getLayout()->setContent($viewOutput);
             } else {
-                $this->translator->load(APPLICATION_PATH . '/modules/user/translations/');
-
                 $url = new \Ilch\Controller\Base($this->layout, $this->view, $this->request, $this->router, $this->translator);
                 $url->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'errorCode' => 403], '');
             }
