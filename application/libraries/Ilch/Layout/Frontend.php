@@ -56,8 +56,8 @@ class Frontend extends Base
 
 
     /**
-     * Gibt die gecachte Accesses-Instanz zurück.
-     * Erstellt sie beim ersten Aufruf und verwendet sie danach wieder.
+     * Returns the cached Accesses instance.
+     * Creates it on first call and reuses it afterwards.
      *
      * @return Accesses
      */
@@ -351,7 +351,7 @@ class Frontend extends Base
      */
     public function getConfigKey(string $key): string
     {
-        // Config nur beim ersten Aufruf aus der Registry holen
+        // Load config from registry only on first call
         if (!$this->configLoaded) {
             $this->config = \Ilch\Registry::get('config');
             $this->configLoaded = true;
@@ -532,11 +532,6 @@ class Frontend extends Base
      *
      * @return string
      */
-    /**
-     * Gets the header.
-     *
-     * @return string
-     */
     public function getHeader(): string
     {
         $locale    = $this->getTranslator()->getLocale();
@@ -637,9 +632,9 @@ class Frontend extends Base
     }
 
     /**
-     * Baut das HTML für den Cookie-Consent-Banner zusammen.
+     * Builds the HTML for the cookie consent banner.
      *
-     * @param string $shortLang Zweistelliger Sprachcode (z.B. 'de', 'fr')
+     * @param string $shortLang Two-letter language code (e.g. 'de', 'fr')
      * @return string
      */
     private function buildCookieConsentHtml(string $shortLang): string
@@ -687,7 +682,7 @@ class Frontend extends Base
                 removeCredit: true,
                 iconPosition: "' . $iconPos . '",';
 
-        // High Privacy und AcceptAllCta basierend auf dem Consent-Typ
+        // Set highPrivacy and AcceptAllCta based on the consent type
         if ($consentType === 'opt-in') {
             $html .= '
                 highPrivacy: true,
