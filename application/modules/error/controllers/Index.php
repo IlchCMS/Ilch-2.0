@@ -17,8 +17,8 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('errorMessage', $this->getTranslator()->trans('noAccessPage'));
         } else {
             http_response_code(404);
-            $this->getView()->set('errorCode', 404);
             if ($this->getRequest()->getParam('error') != '' && $this->getRequest()->getParam('errorText') != '') {
+                $this->getView()->set('errorCode', 404);
                 $this->getView()->set('errorMessage', $this->getRequest()->getParam('error') . ' "' . $this->getRequest()->getParam('errorText') . '" ' . $this->getTranslator()->trans('notFound'));
             } else {
                 $this->redirect();
