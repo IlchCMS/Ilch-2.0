@@ -351,7 +351,7 @@ class Layouts extends \Ilch\Controller\Admin
                     $layoutAdvSettingsModel = new LayoutAdvSettingsModel();
                     $layoutAdvSettingsModel->setLayoutKey($layoutKey)
                         ->setKey($key)
-                        ->setValue($this->getRequest()->getPost($key));
+                        ->setValue($this->getRequest()->getPost($key) ?? $value['default'] ?? '');
                     $postedSettings[] = $layoutAdvSettingsModel;
                 }
             }
