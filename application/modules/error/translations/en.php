@@ -6,7 +6,8 @@
  */
 
 return [
-    'notFound' => 'not Found',
+    'notFound' => 'not found',
     'back' => 'Back to mainpage',
     'error' => 'Error',
+    'noAccessPage' => 'You have not the needed rights to access this page.',
 ];
