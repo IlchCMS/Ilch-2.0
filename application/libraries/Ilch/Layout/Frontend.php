@@ -720,11 +720,14 @@ class Frontend extends Base
     {
         $css = $this->getConfigKey('custom_css');
 
-        if ($css !== '') {
-            $css = str_replace('</style>', '', $css);
-            return '<style>' . $css . '</style>';
+        if ($css === '') {
+            return '';
         }
-        return '';
+
+        // Remove any closing style tag regardless of casing or whitespace
+        $css = preg_replace('/<\/\s*style\s*>/i', '', $css);
+
+        return '<style>' . $css . '</style>';
     }
 
     /**
