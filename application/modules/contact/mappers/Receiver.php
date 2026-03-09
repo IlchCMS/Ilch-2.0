@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -52,7 +53,7 @@ class Receiver extends \Ilch\Mapper
     {
         $sql = 'SELECT *
                 FROM [prefix]_contact_receivers
-                WHERE id = '.(int)$this->db()->escape($id);
+                WHERE id = ' . (int)$this->db()->escape($id);
         $receiverRow = $this->db()->queryRow($sql);
 
         if (empty($receiverRow)) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -18,7 +19,9 @@ return [
     'addButton' => 'Senden',
     'writes' => 'schreibt',
     'privacy' => 'Datenschutzerklärung',
-    'acceptPrivacy' => 'Ich hab die <a href="'.BASE_URL.'/index.php/privacy/index/index" title="Datenschutzerklärung" target="_blank">Datenschutzerklärung</a>  zur Kenntnis genommen.',
+    'acceptPrivacy' => 'Ich hab die <a href="' . BASE_URL . '/index.php/privacy/index/index" title="Datenschutzerklärung" target="_blank">Datenschutzerklärung</a>  zur Kenntnis genommen.',
     'directOrReplyLink' => 'Sie können direkt auf diese E-Mail antworten oder folgenden Link nutzen',
     'welcomeMessage' => 'Willkommensnachricht',
+
+    'entryNotFound' => 'Eintrag nicht gefunden.',
 ];

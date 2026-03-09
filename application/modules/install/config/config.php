@@ -16,11 +16,13 @@ class Config extends \Ilch\Config\Install
 
     public function install()
     {
-
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
+        switch ($installedVersion) {
+        }
 
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

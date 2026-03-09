@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -81,7 +82,7 @@ class Mail
 
     public function PHPMailer()
     {
-        return new PHPMailer;
+        return new PHPMailer();
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -15,7 +16,7 @@ class Archive extends \Ilch\Controller\Frontend
 {
     /** @var string */
     private $locale;
-    
+
     public function init()
     {
         $locale = '';
@@ -74,7 +75,7 @@ class Archive extends \Ilch\Controller\Frontend
         $commentMapper = new CommentMapper();
         $userMapper = new UserMapper();
         $pagination = new \Ilch\Pagination();
-        $datestring = $this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01';
+        $datestring = $this->getRequest()->getParam('year') . '-' . $this->getRequest()->getParam('month') . '-01';
         $articles = null;
         $date = null;
 
@@ -91,9 +92,9 @@ class Archive extends \Ilch\Controller\Frontend
             $date = new \Ilch\Date($datestring);
 
             $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans($date->format('F', true)).$date->format(' Y', true));
+                ->add($this->getTranslator()->trans($date->format('F', true)) . $date->format(' Y', true));
             $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans($date->format('F', true)).$date->format(' Y', true), ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
+                ->add($this->getTranslator()->trans($date->format('F', true)) . $date->format(' Y', true), ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
 
             $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPage'));
             $pagination->setPage($this->getRequest()->getParam('page'));

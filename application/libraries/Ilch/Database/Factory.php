@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -23,7 +24,7 @@ class Factory
             $dbData[$configKey] = $config->get($configKey);
         }
 
-        $dbClass = '\\Ilch\\Database\\'.$dbData['dbEngine'];
+        $dbClass = '\\Ilch\\Database\\' . $dbData['dbEngine'];
 
         $addDebugCollector = false;
         if (DebugBar::isInitialized()) {
@@ -74,7 +75,7 @@ class Factory
      */
     public function getInstanceByEngine($engine)
     {
-        $engine = '\\Ilch\\Database\\'.$engine;
+        $engine = '\\Ilch\\Database\\' . $engine;
         return new $engine();
     }
 }

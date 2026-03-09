@@ -1,4 +1,8 @@
-<?php /** @var $this \Ilch\Layout\Frontend */ ?><!DOCTYPE html>
+<?php
+
+/** @var $this \Ilch\Layout\Frontend */
+?>
+<!DOCTYPE html>
 <html lang="de">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -119,9 +123,9 @@
                         <div class="col-12 col-lg-6 nav">
                             <ul>
                                 <li><a href="<?=$this->getUrl() ?>"><?=$this->getTrans('home') ?></a></li>
-                                <li><a href="<?=$this->getUrl(['module'=>'contact', 'controller'=>'index', 'action'=>'index']) ?>"><?=$this->getTrans('contact') ?></a></li>
-                                <li><a href="<?=$this->getUrl(['module'=>'imprint', 'controller'=>'index', 'action'=>'index']) ?>"><?=$this->getTrans('imprint') ?></a></li>
-                                <li><a href="<?=$this->getUrl(['module'=>'privacy', 'controller'=>'index', 'action'=>'index']) ?>"><?=$this->getTrans('privacy') ?></a></li>
+                                <li><a href="<?=$this->getUrl(['module' => 'contact', 'controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('contact') ?></a></li>
+                                <li><a href="<?=$this->getUrl(['module' => 'imprint', 'controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('imprint') ?></a></li>
+                                <li><a href="<?=$this->getUrl(['module' => 'privacy', 'controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('privacy') ?></a></li>
                             </ul>
                         </div>
                     </div>

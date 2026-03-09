@@ -1,5 +1,10 @@
 <?php
+
+/** @var \Ilch\View $this */
+
+/** @var \Modules\Article\Mappers\Article $articleMapper */
 $articleMapper = $this->get('articleMapper');
+/** @var \Modules\Article\Models\Category[]|null $cats */
 $cats = $this->get('cats');
 ?>
 

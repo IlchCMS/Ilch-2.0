@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -16,7 +17,7 @@ class Model
     public function fillWith($data)
     {
         foreach ($data as $key => $value) {
-            $methodName = 'set'.ucfirst($key);
+            $methodName = 'set' . ucfirst($key);
 
             if (method_exists($this, $methodName)) {
                 $this->$methodName($value);

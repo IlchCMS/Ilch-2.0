@@ -36,15 +36,18 @@
     color: #fff;
     background-color: #3c763d;
 }
+
 .comment-list .btn-hover-danger:hover {
     color: #fff;
     background-color: #a94442;
 }
+
 .comment-list .ellipsis {
     display: -webkit-flex;
     display: flex;
     align-items: center;
 }
+
 .comment-list .ellipsis-item {
     -webkit-flex: 1;
     flex: 1;

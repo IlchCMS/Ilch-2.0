@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  */
@@ -352,12 +353,11 @@ class Validation
     public static function addValidator(string $alias, $validator)
     {
         if (isset(self::$builtInValidators[$alias]) || isset(self::$validators[$alias])) {
-            throw new InvalidArgumentException('Validator alias "'.$alias.'" is already in use.');
+            throw new InvalidArgumentException('Validator alias "' . $alias . '" is already in use.');
         }
 
-        if (!(($validator instanceof Closure))
-            && (is_string($validator) && !class_exists($validator))) {
-            throw new InvalidArgumentException('Validator "'.$alias.'" is not a valid class or closure');
+        if (!(($validator instanceof Closure)) && (is_string($validator) && !class_exists($validator))) {
+            throw new InvalidArgumentException('Validator "' . $alias . '" is not a valid class or closure');
         }
 
         self::$validators[$alias] = $validator;

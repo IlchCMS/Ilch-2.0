@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -78,7 +79,6 @@ class Box extends \Ilch\Mapper
     public function getSelfBoxList(string $locale, $orderBy = ['b.id' => 'DESC'])
     {
         return $this->getSelfBoxEntriesBy(['bc.locale' => $this->db()->escape($locale)], $orderBy);
-
     }
 
     /**
