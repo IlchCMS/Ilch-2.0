@@ -241,7 +241,7 @@ class Redirect
 
         $prefix = '';
 
-        if ($route !== null && $route !== 'frontend') {
+        if ($route !== null && $route !== '') {
             $prefix = $route . '/';
         }
 

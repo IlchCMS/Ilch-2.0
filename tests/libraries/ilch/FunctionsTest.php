@@ -131,7 +131,7 @@ class FunctionsTest extends TestCase
     public function dpForTestUrlGetContents(): array
     {
         return [
-            'valid url' => ['params' => ['url' => 'https://raw.githubusercontent.com/IlchCMS/Ilch-2.0/master/development/.gitignore'], '/vendor' . PHP_EOL . '/bin/*' . PHP_EOL],
+            'valid url' => ['params' => ['url' => 'https://raw.githubusercontent.com/IlchCMS/Ilch-2.0/master/development/.gitignore'], '/vendor' . "\n" . '/bin/*' . "\n"],
             'invalid url' => ['params' => ['url' => ''], false],
         ];
     }

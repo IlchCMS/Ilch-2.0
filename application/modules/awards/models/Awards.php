@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -16,54 +17,83 @@ class Awards extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The date of the awards.
      *
      * @var string
      */
-    protected $date;
+    protected $date = '';
 
     /**
      * The rank of the awards.
      *
      * @var int
      */
-    protected $rank;
+    protected $rank = 1;
 
     /**
      * The image of the awards.
      *
      * @var string
      */
-    protected $image;
+    protected $image = '';
 
     /**
      * The event of the awards.
      *
      * @var string
      */
-    protected $event;
+    protected $event = '';
 
     /**
      * The page of the awards.
      *
      * @var string
      */
-    protected $url;
+    protected $url = '';
 
     /**
-     * @var array
+     * @var Recipient[]
      */
-    protected $recipients;
+    protected $recipients = [];
+
+    /**
+     * @param array $entries
+     * @return $this
+     * @since 1.12.2
+     */
+    public function setByArray(array $entries): Awards
+    {
+        if (!empty($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (!empty($entries['date'])) {
+            $this->setDate($entries['date']);
+        }
+        if (!empty($entries['rank'])) {
+            $this->setRank($entries['rank']);
+        }
+        if (!empty($entries['image'])) {
+            $this->setImage($entries['image']);
+        }
+        if (!empty($entries['event'])) {
+            $this->setEvent($entries['event']);
+        }
+        if (!empty($entries['url'])) {
+            $this->setURL($entries['url']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id of the awards.
      *
      * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -199,7 +229,7 @@ class Awards extends \Ilch\Model
     /**
      * Get the recipients of this award.
      *
-     * @return array
+     * @return Recipient[]
      */
     public function getRecipients(): array
     {
@@ -209,7 +239,7 @@ class Awards extends \Ilch\Model
     /**
      * Sets the recipients of this award.
      *
-     * @param array $recipients
+     * @param Recipient[] $recipients
      * @return $this
      */
     public function setRecipients(array $recipients): Awards
@@ -217,5 +247,32 @@ class Awards extends \Ilch\Model
         $this->recipients = $recipients;
 
         return $this;
+    }
+
+    /**
+     * Sets the recipients of this award.
+     *
+     * @param Recipient $recipients
+     * @return $this
+     */
+    public function addRecipient(Recipient $recipient): Awards
+    {
+        $this->recipients[] = $recipient;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.12.2
+     */
+    public function getArray(): array
+    {
+        return [
+            'award_id' =>   $this->getId(),
+            'ut_id' =>   $this->getUtId(),
+            'typ' =>  $this->getTyp(),
+        ];
     }
 }

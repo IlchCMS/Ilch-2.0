@@ -58,22 +58,39 @@ class Index extends Frontend
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('gallery'))
-                ->add($gallery->getTitle());
+            ->add($this->getTranslator()->trans('gallery'))
+            ->add($gallery->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery') . ' - ' . $gallery->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index'])
-                ->add($gallery->getTitle(), ['action' => 'show', 'id' => $id]);
+            ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index'])
+            ->add($gallery->getTitle(), ['action' => 'show', 'id' => $id]);
 
-        // Venobox instance options
+        // Complete Venobox Options Array
         $venoboxOptions = [
-            'numeration' => $this->getConfig()->get('gallery_venoboxNumeration'),
-            'infinigall' => $this->getConfig()->get('gallery_venoboxInfiniteGallery'),
             'bgcolor' => $this->getConfig()->get('gallery_venoboxBgcolor'),
-            'overlayColor' => $this->getConfig()->get('gallery_venoboxOverlayColor'),
             'border' => $this->getConfig()->get('gallery_venoboxBorder'),
-            'titleattr' => $this->getConfig()->get('gallery_venoboxTitleattr'),
+            'fitView' => (bool)$this->getConfig()->get('gallery_venoboxFitView'),
+            'infinigall' => (bool)$this->getConfig()->get('gallery_venoboxInfiniteGallery'),
+            'maxWidth' => $this->getConfig()->get('gallery_venoboxMaxWidth'),
+            'navigation' => (bool)$this->getConfig()->get('gallery_venoboxNavigation'),
+            'navKeyboard' => (bool)$this->getConfig()->get('gallery_venoboxNavKeyboard'),
+            'navTouch' => (bool)$this->getConfig()->get('gallery_venoboxNavTouch'),
+            'navSpeed' => (int)$this->getConfig()->get('gallery_venoboxNavSpeed'),
+            'numeration' => (bool)$this->getConfig()->get('gallery_venoboxNumeration'),
+            'overlayColor' => $this->getConfig()->get('gallery_venoboxOverlayColor'),
+            'popup' => (bool)$this->getConfig()->get('gallery_venoboxPopup'),
+            'ratio' => $this->getConfig()->get('gallery_venoboxRatio'),
+            'share' => (bool)$this->getConfig()->get('gallery_venoboxShare'),
+            'shareStyle' => $this->getConfig()->get('gallery_venoboxShareStyle'),
+            'spinner' => $this->getConfig()->get('gallery_venoboxSpinner'),
+            'spinColor' => $this->getConfig()->get('gallery_venoboxSpinColor'),
+            'titleattr' => ((bool)$this->getConfig()->get('gallery_venoboxTitleattr') ? 'title' : 'data-title'), // Logic adjustment
+            'titlePosition' => $this->getConfig()->get('gallery_venoboxTitlePosition'),
+            'titleStyle' => $this->getConfig()->get('gallery_venoboxTitleStyle'),
+            'toolsBackground' => $this->getConfig()->get('gallery_venoboxToolsBackground'),
+            'toolsColor' => $this->getConfig()->get('gallery_venoboxToolsColor'),
         ];
+
         $this->getView()->set('venoboxOptions', $venoboxOptions);
         $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination));
         $this->getView()->set('pagination', $pagination);

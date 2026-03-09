@@ -1,10 +1,11 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
  */
 
-return [    
+return [
     'menuAwards' => 'Awards',
     'menuAward' => 'Award',
     'date' => 'Date',

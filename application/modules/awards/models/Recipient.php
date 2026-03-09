@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -18,21 +19,21 @@ class Recipient extends Model
      *
      * @var int
      */
-    protected $award_id;
+    protected $award_id = 0;
 
     /**
      * The utId of the awards.
      *
      * @var int
      */
-    protected $utId;
+    protected $utId = 0;
 
     /**
      * The type of the awards.
      *
      * @var int
      */
-    protected $typ;
+    protected $typ = 0;
 
     /**
      * Get the award id.
@@ -98,5 +99,24 @@ class Recipient extends Model
     {
         $this->typ = $typ;
         return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.12.2
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'date' =>   $this->getDate(),
+                'rank' =>   $this->getRank(),
+                'image' =>  $this->getImage(),
+                'event' =>  $this->getEvent(),
+                'url' =>    $this->getURL()
+            ]
+        );
     }
 }

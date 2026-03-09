@@ -76,7 +76,8 @@ if (empty($modulesOnUpdateServer)) {
 }
 
 // Sort the modules by name
-usort($modulesOnUpdateServer, 'custom_sort');
+$items = is_array($modulesOnUpdateServer) ? $modulesOnUpdateServer : (array) $modulesOnUpdateServer;
+usort($items, 'custom_sort');
 ?>
 
 <div id="modules" class="table-responsive">
@@ -94,7 +95,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($modulesOnUpdateServer as $moduleOnUpdateServer):  ?>
+            <?php foreach ($items as $moduleOnUpdateServer):  ?>
                 <?php
                 if (!empty($moduleOnUpdateServer->phpExtensions)) {
                     $extensionCheck = [];
