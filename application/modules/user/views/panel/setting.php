@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-xl-12 profile">
-        <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
+        <?php include APPLICATION_PATH . '/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('settingsSetting') ?></h1>
@@ -14,9 +14,9 @@
                     </div>
                     <div class="col-xl-2">
                         <select class="form-select" id="locale" name="locale">
-                            <?php foreach ($this->get('languages') as $key => $value): ?>
+                            <?php foreach ($this->get('languages') as $key => $value) : ?>
                                 <?php $selected = ''; ?>
-                                <?php if ($this->getUser()->getLocale() == $key): ?>
+                                <?php if ($this->getUser()->getLocale() == $key) : ?>
                                     <?php $selected = 'selected="selected"'; ?>
                                 <?php endif; ?>
 

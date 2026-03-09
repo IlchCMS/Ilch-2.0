@@ -14,7 +14,7 @@ if (!empty($profil->getBirthday())) {
 
 <div class="row">
     <div class="col-xl-12 profile">
-        <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
+        <?php include APPLICATION_PATH . '/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('profileSettings') ?></h1>
@@ -90,7 +90,7 @@ if (!empty($profil->getBirthday())) {
                     <label class="col-xl-2 col-form-label" for="birthday">
                         <?=$this->getTrans('profileBirthday') ?>
                     </label>
-                    <div id="birthday" class="col-xl-8 input-group ilch-date date form_datetime">
+                    <div id="birthday" class="col-xl-8 input-group date form_datetime">
                         <input type="text"
                                class="form-control"
                                id="birthday"
@@ -111,7 +111,7 @@ if (!empty($profil->getBirthday())) {
                     }
                     if ($profileField->getType() != 1) :
                         $value = ($profileField->getType() == 4) ? [] : '';
-                        $index = 'profileField'.$profileField->getId();
+                        $index = 'profileField' . $profileField->getId();
                         if ($this->originalInput($index) != '') {
                             $value = $this->escape($this->originalInput($index));
                         } else {
@@ -134,7 +134,7 @@ if (!empty($profil->getBirthday())) {
                             <!-- radio -->
                             <?php if ($profileField->getType() == 3) :
                                 $options = json_decode($profileField->getOptions(), true);
-                                foreach ($options as $optValue): ?>
+                                foreach ($options as $optValue) : ?>
                                     <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '<div class="form-check">' ?>
                                         <input type="radio" name="<?=$index ?>" id="<?=$optValue ?>" value="<?=$optValue ?>" class="form-check-input" <?=($optValue == $value) ? 'checked' : '' ?>/>
                                         <label class="form-check-label" for="<?=$optValue ?>"><?=$this->escape($optValue) ?></label>
@@ -178,7 +178,7 @@ if (!empty($profil->getBirthday())) {
                             <?php elseif ($profileField->getType() == 6) : ?>
                                 <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '' ?>
                                     <input type="text"
-                                           class="form-control ilch-date date form_datetime"
+                                           class="form-control date form_datetime"
                                            name="<?=$index ?>"
                                            id="<?=$index ?>"
                                            placeholder="<?=$value ?>"

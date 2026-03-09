@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -50,7 +51,7 @@ class Gallery extends \Ilch\Controller\Frontend
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('gallery'))
                 ->add($gallery->getTitle());
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$gallery->getDesc());
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery') . ' - ' . $gallery->getDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index', 'action' => 'index'])
                 ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
@@ -82,7 +83,7 @@ class Gallery extends \Ilch\Controller\Frontend
                 ->add($profil->getName())
                 ->add($gallery->getTitle())
                 ->add($image->getImageTitle());
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$gallery->getDesc());
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery') . ' - ' . $gallery->getDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index', 'action' => 'index'])
                 ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
@@ -98,10 +99,10 @@ class Gallery extends \Ilch\Controller\Frontend
         if ($this->getUser()) {
             if ($this->getRequest()->getPost('saveComment')) {
                 $comments = new Comments();
-                $key = 'user/gallery/showimage/user/'.$userId;
+                $key = 'user/gallery/showimage/user/' . $userId;
 
                 if ($this->getRequest()->getPost('fkId')) {
-                    $key .= '/id_c/'.$this->getRequest()->getPost('fkId');
+                    $key .= '/id_c/' . $this->getRequest()->getPost('fkId');
                 }
 
                 $comments->saveComment($key, $this->getRequest()->getPost('comment_text'), $this->getUser()->getId());
@@ -112,11 +113,11 @@ class Gallery extends \Ilch\Controller\Frontend
                 $comments = new Comments();
 
                 $comments->saveVote($commentId, $this->getUser()->getId(), ($this->getRequest()->getParam('key') === 'up'));
-                $this->redirect(['action' => 'showimage', 'user' => $userId, 'id' => $id.'#comment_'.$commentId]);
+                $this->redirect(['action' => 'showimage', 'user' => $userId, 'id' => $id . '#comment_' . $commentId]);
             }
         }
 
         $this->getView()->set('image', $imageMapper->getImageById($id));
-        $this->getView()->set('commentsKey', 'user/gallery/showimage/user/'.$userId.'/id/'.$id);
+        $this->getView()->set('commentsKey', 'user/gallery/showimage/user/' . $userId . '/id/' . $id);
     }
 }

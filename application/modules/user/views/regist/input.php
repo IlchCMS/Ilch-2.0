@@ -147,7 +147,7 @@ $profileFieldsTranslation = $this->get('profileFieldsTranslation');
                         <?php elseif ($profileField->getType() == 6) : ?>
                             <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '' ?>
                                 <input type="text"
-                                       class="form-control ilch-date date form_datetime"
+                                       class="form-control date form_datetime"
                                        name="<?=$index ?>"
                                        id="<?=$index ?>"
                                        placeholder="<?=$value ?>"
@@ -189,15 +189,15 @@ $profileFieldsTranslation = $this->get('profileFieldsTranslation');
         <div class="panel-footer clearfix">
             <div class="float-end">
                 <?php
-                    if ($this->get('captchaNeeded')) {
-                        if ($this->get('googlecaptcha')) {
-                            echo $this->get('googlecaptcha')->setForm('registForm')->getCaptcha($this, 'registButton', 'Regist');
-                        } else {
-                            echo $this->getSaveBar('registButton', 'Regist');
-                        }
+                if ($this->get('captchaNeeded')) {
+                    if ($this->get('googlecaptcha')) {
+                        echo $this->get('googlecaptcha')->setForm('registForm')->getCaptcha($this, 'registButton', 'Regist');
                     } else {
                         echo $this->getSaveBar('registButton', 'Regist');
                     }
+                } else {
+                    echo $this->getSaveBar('registButton', 'Regist');
+                }
                 ?>
             </div>
         </div>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -151,7 +152,7 @@ class Regist extends \Ilch\Controller\Frontend
 
                 foreach ($profileFields as $profileField) {
                     if ($profileField->getType() != 1) {
-                        $index = 'profileField'.$profileField->getId();
+                        $index = 'profileField' . $profileField->getId();
                         $profileFieldsContent = new ProfileFieldContentModel();
                         $profileFieldsContent->setFieldId($profileField->getId())
                             ->setUserId($userId)
@@ -175,17 +176,17 @@ class Regist extends \Ilch\Controller\Frontend
 
                 if ($this->getConfig()->get('regist_confirm') == 1) {
                     $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
-                    $confirmCode = '<a href="'.BASE_URL.'/index.php/user/regist/confirm/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
+                    $confirmCode = '<a href="' . BASE_URL . '/index.php/user/regist/confirm/selector/' . $selector . '/code/' . $confirmedCode . '" class="btn btn-primary btn-sm">' . $this->getTranslator()->trans('confirmMailButtonText') . '</a>';
                     $date = new \Ilch\Date();
                     $mailContent = $emailsMapper->getEmail('user', 'regist_confirm_mail', $this->getTranslator()->getLocale());
                     $name = $this->getLayout()->escape($this->getRequest()->getPost('name'));
 
                     $layout = $_SESSION['layout'] ?? '';
 
-                    if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/registconfirm.php')) {
-                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/registconfirm.php');
+                    if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/user/layouts/mail/registconfirm.php')) {
+                        $messageTemplate = file_get_contents(APPLICATION_PATH . '/layouts/' . $this->getConfig()->get('default_layout') . '/views/modules/user/layouts/mail/registconfirm.php');
                     } else {
-                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/registconfirm.php');
+                        $messageTemplate = file_get_contents(APPLICATION_PATH . '/modules/user/layouts/mail/registconfirm.php');
                     }
                     $messageReplace = [
                         '{content}' => $this->getLayout()->purify($mailContent->getText()),
