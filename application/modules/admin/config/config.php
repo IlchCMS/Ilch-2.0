@@ -1271,6 +1271,8 @@ class Config extends \Ilch\Config\Install
                     $databaseConfig->set('updateserver', $updateservers[random_int(0, count($updateservers) - 1)]);
                 }
 
+                // Update vendor folder to update Bootstrap, Font Awesome, HTMLPurifier, jQuery, jQuery UI and PHPMailer.
+                replaceVendorDirectory();
                 break;
         }
 
