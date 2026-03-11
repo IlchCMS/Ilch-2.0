@@ -1,34 +1,29 @@
 <?php
-
-/** @var \Ilch\View $this */
-
-/** @var \Modules\Awards\Mapper\Awards $awardsMapper */
 $awardsMapper = $this->get('awardsMapper');
-/** @var \Modules\Awards\Models\Awards $award */
-$award = $this->get('award');
+$awards = $this->get('awards');
 
-/** @var \Modules\Teams\Models\Teams[]|null $teams */
-$teams = $this->get('teams');
-/** @var \Modules\Users\Models\User[] $users */
-$users = $this->get('users');
+if ($awards != '') {
+    $getDate = new \Ilch\Date($awards->getDate());
+    $date = $getDate->format('d.m.Y', true);
+}
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/awards.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
-<h1><?=$this->getTrans($award->getId() ? 'edit' : 'add') ?></h1>
+<h1><?=($awards != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('date') ? ' has-error' : '' ?>">
         <label for="date" class="col-xl-2 col-form-label">
             <?=$this->getTrans('date') ?>:
         </label>
-        <div id="date" class="col-xl-2 input-group date form_datetime">
+        <div id="date" class="col-xl-2 input-group ilch-date date form_datetime">
             <input type="text"
                    class="form-control"
                    name="date"
                    id="date"
-                   value="<?=$this->originalInput('date', ($award->getId() ? (new \Ilch\Date($award->getDate()))->format('d.m.Y') : (new \Ilch\Date())->format('d.m.Y')), true) ?>"
+                   value="<?=($this->get('awards') != '') ? $this->escape($date) : $this->escape($this->originalInput('date')) ?>"
                    readonly>
             <span class="input-group-text">
                 <span class="fa-solid fa-calendar"></span>
@@ -46,7 +41,7 @@ $users = $this->get('users');
                    name="rank"
                    min="1"
                    placeholder="1"
-                   value="<?=$this->originalInput('rank', $award->getRank(), true) ?>" />
+                   value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getRank()) : $this->escape($this->originalInput('rank')) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('image') ? ' has-error' : '' ?>">
@@ -60,7 +55,7 @@ $users = $this->get('users');
                        id="selectedImage"
                        name="image"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
-                       value="<?=$this->originalInput('image', $award->getImage(), true) ?>" />
+                       value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getImage()) : $this->escape($this->originalInput('image')) ?>" />
                 <span class="input-group-text">
                     <span id="clearImage" class="fa-solid fa-xmark"></span>
                 </span>
@@ -77,43 +72,43 @@ $users = $this->get('users');
         <div class="col-xl-2">
             <select class="form-select" id="user" name="utId[]" multiple>
                 <optgroup label="<?=$this->getTrans('user') ?>">
-                    <?php
-                    foreach ($users as $user) {
-                        $selected = '';
-                        if ($this->originalInput('utId') && in_array('1_' . $user->getId(), $this->originalInput('utId'))) {
-                            $selected = 'selected="selected"';
-                        } else {
-                            foreach ($award->getRecipients() as $recipient) {
-                                if ($recipient->getUtId() === $user->getId() && $recipient->getTyp() === 1) {
-                                    $selected = 'selected="selected"';
-                                    break;
+                    <?php foreach ($this->get('users') as $user) {
+                            $selected = '';
+                            if ($this->validation()->hasErrors() && $this->originalInput('utId') && in_array('1_'.$user->getId(), $this->originalInput('utId'))) {
+                                $selected = 'selected="selected"';
+                            } elseif (!$this->validation()->hasErrors() && $awards) {
+                                foreach($awards->getRecipients() as $recipient) {
+                                    if ($recipient->getUtId() === $user->getId() && $recipient->getTyp() === 1) {
+                                        $selected = 'selected="selected"';
+                                        break;
+                                    }
                                 }
                             }
-                        }
 
-                        echo '<option ' . $selected . ' value="1_' . $user->getId() . '">' . $this->escape($user->getName()) . '</option>';
-                    } ?>
+                            echo '<option '.$selected.' value="1_'.$user->getId().'">'.$this->escape($user->getName()).'</option>';
+                        }
+                    ?>
                 </optgroup>
-            <?php if ($awardsMapper->existsTable('teams') && count($teams)) : ?>
-                <optgroup label="<?=$this->getTrans('team') ?>">
-                    <?php
-                    foreach ($teams as $team) {
-                        $selected = '';
-                        if ($this->originalInput('utId') && in_array('2_' . $team->getId(), $this->originalInput('utId'))) {
-                            $selected = 'selected="selected"';
-                        } else {
-                            foreach ($award->getRecipients() as $recipient) {
-                                if ($recipient->getUtId() === $team->getId() && $recipient->getTyp() === 2) {
-                                    $selected = 'selected="selected"';
-                                    break;
+                <?php if ($awardsMapper->existsTable('teams') && $this->get('teams') != ''): ?>
+                    <optgroup label="<?=$this->getTrans('team') ?>">
+                        <?php foreach ($this->get('teams') as $team) {
+                            $selected = '';
+                            if ($this->validation()->hasErrors() && in_array('2_'.$team->getId(), $this->originalInput('utId'))) {
+                                $selected = 'selected="selected"';
+                            } elseif (!$this->validation()->hasErrors() && $awards) {
+                                foreach($awards->getRecipients() as $recipient) {
+                                    if ($recipient->getUtId() === $team->getId() && $recipient->getTyp() === 2) {
+                                        $selected = 'selected="selected"';
+                                        break;
+                                    }
                                 }
                             }
-                        }
 
-                        echo '<option ' . $selected . ' value="2_' . $team->getId() . '">' . $this->escape($team->getName()) . '</option>';
-                    } ?>
-                </optgroup>
-            <?php endif; ?>
+                            echo '<option '.$selected.' value="2_'.$team->getId().'">'.$this->escape($team->getName()).'</option>';
+                        }
+                        ?>
+                    </optgroup>
+                <?php endif; ?>
             </select>
         </div>
     </div>
@@ -126,7 +121,7 @@ $users = $this->get('users');
                    class="form-control"
                    id="event"
                    name="event"
-                   value="<?=$this->originalInput('event', $award->getEvent(), true) ?>" />
+                   value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getEvent()) : $this->escape($this->originalInput('event')) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('page') ? ' has-error' : '' ?>">
@@ -139,10 +134,14 @@ $users = $this->get('users');
                    name="page"
                    id="page"
                    placeholder="https://"
-                   value="<?=$this->originalInput('page', $award->getURL(), true) ?>" />
+                   value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getURL()) : $this->escape($this->originalInput('page')) ?>" />
         </div>
     </div>
-    <?=$this->getSaveBar($award->getId() ? 'updateButton' : 'addButton') ?>
+    <?php if ($this->get('awards') != ''): ?>
+        <?=$this->getSaveBar('updateButton') ?>
+    <?php else: ?>
+        <?=$this->getSaveBar('addButton') ?>
+    <?php endif; ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
