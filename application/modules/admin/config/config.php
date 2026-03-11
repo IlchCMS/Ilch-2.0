@@ -229,8 +229,7 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
-            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://www.ilch.de/ilch2_updates/stable/", "ilch", "Germany");
-            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://hhunderter-updateserver.de/stable/", "ilch", "Germany");';
+            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://www.ilch.de/ilch2_updates/stable/", "ilch", "Germany");';
     }
 
     public function getUpdate(string $installedVersion): string
@@ -1258,17 +1257,27 @@ class Config extends \Ilch\Config\Install
 
                 break;
             case "2.2.12":
-                // Add new second updateserver.
-                $this->db()->insert('admin_updateservers')
-                    ->values(['url' => 'https://hhunderter-updateserver.de/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
-                    ->execute();
-
+                // Repeat step from previous update as installing Ilch 2.2.12 added the server.
+                // Change updateserver to one without the domain blackcoder.de
                 $databaseConfig = new \Ilch\Config\Database($this->db());
-                $currentUpdateserver = $databaseConfig->get('updateserver');
+                if (strpos($databaseConfig->get('updateserver'), 'blackcoder.de') !== false) {
+                    $databaseConfig->set('updateserver', 'https://www.ilch.de/ilch2_updates/stable/');
+                }
 
-                if ($currentUpdateserver === 'https://www.ilch.de/ilch2_updates/stable/') {
-                    $updateservers = ['https://www.ilch.de/ilch2_updates/stable/', 'https://hhunderter-updateserver.de/stable/'];
-                    $databaseConfig->set('updateserver', $updateservers[random_int(0, count($updateservers) - 1)]);
+                // Remove updateservers with the domain blackcoder.de
+                $this->db()->query("DELETE FROM `[prefix]_admin_updateservers` WHERE `url` LIKE '%blackcoder.de%';");
+
+                // Make sure that at least the default updateserver is in the list of updateservers.
+                $defaultUpdateserverExists = $this->db()->select('url')
+                    ->from('admin_updateservers')
+                    ->where(['url' => 'https://www.ilch.de/ilch2_updates/stable/'])
+                    ->execute()
+                    ->fetchCell();
+
+                if (!$defaultUpdateserverExists) {
+                    $this->db()->insert('admin_updateservers')
+                        ->values(['url' => 'https://www.ilch.de/ilch2_updates/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
+                        ->execute();
                 }
 
                 // Update vendor folder to update Bootstrap, Font Awesome, HTMLPurifier, jQuery, jQuery UI and PHPMailer.
