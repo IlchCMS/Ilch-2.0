@@ -28,10 +28,11 @@ $locale = $this->get('locale');
             <tbody>
                 <?php if ($this->get('modules')): ?>
                     <?php foreach ($this->get('modules') as $module): ?>
-                        <?php $modules = $modulesMapper->getModulesByKey($module, $locale); ?>
+                        <?php $moduleEntry = $modulesMapper->getModulesByKey($module, $locale); ?>
+                        <?php $moduleName = $moduleEntry ? $this->escape($moduleEntry->getName()) : $this->escape($module); ?>
                         <?php $comments = $commentMapper->getCommentsLikeKey($module); ?>
                         <tr>
-                            <td><a href="<?=$this->getUrl('admin/comment/index/show/key/' . $module) ?>"><?=$modules->getName() ?></a>
+                            <td><a href="<?=$this->getUrl('admin/comment/index/show/key/' . $module) ?>"><?=$moduleName ?></a>
                             <td class="text-center"><?=count($comments) ?></td>
                         </tr>
                     <?php endforeach; ?>
