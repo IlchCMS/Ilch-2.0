@@ -51,7 +51,7 @@
                        class="form-control"
                        id="email"
                        name="senderEmail"
-                       value="<?=$this->originalInput('senderEmail') ?>" />
+                       value="<?=$this->escape($this->originalInput('senderEmail')) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('message') ? ' has-error' : '' ?>">
