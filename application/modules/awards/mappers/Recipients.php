@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -60,7 +59,7 @@ class Recipients extends Mapper
         }
 
         $fields = [];
-        foreach ($recipients as $recipient) {
+        foreach($recipients as $recipient) {
             $fields[] = [$recipient->getAwardId(), $recipient->getUtId(), $recipient->getTyp()];
         }
 
