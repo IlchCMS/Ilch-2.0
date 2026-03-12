@@ -79,9 +79,9 @@ class Config extends Install
                     `cat_id` INT(11) NOT NULL,
                     `group_id` INT(11) NOT NULL,
                     PRIMARY KEY (`cat_id`, `group_id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_access_[prefix]_groups` (`group_id`) USING BTREE,
-                    CONSTRAINT `FK_[prefix]_shop_access_[prefix]_shop_cats` FOREIGN KEY (`cat_id`) REFERENCES `[prefix]_shop_cats` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
-                    CONSTRAINT `FK_[prefix]_shop_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    INDEX `FK_[prefix]_shop_acc_grp` (`group_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_acc_cat` FOREIGN KEY (`cat_id`) REFERENCES `[prefix]_shop_cats` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_shop_acc_grp` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_currencies` (
@@ -133,8 +133,8 @@ class Config extends Install
                     `city` VARCHAR(255) NOT NULL,
                     `country` VARCHAR(255) NOT NULL,
                     PRIMARY KEY (`id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_addresses_[prefix]_shop_customers` (`customerId`) USING BTREE,
-                    CONSTRAINT `FK_[prefix]_shop_addresses_[prefix]_shop_customers` FOREIGN KEY (`customerId`) REFERENCES `[prefix]_shop_customers` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    INDEX `FK_[prefix]_shop_addr_cust` (`customerId`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_addr_cust` FOREIGN KEY (`customerId`) REFERENCES `[prefix]_shop_customers` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_orders` (
@@ -151,8 +151,8 @@ class Config extends Install
                     `confirmCode` char(64),
                     `status` TINYINT(1) NULL DEFAULT 0,
                     PRIMARY KEY (`id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_orders_[prefix]_shop_customers` (`customerId`) USING BTREE,
-                    CONSTRAINT `FK_[prefix]_shop_orders_[prefix]_shop_customers` FOREIGN KEY (`customerId`) REFERENCES `[prefix]_shop_customers` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    INDEX `FK_[prefix]_shop_ord_cust` (`customerId`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_ord_cust` FOREIGN KEY (`customerId`) REFERENCES `[prefix]_shop_customers` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_orderdetails` (
@@ -164,8 +164,8 @@ class Config extends Install
                     `tax` INT(11) NOT NULL,
                     `shippingCosts` DOUBLE(9,2) NOT NULL,
                     PRIMARY KEY (`id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_orderdetails_[prefix]_shop_orders` (`orderId`) USING BTREE,
-                    CONSTRAINT `FK_[prefix]_shop_orderdetails_[prefix]_shop_orders` FOREIGN KEY (`orderId`) REFERENCES `[prefix]_shop_orders` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    INDEX `FK_[prefix]_shop_od_ord` (`orderId`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_od_ord` FOREIGN KEY (`orderId`) REFERENCES `[prefix]_shop_orders` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_settings` (
@@ -212,8 +212,8 @@ class Config extends Install
                     `locale` VARCHAR(255) NULL DEFAULT NULL,
                     `text` VARCHAR(255) NULL DEFAULT NULL,
                     PRIMARY KEY (`id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_properties_trans_[prefix]_shop_properties` (`property_id`) USING BTREE,
-                    CONSTRAINT `FK_[prefix]_shop_properties_trans_[prefix]_shop_properties` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    INDEX `FK_[prefix]_shop_pt_prop` (`property_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_pt_prop` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties_values` (
@@ -222,8 +222,8 @@ class Config extends Install
                     `position` INT(11) NOT NULL,
                     `value` VARCHAR(255) NULL DEFAULT NULL,
                     PRIMARY KEY (`id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_properties_values_[prefix]_shop_properties` (`property_id`) USING BTREE,
-                    CONSTRAINT `FK_[prefix]_shop_properties_values_[prefix]_shop_properties` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    INDEX `FK_[prefix]_shop_pv_prop` (`property_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_pv_prop` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties_values_trans` (
@@ -232,8 +232,8 @@ class Config extends Install
                     `locale` VARCHAR(255) NULL DEFAULT NULL,
                     `text` VARCHAR(255) NULL DEFAULT NULL,
                     PRIMARY KEY (`id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_properties_values_trans_[prefix]_shop_properties_values` (`value_id`) USING BTREE,
-                    CONSTRAINT `FK_[prefix]_shop_properties_values_trans_[prefix]_shop_properties_values` FOREIGN KEY (`value_id`) REFERENCES `[prefix]_shop_properties_values` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    INDEX `FK_[prefix]_shop_pv_trans_value` (`value_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_pv_trans_value` FOREIGN KEY (`value_id`) REFERENCES `[prefix]_shop_properties_values` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties_variants` (
@@ -243,14 +243,14 @@ class Config extends Install
                     `property_id` INT(11) NOT NULL,
                     `value_id` INT(11) NOT NULL,
                     PRIMARY KEY (`id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties` (`property_id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_items` (`item_id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_items_2` (`item_variant_id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties_values` (`value_id`) USING BTREE,
-                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_shop_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
-                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_items_2` FOREIGN KEY (`item_variant_id`) REFERENCES `[prefix]_shop_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
-                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
-                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties_values` FOREIGN KEY (`value_id`) REFERENCES `[prefix]_shop_properties_values` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    INDEX `FK_[prefix]_shop_pvar_prop` (`property_id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_pvar_item` (`item_id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_pvar_item2` (`item_variant_id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_pvar_val` (`value_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_pvar_item` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_shop_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_shop_pvar_item2` FOREIGN KEY (`item_variant_id`) REFERENCES `[prefix]_shop_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_shop_pvar_prop` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_shop_pvar_val` FOREIGN KEY (`value_id`) REFERENCES `[prefix]_shop_properties_values` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
                 
                 INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
@@ -427,8 +427,8 @@ class Config extends Install
                     `locale` VARCHAR(255) NULL DEFAULT NULL,
                     `text` VARCHAR(255) NULL DEFAULT NULL,
                     PRIMARY KEY (`id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_properties_trans_[prefix]_shop_properties` (`property_id`) USING BTREE,
-                    CONSTRAINT `FK_[prefix]_shop_properties_trans_[prefix]_shop_properties` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    INDEX `FK_[prefix]_shop_pt_prop` (`property_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_pt_prop` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties_values` (
@@ -437,8 +437,8 @@ class Config extends Install
                     `position` INT(11) NOT NULL,
                     `value` VARCHAR(255) NULL DEFAULT NULL,
                     PRIMARY KEY (`id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_properties_values_[prefix]_shop_properties` (`property_id`) USING BTREE,
-                    CONSTRAINT `FK_[prefix]_shop_properties_values_[prefix]_shop_properties` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    INDEX `FK_[prefix]_shop_pv_prop` (`property_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_pv_prop` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties_values_trans` (
@@ -447,8 +447,8 @@ class Config extends Install
                     `locale` VARCHAR(255) NULL DEFAULT NULL,
                     `text` VARCHAR(255) NULL DEFAULT NULL,
                     PRIMARY KEY (`id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_properties_values_trans_[prefix]_shop_properties_values` (`value_id`) USING BTREE,
-                    CONSTRAINT `FK_[prefix]_shop_properties_values_trans_[prefix]_shop_properties_values` FOREIGN KEY (`value_id`) REFERENCES `[prefix]_shop_properties_values` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    INDEX `FK_[prefix]_shop_pv_trans_value` (`value_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_pv_trans_value` FOREIGN KEY (`value_id`) REFERENCES `[prefix]_shop_properties_values` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_shop_properties_variants` (
@@ -458,20 +458,154 @@ class Config extends Install
                     `property_id` INT(11) NOT NULL,
                     `value_id` INT(11) NOT NULL,
                     PRIMARY KEY (`id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties` (`property_id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_items` (`item_id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_items_2` (`item_variant_id`) USING BTREE,
-                    INDEX `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties_values` (`value_id`) USING BTREE,
-                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_shop_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
-                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_items_2` FOREIGN KEY (`item_variant_id`) REFERENCES `[prefix]_shop_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
-                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
-                    CONSTRAINT `FK_[prefix]_shop_properties_variants_[prefix]_shop_properties_values` FOREIGN KEY (`value_id`) REFERENCES `[prefix]_shop_properties_values` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                    INDEX `FK_[prefix]_shop_pvar_prop` (`property_id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_pvar_item` (`item_id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_pvar_item2` (`item_variant_id`) USING BTREE,
+                    INDEX `FK_[prefix]_shop_pvar_val` (`value_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_shop_pvar_item` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_shop_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_shop_pvar_item2` FOREIGN KEY (`item_variant_id`) REFERENCES `[prefix]_shop_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_shop_pvar_prop` FOREIGN KEY (`property_id`) REFERENCES `[prefix]_shop_properties` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_shop_pvar_val` FOREIGN KEY (`value_id`) REFERENCES `[prefix]_shop_properties_values` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
                 // Delete unused items model.
                 unlink(ROOT_PATH . '/application/modules/shop/models/Items.php');
                 // no break
             case '1.4.0':
+                $this->migrateForeignKeysToShortNames();
+                // no break
         }
+    }
+
+    private function migrateForeignKeysToShortNames(): void
+    {
+        $this->normalizeForeignKeyAndIndex(
+            'shop_access',
+            'cat_id',
+            'FK_[prefix]_shop_acc_cat',
+            ['FK_[prefix]_shop_access_[prefix]_shop_cats'],
+            'shop_cats'
+        );
+        $this->normalizeForeignKeyAndIndex(
+            'shop_access',
+            'group_id',
+            'FK_[prefix]_shop_acc_grp',
+            ['FK_[prefix]_shop_access_[prefix]_groups'],
+            'groups'
+        );
+        $this->normalizeForeignKeyAndIndex(
+            'shop_addresses',
+            'customerId',
+            'FK_[prefix]_shop_addr_cust',
+            ['FK_[prefix]_shop_addresses_[prefix]_shop_customers'],
+            'shop_customers'
+        );
+        $this->normalizeForeignKeyAndIndex(
+            'shop_orders',
+            'customerId',
+            'FK_[prefix]_shop_ord_cust',
+            ['FK_[prefix]_shop_orders_[prefix]_shop_customers'],
+            'shop_customers'
+        );
+        $this->normalizeForeignKeyAndIndex(
+            'shop_orderdetails',
+            'orderId',
+            'FK_[prefix]_shop_od_ord',
+            ['FK_[prefix]_shop_orderdetails_[prefix]_shop_orders'],
+            'shop_orders'
+        );
+        $this->normalizeForeignKeyAndIndex(
+            'shop_properties_trans',
+            'property_id',
+            'FK_[prefix]_shop_pt_prop',
+            ['FK_[prefix]_shop_properties_trans_[prefix]_shop_properties'],
+            'shop_properties'
+        );
+        $this->normalizeForeignKeyAndIndex(
+            'shop_properties_values',
+            'property_id',
+            'FK_[prefix]_shop_pv_prop',
+            ['FK_[prefix]_shop_properties_values_[prefix]_shop_properties'],
+            'shop_properties'
+        );
+        $this->normalizeForeignKeyAndIndex(
+            'shop_properties_values_trans',
+            'value_id',
+            'FK_[prefix]_shop_pv_trans_value',
+            ['FK_[prefix]_shop_properties_values_trans_[prefix]_shop_properties_values'],
+            'shop_properties_values'
+        );
+        $this->normalizeForeignKeyAndIndex(
+            'shop_properties_variants',
+            'item_id',
+            'FK_[prefix]_shop_pvar_item',
+            ['FK_[prefix]_shop_properties_variants_[prefix]_shop_items'],
+            'shop_items'
+        );
+        $this->normalizeForeignKeyAndIndex(
+            'shop_properties_variants',
+            'item_variant_id',
+            'FK_[prefix]_shop_pvar_item2',
+            ['FK_[prefix]_shop_properties_variants_[prefix]_shop_items_2'],
+            'shop_items'
+        );
+        $this->normalizeForeignKeyAndIndex(
+            'shop_properties_variants',
+            'property_id',
+            'FK_[prefix]_shop_pvar_prop',
+            ['FK_[prefix]_shop_properties_variants_[prefix]_shop_properties'],
+            'shop_properties'
+        );
+        $this->normalizeForeignKeyAndIndex(
+            'shop_properties_variants',
+            'value_id',
+            'FK_[prefix]_shop_pvar_val',
+            ['FK_[prefix]_shop_properties_variants_[prefix]_shop_properties_values'],
+            'shop_properties_values'
+        );
+    }
+
+    private function normalizeForeignKeyAndIndex(string $table, string $column, string $newName, array $oldNames, string $refTable): void
+    {
+        if (!$this->db()->ifTableExists($table)) {
+            return;
+        }
+
+        $oldNames = array_values(array_unique($oldNames));
+
+        foreach ($oldNames as $oldName) {
+            if ($oldName === $newName) {
+                continue;
+            }
+
+            if ($this->db()->ifForeignKeyConstraintExists($table, $oldName)) {
+                $this->db()->query('ALTER TABLE `[prefix]_' . $table . '` DROP FOREIGN KEY `' . $oldName . '`;');
+            }
+        }
+
+        foreach ($oldNames as $oldName) {
+            if ($oldName === $newName) {
+                continue;
+            }
+
+            if ($this->ifIndexExists($table, $oldName)) {
+                $this->db()->query('ALTER TABLE `[prefix]_' . $table . '` DROP INDEX `' . $oldName . '`;');
+            }
+        }
+
+        if (!$this->ifIndexExists($table, $newName)) {
+            $this->db()->query('ALTER TABLE `[prefix]_' . $table . '` ADD INDEX `' . $newName . '` (`' . $column . '`) USING BTREE;');
+        }
+
+        if (!$this->db()->ifForeignKeyConstraintExists($table, $newName)) {
+            $this->db()->query('ALTER TABLE `[prefix]_' . $table . '` ADD CONSTRAINT `' . $newName . '` FOREIGN KEY (`' . $column . '`) REFERENCES `[prefix]_' . $refTable . '` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+        }
+    }
+
+    private function ifIndexExists(string $table, string $indexName): bool
+    {
+        $dbName = $this->db()->getDatabaseName();
+
+        return (bool) $this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.statistics WHERE table_schema='" . $dbName . "' AND table_name='[prefix]_" . $table . "' AND index_name='" . $indexName . "');");
     }
 }
