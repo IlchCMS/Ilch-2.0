@@ -106,14 +106,14 @@ class Currency extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
-            $_POST['name'] = trim($this->getRequest()->getPost('name'));
+            $postData = array_merge($this->getRequest()->getPost(), ['name' => trim($this->getRequest()->getPost('name'))]);
 
-            $validation = Validation::create($this->getRequest()->getPost(), [
+            $validation = Validation::create($postData, [
                 'name' => 'required|unique:' . $currencyMapper->tablename . ',name,' . $currencyModel->getId(),
             ]);
 
             if ($validation->isValid()) {
-                $currencyModel->setName($this->getRequest()->getPost('name'));
+                $currencyModel->setName($postData['name']);
                 $currencyMapper->save($currencyModel);
 
                 $this->addMessage('saveSuccess');

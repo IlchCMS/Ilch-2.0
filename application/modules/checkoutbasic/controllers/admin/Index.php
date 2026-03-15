@@ -62,9 +62,9 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $_POST['usage'] = trim($this->getRequest()->getPost('usage'));
+            $postData = array_merge($this->getRequest()->getPost(), ['usage' => trim($this->getRequest()->getPost('usage'))]);
 
-            $validation = Validation::create($this->getRequest()->getPost(), [
+            $validation = Validation::create($postData, [
                 'name' => 'required',
                 'datetime' => 'required|date:Y-m-d H\:i\:s',
                 'usage' => 'required',
@@ -75,7 +75,7 @@ class Index extends \Ilch\Controller\Admin
                 $model = new \Modules\Checkoutbasic\Models\Entry();
                 $model->setName($this->getRequest()->getPost('name'))
                     ->setDatetime($this->getRequest()->getPost('datetime'))
-                    ->setUsage($this->getRequest()->getPost('usage'))
+                    ->setUsage($postData['usage'])
                     ->setAmount($this->getRequest()->getPost('amount'));
                 $checkoutMapper->save($model);
 

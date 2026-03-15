@@ -151,19 +151,16 @@ class Page extends \Ilch\Controller\Admin
                 $permaLinkUrl = '';
             }
 
-            $_POST['permaLink'] = $permaLinkUrl;
+            $validationData = array_merge($this->getRequest()->getPost(), ['permaLink' => $permaLinkUrl]);
 
             $validation = Validation::create(
-                $this->getRequest()->getPost(),
+                $validationData,
                 [
                     'pageTitle' => 'required',
                     'pageContent' => 'required',
                     'permaLink' => 'url|required'
                 ]
             );
-
-            // Restore original values
-            $_POST['permaLink'] = $permaLink;
 
             if ($validation->isValid()) {
                 if ($this->getRequest()->getParam('id')) {
@@ -176,7 +173,7 @@ class Page extends \Ilch\Controller\Admin
                 if ($this->getRequest()->getPost('pageLanguage') != '') {
                     $model->setLocale($this->getRequest()->getPost('pageLanguage'));
                 }
-                $model->setPerma($this->getRequest()->getPost('permaLink'));
+                $model->setPerma($permaLink);
                 $pageId = $pageMapper->save($model);
 
                 if (!$model->getId()) {
