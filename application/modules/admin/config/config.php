@@ -1297,6 +1297,10 @@ class Config extends \Ilch\Config\Install
                 // Update vendor folder to update Bootstrap, Font Awesome, HTMLPurifier, jQuery, jQuery UI and PHPMailer.
                 replaceVendorDirectory();
                 break;
+            case "2.2.13":
+                // Update vendor folder to remove blueimp/jquery-file-upload.
+                replaceVendorDirectory();
+                break;
         }
 
         return 'Update function executed.';
