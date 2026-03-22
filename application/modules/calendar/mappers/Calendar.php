@@ -9,7 +9,7 @@ namespace Modules\Calendar\Mappers;
 
 use Ilch\Date;
 use Ilch\Pagination;
-use Modules\Calendar\Models\Calendar as EntriesModel;
+use Modules\Calendar\Models\Calendar as EntryModel;
 
 class Calendar extends \Ilch\Mapper
 {
@@ -27,12 +27,12 @@ class Calendar extends \Ilch\Mapper
     }
 
     /**
-     * Gets the Entries by param.
+     * Gets the entries by param.
      *
      * @param array $where
      * @param array $orderBy
      * @param Pagination|null $pagination
-     * @return EntriesModel|null
+     * @return EntryModel[]|null
      */
     public function getEntriesBy(array $where = [], array $orderBy = ['c.id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
@@ -63,23 +63,23 @@ class Calendar extends \Ilch\Mapper
         if (empty($entryArray)) {
             return null;
         }
-        $entrys = [];
+        $entries = [];
 
-        foreach ($entryArray as $entries) {
-            $entryModel = new EntriesModel();
+        foreach ($entryArray as $entry) {
+            $entryModel = new EntryModel();
 
-            $entryModel->setByArray($entries);
+            $entryModel->setByArray($entry);
 
-            $entrys[] = $entryModel;
+            $entries[] = $entryModel;
         }
-        return $entrys;
+        return $entries;
     }
 
     /**
      * Gets the Calendar entries.
      *
      * @param array $where
-     * @return null|EntriesModel[]
+     * @return null|EntryModel[]
      */
     public function getEntries(array $where = []): ?array
     {
@@ -89,12 +89,12 @@ class Calendar extends \Ilch\Mapper
     /**
      * Gets calendar.
      *
-     * @param EntriesModel|int $id
-     * @return EntriesModel|null
+     * @param EntryModel|int $id
+     * @return EntryModel|null
      */
-    public function getCalendarById($id): ?EntriesModel
+    public function getCalendarById($id): ?EntryModel
     {
-        if (is_a($id, EntriesModel::class)) {
+        if (is_a($id, EntryModel::class)) {
             $id = $id->getId();
         }
 
@@ -113,7 +113,7 @@ class Calendar extends \Ilch\Mapper
      * @param Date|string $start
      * @param Date|string $end
      * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
-     * @return EntriesModel[]|null
+     * @return EntryModel[]|null
      */
     public function getEntriesForJson($start, $end, $groupIds = '3'): ?array
     {
@@ -157,10 +157,10 @@ class Calendar extends \Ilch\Mapper
     /**
      * Inserts Events model.
      *
-     * @param EntriesModel $model
+     * @param EntryModel $model
      * @return int
      */
-    public function save(EntriesModel $model): int
+    public function save(EntryModel $model): int
     {
         $fields = $model->getArray(false);
 
@@ -216,7 +216,7 @@ class Calendar extends \Ilch\Mapper
         }
 
         if (count($preparedRows)) {
-            // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows
+            // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows.
             $chunks = array_chunk($preparedRows, 25);
             foreach ($chunks as $chunk) {
                 $this->db()->insert($this->tablenameAccess)
@@ -230,29 +230,18 @@ class Calendar extends \Ilch\Mapper
     }
 
     /**
-     * @param EntriesModel|int $id
+     * @param EntryModel|int $id
      * @return bool
      */
     public function delete($id): bool
     {
-        if (is_a($id, EntriesModel::class)) {
+        if (is_a($id, EntryModel::class)) {
             $id = $id->getId();
         }
 
         return $this->db()->delete($this->tablename)
             ->where(['id' => (int)$id])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.11.5
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 
     /**
