@@ -14,7 +14,7 @@ $rulesparents = $this->get('rulesparents');
 /** @var Modules\User\Models\Group[]|null $userGroupList */
 $userGroupList = $this->get('userGroupList');
 ?>
-<h1><?=($rule->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
+<h1><?=$this->getTrans($rule->getId() ? 'edit' : 'add') ?></h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('paragraph') ? ' has-error' : '' ?>">
@@ -83,7 +83,7 @@ $userGroupList = $this->get('userGroupList');
                       rows="5"><?=$this->escape($this->originalInput('text', $rule->getText())) ?></textarea>
         </div>
     </div>
-    <?=($rule->getId()) ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
+    <?=$this->getSaveBar($rule->getId() ? 'edit' : 'add') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>

@@ -11,7 +11,7 @@ $rulesparents = $this->get('rulesparents');
 /** @var Modules\User\Models\Group[]|null $userGroupList */
 $userGroupList = $this->get('userGroupList');
 ?>
-<h1><?=($cat) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
+<h1><?=$this->getTrans($cat->getId() ? 'edit' : 'add') ?></h1>
 <form method="POST">
     <?=$this->getTokenField(); ?>
     <div class="row mb-3<?=$this->validation()->hasError('paragraph') ? ' has-error' : '' ?>">
@@ -56,7 +56,7 @@ $userGroupList = $this->get('userGroupList');
             </select>
         </div>
     </div>
-    <?=($cat->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=$this->getSaveBar($cat->getId() ? 'updateButton' : 'addButton') ?>
 </form>
 
 <script>

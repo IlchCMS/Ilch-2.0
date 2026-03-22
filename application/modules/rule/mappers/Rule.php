@@ -15,12 +15,12 @@ class Rule extends \Ilch\Mapper
     /**
      * @var string
      */
-    public $tablename = 'rules';
+    public string $tablename = 'rules';
 
     /**
      * @var string
      */
-    public $tablenameAccess = 'rules_access';
+    public string $tablenameAccess = 'rules_access';
 
     /**
      * returns if the module is installed.
@@ -197,7 +197,7 @@ class Rule extends \Ilch\Mapper
      *
      * @param int $ruleId
      * @param string|array $access example: "1,2,3"
-     * @param boolean $addAdmin
+     * @param bool $addAdmin
      */
     public function saveAccess(int $ruleId, $access, bool $addAdmin = true)
     {
@@ -226,7 +226,7 @@ class Rule extends \Ilch\Mapper
         }
 
         if (count($preparedRows)) {
-            // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows
+            // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows.
             $chunks = array_chunk($preparedRows, 25);
             foreach ($chunks as $chunk) {
                 $this->db()->insert($this->tablenameAccess)
