@@ -52,7 +52,7 @@ class Away extends \Ilch\Mapper
     /**
      * Gets away.
      *
-     * @param integer $id
+     * @param int $id
      * @return AwayModel|null
      */
     public function getAwayById(int $id): ?AwayModel
@@ -142,7 +142,7 @@ class Away extends \Ilch\Mapper
     /**
      * Updates away with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function update(int $id)
     {
@@ -168,7 +168,7 @@ class Away extends \Ilch\Mapper
     /**
      * Deletes away with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function delete(int $id)
     {

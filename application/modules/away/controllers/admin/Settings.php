@@ -47,8 +47,8 @@ class Settings extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $rules = [
-                'userNotification' => 'numeric|integer|min:0|max:1',
-                'adminNotification' => 'numeric|integer|min:0|max:1',
+                'userNotification' => 'required|numeric|integer|min:0|max:1',
+                'adminNotification' => 'required|numeric|integer|min:0|max:1',
             ];
 
             if ($this->getRequest()->getPost('userNotification')) {
@@ -80,7 +80,7 @@ class Settings extends \Ilch\Controller\Admin
         $groups = $awayGroupsMapper->getGroups();
 
         if ($groups === null) {
-            $groups = [1,2];
+            $groups = [1, 2];
         }
 
         $userGroupList = $groupMapper->getGroupList();
