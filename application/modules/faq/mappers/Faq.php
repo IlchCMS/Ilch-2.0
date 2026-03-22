@@ -16,12 +16,12 @@ class Faq extends \Ilch\Mapper
      * @var string
      * @since 1.9.0
      */
-    public $tablename = 'faqs';
+    public string $tablename = 'faqs';
 
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      * @throws \Ilch\Database\Exception
      * @since 1.9.0
      */

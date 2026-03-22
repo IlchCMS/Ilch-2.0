@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'faq',
-        'version' => '1.10.2',
+        'version' => '1.10.3',
         'icon_small' => 'fa-regular fa-circle-question',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -25,8 +25,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'A FAQ module (frequently asked questions) with categories, options regarding the sorting and a search function.',
             ],
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'ilchCore' => '2.2.13',
+        'phpVersion' => '7.4'
     ];
 
     public function install()
@@ -190,8 +190,11 @@ class Config extends \Ilch\Config\Install
             case "1.9.1":
             case "1.9.2":
                 // no break
+            case "1.10.0":
+            case "1.10.1":
+            case "1.10.2":
         }
 
-        return 'Update function executed.';
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

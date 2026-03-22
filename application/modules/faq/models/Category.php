@@ -14,21 +14,21 @@ class Category extends \Ilch\Mapper
      *
      * @var int
      */
-    private $id = 0;
+    private int $id = 0;
 
     /**
      * The title of the category.
      *
      * @var string
      */
-    private $title = '';
+    private string $title = '';
 
     /**
      * Value for read_access.
      *
      * @var string
      */
-    private $read_access = '';
+    private string $read_access = '';
 
     /**
      * @param array $entries

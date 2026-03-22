@@ -14,28 +14,28 @@ class Faq extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The cat_id of the faq.
      *
      * @var int
      */
-    protected $catId = 0;
+    protected int $catId = 0;
 
     /**
      * The question of the faq.
      *
      * @var string
      */
-    protected $question = '';
+    protected string $question = '';
 
     /**
      * The answer of the faq.
      *
      * @var string
      */
-    protected $answer = '';
+    protected string $answer = '';
 
     /**
      * Value for read_access.
@@ -43,7 +43,7 @@ class Faq extends \Ilch\Model
      * @var string
      * @since 1.9.0
      */
-    private $read_access = '';
+    private string $read_access = '';
 
     /**
      * @param array $entries
