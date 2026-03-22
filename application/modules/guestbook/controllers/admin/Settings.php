@@ -45,8 +45,6 @@ class Settings extends \Ilch\Controller\Admin
                 'entrySettings' => 'required|numeric|integer|min:0|max:1',
                 'notificationOnNewEntry' => 'required|numeric|integer|min:0|max:1',
                 'entriesPerPage' => 'numeric|integer|min:1',
-
-                //'welcomeMessage' => '',
             ]);
 
             if ($validation->isValid()) {

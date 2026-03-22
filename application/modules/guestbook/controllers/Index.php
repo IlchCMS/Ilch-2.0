@@ -71,10 +71,10 @@ class Index extends \Ilch\Controller\Frontend
 
             if ($validation->isValid()) {
                 $model = new GuestbookModel();
-                $model->setName($this->getRequest()->getPost('name', '', true))
-                    ->setEmail($this->getRequest()->getPost('email', '', true))
-                    ->setText($this->getRequest()->getPost('text', '', true))
-                    ->setHomepage($this->getRequest()->getPost('homepage', '', true))
+                $model->setName($this->getRequest()->getPost('name'))
+                    ->setEmail($this->getRequest()->getPost('email'))
+                    ->setText($this->getRequest()->getPost('text'))
+                    ->setHomepage($this->getRequest()->getPost('homepage'))
                     ->setDatetime($ilchDate->toDb())
                     ->setFree($this->getConfig()->get('gbook_autosetfree'));
                 $guestbookMapper->save($model);

@@ -14,49 +14,49 @@ class Entry extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The email of the entry.
      *
      * @var string
      */
-    protected $email = '';
+    protected string $email = '';
 
     /**
      * The text of the entry.
      *
      * @var string
      */
-    protected $text = '';
+    protected string $text = '';
 
     /**
      * The name of the entry.
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * The homepage of the entry.
      *
      * @var string
      */
-    protected $homepage = '';
+    protected string $homepage = '';
 
     /**
      * The datetime of the entry.
      *
      * @var string
      */
-    protected $datetime = '';
+    protected string $datetime = '';
 
     /**
      * The setfee of the entry.
      *
      * @var bool
      */
-    protected $setFree = false;
+    protected bool $setFree = false;
 
     /**
      * @param array $entries

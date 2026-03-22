@@ -25,9 +25,9 @@
         </div>
         <div class="col-xl-2">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="notificationOnNewEntry-yes" name="notificationOnNewEntry" value="1" <?=($this->originalInput('entrySettings', $this->get('notificationOnNewEntry')) == '1') ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="notificationOnNewEntry-yes" name="notificationOnNewEntry" value="1" <?=($this->originalInput('notificationOnNewEntry', $this->get('notificationOnNewEntry')) == '1') ? 'checked="checked"' : '' ?> />
                 <label for="notificationOnNewEntry-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="notificationOnNewEntry-no" name="notificationOnNewEntry" value="0" <?=($this->originalInput('entrySettings', $this->get('notificationOnNewEntry')) != '1') ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="notificationOnNewEntry-no" name="notificationOnNewEntry" value="0" <?=($this->originalInput('notificationOnNewEntry', $this->get('notificationOnNewEntry')) != '1') ? 'checked="checked"' : '' ?> />
                 <label for="notificationOnNewEntry-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -43,7 +43,7 @@
                    id="entriesPerPageInput"
                    name="entriesPerPage"
                    min="1"
-                   value="<?=$this->originalInput('entrySettings', $this->get('entriesPerPage'), true) ?>" />
+                   value="<?=($this->escape($this->get('entriesPerPage')) != '') ? $this->escape($this->get('entriesPerPage')) : $this->escape($this->originalInput('entriesPerPage')) ?>" />
         </div>
     </div>
     <div class="row mb-3<?= $this->validation()->hasError('welcomeMessage') ? ' has-error' : '' ?>">
@@ -54,7 +54,7 @@
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="welcomeMessage"
-                      toolbar="ilch_html"><?=$this->originalInput('entrySettings', $this->get('welcomeMessage')) ?></textarea>
+                      toolbar="ilch_html"><?=($this->escape($this->get('welcomeMessage')) != '') ? $this->escape($this->get('welcomeMessage')) : $this->escape($this->originalInput('welcomeMessage')) ?></textarea>
         </div>
     </div>
     <?=$this->getSaveBar() ?>

@@ -7,7 +7,6 @@
 
 namespace Modules\Guestbook\Mappers;
 
-use Ilch\Database\Mysql\Result;
 use Modules\Guestbook\Models\Entry as GuestbookModel;
 
 class Guestbook extends \Ilch\Mapper
@@ -16,19 +15,7 @@ class Guestbook extends \Ilch\Mapper
      * @var string
      * @since 1.14.4
      */
-    public $tablename = 'gbook';
-
-    /**
-     * returns if the module is installed.
-     *
-     * @return bool
-     * @throws \Ilch\Database\Exception
-     * @since 1.14.4
-     */
-    public function checkDB(): bool
-    {
-        return $this->db()->ifTableExists($this->tablename);
-    }
+    public string $tablename = 'gbook';
 
     /**
      * Gets the Entries by params.
@@ -91,7 +78,7 @@ class Guestbook extends \Ilch\Mapper
     /**
      * @param int|GuestbookModel $id
      * @param int $setfree
-     * @return boolean
+     * @return bool
      */
     public function updateSetfree($id, int $setfree = -1): bool
     {
@@ -128,6 +115,7 @@ class Guestbook extends \Ilch\Mapper
      * Inserts or updates gustebook entry.
      *
      * @param GuestbookModel $model
+     * @return int
      */
     public function save(GuestbookModel $model): int
     {
@@ -177,16 +165,5 @@ class Guestbook extends \Ilch\Mapper
                 ->where(['setfree' => $setfree])
                 ->execute();
         }
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.14.4
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 }

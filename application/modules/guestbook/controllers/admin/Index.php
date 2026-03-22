@@ -8,7 +8,6 @@
 namespace Modules\Guestbook\Controllers\Admin;
 
 use Modules\Guestbook\Mappers\Guestbook as GuestbookMapper;
-use Modules\Guestbook\Models\Entry as GuestbookModel;
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 
 class Index extends \Ilch\Controller\Admin
@@ -98,7 +97,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id')) && is_numeric($this->getRequest()->getParam('id'))) {
             $guestbookMapper = new GuestbookMapper();
 
             $guestbookMapper->delete($this->getRequest()->getParam('id'));
@@ -114,7 +113,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function setfreeAction()
     {
-        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id')) && is_numeric($this->getRequest()->getParam('id'))) {
             $guestbookMapper = new GuestbookMapper();
 
             $guestbookMapper->updateSetfree($this->getRequest()->getParam('id'));
