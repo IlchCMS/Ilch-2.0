@@ -21,7 +21,7 @@ $cats = $this->get('cats');
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?=$this->originalInput('Name', $link->getName(), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('Name', $link->getName())) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('link') ? ' has-error' : '' ?>">
@@ -34,7 +34,7 @@ $cats = $this->get('cats');
                    id="link"
                    name="link"
                    placeholder="https://"
-                   value="<?=$this->originalInput('link', $link->getLink(), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('link', $link->getLink())) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('banner') ? ' has-error' : '' ?>">
@@ -48,7 +48,7 @@ $cats = $this->get('cats');
                        id="selectedImage_1"
                        name="banner"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
-                       value="<?=$this->originalInput('banner', $link->getBanner(), true) ?>" />
+                       value="<?=$this->escape($this->originalInput('banner', $link->getBanner())) ?>" />
                 <span class="input-group-text"><a id="media" href="javascript:media_1()"><i class="fa-regular fa-image"></i></a></span>
             </div>
         </div>
@@ -60,9 +60,9 @@ $cats = $this->get('cats');
         <div class="col-xl-4">
             <textarea class="form-control"
                       id="desc"
-                      name="desc" 
-                      cols="45" 
-                      rows="3"><?=$this->originalInput('desc', $link->getDesc(), true) ?></textarea>
+                      name="desc"
+                      cols="45"
+                      rows="3"><?=$this->escape($this->originalInput('desc', $link->getDesc())) ?></textarea>
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('catId') ? ' has-error' : '' ?>">

@@ -18,7 +18,7 @@ $cat = $this->get('category');
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?=$this->originalInput('name', $cat->getName(), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('name', $cat->getName())) ?>" />
         </div>
     </div>
     <div class="row mb-3">
@@ -30,7 +30,7 @@ $cat = $this->get('category');
                       id="desc"
                       name="desc"
                       cols="45"
-                      rows="3"><?=$this->originalInput('desc', $cat->getDesc(), true) ?></textarea>
+                      rows="3"><?=$this->escape($this->originalInput('desc', $cat->getDesc())) ?></textarea>
         </div>
     </div>
     <?=$this->getSaveBar($cat->getId() ? 'updateButton' : 'addButton') ?>

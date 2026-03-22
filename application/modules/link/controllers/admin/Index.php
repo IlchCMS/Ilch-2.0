@@ -222,15 +222,14 @@ class Index extends \Ilch\Controller\Admin
                 'name' => 'required',
                 'link' => 'required|url',
                 'banner' => 'url',
-                //'desc' => '',
             ], $this->getRequest()->getPost('catId') ? ['catId' => 'required|numeric|integer|min:1|exists:' . $categoryMapper->tablename . ',id'] : ['catId' => 'required|numeric|integer|min:0']));
 
             if ($validation->isValid()) {
-                $model->setName($this->getRequest()->getPost('name', '', true))
-                    ->setLink($this->getRequest()->getPost('link', '', true))
-                    ->setBanner($this->getRequest()->getPost('banner', '', true))
-                    ->setDesc($this->getRequest()->getPost('desc', '', true))
-                    ->setCatId($this->getRequest()->getPost('catId', 0, true));
+                $model->setName($this->getRequest()->getPost('name', ''))
+                    ->setLink($this->getRequest()->getPost('link', ''))
+                    ->setBanner($this->getRequest()->getPost('banner', ''))
+                    ->setDesc($this->getRequest()->getPost('desc', ''))
+                    ->setCatId($this->getRequest()->getPost('catId', 0));
                 $linkMapper->save($model);
 
                 $this->addMessage('saveSuccess');
@@ -273,7 +272,6 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'name' => 'required',
-                //'desc' => ''
             ]);
 
             if ($validation->isValid()) {
