@@ -29,7 +29,7 @@ $userGroupList = $this->get('userGroupList');
                    class="form-control"
                    id="name"
                    name="name"
-                   value="<?=$this->originalInput('name', $team->getName(), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('name', $team->getName())) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('upl') ? ' has-error' : '' ?>">

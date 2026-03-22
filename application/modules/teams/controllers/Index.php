@@ -112,9 +112,6 @@ class Index extends \Ilch\Controller\Frontend
                 'gender' => 'numeric|integer|min:1|max:3',
                 'birthday' => 'required|date:d.m.Y',
                 'text' => 'required',
-
-                //'place' => '',
-                //'skill' => '',
             ];
 
             if ($captchaNeeded) {
@@ -215,15 +212,8 @@ class Index extends \Ilch\Controller\Frontend
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $this->redirect()
                 ->withInput()
-                ->withErrors($validation->getErrorBag());
-
-            if ($this->getRequest()->getParam('id')) {
-                $this->redirect()
-                    ->to(['action' => 'join', 'id' => $this->getRequest()->getParam('id')]);
-            } else {
-                $this->redirect()
-                    ->to(['action' => 'join']);
-            }
+                ->withErrors($validation->getErrorBag())
+                ->to(($this->getRequest()->getParam('id')) ? ['action' => 'join', 'id' => $this->getRequest()->getParam('id')] : ['action' => 'join']);
         }
 
         $this->getView()->set('teamsMapper', $teamsMapper)

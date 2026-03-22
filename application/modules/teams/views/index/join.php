@@ -137,7 +137,7 @@ $teams = $this->get('teams');
                            value="<?=$birthday->format('d.m.Y') ?>"
                            readonly />
                     <span class="input-group-text">
-                        <span class="fa-solid fa-calendar" disabled></span>
+                        <span class="fa-solid fa-calendar"></span>
                     </span>
                 </div>
             <?php else : ?>

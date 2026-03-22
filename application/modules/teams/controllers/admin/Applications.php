@@ -7,6 +7,7 @@
 
 namespace Modules\Teams\Controllers\Admin;
 
+use Ilch\Date;
 use Modules\Teams\Mappers\Joins as JoinsMapper;
 use Modules\Teams\Mappers\Teams as TeamsMapper;
 use Modules\User\Mappers\User as UserMapper;
@@ -150,9 +151,9 @@ class Applications extends \Ilch\Controller\Admin
                 $userModel->setName($name)
                     ->setPassword($passwordService->hash($password))
                     ->setEmail($email)
-                    ->setBirthday($join->getBirthday())
+                    ->setBirthday(new Date($join->getBirthday()))
                     ->setGender($join->getGender())
-                    ->setDateCreated($join->getDateCreated())
+                    ->setDateCreated(new Date($join->getDateCreated()))
                     ->addGroup($userGroup)
                     ->setSelector($selector)
                     ->setConfirmedCode($confirmedCode)

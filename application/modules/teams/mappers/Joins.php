@@ -15,12 +15,12 @@ class Joins extends \Ilch\Mapper
      * @var string
      * @since 1.22.0
      */
-    public $tablename = 'teams_joins';
+    public string $tablename = 'teams_joins';
 
     /**
      * Check if DB-Table exists
      *
-     * @return boolean
+     * @return bool
      * @throws \Ilch\Database\Exception
      * @since 1.22.0
      */
@@ -258,16 +258,5 @@ class Joins extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['undecided' => 0])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.25.1
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 }
