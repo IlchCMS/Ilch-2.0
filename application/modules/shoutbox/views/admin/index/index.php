@@ -40,7 +40,7 @@ $userMapper = $this->get('userMapper');
                                 <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
                                 <td><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>" target="_blank"><?=$this->escape($user ? $user->getName() : $userMapper->getDummyUser()->getName()) ?></a></td>
                             <?php endif; ?>
-                            <td><?=$date->format("d.m.Y H:i", true) ?></td>
+                            <td><?=$date->format('d.m.Y H:i', true) ?></td>
                             <td><?=$this->escape($shoutbox->getTextarea()) ?></td>
                         </tr>
                     <?php endforeach; ?>

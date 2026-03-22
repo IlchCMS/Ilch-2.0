@@ -53,15 +53,13 @@ class Settings extends \Ilch\Controller\Admin
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'limit'         => 'required|min:1',
                 'maxtextlength' => 'required|min:20',
-
-                //'writeAccess' => '',
             ]);
 
             if ($validation->isValid()) {
                 if (empty($this->getRequest()->getPost('writeAccess'))) {
                     $writeAccess = '';
                 } else {
-                    $writeAccess = implode(",", $this->getRequest()->getPost('writeAccess'));
+                    $writeAccess = implode(',', $this->getRequest()->getPost('writeAccess'));
                 }
 
                 $this->getConfig()->set('shoutbox_limit', $this->getRequest()->getPost('limit'))

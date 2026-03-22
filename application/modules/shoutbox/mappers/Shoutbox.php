@@ -15,7 +15,7 @@ class Shoutbox extends \Ilch\Mapper
      * @var string
      * @since 1.5.0
      */
-    public $tablename = 'shoutbox';
+    public string $tablename = 'shoutbox';
 
     /**
      * Check if DB-Table exists

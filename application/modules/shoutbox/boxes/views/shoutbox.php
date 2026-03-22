@@ -184,12 +184,12 @@ $config = \Ilch\Registry::get('config');
                         <?php if ($shoutbox->getUid() == '0' || empty($user)) : ?>
                             <td>
                                 <b><?=$this->escape($shoutbox->getName()) ?>:</b><br />
-                                <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
+                                <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>
                             </td>
                         <?php else : ?>
                             <td>
                                 <b><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></b>:<br />
-                                <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
+                                <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>
                             </td>
                         <?php endif; ?>
                     </tr>

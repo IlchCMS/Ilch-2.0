@@ -14,35 +14,35 @@ class Shoutbox extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The uid of the shoutbox.
      *
      * @var int
      */
-    protected $uid = 0;
+    protected int $uid = 0;
 
     /**
      * The name of the shoutbox.
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * The textarea of the shoutbox.
      *
      * @var string
      */
-    protected $textarea = '';
+    protected string $textarea = '';
 
     /**
      * The time of the shoutbox.
      *
      * @var string
      */
-    protected $time = '';
+    protected string $time = '';
 
     /**
      * @param array $entries
