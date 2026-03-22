@@ -184,7 +184,8 @@ class Joins extends \Ilch\Mapper
         if (!is_a($date, \ilch\Date::class)) {
             $date = new \ilch\Date($date);
         }
-        return (int)$date->format('Y') - 1970;
+
+        return (int)(substr(date('Ymd') - date('Ymd', strtotime($date)), 0, -4));
     }
 
     /**
