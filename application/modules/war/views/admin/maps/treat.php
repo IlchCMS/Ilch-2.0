@@ -5,7 +5,7 @@
 /** @var \Modules\War\Models\Maps $entry */
 $entry = $this->get('map');
 ?>
-<h1><?=(!$entry->getId()) ? $this->getTrans('manageNewMaps') : $this->getTrans('treatMaps') ?></h1>
+<h1><?=$this->getTrans(!$entry->getId() ? 'manageNewMaps' : 'treatMaps') ?></h1>
 <form id="article_form" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('mapsName') ? ' has-error' : '' ?>">
@@ -17,8 +17,8 @@ $entry = $this->get('map');
                    class="form-control"
                    id="mapsNameInput"
                    name="mapsName"
-                   value="<?=$this->escape($this->originalInput('mapsName', ($entry->getId() ? $entry->getName() : ''))) ?>" />
+                   value="<?=$this->originalInput('mapsName', $entry->getName(), true) ?>" />
         </div>
     </div>
-    <?=($entry->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=$this->getSaveBar($entry->getId() ? 'updateButton' : 'addButton') ?>
 </form>

@@ -11,6 +11,8 @@ use Ilch\Date;
 use Ilch\Mapper;
 use Ilch\Pagination;
 use Modules\War\Models\War as EntriesModel;
+use Modules\War\Mappers\Enemy as EnemyMapper;
+use Modules\War\Mappers\Group as GroupMapper;
 use Modules\Comment\Mappers\Comment as Comments;
 
 use function is_string;
@@ -18,6 +20,7 @@ use function is_string;
 class War extends Mapper
 {
     public $tablename = 'war';
+    public $tablenameAccess = 'war_access';
 
     /**
      * returns if the module is installed.
@@ -26,7 +29,7 @@ class War extends Mapper
      */
     public function checkDB(): bool
     {
-        return $this->db()->ifTableExists($this->tablename);
+        return $this->db()->ifTableExists($this->tablename) && $this->db()->ifTableExists($this->tablenameAccess);
     }
 
     /**
@@ -39,6 +42,9 @@ class War extends Mapper
      */
     public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
+        $groupMapper = new GroupMapper();
+        $enemyMapper = new EnemyMapper();
+
         $read_access = '';
         if (isset($where['ra.group_id'])) {
             $read_access = $where['ra.group_id'];
@@ -48,9 +54,9 @@ class War extends Mapper
         $select = $this->db()->select();
         $select->fields(['w.id', 'w.enemy', 'w.group', 'w.time', 'w.maps', 'w.server', 'w.password', 'w.xonx', 'w.game', 'w.matchtype', 'w.report', 'w.status', 'w.show', 'w.lastaccepttime', 'w.read_access_all'])
             ->from(['w' => $this->tablename])
-            ->join(['ra' => 'war_access'], 'w.id = ra.war_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
-            ->join(['g' => 'war_groups'], 'w.group = g.id', 'LEFT', ['war_groups' => 'g.tag', 'group_name' => 'g.name', 'group_is' => 'g.id'])
-            ->join(['e' => 'war_enemy'], 'w.enemy = e.id', 'LEFT', ['war_enemy' => 'e.tag', 'enemy_name' => 'e.name', 'enemy_id' => 'e.id'])
+            ->join(['ra' => $this->tablenameAccess], 'w.id = ra.war_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
+            ->join(['g' => $groupMapper->tablename], 'w.group = g.id', 'LEFT', ['war_groups' => 'g.tag', 'group_name' => 'g.name', 'group_is' => 'g.id'])
+            ->join(['e' => $enemyMapper->tablename], 'w.enemy = e.id', 'LEFT', ['war_enemy' => 'e.tag', 'enemy_name' => 'e.name', 'enemy_id' => 'e.id'])
             ->where(array_merge($where, ($read_access ? [$select->orX(['ra.group_id' => $read_access, 'w.read_access_all' => '1'])] : [])))
             ->order($orderBy)
             ->group(['w.id']);
@@ -207,18 +213,15 @@ class War extends Mapper
      */
     public function saveReadAccess(int $warId, $readAccess, bool $addAdmin = true)
     {
-        if (is_string($readAccess)) {
+        if (\is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
         }
 
         // Delete possible old entries to later insert the new ones.
-        $this->db()->delete('war_access')
+        $this->db()->delete($this->tablenameAccess)
             ->where(['war_id' => $warId])
             ->execute();
 
-        $sql = 'INSERT INTO [prefix]_war_access (war_id, group_id) VALUES';
-        $sqlWithValues = $sql;
-        $rowCount = 0;
         $groupIds = [];
         if (!empty($readAccess)) {
             if (!in_array('all', $readAccess)) {
@@ -229,23 +232,21 @@ class War extends Mapper
             $groupIds[] = '1';
         }
 
+        $preparedRows = [];
         foreach ($groupIds as $groupId) {
-            // There is a limit of 1000 rows per insert, but according to some benchmarks found online
-            // the sweet spot seams to be around 25 rows per insert. So aim for that.
-            if ($rowCount >= 25) {
-                $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-                $this->db()->queryMulti($sqlWithValues);
-                $rowCount = 0;
-                $sqlWithValues = $sql;
-            }
-
-            $rowCount++;
-            $sqlWithValues .= '(' . $warId . ',' . (int)$groupId . '),';
+            $preparedRows[] = [$warId, (int)$groupId];
         }
 
-        // Insert remaining rows.
-        $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-        $this->db()->queryMulti($sqlWithValues);
+        if (count($preparedRows)) {
+            // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows
+            $chunks = array_chunk($preparedRows, 25);
+            foreach ($chunks as $chunk) {
+                $this->db()->insert($this->tablenameAccess)
+                    ->columns(['war_id', 'group_id'])
+                    ->values($chunk)
+                    ->execute();
+            }
+        }
     }
 
     /**
@@ -283,12 +284,12 @@ class War extends Mapper
     /**
      * Get a list of wars.
      *
-     * @param null $pagination
+     * @param null|Pagination $pagination
      * @param string|array $readAccess A string like '1,2,3' or an array like [1,2,3]
      * @param int|null $groupId
      * @return array|null
      */
-    public function getWarList($pagination = null, $readAccess = '3', ?int $groupId = null): ?array
+    public function getWarList(?Pagination $pagination = null, $readAccess = '3', ?int $groupId = null): ?array
     {
         if (is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
@@ -520,5 +521,16 @@ class War extends Mapper
             ->values(['show' => $showNow])
             ->where(['id' => (int)$id])
             ->execute();
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.16.5
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
     }
 }

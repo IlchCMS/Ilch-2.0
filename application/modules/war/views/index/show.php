@@ -3,6 +3,7 @@
 /** @var \Ilch\View $this */
 
 use Ilch\Date;
+
 $commentsClass = new Ilch\Comments();
 
 /** @var \Modules\War\Models\War $war */

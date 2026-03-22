@@ -93,7 +93,7 @@ class Group extends Admin
         }
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_groupsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_groupsPerPage'));
-        $pagination->setPage($this->getRequest()->getParam('page'));
+        $pagination->setPage($this->getRequest()->getParam('page', 1));
 
         $this->getView()->set('groups', $groupMapper->getGroupList($pagination))
             ->set('pagination', $pagination);
@@ -137,16 +137,12 @@ class Group extends Admin
             ];
 
             $validator = [
-                'groupName' => 'required|unique:war_groups,name',
-                'groupTag' => 'required|unique:war_groups,tag',
+                'groupName' => 'required|unique:' . $groupMapper->tablename . ',name,' . $groupModel->getId(),
+                'groupTag' => 'required|unique:' . $groupMapper->tablename . ',tag,' . $groupModel->getId(),
                 'groupImage' => 'required|url',
-                'userGroup' => 'required|numeric|integer|min:1|exists:groups'
+                'userGroup' => 'required|numeric|integer|min:1|exists:groups',
+                //'groupDesc' => '',
             ];
-
-            if ($groupModel->getId()) {
-                $validator['groupName'] = 'required';
-                $validator['groupTag'] = 'required';
-            }
 
             $validation = Validation::create($post, $validator);
 
@@ -176,7 +172,7 @@ class Group extends Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $groupMapper = new GroupMapper();
             $groupMapper->delete((int)$this->getRequest()->getParam('id'));
 
