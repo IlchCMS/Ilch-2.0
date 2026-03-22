@@ -111,7 +111,7 @@ class Currency extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $currencyModel->setName($this->getRequest()->getPost('name', '', true));
+                $currencyModel->setName($this->getRequest()->getPost('name', ''));
                 $currencyMapper->save($currencyModel);
 
                 $this->addMessage('saveSuccess');

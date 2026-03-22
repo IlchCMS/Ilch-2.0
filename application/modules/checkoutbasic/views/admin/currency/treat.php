@@ -2,7 +2,7 @@
 
 /** @var \Ilch\View $this */
 
-/** @var Modules\Checkout\Models\Currency|null $currency */
+/** @var Modules\Checkoutbasic\Models\Currency|null $currency */
 $currency = $this->get('currency');
 ?>
 
@@ -21,7 +21,7 @@ $currency = $this->get('currency');
                    id="name"
                    name="name"
                    placeholder="<?=$this->getTrans('name') ?>"
-                   value="<?=$this->originalInput('name', $currency->getName(), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('name', $currency->getName())) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar() ?>

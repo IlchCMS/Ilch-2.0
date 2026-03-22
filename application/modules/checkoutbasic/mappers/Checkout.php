@@ -15,12 +15,12 @@ class Checkout extends \Ilch\Mapper
      * @var string
      * @since 1.5.0
      */
-    public $tablename = 'checkoutbasic';
+    public string $tablename = 'checkoutbasic';
 
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      * @throws \Ilch\Database\Exception
      * @since 1.5.0
      */
@@ -161,16 +161,5 @@ class Checkout extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.6.2
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 }

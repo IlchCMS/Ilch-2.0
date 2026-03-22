@@ -21,7 +21,7 @@ $checkouts = $this->get('checkout');
                    id="name"
                    name="name"
                    placeholder="<?=$this->getTrans('name') ?>"
-                   value="<?=$this->originalInput('name', '', true) ?>" />
+                   value="<?=$this->escape($this->originalInput('name')) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('checkoutdate') ? ' has-error' : '' ?>">
@@ -34,7 +34,7 @@ $checkouts = $this->get('checkout');
                    id="datetime"
                    name="datetime"
                    placeholder="<?=$this->getTrans('datetime') ?>"
-                   value="<?=$this->originalInput('checkoutdate', $this->get('checkoutdate'), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('checkoutdate', $this->get('checkoutdate'))) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('usage') ? ' has-error' : '' ?>">
@@ -47,7 +47,7 @@ $checkouts = $this->get('checkout');
                    id="usage"
                    name="usage"
                    placeholder="<?=$this->getTrans('usage') ?>"
-                   value="<?=$this->originalInput('usage', '', true) ?>" />
+                   value="<?=$this->escape($this->originalInput('usage')) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('amount') ? ' has-error' : '' ?>">
@@ -64,7 +64,7 @@ $checkouts = $this->get('checkout');
                    data-bs-placement="bottom"
                    data-bs-custom-class="custom-tooltip"
                    data-bs-title="<?=$this->getTrans('amountinfo') ?>"
-                   value="<?=$this->originalInput('amount', '', true) ?>" />
+                   value="<?=$this->escape($this->originalInput('amount')) ?>" />
         </div>
     </div>
     <br>

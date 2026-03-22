@@ -73,7 +73,7 @@ class Index extends \Ilch\Controller\Admin
                 $model = new \Modules\Checkoutbasic\Models\Entry();
                 $model->setName($this->getRequest()->getPost('name'))
                     ->setDatetime($this->getRequest()->getPost('datetime'))
-                    ->setUsage($this->getRequest()->getPost('usage', '', true))
+                    ->setUsage($this->getRequest()->getPost('usage', ''))
                     ->setAmount($this->getRequest()->getPost('amount'));
                 $checkoutMapper->save($model);
 
@@ -158,10 +158,10 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $model->setName($this->getRequest()->getPost('name', '', true))
-                    ->setDatetime($this->getRequest()->getPost('datetime', '', true))
-                    ->setUsage($this->getRequest()->getPost('usage', '', true))
-                    ->setAmount($this->getRequest()->getPost('amount', 0, true));
+                $model->setName($this->getRequest()->getPost('name'))
+                    ->setDatetime($this->getRequest()->getPost('datetime'))
+                    ->setUsage($this->getRequest()->getPost('usage'))
+                    ->setAmount($this->getRequest()->getPost('amount'));
                 $checkoutMapper->save($model);
 
                 $this->addMessage('saveSuccess');

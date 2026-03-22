@@ -15,12 +15,12 @@ class Currency extends \Ilch\Mapper
      * @var string
      * @since 1.5.0
      */
-    public $tablename = 'checkoutbasic_currencies';
+    public string $tablename = 'checkoutbasic_currencies';
 
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      * @throws \Ilch\Database\Exception
      * @since 1.5.0
      */
@@ -130,19 +130,8 @@ class Currency extends \Ilch\Mapper
      */
     public function deleteCurrencyById(int $id): bool
     {
-        return $this->db()->delete($this->tablename)
+        return (bool)$this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.6.2
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 }
