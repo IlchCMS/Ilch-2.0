@@ -8,7 +8,7 @@ $link = $this->get('link');
 /** @var Modules\Link\Models\Category[]|null $cats */
 $cats = $this->get('cats');
 ?>
-<h1><?=($link->getId()) ? $this->getTrans('menuActionEditLink') : $this->getTrans('menuActionNewLink') ?></h1>
+<h1><?=$this->getTrans($link->getId() ? 'menuActionEditLink' : 'menuActionNewLink') ?></h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
@@ -60,8 +60,8 @@ $cats = $this->get('cats');
         <div class="col-xl-4">
             <textarea class="form-control"
                       id="desc"
-                      name="desc" 
-                      cols="45" 
+                      name="desc"
+                      cols="45"
                       rows="3"><?=$this->escape($this->originalInput('desc', $link->getDesc())) ?></textarea>
         </div>
     </div>

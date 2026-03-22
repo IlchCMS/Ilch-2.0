@@ -5,7 +5,7 @@
 /** @var Modules\Link\Models\Category $cat */
 $cat = $this->get('category');
 ?>
-<h1><?=($cat->getId()) ? $this->getTrans('menuActionEditCategory') : $this->getTrans('menuActionNewCategory') ?></h1>
+<h1><?=$this->getTrans($cat->getId() ? 'menuActionEditCategory' : 'menuActionNewCategory') ?></h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('name') ? ' has-error' : '' ?>">
