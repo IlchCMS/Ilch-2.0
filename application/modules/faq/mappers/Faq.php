@@ -16,12 +16,12 @@ class Faq extends \Ilch\Mapper
      * @var string
      * @since 1.9.0
      */
-    public $tablename = 'faqs';
+    public string $tablename = 'faqs';
 
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      * @throws \Ilch\Database\Exception
      * @since 1.9.0
      */
@@ -179,16 +179,5 @@ class Faq extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.10.3
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 }

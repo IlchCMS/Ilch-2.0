@@ -36,7 +36,7 @@ $cats = $this->get('cats');
                        class="form-control"
                        id="question"
                        name="question"
-                       value="<?=$this->originalInput('question', $faq->getQuestion(), true) ?>" />
+                       value="<?=$this->escape($this->originalInput('question', $faq->getQuestion())) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('answer') ? ' has-error' : '' ?>">

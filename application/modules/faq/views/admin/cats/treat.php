@@ -20,7 +20,7 @@ $cat = $this->get('cat');
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=$this->originalInput('title', $cat->getTitle(), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('title', $cat->getTitle())) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">

@@ -15,12 +15,12 @@ class Category extends \Ilch\Mapper
      * @var string
      * @since 1.9.0
      */
-    public $tablename = 'faqs_cats';
+    public string $tablename = 'faqs_cats';
     /**
      * @var string
      * @since 1.9.0
      */
-    public $tablenameAccess = 'faqs_cats_access';
+    public string $tablenameAccess = 'faqs_cats_access';
 
     /**
      * returns if the module is installed.
@@ -126,7 +126,7 @@ class Category extends \Ilch\Mapper
      * Inserts or updates entry.
      *
      * @param CategoryModel $model
-     * @return integer
+     * @return int
      */
     public function save(CategoryModel $model): int
     {
@@ -152,12 +152,13 @@ class Category extends \Ilch\Mapper
     /**
      * Update the entries for which user groups are allowed to read a Cat.
      *
-     * @param int $warId
+     * @param int $faqId the id of the faq.
      * @param string|array $readAccess example: "1,2,3"
-     * @param bool $addAdmin
+     * @param bool $addAdmin true if you want to add the admin group.
+     * @return array|string[]
      * @since 1.9.0
      */
-    public function saveReadAccess(int $faqId, $readAccess, bool $addAdmin = true)
+    public function saveReadAccess(int $faqId, $readAccess, bool $addAdmin = true): array
     {
         if (\is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
@@ -208,16 +209,5 @@ class Category extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.10.3
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename) && $this->db()->truncate($this->tablenameAccess);
     }
 }
