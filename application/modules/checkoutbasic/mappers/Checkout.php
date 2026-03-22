@@ -73,7 +73,7 @@ class Checkout extends \Ilch\Mapper
      * Gets the Checkout entries.
      *
      * @param array $where
-     * @return CheckoutModel[]|array
+     * @return CheckoutModel[]
      */
     public function getEntries(array $where = []): ?array
     {
@@ -161,5 +161,16 @@ class Checkout extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.6.2
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
     }
 }

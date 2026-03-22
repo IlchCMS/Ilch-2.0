@@ -106,25 +106,22 @@ class Currency extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
-            $_POST['name'] = trim($this->getRequest()->getPost('name'));
-
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'name' => 'required|unique:' . $currencyMapper->tablename . ',name,' . $currencyModel->getId(),
             ]);
 
             if ($validation->isValid()) {
-                $currencyModel->setName($this->getRequest()->getPost('name'));
+                $currencyModel->setName($this->getRequest()->getPost('name', '', true));
                 $currencyMapper->save($currencyModel);
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-                $this->redirect()
-                    ->withInput($this->getRequest()->getPost())
-                    ->withErrors($validation->getErrorBag())
-                    ->to(['id' => $currencyModel->getId()]);
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput($this->getRequest()->getPost())
+                ->withErrors($validation->getErrorBag())
+                ->to(['id' => $currencyModel->getId()]);
         }
 
         $this->getView()->set('currency', $currencyModel);
@@ -132,7 +129,7 @@ class Currency extends \Ilch\Controller\Admin
 
     public function deleteAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $currencyMapper = new CurrencyMapper();
 
             $currency = $currencyMapper->getCurrencyById($this->getRequest()->getParam('id'));
