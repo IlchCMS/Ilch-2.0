@@ -14,70 +14,70 @@ class Teams extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The position of th team.
      *
      * @var int
      */
-    protected $position = 0;
+    protected int $position = 0;
 
     /**
      * The Name of the Team.
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * The Image of the Team.
      *
      * @var string
      */
-    protected $img = '';
+    protected string $img = '';
 
     /**
      * The Leader of the Team.
      *
      * @var string
      */
-    protected $leader = '';
+    protected string $leader = '';
 
     /**
      * The CoLeader of the Team.
      *
      * @var string
      */
-    protected $coLeader = '';
+    protected string $coLeader = '';
 
     /**
      * The Group Id of the Team.
      *
      * @var int
      */
-    protected $groupId = 0;
+    protected int $groupId = 0;
 
     /**
      * The Opt Show of the Team.
      *
      * @var bool
      */
-    protected $optIn = false;
+    protected bool $optIn = false;
 
     /**
      * The value of notifyLeader of the Team.
      *
      * @var bool
      */
-    protected $notifyLeader = false;
+    protected bool $notifyLeader = false;
 
     /**
      * The Opt Show of the Team.
      *
      * @var bool
      */
-    protected $optShow = false;
+    protected bool $optShow = false;
 
     /**
      * Set this Model by Array

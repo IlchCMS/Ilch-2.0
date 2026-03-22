@@ -58,7 +58,7 @@ class Index extends \Ilch\Controller\Frontend
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
-        $team = $teamsMapper->getTeamById($this->getRequest()->getParam('id'));
+        $team = $teamsMapper->getTeamById($this->getRequest()->getParam('id', 0));
 
         if (!$team) {
             $this->redirect()
@@ -106,12 +106,12 @@ class Index extends \Ilch\Controller\Frontend
             ]);
 
             $validationRules = [
-                'name' => 'required|unique:teams_joins,name,0,undecided',
-                'email' => 'required|email|unique:teams_joins,email,0,undecided',
-                'teamId' => 'numeric|integer|min:1',
+                'name' => 'required|unique:' . $joinsMapper->tablename . ',name,0,undecided',
+                'email' => 'required|email|unique:' . $joinsMapper->tablename . ',email,0,undecided',
+                'teamId' => 'numeric|integer|numeric|exists:' . $teamsMapper->tablename,
                 'gender' => 'numeric|integer|min:1|max:3',
-                'birthday' => 'required',
-                'text' => 'required'
+                'birthday' => 'required|date:d.m.Y',
+                'text' => 'required',
             ];
 
             if ($captchaNeeded) {
@@ -212,15 +212,8 @@ class Index extends \Ilch\Controller\Frontend
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $this->redirect()
                 ->withInput()
-                ->withErrors($validation->getErrorBag());
-
-            if ($this->getRequest()->getParam('id')) {
-                $this->redirect()
-                    ->to(['action' => 'join', 'id' => $this->getRequest()->getParam('id')]);
-            } else {
-                $this->redirect()
-                    ->to(['action' => 'join']);
-            }
+                ->withErrors($validation->getErrorBag())
+                ->to(($this->getRequest()->getParam('id')) ? ['action' => 'join', 'id' => $this->getRequest()->getParam('id')] : ['action' => 'join']);
         }
 
         $this->getView()->set('teamsMapper', $teamsMapper)

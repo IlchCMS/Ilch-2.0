@@ -14,98 +14,98 @@ class Joins extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The User Id from the User.
      *
      * @var int
      */
-    protected $userId = 0;
+    protected int $userId = 0;
 
     /**
      * The Name from the User.
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * The E-Mail from the User.
      *
      * @var string
      */
-    protected $email = '';
+    protected string $email = '';
 
     /**
      * The Gender from the User.
      *
      * @var int
      */
-    protected $gender = 0;
+    protected int $gender = 0;
 
     /**
      * The Birthday from the User.
      *
      * @var string
      */
-    protected $birthday = '';
+    protected string $birthday = '';
 
     /**
      * The Place from the User.
      *
      * @var string
      */
-    protected $place = '';
+    protected string $place = '';
 
     /**
      * The Skill from the User.
      *
      * @var int
      */
-    protected $skill = 0;
+    protected int $skill = 0;
 
     /**
      * The Team Id of the Join.
      *
      * @var int
      */
-    protected $teamId = 0;
+    protected int $teamId = 0;
 
     /**
      * The Locale of the Join.
      *
      * @var string
      */
-    protected $locale = '';
+    protected string $locale = '';
 
     /**
      * The created Date of the Join.
      *
      * @var string
      */
-    protected $dateCreated = '';
+    protected string $dateCreated = '';
 
     /**
      * The Text of the Join.
      *
      * @var string
      */
-    protected $text = '';
+    protected string $text = '';
 
     /**
      * The decision of the Join.
      *
      * @var int
      */
-    protected $decision = 0;
+    protected int $decision = 0;
 
     /**
      * The value of undecided of the Join.
      *
      * @var int
      */
-    protected $undecided = 0;
+    protected int $undecided = 0;
 
     /**
      * Set this Model by Array

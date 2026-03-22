@@ -15,12 +15,12 @@ class Teams extends \Ilch\Mapper
      * @var string
      * @since 1.22.0
      */
-    public $tablename = 'teams';
+    public string $tablename = 'teams';
 
     /**
      * Check if DB-Table exists
      *
-     * @return boolean
+     * @return bool
      * @throws \Ilch\Database\Exception
      * @since 1.22.0
      */
@@ -189,7 +189,7 @@ class Teams extends \Ilch\Mapper
     /**
      * @param int|TeamsModel $id
      * @param int $show
-     * @return boolean
+     * @return bool
      */
     public function updateShow($id, int $show = -1): bool
     {
@@ -212,7 +212,7 @@ class Teams extends \Ilch\Mapper
                 $showNow = 1;
             }
         }
-        if (is_a($id, EntriesModel::class)) {
+        if (is_a($id, TeamsModel::class)) {
             $id = $id->getId();
         }
 
@@ -233,10 +233,11 @@ class Teams extends \Ilch\Mapper
         $fields = $model->getArray(false);
 
         if ($model->getId()) {
-            return $this->db()->update($this->tablename)
+            $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $model->getId()])
                 ->execute();
+                return $model->getId();
         } else {
             return $this->db()->insert($this->tablename)
                 ->values($fields)
