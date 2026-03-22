@@ -138,6 +138,6 @@ class Shoutbox extends \Ilch\Mapper
      */
     public function truncate(): bool
     {
-        return $this->db()->truncate($this->tablename);
+        return (bool)$this->db()->truncate($this->tablename);
     }
 }
