@@ -41,7 +41,7 @@ $history = $this->get('history');
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=$this->originalInput('title', $history->getTitle(), true) ?>" />
+                   value="<?=$this->originalInput('title', $history->getTitle()) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">

@@ -92,7 +92,6 @@ class Index extends \Ilch\Controller\Admin
                 'title' => 'required',
                 'text' => 'required',
                 'color' => 'required',
-                //'symbol' => '',
             ]);
 
             if ($validation->isValid()) {
