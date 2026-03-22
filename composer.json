@@ -18,8 +18,7 @@
         "npm-asset/jquery": "^4.0.0",
         "npm-asset/jquery-ui": "^1.14.0",
         "phpmailer/phpmailer": "^7.0.2",
-        "ezyang/htmlpurifier": "^4.17",
-        "blueimp/jquery-file-upload": "^10.32.0"
+        "ezyang/htmlpurifier": "^4.17"
     },
     "require-dev": {
         "maximebf/debugbar": "^1.22.3",

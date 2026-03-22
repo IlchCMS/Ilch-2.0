@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['7.4', '8.4']
+        php-versions: ['7.4', '8.5']
         mysql-versions: ['5.7', 'latest']
 
     services:
@@ -66,7 +66,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['8.4']
+        php-versions: ['8.5']
         mariadb-versions: ['10.5', 'latest']
 
     services:
