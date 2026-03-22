@@ -48,7 +48,7 @@ class Settings extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'showallonstart' => 'required|numeric|min:0|max:1',
+                'showallonstart' => 'required|numeric|integer|min:0|max:1',
             ]);
             if ($validation->isValid()) {
                 $this->getConfig()->set('rule_showallonstart', $this->getRequest()->getPost('showallonstart'));
