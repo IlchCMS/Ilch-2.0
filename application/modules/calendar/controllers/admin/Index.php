@@ -98,25 +98,23 @@ class Index extends \Ilch\Controller\Admin
                 'color' => 'required',
             ];
 
-            if ($this->getRequest()->getPost('periodType') == 'days') {
-                $_POST['periodDay'] = $this->getRequest()->getPost('periodDays');
+            $postData = $this->getRequest()->getPost();
+            if ($postData['periodType'] == 'days') {
+                $postData['periodDay'] = $postData['periodDays'] ?? null;
                 $validator['periodDay'] = 'required|numeric|min:1|max:7';
-            } elseif ($this->getRequest()->getPost('periodType') != '') {
+            } elseif ($postData['periodType'] != '') {
                 $validator['periodDay'] = 'required|numeric|min:1';
             }
 
-            if ($this->getRequest()->getPost('periodType') != '') {
+            if ($postData['periodType'] != '') {
                 $validator['repeatUntil'] = 'required|date:d.m.Y H\:i';
             }
 
-            if ($this->getRequest()->getPost('end')) {
+            if ($postData['end'] ?? null) {
                 $validator['end'] = 'required|date:d.m.Y H\:i';
             }
 
-            $validation = Validation::create(
-                $this->getRequest()->getPost(),
-                $validator
-            );
+            $validation = Validation::create($postData, $validator);
 
             if ($validation->isValid()) {
                 $groups = '';
@@ -135,7 +133,7 @@ class Index extends \Ilch\Controller\Admin
                     ->setEnd($this->getRequest()->getPost('end') ? new Date($this->getRequest()->getPost('end')) : '1000-01-01 00:00:00')
                     ->setText($this->getRequest()->getPost('text'))
                     ->setColor($this->getRequest()->getPost('color'))
-                    ->setPeriodDay($this->getRequest()->getPost('periodDay'))
+                    ->setPeriodDay($postData['periodDay'] ?? null)
                     ->setPeriodType($this->getRequest()->getPost('periodType'))
                     ->setRepeatUntil($this->getRequest()->getPost('repeatUntil') ? new Date($this->getRequest()->getPost('repeatUntil')) : '1000-01-01 00:00:00')
                     ->setReadAccess($groups);

@@ -109,10 +109,32 @@ class Keywords extends \Ilch\Controller\Frontend
             }
         }
 
-        $this->getView()->set('categoryMapper', $categoryMapper)
-            ->set('commentMapper', $commentMapper)
+        $articles = $articleMapper->getArticlesByKeywordAccess($keyword, $readAccess, $this->locale, $pagination);
+
+        // Kommentaranzahl pro Artikel vorberechnen – vermeidet N+1-DB-Aufrufe im View
+        $commentCounts = [];
+        if ($articles !== null) {
+            foreach ($articles as $article) {
+                $commentCounts[$article->getId()] = $commentMapper->getCountComments(
+                    sprintf(\Modules\Article\Config\Config::COMMENT_KEY_TPL, $article->getId())
+                );
+            }
+        }
+
+        // Alle Kategorien einmal laden und als Map (id => Model) bereitstellen
+        $categoriesMap = [];
+        $allCategories = $categoryMapper->getCategories();
+        if ($allCategories !== null) {
+            foreach ($allCategories as $category) {
+                $categoriesMap[$category->getId()] = $category;
+            }
+        }
+
+        $this->getView()
             ->set('article_articleRating', \Ilch\Registry::get('config')->get('article_articleRating'))
-            ->set('articles', $articleMapper->getArticlesByKeywordAccess($keyword, $readAccess, $this->locale, $pagination))
+            ->set('articles', $articles)
+            ->set('commentCounts', $commentCounts)
+            ->set('categoriesMap', $categoriesMap)
             ->set('pagination', $pagination);
     }
 

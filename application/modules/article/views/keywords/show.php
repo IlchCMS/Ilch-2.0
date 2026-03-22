@@ -4,10 +4,10 @@
 
 /** @var \Modules\Article\Models\Article[]|null $articles */
 $articles = $this->get('articles');
-/** @var \Modules\Article\Mappers\Category $categoryMapper */
-$categoryMapper = $this->get('categoryMapper');
-/** @var \Modules\Comment\Mappers\Comment $commentMapper */
-$commentMapper = $this->get('commentMapper');
+/** @var \Modules\Article\Models\Category[] $categoriesMap Kategorien als Array (id => CategoryModel) */
+$categoriesMap = $this->get('categoriesMap');
+/** @var int[] $commentCounts Kommentaranzahl pro Artikel (article_id => count) */
+$commentCounts = $this->get('commentCounts');
 $keyword = $this->getRequest()->getParam('keyword');
 
 /** @var \Ilch\Pagination $pagination */
@@ -18,15 +18,17 @@ $pagination = $this->get('pagination');
 <?php if ($articles != ''):
     foreach ($articles as $article):
         $date = new \Ilch\Date($article->getDateCreated());
-        $commentsCount = $commentMapper->getCountComments(sprintf(Modules\Article\Config\Config::COMMENT_KEY_TPL, $article->getId()));
+        $commentsCount = $commentCounts[$article->getId()] ?? 0;
         $image = $article->getImage();
         $imageSource = $article->getImageSource();
 
         $catIds = explode(',', $article->getCatId());
         $categories = '';
         foreach ($catIds as $catId) {
-            $articlesCats = $categoryMapper->getCategoryById($catId);
-            $categories .= '<a href="'.$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]).'">'.$this->escape($articlesCats->getName()).'</a>, ';
+            if (!isset($categoriesMap[$catId])) {
+                continue;
+            }
+            $categories .= '<a href="'.$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]).'">'.$this->escape($categoriesMap[$catId]->getName()).'</a>, ';
         }
     ?>
         <?php if ($article->getTeaser()): ?>

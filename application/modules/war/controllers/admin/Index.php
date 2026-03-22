@@ -146,16 +146,17 @@ class Index extends Admin
         }
 
         if ($this->getRequest()->isPost()) {
-            if ($this->getRequest()->getPost('warXonx') === 'new') {
-                $_POST['warXonx'] = $this->getRequest()->getPost('warXonxNew');
+            $postData = $this->getRequest()->getPost();
+            if ($postData['warXonx'] === 'new') {
+                $postData['warXonx'] = $postData['warXonxNew'] ?? '';
             }
 
-            if ($this->getRequest()->getPost('warGame') === 'new') {
-                $_POST['warGame'] = $this->getRequest()->getPost('warGameNew');
+            if ($postData['warGame'] === 'new') {
+                $postData['warGame'] = $postData['warGameNew'] ?? '';
             }
 
-            if ($this->getRequest()->getPost('warMatchtype') === 'new') {
-                $_POST['warMatchtype'] = $this->getRequest()->getPost('warMatchtypeNew');
+            if ($postData['warMatchtype'] === 'new') {
+                $postData['warMatchtype'] = $postData['warMatchtypeNew'] ?? '';
             }
 
             $validator = [
@@ -174,7 +175,7 @@ class Index extends Admin
                 $validator['calendarShow'] = 'required|numeric|min:0|max:1';
             }
 
-            $validation = Validation::create($this->getRequest()->getPost(), $validator);
+            $validation = Validation::create($postData, $validator);
 
             if ($validation->isValid()) {
                 $groups = '';
@@ -214,9 +215,9 @@ class Index extends Admin
                     ->setWarMaps($warMap)
                     ->setWarServer($this->getRequest()->getPost('warServer'))
                     ->setWarPassword($this->getRequest()->getPost('warPassword'))
-                    ->setWarXonx($this->getRequest()->getPost('warXonx'))
-                    ->setWarGame($this->getRequest()->getPost('warGame'))
-                    ->setWarMatchtype($this->getRequest()->getPost('warMatchtype'))
+                    ->setWarXonx($postData['warXonx'])
+                    ->setWarGame($postData['warGame'])
+                    ->setWarMatchtype($postData['warMatchtype'])
                     ->setWarReport($this->getRequest()->getPost('warReport'))
                     ->setWarStatus($this->getRequest()->getPost('warStatus'))
                     ->setReadAccess($groups)

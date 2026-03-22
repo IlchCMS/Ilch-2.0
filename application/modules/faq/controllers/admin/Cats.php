@@ -100,9 +100,9 @@ class Cats extends \Ilch\Controller\Admin
         $this->getView()->set('cat', $model);
 
         if ($this->getRequest()->isPost()) {
-            $_POST['title'] = trim($this->getRequest()->getPost('title'));
+            $postData = array_merge($this->getRequest()->getPost(), ['title' => trim($this->getRequest()->getPost('title'))]);
 
-            $validation = Validation::create($this->getRequest()->getPost(), [
+            $validation = Validation::create($postData, [
                 'title' => 'required|unique:' . $categoryMapper->tablename . ',title,' . $model->getId(),
                 'groups' => 'required',
             ]);
@@ -117,7 +117,7 @@ class Cats extends \Ilch\Controller\Admin
                     }
                 }
 
-                $model->setTitle($this->getRequest()->getPost('title'))
+                $model->setTitle($postData['title'])
                     ->setReadAccess($groups);
                 $categoryMapper->save($model);
 

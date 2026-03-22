@@ -111,7 +111,7 @@ class Article extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return ArticleModel[]|array
      */
-    public function getArticlesByCats($catId, $locale = '', $pagination = null)
+    public function getArticlesByCats(int $catId, $locale = '', $pagination = null)
     {
         $select = $this->db()->select()
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
@@ -201,7 +201,7 @@ class Article extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return ArticleModel[]|array
      */
-    public function getArticlesByKeyword($keyword, $locale = '', $pagination = null)
+    public function getArticlesByKeyword(string $keyword, $locale = '', $pagination = null)
     {
         $select = $this->db()->select()
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
@@ -209,7 +209,7 @@ class Article extends \Ilch\Mapper
             ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
-            ->where(['pc.keywords LIKE' => '%' . $keyword . '%', 'pc.locale' => $this->db()->escape($locale)])
+            ->where(['pc.keywords LIKE' => '%' . $this->db()->escape($keyword) . '%', 'pc.locale' => $this->db()->escape($locale)])
             ->group(['p.id'])
             ->order(['id' => 'DESC']);
 
@@ -257,7 +257,7 @@ class Article extends \Ilch\Mapper
             ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
-            ->where(['ra.group_id' => $groupIds, 'pc.keywords LIKE' => '%' . $keyword . '%', 'pc.locale' => $this->db()->escape($locale)])
+            ->where(['ra.group_id' => $groupIds, 'pc.keywords LIKE' => '%' . $this->db()->escape($keyword) . '%', 'pc.locale' => $this->db()->escape($locale)])
             ->group(['p.id'])
             ->order(['id' => 'DESC']);
 
@@ -396,7 +396,7 @@ class Article extends \Ilch\Mapper
      * @return int
      * @throws \Ilch\Database\Exception
      */
-    public function getCountArticlesByCatId($catId)
+    public function getCountArticlesByCatId(int $catId)
     {
         return (int)$this->db()->select('COUNT(*)')
             ->from('articles')
