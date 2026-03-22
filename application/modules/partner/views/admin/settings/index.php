@@ -1,13 +1,11 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getModuleUrl('static/css/partners.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('settings') ?></h1>
-<?php
-if ($this->validation()->hasErrors()) {
-    $slider = (bool)$this->originalInput('slider') == '1';
-} else {
-    $slider = (bool)$this->get('slider') == '1';
-}
-?>
+
 <form method="POST">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('slider') ? ' has-error' : '' ?>">
@@ -16,9 +14,9 @@ if ($this->validation()->hasErrors()) {
         </div>
         <div class="col-xl-2">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="slider-on" name="slider" value="1" <?=($slider) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="slider-on" name="slider" value="1" <?=$this->originalInput('slider', $this->get('slider')) == 1 ? 'checked="checked"' : '' ?> />
                 <label for="slider-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="slider-off" name="slider" value="0" <?=(!$slider) ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="slider-off" name="slider" value="0" <?=$this->originalInput('slider', $this->get('slider')) != 1 ? 'checked="checked"' : '' ?> />
                 <label for="slider-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -31,8 +29,8 @@ if ($this->validation()->hasErrors()) {
             </label>
             <div class="col-xl-2">
                 <select class="form-select" name="boxSliderMode">
-                    <option <?=($this->get('boxSliderMode') === 'vertical') ? 'selected="selected"' : '' ?> value="vertical"><?=$this->getTrans('boxSliderModeVertical') ?></option>
-                    <option <?=($this->get('boxSliderMode') === 'horizontal') ? 'selected="selected"' : '' ?> value="horizontal"><?=$this->getTrans('boxSliderModeHorizontal') ?></option>
+                    <option <?=($this->originalInput('boxSliderMode', $this->get('boxSliderMode')) === 'vertical') ? 'selected="selected"' : '' ?> value="vertical"><?=$this->getTrans('boxSliderModeVertical') ?></option>
+                    <option <?=($this->originalInput('boxSliderMode', $this->get('boxSliderMode')) === 'horizontal') ? 'selected="selected"' : '' ?> value="horizontal"><?=$this->getTrans('boxSliderModeHorizontal') ?></option>
                 </select>
             </div>
         </div>
@@ -46,7 +44,7 @@ if ($this->validation()->hasErrors()) {
                        id="boxSliderHeight"
                        name="boxSliderHeight"
                        min="0"
-                       value="<?=(!$this->validation()->hasErrors()) ? $this->get('boxSliderHeight') : $this->originalInput('boxSliderHeight') ?>">
+                       value="<?=$this->originalInput('boxSliderHeight', $this->get('boxSliderHeight')) ?>">
             </div>
         </div>
 
@@ -60,7 +58,7 @@ if ($this->validation()->hasErrors()) {
                        id="boxSliderSpeed"
                        name="boxSliderSpeed"
                        min="0"
-                       value="<?=(!$this->validation()->hasErrors()) ? $this->get('boxSliderSpeed') : $this->originalInput('boxSliderSpeed') ?>">
+                       value="<?=$this->originalInput('boxSliderSpeed', $this->get('boxSliderSpeed')) ?>">
             </div>
         </div>
     </div>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,49 +14,77 @@ class Partner extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The name of the partner.
      *
      * @var string
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * The link of the partner.
      *
      * @var string
      */
-    protected $link;
+    protected $link = '';
 
     /**
      * The banner of the partner.
      *
      * @var string
      */
-    protected $banner;
+    protected $banner = '';
 
     /**
      * The link target of the entry.
      *
-     * @var integer
+     * @var int
      */
-    protected $target;
+    protected $target = 0;
 
     /**
      * The free of the entry.
      *
-     * @var integer
+     * @var int
      */
-    protected $free;
+    protected $free = 1;
+
+    /**
+     * @param array $entries
+     * @return $this
+     * @since 1.14.2
+     */
+    public function setByArray(array $entries): Partner
+    {
+        if (!empty($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (!empty($entries['name'])) {
+            $this->setName($entries['name']);
+        }
+        if (!empty($entries['link'])) {
+            $this->setLink($entries['link']);
+        }
+        if (!empty($entries['banner'])) {
+            $this->setBanner($entries['banner']);
+        }
+        if (!empty($entries['target'])) {
+            $this->setTarget($entries['target']);
+        }
+        if (!empty($entries['setfree'])) {
+            $this->setFree($entries['setfree']);
+        }
+        return $this;
+    }
 
     /**
      * Gets the id of the partner.
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -66,9 +95,9 @@ class Partner extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Partner
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -78,7 +107,7 @@ class Partner extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -89,9 +118,9 @@ class Partner extends \Ilch\Model
      * @param string $name
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): Partner
     {
-        $this->name = (string)$name;
+        $this->name = $name;
 
         return $this;
     }
@@ -101,7 +130,7 @@ class Partner extends \Ilch\Model
      *
      * @return string
      */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->link;
     }
@@ -112,9 +141,9 @@ class Partner extends \Ilch\Model
      * @param string $link
      * @return $this
      */
-    public function setLink($link)
+    public function setLink(string $link): Partner
     {
-        $this->link = (string)$link;
+        $this->link = $link;
 
         return $this;
     }
@@ -124,7 +153,7 @@ class Partner extends \Ilch\Model
      *
      * @return string
      */
-    public function getBanner()
+    public function getBanner(): string
     {
         return $this->banner;
     }
@@ -135,9 +164,9 @@ class Partner extends \Ilch\Model
      * @param string $banner
      * @return $this
      */
-    public function setBanner($banner)
+    public function setBanner(string $banner): Partner
     {
-        $this->banner = (string)$banner;
+        $this->banner = $banner;
 
         return $this;
     }
@@ -145,9 +174,9 @@ class Partner extends \Ilch\Model
     /**
      * Gets the link target of the entry.
      *
-     * @return integer
+     * @return int
      */
-    public function getTarget()
+    public function getTarget(): int
     {
         return $this->target;
     }
@@ -155,12 +184,12 @@ class Partner extends \Ilch\Model
     /**
      * Set the link target of the entry.
      *
-     * @param integer $target
+     * @param int $target
      * @return $this
      */
-    public function setTarget($target)
+    public function setTarget(int $target): Partner
     {
-        $this->target = (int)$target;
+        $this->target = $target;
 
         return $this;
     }
@@ -168,9 +197,9 @@ class Partner extends \Ilch\Model
     /**
      * Gets the free of the entry.
      *
-     * @return integer
+     * @return int
      */
-    public function getFree()
+    public function getFree(): int
     {
         return $this->free;
     }
@@ -178,13 +207,32 @@ class Partner extends \Ilch\Model
     /**
      * Set the free of the entry.
      *
-     * @param integer $free
+     * @param int $free
      * @return $this
      */
-    public function setFree($free)
+    public function setFree(int $free): Partner
     {
-        $this->free = (int)$free;
+        $this->free = $free;
 
         return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.14.2
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'name' => $this->getName(),
+                'link' => $this->getLink(),
+                'banner' => $this->getBanner(),
+                'target' => $this->getTarget(),
+                'setfree' => $this->getFree()
+            ]
+        );
     }
 }

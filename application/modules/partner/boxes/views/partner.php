@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <link href="<?=$this->getBaseUrl('application/modules/partner/static/css/partners.css') ?>" rel="stylesheet">
 <link href="<?=$this->getBaseUrl('application/modules/partner/static/js/jquery.bxslider/jquery.bxslider.min.css') ?>" rel="stylesheet">
 <style>
@@ -7,8 +11,10 @@
 </style>
 
 <div class="partner-box">
-    <?php if ($this->get('slider') == 0): ?>
-        <?php foreach ($this->get('partners') as $partner): ?>
+    <?php if ($this->get('slider') == 0) : ?>
+        <?php
+        /** @var \Modules\Partner\Models\Partner $partner */
+        foreach ($this->get('partners') as $partner) : ?>
             <div class="partner-item">
                 <?php
                 $userMapper = new Modules\User\Mappers\User();
@@ -25,12 +31,13 @@
                 <br />
             </div>
         <?php endforeach; ?>
-    <?php else: ?>
+    <?php else : ?>
         <?php if (!empty($this->get('partners'))) : ?>
             <div class="partnersslider">
                 <div class="bxslider<?=($this->get('sliderMode') === 'horizontal' ? ' h-slide' : '') ?>">
                     <?php
-                    foreach ($this->get('partners') as $partner):
+                    /** @var \Modules\Partner\Models\Partner $partner */
+                    foreach ($this->get('partners') as $partner) :
                         $userMapper = new Modules\User\Mappers\User();
                         $link = $userMapper->getHomepage($partner->getLink());
                         if (strncmp($partner->getBanner(), 'application', 11) === 0) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -108,7 +109,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $partnerMapper = new PartnerMapper();
             $partnerMapper->delete($this->getRequest()->getParam('id'));
 
@@ -124,7 +125,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function setfreeAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $partnerMapper = new PartnerMapper();
 
             $model = new PartnerModel();
@@ -146,51 +147,49 @@ class Index extends \Ilch\Controller\Admin
     {
         $partnerMapper = new PartnerMapper();
 
+        $model = new PartnerModel();
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
-
-            $this->getView()->set('partner', $partnerMapper->getPartnerById($this->getRequest()->getParam('id')));
+            $model = $partnerMapper->getPartnerById($this->getRequest()->getParam('id'));
+            if (!$model) {
+                $this->redirect(['action' => 'index']);
+            }
         } else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+        $this->getView()->set('partner', $model);
 
         if ($this->getRequest()->isPost()) {
             $banner = trim($this->getRequest()->getPost('banner'));
             if (!empty($banner) && strncmp($banner, 'application', 11) === 0) {
-                $banner = BASE_URL.'/'.$banner;
+                $banner = BASE_URL . '/' . $banner;
             }
 
             $post = [
-                'name' => trim($this->getRequest()->getPost('name')),
-                'link' => trim($this->getRequest()->getPost('link')),
-                'target' => $this->getRequest()->getPost('target'),
+                'name' => $this->getRequest()->getPost('name', '', true),
+                'link' => $this->getRequest()->getPost('link', '', true),
+                'target' => $this->getRequest()->getPost('target', '', true),
                 'banner' => $banner
             ];
 
             $validation = Validation::create($post, [
                 'name' => 'required',
                 'link' => 'required|url',
-                'target' => 'numeric|min:0|max:1',
+                'target' => 'required|numeric|integer|min:0|max:1',
                 'banner' => 'required|url'
             ]);
 
             $post['banner'] = trim($this->getRequest()->getPost('banner'));
 
             if ($validation->isValid()) {
-                $model = new PartnerModel();
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
-                } else {
-                    $model->setFree(1);
-                }
-                $model->setName($post['name'])
-                    ->setLink($post['link'])
-                    ->setTarget($post['target'])
-                    ->setBanner($post['banner']);
+                $model->setName($this->getRequest()->getPost('name', '', true))
+                    ->setLink($this->getRequest()->getPost('link', '', true))
+                    ->setTarget($this->getRequest()->getPost('target', '', true))
+                    ->setBanner($this->getRequest()->getPost('banner', '', true));
                 $partnerMapper->save($model);
 
                 $this->redirect()
