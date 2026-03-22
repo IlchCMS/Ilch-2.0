@@ -70,7 +70,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id')) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $eventMapper = new EventMapper();
             $eventMapper->delete($this->getRequest()->getParam('id'));
 

@@ -12,35 +12,78 @@ use Modules\Events\Models\Currency as CurrencyModel;
 class Currency extends \Ilch\Mapper
 {
     /**
+     * @var string
+     * @since 1.23.6
+     */
+    public $tablename = 'events_currencies';
+
+    /**
+     * returns if the module is installed.
+     *
+     * @return boolean
+     * @throws \Ilch\Database\Exception
+     * @since 1.23.6
+     */
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
+    /**
+     * Gets the Entries by params.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return CurrencyModel[]|null
+     * @since 1.23.6
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['name' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
+    {
+        $select = $this->db()->select('*')
+            ->from($this->tablename)
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
+            return null;
+        }
+        $entrys = [];
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new CurrencyModel();
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
+    /**
      * Gets the currencies.
      *
      * @param array $where
      *
-     * @return CurrencyModel[]|array
+     * @return CurrencyModel[]
      */
     public function getCurrencies(array $where = []): array
     {
-        $currenciesArray = $this->db()->select('*')
-            ->from('events_currencies')
-            ->where($where)
-            ->order(['name' => 'ASC'])
-            ->execute()
-            ->fetchRows();
+        $currenciesArray = $this->getEntriesBy($where);
 
         if (empty($currenciesArray)) {
             return [];
         }
-
-        $currencies = [];
-
-        foreach ($currenciesArray as $currency) {
-            $currencyModel = new CurrencyModel();
-            $currencyModel->setId($currency['id'])
-                ->setName($currency['name']);
-            $currencies[] = $currencyModel;
-        }
-
-        return $currencies;
+        return $currenciesArray;
     }
 
     /**
@@ -59,30 +102,48 @@ class Currency extends \Ilch\Mapper
      * Insert or update currencies.
      *
      * @param CurrencyModel $model
+     * @return int
      */
-    public function save(CurrencyModel $model)
+    public function save(CurrencyModel $model): int
     {
+        $fields = $model->getArray(false);
+
         if ($model->getId()) {
-            $this->db()->update('events_currencies')
-                ->values(['name' => $model->getName()])
+            $this->db()->update($this->tablename)
+                ->values($fields)
                 ->where(['id' => $model->getId()])
                 ->execute();
+            $result = $model->getId();
         } else {
-            $this->db()->insert('events_currencies')
-                ->values(['name' => $model->getName()])
+            $result = $this->db()->insert($this->tablename)
+                ->values($fields)
                 ->execute();
         }
+
+        return $result;
     }
 
     /**
      * Deletes the currency by id.
      *
      * @param int $id
+     * @return bool
      */
-    public function deleteCurrencyById(int $id)
+    public function deleteCurrencyById(int $id): bool
     {
-        $this->db()->delete('events_currencies')
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
+    }
+
+    /**
+     * Deletes all entries.
+     *
+     * @return bool
+     * @since 1.23.6
+     */
+    public function truncate(): bool
+    {
+        return (bool)$this->db()->truncate($this->tablename);
     }
 }

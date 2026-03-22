@@ -14,7 +14,7 @@ class Events extends \Ilch\Model
      *
      * @var int
      */
-    protected $id;
+    protected $id = 0;
 
     /**
      * The user id of the host of the event.
@@ -70,14 +70,14 @@ class Events extends \Ilch\Model
      *
      * @var string
      */
-    protected $latLong;
+    protected $latLong = '';
 
     /**
      * The image of the event.
      *
      * @var string
      */
-    protected $image;
+    protected $image = '';
 
     /**
      * The text of the event.
@@ -129,11 +129,73 @@ class Events extends \Ilch\Model
     protected $readAccess = '';
 
     /**
+     * @param array $entries
+     * @return $this
+     * @since 1.23.6
+     */
+    public function setByArray(array $entries): Events
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['user_id'])) {
+            $this->setUserId($entries['user_id']);
+        }
+        if (isset($entries['start'])) {
+            $this->setStart($entries['start']);
+        }
+        if (isset($entries['end'])) {
+            $this->setEnd($entries['end']);
+        }
+        if (isset($entries['title'])) {
+            $this->setTitle($entries['title']);
+        }
+        if (isset($entries['place'])) {
+            $this->setPlace($entries['place']);
+        }
+        if (isset($entries['type'])) {
+            $this->setType($entries['type']);
+        }
+        if (isset($entries['website'])) {
+            $this->setWebsite($entries['website']);
+        }
+        if (isset($entries['lat_long'])) {
+            $this->setLatLong($entries['lat_long']);
+        }
+        if (isset($entries['image'])) {
+            $this->setImage($entries['image']);
+        }
+        if (isset($entries['text'])) {
+            $this->setText($entries['text']);
+        }
+        if (isset($entries['currency'])) {
+            $this->setCurrency($entries['currency']);
+        }
+        if (isset($entries['price'])) {
+            $this->setPrice($entries['price']);
+        }
+        if (isset($entries['price_art'])) {
+            $this->setPriceArt($entries['price_art']);
+        }
+        if (isset($entries['show'])) {
+            $this->setShow($entries['show']);
+        }
+        if (isset($entries['user_limit'])) {
+            $this->setUserLimit($entries['user_limit']);
+        }
+        if (isset($entries['read_access'])) {
+            $this->setReadAccess($entries['read_access']);
+        }
+
+        return $this;
+    }
+
+    /**
      * Gets the id of the event.
      *
-     * @return int|null
+     * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -321,9 +383,9 @@ class Events extends \Ilch\Model
     /**
      * Gets the lat and long from the place.
      *
-     * @return string|null
+     * @return string
      */
-    public function getLatLong(): ?string
+    public function getLatLong(): string
     {
         return $this->latLong;
     }
@@ -331,11 +393,11 @@ class Events extends \Ilch\Model
     /**
      * Sets the lat and long of the place.
      *
-     * @param string|null $latLong
+     * @param string $latLong
      *
      * @return $this
      */
-    public function setLatLong(?string $latLong): Events
+    public function setLatLong(string $latLong): Events
     {
         $this->latLong = $latLong;
 
@@ -345,9 +407,9 @@ class Events extends \Ilch\Model
     /**
      * Gets the image of the event.
      *
-     * @return string|null
+     * @return string
      */
-    public function getImage(): ?string
+    public function getImage(): string
     {
         return $this->image;
     }
@@ -355,11 +417,11 @@ class Events extends \Ilch\Model
     /**
      * Sets the image of the event.
      *
-     * @param string|null $image
+     * @param string $image
      *
      * @return $this
      */
-    public function setImage(?string $image): Events
+    public function setImage(string $image): Events
     {
         $this->image = $image;
 
@@ -532,5 +594,35 @@ class Events extends \Ilch\Model
         $this->readAccess = $readAccess;
 
         return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.23.6
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'user_id' => $this->getUserId(),
+                'start' => $this->getStart(),
+                'end' => $this->getEnd(),
+                'title' => $this->getTitle(),
+                'place' => $this->getPlace(),
+                'type' => $this->getType(),
+                'website' => $this->getWebsite(),
+                'lat_long' => $this->getLatLong(),
+                'image' => $this->getImage(),
+                'text' => $this->getText(),
+                'currency' => $this->getCurrency(),
+                'price' => $this->getPrice(),
+                'price_art' => $this->getPriceArt(),
+                'show' => $this->getShow(),
+                'user_limit' => $this->getUserLimit(),
+                'read_access' => $this->getReadAccess()
+            ]
+        );
     }
 }

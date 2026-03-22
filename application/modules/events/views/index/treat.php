@@ -15,7 +15,7 @@ $groupAccesses = explode(',', $config->get('event_add_entries_accesses'));
 /** @var string[] $types */
 $types = $this->get('types');
 
-/** @var \Modules\Events\Models\Events|null $event */
+/** @var \Modules\Events\Models\Events $event */
 $event = $this->get('event');
 ?>
 
@@ -25,14 +25,14 @@ $event = $this->get('event');
 
 <?php include APPLICATION_PATH . '/modules/events/views/index/navi.php'; ?>
 
-<h1><?=$this->getTrans($event != '' ? 'edit' : 'add') ?></h1>
+<h1><?=$this->getTrans($event->getId() ? 'edit' : 'add') ?></h1>
 <?php if ($this->getUser() && (in_array($this->getUser()->getId(), $groupAccesses) || $this->getUser()->hasAccess('module_events'))) : ?>
     <form method="POST" enctype="multipart/form-data" action="">
         <?=$this->getTokenField() ?>
         <div class="row mb-3">
             <div class="col-xl-2 col-form-label"><?=$this->getTrans('image') ?></div>
             <div class="col-xl-10">
-                <?php if ($event != '' && $this->escape($event->getImage()) != '') : ?>
+                <?php if ($event->getId() && $this->escape($event->getImage()) != '') : ?>
                     <div class="col-xl-7 col-md-7 col-7">
                         <div class="row">
                             <img src="<?=$this->getBaseUrl() . $this->escape($event->getImage()) ?>" title="<?=$this->escape($event->getTitle()) ?>" alt="<?=$this->escape($event->getTitle()) ?>">
@@ -41,7 +41,7 @@ $event = $this->get('event');
                 <?php endif; ?>
                 <div class="col-xl-7">
                     <div class="row">
-                        <?php if ($event != '' && $event->getImage() != '') : ?>
+                        <?php if ($event->getId() && $event->getImage() != '') : ?>
                             <label style="margin-left: 10px; margin-top: 10px;">
                                 <input type="checkbox" id="image_delete" name="image_delete"> <?=$this->getTrans('deleteImage') ?>
                             </label>
@@ -72,22 +72,26 @@ $event = $this->get('event');
                 <select class="form-select" name="creator" id="creator">
                     <option selected="selected" value="0"><?=$this->getTrans('noSelection') ?></option>
                     <?php foreach ($users as $user) : ?>
-                        <option value="<?=$user->getId() ?>" <?=(($event != '' && $event->getUserId() == $user->getId()) || $this->originalInput('creator') == $user->getId()) ? 'selected="selected"' : '' ?>><?=$user->getName() ?></option>
+                        <option value="<?=$user->getId() ?>" <?=($this->originalInput('creator', $event->getUserId()) == $user->getId()) ? 'selected="selected"' : '' ?>><?=$user->getName() ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
         </div>
+        <?php
+            $startDate = new \Ilch\Date($this->originalInput('start', $event->getStart()));
+            $endDate = new \Ilch\Date($this->originalInput('end', $event->getEnd()));
+        ?>
         <div class="row mb-3<?=$this->validation()->hasError('start') ? ' has-error' : '' ?>">
             <label for="start" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('startTime') ?>
             </label>
-            <div id="start" class="col-xl-4 input-group ilch-date date form_datetime">
+            <div id="start" class="col-xl-4 input-group date form_datetime">
                 <input type="text"
                        class="form-control"
                        id="start"
                        name="start"
                        size="16"
-                       value="<?=$event != '' ? date('d.m.Y H:i', strtotime($event->getStart())) : ($this->originalInput('start') != '' ? date('d.m.Y H:i', strtotime($this->originalInput('start'))) : '') ?>"
+                       value="<?=$startDate->format('d.m.Y H:i') ?>"
                        readonly>
                 <span class="input-group-text">
                     <span class="fa-regular fa-calendar"></span>
@@ -98,13 +102,13 @@ $event = $this->get('event');
             <label for="end" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('endTime') ?>
             </label>
-            <div id="end" class="col-xl-4 input-group ilch-date date form_datetime">
+            <div id="end" class="col-xl-4 input-group date form_datetime">
                 <input type="text"
                        class="form-control"
                        id="end"
                        name="end"
                        size="16"
-                       value="<?=($event != '') ? date('d.m.Y H:i', strtotime($event->getEnd())) : ($this->originalInput('end') != '' ? date('d.m.Y H:i', strtotime($this->originalInput('end'))) : '') ?>"
+                       value="<?=$endDate->format('d.m.Y H:i') ?>"
                        readonly>
                 <span class="input-group-text">
                     <span class="fa-solid fa-xmark"></span>
@@ -123,7 +127,7 @@ $event = $this->get('event');
                        class="form-control"
                        id="title"
                        name="title"
-                       value="<?=($event != '') ? $this->escape($event->getTitle()) : $this->escape($this->originalInput('title')) ?>" />
+                       value="<?=$this->originalInput('title', $event->getTitle(), true) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
@@ -135,7 +139,7 @@ $event = $this->get('event');
                        class="form-control"
                        id="place"
                        name="place"
-                       value="<?=($event != '') ? $this->escape($event->getPlace()) : $this->escape($this->originalInput('place')) ?>" />
+                       value="<?=$this->originalInput('place', $event->getPlace(), true) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('type') ? ' has-error' : '' ?>">
@@ -151,7 +155,7 @@ $event = $this->get('event');
                         <?php if (empty($type)) {
                             continue;
                         } ?>
-                        <option value="<?=$this->escape($type) ?>"<?=(($event != '' && $event->getType() == $type) || $this->originalInput('type') == $type) ? ' selected="selected"' : '' ?>><?=$this->escape($type) ?></option>
+                        <option value="<?=$this->escape($type) ?>"<?=($this->originalInput('type', $event->getType()) == $type) ? ' selected="selected"' : '' ?>><?=$this->escape($type) ?></option>
                     <?php endforeach; ?>
                 </select>
                 <input type="text"
@@ -159,7 +163,7 @@ $event = $this->get('event');
                        id="type"
                        name="type"
                        placeholder="<?=$this->getTrans('typePlaceholder') ?>"
-                       value="<?=($event != '') ? $this->escape($event->getType()) : $this->escape($this->originalInput('type')) ?>" />
+                       value="<?=$this->originalInput('type', $event->getType(), true) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('website') ? ' has-error' : '' ?>">
@@ -172,7 +176,7 @@ $event = $this->get('event');
                        id="website"
                        name="website"
                        placeholder="https://"
-                       value="<?=($event != '') ? $this->escape($event->getWebsite()) : $this->escape($this->originalInput('website')) ?>" />
+                       value="<?=$this->originalInput('website', $event->getWebsite(), true) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
@@ -184,7 +188,7 @@ $event = $this->get('event');
                           id="ck_1"
                           name="text"
                           toolbar="ilch_html_frontend"
-                          rows="5"><?=($event != '') ? $this->escape($event->getText()) : $this->escape($this->originalInput('text')) ?></textarea>
+                          rows="5"><?=$this->originalInput('text', $event->getText(), true) ?></textarea>
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('price') ? ' has-error' : '' ?>">
@@ -197,9 +201,8 @@ $event = $this->get('event');
             </label>
             <div class="col-xl-2">
                 <select class="form-select" id="priceArt" name="priceArt">
-                    <option <?=($event != '' && $event->getPriceArt() == 0) ? 'selected="selected"' : '' ?> value="0"><?=$this->getTrans('select') ?></option>
-                    <option <?=($event != '' && $event->getPriceArt() == 1) ? 'selected="selected"' : '' ?> value="1"><?=$this->getTrans('ticket') ?></option>
-                    <option <?=($event != '' && $event->getPriceArt() == 2) ? 'selected="selected"' : '' ?> value="2"><?=$this->getTrans('entry') ?></option>
+                    <option <?=($this->originalInput('priceArt', $event->getPriceArt()) == 0) ? 'selected="selected"' : '' ?> value="0"><?=$this->getTrans('select') ?></option>
+                    <option <?=($this->originalInput('priceArt', $event->getPriceArt()) == 1) ? 'selected="selected"' : '' ?> value="1"><?=$this->getTrans('ticket') ?></option>
                 </select>
             </div>
             <div class="col-xl-4">
@@ -209,19 +212,14 @@ $event = $this->get('event');
                        name="price"
                        step="0.01"
                        min="0"
-                       value="<?=($event != '') ? $this->escape($event->getPrice()) : $this->originalInput('price') ?>" />
+                       value="<?=$this->originalInput('price', $event->getPrice()) ?>" />
             </div>
             <div class="col-xl-2">
                 <select class="form-select" id="currency" name="currency">
                     <option <?=($event != '' && $event->getPriceArt() == 0) ? 'selected="selected"' : '' ?> value="0"><?=$this->getTrans('select') ?></option>
-                    <?php foreach ($this->get('currencies') as $currency) {
-                        if ($event != '' && $event->getCurrency() == $currency->getId()) {
-                            echo '<option value="' . $currency->getId() . '" selected="selected">' . $this->escape($currency->getName()) . '</option>';
-                        } else {
-                            echo '<option value="' . $currency->getId() . '">' . $this->escape($currency->getName()) . '</option>';
-                        }
-                    }
-                    ?>
+                    <?php foreach ($this->get('currencies') as $currency) { ?>
+                    <option <?=($this->originalInput('currency', $event->getCurrency()) == $currency->getId()) ? 'selected="selected"' : '' ?> value="<?=$currency->getId() ?>"><?=$this->escape($currency->getName()) ?></option>
+                    <?php } ?>
                 </select>
             </div>
         </div>
@@ -236,10 +234,10 @@ $event = $this->get('event');
                        name="userLimit"
                        step="1"
                        min="0"
-                       value="<?=($event != '') ? $event->getUserLimit() : $this->originalInput('userLimit') ?>" />
+                       value="<?=$this->originalInput('userLimit', $event->getUserLimit()) ?>" />
             </div>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-3<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">
             <label for="access" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('visibleFor') ?>
             </label>
@@ -247,20 +245,20 @@ $event = $this->get('event');
                 <select class="choices-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                     <?php foreach ($this->get('userGroupList') as $groupList) : ?>
                         <?php if ($groupList->getId() != 1) : ?>
-                            <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
+                            <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->originalInput('groups', $this->get('groups')))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </select>
             </div>
         </div>
         <?php if ($this->get('calendarShow') == 1) : ?>
-            <div class="row mb-3">
+            <div class="row mb-3<?=$this->validation()->hasError('calendarShow') ? ' has-error' : '' ?>">
                 <div class="offset-xl-2 col-xl-10">
                     <input type="checkbox"
                            id="calendarShow"
                            name="calendarShow"
                            value="1"
-                           <?=(($event != '' && $event->getShow() == 1) || $this->originalInput('calendarShow') == 1) ? 'checked' : '' ?> />
+                           <?=($this->originalInput('calendarShow', $event->getShow()) == 1) ? 'checked' : '' ?> />
                     <label for="calendarShow">
                         <?=$this->getTrans('calendarShow') ?>
                     </label>
@@ -268,7 +266,7 @@ $event = $this->get('event');
             </div>
         <?php endif; ?>
         <div class="float-end">
-            <?=$this->getSaveBar(($event != '') ? 'edit' : 'add') ?>
+            <?=$this->getSaveBar($event->getId() ? 'edit' : 'add') ?>
         </div>
     </form>
 <?php else : ?>
