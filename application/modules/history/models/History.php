@@ -14,42 +14,42 @@ class History extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The date of the history.
      *
      * @var string
      */
-    protected $date = '';
+    protected string $date = '';
 
     /**
      * The title of the history.
      *
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * The type of the history.
      *
      * @var string
      */
-    protected $type  = '';
+    protected string $type  = '';
 
     /**
      * The color of the history.
      *
      * @var string
      */
-    protected $color = '';
+    protected string $color = '#75ce66';
 
     /**
      * The text of the history.
      *
      * @var string
      */
-    protected $text = '';
+    protected string $text = '';
 
     /**
      * @param array $entries
