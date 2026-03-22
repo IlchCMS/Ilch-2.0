@@ -8,7 +8,6 @@
 namespace Modules\Guestbook\Controllers\Admin;
 
 use Modules\Guestbook\Mappers\Guestbook as GuestbookMapper;
-use Modules\Guestbook\Models\Entry as GuestbookModel;
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 
 class Index extends \Ilch\Controller\Admin
@@ -54,7 +53,7 @@ class Index extends \Ilch\Controller\Admin
         $pagination = new \Ilch\Pagination();
 
         $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
-        $pagination->setPage($this->getRequest()->getParam('page'));
+        $pagination->setPage($this->getRequest()->getParam('page', 1));
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])

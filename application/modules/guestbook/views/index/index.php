@@ -18,7 +18,7 @@ $pagination = $this->get('pagination');
 <?php endif; ?>
 <?php
 /** @var \Modules\Guestbook\Models\Entry $entry */
-foreach ($this->get('entries') as $entry): ?>
+foreach ($this->get('entries') as $entry) : ?>
     <?php $date = new \Ilch\Date($entry->getDatetime()); ?>
     <div class="card card-default">
         <div class="card-header">
@@ -32,7 +32,7 @@ foreach ($this->get('entries') as $entry): ?>
                             <i class="fa-solid fa-envelope"></i>
                         </a>
                     <?php endif; ?>
-                    <?php if ($entry->getHomepage() != ''): ?>
+                    <?php if ($entry->getHomepage() != '') : ?>
                         <a target="_blank" rel="noopener" href="<?=$this->escape($entry->getHomepage()) ?>">
                             <i class="fa-solid fa-house"></i>
                         </a>
