@@ -1,44 +1,85 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
 namespace Modules\Birthday\Mappers;
 
+use Ilch\Date;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Models\User as UserModel;
+use Ilch\Pagination;
 
 class Birthday extends \Ilch\Mapper
 {
     /**
-     * @return UserMapper[]
+     * @var string
+     * @since 1.7.2
      */
-    public function getBirthdayUserList($limit = null)
+    public $tablename = 'users';
+
+    /**
+     * Gets the Entries by params.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return UserModel[]|null
+     * @since 1.7.2
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['birthday' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
     {
         $userMapper = new UserMapper();
 
-        if ($limit != '') {
-            $sql = 'SELECT *
-                    FROM `[prefix]_users`
-                    WHERE DAY(birthday) = DAY(CURDATE()) AND MONTH(birthday) = MONTH(CURDATE())
-                    LIMIT ' . (int)$limit;
-        } else {
-            $sql = 'SELECT *
-                    FROM `[prefix]_users`
-                    WHERE DAY(birthday) = DAY(CURDATE()) AND MONTH(birthday) = MONTH(CURDATE())';
-        }
-        $rows = $this->db()->queryArray($sql);
+        $select = $this->db()->select()->fields(['id', 'birthday'])
+            ->from($this->tablename)
+            ->where($where)
+        ->order($orderBy);
 
-        if (empty($rows)) {
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
             return null;
         }
+        $entrys = [];
 
-        $users = [];
-        foreach ($rows as $row) {
-            $users[] = $userMapper->getUserById($row['id']);
+        foreach ($entryArray as $row) {
+            $entrys[] = $userMapper->getUserById($row['id']);
         }
 
+        return $entrys;
+    }
+
+    /**
+     * @param int|null $limit
+     * @return UserModel[]
+     */
+    public function getBirthdayUserList(?int $limit = null): array
+    {
+        $pagination = null;
+        if ($limit) {
+            $pagination = new Pagination();
+            $pagination->setRowsPerPage($limit);
+        }
+
+        $select = $this->db()->select();
+        $users = $this->getEntriesBy([$select->andX([
+                new \Ilch\Database\Mysql\Expression\Comparison('DAY(' . $this->db()->quote('birthday') . ')', '=', 'DAY(CURDATE())'),
+                new \Ilch\Database\Mysql\Expression\Comparison('MONTH(' . $this->db()->quote('birthday') . ')', '=', 'MONTH(CURDATE())')
+            ])], ['birthday' => 'ASC'], $pagination);
+        if (!$users) {
+            return [];
+        }
         return $users;
     }
 
@@ -49,34 +90,49 @@ class Birthday extends \Ilch\Mapper
      * @param string $end
      * @return UserModel[]|null
      */
-    public function getEntriesForJson($start, $end)
+    public function getEntriesForJson(string $start, string $end): ?array
     {
         if ($start && $end) {
+            $start = new Date($start);
+            $end = new Date($end);
 
-            $sql = 'SELECT *
-                    FROM `[prefix]_users`
-                    WHERE DayOfYear(`birthday`)
-                        BETWEEN DayOfYear("' . $this->db()->escape($start) .'")
-                        AND DayOfYear("' .  $this->db()->escape($end) . '")';
+            $select = $this->db()->select();
+            if ($start->format('z') <= $end->format('z')) {
+                $condition = $select->andX([
+                    new \Ilch\Database\Mysql\Expression\Comparison(
+                        'DAYOFYEAR(' . $this->db()->quote('birthday') . ')',
+                        '>=',
+                        'DAYOFYEAR(' . $this->db()->escape($start->format('Y-m-d'), true) . ')'
+                    ),
+                    new \Ilch\Database\Mysql\Expression\Comparison(
+                        'DAYOFYEAR(' . $this->db()->quote('birthday') . ')',
+                        '<=',
+                        'DAYOFYEAR(' . $this->db()->escape($end->format('Y-m-d'), true) . ')'
+                    ),
+                ]);
+            } else {
+                $condition = $select->orX([
+                    new \Ilch\Database\Mysql\Expression\Comparison(
+                        'DAYOFYEAR(' . $this->db()->quote('birthday') . ')',
+                        '>=',
+                        'DAYOFYEAR(' . $this->db()->escape($start->format('Y-m-d'), true) . ')'
+                    ),
+                    new \Ilch\Database\Mysql\Expression\Comparison(
+                        'DAYOFYEAR(' . $this->db()->quote('birthday') . ')',
+                        '<=',
+                        'DAYOFYEAR(' . $this->db()->escape($end->format('Y-m-d'), true) . ')'
+                    ),
+                ]);
+            }
+
+            $users = $this->getEntriesBy([$condition], ['birthday' => 'ASC']);
+
+            if (!$users) {
+                return [];
+            }
+            return $users;
         } else {
             return null;
         }
-
-        $entryArray = $this->db()->queryArray($sql);
-
-        if (empty($entryArray)) {
-            return null;
-        }
-
-        $entry = [];
-        foreach ($entryArray as $entries) {
-            $entryModel = new UserModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setName($entries['name']);
-            $entryModel->setBirthday($entries['birthday']);
-            $entry[] = $entryModel;
-        }
-
-        return $entry;
     }
 }
