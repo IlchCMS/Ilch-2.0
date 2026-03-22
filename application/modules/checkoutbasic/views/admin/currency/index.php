@@ -2,7 +2,7 @@
 
 /** @var \Ilch\View $this */
 
-/** @var Modules\Checkout\Models\Currency[]|null $currencies */
+/** @var Modules\Checkoutbasic\Models\Currency[]|null $currencies */
 $currencies = $this->get('currencies');
 ?>
 

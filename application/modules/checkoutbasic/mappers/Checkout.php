@@ -15,12 +15,12 @@ class Checkout extends \Ilch\Mapper
      * @var string
      * @since 1.5.0
      */
-    public $tablename = 'checkoutbasic';
+    public string $tablename = 'checkoutbasic';
 
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      * @throws \Ilch\Database\Exception
      * @since 1.5.0
      */
@@ -73,7 +73,7 @@ class Checkout extends \Ilch\Mapper
      * Gets the Checkout entries.
      *
      * @param array $where
-     * @return CheckoutModel[]|array
+     * @return CheckoutModel[]
      */
     public function getEntries(array $where = []): ?array
     {

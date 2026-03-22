@@ -34,7 +34,7 @@ $checkouts = $this->get('checkout');
                    id="datetime"
                    name="datetime"
                    placeholder="<?=$this->getTrans('datetime') ?>"
-                   value="<?=($this->get('checkoutdate') != '') ? $this->get('checkoutdate') : '' ?>" />
+                   value="<?=$this->escape($this->originalInput('checkoutdate', $this->get('checkoutdate'))) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('usage') ? ' has-error' : '' ?>">
