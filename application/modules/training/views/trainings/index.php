@@ -17,9 +17,13 @@ if ($trainingList) {
         $e['color'] = '#C52C66';
         $e['url'] = $this->getUrl('training/index/show/id/' . $training->getId());
 
-        $startDate = new \Ilch\Date($training->getDate());
-        $endDate = $training->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($training->getEnd()) : 1;
-        $repeatUntil = $training->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($training->getRepeatUntil()) : 1;
+        $startDate = new \Ilch\Date($calendar->getStart());
+        $endDate = $calendar->getEnd() != '1000-01-01 00:00:00'
+            ? new \Ilch\Date($calendar->getEnd())
+            : new \Ilch\Date('9999-12-31 23:59:59');
+        $repeatUntil = $calendar->getRepeatUntil() && $calendar->getRepeatUntil() != '1000-01-01 00:00:00'
+            ? new \Ilch\Date($calendar->getRepeatUntil())
+            : new \Ilch\Date('9999-12-31 23:59:59');
 
         // Add only or initial (in case of recurring events) event.
         $trainings[] = $e;

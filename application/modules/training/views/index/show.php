@@ -33,9 +33,13 @@ $periodTypes = [
     'days' => $this->getTranslator()->trans('days'),
 ];
 
-$startDate = new \Ilch\Date($training->getDate());
-$endDate = $training->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($training->getEnd()) : 1;
-$repeatUntil = $training->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($training->getRepeatUntil()) : 1;
+$startDate = new \Ilch\Date($calendar->getStart());
+$endDate = $calendar->getEnd() != '1000-01-01 00:00:00'
+    ? new \Ilch\Date($calendar->getEnd())
+    : new \Ilch\Date('9999-12-31 23:59:59');
+$repeatUntil = $calendar->getRepeatUntil() && $calendar->getRepeatUntil() != '1000-01-01 00:00:00'
+    ? new \Ilch\Date($calendar->getRepeatUntil())
+    : new \Ilch\Date('9999-12-31 23:59:59');
 
 if ($iteration != '') {
     $recurrence = $calendarMapper->repeat($training->getPeriodType(), $startDate, $endDate, $repeatUntil, $training->getPeriodDay())[$iteration];
@@ -43,7 +47,7 @@ if ($iteration != '') {
     $endDate = $recurrence['end'];
 }
 
-$endDate = is_numeric($endDate) ? null : $endDate;
+$endDate = is_numeric($endDate) || $endDate == '9999-12-31 23:59:59' ? null : $endDate;
 ?>
 
 <h1><?=$this->getTrans('trainDetails') ?></h1>
@@ -184,7 +188,7 @@ $endDate = is_numeric($endDate) ? null : $endDate;
                 <?=$this->getTrans('decline') ?>
             </button>
         <?php else : ?>
-            <div class="row mb-3">
+            <div class="row mb-3<?=$this->validation()->hasError('train_textarea') ? ' has-error' : '' ?>">
                 <label for="otherInfo" class="col-lg-2" style="top: 7px;">
                     <?=$this->getTrans('note') ?>:
                 </label>
@@ -194,7 +198,7 @@ $endDate = is_numeric($endDate) ? null : $endDate;
                           id="otherInfo"
                           name="train_textarea"
                           cols="10"
-                          rows="1"></textarea>
+                          rows="1"><?=$this->originalInput('train_textarea') ?></textarea>
                 </div>
                 <div class="col-xl-2" style="top: 2px;">
                     <button type="submit" class="btn btn-sm btn-success" name="save" value="save">
