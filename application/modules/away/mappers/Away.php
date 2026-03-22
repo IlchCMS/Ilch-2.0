@@ -20,18 +20,6 @@ class Away extends \Ilch\Mapper
     public $tablename = 'away';
 
     /**
-     * returns if the module is installed.
-     *
-     * @return boolean
-     * @throws \Ilch\Database\Exception
-     * @since 1.8.1
-     */
-    public function checkDB(): bool
-    {
-        return $this->db()->ifTableExists($this->tablename);
-    }
-
-    /**
      * Gets the Entries by params.
      *
      * @param array $where

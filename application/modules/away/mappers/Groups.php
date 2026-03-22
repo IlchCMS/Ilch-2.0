@@ -17,18 +17,6 @@ class Groups extends \Ilch\Mapper
     public $tablename = 'away_groups';
 
     /**
-     * returns if the module is installed.
-     *
-     * @return boolean
-     * @throws \Ilch\Database\Exception
-     * @since 1.8.1
-     */
-    public function checkDB(): bool
-    {
-        return $this->db()->ifTableExists($this->tablename);
-    }
-
-    /**
      * Get all groups that are subscribed to notifications.
      *
      * @return array|null
@@ -86,16 +74,5 @@ class Groups extends \Ilch\Mapper
         }
 
         return $affectedRows;
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.8.1
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 }
