@@ -38,13 +38,13 @@ $entry = $this->get('calendar');
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
     <h1>
-        <?=($entry->getId()) ? $this->getTrans('edit') : $this->getTrans('add') ?>
+        <?=$this->getTrans($entry->getId() ? 'edit' : 'add') ?>
     </h1>
     <div class="row mb-3<?=$this->validation()->hasError('start') ? ' has-error' : '' ?>">
         <label for="start" class="col-xl-2 col-form-label">
             <?=$this->getTrans('start') ?>:
         </label>
-        <div id="start" class="col-xl-4 input-group ilch-date date form_datetime_1">
+        <div id="start" class="col-xl-4 input-group date form_datetime_1">
             <input type="text"
                    class="form-control"
                    id="start"
@@ -60,7 +60,7 @@ $entry = $this->get('calendar');
         <label for="end" class="col-xl-2 col-form-label">
             <?=$this->getTrans('end') ?>:
         </label>
-        <div id="end" class="col-xl-4 input-group ilch-date date form_datetime_2">
+        <div id="end" class="col-xl-4 input-group date form_datetime_2">
             <input type="text"
                    class="form-control"
                    id="end"
@@ -141,7 +141,7 @@ $entry = $this->get('calendar');
         <label for="repeatUntil" class="col-xl-2 col-form-label">
             <?=$this->getTrans('repeatUntil') ?>:
         </label>
-        <div id="repeatUntil" class="col-xl-4 input-group ilch-date date form_datetime_3">
+        <div id="repeatUntil" class="col-xl-4 input-group date form_datetime_3">
             <input type="text"
                    class="form-control"
                    id="repeatUntil"
@@ -199,7 +199,7 @@ $entry = $this->get('calendar');
                       rows="5"><?=$this->escape($this->originalInput('text', ($entry->getId() ? $entry->getText() : ''))) ?></textarea>
         </div>
     </div>
-    <?=($entry->getId()) ? $this->getSaveBar('updateButton') : $this->getSaveBar('addButton') ?>
+    <?=$this->getSaveBar($entry->getId() ? 'updateButton' : 'addButton') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>

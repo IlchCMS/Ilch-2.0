@@ -165,7 +165,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $calendarMapper = new CalendarMapper();
             $calendarMapper->delete($this->getRequest()->getParam('id'));
 

@@ -8,7 +8,7 @@
 namespace Modules\Calendar\Mappers;
 
 use Ilch\Pagination;
-use Modules\Calendar\Models\Events as EntriesModel;
+use Modules\Calendar\Models\Events as EntryModel;
 
 class Events extends \Ilch\Mapper
 {
@@ -30,7 +30,7 @@ class Events extends \Ilch\Mapper
      * @param array $where
      * @param array $orderBy
      * @param Pagination|null $pagination
-     * @return array|null
+     * @return EntryModel[]|null
      */
     public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
@@ -53,23 +53,23 @@ class Events extends \Ilch\Mapper
         if (empty($entryArray)) {
             return null;
         }
-        $entrys = [];
+        $entryModels = [];
 
-        foreach ($entryArray as $entries) {
-            $entryModel = new EntriesModel();
+        foreach ($entryArray as $entry) {
+            $entryModel = new EntryModel();
 
-            $entryModel->setByArray($entries);
+            $entryModel->setByArray($entry);
 
-            $entrys[] = $entryModel;
+            $entryModels[] = $entryModel;
         }
-        return $entrys;
+        return $entryModels;
     }
 
     /**
      * Gets the Events entries.
      *
      * @param array $where
-     * @return array|null
+     * @return EntryModel[]|null
      */
     public function getEntries(array $where = []): ?array
     {
@@ -79,12 +79,12 @@ class Events extends \Ilch\Mapper
     /**
      * Gets the entry by given ID.
      *
-     * @param int|EntriesModel $id
-     * @return null|EntriesModel
+     * @param int|EntryModel $id
+     * @return null|EntryModel
      */
-    public function getEntryById(int $id): ?EntriesModel
+    public function getEntryById(int $id): ?EntryModel
     {
-        if (is_a($id, EntriesModel::class)) {
+        if (is_a($id, EntryModel::class)) {
             $id = $id->getId();
         }
 
@@ -100,12 +100,12 @@ class Events extends \Ilch\Mapper
     /**
      * Inserts Events model.
      *
-     * @param EntriesModel $model
+     * @param EntryModel $model
      * @return int
      */
-    public function save(EntriesModel $model): int
+    public function save(EntryModel $model): int
     {
-        $fields = $model->getArray();
+        $fields = $model->getArray(false);
 
         if ($model->getId()) {
             $this->db()->update($this->tablename)
@@ -123,12 +123,12 @@ class Events extends \Ilch\Mapper
     }
 
     /**
-     * @param EntriesModel|int $id
+     * @param EntryModel|int $id
      * @return bool
      */
     public function delete($id): bool
     {
-        if (is_a($id, EntriesModel::class)) {
+        if (is_a($id, EntryModel::class)) {
             $id = $id->getId();
         }
 
