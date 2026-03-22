@@ -14,56 +14,56 @@ class Rule extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The paragraph of the rule.
      *
      * @var string
      */
-    protected $paragraph = '';
+    protected string $paragraph = '';
 
     /**
      * The title of the rule.
      *
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * The text of the rule.
      *
      * @var string
      */
-    protected $text = '';
+    protected string $text = '';
 
     /**
      * The position of the rule.
      *
      * @var int
      */
-    protected $position = 0;
+    protected int $position = 0;
 
     /**
      * The parent_id of the rule.
      *
      * @var int
      */
-    protected $parent_id = 0;
+    protected int $parent_id = 0;
 
     /**
      * The title of the parent rule.
      *
      * @var string
      */
-    protected $parent_title = '';
+    protected string $parent_title = '';
 
     /**
      * Read access of the item.
      *
      * @var string
      */
-    protected $access = '';
+    protected string $access = '';
 
     /**
      * @param array $entries

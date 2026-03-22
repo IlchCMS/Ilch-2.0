@@ -15,12 +15,12 @@ class Rule extends \Ilch\Mapper
     /**
      * @var string
      */
-    public $tablename = 'rules';
+    public string $tablename = 'rules';
 
     /**
      * @var string
      */
-    public $tablenameAccess = 'rules_access';
+    public string $tablenameAccess = 'rules_access';
 
     /**
      * returns if the module is installed.
@@ -226,7 +226,7 @@ class Rule extends \Ilch\Mapper
         }
 
         if (count($preparedRows)) {
-            // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows
+            // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows.
             $chunks = array_chunk($preparedRows, 25);
             foreach ($chunks as $chunk) {
                 $this->db()->insert($this->tablenameAccess)
@@ -248,16 +248,5 @@ class Rule extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.9.3
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename) && $this->db()->truncate($this->tablenameAccess);
     }
 }

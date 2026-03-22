@@ -23,7 +23,7 @@ $userGroupList = $this->get('userGroupList');
                    class="form-control"
                    id="paragraph"
                    name="paragraph"
-                   value="<?=$this->originalInput('paragraph', $cat->getParagraph(), true) ?>"
+                   value="<?=$this->escape($this->originalInput('paragraph', $cat->getParagraph())) ?>"
                    required />
         </div>
     </div>
@@ -36,7 +36,7 @@ $userGroupList = $this->get('userGroupList');
                    class="form-control"
                    id="name"
                    name="name"
-                   value="<?=$this->originalInput('name', $cat->getTitle(), true) ?>"
+                   value="<?=$this->escape($this->originalInput('name', $cat->getTitle())) ?>"
                    required />
         </div>
     </div>

@@ -26,7 +26,7 @@ $userGroupList = $this->get('userGroupList');
                    class="form-control"
                    id="paragraph"
                    name="paragraph"
-                   value="<?=$this->originalInput('paragraph', $rule->getParagraph(), true) ?>"
+                   value="<?=$this->escape($this->originalInput('paragraph', $rule->getParagraph())) ?>"
                    required />
         </div>
     </div>
@@ -39,7 +39,7 @@ $userGroupList = $this->get('userGroupList');
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=$this->originalInput('title', $rule->getTitle(), true) ?>"
+                   value="<?=$this->escape($this->originalInput('title', $rule->getTitle())) ?>"
                    required />
         </div>
     </div>
@@ -80,7 +80,7 @@ $userGroupList = $this->get('userGroupList');
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?=$this->originalInput('text', $rule->getText()) ?></textarea>
+                      rows="5"><?=$this->escape($this->originalInput('text', $rule->getText())) ?></textarea>
         </div>
     </div>
     <?=$this->getSaveBar($rule->getId() ? 'edit' : 'add') ?>
