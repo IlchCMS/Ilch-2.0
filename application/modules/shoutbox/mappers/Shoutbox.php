@@ -15,7 +15,7 @@ class Shoutbox extends \Ilch\Mapper
      * @var string
      * @since 1.5.0
      */
-    public $tablename = 'shoutbox';
+    public string $tablename = 'shoutbox';
 
     /**
      * Check if DB-Table exists
@@ -138,6 +138,6 @@ class Shoutbox extends \Ilch\Mapper
      */
     public function truncate(): bool
     {
-        return $this->db()->truncate($this->tablename);
+        return (bool)$this->db()->truncate($this->tablename);
     }
 }
