@@ -13,7 +13,7 @@ use Ilch\Validation;
 
 class Icons extends Admin
 {
-    protected $icons = [];
+    protected array $icons = [];
 
     public function init()
     {

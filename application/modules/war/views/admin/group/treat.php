@@ -17,7 +17,7 @@ $entry = $this->get('group');
                    class="form-control"
                    id="groupNameInput"
                    name="groupName"
-                   value="<?=$this->originalInput('groupName', $entry->getGroupName(), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('groupName', $entry->getGroupName())) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('groupTag') ? ' has-error' : '' ?>">
@@ -29,7 +29,7 @@ $entry = $this->get('group');
                    class="form-control"
                    id="groupTagInput"
                    name="groupTag"
-                   value="<?=$this->originalInput('groupTag', $entry->getGroupTag(), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('groupTag', $entry->getGroupTag())) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('groupImage') ? ' has-error' : '' ?>">
@@ -43,7 +43,7 @@ $entry = $this->get('group');
                        id="selectedImage_1"
                        name="groupImage"
                        placeholder="<?=$this->getTrans('groupImage') ?>"
-                       value="<?=$this->originalInput('groupImage', $entry->getGroupImage(), true) ?>" />
+                       value="<?=$this->escape($this->originalInput('groupImage', $entry->getGroupImage())) ?>" />
                 <span class="input-group-text">
                     <a id="media" href="javascript:media_1()"><i class="fa-regular fa-image"></i></a>
                 </span>
@@ -61,7 +61,7 @@ $entry = $this->get('group');
                           id="groupDesc"
                           cols="50"
                           rows="5"
-                          placeholder="<?=$this->originalInput('groupDesc', $entry->getGroupDesc(), true) ?>"></textarea>
+                          placeholder="<?=$this->escape($this->originalInput('groupDesc', $entry->getGroupDesc())) ?>"></textarea>
             </div>
         </div>
     </div>

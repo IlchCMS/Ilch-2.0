@@ -70,7 +70,7 @@ class Index extends Frontend
         $mapsMapper = new MapsMapper();
 
         $date = new Date();
-        $datenow = new Date($date->format("Y-m-d H:i:s", true));
+        $datenow = new Date($date->format('Y-m-d H:i:s', true));
 
         $war = $warMapper->getWarById($this->getRequest()->getParam('id', 0));
 

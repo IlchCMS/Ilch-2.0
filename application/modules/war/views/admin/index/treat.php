@@ -54,7 +54,7 @@ $entry = $this->get('war');
                        id="warTimeInput"
                        name="warTime"
                        size="16"
-                       value="<?=$this->originalInput('warTime', ($entry->getId() ? (new Date($entry->getWarTime()))->format("d.m.Y H:i") : ''), true) ?>"
+                       value="<?=$this->escape($this->originalInput('warTime', ($entry->getId() ? (new Date($entry->getWarTime()))->format('d.m.Y H:i') : ''))) ?>"
                        readonly />
                 <span class="input-group-text">
                     <span class="fa-solid fa-calendar"></span>
@@ -84,7 +84,7 @@ $entry = $this->get('war');
                        class="form-control"
                        id="warServerInput"
                        name="warServer"
-                       value="<?=$this->originalInput('warServer', $entry->getWarServer(), true) ?>" />
+                       value="<?=$this->escape($this->originalInput('warServer', $entry->getWarServer())) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('warPassword') ? ' has-error' : '' ?>">
@@ -96,7 +96,7 @@ $entry = $this->get('war');
                        class="form-control"
                        id="warPasswordInput"
                        name="warPassword"
-                       value="<?=$this->originalInput('warPassword', $entry->getWarPassword(), true) ?>" />
+                       value="<?=$this->escape($this->originalInput('warPassword', $entry->getWarPassword())) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('warXonx') ? ' has-error' : '' ?>">
@@ -192,7 +192,7 @@ $entry = $this->get('war');
                        class="form-control"
                        id="lastAcceptTimeInput"
                        name="lastAcceptTime"
-                       value="<?=$this->originalInput('lastAcceptTime', $entry->getLastAcceptTime(), true) ?>" />
+                       value="<?=$this->escape($this->originalInput('lastAcceptTime', $entry->getLastAcceptTime())) ?>" />
             </div>
         </div>
         <?php if ($entry->getId()) : ?>
@@ -215,7 +215,7 @@ $entry = $this->get('war');
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="warReport"
-                          toolbar="ilch_html"><?=$this->originalInput('warReport', $entry->getWarReport(), true) ?></textarea>
+                          toolbar="ilch_html"><?=$this->escape($this->originalInput('warReport', $entry->getWarReport())) ?></textarea>
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('groups') ? ' has-error' : '' ?>">

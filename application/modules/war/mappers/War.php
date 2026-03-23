@@ -19,8 +19,8 @@ use function is_string;
 
 class War extends Mapper
 {
-    public $tablename = 'war';
-    public $tablenameAccess = 'war_access';
+    public string $tablename = 'war';
+    public string $tablenameAccess = 'war_access';
 
     /**
      * returns if the module is installed.

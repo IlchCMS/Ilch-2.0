@@ -15,7 +15,7 @@
                    id="warsPerPageInput"
                    name="warsPerPage"
                    min="1"
-                   value="<?=$this->originalInput('warsPerPage', $this->get('warsPerPage'), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('warsPerPage', $this->get('warsPerPage'))) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('enemiesPerPage') ? ' has-error' : '' ?>">
@@ -28,7 +28,7 @@
                    id="enemiesPerPageInput"
                    name="enemiesPerPage"
                    min="1"
-                   value="<?=$this->originalInput('enemiesPerPage', $this->get('enemiesPerPage'), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('enemiesPerPage', $this->get('enemiesPerPage'))) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('groupsPerPage') ? ' has-error' : '' ?>">
@@ -41,7 +41,7 @@
                    id="groupsPerPageInput"
                    name="groupsPerPage"
                    min="1"
-                   value="<?=$this->originalInput('groupsPerPage', $this->get('groupsPerPage'), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('groupsPerPage', $this->get('groupsPerPage'))) ?>" />
         </div>
     </div>
 
@@ -56,7 +56,7 @@
                    id="limitNextWarInput"
                    name="boxNextWarLimit"
                    min="1"
-                   value="<?=$this->originalInput('boxNextWarLimit', $this->get('boxNextWarLimit'), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('boxNextWarLimit', $this->get('boxNextWarLimit'))) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('boxLastWarLimit') ? ' has-error' : '' ?>">
@@ -69,7 +69,7 @@
                    id="limitLastWarInput"
                    name="boxLastWarLimit"
                    min="1"
-                   value="<?=$this->originalInput('boxLastWarLimit', $this->get('boxLastWarLimit'), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('boxLastWarLimit', $this->get('boxLastWarLimit'))) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar() ?>
