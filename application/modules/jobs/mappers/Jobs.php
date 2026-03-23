@@ -18,19 +18,7 @@ class Jobs extends \Ilch\Mapper
      * @var string
      * @since 1.7.2
      */
-    public $tablename = 'jobs';
-
-    /**
-     * returns if the module is installed.
-     *
-     * @return bool
-     * @throws \Ilch\Database\Exception
-     * @since 1.7.2
-     */
-    public function checkDB(): bool
-    {
-        return $this->db()->ifTableExists($this->tablename);
-    }
+    public string $tablename = 'jobs';
 
     /**
      * Gets the Entries by params.
@@ -160,16 +148,5 @@ class Jobs extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.7.2
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 }

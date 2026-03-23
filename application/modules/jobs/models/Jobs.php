@@ -17,35 +17,35 @@ class Jobs extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The title of the jobs.
      *
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * The text of the jobs.
      *
      * @var string
      */
-    protected $text = '';
+    protected string $text = '';
 
     /**
      * The email of the jobs.
      *
      * @var string
      */
-    protected $email = '';
+    protected string $email = '';
 
     /**
      * The show of the jobs.
      *
      * @var bool
      */
-    protected $show = true;
+    protected bool $show = true;
 
     /**
      * @param array $entries

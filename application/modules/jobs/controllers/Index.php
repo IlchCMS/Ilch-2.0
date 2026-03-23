@@ -47,7 +47,7 @@ class Index extends \Ilch\Controller\Frontend
 
             if ($validation->isValid()) {
                 $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
-                $jobTitle = $this->getRequest()->getPost('title', '', true);
+                $jobTitle = $this->getLayout()->escape($this->getRequest()->getPost('title', ''));
                 $date = new \Ilch\Date();
                 $user = $userMapper->getUserById($this->getUser()->getId());
 

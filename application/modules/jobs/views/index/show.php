@@ -32,9 +32,7 @@ $job = $this->get('job');
         <?=$this->getTokenField() ?>
         <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
             <label for="title" class="col-xl-3 col-form-label">
-                <div class="text-start">
-                    <?=$this->getTrans('applyAs') ?>:
-                </div>
+                <?=$this->getTrans('applyAs') ?>:
             </label>
             <div class="col-xl-3">
                 <select class="form-select" id="title" name="title">
@@ -52,7 +50,7 @@ $job = $this->get('job');
                           id="ck_1"
                           name="text"
                           toolbar="ilch_html_frontend"
-                          rows="5"><?=$this->originalInput('text', '', true) ?></textarea>
+                          rows="5"><?=$this->originalInput('text') ?></textarea>
             </div>
         </div>
         <div class="col-xl-12 text-end">

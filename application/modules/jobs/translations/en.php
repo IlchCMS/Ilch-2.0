@@ -23,6 +23,5 @@ return [
     'apply' => 'Apply',
     'applyAs' => 'Apply as',
     'hide' => 'Hide',
-
     'entryNotFound' => 'Entry not found',
 ];
