@@ -172,15 +172,4 @@ class Accept extends Mapper
 
         return json_encode($entrys, $options);
     }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.16.5
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
-    }
 }

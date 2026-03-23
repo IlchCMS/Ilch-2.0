@@ -120,7 +120,6 @@ class Index extends Frontend
                     if ($this->getRequest()->getPost('warAccept')) {
                         $validation = Validation::create($this->getRequest()->getPost(), [
                             'warAccept'           => 'required|min:1|max:3',
-                            //'warComment'           => '',
                         ]);
 
                         if ($validation->isValid()) {

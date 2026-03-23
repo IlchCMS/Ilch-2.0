@@ -16,35 +16,35 @@ class Games extends Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The warId.
      *
      * @var int
      */
-    protected $warId = 0;
+    protected int $warId = 0;
 
     /**
      * The Game map.
      *
      * @var int
      */
-    protected $map = 0;
+    protected int $map = 0;
 
     /**
      * The Group Points.
      *
      * @var int
      */
-    protected $groupPoints = 0;
+    protected int $groupPoints = 0;
 
     /**
      * The Enemy Points.
      *
      * @var int
      */
-    protected $enemyPoints = 0;
+    protected int $enemyPoints = 0;
 
     /**
      * Sets Model by Array.

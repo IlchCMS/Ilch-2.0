@@ -17,14 +17,14 @@ class Maps extends Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The Name.
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * Sets Model by Array.

@@ -16,118 +16,118 @@ class War extends Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The War Enemy.
      *
      * @var int
      */
-    protected $warEnemy = 0;
+    protected int $warEnemy = 0;
 
     /**
      * The War Enemy Tag.
      *
      * @var string
      */
-    protected $warEnemyTag = '';
+    protected string $warEnemyTag = '';
 
     /**
      * The War Group.
      *
      * @var int
      */
-    protected $warGroup = 0;
+    protected int $warGroup = 0;
 
     /**
      * The War Group Tag.
      *
      * @var string
      */
-    protected $warGroupTag = '';
+    protected string $warGroupTag = '';
 
     /**
      * The War Time.
      *
      * @var string
      */
-    protected $warTime = '';
+    protected string $warTime = '';
 
     /**
      * The War Maps.
      *
      * @var string
      */
-    protected $warMaps = '';
+    protected string $warMaps = '';
 
     /**
      * The War Server.
      *
      * @var string
      */
-    protected $warServer = '';
+    protected string $warServer = '';
 
     /**
      * The War Password.
      *
      * @var string
      */
-    protected $warPassword = '';
+    protected string $warPassword = '';
 
     /**
      * The War Xonx.
      *
      * @var string
      */
-    protected $warXonx = 'new';
+    protected string $warXonx = 'new';
 
     /**
      * The War Game.
      *
      * @var string
      */
-    protected $warGame = 'new';
+    protected string $warGame = 'new';
 
     /**
      * The War Matchtype.
      *
      * @var string
      */
-    protected $warMatchtype = 'new';
+    protected string $warMatchtype = 'new';
 
     /**
      * The War Report.
      *
      * @var string
      */
-    protected $warReport = '';
+    protected string $warReport = '';
 
     /**
      * The War Status.
      *
      * @var int
      */
-    protected $warStatus = 1;
+    protected int $warStatus = 1;
 
     /**
      * The show value (hide or show in calendar) of the training.
      *
      * @var int
      */
-    protected $show = 0;
+    protected int $show = 0;
     /**
      * The readaccess of the training.
      *
      * @var string
      */
-    protected $readAccess = '';
+    protected string $readAccess = '';
 
     /**
      * The last Accept Time.
      *
      * @var int
      */
-    protected $lastAcceptTime = 0;
+    protected int $lastAcceptTime = 0;
 
     /**
      * Sets Model by Array.

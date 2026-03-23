@@ -160,15 +160,4 @@ class Games extends Mapper
     {
         return $this->delete($id);
     }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.16.5
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
-    }
 }

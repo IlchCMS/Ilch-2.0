@@ -522,15 +522,4 @@ class War extends Mapper
             ->where(['id' => (int)$id])
             ->execute();
     }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.16.5
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
-    }
 }

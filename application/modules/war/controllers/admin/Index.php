@@ -169,8 +169,6 @@ class Index extends Admin
                 'warServer'         => 'required',
                 'lastAcceptTime'    => 'numeric|numeric|integer',
                 'warStatus'         => 'numeric|numeric|integer|min:1|max:2',
-                //'warPassword'    => '',
-                //'warReport'    => '',
             ];
 
             if ($warMapper->existsTable('calendar')) {
