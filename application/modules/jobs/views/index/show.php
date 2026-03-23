@@ -32,9 +32,7 @@ $job = $this->get('job');
         <?=$this->getTokenField() ?>
         <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
             <label for="title" class="col-xl-3 col-form-label">
-                <div class="text-start">
-                    <?=$this->getTrans('applyAs') ?>:
-                </div>
+                <?=$this->getTrans('applyAs') ?>:
             </label>
             <div class="col-xl-3">
                 <select class="form-select" id="title" name="title">
