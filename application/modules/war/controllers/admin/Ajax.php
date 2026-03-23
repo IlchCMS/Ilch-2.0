@@ -35,7 +35,7 @@ class Ajax extends Admin
 
     public function delAction()
     {
-        if (!empty($this->getRequest()->getParam('mapid')) && !empty($this->getRequest()->getParam('id'))) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('mapid')) && !empty($this->getRequest()->getParam('id'))) {
             $gameMapper = new GamesMapper();
             $gameMapper->deleteById((int)$this->getRequest()->getParam('mapid'));
 
