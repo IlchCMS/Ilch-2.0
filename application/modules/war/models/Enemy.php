@@ -16,63 +16,63 @@ class Enemy extends Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The Enemy Name.
      *
      * @var string
      */
-    protected $enemyName = '';
+    protected string $enemyName = '';
 
     /**
      * The Enemy Tag.
      *
      * @var string
      */
-    protected $enemyTag = '';
+    protected string $enemyTag = '';
 
     /**
      * The Enemy Homepage.
      *
      * @var string
      */
-    protected $enemyHomepage = '';
+    protected string $enemyHomepage = '';
 
     /**
      * The Enemy Image.
      *
      * @var string
      */
-    protected $enemyImage = '';
+    protected string $enemyImage = '';
 
     /**
      * The Enemy ImageThumb.
      *
      * @var string
      */
-    protected $enemyImageThumb = '';
+    protected string $enemyImageThumb = '';
 
     /**
      * The Enemy Land.
      *
      * @var string
      */
-    protected $enemyLand = '';
+    protected string $enemyLand = '';
 
     /**
      * The Enemy Contact Name.
      *
      * @var string
      */
-    protected $enemyContactName = '';
+    protected string $enemyContactName = '';
 
     /**
      * The Enemy Contact Email.
      *
      * @var string
      */
-    protected $enemyContactEmail = '';
+    protected string $enemyContactEmail = '';
 
     /**
      * Sets Model by Array.

@@ -6,7 +6,7 @@ use Ilch\Date;
 
 /** @var \Modules\War\Models\Group $group */
 $group = $this->get('group');
-/** @var \Modules\War\Mappers\War[]|null $wars */
+/** @var \Modules\War\Models\War[]|null $wars */
 $wars = $this->get('wars');
 
 /** @var \Modules\War\Mappers\Games $gamesMapper */
@@ -113,7 +113,7 @@ foreach ($wars ?? [] as $war) {
                         $group = $groupMapper->getGroupById($war->getWarGroup());
                         echo $this->escape($group ? $group->getGroupName() : '');
                         ?></td>
-                        <td><?=$date->format("d.m.Y H:i", true) ?></td>
+                        <td><?=$date->format('d.m.Y H:i', true) ?></td>
                         <td>
                             <?php
                             if ($war->getWarStatus() == '1') {

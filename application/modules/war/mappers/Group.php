@@ -13,7 +13,7 @@ use Modules\War\Models\Group as EntriesModel;
 
 class Group extends Mapper
 {
-    public $tablename = 'war_groups';
+    public string $tablename = 'war_groups';
 
     /**
      * returns if the module is installed.

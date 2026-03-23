@@ -16,49 +16,49 @@ class Group extends Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The Group Name.
      *
      * @var string
      */
-    protected $groupName = '';
+    protected string $groupName = '';
 
     /**
      * The Group Tag.
      *
      * @var string
      */
-    protected $groupTag = '';
+    protected string $groupTag = '';
 
     /**
      * The Group Image.
      *
      * @var string
      */
-    protected $groupImage = '';
+    protected string $groupImage = '';
 
     /**
      * The Group ImageThumb.
      *
      * @var string
      */
-    protected $groupImageThumb = '';
+    protected string $groupImageThumb = '';
 
     /**
      * The Group Member.
      *
      * @var string
      */
-    protected $groupMember = '';
+    protected string $groupMember = '';
 
     /**
      * The Group Desc.
      *
      * @var string
      */
-    protected $groupDesc = '';
+    protected string $groupDesc = '';
 
     /**
      * Sets Model by Array.

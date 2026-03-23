@@ -14,7 +14,7 @@ use Modules\War\Models\Maps as EntriesModel;
 
 class Maps extends Mapper
 {
-    public $tablename = 'war_maps';
+    public string $tablename = 'war_maps';
 
     /**
      * returns if the module is installed.

@@ -13,7 +13,7 @@ use Modules\War\Models\Games as EntriesModel;
 
 class Games extends Mapper
 {
-    public $tablename = 'war_played';
+    public string $tablename = 'war_played';
 
     /**
      * returns if the module is installed.

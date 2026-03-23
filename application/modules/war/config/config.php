@@ -15,7 +15,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'war',
-        'version' => '1.16.4',
+        'version' => '1.16.5',
         'icon_small' => 'fa-solid fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -48,8 +48,8 @@ class Config extends Install
                 ]
             ]
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'ilchCore' => '2.2.13',
+        'phpVersion' => '7.4'
     ];
 
     public function install()
@@ -402,6 +402,10 @@ class Config extends Install
             case "1.15.4":
             case "1.15.5":
             case "1.16.0":
+            case "1.16.1":
+            case "1.16.2":
+            case "1.16.3":
+            case "1.16.4":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
