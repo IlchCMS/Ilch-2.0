@@ -106,11 +106,6 @@ class Index extends \Ilch\Controller\Admin
                 'groups' => 'required',
                 'calendarShow' => 'required|integer|min:0|max:1',
                 'periodType' => 'required',
-
-                //'place' => '',
-                //'voiceServerPW' => '',
-                //'gameServerPW' => '',
-                //'text' => '',
             ];
 
             if ($this->getRequest()->getPost('periodType') == 'days') {

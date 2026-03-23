@@ -189,7 +189,7 @@ class Training extends \Ilch\Mapper
         }
 
         $currentDate = new Date();
-        $currentDate->format("Y-m-d H:i:s");
+        $currentDate->format('Y-m-d H:i:s');
 
         // Get all recurrent trainings with a repeat until date not in the past.
         $where = [
@@ -235,7 +235,7 @@ class Training extends \Ilch\Mapper
     public function countdown(Date $countdown_date, int $countdown_time = 60)
     {
         $date = new Date();
-        $datenow = new Date($date->format("Y-m-d H:i:s", true));
+        $datenow = new Date($date->format('Y-m-d H:i:s', true));
         $difference = $countdown_date->getTimestamp() - $datenow->getTimestamp();
         if ($difference < 0) {
             if ($difference <= (60 * $countdown_time)) {
@@ -444,16 +444,5 @@ class Training extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.10.2
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename) && $this->db()->truncate($this->tablenameAccess);
     }
 }
