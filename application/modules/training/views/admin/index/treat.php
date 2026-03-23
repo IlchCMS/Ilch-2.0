@@ -56,7 +56,7 @@ $periodAppendix = [
         <label for="start" class="col-md-2 col-form-label">
             <?=$this->getTrans('start') ?>:
         </label>
-        <div class="col-xl-2 input-group ilch-date date form_datetime" id="date">
+        <div class="col-xl-2 input-group date form_datetime" id="date">
             <?php
             $datecreate = '';
             if ($training->getDate()) {
@@ -81,7 +81,7 @@ $periodAppendix = [
         <label for="end" class="col-xl-2 col-form-label">
             <?=$this->getTrans('end') ?>:
         </label>
-        <div id="end" class="col-xl-4 input-group ilch-date date form_datetime_2">
+        <div id="end" class="col-xl-4 input-group date form_datetime_2">
             <input type="text"
                    class="form-control"
                    id="end"
@@ -99,9 +99,9 @@ $periodAppendix = [
         </label>
         <div class="col-xl-4">
             <select class="form-select" name="periodType" id="periodType">
-                <option value="" <?=($this->originalInput('periodType', ($training->getId() ? $training->getPeriodType() : ''))) == '' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
+                <option value="" <?=($this->originalInput('periodType', $training->getPeriodType())) == '' ? 'selected=""' : '' ?>><?=$this->getTrans('noPeriodEntry') ?></option>
                 <?php foreach ($periodTypes as $key => $value) : ?>
-                    <option value="<?=$key ?>" <?=($this->originalInput('periodType', ($training->getId() ? $training->getPeriodType() : ''))) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
+                    <option value="<?=$key ?>" <?=($this->originalInput('periodType', $training->getPeriodType())) == $key ? 'selected=""' : '' ?>><?=$value ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -138,7 +138,7 @@ $periodAppendix = [
             <label for="repeatUntil" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('repeatUntil') ?>:
             </label>
-            <div id="repeatUntil" class="col-xl-4 input-group ilch-date date form_datetime_3">
+            <div id="repeatUntil" class="col-xl-4 input-group date form_datetime_3">
                 <input type="text"
                        class="form-control"
                        id="repeatUntil"
@@ -172,7 +172,7 @@ $periodAppendix = [
                 <?php
                 foreach ($this->get('users') as $user) {
                     $selected = '';
-                    if ($this->get('training') != '' && $this->get('training')->getContact() == $user->getId()) {
+                    if ($this->originalInput('contact', $training->getContact()) == $user->getId()) {
                         $selected = 'selected="selected"';
                     }
                     echo '<option ' . $selected . ' value="' . $user->getId() . '">' . $this->escape($user->getName()) . '</option>';
@@ -299,7 +299,7 @@ $periodAppendix = [
             <select class="choices-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                 <?php foreach ($this->get('userGroupList') as $groupList) : ?>
                     <?php if ($groupList->getId() != 1) : ?>
-                        <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
+                        <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->originalInput('groups', $this->get('groups')))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
                     <?php endif; ?>
                 <?php endforeach; ?>
             </select>

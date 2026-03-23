@@ -7,6 +7,7 @@
 
 namespace Modules\Training\Controllers;
 
+use Ilch\Validation;
 use Modules\Training\Mappers\Training as TrainingMapper;
 use Modules\Training\Mappers\Entrants as EntrantsMapper;
 use Modules\Training\Models\Entrants as EntrantsModel;
@@ -73,16 +74,31 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuTraining'), ['controller' => 'index', 'action' => 'index'])
             ->add($training->getTitle(), ['controller' => 'index', 'action' => 'show', 'id' => $training->getId()]);
 
+        if ($this->getUser()) {
+            $this->getView()->set('trainEntrantUser', $entrantsMapper->getEntrants($training->getId(), $this->getUser()->getId()));
+        }
+
         if ($this->getRequest()->isPost()) {
-            if ($this->getRequest()->getPost('save') && $this->getUser()) {
-                $entrantsModel->setTrainId($training->getId())
-                    ->setUserId($this->getUser()->getId())
-                    ->setNote($this->getRequest()->getPost('train_textarea'));
-                $entrantsMapper->saveUserOnTrain($entrantsModel);
+            if ($this->getRequest()->getPost('save') && $this->getUser() && $this->getView()->get('trainEntrantUser')) {
+                Validation::setCustomFieldAliases([
+                    'train_textarea' => 'note',
+                ]);
+                $validation = Validation::create($this->getRequest()->getPost(), ['train_textarea' => 'required',]);
+                if ($validation->isValid()) {
+                    $entrantsModel->setTrainId($training->getId())
+                        ->setUserId($this->getUser()->getId())
+                        ->setNote($this->getRequest()->getPost('train_textarea'));
+                    $entrantsMapper->saveUserOnTrain($entrantsModel);
+                    $this->redirect()
+                        ->withMessage('saveSuccess')
+                        ->to(['action' => 'index']);
+                }
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
                 $this->redirect()
-                    ->withMessage('saveSuccess')
-                    ->to(['action' => 'index']);
-            } elseif ($this->getRequest()->getPost('del') && $this->getUser()) {
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
+            } elseif ($this->getRequest()->getPost('del') && $this->getUser() && !$this->getView()->get('trainEntrantUser')) {
                 $entrantsMapper->deleteUserFromTrain($training->getId(), $this->getUser()->getId());
                 $this->redirect()
                     ->withMessage('deleteSuccess')
@@ -90,10 +106,6 @@ class Index extends \Ilch\Controller\Frontend
             }
             $this->redirect()
                 ->to(['action' => 'index']);
-        }
-
-        if ($this->getUser()) {
-            $this->getView()->set('trainEntrantUser', $entrantsMapper->getEntrants($training->getId(), $this->getUser()->getId()));
         }
 
         $trainEntrantsUser = $entrantsMapper->getEntrantsById($training->getId());
