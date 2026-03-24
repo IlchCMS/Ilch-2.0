@@ -82,7 +82,7 @@ class Gallery extends Mapper
      */
     public function getGalleryCatItem(int $type): array
     {
-        return $this->getEntriesBy(['type' => $type], ['sort' => 'ASC']);
+        return $this->getEntriesBy(['type' => $type], ['sort' => 'ASC']) ?? [];
     }
 
     /**
