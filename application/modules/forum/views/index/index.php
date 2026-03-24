@@ -92,7 +92,7 @@ function rec(ForumItem $item, View $obj, ?int $i)
                             </a>
                             <br>
                             <div class="small">
-                                <?=$item->getDesc() ?>
+                                <?=$obj->purify($item->getDesc()) ?>
                             </div>
                         </dt>
                         <dd class="posts small">
