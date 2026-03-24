@@ -60,7 +60,8 @@ class Settings extends Admin
                 'pictureOfXInterval' => 'numeric|min:0|max:4',
                 'pictureOfXRandom' => 'numeric|min:0|max:1',
                 // Venobox numeric checks (for boolean/numeric values)
-                'venoboxNumeration' => 'numeric',
+                'venoboxNumeration' => 'numeric|min:0|max:1',
+                'venoboxInfiniteGallery' => 'numeric|min:0|max:1',
                 'venoboxNavSpeed' => 'numeric',
             ]);
 
