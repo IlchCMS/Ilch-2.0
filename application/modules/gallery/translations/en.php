@@ -102,7 +102,7 @@ return [
     'venoboxRatio' => 'Video Ratio',
     'venoboxRatioDesc' => 'Aspect ratio for videos (e.g., 16x9).',
     'venoboxBorderPlaceholder' => 'e.g. 5px',
-    'venoboxMaxWidthPlaceholder' => 'e.g. 100%',
+    'venoboxMaxWidthPlaceholder' => 'e.g. 100%%',
     'venoboxShareStyleBar' => 'Bar',
     'venoboxShareStylePill' => 'Pill',
     'venoboxShareStyleBlock' => 'Block',

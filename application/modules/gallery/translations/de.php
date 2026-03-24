@@ -101,7 +101,7 @@ return [
     'venoboxRatio' => 'Video Format',
     'venoboxRatioDesc' => 'Seitenverhältnis für Videos (z.B. 16x9).',
     'venoboxBorderPlaceholder' => 'z.B. 5px',
-    'venoboxMaxWidthPlaceholder' => 'z.B. 100%',
+    'venoboxMaxWidthPlaceholder' => 'z.B. 100%%',
     'venoboxShareStyleBar' => 'Balken (Bar)',
     'venoboxShareStylePill' => 'Pille (Pill)',
     'venoboxShareStyleBlock' => 'Block',
