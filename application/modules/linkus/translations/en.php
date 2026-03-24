@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -14,4 +15,5 @@ return [
     'showHtml' => 'Show HTML-Code?',
     'showBBCode' => 'Show BB-Code?',
     'noneEnabled' => 'At least one option must be enabled.',
+    'entryNotFound' => 'Entry not found',
 ];
