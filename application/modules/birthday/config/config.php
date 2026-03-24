@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'birthday',
-        'version' => '1.7.1',
+        'version' => '1.7.2',
         'icon_small' => 'fa-solid fa-cake-candles',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -34,14 +35,15 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'ilchCore' => '2.2.13',
+        'phpVersion' => '7.4'
     ];
 
     public function install()
     {
         $databaseConfig = new \Ilch\Config\Database($this->db());
-        $databaseConfig->set('bday_boxShow', '5');
+        $databaseConfig->set('bday_boxShow', '5')
+            ->set('bday_visibleForGuest', '0');
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
             $this->db()->queryMulti("INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ('birthday/birthdays/index/');");
@@ -50,14 +52,16 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'bday_boxShow'");
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->delete('bday_boxShow')
+            ->delete('bday_visibleForGuest');
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
             $this->db()->queryMulti("DELETE FROM `[prefix]_calendar_events` WHERE `url` = 'birthday/birthdays/index/';");
         }
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case '1.0':
@@ -65,12 +69,19 @@ class Config extends \Ilch\Config\Install
             case '1.2.0':
             case '1.3.0':
                 // Update description
-                foreach($this->config['languages'] as $key => $value) {
+                foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'birthday' AND `locale` = '%s';", $value['description'], $key));
                 }
+                // no break
             case '1.4.0':
             case '1.5.0':
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-cake-candles' WHERE `key` = 'birthday';");
+                // no break
+            case '1.6.0':
+            case '1.7.0':
+            case '1.7.1':
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
