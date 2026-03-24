@@ -15,19 +15,7 @@ class Linkus extends \Ilch\Mapper
      * @var string
      * @since 1.7.3
      */
-    public $tablename = 'linkus';
-
-    /**
-     * returns if the module is installed.
-     *
-     * @return bool
-     * @throws \Ilch\Database\Exception
-     * @since 1.7.3
-     */
-    public function checkDB(): bool
-    {
-        return $this->db()->ifTableExists($this->tablename);
-    }
+    public string $tablename = 'linkus';
 
     /**
      * Gets the Entries by params.
@@ -75,7 +63,7 @@ class Linkus extends \Ilch\Mapper
      * @param array $where
      * @return LinkusModel[]|null
      */
-    public function getLinkus(array $where = [])
+    public function getLinkus(array $where = []): ?array
     {
         return $this->getEntriesBy($where, ['id' => 'ASC']);
     }
@@ -86,7 +74,7 @@ class Linkus extends \Ilch\Mapper
      * @param int $id
      * @return LinkusModel|null
      */
-    public function getLinkusById(int $id)
+    public function getLinkusById(int $id): ?LinkusModel
     {
         $linkusRow = $this->getEntriesBy(['id' => $id], []);
 
@@ -102,7 +90,7 @@ class Linkus extends \Ilch\Mapper
      * @param LinkusModel $linkus
      * @return int
      */
-    public function save(LinkusModel $linkus)
+    public function save(LinkusModel $linkus): int
     {
         $fields = $linkus->getArray();
 
@@ -129,16 +117,5 @@ class Linkus extends \Ilch\Mapper
         $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.7.3
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 }

@@ -20,7 +20,7 @@ $linkus = $this->get('linkus');
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?=$this->originalInput('title', $linkus->getTitle(), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('title', $linkus->getTitle())) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('banner') ? ' has-error' : '' ?>">
@@ -33,7 +33,7 @@ $linkus = $this->get('linkus');
                        class="form-control"
                        id="selectedImage_1"
                        name="banner"
-                       value="<?=$this->originalInput('banner', $linkus->getBanner(), true) ?>"
+                       value="<?=$this->escape($this->originalInput('banner', $linkus->getBanner())) ?>"
                        readonly />
                 <span class="input-group-text"><a id="media" href="javascript:media_1()"><i class="fa-regular fa-image"></i></a></span>
             </div>

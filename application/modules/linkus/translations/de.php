@@ -15,6 +15,5 @@ return [
     'showHtml' => 'HTML-Code anzeigen?',
     'showBBCode' => 'BB-Code anzeigen?',
     'noneEnabled' => 'Es muss mindestens eine Option aktiviert sein.',
-
     'entryNotFound' => 'Eintrag nicht gefunden.',
 ];

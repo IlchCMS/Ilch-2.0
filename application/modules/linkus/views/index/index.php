@@ -24,7 +24,6 @@ $config = \Ilch\Registry::get('config');
                       <textarea class="form-control bg-body-tertiary"
                                 style="resize: vertical"
                                 name="text"
-                                type="text"
                                 rows="4"
                                 readonly><a href="<?=$this->getUrl() ?>" target="_blank" rel="noopener"><img src="<?=$this->getBaseUrl($this->escape($linkusModel->getBanner())) ?>" border="0"></a></textarea>
                   </div>

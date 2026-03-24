@@ -14,21 +14,21 @@ class Linkus extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The title of the linkus.
      *
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * The banner of the linkus.
      *
      * @var string
      */
-    protected $banner = '';
+    protected string $banner = '';
 
     /**
      * @param array $entries
@@ -64,7 +64,7 @@ class Linkus extends \Ilch\Model
      * Sets the id of the linkus.
      *
      * @param int $id
-     * @return this
+     * @return $this
      */
     public function setId(int $id): Linkus
     {
@@ -87,7 +87,7 @@ class Linkus extends \Ilch\Model
      * Sets the title of the linkus.
      *
      * @param string $title
-     * @return this
+     * @return $this
      */
     public function setTitle(string $title): Linkus
     {
@@ -110,7 +110,7 @@ class Linkus extends \Ilch\Model
      * Sets the banner of the linkus.
      *
      * @param string $banner
-     * @return this
+     * @return $this
      */
     public function setBanner(string $banner): Linkus
     {

@@ -97,7 +97,7 @@ class Index extends \Ilch\Controller\Admin
             }
 
             $post = [
-                'title' => $this->getRequest()->getPost('title', '', true),
+                'title' => $this->getRequest()->getPost('title', ''),
                 'banner' => $banner,
             ];
 
@@ -107,8 +107,8 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $model->setTitle($this->getRequest()->getPost('title', '', true));
-                $model->setBanner($this->getRequest()->getPost('banner', '', true));
+                $model->setTitle($this->getRequest()->getPost('title', ''));
+                $model->setBanner($this->getRequest()->getPost('banner', ''));
                 $linkusMapper->save($model);
 
                 $this->addMessage('saveSuccess');
