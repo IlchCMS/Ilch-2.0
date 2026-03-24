@@ -31,7 +31,9 @@
                     name="pictureOfXSource[]"
                     data-placeholder="<?=$this->getTrans('selectGalleries') ?>"
                     multiple>
-                <?php foreach ($this->get('galleries') as $gallery) : ?>
+                <?php
+                /** @var \Modules\Gallery\Models\GalleryItem $gallery */
+                foreach ($this->get('galleries') as $gallery) : ?>
                     <option value="<?=$gallery->getId() ?>" <?=in_array($gallery->getId(), $this->originalInput('pictureOfXSource', $this->get('pictureOfXSource')) ?? []) ? 'selected="selected"' : '' ?>>
                         <?=$this->escape($gallery->getTitle()) ?>
                     </option>

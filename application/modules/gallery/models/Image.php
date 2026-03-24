@@ -19,56 +19,91 @@ class Image extends Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The imageId of the image.
      *
      * @var int
      */
-    protected $image_id = 0;
+    protected int $image_id = 0;
 
     /**
      * The imageThumb of the image.
      *
      * @var string
      */
-    protected $image_thumb = '';
+    protected string $image_thumb = '';
 
     /**
      * Title of the image.
      *
      * @var string
      */
-    protected $image_title = '';
+    protected string $image_title = '';
 
     /**
      * Description of the image.
      *
      * @var string
      */
-    protected $image_desc = '';
+    protected string $image_desc = '';
 
     /**
      * The gallery id of the image.
      *
      * @var int
      */
-    protected $gallery_id = 0;
+    protected int $gallery_id = 0;
 
     /**
      * The visits of the image.
      *
      * @var int
      */
-    protected $visits = 0;
+    protected int $visits = 0;
 
     /**
      * The imageUrl of the image.
      *
      * @var string
      */
-    protected $image_url = '';
+    protected string $image_url = '';
+
+    /**
+     * @param array $entries
+     * @return $this
+     * @since 1.23.4
+     */
+    public function setByArray(array $entries): Image
+    {
+        if (!empty($entries['imgid']) || !empty($entries['id'])) {
+            $this->setId($entries['imgid'] ?? $entries['id']);
+        }
+        if (!empty($entries['image_id'])) {
+            $this->setImageId($entries['image_id']);
+        }
+        if (!empty($entries['url'])) {
+            $this->setImageUrl($entries['url']);
+        }
+        if (!empty($entries['url_thumb'])) {
+            $this->setImageThumb($entries['url_thumb']);
+        }
+        if (!empty($entries['image_title'])) {
+            $this->setImageTitle($entries['image_title']);
+        }
+        if (!empty($entries['image_description'])) {
+            $this->setImageDesc($entries['image_description']);
+        }
+        if (!empty($entries['gallery_id'])) {
+            $this->setGalleryId($entries['gallery_id']);
+        }
+        if (!empty($entries['visits'])) {
+            $this->setVisits($entries['visits']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id of the image.
@@ -228,5 +263,24 @@ class Image extends Model
     public function setImageUrl(string $imageUrl)
     {
         $this->image_url = $imageUrl;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.23.4
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'image_id' =>    $this->getImageId(),
+                'image_title' =>     $this->getImageTitle(),
+                'image_description' =>      $this->getImageDesc(),
+                'gallery_id' =>        $this->getGalleryId(),
+                'visits' =>       $this->getVisits()
+            ]
+        );
     }
 }

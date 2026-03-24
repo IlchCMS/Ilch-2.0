@@ -91,8 +91,8 @@ $pagination = $this->get('pagination');
         titleStyle: 'bar',
 
     <?php foreach ($this->get('venoboxOptions') as $param => $value) : ?>
-        <?php if ($value === "0" || $value === "1") : ?>
-            <?=$param ?>: <?=$value === "1" ? 'true' : 'false' ?>,
+        <?php if ($value === '0' || $value === '1') : ?>
+            <?=$param ?>: <?=$value === '1' ? 'true' : 'false' ?>,
         <?php else : ?>
             <?=$param ?>: "<?=$value ?>",
         <?php endif; ?>
