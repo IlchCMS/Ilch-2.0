@@ -27,12 +27,12 @@ $date = new \Ilch\Date();
                     <div class="row">
                         <div class="col-xl-2 confetti">
                             <a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>">
-                                <img class="img-thumbnail mx-auto" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($user->getAvatar()) ?>" title="<?=$this->escape($user->getName()) ?>" width="69" height="69">
+                                <img class="img-thumbnail mx-auto" style="margin-bottom: 0;" src="<?=$this->getStaticUrl() . '../' . $this->escape($user->getAvatar()) ?>" title="<?=$this->escape($user->getName()) ?>" width="69" height="69" alt="<?=$this->escape($user->getName()) ?>">
                             </a>
                         </div>
                         <div class="col-xl-10">
                             <a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>"><strong><?=$this->escape($user->getName()) ?></strong></a><br />
-                            <?=$this->getTrans('will') ?> <?=floor(($date->format('Ymd') - str_replace("-", "", $this->escape($user->getBirthday()))) / 10000) ?> <?=$this->getTrans('yearsOld') ?><br />
+                            <?=$this->getTrans('will') ?> <?=floor(($date->format('Ymd') - str_replace('-', '', $this->escape($user->getBirthday()))) / 10000) ?> <?=$this->getTrans('yearsOld') ?><br />
                             <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($user->getID())) : ?>
                                 <a href="<?=$this->getUrl('user/panel/dialognew/id/' . $user->getId()) ?>"><?=$this->getTrans('writeCongratulations') ?></a>
                             <?php endif; ?>
@@ -68,7 +68,7 @@ $date = new \Ilch\Date();
                         <?php if ($user->getBirthday() != '' && $this->escape(date('n', strtotime($user->getBirthday()))) == $x) : ?>
                             <div style="padding: 0 2px 2px 0; float: left;">
                                 <a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>">
-                                    <img class="thumbnail" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($user->getAvatar()) ?>" title="<?=$this->escape($user->getName()) ?> (<?=date("d.m", strtotime($this->escape($user->getBirthday()))) ?>)" width="69" height="69">
+                                    <img class="thumbnail" style="margin-bottom: 0;" src="<?=$this->getStaticUrl() . '../' . $this->escape($user->getAvatar()) ?>" title="<?=$this->escape($user->getName()) ?> (<?=date('d.m', strtotime($this->escape($user->getBirthday()))) ?>)" width="69" height="69" alt="<?=$this->escape($user->getName()) ?>">
                                 </a>
                             </div>
                         <?php endif; ?>

@@ -18,7 +18,7 @@ class Birthday extends \Ilch\Mapper
      * @var string
      * @since 1.7.2
      */
-    public $tablename = 'users';
+    public string $tablename = 'users';
 
     /**
      * Gets the Entries by params.
@@ -125,7 +125,7 @@ class Birthday extends \Ilch\Mapper
                 ]);
             }
 
-            $users = $this->getEntriesBy([$condition], ['birthday' => 'ASC']);
+            $users = $this->getEntriesBy([$condition]);
 
             if (!$users) {
                 return [];
