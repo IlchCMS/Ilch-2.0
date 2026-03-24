@@ -2,22 +2,21 @@
 
 /** @var \Ilch\View $this */
 
-/** @var \Modules\Gallery\Mappers\Gallery $galleryMapper */
-$galleryMapper = $this->get('galleryMapper');
 /** @var \Modules\Gallery\Models\GalleryItem[]|null $galleryItems */
 $galleryItems = $this->get('galleryItems');
-/** @var \Modules\Gallery\Mappers\Image $imageMapper */
-$imageMapper = $this->get('imageMapper');
 
 /**
  * @param \Modules\Gallery\Models\GalleryItem $item
- * @param \Modules\Gallery\Mappers\Gallery $galleryMapper
  * @param \Ilch\View $obj
- * @param \Modules\Gallery\Mappers\Image $imageMapper
  * @return void
  */
-function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers\Gallery $galleryMapper, \Ilch\View $obj, \Modules\Gallery\Mappers\Image $imageMapper)
+function rec(\Modules\Gallery\Models\GalleryItem $item, \Ilch\View $obj)
 {
+    /** @var \Modules\Gallery\Mappers\Gallery $galleryMapper */
+    $galleryMapper = $obj->get('galleryMapper');
+    /** @var \Modules\Gallery\Mappers\Image $imageMapper */
+    $imageMapper = $obj->get('imageMapper');
+
     $subItems = $galleryMapper->getGalleryItemsByParent($item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
@@ -57,7 +56,7 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
         echo '<ol>';
 
         foreach ($subItems as $subItem) {
-            rec($subItem, $galleryMapper, $obj, $imageMapper);
+            rec($subItem, $obj);
         }
 
         echo '</ol>';
@@ -75,7 +74,7 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
             <?php
             if (!empty($galleryItems)) {
                 foreach ($galleryItems as $item) {
-                    rec($item, $galleryMapper, $this, $imageMapper);
+                    rec($item, $this);
                 }
             }
             ?>
@@ -123,7 +122,7 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Modules\Gallery\Mappers
         </div>
     </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
-    <?=$this->getSaveBar('saveButton') ?>
+    <?=$this->getSaveBar() ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
