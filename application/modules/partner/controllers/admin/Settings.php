@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -53,13 +54,13 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('partners_box_height', $this->getRequest()->getPost('boxSliderHeight'));
                 $this->getConfig()->set('partners_slider_speed', $this->getRequest()->getPost('boxSliderSpeed'));
                 $this->addMessage('saveSuccess');
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-                $this->redirect()
-                  ->withInput()
-                  ->withErrors($validation->getErrorBag())
-                  ->to(['action' => 'index']);
+                $this->redirect()->to(['action' => 'index']);
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
         $this->getView()->set('slider', $this->getConfig()->get('partners_slider'));
