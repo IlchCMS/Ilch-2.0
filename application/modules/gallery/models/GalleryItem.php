@@ -21,42 +21,71 @@ class GalleryItem extends Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * Sort of the item.
      *
      * @var int
      */
-    protected $sort = 0;
+    protected int $sort = 0;
 
     /**
      * Type of the item.
      *
      * @var int
      */
-    protected $type = 0;
+    protected int $type = 0;
 
     /**
      * ParentId of the item.
      *
      * @var int
      */
-    protected $parentId = 0;
+    protected int $parentId = 0;
 
     /**
      * Title of the item.
      *
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * Description of the item.
      *
      * @var string
      */
-    protected $desc = '';
+    protected string $desc = '';
+
+    /**
+     * @param array $entries
+     * @return $this
+     * @since 1.24.1
+     */
+    public function setByArray(array $entries): GalleryItem
+    {
+        if (!empty($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (!empty($entries['type'])) {
+            $this->setType($entries['type']);
+        }
+        if (!empty($entries['title'])) {
+            $this->setTitle($entries['title']);
+        }
+        if (!empty($entries['description'])) {
+            $this->setDesc($entries['description']);
+        }
+        if (!empty($entries['parent_id'])) {
+            $this->setParentId($entries['parent_id']);
+        }
+        if (!empty($entries['sortid'])) {
+            $this->setSort($entries['sort']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id.
@@ -176,5 +205,24 @@ class GalleryItem extends Model
     public function setDesc(string $desc)
     {
         $this->desc = $desc;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.24.1
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'sort' =>           $this->getSort(),
+                'parent_id' =>      $this->getParentId(),
+                'type' =>           $this->getType(),
+                'title' =>          $this->getTitle(),
+                'description' =>    $this->getDesc(),
+            ]
+        );
     }
 }
