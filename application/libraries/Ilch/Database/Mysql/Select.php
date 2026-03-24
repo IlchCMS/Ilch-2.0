@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -59,12 +60,12 @@ class Select extends QueryBuilder
      * @param array|int|null $limit
      */
     public function __construct(
-        DB     $db,
-               $fields = null,
+        DB $db,
+        $fields = null,
         ?string $table = null,
-        ?array  $where = null,
-        ?array  $orderBy = null,
-               $limit = null
+        ?array $where = null,
+        ?array $orderBy = null,
+        $limit = null
     ) {
         parent::__construct($db);
 
@@ -118,7 +119,7 @@ class Select extends QueryBuilder
         if ($replace || empty($this->fields)) {
             $this->fields = $fields;
         } else {
-            $this->fields = array_merge($this->fields. $fields);
+            $this->fields = array_merge($this->fields . $fields);
         }
 
         return $this;
@@ -328,7 +329,7 @@ class Select extends QueryBuilder
 
         // Special handling for sql queries with the group by clause.
         if ($groupBy !== '') {
-            $sql = 'SELECT COUNT(*) FROM ('.$sql.') AS countOfRows';
+            $sql = 'SELECT COUNT(*) FROM (' . $sql . ') AS countOfRows';
         }
 
         return $sql;

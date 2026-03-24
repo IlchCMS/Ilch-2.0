@@ -14,12 +14,12 @@ $userMapper = new \Modules\User\Mappers\User();
             <tr>
                 <?php if ($shoutbox->getUid() == '0') : ?>
                     <td>
-                        <b><?=$this->escape($shoutbox->getName()) ?>:</b> <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
+                        <b><?=$this->escape($shoutbox->getName()) ?>:</b> <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>
                     </td>
                 <?php else : ?>
                     <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
                     <td>
-                        <b><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>"><?=$this->escape($user ? $user->getName() : $userMapper->getDummyUser()->getName()) ?></a></b>: <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
+                        <b><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>"><?=$this->escape($user ? $user->getName() : $userMapper->getDummyUser()->getName()) ?></a></b>: <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>
                     </td>
                 <?php endif; ?>
             </tr>

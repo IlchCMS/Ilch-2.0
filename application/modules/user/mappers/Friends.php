@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2.0
  * @package ilch
@@ -114,7 +115,7 @@ class Friends extends \Ilch\Mapper
      */
     public function hasFriend($userId, $friendUserId)
     {
-        return (boolean) $this->db()->select('COUNT(*)')
+        return (bool) $this->db()->select('COUNT(*)')
             ->from('user_friends')
             ->where(['user_id' => $userId, 'friend_user_id' => $friendUserId])
             ->execute()

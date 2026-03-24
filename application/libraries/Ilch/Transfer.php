@@ -55,7 +55,7 @@ class Transfer
     /**
      * Gets the TransferUrl.
      *
-     * @return false|resource
+     * @return false|resource|\CurlHandle
      */
     public function getTransferUrl()
     {
@@ -627,7 +627,12 @@ class Transfer
     private function curlClose()
     {
         if (is_resource($this->transferUrl)) {
-            curl_close($this->transferUrl);
+            // Can be replaced with just "unset($this->transferUrl);" if we no longer need to support PHP 8.0 or older.
+            if (PHP_VERSION_ID >= 80000) {
+                unset($this->transferUrl);
+            } else {
+                curl_close($this->transferUrl);
+            }
         }
     }
 

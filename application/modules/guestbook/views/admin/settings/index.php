@@ -11,9 +11,9 @@
         </div>
         <div class="col-xl-2">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="setfree-yes" name="entrySettings" value="1" <?=($this->get('setfree') == '1') ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="setfree-yes" name="entrySettings" value="1" <?=($this->originalInput('entrySettings', $this->get('setfree')) == '1') ? 'checked="checked"' : '' ?> />
                 <label for="setfree-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="setfree-no" name="entrySettings" value="0" <?=($this->get('setfree') != '1') ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="setfree-no" name="entrySettings" value="0" <?=($this->originalInput('entrySettings', $this->get('setfree')) != '1') ? 'checked="checked"' : '' ?> />
                 <label for="setfree-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -25,9 +25,9 @@
         </div>
         <div class="col-xl-2">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="notificationOnNewEntry-yes" name="notificationOnNewEntry" value="1" <?=($this->get('notificationOnNewEntry') == '1') ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="notificationOnNewEntry-yes" name="notificationOnNewEntry" value="1" <?=($this->originalInput('notificationOnNewEntry', $this->get('notificationOnNewEntry')) == '1') ? 'checked="checked"' : '' ?> />
                 <label for="notificationOnNewEntry-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="notificationOnNewEntry-no" name="notificationOnNewEntry" value="0" <?=($this->get('notificationOnNewEntry') != '1') ? 'checked="checked"' : '' ?> />
+                <input type="radio" class="flipswitch-input" id="notificationOnNewEntry-no" name="notificationOnNewEntry" value="0" <?=($this->originalInput('notificationOnNewEntry', $this->get('notificationOnNewEntry')) != '1') ? 'checked="checked"' : '' ?> />
                 <label for="notificationOnNewEntry-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>

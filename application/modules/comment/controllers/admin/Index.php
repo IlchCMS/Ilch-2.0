@@ -1,6 +1,7 @@
 <?php
+
 /**
- * @copyright Ilch 2.0
+ * @copyright Ilch 2
  * @package ilch
  */
 
@@ -29,8 +30,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuComments',
             $items
         );
@@ -71,7 +71,7 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuComments'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('manage'), ['action' => 'index'])
-            ->add($modules ? $modules->getName() : $this->getLayout()->escape($this->getRequest()->getParam('key')), ['action' => 'show', 'module' => $module]);
+            ->add($modules ? $modules->getName() : $this->getLayout()->escape($this->getRequest()->getParam('key')), ['action' => 'show', 'key' => $module]);
 
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_comments')) {
             foreach ($this->getRequest()->getPost('check_comments') as $commentId) {

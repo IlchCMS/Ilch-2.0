@@ -17,17 +17,17 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($this->get('providers') as $provider): ?>
+                <?php foreach ($this->get('providers') as $provider) : ?>
                     <tr>
                         <td><?=$this->getEditIcon(['action' => 'edit', 'key' => $provider->getKey()]) ?></td>
                         <td><?=$this->getDeleteIcon(['action' => 'delete', 'key' => $provider->getKey()]) ?></td>
                         <td><i class="fa-solid fa-fw <?= $provider->getIcon() ?>"></i> <?=$this->escape($provider->getName()) ?></td>
                         <td>
-                            <?php if (empty($provider->getModule())): ?>
+                            <?php if (empty($provider->getModule())) : ?>
                                 <span class="text-danger">
                                     <i class="fa-solid fa-xmark fa-fw"></i> <?= $this->getTrans('providersNoModuleSelectedOrInstalled') ?>
                                 </span>
-                            <?php else: ?>
+                            <?php else : ?>
                                 <span class="text-success">
                                     <i class="fa-solid fa-check fa-fw"></i> <b><?=$this->escape($provider->getModuleName()) ?></b> (<?= $provider->getModule() ?>)
                                 </span>

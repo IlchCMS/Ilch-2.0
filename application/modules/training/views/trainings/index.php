@@ -9,6 +9,7 @@ $trainings = [];
 
 // training entries
 if ($trainingList) {
+    /** @var \Modules\Training\Models\Training $training */
     foreach ($trainingList as $training) {
         $e = [];
         $e['title'] = $this->escape($training->getTitle());
@@ -18,8 +19,12 @@ if ($trainingList) {
         $e['url'] = $this->getUrl('training/index/show/id/' . $training->getId());
 
         $startDate = new \Ilch\Date($training->getDate());
-        $endDate = $training->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($training->getEnd()) : 1;
-        $repeatUntil = $training->getEnd() != '1000-01-01 00:00:00' ? new \Ilch\Date($training->getRepeatUntil()) : 1;
+        $endDate = $training->getEnd() != '1000-01-01 00:00:00'
+            ? new \Ilch\Date($training->getEnd())
+            : new \Ilch\Date('9999-12-31 23:59:59');
+        $repeatUntil = $training->getRepeatUntil() && $training->getRepeatUntil() != '1000-01-01 00:00:00'
+            ? new \Ilch\Date($training->getRepeatUntil())
+            : new \Ilch\Date('9999-12-31 23:59:59');
 
         // Add only or initial (in case of recurring events) event.
         $trainings[] = $e;

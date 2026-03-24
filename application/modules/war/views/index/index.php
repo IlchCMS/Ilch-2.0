@@ -59,7 +59,7 @@ $groupMapper = $this->get('groupMapper');
                         $group = $groupMapper->getGroupById($war->getWarGroup());
                         echo $this->escape($group ? $group->getGroupName() : '');
                         ?></td>
-                        <td><?=$date->format("d.m.Y H:i", true) ?></td>
+                        <td><?=$date->format('d.m.Y H:i', true) ?></td>
                         <td>
                             <?php
                             if ($war->getWarStatus() == '1') {

@@ -23,4 +23,5 @@ return [
     'apply' => 'Bewerben',
     'applyAs' => 'Bewerbung als',
     'hide' => 'Ausblenden',
+    'entryNotFound' => 'Eintrag nicht gefunden.',
 ];

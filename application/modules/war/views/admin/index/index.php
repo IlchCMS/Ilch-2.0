@@ -11,19 +11,19 @@ $enemyMapper = $this->get('enemyMapper');
 $groupMapper = $this->get('groupMapper');
 ?>
 <h1><?=$this->getTrans('manageWarOverview') ?></h1>
-<?php if ($this->get('wars')) : ?>
-    <div class="row mb-3">
-        <label class="col-lg-2 col-form-label" for="filterLastNext">
-            <?=$this->getTrans('showOnly') ?>
-        </label>
-        <div class="col-lg-2">
-            <select class="form-select" id="filterLastNext" name="filterLastNext">
-                <option value="0" <?=($this->getRequest()->getParam('filterLastNext') == 0) ? 'selected=""' : '' ?>><?=$this->getTrans('all') ?></option>
-                <option value="1" <?=($this->getRequest()->getParam('filterLastNext') == 1) ? 'selected=""' : '' ?>><?=$this->getTrans('warStatusOpen') ?></option>
-                <option value="2" <?=($this->getRequest()->getParam('filterLastNext') == 2) ? 'selected=""' : '' ?>><?=$this->getTrans('warStatusClose') ?></option>
-            </select>
-        </div>
+<div class="row mb-3">
+    <label class="col-lg-2 col-form-label" for="filterLastNext">
+        <?=$this->getTrans('showOnly') ?>
+    </label>
+    <div class="col-lg-2">
+        <select class="form-select" id="filterLastNext" name="filterLastNext">
+            <option value="0" <?=($this->getRequest()->getParam('filterLastNext') == 0) ? 'selected=""' : '' ?>><?=$this->getTrans('all') ?></option>
+            <option value="1" <?=($this->getRequest()->getParam('filterLastNext') == 1) ? 'selected=""' : '' ?>><?=$this->getTrans('warStatusOpen') ?></option>
+            <option value="2" <?=($this->getRequest()->getParam('filterLastNext') == 2) ? 'selected=""' : '' ?>><?=$this->getTrans('warStatusClose') ?></option>
+        </select>
     </div>
+</div>
+<?php if ($this->get('wars')) : ?>
     <?=$pagination->getHtml($this, []) ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>

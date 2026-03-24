@@ -80,34 +80,34 @@ foreach ($profil->getGroups() as $group) {
                 <?php endif; ?>
 
                 <?php foreach ($profileIconFields as $profileIconField) {
-    if ($profileIconField->getShow()) {
-        foreach ($profileFieldsContent as $profileFieldContent) {
-            if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
-                $profileFieldName = $profileIconField->getKey();
-                foreach ($profileFieldsTranslation as $profileFieldTrans) {
-                    if ($profileIconField->getId() == $profileFieldTrans->getFieldId()) {
-                        $profileFieldName = $profileFieldTrans->getName();
-                        break;
+                    if ($profileIconField->getShow()) {
+                        foreach ($profileFieldsContent as $profileFieldContent) {
+                            if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
+                                $profileFieldName = $profileIconField->getKey();
+                                foreach ($profileFieldsTranslation as $profileFieldTrans) {
+                                    if ($profileIconField->getId() == $profileFieldTrans->getFieldId()) {
+                                        $profileFieldName = $profileFieldTrans->getName();
+                                        break;
+                                    }
+                                }
+
+                                // Using this code instead of for example str_replace to only replace the addition once.
+                                // Example: addition = "https://discord.gg/", value = "https://discord.gg/username". The user entered the complete URL instead of just the username.
+                                $profileFieldContentValue = $profileFieldContent->getValue();
+                                if ($profileIconField->getAddition()) {
+                                    $pos = strpos($profileFieldContent->getValue(), $profileIconField->getAddition());
+
+                                    if ($pos !== false) {
+                                        $profileFieldContentValue = substr_replace($profileFieldContent->getValue(), '', $pos, strlen($profileIconField->getAddition()));
+                                    }
+                                }
+
+                                echo '<a href="' . $profileIconField->getAddition() . $profileFieldContentValue . '" target="_blank" rel="noopener" class="' . $profileIconField->getIcon() . ' fa-lg user-link" title="' . $profileFieldName . '"></a>';
+                                break;
+                            }
+                        }
                     }
                 }
-
-                // Using this code instead of for example str_replace to only replace the addition once.
-                // Example: addition = "https://discord.gg/", value = "https://discord.gg/username". The user entered the complete URL instead of just the username.
-                $profileFieldContentValue = $profileFieldContent->getValue();
-                if ($profileIconField->getAddition()) {
-                    $pos = strpos($profileFieldContent->getValue(), $profileIconField->getAddition());
-
-                    if ($pos !== false) {
-                        $profileFieldContentValue = substr_replace($profileFieldContent->getValue(), '', $pos, strlen($profileIconField->getAddition()));
-                    }
-                }
-
-                echo '<a href="' . $profileIconField->getAddition() . $profileFieldContentValue . '" target="_blank" rel="noopener" class="' . $profileIconField->getIcon() . ' fa-lg user-link" title="' . $profileFieldName . '"></a>';
-                break;
-            }
-        }
-    }
-}
                 ?>
             </div>
         </div>

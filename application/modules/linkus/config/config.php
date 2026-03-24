@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -6,11 +7,13 @@
 
 namespace Modules\Linkus\Config;
 
+use Ilch\Config\Database;
+
 class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'linkus',
-        'version' => '1.7.2',
+        'version' => '1.7.3',
         'icon_small' => 'fa-solid fa-link',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -24,8 +27,8 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Provides HTML code or BBCode for others to link to your website.',
             ],
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'ilchCore' => '2.2.13',
+        'phpVersion' => '7.4'
     ];
 
     public function install()
@@ -40,11 +43,13 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->drop('linkus', true);
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'linkus_html';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'linkus_bbcode'");
+
+        $databaseConfig = new Database($this->db());
+        $databaseConfig->delete('linkus_html')
+            ->delete('linkus_bbcode');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_linkus` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -54,7 +59,7 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -74,6 +79,11 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = 'fa-solid fa-link' WHERE `key` = 'linkus';");
                 // no break
             case "1.6.0":
+            case "1.7.0":
+            case "1.7.1":
+            case "1.7.2":
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }

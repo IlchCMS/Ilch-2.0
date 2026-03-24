@@ -13,7 +13,7 @@ use Modules\War\Models\Enemy as EntriesModel;
 
 class Enemy extends Mapper
 {
-    public $tablename = 'war_enemy';
+    public string $tablename = 'war_enemy';
 
     /**
      * returns if the module is installed.

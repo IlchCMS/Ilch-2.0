@@ -1,6 +1,12 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <?php if ($this->get('medias') != ''): ?>
     <?php if ($this->getRequest()->getParam('type') === 'imageckeditor' || $this->getRequest()->getParam('type') === 'single') : ?>
-        <?php foreach ($this->get('medias') as $media) : ?>
+        <?php
+            /** @var \Modules\Media\Models\Media $media */
+            foreach ($this->get('medias') as $media) : ?>
             <?php if (in_array(strtolower($media->getEnding()), explode(' ', strtolower($this->get('media_ext_img'))))) : ?>
                 <div id="<?=$media->getId() ?>" class="col-lg-2 col-sm-3 col-xs-4 media_loader">
                     <img class="image img-thumbnail img-fluid thumbnail"
@@ -13,7 +19,9 @@
     <?php endif; ?>
 
     <?php if ($this->getRequest()->getParam('type') === 'media' || $this->getRequest()->getParam('type') === 'videockeditor') : ?>
-        <?php foreach ($this->get('medias') as $media) : ?>
+        <?php
+            /** @var \Modules\Media\Models\Media $media */
+            foreach ($this->get('medias') as $media) : ?>
             <?php if (in_array(strtolower($media->getEnding()), explode(' ', strtolower($this->get('media_ext_video'))))) : ?>
                 <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
                     <img class="image img-thumbnail img-fluid thumbnail"
@@ -29,7 +37,9 @@
     <?php endif; ?>
 
     <?php if ($this->getRequest()->getParam('type') === 'file' || $this->getRequest()->getParam('type') === 'fileckeditor') : ?>
-        <?php foreach ($this->get('medias') as $media) : ?>
+        <?php
+            /** @var \Modules\Media\Models\Media $media */
+            foreach ($this->get('medias') as $media) : ?>
             <?php if (in_array(strtolower($media->getEnding()), explode(' ', strtolower($this->get('media_ext_file'))))) : ?>
                 <div id="<?=$media->getId() ?>" class="col-xl-2 col-lg-2 col-md-3 col-4 co thumb media_loader">
                     <img class="image img-thumbnail img-fluid thumbnail"

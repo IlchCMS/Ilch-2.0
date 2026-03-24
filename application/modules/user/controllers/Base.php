@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -21,10 +22,10 @@ class Base extends \Ilch\Controller\Frontend
     {
         $UserMenuMapper = new UserMenuMapper();
         $profilMapper = new UserMapper();
-        
+
         $menu = $UserMenuMapper->getUserMenu();
         $menuLinks = $UserMenuMapper->getUserMenuSettingsLinks($this->getTranslator()->getLocale());
-        
+
         $this->getView()->set('usermenu', $menu);
         $this->getView()->set('usermenusettingslinks', $menuLinks);
         $this->getView()->set('profil', $profilMapper->getUserById($this->getUser()->getId()));

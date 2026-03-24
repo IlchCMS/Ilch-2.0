@@ -165,7 +165,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function lockAction()
     {
-        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id')) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $voteMapper = new VoteMapper();
             $voteMapper->lock($this->getRequest()->getParam('id'));
 
@@ -177,7 +177,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function resetAction()
     {
-        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id')) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $resultMapper = new ResultMapper();
             $resultMapper->resetResult($this->getRequest()->getParam('id'));
 
@@ -189,7 +189,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id')) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $voteMapper = new VoteMapper();
             $voteMapper->delete($this->getRequest()->getParam('id'));
 

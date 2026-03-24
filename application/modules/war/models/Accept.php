@@ -16,42 +16,42 @@ class Accept extends Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The warId
      *
      * @var int
      */
-    protected $warId = 0;
+    protected int $warId = 0;
 
     /**
      * The userId
      *
      * @var int
      */
-    protected $userId = 0;
+    protected int $userId = 0;
 
     /**
      * The accept
      *
      * @var int
      */
-    protected $accept = 0;
+    protected int $accept = 0;
 
     /**
      * The comment
      *
      * @var string
      */
-    protected $comment = '';
+    protected string $comment = '';
 
     /**
      * The datetime when the Accept got created.
      *
      * @var string
      */
-    protected $dateCreated = '';
+    protected string $dateCreated = '';
 
     /**
      * Sets Model by Array.

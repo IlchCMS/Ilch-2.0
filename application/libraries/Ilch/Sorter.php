@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -8,7 +9,6 @@ namespace Ilch;
 
 class Sorter
 {
-
     /**
      * @var \Ilch\Request
      */
@@ -179,7 +179,7 @@ class Sorter
         if (!$column) {
             $column = $this->getColumn();
         }
-        return '<i class="fa-solid fa-sort-'.($this->getColumn() == $column ? '-' . str_replace(array('ASC','DESC'), array('up','down'), $this->getOrder()) : '').'"></i>';
+        return '<i class="fa-solid fa-sort-' . ($this->getColumn() == $column ? '-' . str_replace(array('ASC','DESC'), array('up','down'), $this->getOrder()) : '') . '"></i>';
     }
 
     /**

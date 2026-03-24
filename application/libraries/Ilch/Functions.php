@@ -267,7 +267,13 @@ function url_get_contents(string $url, bool $write_cache = true, bool $ignoreCac
             CURLOPT_URL            => $url,
         ]);
         $output = curl_exec($ch);
-        curl_close($ch);
+        
+        // Can be replaced with just "unset($ch);" if we no longer need to support PHP 8.0 or older.
+        if (PHP_VERSION_ID >= 80000) {
+            unset($ch);
+        } else {
+            curl_close($ch);
+        }
 
         // save the file if there's data
         if ($output && $write_cache) {
@@ -298,7 +304,7 @@ function var_export_short_syntax($var, string $indent = ''): string
                     . ($indexed ? '' : var_export_short_syntax($key) . ' => ')
                     . var_export_short_syntax($value, "$indent    ");
             }
-            return "[\n" . implode(",\n", $r) . "\n" . $indent . ']';
+            return '[' . PHP_EOL . implode(',' . PHP_EOL, $r) . PHP_EOL . $indent . ']';
         case 'boolean':
             return $var ? 'TRUE' : 'FALSE';
         default:

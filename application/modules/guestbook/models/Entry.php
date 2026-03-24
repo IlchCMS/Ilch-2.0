@@ -14,49 +14,81 @@ class Entry extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The email of the entry.
      *
      * @var string
      */
-    protected $email = '';
+    protected string $email = '';
 
     /**
      * The text of the entry.
      *
      * @var string
      */
-    protected $text = '';
+    protected string $text = '';
 
     /**
      * The name of the entry.
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * The homepage of the entry.
      *
      * @var string
      */
-    protected $homepage = '';
+    protected string $homepage = '';
 
     /**
      * The datetime of the entry.
      *
      * @var string
      */
-    protected $datetime = '';
+    protected string $datetime = '';
 
     /**
      * The setfee of the entry.
      *
      * @var bool
      */
-    protected $setFree = false;
+    protected bool $setFree = false;
+
+    /**
+     * @param array $entries
+     * @return $this
+     * @since 1.14.4
+     */
+    public function setByArray(array $entries): Entry
+    {
+        if (isset($entries['id'])) {
+            $this->setId($entries['id']);
+        }
+        if (isset($entries['email'])) {
+            $this->setEmail($entries['email']);
+        }
+        if (isset($entries['text'])) {
+            $this->setText($entries['text']);
+        }
+        if (isset($entries['datetime'])) {
+            $this->setDatetime($entries['datetime']);
+        }
+        if (isset($entries['homepage'])) {
+            $this->setHomepage($entries['homepage']);
+        }
+        if (isset($entries['name'])) {
+            $this->setName($entries['name']);
+        }
+        if (isset($entries['setfree'])) {
+            $this->setFree($entries['setfree']);
+        }
+
+        return $this;
+    }
 
     /**
      * Gets the id of the entry.
@@ -217,5 +249,25 @@ class Entry extends \Ilch\Model
         $this->setFree = $free;
 
         return $this;
+    }
+
+    /**
+     * @param bool $withId
+     * @return array
+     * @since 1.14.4
+     */
+    public function getArray(bool $withId = true): array
+    {
+        return array_merge(
+            ($withId ? ['id' => $this->getId()] : []),
+            [
+                'email' => $this->getEmail(),
+                'text' => $this->getText(),
+                'datetime' => $this->getDatetime(),
+                'homepage' => $this->getHomepage(),
+                'name' => $this->getName(),
+                'setfree' => $this->getFree(),
+            ]
+        );
     }
 }

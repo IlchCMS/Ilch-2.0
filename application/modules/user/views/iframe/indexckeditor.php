@@ -4,7 +4,7 @@
 <div id="ilchmedia" class="container-fluid">
     <?php if ($this->getRequest()->getParam('type') === 'imageckeditor') : ?>
         <div class="row">
-        <?php foreach ($this->get('medias') as $media): ?>
+        <?php foreach ($this->get('medias') as $media) : ?>
             <?php if (in_array(strtolower($media->getEnding()), explode(' ', strtolower($this->get('usergallery_filetypes'))))) : ?>
                     <div  id="<?=$media->getId() ?>" class="col-xl-2 col-md-3 col-4 media_loader">
                         <img class="image img-thumbnail img-fluid thumbnail"

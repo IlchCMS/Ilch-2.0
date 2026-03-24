@@ -9,11 +9,12 @@ namespace Modules\Calendar\Mappers;
 
 use Ilch\Date;
 use Ilch\Pagination;
-use Modules\Calendar\Models\Calendar as EntriesModel;
+use Modules\Calendar\Models\Calendar as EntryModel;
 
 class Calendar extends \Ilch\Mapper
 {
     public string $tablename = 'calendar';
+    public string $tablenameAccess = 'calendar_access';
 
     /**
      * returns if the module is installed.
@@ -26,12 +27,12 @@ class Calendar extends \Ilch\Mapper
     }
 
     /**
-     * Gets the Entries by param.
+     * Gets the entries by param.
      *
      * @param array $where
      * @param array $orderBy
      * @param Pagination|null $pagination
-     * @return array|null
+     * @return EntryModel[]|null
      */
     public function getEntriesBy(array $where = [], array $orderBy = ['c.id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
@@ -62,23 +63,23 @@ class Calendar extends \Ilch\Mapper
         if (empty($entryArray)) {
             return null;
         }
-        $entrys = [];
+        $entries = [];
 
-        foreach ($entryArray as $entries) {
-            $entryModel = new EntriesModel();
+        foreach ($entryArray as $entry) {
+            $entryModel = new EntryModel();
 
-            $entryModel->setByArray($entries);
+            $entryModel->setByArray($entry);
 
-            $entrys[] = $entryModel;
+            $entries[] = $entryModel;
         }
-        return $entrys;
+        return $entries;
     }
 
     /**
      * Gets the Calendar entries.
      *
      * @param array $where
-     * @return null|array
+     * @return null|EntryModel[]
      */
     public function getEntries(array $where = []): ?array
     {
@@ -88,12 +89,12 @@ class Calendar extends \Ilch\Mapper
     /**
      * Gets calendar.
      *
-     * @param EntriesModel|int $id
-     * @return EntriesModel|null
+     * @param EntryModel|int $id
+     * @return EntryModel|null
      */
-    public function getCalendarById($id): ?EntriesModel
+    public function getCalendarById($id): ?EntryModel
     {
-        if (is_a($id, EntriesModel::class)) {
+        if (is_a($id, EntryModel::class)) {
             $id = $id->getId();
         }
 
@@ -112,7 +113,7 @@ class Calendar extends \Ilch\Mapper
      * @param Date|string $start
      * @param Date|string $end
      * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
-     * @return array|null
+     * @return EntryModel[]|null
      */
     public function getEntriesForJson($start, $end, $groupIds = '3'): ?array
     {
@@ -128,6 +129,7 @@ class Calendar extends \Ilch\Mapper
                 $end = new Date($end);
             }
             $select = $this->db()->select();
+
             return $this->getEntriesBy(
                 [
                     $select->orX(
@@ -155,12 +157,12 @@ class Calendar extends \Ilch\Mapper
     /**
      * Inserts Events model.
      *
-     * @param EntriesModel $model
+     * @param EntryModel $model
      * @return int
      */
-    public function save(EntriesModel $model): int
+    public function save(EntryModel $model): int
     {
-        $fields = $model->getArray();
+        $fields = $model->getArray(false);
 
         if ($model->getId()) {
             $this->db()->update($this->tablename)
@@ -194,13 +196,10 @@ class Calendar extends \Ilch\Mapper
         }
 
         // Delete possible old entries to later insert the new ones.
-        $this->db()->delete($this->tablename . '_access')
+        $this->db()->delete($this->tablenameAccess)
             ->where(['calendar_id' => $calendarId])
             ->execute();
 
-        $sql = 'INSERT INTO [prefix]_' . $this->tablename . '_access (calendar_id, group_id) VALUES';
-        $sqlWithValues = $sql;
-        $rowCount = 0;
         $groupIds = [];
         if (!empty($readAccess)) {
             if (!in_array('all', $readAccess)) {
@@ -211,32 +210,32 @@ class Calendar extends \Ilch\Mapper
             $groupIds[] = '1';
         }
 
+        $preparedRows = [];
         foreach ($groupIds as $groupId) {
-            // There is a limit of 1000 rows per insert, but according to some benchmarks found online
-            // the sweet spot seams to be around 25 rows per insert. So aim for that.
-            if ($rowCount >= 25) {
-                $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-                $this->db()->queryMulti($sqlWithValues);
-                $rowCount = 0;
-                $sqlWithValues = $sql;
-            }
-
-            $rowCount++;
-            $sqlWithValues .= '(' . $calendarId . ',' . (int)$groupId . '),';
+            $preparedRows[] = [$calendarId, (int)$groupId];
         }
 
-        // Insert remaining rows.
-        $sqlWithValues = rtrim($sqlWithValues, ',') . ';';
-        $this->db()->queryMulti($sqlWithValues);
+        if (count($preparedRows)) {
+            // Add access rights in chunks of 25 to the table. This prevents reaching the limit of 1000 rows.
+            $chunks = array_chunk($preparedRows, 25);
+            foreach ($chunks as $chunk) {
+                $this->db()->insert($this->tablenameAccess)
+                    ->columns(['calendar_id', 'group_id'])
+                    ->values($chunk)
+                    ->execute();
+            }
+        }
+
+        return $groupIds;
     }
 
     /**
-     * @param EntriesModel|int $id
+     * @param EntryModel|int $id
      * @return bool
      */
     public function delete($id): bool
     {
-        if (is_a($id, EntriesModel::class)) {
+        if (is_a($id, EntryModel::class)) {
             $id = $id->getId();
         }
 

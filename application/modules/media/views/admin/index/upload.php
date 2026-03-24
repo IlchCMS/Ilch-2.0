@@ -1,4 +1,9 @@
-<?php $ilchUpload = new \Ilch\Upload(); ?>
+<?php
+
+/** @var \Ilch\View $this */
+
+$ilchUpload = new \Ilch\Upload();
+?>
 
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
 
@@ -30,9 +35,8 @@ $desc .= '<strong>' . $this->getTrans('max_execution_time') . ' = ' . ini_get('m
 <?=$this->getDialog('infoModal', $this->getTrans('info'), $desc) ?>
 
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/jquery.knob.min.js') ?>"></script>
-<script src="<?=$this->getVendorUrl('blueimp/jquery-file-upload/js/vendor/jquery.ui.widget.js') ?>"></script>
-<script src="<?=$this->getVendorUrl('blueimp/jquery-file-upload/js/jquery.iframe-transport.js') ?>"></script>
-<script src="<?=$this->getVendorUrl('blueimp/jquery-file-upload/js/jquery.fileupload.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/blueimp/jquery-file-upload/js/jquery.iframe-transport.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/blueimp/jquery-file-upload/js/jquery.fileupload.js') ?>"></script>
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/script.js') ?>"></script>
 
 <script>

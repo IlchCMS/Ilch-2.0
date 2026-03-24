@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -322,7 +323,7 @@ class Group extends \Ilch\Controller\Admin
             $this->getView()->set('activeGroupId', $groupId);
             $this->getView()->set('activeGroup', $activeGroup);
         }
-        
+
         if ($accessId) {
             list($Type, $Id) = explode('_', $accessId);
             $groupAccessList = $groupMapper->getAccessAccessList($Type, $Id);

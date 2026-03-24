@@ -1,6 +1,11 @@
 <?php
 $modulesList = url_get_contents($this->get('updateserver'));
 $modulesOnUpdateServer = json_decode($modulesList);
+if ($modulesOnUpdateServer instanceof \stdClass) {
+    $modulesOnUpdateServer = array_values(get_object_vars($modulesOnUpdateServer));
+} elseif (!is_array($modulesOnUpdateServer)) {
+    $modulesOnUpdateServer = [];
+}
 $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
 $dependencies = $this->get('dependencies');
@@ -52,6 +57,21 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer)
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
+<style>
+    div.input-group.filter #filterInput.is-valid {
+        font-weight: bold;
+        background: #198754;
+        color: #fff;
+        border-color: #198754;
+    }
+
+    div.input-group.filter #filterInput.is-invalid {
+        font-weight: bold;
+        background: #c10000;
+        color: #fff;
+        border-color: #c10000;
+    }
+</style>
 
 <div class="d-flex align-items-start heading-filter-wrapper">
     <h1><?=$this->getTrans('search') ?></h1>
@@ -76,8 +96,7 @@ if (empty($modulesOnUpdateServer)) {
 }
 
 // Sort the modules by name
-$items = is_array($modulesOnUpdateServer) ? $modulesOnUpdateServer : (array) $modulesOnUpdateServer;
-usort($items, 'custom_sort');
+usort($modulesOnUpdateServer, 'custom_sort');
 ?>
 
 <div id="modules" class="table-responsive">
@@ -241,29 +260,39 @@ $(document).ready(function() {
     clearTimeout(delayedShow);
     $(".loadingoverlay").attr('hidden', '');
 
-    // something is entered in search form
-    $('#user-search').keyup( function() {
-        var that = this,
-            tableBody = $('.table-list-search tbody'),
-            tableRowsClass = $('.table-list-search tbody tr');
+    const $filterInput = $('#filterInput');
+    const $filterClear = $('#filterClear');
+    const setFilterState = function(state) {
+        $filterInput.removeClass('is-valid is-invalid');
+
+        if (state === 'valid') {
+            $filterInput.addClass('is-valid');
+        } else if (state === 'invalid') {
+            $filterInput.addClass('is-invalid');
+        }
+    };
+
+    const applyTableFilter = function() {
+        const tableBody = $('.table-list-search tbody');
+        const tableRowsClass = $('.table-list-search tbody tr');
+        const inputText = $filterInput.val().toLowerCase();
 
         $('.search-sf').remove();
-        tableRowsClass.each( function(i, val) {
+        tableRowsClass.each(function(i, val) {
 
             // lower text for case insensitive
-            var rowText = $(val).text().toLowerCase(),
-                inputText = $(that).val().toLowerCase();
+            const rowText = $(val).text().toLowerCase();
 
-            if(inputText != '') {
+            if (inputText !== '') {
                 $('.search-query-sf').remove();
                 tableBody.prepend('<tr class="search-query-sf"><td colspan="3"><strong><?=$this->getTrans('searchingFor') ?>: "'
-                    + $(that).val()
+                    + $filterInput.val()
                     + '"</strong></td></tr>');
             } else {
                 $('.search-query-sf').remove();
             }
 
-            if( rowText.indexOf( inputText ) == -1 ) {
+            if (rowText.indexOf(inputText) === -1) {
                 // hide rows
                 tableRowsClass.eq(i).hide();
             } else {
@@ -273,9 +302,26 @@ $(document).ready(function() {
         });
 
         // all tr elements are hidden
-        if(tableRowsClass.children(':visible').length == 0) {
+        const visibleRowsCount = tableRowsClass.filter(':visible').length;
+        if (visibleRowsCount === 0) {
             tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="3"><?=$this->getTrans('noResultFound') ?></td></tr>');
         }
+
+        if (inputText === '') {
+            setFilterState('neutral');
+        } else if (visibleRowsCount > 0) {
+            setFilterState('valid');
+        } else {
+            setFilterState('invalid');
+        }
+    };
+
+    // something is entered in search form
+    $filterInput.on('input keyup', applyTableFilter);
+    $filterClear.on('click', function () {
+        $filterInput.val('');
+        applyTableFilter();
+        $filterInput.trigger('focus');
     });
 });
 </script>

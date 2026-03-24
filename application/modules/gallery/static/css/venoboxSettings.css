@@ -1,0 +1,248 @@
+/* =========================================
+   Container & Header (Scoped)
+   ========================================= */
+.venobox-grid {
+    padding: 20px 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    box-sizing: border-box; /* Verhindert Layout-Sprengung durch Padding */
+}
+
+/* Alle Elemente innerhalb des Grids nutzen border-box */
+.venobox-grid *,
+.venobox-grid *::before,
+.venobox-grid *::after {
+    box-sizing: inherit;
+}
+
+.venobox-grid h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: none; /* Falls Ilch globale h1 borders hat */
+}
+
+.venobox-grid h1 i {
+    color: #3498db;
+    transition: transform 0.5s ease;
+}
+
+.venobox-grid:hover h1 i {
+    transform: rotate(90deg);
+}
+
+/* =========================================
+   Grid System
+   ========================================= */
+.venobox-grid .venobox-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+/* =========================================
+   Card Styling
+   ========================================= */
+.venobox-grid .setting-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 24px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    position: relative; /* Wichtig für Context */
+}
+
+.venobox-grid .setting-card:hover {
+    transform: translateY(-4px);
+    background: #f1f3f4;
+    box-shadow: 0 15px 24px rgba(0,0,0,0.06);
+    border-color: #3498db;
+}
+
+/* Fehlerzustand */
+.venobox-grid .setting-card.has-error {
+    border-color: #e53e3e;
+    background: #fff5f5;
+}
+
+.venobox-grid .card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.venobox-grid .card-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #1a202c;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.venobox-grid .card-description {
+    font-size: 0.88rem;
+    color: #718096;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.venobox-grid .card-action {
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #f7fafc;
+    width: 100%;
+}
+
+/* =========================================
+   Form Controls (Inputs & Selects)
+   ========================================= */
+/* Wir sprechen hier gezielt nur Inputs IN der .setting-card an */
+.venobox-grid .setting-card .form-control {
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+    height: auto; /* Ilch Reset */
+    box-shadow: none;
+}
+
+.venobox-grid .setting-card .form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    outline: none;
+}
+
+/* Dropdowns */
+.venobox-grid .setting-card .form-select {
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-color: #ffffff;
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.venobox-grid .setting-card .form-select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    outline: none;
+}
+
+/* Input Groups (für Farbpicker Reset Button) */
+.venobox-grid .setting-card .input-group {
+    display: flex;
+    flex-wrap: nowrap; /* Verhindert Umbruch */
+}
+
+.venobox-grid .setting-card .input-group-text {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+    color: #3498db;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+}
+
+.venobox-grid .setting-card .input-group-text:hover {
+    background-color: #f8f9fa;
+}
+
+/* =========================================
+   Flipswitch (iOS Style) - Isoliert
+   ========================================= */
+.venobox-grid .flipswitch {
+    position: relative;
+    display: flex;
+    background: #edf2f7;
+    border-radius: 12px;
+    height: 44px;
+    padding: 4px;
+    border: 1px solid #e2e8f0;
+    width: 100%; /* Füllt die Breite der Action-Bar */
+    box-sizing: border-box;
+}
+
+.venobox-grid .flipswitch-label {
+    flex: 1;
+    z-index: 2;
+    text-align: center;
+    line-height: 36px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #4a5568;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin: 0; /* Reset global margins */
+    display: block;
+}
+
+.venobox-grid .flipswitch-input {
+    display: none;
+}
+
+/* Textfarbe aktiv */
+.venobox-grid .flipswitch-input:checked + .flipswitch-label {
+    color: #ffffff;
+}
+
+/* Der wandernde Hintergrund */
+.venobox-grid .flipswitch-selection {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: calc(50% - 4px); /* Exakte Berechnung */
+    height: 36px;
+    background: #3498db;
+    border-radius: 10px;
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);
+}
+
+/* Wenn OFF (Value 0) ausgewählt ist -> Schiebe nach rechts */
+.venobox-grid .flipswitch-input[value="0"]:checked ~ .flipswitch-selection {
+    transform: translateX(100%);
+    background: #a0aec0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.venobox-grid .d-flex {
+    border-bottom: 2px solid #f4f7f6;
+    padding-bottom: 15px;
+}
+
+.venobox-grid .d-flex.justify-content-between {
+    border-bottom: 2px solid #f4f7f6;
+    margin-bottom: 30px !important;
+    padding-bottom: 10px;
+}
+
+#resetVenobox {
+    border-radius: 8px;
+    padding: 5px 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease-in-out;
+}
+
+#resetVenobox:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.2);
+}

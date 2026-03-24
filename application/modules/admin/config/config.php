@@ -230,7 +230,7 @@ class Config extends \Ilch\Config\Install
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
             INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://www.ilch.de/ilch2_updates/stable/", "ilch", "Germany");
-            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://ilch.blackcoder.de/stable/", "ilch", "Germany");';
+            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://update.captive-it.de/stable/", "BlackRomeo (ilch-Team)", "Germany");';
     }
 
     public function getUpdate(string $installedVersion): string
@@ -1013,7 +1013,7 @@ class Config extends \Ilch\Config\Install
 
                 // Remove BBCode helper class.
                 removeDir(APPLICATION_PATH . '/libraries/Ilch/BBCode');
-                
+
                 // Add second updateserver.
                 $this->db()->insert('admin_updateservers')
                     ->values(['url' => 'https://ilch.blackcoder.de/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
@@ -1256,6 +1256,50 @@ class Config extends \Ilch\Config\Install
                         ->execute();
                 }
 
+                break;
+            case "2.2.12":
+                // Repeat step from previous update as installing Ilch 2.2.12 added the server.
+                // Change updateserver to one without the domain blackcoder.de
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                if (strpos($databaseConfig->get('updateserver'), 'blackcoder.de') !== false) {
+                    $databaseConfig->set('updateserver', 'https://www.ilch.de/ilch2_updates/stable/');
+                }
+
+                // Remove updateservers with the domain blackcoder.de
+                $this->db()->query("DELETE FROM `[prefix]_admin_updateservers` WHERE `url` LIKE '%blackcoder.de%';");
+
+                // Make sure that at least the default updateserver is in the list of updateservers.
+                $defaultUpdateserverExists = $this->db()->select('url')
+                    ->from('admin_updateservers')
+                    ->where(['url' => 'https://www.ilch.de/ilch2_updates/stable/'])
+                    ->execute()
+                    ->fetchCell();
+
+                if (!$defaultUpdateserverExists) {
+                    $this->db()->insert('admin_updateservers')
+                        ->values(['url' => 'https://www.ilch.de/ilch2_updates/stable/', 'operator' => 'ilch', 'country' => 'Germany'])
+                        ->execute();
+                }
+
+                // Add new updateserver.
+                $this->db()->insert('admin_updateservers')
+                    ->values(['url' => 'https://update.captive-it.de/stable/', 'operator' => 'BlackRomeo (ilch-Team)', 'country' => 'Germany'])
+                    ->execute();
+
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $currentUpdateserver = $databaseConfig->get('updateserver');
+
+                if ($currentUpdateserver === 'https://www.ilch.de/ilch2_updates/stable/') {
+                    $updateservers = ['https://www.ilch.de/ilch2_updates/stable/', 'https://update.captive-it.de/stable/'];
+                    $databaseConfig->set('updateserver', $updateservers[random_int(0, count($updateservers) - 1)]);
+                }
+
+                // Update vendor folder to update Bootstrap, Font Awesome, HTMLPurifier, jQuery, jQuery UI and PHPMailer.
+                replaceVendorDirectory();
+                break;
+            case "2.2.13":
+                // Update vendor folder to remove blueimp/jquery-file-upload.
+                replaceVendorDirectory();
                 break;
         }
 

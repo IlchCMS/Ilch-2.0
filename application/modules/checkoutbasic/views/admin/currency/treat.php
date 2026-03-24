@@ -2,12 +2,12 @@
 
 /** @var \Ilch\View $this */
 
-/** @var Modules\Checkout\Models\Currency|null $currency */
+/** @var Modules\Checkoutbasic\Models\Currency|null $currency */
 $currency = $this->get('currency');
 ?>
 
 <h1>
-    <?=($currency) ? $this->getTrans('edit') : $this->getTrans('add') ?>
+    <?=$this->getTrans($currency->getId() ? 'edit' : 'add') ?>
 </h1>
 <form method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -21,7 +21,7 @@ $currency = $this->get('currency');
                    id="name"
                    name="name"
                    placeholder="<?=$this->getTrans('name') ?>"
-                   value="<?=$this->escape($currency->getName()) ?>" />
+                   value="<?=$this->escape($this->originalInput('name', $currency->getName())) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar() ?>

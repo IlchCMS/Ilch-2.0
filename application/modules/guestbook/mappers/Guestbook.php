@@ -7,24 +7,31 @@
 
 namespace Modules\Guestbook\Mappers;
 
-use Ilch\Database\Mysql\Result;
 use Modules\Guestbook\Models\Entry as GuestbookModel;
 
 class Guestbook extends \Ilch\Mapper
 {
     /**
-     * Gets the guestbook entries.
+     * @var string
+     * @since 1.14.4
+     */
+    public string $tablename = 'gbook';
+
+    /**
+     * Gets the Entries by params.
      *
      * @param array $where
+     * @param array $orderBy
      * @param \Ilch\Pagination|null $pagination
-     * @return GuestbookModel[]|array
+     * @return GuestbookModel[]|null
+     * @since 1.14.4
      */
-    public function getEntries(array $where = [], ?\Ilch\Pagination $pagination = null): array
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select('*')
-            ->from('gbook')
+            ->from($this->tablename)
             ->where($where)
-            ->order(['id' => 'DESC']);
+            ->order($orderBy);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -36,28 +43,42 @@ class Guestbook extends \Ilch\Mapper
         }
 
         $entryArray = $result->fetchRows();
-        $entry = [];
+        if (empty($entryArray)) {
+            return null;
+        }
+        $entrys = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new GuestbookModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setEmail($entries['email']);
-            $entryModel->setText($entries['text']);
-            $entryModel->setDatetime($entries['datetime']);
-            $entryModel->setHomepage($entries['homepage']);
-            $entryModel->setName($entries['name']);
-            $entryModel->setFree($entries['setfree']);
-            $entry[] = $entryModel;
-        }
+            $entryModel->setByArray($entries);
 
-        return $entry;
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
+    /**
+     * Gets the guestbook entries.
+     *
+     * @param array $where
+     * @param \Ilch\Pagination|null $pagination
+     * @return GuestbookModel[]|array
+     */
+    public function getEntries(array $where = [], ?\Ilch\Pagination $pagination = null): array
+    {
+        $entryArray = $this->getEntriesBy($where, ['id' => 'DESC'], $pagination);
+
+        if (!$entryArray) {
+            return [];
+        }
+        return $entryArray;
     }
 
 
     /**
      * @param int|GuestbookModel $id
      * @param int $setfree
-     * @return boolean
+     * @return bool
      */
     public function updateSetfree($id, int $setfree = -1): bool
     {
@@ -68,7 +89,7 @@ class Guestbook extends \Ilch\Mapper
                 $setfree = $id->getFree();
             } else {
                 $setfree = (int) $this->db()->select('setfree')
-                    ->from('gbook')
+                    ->from($this->tablename)
                     ->where(['id' => (int)$id])
                     ->execute()
                     ->fetchCell();
@@ -84,7 +105,7 @@ class Guestbook extends \Ilch\Mapper
             $id = $id->getId();
         }
 
-        return $this->db()->update('gbook')
+        return $this->db()->update($this->tablename)
             ->values(['setfree' => $setfreeNow])
             ->where(['id' => (int)$id])
             ->execute();
@@ -94,25 +115,20 @@ class Guestbook extends \Ilch\Mapper
      * Inserts or updates gustebook entry.
      *
      * @param GuestbookModel $model
+     * @return int
      */
-    public function save(GuestbookModel $model)
+    public function save(GuestbookModel $model): int
     {
-        $fields = [
-            'email' => $model->getEmail(),
-            'text' => $model->getText(),
-            'datetime' => $model->getDatetime(),
-            'homepage' => $model->getHomepage(),
-            'name' => $model->getName(),
-            'setfree' => $model->getFree()
-        ];
+        $fields = $model->getArray(false);
 
         if ($model->getId()) {
-            $this->db()->update('gbook')
+            $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $model->getId()])
                 ->execute();
+                return $model->getId();
         } else {
-            $this->db()->insert('gbook')
+            return $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
@@ -122,11 +138,11 @@ class Guestbook extends \Ilch\Mapper
      * Deletes the guestbook entry.
      *
      * @param int $id
-     * @return Result|int
+     * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
-        return $this->db()->delete('gbook')
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
     }
@@ -142,10 +158,10 @@ class Guestbook extends \Ilch\Mapper
     public function reset(?int $setfree = null): bool
     {
         if ($setfree == null) {
-            $this->db()->truncate('[prefix]_gbook');
-            return $this->db()->queryMulti('ALTER TABLE `[prefix]_gbook` auto_increment = 1;');
+            $this->db()->truncate($this->tablename);
+            return $this->db()->queryMulti('ALTER TABLE `[prefix]_' . $this->tablename . '` auto_increment = 1;');
         } else {
-            return $this->db()->delete('gbook')
+            return $this->db()->delete($this->tablename)
                 ->where(['setfree' => $setfree])
                 ->execute();
         }

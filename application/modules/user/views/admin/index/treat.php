@@ -56,7 +56,7 @@ if ($user->getId()) {
         </div>
     </div>
     <?php
-    if ($user->getId()):
+    if ($user->getId()) :
         $dateConfirmed = $user->getDateConfirmed();
 
         if ($dateConfirmed == '') {
@@ -68,7 +68,7 @@ if ($user->getId()) {
         if ($dateLastActivity == '') {
             $dateLastActivity = $this->getTrans('neverLoggedIn');
         }
-    ?>
+        ?>
         <div class="row mb-3">
             <label class="col-xl-3 col-form-label">
                 <?=$this->getTrans('userDateCreated') ?>
@@ -162,7 +162,7 @@ if ($user->getId()) {
                             } ?>>
                         <?=$this->escape($group->getName()) ?>
                     </option>
-                    <?php
+                        <?php
                     }
                 }
                 ?>

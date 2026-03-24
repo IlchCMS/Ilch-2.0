@@ -1,3 +1,7 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
 <?php $ilchUpload = new \Ilch\Upload(); ?>
 
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
@@ -23,9 +27,8 @@
 </div>
 
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/jquery.knob.min.js') ?>"></script>
-<script src="<?=$this->getVendorUrl('blueimp/jquery-file-upload/js/vendor/jquery.ui.widget.js') ?>"></script>
-<script src="<?=$this->getVendorUrl('blueimp/jquery-file-upload/js/jquery.iframe-transport.js') ?>"></script>
-<script src="<?=$this->getVendorUrl('blueimp/jquery-file-upload/js/jquery.fileupload.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/blueimp/jquery-file-upload/js/jquery.iframe-transport.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/blueimp/jquery-file-upload/js/jquery.fileupload.js') ?>"></script>
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/script.js') ?>"></script>
 
 <script>

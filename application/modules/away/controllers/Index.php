@@ -142,7 +142,7 @@ class Index extends \Ilch\Controller\Frontend
 
     public function updateAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $awayMapper = new AwayMapper();
             $awayMapper->update($this->getRequest()->getParam('id'));
 
@@ -182,7 +182,7 @@ class Index extends \Ilch\Controller\Frontend
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $awayMapper = new AwayMapper();
             $awayMapper->delete($this->getRequest()->getParam('id'));
 

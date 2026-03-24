@@ -124,7 +124,7 @@ class Maps extends Admin
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'mapsName' => 'required|unique:war_maps,name'
+                'mapsName' => 'required|unique:' . $mapsMapper->tablename . ',name,' . $mapsModel->getId(),
             ]);
 
             if ($validation->isValid()) {
@@ -148,7 +148,7 @@ class Maps extends Admin
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
             $mapsMapper = new MapsMapper();
             $mapsMapper->delete((int)$this->getRequest()->getParam('id'));
 

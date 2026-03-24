@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -70,14 +71,14 @@ class Article extends \Ilch\Model
      * @var string
      */
     protected $content;
-    
+
     /**
      * The description of the article.
      *
      * @var string
      */
     protected $description;
-    
+
     /**
      * The keywords of the article.
      *
@@ -466,7 +467,7 @@ class Article extends \Ilch\Model
     public function setTopArticle($top)
     {
         $this->top = $top;
-        
+
         return $this;
     }
 

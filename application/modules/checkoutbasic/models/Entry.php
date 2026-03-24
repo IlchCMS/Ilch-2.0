@@ -12,37 +12,37 @@ class Entry extends \Ilch\Model
     /**
      * The id of the entry.
      *
-     * @var integer
+     * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The datetime of the entry.
      *
      * @var string
      */
-    protected $datetime = '';
+    protected string $datetime = '';
 
     /**
      * The name of the entry.
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * The usage of the entry.
      *
      * @var string
      */
-    protected $usage = '';
+    protected string $usage = '';
 
     /**
      * The amount of the entry.
      *
      * @var float
      */
-    protected $amount = 0.0;
+    protected float $amount = 0.0;
 
     /**
      * @param array $entries
@@ -73,7 +73,7 @@ class Entry extends \Ilch\Model
     /**
      * Gets the id of the entry.
      *
-     * @return integer
+     * @return int
      */
     public function getId(): int
     {
@@ -123,7 +123,7 @@ class Entry extends \Ilch\Model
     /**
      * Sets the id of the entry.
      *
-     * @param integer $id
+     * @param int $id
      * @return $this
      */
     public function setId(int $id): Entry

@@ -28,4 +28,5 @@ return [
     'search' => 'Suche',
     'noSearchResult' => 'Leider kein Suchergebnis.',
     'groupAll' => 'Alle',
+    'entryNotFound' => 'Eintrag nicht gefunden.',
 ];

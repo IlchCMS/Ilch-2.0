@@ -19,7 +19,7 @@ $checkout = $this->get('checkout');
                    id="name"
                    name="name"
                    placeholder="<?=$this->getTrans('name') ?>"
-                   value="<?=($this->originalInput('name') != '') ? $this->escape($this->originalInput('name')) : $this->escape($checkout->getName()) ?>" />
+                   value="<?=$this->escape($this->originalInput('name', $checkout->getName())) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('datetime') ? ' has-error' : '' ?>">
@@ -32,7 +32,7 @@ $checkout = $this->get('checkout');
                    id="datetime"
                    name="datetime"
                    placeholder="<?=$this->getTrans('datetime') ?>"
-                   value="<?=($this->originalInput('datetime') != '') ? $this->escape($this->originalInput('datetime')) : $this->escape($checkout->getDateTime()) ?>" />
+                   value="<?=$this->escape($this->originalInput('datetime', $checkout->getDateTime())) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('usage') ? ' has-error' : '' ?>">
@@ -45,7 +45,7 @@ $checkout = $this->get('checkout');
                    id="usage"
                    name="usage"
                    placeholder="<?=$this->getTrans('usage') ?>"
-                   value="<?=($this->originalInput('usage') != '') ? $this->escape($this->originalInput('usage')) : $this->escape($checkout->getUsage()) ?>" />
+                   value="<?=$this->escape($this->originalInput('usage', $checkout->getUsage())) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('amount') ? ' has-error' : '' ?>">
@@ -62,7 +62,7 @@ $checkout = $this->get('checkout');
                    data-bs-placement="bottom"
                    data-bs-custom-class="custom-tooltip"
                    data-bs-title="<?=$this->getTrans('amountinfo') ?>"
-                   value="<?=($this->originalInput('amount') != '') ? $this->escape($this->originalInput('amount')) : $this->escape($checkout->getAmount()) ?>" />
+                   value="<?=$this->escape($this->originalInput('amount', $checkout->getAmount())) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar('updateButton') ?>

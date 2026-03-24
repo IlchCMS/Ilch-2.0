@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -11,12 +12,59 @@ use Modules\Partner\Models\Partner as PartnerModel;
 class Partner extends \Ilch\Mapper
 {
     /**
+     * @var string
+     * @since 1.14.2
+     */
+    public string $tablename = 'partners';
+
+    /**
+     * Gets the Entries by params.
+     *
+     * @param array $where
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return PartnerModel[]|null
+     * @since 1.14.2
+     */
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
+    {
+        $select = $this->db()->select();
+        $select->fields('*')
+            ->from($this->tablename)
+            ->where($where)
+            ->order($orderBy);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
+            return null;
+        }
+        $entrys = [];
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new PartnerModel();
+            $entryModel->setByArray($entries);
+
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
+    /**
      * Gets the Partner entries.
      *
      * @param array $where
-     * @return PartnerModel[]|array
+     * @return PartnerModel[]
      */
-    public function getEntries($where = [])
+    public function getEntries(array $where = []): array
     {
         return $this->getPartnersBy($where, ['id' => 'DESC']);
     }
@@ -26,86 +74,52 @@ class Partner extends \Ilch\Mapper
      *
      * @param array $where
      * @param array $orderBy
-     * @return PartnerModel[]|array
+     * @return PartnerModel[]
      */
-    public function getPartnersBy($where = [], $orderBy = ['id' => 'ASC'])
+    public function getPartnersBy(array $where = [], array $orderBy = ['id' => 'ASC']): array
     {
-        $partnerArray = $this->db()->select('*')
-            ->from('partners')
-            ->where($where)
-            ->order($orderBy)
-            ->execute()
-            ->fetchRows();
+        $partnerArray = $this->getEntriesBy($where, $orderBy);
 
-        if (empty($partnerArray)) {
+        if (!$partnerArray) {
             return [];
         }
-
-        $partners = [];
-        foreach ($partnerArray as $partnerRow) {
-            $partnerModel = new PartnerModel();
-            $partnerModel->setId($partnerRow['id'])
-                ->setName($partnerRow['name'])
-                ->setLink($partnerRow['link'])
-                ->setBanner($partnerRow['banner'])
-                ->setTarget($partnerRow['target'])
-                ->setFree($partnerRow['setfree']);
-            $partners[] = $partnerModel;
-        }
-
-        return $partners;
+        return $partnerArray;
     }
 
     /**
      * Gets partner.
      *
-     * @param integer $id
+     * @param int $id
      * @return PartnerModel|null
      */
-    public function getPartnerById($id)
+    public function getPartnerById(int $id): ?PartnerModel
     {
-        $partnerRow = $this->db()->select('*')
-            ->from('partners')
-            ->where(['id' => $id])
-            ->execute()
-            ->fetchAssoc();
+        $partnerArray = $this->getEntriesBy(['id' => $id], []);
 
-        if (empty($partnerRow)) {
-            return null;
+        if ($partnerArray) {
+            return reset($partnerArray);
         }
-
-        $partnerModel = new PartnerModel();
-        $partnerModel->setId($partnerRow['id'])
-            ->setName($partnerRow['name'])
-            ->setLink($partnerRow['link'])
-            ->setBanner($partnerRow['banner'])
-            ->setTarget($partnerRow['target']);
-
-        return $partnerModel;
+        return null;
     }
 
     /**
      * Inserts or updates partner model.
      *
      * @param PartnerModel $partner
+     * @return int
      */
-    public function save(PartnerModel $partner)
+    public function save(PartnerModel $partner): int
     {
-        $fields = [
-            'name' => $partner->getName(),
-            'link' => $partner->getLink(),
-            'banner' => $partner->getBanner(),
-            'target' => $partner->getTarget(),
-            'setfree' => $partner->getFree()
-        ];
+        $fields = $partner->getArray(false);
 
         if ($partner->getId()) {
-            $this->db()->update('partners')
+            $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $partner->getId()])
                 ->execute();
+                return $partner->getId();
         } else {
-            $this->db()->insert('partners')
+            return $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
@@ -117,9 +131,9 @@ class Partner extends \Ilch\Mapper
      * @param int $id
      * @param int $position
      */
-    public function updatePositionById($id, $position)
+    public function updatePositionById(int $id, int $position)
     {
-        $this->db()->update('partners')
+        $this->db()->update($this->tablename)
             ->values(['pos' => $position])
             ->where(['id' => $id])
             ->execute();
@@ -128,11 +142,11 @@ class Partner extends \Ilch\Mapper
     /**
      * Deletes partner with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
-        $this->db()->delete('partners')
+        $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
     }

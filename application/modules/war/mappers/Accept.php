@@ -13,7 +13,7 @@ use Modules\War\Models\Accept as EntriesModel;
 
 class Accept extends Mapper
 {
-    public $tablename = 'war_accept';
+    public string $tablename = 'war_accept';
 
     /**
      * returns if the module is installed.

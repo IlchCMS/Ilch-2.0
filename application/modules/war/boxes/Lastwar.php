@@ -20,6 +20,7 @@ class Lastwar extends Box
         $warMapper = new WarMapper();
         $gamesMapper = new GamesMapper();
         $userMapper = new UserMapper();
+        /** @var \Ilch\Config\Database $config */
         $config = Registry::get('config');
 
         $user = null;

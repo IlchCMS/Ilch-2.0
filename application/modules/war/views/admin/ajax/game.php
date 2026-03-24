@@ -28,6 +28,7 @@ foreach ($this->get('games') as $game) : ?>
                         id="warMapPlayed[]"
                         name="warMapPlayed[]"
                         data-placeholder="<?=$this->getTrans('warMapName') ?>">
+                    <option value="" <?=$game->getMap() == 0 ? 'selected=""' : '' ?>><?=$this->getTrans('choose') ?></option>
                     <?php
                     /** @var \Modules\War\Models\Maps $maps */
                     foreach ($this->get('gamesmaps') ?? [] as $maps) : ?>
@@ -55,7 +56,7 @@ foreach ($this->get('games') as $game) : ?>
                        class="form-control"
                        id="warResultEnemys[]"
                        name="warResultEnemys[]"
-                       placeholder="<?=$this->getTrans('warResultEnemys') ?>"
+                       placeholder="<?=$this->getTrans('warResultEnemy') ?>"
                        value="<?=$game->getEnemyPoints() ?>">
             </div>
         </div>
@@ -81,12 +82,10 @@ foreach ($this->get('games') as $game) : ?>
 <script>
     document.getElementById('button-duplicater').onclick = duplicate;
     document.getElementById('button-remover').onclick = remove;
-    document.getElementById('button-remover').onclick = remove;
-
-    let i = <?=$index?>;
-    let original = document.getElementById('duplicator0');
 
     function duplicate() {
+        let i = <?=$index?>;
+        let original = document.getElementById('duplicator0');
         let clone = original.cloneNode(true); // "deep" clone
         clone.id = "duplicator" + i++; // there can only be one element with an ID
         original.parentNode.appendChild(clone);
@@ -130,6 +129,6 @@ foreach ($this->get('games') as $game) : ?>
     }
 
     function del(mapid) {
-        $('#games').load('<?=$this->getUrl('index.php/admin/war/ajax/del/id/' . $this->getRequest()->getParam('id') . '/mapid/') ?>' + mapid);
+        $('#games').load('<?=$this->getUrl(['module' => 'war', 'controller' => 'ajax', 'action' => 'del', 'id' => $this->getRequest()->getParam('id')], 'admin', true) . '/mapid/' ?>' + mapid);
     }
 </script>

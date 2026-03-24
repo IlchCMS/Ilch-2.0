@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -10,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'partner',
-        'version' => '1.14.1',
+        'version' => '1.14.2',
         'icon_small' => 'fa-regular fa-handshake',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -34,8 +35,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'ilchCore' => '2.2.13',
+        'phpVersion' => '7.4'
     ];
 
     public function install()
@@ -52,13 +53,15 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->drop('partners', true);
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'partners_slider';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'partners_slider_mode';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'partners_box_height';
-            DELETE FROM `[prefix]_config` WHERE `key` = 'partners_slider_speed'");
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->delete('partners_slider')
+            ->delete('partners_slider_mode')
+            ->delete('partners_box_height')
+            ->delete('partners_slider_speed');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_partners` (
             `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -75,7 +78,7 @@ class Config extends \Ilch\Config\Install
         (1, "ilch", "https://www.ilch.de/include/images/linkus/88x31.png", "https://ilch.de", "0", "1");';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate(string $installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":
@@ -110,6 +113,10 @@ class Config extends \Ilch\Config\Install
                 // no break
             case "1.12.0":
             case "1.13.0":
+            case "1.14.0":
+            case "1.14.1":
         }
+
+        return '"' . $this->config['key'] . '" Update-function executed.';
     }
 }
