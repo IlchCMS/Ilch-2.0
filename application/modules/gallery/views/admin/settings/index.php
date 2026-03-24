@@ -16,7 +16,7 @@
                    id="picturesPerPageInput"
                    name="picturesPerPage"
                    min="1"
-                   value="<?=$this->originalInput('picturesPerPage', $this->get('picturesPerPage'), true) ?>" />
+                   value="<?=$this->escape($this->originalInput('picturesPerPage', $this->get('picturesPerPage'))) ?>" />
         </div>
     </div>
 

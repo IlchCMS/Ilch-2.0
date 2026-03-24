@@ -7,9 +7,7 @@ $galleryItems = $this->get('galleryItems');
 
 /**
  * @param \Modules\Gallery\Models\GalleryItem $item
- * @param \Modules\Gallery\Mappers\Gallery $galleryMapper
  * @param \Ilch\View $obj
- * @param \Modules\Gallery\Mappers\Image $imageMapper
  * @return void
  */
 function rec(\Modules\Gallery\Models\GalleryItem $item, \Ilch\View $obj)
@@ -124,7 +122,7 @@ function rec(\Modules\Gallery\Models\GalleryItem $item, \Ilch\View $obj)
         </div>
     </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
-    <?=$this->getSaveBar('saveButton') ?>
+    <?=$this->getSaveBar() ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>

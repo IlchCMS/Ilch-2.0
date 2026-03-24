@@ -19,56 +19,56 @@ class Image extends Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The imageId of the image.
      *
      * @var int
      */
-    protected $image_id = 0;
+    protected int $image_id = 0;
 
     /**
      * The imageThumb of the image.
      *
      * @var string
      */
-    protected $image_thumb = '';
+    protected string $image_thumb = '';
 
     /**
      * Title of the image.
      *
      * @var string
      */
-    protected $image_title = '';
+    protected string $image_title = '';
 
     /**
      * Description of the image.
      *
      * @var string
      */
-    protected $image_desc = '';
+    protected string $image_desc = '';
 
     /**
      * The gallery id of the image.
      *
      * @var int
      */
-    protected $gallery_id = 0;
+    protected int $gallery_id = 0;
 
     /**
      * The visits of the image.
      *
      * @var int
      */
-    protected $visits = 0;
+    protected int $visits = 0;
 
     /**
      * The imageUrl of the image.
      *
      * @var string
      */
-    protected $image_url = '';
+    protected string $image_url = '';
 
     /**
      * @param array $entries
@@ -279,9 +279,7 @@ class Image extends Model
                 'image_title' =>     $this->getImageTitle(),
                 'image_description' =>      $this->getImageDesc(),
                 'gallery_id' =>        $this->getGalleryId(),
-                'visits' =>       $this->getVisits(),
-                'show' =>       $this->getShow(),
-                'status' =>     $this->getStatus()
+                'visits' =>       $this->getVisits()
             ]
         );
     }

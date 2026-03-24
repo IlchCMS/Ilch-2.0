@@ -70,7 +70,7 @@ class Settings extends Admin
                 // Standard Gallery Settings
                 $this->getConfig()->set('gallery_picturesPerPage', $this->getRequest()->getPost('picturesPerPage'));
 
-                $pictureOfXSource = is_array($this->getRequest()->getPost('pictureOfXSource')) ? implode(",", $this->getRequest()->getPost('pictureOfXSource')) : '';
+                $pictureOfXSource = is_array($this->getRequest()->getPost('pictureOfXSource')) ? implode(',', $this->getRequest()->getPost('pictureOfXSource')) : '';
                 $this->getConfig()->set('gallery_pictureOfXSource', (empty($pictureOfXSource)) ? '' : $pictureOfXSource);
                 $this->getConfig()->set('gallery_pictureOfXInterval', $this->getRequest()->getPost('pictureOfXInterval'));
                 $this->getConfig()->set('gallery_pictureOfXRandom', $this->getRequest()->getPost('pictureOfXRandom'));

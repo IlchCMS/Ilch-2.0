@@ -19,19 +19,7 @@ class Gallery extends Mapper
      * @var string
      * @since 1.23.4
      */
-    public $tablename = 'gallery_items';
-
-    /**
-     * returns if the module is installed.
-     *
-     * @return boolean
-     * @throws \Ilch\Database\Exception
-     * @since 1.23.4
-     */
-    public function checkDB(): bool
-    {
-        return $this->db()->ifTableExists($this->tablename);
-    }
+    public string $tablename = 'gallery_items';
 
     /**
      * Gets the Entries by params.
@@ -40,7 +28,7 @@ class Gallery extends Mapper
      * @param array $orderBy
      * @param \Ilch\Pagination|null $pagination
      * @return GalleryItem[]|null
-     * @since 1.23.4
+     * @since 1.24.1
      */
     public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
     {
@@ -155,6 +143,7 @@ class Gallery extends Mapper
      *
      * @param int|GalleryItem $id
      * @param int $pos
+     * @param int $parent
      * @return bool
      */
     public function sort($id, int $pos, int $parent): bool
@@ -194,16 +183,5 @@ class Gallery extends Mapper
     public function getGalleryItems(): ?array
     {
         return $this->getEntriesBy([], ['sort' => 'ASC']);
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.23.4
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 }

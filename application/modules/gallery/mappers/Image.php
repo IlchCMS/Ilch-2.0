@@ -7,7 +7,6 @@
 
 namespace Modules\Gallery\Mappers;
 
-use Ilch\Database\Mysql\Result;
 use Ilch\Mapper;
 use Ilch\Pagination;
 use Modules\Gallery\Models\Image as ImageModel;
@@ -21,19 +20,7 @@ class Image extends Mapper
      * @var string
      * @since 1.23.4
      */
-    public $tablename = 'gallery_imgs';
-
-    /**
-     * returns if the module is installed.
-     *
-     * @return boolean
-     * @throws \Ilch\Database\Exception
-     * @since 1.23.4
-     */
-    public function checkDB(): bool
-    {
-        return $this->db()->ifTableExists($this->tablename);
-    }
+    public string $tablename = 'gallery_imgs';
 
     /**
      * Gets the Entries by params.
@@ -42,7 +29,7 @@ class Image extends Mapper
      * @param array $orderBy
      * @param \Ilch\Pagination|null $pagination
      * @return ImageModel[]|null
-     * @since 1.23.4
+     * @since 1.24.1
      */
     public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
     {
@@ -99,7 +86,7 @@ class Image extends Mapper
      */
     public function getLastImageByGalleryId(int $id): ?ImageModel
     {
-        $imageRow = $this->getEntriesBy(['g.gallery_id' => $id], ['g.id' => 'DESC']);
+        $imageRow = $this->getEntriesBy(['g.gallery_id' => $id]);
 
         if ($imageRow) {
             return reset($imageRow);
@@ -216,16 +203,5 @@ class Image extends Mapper
             ->values(['image_title' => $model->getImageTitle(), 'image_description' => $model->getImageDesc()])
             ->where(['id' => $model->getId()])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.23.4
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 }

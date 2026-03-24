@@ -21,47 +21,47 @@ class GalleryItem extends Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * Sort of the item.
      *
      * @var int
      */
-    protected $sort = 0;
+    protected int $sort = 0;
 
     /**
      * Type of the item.
      *
      * @var int
      */
-    protected $type = 0;
+    protected int $type = 0;
 
     /**
      * ParentId of the item.
      *
      * @var int
      */
-    protected $parentId = 0;
+    protected int $parentId = 0;
 
     /**
      * Title of the item.
      *
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * Description of the item.
      *
      * @var string
      */
-    protected $desc = '';
+    protected string $desc = '';
 
     /**
      * @param array $entries
      * @return $this
-     * @since 1.23.4
+     * @since 1.24.1
      */
     public function setByArray(array $entries): GalleryItem
     {
@@ -210,7 +210,7 @@ class GalleryItem extends Model
     /**
      * @param bool $withId
      * @return array
-     * @since 1.23.4
+     * @since 1.24.1
      */
     public function getArray(bool $withId = true): array
     {
