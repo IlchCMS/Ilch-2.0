@@ -4,10 +4,10 @@
 .venobox-grid {
     padding: 20px 0;
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    box-sizing: border-box; /* Verhindert Layout-Sprengung durch Padding */
+    box-sizing: border-box; /* Prevents layout overflow caused by padding */
 }
 
-/* Alle Elemente innerhalb des Grids nutzen border-box */
+/* All elements inside the grid use border-box */
 .venobox-grid *,
 .venobox-grid *::before,
 .venobox-grid *::after {
@@ -22,7 +22,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    border-bottom: none; /* Falls Ilch globale h1 borders hat */
+    border-bottom: none; /* Override global h1 borders if any */
 }
 
 .venobox-grid h1 i {
@@ -56,7 +56,7 @@
     display: flex;
     flex-direction: column;
     box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-    position: relative; /* Wichtig für Context */
+    position: relative; /* Required for absolute child positioning */
 }
 
 .venobox-grid .setting-card:hover {
@@ -66,7 +66,7 @@
     border-color: #3498db;
 }
 
-/* Fehlerzustand */
+/* Error state */
 .venobox-grid .setting-card.has-error {
     border-color: #e53e3e;
     background: #fff5f5;
@@ -104,7 +104,7 @@
 /* =========================================
    Form Controls (Inputs & Selects)
    ========================================= */
-/* Wir sprechen hier gezielt nur Inputs IN der .setting-card an */
+/* Targets only inputs inside .setting-card */
 .venobox-grid .setting-card .form-control {
     border-radius: 10px;
     border: 1px solid #e2e8f0;
@@ -140,10 +140,10 @@
     outline: none;
 }
 
-/* Input Groups (für Farbpicker Reset Button) */
+/* Input Groups (for color picker reset button) */
 .venobox-grid .setting-card .input-group {
     display: flex;
-    flex-wrap: nowrap; /* Verhindert Umbruch */
+    flex-wrap: nowrap; /* Prevents line breaks */
 }
 
 .venobox-grid .setting-card .input-group-text {
@@ -173,7 +173,7 @@
     height: 44px;
     padding: 4px;
     border: 1px solid #e2e8f0;
-    width: 100%; /* Füllt die Breite der Action-Bar */
+    width: 100%; /* Fills the full width of the action bar */
     box-sizing: border-box;
 }
 
@@ -187,7 +187,7 @@
     color: #4a5568;
     cursor: pointer;
     transition: color 0.3s ease;
-    margin: 0; /* Reset global margins */
+    margin: 0; /* Reset global label margins */
     display: block;
 }
 
@@ -200,12 +200,12 @@
     color: #ffffff;
 }
 
-/* Der wandernde Hintergrund */
+/* The sliding background indicator */
 .venobox-grid .flipswitch-selection {
     position: absolute;
     top: 4px;
     left: 4px;
-    width: calc(50% - 4px); /* Exakte Berechnung */
+    width: calc(50% - 4px); /* Exact calculation for half-width minus padding */
     height: 36px;
     background: #3498db;
     border-radius: 10px;
@@ -214,7 +214,7 @@
     box-shadow: 0 2px 4px rgba(52, 152, 219, 0.3);
 }
 
-/* Wenn OFF (Value 0) ausgewählt ist -> Schiebe nach rechts */
+/* When OFF (value 0) is selected, slide to the right */
 .venobox-grid .flipswitch-input[value="0"]:checked ~ .flipswitch-selection {
     transform: translateX(100%);
     background: #a0aec0;

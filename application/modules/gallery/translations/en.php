@@ -62,6 +62,8 @@ return [
     'titleCannotChangeTypeOnEdit' => 'Changing the type afterwards is not possible.',
     'titleCannotChangeCategoryOnEdit' => 'On the left side you can assign the gallery to another category by drag and drop.',
 
+    'resetToDefault' => 'Restore Defaults',
+    'pleaseSelect' => 'Please select...',
     // Venobox Settings
     'venoboxSetting' => 'Venobox Settings',
     'venoboxNumeration' => 'Numbering',
@@ -99,4 +101,13 @@ return [
     'venoboxShareStyleDesc' => 'Design of the share buttons.',
     'venoboxRatio' => 'Video Ratio',
     'venoboxRatioDesc' => 'Aspect ratio for videos (e.g., 16x9).',
+    'venoboxBorderPlaceholder' => 'e.g. 5px',
+    'venoboxMaxWidthPlaceholder' => 'e.g. 100%',
+    'venoboxShareStyleBar' => 'Bar',
+    'venoboxShareStylePill' => 'Pill',
+    'venoboxShareStyleBlock' => 'Block',
+    'venoboxShareStyleTransparent' => 'Transparent',
+    'venoboxResetConfirm' => 'Do you want to reset all Venobox settings to their default values?',
+    'venoboxResetApplied' => 'Applied',
+    'venoboxResetAlertText' => 'The default values have been entered into the form. Please click Save below to apply them permanently.',
 ];

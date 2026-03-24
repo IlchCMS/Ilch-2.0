@@ -78,7 +78,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1><i class="fa-solid fa-wand-magic-sparkles"></i> <?=$this->getTrans('venoboxSetting') ?></h1>
             <button type="button" id="resetVenobox" class="btn btn-outline-secondary btn-sm">
-                <i class="fa-solid fa-rotate-left"></i> Standard wiederherstellen
+                <i class="fa-solid fa-rotate-left"></i> <?=$this->getTrans('resetToDefault') ?>
             </button>
         </div>
 
@@ -162,7 +162,7 @@
                         <p class="card-description"><?=$this->getTrans('venoboxBorderDesc') ?></p>
                     </div>
                     <div class="card-action">
-                        <input type="text" class="form-control" id="venoboxBorder" name="venoboxBorder" pattern="([0-9]+px)?" value="<?=$this->escape($this->originalInput('venoboxBorder', $this->get('venoboxBorder'))) ?>" placeholder="z.B. 5px" />
+                        <input type="text" class="form-control" id="venoboxBorder" name="venoboxBorder" pattern="([0-9]+px)?" value="<?=$this->escape($this->originalInput('venoboxBorder', $this->get('venoboxBorder'))) ?>" placeholder="<?=$this->getTrans('venoboxBorderPlaceholder') ?>" />
                     </div>
                 </div>
             </div>
@@ -191,7 +191,7 @@
                         <p class="card-description"><?=$this->getTrans('venoboxMaxWidthDesc') ?></p>
                     </div>
                     <div class="card-action">
-                        <input type="text" class="form-control" id="venoboxMaxWidth" name="venoboxMaxWidth" pattern="([0-9]+(px|%|vw))?" value="<?=$this->escape($this->originalInput('venoboxMaxWidth', $this->get('venoboxMaxWidth'))) ?>" placeholder="z.B. 100%" />
+                        <input type="text" class="form-control" id="venoboxMaxWidth" name="venoboxMaxWidth" pattern="([0-9]+(px|%|vw))?" value="<?=$this->escape($this->originalInput('venoboxMaxWidth', $this->get('venoboxMaxWidth'))) ?>" placeholder="<?=$this->getTrans('venoboxMaxWidthPlaceholder') ?>" />
                     </div>
                 </div>
             </div>
@@ -316,10 +316,10 @@
                     <div class="card-action">
                         <select class="form-select shadow-none" name="venoboxShareStyle">
                             <?php $style = $this->get('venoboxShareStyle') ?: 'bar'; ?>
-                            <option value="bar" <?=$style == 'bar' ? 'selected' : ''?>>Balken (Bar)</option>
-                            <option value="pill" <?=$style == 'pill' ? 'selected' : ''?>>Pille (Pill)</option>
-                            <option value="block" <?=$style == 'block' ? 'selected' : ''?>>Block</option>
-                            <option value="transparent" <?=$style == 'transparent' ? 'selected' : ''?>>Transparent</option>
+                            <option value="bar" <?=$style == 'bar' ? 'selected' : ''?>><?=$this->getTrans('venoboxShareStyleBar') ?></option>
+                            <option value="pill" <?=$style == 'pill' ? 'selected' : ''?>><?=$this->getTrans('venoboxShareStylePill') ?></option>
+                            <option value="block" <?=$style == 'block' ? 'selected' : ''?>><?=$this->getTrans('venoboxShareStyleBlock') ?></option>
+                            <option value="transparent" <?=$style == 'transparent' ? 'selected' : ''?>><?=$this->getTrans('venoboxShareStyleTransparent') ?></option>
                         </select>
                     </div>
                 </div>
@@ -366,4 +366,12 @@
     <?=$this->getSaveBar() ?>
 </form>
 <script src="<?=$this->getStaticUrl('js/jscolor/jscolor.min.js') ?>"></script>
+<script>
+var galleryTrans = {
+    resetConfirm: '<?=addslashes($this->getTrans('venoboxResetConfirm')) ?>',
+    resetApplied: '<?=addslashes($this->getTrans('venoboxResetApplied')) ?>',
+    resetAlertText: '<?=addslashes($this->getTrans('venoboxResetAlertText')) ?>',
+    pleaseSelect: '<?=addslashes($this->getTrans('pleaseSelect')) ?>'
+};
+</script>
 <script src="<?=$this->getModuleUrl('static/js/main.js') ?>"></script>

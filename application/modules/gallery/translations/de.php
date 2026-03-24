@@ -61,6 +61,8 @@ return [
     'noMediaAlt' => 'Kein Vorschaubild verfügbar.',
     'titleCannotChangeTypeOnEdit' => 'Nachträgliches Ändern des Typs ist nicht möglich.',
     'titleCannotChangeCategoryOnEdit' => 'Sie können links per Ziehen und Ablegen die Zuordnung zu einer Kategorie ändern.',
+    'resetToDefault' => 'Standard wiederherstellen',
+    'pleaseSelect' => 'Bitte wählen...',
     // Venobox Settings
     'venoboxSetting' => 'Venobox Einstellungen',
     'venoboxNumeration' => 'Nummerierung',
@@ -98,4 +100,13 @@ return [
     'venoboxShareStyleDesc' => 'Design der Share-Buttons.',
     'venoboxRatio' => 'Video Format',
     'venoboxRatioDesc' => 'Seitenverhältnis für Videos (z.B. 16x9).',
+    'venoboxBorderPlaceholder' => 'z.B. 5px',
+    'venoboxMaxWidthPlaceholder' => 'z.B. 100%',
+    'venoboxShareStyleBar' => 'Balken (Bar)',
+    'venoboxShareStylePill' => 'Pille (Pill)',
+    'venoboxShareStyleBlock' => 'Block',
+    'venoboxShareStyleTransparent' => 'Transparent',
+    'venoboxResetConfirm' => 'Möchten Sie alle Venobox-Einstellungen auf die Standardwerte zurücksetzen?',
+    'venoboxResetApplied' => 'Eingetragen',
+    'venoboxResetAlertText' => 'Die Standardwerte wurden ins Formular eingetragen. Bitte klicke unten auf Speichern, um sie dauerhaft zu übernehmen.',
 ];
