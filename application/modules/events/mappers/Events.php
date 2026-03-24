@@ -9,53 +9,65 @@ namespace Modules\Events\Mappers;
 
 use Ilch\Database\Exception;
 use Modules\Events\Models\Events as EventModel;
-use Modules\Events\Mappers\Events as EventMapper;
+use Ilch\Pagination;
 
 class Events extends \Ilch\Mapper
 {
     /**
-     * Gets the Event entries.
+     * @var string
+     * @since 1.23.6
+     */
+    public string $tablename = 'events';
+
+    /**
+     * Gets the Entries by params.
      *
      * @param array $where
-     * @return EventModel[]|array
+     * @param array $orderBy
+     * @param \Ilch\Pagination|null $pagination
+     * @return EventModel[]|null
+     * @since 1.23.6
      */
-    public function getEntries(array $where = []): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['start' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
     {
-        $entryArray = $this->db()->select('*')
-            ->from('events')
+        $select = $this->db()->select('*')
+            ->from($this->tablename)
             ->where($where)
-            ->order(['start' => 'ASC'])
-            ->execute()
-            ->fetchRows();
+            ->order($orderBy);
 
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+
+        $entryArray = $result->fetchRows();
         if (empty($entryArray)) {
             return null;
         }
+        $entrys = [];
 
-        $entry = [];
         foreach ($entryArray as $entries) {
             $entryModel = new EventModel();
-            $entryModel->setId($entries['id'])
-                ->setUserId($entries['user_id'])
-                ->setStart($entries['start'])
-                ->setEnd($entries['end'])
-                ->setTitle($entries['title'])
-                ->setPlace($entries['place'])
-                ->setType($entries['type'])
-                ->setWebsite($entries['website'])
-                ->setLatLong($entries['lat_long'])
-                ->setImage($entries['image'])
-                ->setText($entries['text'])
-                ->setCurrency($entries['currency'])
-                ->setPrice($entries['price'])
-                ->setPriceArt($entries['price_art'])
-                ->setShow($entries['show'])
-                ->setUserLimit($entries['user_limit'])
-                ->setReadAccess($entries['read_access']);
-            $entry[] = $entryModel;
-        }
+            $entryModel->setByArray($entries);
 
-        return $entry;
+            $entrys[] = $entryModel;
+        }
+        return $entrys;
+    }
+
+    /**
+     * Gets the Event entries.
+     *
+     * @param array $where
+     * @return EventModel[]|null
+     */
+    public function getEntries(array $where = []): ?array
+    {
+        return $this->getEntriesBy($where);
     }
 
     /**
@@ -67,175 +79,81 @@ class Events extends \Ilch\Mapper
      */
     public function getEventById(int $id): ?EventModel
     {
-        $eventRow = $this->db()->select('*')
-            ->from('events')
-            ->where(['id' => $id])
-            ->execute()
-            ->fetchAssoc();
+        $eventRow = $this->getEntriesBy(['id' => $id]);
 
-        if (empty($eventRow)) {
-            return null;
+        if ($eventRow) {
+            return reset($eventRow);
         }
-
-        $eventModel = new EventModel();
-        $eventModel->setId($eventRow['id'])
-            ->setUserId($eventRow['user_id'])
-            ->setStart($eventRow['start'])
-            ->setEnd($eventRow['end'])
-            ->setTitle($eventRow['title'])
-            ->setPlace($eventRow['place'])
-            ->setType($eventRow['type'])
-            ->setWebsite($eventRow['website'])
-            ->setLatLong($eventRow['lat_long'])
-            ->setImage($eventRow['image'])
-            ->setText($eventRow['text'])
-            ->setCurrency($eventRow['currency'])
-            ->setPrice($eventRow['price'])
-            ->setPriceArt($eventRow['price_art'])
-            ->setShow($eventRow['show'])
-            ->setUserLimit($eventRow['user_limit'])
-            ->setReadAccess($eventRow['read_access']);
-
-        return $eventModel;
+        return null;
     }
 
     /**
      * Get list of upcoming events.
      *
      * @param int|null $limit
-     * @return EventMapper[]|array
-     * @throws Exception
+     * @return EventModel[]|null
      */
     public function getEventListUpcoming(?int $limit = null): ?array
     {
-        $eventMapper = new EventMapper();
-
-        $select = $this->db()->select()
-            ->fields('*')
-            ->from('events')
-            ->where([new \Ilch\Database\Mysql\Expression\Comparison('`start`', '>', 'NOW()')])
-            ->order(['start' => 'ASC']);
-
+        $pagination = null;
         if ($limit) {
-            $select->limit($limit);
+            $pagination = new Pagination();
+            $pagination->setRowsPerPage($limit);
         }
 
-        $rows = $select->execute()
-            ->fetchRows();
-
-        if (empty($rows)) {
-            return null;
-        }
-
-        $events = [];
-        foreach ($rows as $row) {
-            $events[] = $eventMapper->getEventById($row['id']);
-        }
-
-        return $events;
+        return $this->getEntriesBy([new \Ilch\Database\Mysql\Expression\Comparison('`start`', '>', 'NOW()')], [], $pagination);
     }
 
     /**
      * Get list of events a user participates in.
      *
      * @param int $userId
-     * @return EventMapper[]|array
+     * @return EventModel[]|array
      */
     public function getEventListParticipation(int $userId): ?array
     {
-        $eventMapper = new EventMapper();
-
-        $entryRow = $this->db()->select('*')
-            ->from('events')
-            ->where(['user_id' => $userId])
-            ->execute()
-            ->fetchRows();
-
-        if (empty($entryRow)) {
-            return null;
-        }
-
-        $events = [];
-        foreach ($entryRow as $row) {
-            $events[] = $eventMapper->getEventById($row['id']);
-        }
-
-        return $events;
+        return $this->getEntriesBy(['user_id' => $userId], []);
     }
 
     /**
      * Get list of past events.
      *
      * @param int|null $limit
-     * @return EventMapper[]|array
-     * @throws Exception
+     * @return EventModel[]|array
      */
     public function getEventListPast(?int $limit = null): ?array
     {
-        $eventMapper = new EventMapper();
-
-        $select = $this->db()->select()
-            ->fields('*')
-            ->from('events')
-            ->where([new \Ilch\Database\Mysql\Expression\Comparison('`end`', '<', 'NOW()')])
-            ->order(['start' => 'DESC']);
-
+        $pagination = null;
         if ($limit) {
-            $select->limit($limit);
+            $pagination = new Pagination();
+            $pagination->setRowsPerPage($limit);
         }
 
-        $rows = $select->execute()
-            ->fetchRows();
-
-        if (empty($rows)) {
-            return null;
-        }
-
-        $events = [];
-        foreach ($rows as $row) {
-            $events[] = $eventMapper->getEventById($row['id']);
-        }
-
-        return $events;
+        return $this->getEntriesBy([new \Ilch\Database\Mysql\Expression\Comparison('`end`', '<', 'NOW()')], [], $pagination);
     }
 
     /**
      * Get a list of the current events.
      *
      * @param int|null $limit
-     * @return array|null
-     * @throws Exception
+     * @return EventModel[]|null
      */
     public function getEventListCurrent(?int $limit = null): ?array
     {
-        $eventMapper = new EventMapper();
+        $pagination = null;
+        if ($limit) {
+            $pagination = new Pagination();
+            $pagination->setRowsPerPage($limit);
+        }
 
-        $select = $this->db()->select()
-            ->fields('*')
-            ->from('events')
-            ->where([
+        return $this->getEntriesBy(
+            [
                 new \Ilch\Database\Mysql\Expression\Comparison('`start`', '<', 'NOW()'),
                 new \Ilch\Database\Mysql\Expression\Comparison('`end`', '>', 'NOW()'),
-                ])
-            ->order(['start' => 'DESC']);
-
-        if ($limit) {
-            $select->limit($limit);
-        }
-
-        $rows = $select->execute()
-            ->fetchRows();
-
-        if (empty($rows)) {
-            return null;
-        }
-
-        $events = [];
-        foreach ($rows as $row) {
-            $events[] = $eventMapper->getEventById($row['id']);
-        }
-
-        return $events;
+            ],
+            [],
+            $pagination
+        );
     }
 
     /**
@@ -255,9 +173,7 @@ class Events extends \Ilch\Mapper
      *
      * @param string $start
      * @param string $end
-     *
      * @return EventModel[]|array|null
-     * @throws Exception
      */
     public function getEntriesForJson(string $start, string $end): ?array
     {
@@ -265,34 +181,10 @@ class Events extends \Ilch\Mapper
             $start = new \Ilch\Date($start);
             $end = new \Ilch\Date($end);
 
-            $entryArray = $this->db()->select()
-                ->fields('*')
-                ->from('events')
-                ->where(['start >=' => $start, 'end <=' => $end, 'show' => 1])
-                ->order(['start' => 'ASC'])
-                ->execute()
-                ->fetchRows();
+            return $this->getEntriesBy(['start >=' => $start, 'end <=' => $end, 'show' => 1]);
         } else {
             return null;
         }
-
-        if (empty($entryArray)) {
-            return null;
-        }
-
-        $entry = [];
-        foreach ($entryArray as $entries) {
-            $entryModel = new EventModel();
-            $entryModel->setId($entries['id'])
-                ->setStart($entries['start'])
-                ->setEnd($entries['end'])
-                ->setTitle($entries['title'])
-                ->setShow($entries['show'])
-                ->setReadAccess($entries['read_access']);
-            $entry[] = $entryModel;
-        }
-
-        return $entry;
     }
 
     /**
@@ -326,7 +218,7 @@ class Events extends \Ilch\Mapper
     public function getListOfTypes(): array
     {
         return $this->db()->select('type')
-            ->from('events')
+            ->from($this->tablename)
             ->execute()
             ->fetchList();
     }
@@ -338,32 +230,15 @@ class Events extends \Ilch\Mapper
      */
     public function save(EventModel $event)
     {
-        $fields = [
-            'user_id' => $event->getUserId(),
-            'start' => $event->getStart(),
-            'end' => $event->getEnd(),
-            'title' => $event->getTitle(),
-            'place' => $event->getPlace(),
-            'type' => $event->getType(),
-            'website' => $event->getWebsite(),
-            'lat_long' => $event->getLatLong(),
-            'image' => $event->getImage(),
-            'text' => $event->getText(),
-            'currency' => $event->getCurrency(),
-            'price' => $event->getPrice(),
-            'price_art' => $event->getPriceArt(),
-            'show' => $event->getShow(),
-            'user_limit' => $event->getUserLimit(),
-            'read_access' => $event->getReadAccess()
-        ];
+        $fields = $event->getArray();
 
         if ($event->getId()) {
-            $this->db()->update('events')
+            $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $event->getId()])
                 ->execute();
         } else {
-            $this->db()->insert('events')
+            $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
@@ -377,7 +252,7 @@ class Events extends \Ilch\Mapper
     public function delete(int $id)
     {
         $imageRow = $this->db()->select('*')
-            ->from('events')
+            ->from($this->tablename)
             ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
@@ -386,7 +261,7 @@ class Events extends \Ilch\Mapper
             unlink($imageRow['image']);
         }
 
-        $this->db()->delete('events')
+        $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
 
@@ -407,7 +282,7 @@ class Events extends \Ilch\Mapper
     public function delImageById(int $id)
     {
         $imageRow = $this->db()->select('*')
-            ->from('events')
+            ->from($this->tablename)
             ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
@@ -416,7 +291,7 @@ class Events extends \Ilch\Mapper
             unlink($imageRow['image']);
         }
 
-        $this->db()->update('events')
+        $this->db()->update($this->tablename)
             ->values(['image' => ''])
             ->where(['id' => $id])
             ->execute();

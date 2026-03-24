@@ -69,7 +69,7 @@ class Settings extends \Ilch\Controller\Admin
                 'event_size'                    => 'required|numeric|min:1',
                 'event_filetypes'               => 'required',
                 'event_google_maps_map_typ'     => 'required',
-                'event_google_maps_zoom'        => 'required|numeric|min:1'
+                'event_google_maps_zoom'        => 'required|numeric|min:1',
             ]);
 
             if ($validation->isValid()) {
