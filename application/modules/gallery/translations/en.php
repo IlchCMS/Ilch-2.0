@@ -17,7 +17,7 @@ return [
     'noCats' => 'No category available',
     'noImage' => 'No image available',
     'name' => 'Name',
-    'description' => 'description',
+    'description' => 'Description',
     'cats' => 'Categories',
     'cat' => 'Category',
     'noCat' => 'No category available',
