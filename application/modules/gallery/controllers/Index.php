@@ -55,7 +55,7 @@ class Index extends Frontend
         }
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('gallery_picturesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('gallery_picturesPerPage'));
-        $pagination->setPage($this->getRequest()->getParam('page'));
+        $pagination->setPage($this->getRequest()->getParam('page', 1));
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('gallery'))
@@ -84,7 +84,7 @@ class Index extends Frontend
             'shareStyle' => $this->getConfig()->get('gallery_venoboxShareStyle'),
             'spinner' => $this->getConfig()->get('gallery_venoboxSpinner'),
             'spinColor' => $this->getConfig()->get('gallery_venoboxSpinColor'),
-            'titleattr' => ((bool)$this->getConfig()->get('gallery_venoboxTitleattr') ? 'title' : 'data-title'), // Logic adjustment
+            'titleattr' => ($this->getConfig()->get('gallery_venoboxTitleattr') ? 'title' : 'data-title'), // Logic adjustment
             'titlePosition' => $this->getConfig()->get('gallery_venoboxTitlePosition'),
             'titleStyle' => $this->getConfig()->get('gallery_venoboxTitleStyle'),
             'toolsBackground' => $this->getConfig()->get('gallery_venoboxToolsBackground'),
