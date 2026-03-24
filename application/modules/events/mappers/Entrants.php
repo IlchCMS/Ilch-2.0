@@ -15,12 +15,12 @@ class Entrants extends \Ilch\Mapper
      * @var string
      * @since 1.23.6
      */
-    public $tablename = 'events_entrants';
+    public string $tablename = 'events_entrants';
 
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      * @throws \Ilch\Database\Exception
      * @since 1.23.6
      */
@@ -164,16 +164,5 @@ class Entrants extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['user_id' => $userId, 'event_id' => $eventId])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.23.6
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 }

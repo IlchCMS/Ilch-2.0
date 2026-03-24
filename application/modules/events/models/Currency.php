@@ -14,14 +14,14 @@ class Currency extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The name of the currency.
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * @param array $entries

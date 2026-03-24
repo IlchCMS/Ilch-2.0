@@ -92,8 +92,6 @@ class Index extends \Ilch\Controller\Frontend
         $imageSize = $this->getConfig()->get('event_size');
 
         if ($this->getRequest()->isPost()) {
-            $image = '';
-
             Validation::setCustomFieldAliases([
                 'start' => 'startTime',
                 'end'   => 'endTime'
@@ -107,7 +105,6 @@ class Index extends \Ilch\Controller\Frontend
                 'website' => 'url',
                 'text' => 'required',
                 'userLimit' => 'required|numeric|integer|min:0',
-                //'groups' => '',
             ];
 
             if ($this->getRequest()->getPost('creator')) {

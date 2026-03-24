@@ -14,21 +14,21 @@ class Entrants extends \Ilch\Model
      *
      * @var int
      */
-    protected $eventId = 0;
+    protected int $eventId = 0;
 
     /**
      * The userId of the event entrants.
      *
      * @var int
      */
-    protected $userId = 0;
+    protected int $userId = 0;
 
     /**
      * The user status of the event entrants.
      *
      * @var int
      */
-    protected $status = 0;
+    protected int $status = 0;
 
     /**
      * @param array $entries
@@ -123,7 +123,6 @@ class Entrants extends \Ilch\Model
     }
 
     /**
-     * @param bool $withId
      * @return array
      * @since 1.23.6
      */

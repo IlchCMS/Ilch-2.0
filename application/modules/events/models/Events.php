@@ -14,119 +14,119 @@ class Events extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The user id of the host of the event.
      *
      * @var int
      */
-    protected $userId = 0;
+    protected int $userId = 0;
 
     /**
      * The start date of the event.
      *
      * @var string
      */
-    protected $start = '';
+    protected string $start = '';
 
     /**
      * The end date of the event.
      *
      * @var string
      */
-    protected $end = '';
+    protected string $end = '';
 
     /**
      * The title of the event.
      *
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * The place of the event.
      *
      * @var string
      */
-    protected $place = '';
+    protected string $place = '';
 
     /**
      * The type of the event like concert, karaoke evening, ...
      *
      * @var string
      */
-    protected $type = '';
+    protected string $type = '';
 
     /**
      * The website of the event.
      *
      * @var string
      */
-    protected $website = '';
+    protected string $website = '';
 
     /**
      * The lat and long of the event.
      *
      * @var string
      */
-    protected $latLong = '';
+    protected string $latLong = '';
 
     /**
      * The image of the event.
      *
      * @var string
      */
-    protected $image = '';
+    protected string $image = '';
 
     /**
      * The text of the event.
      *
      * @var string
      */
-    protected $text = '';
+    protected string $text = '';
 
     /**
      * The currency of the event.
      *
      * @var int
      */
-    protected $currency = 0;
+    protected int $currency = 0;
 
     /**
      * The price of the event.
      *
      * @var string
      */
-    protected $price = '';
+    protected string $price = '';
 
     /**
      * The price art of the event.
      *
      * @var int
      */
-    protected $priceArt = 0;
+    protected int $priceArt = 0;
 
     /**
      * The show of the event.
      *
      * @var int
      */
-    protected $show = 0;
+    protected int $show = 0;
 
     /**
      * The user limit of the event.
      *
      * @var int
      */
-    protected $userLimit = 0;
+    protected int $userLimit = 0;
 
     /**
      * The read access of the event.
      *
      * @var string
      */
-    protected $readAccess = '';
+    protected string $readAccess = '';
 
     /**
      * @param array $entries

@@ -15,12 +15,12 @@ class Currency extends \Ilch\Mapper
      * @var string
      * @since 1.23.6
      */
-    public $tablename = 'events_currencies';
+    public string $tablename = 'events_currencies';
 
     /**
      * returns if the module is installed.
      *
-     * @return boolean
+     * @return bool
      * @throws \Ilch\Database\Exception
      * @since 1.23.6
      */
@@ -134,16 +134,5 @@ class Currency extends \Ilch\Mapper
         return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.23.6
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 }

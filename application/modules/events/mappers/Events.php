@@ -17,19 +17,7 @@ class Events extends \Ilch\Mapper
      * @var string
      * @since 1.23.6
      */
-    public $tablename = 'events';
-
-    /**
-     * returns if the module is installed.
-     *
-     * @return boolean
-     * @throws \Ilch\Database\Exception
-     * @since 1.23.6
-     */
-    public function checkDB(): bool
-    {
-        return $this->db()->ifTableExists($this->tablename);
-    }
+    public string $tablename = 'events';
 
     /**
      * Gets the Entries by params.
@@ -103,8 +91,7 @@ class Events extends \Ilch\Mapper
      * Get list of upcoming events.
      *
      * @param int|null $limit
-     * @return EventMapper[]|null
-     * @throws Exception
+     * @return EventModel[]|null
      */
     public function getEventListUpcoming(?int $limit = null): ?array
     {
@@ -121,7 +108,7 @@ class Events extends \Ilch\Mapper
      * Get list of events a user participates in.
      *
      * @param int $userId
-     * @return EventMapper[]|array
+     * @return EventModel[]|array
      */
     public function getEventListParticipation(int $userId): ?array
     {
@@ -132,8 +119,7 @@ class Events extends \Ilch\Mapper
      * Get list of past events.
      *
      * @param int|null $limit
-     * @return EventMapper[]|array
-     * @throws Exception
+     * @return EventModel[]|array
      */
     public function getEventListPast(?int $limit = null): ?array
     {
@@ -150,8 +136,7 @@ class Events extends \Ilch\Mapper
      * Get a list of the current events.
      *
      * @param int|null $limit
-     * @return EventMapper[]|null
-     * @throws Exception
+     * @return EventModel[]|null
      */
     public function getEventListCurrent(?int $limit = null): ?array
     {
@@ -188,9 +173,7 @@ class Events extends \Ilch\Mapper
      *
      * @param string $start
      * @param string $end
-     *
      * @return EventModel[]|array|null
-     * @throws Exception
      */
     public function getEntriesForJson(string $start, string $end): ?array
     {
@@ -312,16 +295,5 @@ class Events extends \Ilch\Mapper
             ->values(['image' => ''])
             ->where(['id' => $id])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.23.6
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 }

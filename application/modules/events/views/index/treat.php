@@ -7,11 +7,15 @@ $config = \Ilch\Registry::get('config');
 
 /** @var \Modules\User\Mappers\Setting $settingMapper */
 $settingMapper = $this->get('settingMapper');
+
 /** @var \Modules\User\Mappers\User $userMapper */
 $userMapper = $this->get('userMapper');
+
+/** @var \Modules\User\Models\User[]|null $users */
 $users = $userMapper->getUserList();
 
 $groupAccesses = explode(',', $config->get('event_add_entries_accesses'));
+
 /** @var string[] $types */
 $types = $this->get('types');
 
@@ -127,7 +131,7 @@ $event = $this->get('event');
                        class="form-control"
                        id="title"
                        name="title"
-                       value="<?=$this->originalInput('title', $event->getTitle(), true) ?>" />
+                       value="<?=$this->escape($this->originalInput('title', $event->getTitle())) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('place') ? ' has-error' : '' ?>">
@@ -139,7 +143,7 @@ $event = $this->get('event');
                        class="form-control"
                        id="place"
                        name="place"
-                       value="<?=$this->originalInput('place', $event->getPlace(), true) ?>" />
+                       value="<?=$this->escape($this->originalInput('place', $event->getPlace())) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('type') ? ' has-error' : '' ?>">
@@ -163,7 +167,7 @@ $event = $this->get('event');
                        id="type"
                        name="type"
                        placeholder="<?=$this->getTrans('typePlaceholder') ?>"
-                       value="<?=$this->originalInput('type', $event->getType(), true) ?>" />
+                       value="<?=$this->escape($this->originalInput('type', $event->getType())) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('website') ? ' has-error' : '' ?>">
@@ -176,7 +180,7 @@ $event = $this->get('event');
                        id="website"
                        name="website"
                        placeholder="https://"
-                       value="<?=$this->originalInput('website', $event->getWebsite(), true) ?>" />
+                       value="<?=$this->escape($this->originalInput('website', $event->getWebsite())) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('text') ? ' has-error' : '' ?>">
@@ -188,7 +192,7 @@ $event = $this->get('event');
                           id="ck_1"
                           name="text"
                           toolbar="ilch_html_frontend"
-                          rows="5"><?=$this->originalInput('text', $event->getText(), true) ?></textarea>
+                          rows="5"><?=$this->escape($this->originalInput('text', $event->getText())) ?></textarea>
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('price') ? ' has-error' : '' ?>">
