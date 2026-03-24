@@ -18,7 +18,7 @@ $partner = $this->get('partner');
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?=$this->originalInput('name', $partner->getName(), true) ?>" />
+                   value="<?=$this->originalInput('name', $partner->getName()) ?>" />
         </div>
     </div>
     <div class="row mb-3">
@@ -30,8 +30,8 @@ $partner = $this->get('partner');
                    class="form-control"
                    id="link"
                    name="link"
-                   placeholder="http://"
-                   value="<?=$this->originalInput('link', $partner->getLink(), true) ?>" />
+                   placeholder="https://"
+                   value="<?=$this->originalInput('link', $partner->getLink()) ?>" />
         </div>
         <div class="col-xl-3">
             <select class="form-select" id="target" name="target">
@@ -51,7 +51,7 @@ $partner = $this->get('partner');
                        id="selectedImage_1"
                        name="banner"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
-                       value="<?=$this->originalInput('banner', $partner->getBanner(), true) ?>" />
+                       value="<?=$this->originalInput('banner', $partner->getBanner()) ?>" />
                 <span class="input-group-text"><a id="media" href="javascript:media_1()"><i class="fa-regular fa-image"></i></a></span>
             </div>
         </div>

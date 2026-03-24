@@ -14,42 +14,42 @@ class Partner extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The name of the partner.
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * The link of the partner.
      *
      * @var string
      */
-    protected $link = '';
+    protected string $link = '';
 
     /**
      * The banner of the partner.
      *
      * @var string
      */
-    protected $banner = '';
+    protected string $banner = '';
 
     /**
      * The link target of the entry.
      *
      * @var int
      */
-    protected $target = 0;
+    protected int $target = 0;
 
     /**
      * The free of the entry.
      *
      * @var int
      */
-    protected $free = 1;
+    protected int $free = 1;
 
     /**
      * @param array $entries

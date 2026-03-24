@@ -26,7 +26,7 @@
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?=$this->originalInput('name', '', true) ?>" />
+                   value="<?=$this->originalInput('name') ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('link') ? ' has-error' : '' ?>">
@@ -39,7 +39,7 @@
                    id="link"
                    name="link"
                    placeholder="https://"
-                   value="<?=$this->originalInput('link', '', true) ?>" />
+                   value="<?=$this->originalInput('link') ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('banner') ? ' has-error' : '' ?>">
@@ -52,7 +52,7 @@
                    id="banner"
                    name="banner"
                    placeholder="https://"
-                   value="<?=$this->originalInput('banner', '', true) ?>" />
+                   value="<?=$this->originalInput('banner') ?>" />
         </div>
     </div>
     <?php if ($this->get('captchaNeeded') && $this->get('defaultcaptcha')) : ?>

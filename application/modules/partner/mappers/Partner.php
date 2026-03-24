@@ -15,19 +15,7 @@ class Partner extends \Ilch\Mapper
      * @var string
      * @since 1.14.2
      */
-    public $tablename = 'partners';
-
-    /**
-     * returns if the module is installed.
-     *
-     * @return boolean
-     * @throws \Ilch\Database\Exception
-     * @since 1.14.2
-     */
-    public function checkDB(): bool
-    {
-        return $this->db()->ifTableExists($this->tablename);
-    }
+    public string $tablename = 'partners';
 
     /**
      * Gets the Entries by params.
@@ -76,7 +64,7 @@ class Partner extends \Ilch\Mapper
      * @param array $where
      * @return PartnerModel[]
      */
-    public function getEntries($where = [])
+    public function getEntries(array $where = []): array
     {
         return $this->getPartnersBy($where, ['id' => 'DESC']);
     }
@@ -88,7 +76,7 @@ class Partner extends \Ilch\Mapper
      * @param array $orderBy
      * @return PartnerModel[]
      */
-    public function getPartnersBy($where = [], $orderBy = ['id' => 'ASC'])
+    public function getPartnersBy(array $where = [], array $orderBy = ['id' => 'ASC']): array
     {
         $partnerArray = $this->getEntriesBy($where, $orderBy);
 
@@ -104,7 +92,7 @@ class Partner extends \Ilch\Mapper
      * @param int $id
      * @return PartnerModel|null
      */
-    public function getPartnerById($id)
+    public function getPartnerById(int $id): ?PartnerModel
     {
         $partnerArray = $this->getEntriesBy(['id' => $id], []);
 
@@ -143,7 +131,7 @@ class Partner extends \Ilch\Mapper
      * @param int $id
      * @param int $position
      */
-    public function updatePositionById($id, $position)
+    public function updatePositionById(int $id, int $position)
     {
         $this->db()->update($this->tablename)
             ->values(['pos' => $position])
@@ -156,21 +144,10 @@ class Partner extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id)
     {
         $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
-    }
-
-    /**
-     * Deletes all entries.
-     *
-     * @return bool
-     * @since 1.14.2
-     */
-    public function truncate(): bool
-    {
-        return (bool)$this->db()->truncate($this->tablename);
     }
 }

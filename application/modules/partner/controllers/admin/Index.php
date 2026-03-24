@@ -170,9 +170,9 @@ class Index extends \Ilch\Controller\Admin
             }
 
             $post = [
-                'name' => $this->getRequest()->getPost('name', '', true),
-                'link' => $this->getRequest()->getPost('link', '', true),
-                'target' => $this->getRequest()->getPost('target', '', true),
+                'name' => $this->getRequest()->getPost('name', ''),
+                'link' => $this->getRequest()->getPost('link', ''),
+                'target' => $this->getRequest()->getPost('target', ''),
                 'banner' => $banner
             ];
 
@@ -183,13 +183,11 @@ class Index extends \Ilch\Controller\Admin
                 'banner' => 'required|url'
             ]);
 
-            $post['banner'] = trim($this->getRequest()->getPost('banner'));
-
             if ($validation->isValid()) {
-                $model->setName($this->getRequest()->getPost('name', '', true))
-                    ->setLink($this->getRequest()->getPost('link', '', true))
-                    ->setTarget($this->getRequest()->getPost('target', '', true))
-                    ->setBanner($this->getRequest()->getPost('banner', '', true));
+                $model->setName($this->getRequest()->getPost('name', ''))
+                    ->setLink($this->getRequest()->getPost('link', ''))
+                    ->setTarget($this->getRequest()->getPost('target', ''))
+                    ->setBanner($this->getRequest()->getPost('banner', ''));
                 $partnerMapper->save($model);
 
                 $this->redirect()

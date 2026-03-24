@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-    <div id="contentHeight" <?=(!$slider) ? 'hidden' : '' ?>>
+    <div id="contentHeight" <?=(!$this->originalInput('slider', $this->get('slider')) == 1) ? 'hidden' : '' ?>>
         <div class="row mb-3<?=$this->validation()->hasError('boxSliderMode') ? ' has-error' : '' ?>">
             <label for="boxSliderMode" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('boxSliderMode') ?>:

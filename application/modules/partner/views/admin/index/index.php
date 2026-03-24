@@ -84,7 +84,7 @@
                                 ?>
                             </td>
                             <td><?=$this->escape($entry->getName()) ?></td>
-                            <td><a href='<?=$this->escape($entry->getLink()) ?>' target="_blank" rel="noopener"><img src='<?=$banner ?>'></a></td>
+                            <td><a href='<?=$this->escape($entry->getLink()) ?>' target="_blank" rel="noopener"><img src='<?=$banner ?>' alt="<?=$this->getTrans('banner') ?>"></a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

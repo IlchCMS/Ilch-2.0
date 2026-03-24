@@ -25,7 +25,7 @@
                     $banner = $partner->getBanner();
                 }
                 ?>
-                <a href="<?=$link ?>" alt="<?=$this->escape($partner->getName()) ?>" title="<?=$this->escape($partner->getName()) ?>" target=<?=($partner->getTarget() == 0) ? '"_blank" rel="noopener"' : '"_self"' ?>>
+                <a href="<?=$link ?>" title="<?=$this->escape($partner->getName()) ?>" target=<?=($partner->getTarget() == 0) ? '"_blank" rel="noopener"' : '"_self"' ?>>
                     <img src="<?=$banner ?>" alt="<?=$this->escape($partner->getName()) ?>" title="<?=$this->escape($partner->getName()) ?>" class="img-fluid">
                 </a>
                 <br />
@@ -48,7 +48,7 @@
                         ?>
 
                         <div class="partner-item">
-                            <a href="<?=$link ?>" alt="<?=$this->escape($partner->getName()) ?>" title="<?=$this->escape($partner->getName()) ?>" target=<?=($partner->getTarget() == 0) ? '"_blank" rel="noopener"' : '"_self"' ?>>
+                            <a href="<?=$link ?>" title="<?=$this->escape($partner->getName()) ?>" target=<?=($partner->getTarget() == 0) ? '"_blank" rel="noopener"' : '"_self"' ?>>
                                 <img src="<?=$banner ?>" alt="<?=$this->escape($partner->getName()) ?>" title="<?=$this->escape($partner->getName()) ?>" class="img-fluid">
                             </a>
                         </div>
