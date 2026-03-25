@@ -257,7 +257,7 @@ class Upload
         $this->setUrl($this->path . $hash . '.' . $extension);
         $this->setUrlThumb($this->path . 'thumb_' . $hash . '.' . $extension);
 
-        if (move_uploaded_file($_FILES['upl']['tmp_name'], $this->path . $hash . '.' . $extension) && $this->isAllowedExtension()) {
+        if ($this->isAllowedExtension() && move_uploaded_file($_FILES['upl']['tmp_name'], $this->path . $hash . '.' . $extension)) {
             if (!in_array($extension, ['jpg', 'jpeg', 'gif', 'png'])) {
                 // EasyPhpThumbnail only supports these image types.
                 return;
