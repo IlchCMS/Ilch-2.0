@@ -138,11 +138,11 @@ class Icons extends Admin
             }
 
             if ($validation->isValid()) {
-                $_POST['gameName'] = strtolower($this->getRequest()->getPost('gameName'));
+                $gameName = preg_replace('/[^a-z0-9_\-]/', '', strtolower($this->getRequest()->getPost('gameName')));
                 if (!empty($_FILES['icon']['name']) && file_exists($_FILES['icon']['tmp_name'])) {
-                    move_uploaded_file($_FILES['icon']['tmp_name'], ROOT_PATH . '/application/modules/war/static/img/' . $this->getRequest()->getPost('gameName') . '.png');
+                    move_uploaded_file($_FILES['icon']['tmp_name'], ROOT_PATH . '/application/modules/war/static/img/' . $gameName . '.png');
                 } elseif ($this->getRequest()->getParam('key')) {
-                    rename(ROOT_PATH . '/application/modules/war/static/img/' . $this->getRequest()->getParam('key') . '.png', ROOT_PATH . '/application/modules/war/static/img/' . $this->getRequest()->getPost('gameName') . '.png');
+                    rename(ROOT_PATH . '/application/modules/war/static/img/' . $this->getRequest()->getParam('key') . '.png', ROOT_PATH . '/application/modules/war/static/img/' . $gameName . '.png');
                 }
 
                 $this->redirect()
