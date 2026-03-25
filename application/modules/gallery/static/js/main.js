@@ -3,9 +3,9 @@
  */
 $(document).ready(function() {
 
-    // 1. Reset-Funktionalität
+    // 1. Reset functionality
     $('#resetVenobox').on('click', function() {
-        if (confirm('Möchten Sie alle Venobox-Einstellungen auf die Standardwerte zurücksetzen?')) {
+        if (confirm(galleryTrans.resetConfirm)) {
 
             const defaults = {
                 'venoboxNumeration': '1',
@@ -44,12 +44,12 @@ $(document).ready(function() {
                 }
             });
 
-            // Optisches Feedback
+            // Visual feedback
             let $btn = $(this);
             let originalText = $btn.html();
-            $btn.html('<i class="fa-solid fa-check"></i> Eingetragen').addClass('btn-success').removeClass('btn-outline-danger');
+            $btn.html('<i class="fa-solid fa-check"></i> ' + galleryTrans.resetApplied).addClass('btn-success').removeClass('btn-outline-danger');
 
-            alert('Die Standardwerte wurden ins Formular eingetragen. Bitte klicke unten auf Speichern, um sie dauerhaft zu übernehmen.');
+            alert(galleryTrans.resetAlertText);
 
             setTimeout(function() {
                 $btn.html(originalText).addClass('btn-outline-danger').removeClass('btn-success');
@@ -57,7 +57,7 @@ $(document).ready(function() {
         }
     });
 
-    // 2. Choices.js Initialisierung für Bildquelle
+    // 2. Choices.js initialization for image source
     const sourceSelect = document.getElementById('pictureOfXSource');
     if (sourceSelect) {
         new Choices(sourceSelect, {
@@ -65,7 +65,7 @@ $(document).ready(function() {
             searchEnabled: true,
             itemSelectText: '',
             placeholder: true,
-            placeholderValue: 'Bitte wählen...'
+            placeholderValue: galleryTrans.pleaseSelect
         });
     }
 });

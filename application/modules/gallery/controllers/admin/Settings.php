@@ -44,7 +44,7 @@ class Settings extends Admin
             ->add($this->getTranslator()->trans('gallery'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
-        // Liste aller neuen Venobox-Einstellungen
+        // List of all Venobox settings keys
         $venoboxKeys = [
             'venoboxBgcolor', 'venoboxBorder', 'venoboxFitView',
             'venoboxInfiniteGallery', 'venoboxMaxWidth', 'venoboxNavigation', 'venoboxNavKeyboard',
@@ -59,8 +59,8 @@ class Settings extends Admin
                 'picturesPerPage' => 'numeric|min:1',
                 'pictureOfXInterval' => 'numeric|min:0|max:4',
                 'pictureOfXRandom' => 'numeric|min:0|max:1',
-                // Venobox numerische Checks (für Boolean/Zahlen Werte)
-                'venoboxNumeration' => 'numeric',
+                'venoboxNumeration' => 'numeric|min:0|max:1',
+                'venoboxInfiniteGallery' => 'numeric|min:0|max:1',
                 'venoboxNavSpeed' => 'numeric',
             ]);
 
@@ -68,7 +68,7 @@ class Settings extends Admin
                 // Standard Gallery Settings
                 $this->getConfig()->set('gallery_picturesPerPage', $this->getRequest()->getPost('picturesPerPage'));
 
-                $pictureOfXSource = is_array($this->getRequest()->getPost('pictureOfXSource')) ? implode(",", $this->getRequest()->getPost('pictureOfXSource')) : '';
+                $pictureOfXSource = is_array($this->getRequest()->getPost('pictureOfXSource')) ? implode(',', $this->getRequest()->getPost('pictureOfXSource')) : '';
                 $this->getConfig()->set('gallery_pictureOfXSource', (empty($pictureOfXSource)) ? '' : $pictureOfXSource);
                 $this->getConfig()->set('gallery_pictureOfXInterval', $this->getRequest()->getPost('pictureOfXInterval'));
                 $this->getConfig()->set('gallery_pictureOfXRandom', $this->getRequest()->getPost('pictureOfXRandom'));
@@ -76,28 +76,30 @@ class Settings extends Admin
                 // Venobox Settings Loop
                 foreach ($venoboxKeys as $key) {
                     $value = $this->getRequest()->getPost($key);
-                    // config key immer mit prefix 'gallery_' speichern
+                    // Always save config key with prefix 'gallery_'
                     $this->getConfig()->set('gallery_' . $key, $value);
                 }
 
-                $this->addMessage('saveSuccess');
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
 
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $this->redirect()
+                ->withInput()
                 ->withErrors($validation->getErrorBag())
                 ->to(['action' => 'index']);
         }
 
-        // View Variables setzen
+        // Set view variables
         $this->getView()->set('picturesPerPage', $this->getConfig()->get('gallery_picturesPerPage'));
         $this->getView()->set('pictureOfXSource', explode(',', $this->getConfig()->get('gallery_pictureOfXSource') ?? ''));
         $this->getView()->set('pictureOfXInterval', $this->getConfig()->get('gallery_pictureOfXInterval'));
         $this->getView()->set('pictureOfXRandom', $this->getConfig()->get('gallery_pictureOfXRandom'));
         $this->getView()->set('galleries', $galleryMapper->getGalleryCatItem(1));
 
-        // Venobox Variablen an View übergeben
+        // Pass Venobox variables to view
         foreach ($venoboxKeys as $key) {
             $this->getView()->set($key, $this->getConfig()->get('gallery_' . $key));
         }
