@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -18,21 +19,21 @@ class Recipient extends Model
      *
      * @var int
      */
-    protected $award_id;
+    protected int $award_id = 0;
 
     /**
      * The utId of the awards.
      *
      * @var int
      */
-    protected $utId;
+    protected int $utId = 0;
 
     /**
      * The type of the awards.
      *
      * @var int
      */
-    protected $typ;
+    protected int $typ = 0;
 
     /**
      * Get the award id.
@@ -98,5 +99,18 @@ class Recipient extends Model
     {
         $this->typ = $typ;
         return $this;
+    }
+
+    /**
+     * @return array
+     * @since 1.12.2
+     */
+    public function getArray(): array
+    {
+        return [
+            'award_id' =>   $this->getAwardId(),
+            'ut_id' =>   $this->getUtId(),
+            'typ' =>  $this->getTyp(),
+        ];
     }
 }
