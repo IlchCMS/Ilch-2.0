@@ -71,7 +71,7 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj)
                             </a>
                             <br>
                             <div class="small">
-                                <?=$obj->purify($item->getDesc()) ?>
+                                <?=$obj->escape($item->getDesc()) ?>
                             </div>
                         </dt>
                         <dd class="posts small">
@@ -158,7 +158,7 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj)
                     </dl>
                     <?php if ($cat->getDesc() != '') : ?>
                         <dl class="desc small ilch-bg ilch-border">
-                            <?=$this->purify($cat->getDesc()) ?>
+                            <?=$this->escape($cat->getDesc()) ?>
                         </dl>
                     <?php endif; ?>
                 </li>
