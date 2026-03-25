@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.35.7',
+        'version' => '1.35.8',
         'icon_small' => 'fa-solid fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
@@ -933,6 +933,11 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_forum_posts` MODIFY COLUMN `text` MEDIUMTEXT NOT NULL;');
 
                 // no break
+            case "1.35.3":
+            case "1.35.4":
+            case "1.35.5":
+            case "1.35.6":
+            case "1.35.7":
         }
 
         return '"' . $this->config['key'] . '" Update function executed.';

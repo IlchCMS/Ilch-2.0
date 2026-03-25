@@ -66,7 +66,7 @@ $postsPerPage = $this->get('postsPerPage');
                             }
                             ?>
                             <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic['topic']->getId()]) ?>" class="topictitle">
-                                <?=$topic['topic']->getTopicTitle() ?>
+                                <?=$this->escape($topic['topic']->getTopicTitle()) ?>
                             </a>
                             <?php if ($topic['topic']->getType() == '1') : ?>
                                 <i class="fa-solid fa-thumbtack"></i>

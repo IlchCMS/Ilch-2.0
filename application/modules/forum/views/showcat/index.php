@@ -67,11 +67,11 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj)
                     ">
                         <dt>
                             <a href="<?=$obj->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $item->getId()]) ?>">
-                                <?=$item->getTitle() ?>
+                                <?=$obj->escape($item->getTitle()) ?>
                             </a>
                             <br>
                             <div class="small">
-                                <?=$item->getDesc() ?>
+                                <?=$obj->escape($item->getDesc()) ?>
                             </div>
                         </dt>
                         <dd class="posts small">
@@ -131,7 +131,7 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj)
 <div id="forum">
     <h1>
         <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
-        <i class="fa-solid fa-chevron-right"></i> <?=$cat->getTitle() ?>
+        <i class="fa-solid fa-chevron-right"></i> <?=$this->escape($cat->getTitle()) ?>
     </h1>
     <?php
     $adminAccess = null;
@@ -152,13 +152,13 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj)
                     <dl class="title ilch-head">
                         <dt>
                             <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>">
-                                <?=$cat->getTitle() ?>
+                                <?=$this->escape($cat->getTitle()) ?>
                             </a>
                         </dt>
                     </dl>
                     <?php if ($cat->getDesc() != '') : ?>
                         <dl class="desc small ilch-bg ilch-border">
-                            <?=$cat->getDesc() ?>
+                            <?=$this->escape($cat->getDesc()) ?>
                         </dl>
                     <?php endif; ?>
                 </li>
