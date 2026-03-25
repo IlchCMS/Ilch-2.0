@@ -3,6 +3,8 @@
 
 /** @var \Modules\War\Mappers\War $warMapper */
 $warMapper = $this->get('warMapper');
+/** @var array<string, string> $gameIconMap */
+$gameIconMap = $this->get('gameIconMap') ?? [];
 ?>
 <link href="<?=$this->getBoxUrl('static/css/style.css') ?>" rel="stylesheet">
 
@@ -17,9 +19,9 @@ $warMapper = $this->get('warMapper');
     foreach ($this->get('wars') as $war) :
         $displayed++;
 
-        $gameImg = $this->getBoxUrl('static/img/' . $war->getWarGame() . '.png');
-        if (file_exists(APPLICATION_PATH . '/modules/war/static/img/' . $war->getWarGame() . '.png')) {
-            $gameImg = '<img src="' . $this->getBoxUrl('static/img/' . urlencode($war->getWarGame()) . '.png') . '" title="' . $this->escape($war->getWarGame()) . '" width="16" height="16">';
+        $iconFilename = $gameIconMap[$war->getWarGame()] ?? null;
+        if ($iconFilename !== null && file_exists(APPLICATION_PATH . '/modules/war/static/img/' . $iconFilename . '.png')) {
+            $gameImg = '<img src="' . $this->getBoxUrl('static/img/' . $iconFilename . '.png') . '" title="' . $this->escape($war->getWarGame()) . '" width="16" height="16">';
         } else {
             $gameImg = '<i class="fa-solid fa-question-circle text-muted" title="' . $this->escape($war->getWarGame()) . '"></i>';
         }

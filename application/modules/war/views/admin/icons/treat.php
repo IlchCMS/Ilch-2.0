@@ -2,10 +2,11 @@
 
 /** @var \Ilch\View $this */
 
-/** @var string $icon */
-$icon = $this->get('icon');
+/** @var \Modules\War\Models\GameIcon|null $gameIconModel */
+$gameIconModel = $this->get('gameIconModel');
+$isEdit = $gameIconModel !== null;
 ?>
-<h1><?=$this->getTrans(!$icon ? 'createNewGameIcon' : 'treatGameIcon') ?></h1>
+<h1><?=$this->getTrans(!$isEdit ? 'createNewGameIcon' : 'treatGameIcon') ?></h1>
 <form id="warIcon_form" method="POST" action="" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
     <div class="row mb-3<?=$this->validation()->hasError('gameName') ? ' has-error' : '' ?>">
@@ -17,7 +18,7 @@ $icon = $this->get('icon');
                    class="form-control"
                    id="gameNameInput"
                    name="gameName"
-                   value="<?=$this->escape($this->originalInput('gameName', ($icon ?? ''))) ?>" />
+                   value="<?=$this->escape($this->originalInput('gameName', ($isEdit ? $gameIconModel->getTitle() : ''))) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('gameIcon') ? ' has-error' : '' ?>">
@@ -33,16 +34,16 @@ $icon = $this->get('icon');
                        name="gameIcon"
                        aria-describedby="iconHelpBlock"
                        readonly />
-                <?php if ($icon && file_exists(APPLICATION_PATH . '/modules/war/static/img/' . $icon . '.png')) : ?>
+                <?php if ($isEdit && $gameIconModel->getIcon() !== '' && file_exists(APPLICATION_PATH . '/modules/war/static/img/' . $gameIconModel->getIcon() . '.png')) : ?>
                     <span class="input-group-text">
-                        <img src="<?=$this->getBaseUrl() . 'application/modules/war/static/img/' . $icon . '.png' ?>" title="<?=$this->escape($icon) ?>" alt="<?=$this->escape($icon) ?>">
+                        <img src="<?=$this->getBaseUrl('application/modules/war/static/img/' . $gameIconModel->getIcon() . '.png') ?>" title="<?=$this->escape($gameIconModel->getTitle()) ?>" alt="<?=$this->escape($gameIconModel->getTitle()) ?>">
                     </span>
                 <?php endif; ?>
             </div>
             <div class="form-text" id="iconHelpBlock"><?=$this->getTrans('iconSize') ?>: 16 Pixel <?=$this->getTrans('iconWidth') ?>, 16 Pixel <?=$this->getTrans('iconHeight') ?>. <?=$this->getTrans('allowedFileExtensions') ?>: png</div>
         </div>
     </div>
-    <?=$this->getSaveBar($icon ? 'updateButton' : 'addButton') ?>
+    <?=$this->getSaveBar($isEdit ? 'updateButton' : 'addButton') ?>
 </form>
 
 <script>

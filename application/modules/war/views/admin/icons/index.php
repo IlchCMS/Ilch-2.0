@@ -1,14 +1,17 @@
 <?php
 
 /** @var \Ilch\View $this */
+/** @var \Modules\War\Models\GameIcon[] $icons */
+$icons = $this->get('icons');
 ?>
 <h1><?=$this->getTrans('menuGameIcons') ?></h1>
-<?php if ($this->get('icons')) : ?>
+<?php if ($icons) : ?>
     <form method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <colgroup>
+                    <col class="icon_width" />
                     <col class="icon_width" />
                     <col class="icon_width" />
                     <col class="icon_width" />
@@ -19,18 +22,24 @@
                         <th><?=$this->getCheckAllCheckbox('check_icons') ?></th>
                         <th></th>
                         <th></th>
+                        <th></th>
                         <th><?=$this->getTrans('nextWarGame') ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    /** @var string $game */
-                    foreach ($this->get('icons') as $game) : ?>
+                    /** @var \Modules\War\Models\GameIcon $gameIcon */
+                    foreach ($icons as $gameIcon) : ?>
                         <tr>
-                            <td><?=$this->getDeleteCheckbox('check_icons', $game) ?></td>
-                            <td><?=$this->getEditIcon(['action' => 'treat', 'key' => $game]) ?></td>
-                            <td><?=$this->getDeleteIcon(['action' => 'del', 'key' => $game]) ?></td>
-                            <td><?=$this->escape($game) ?></td>
+                            <td><?=$this->getDeleteCheckbox('check_icons', $gameIcon->getId()) ?></td>
+                            <td>
+                                <?php if (file_exists(APPLICATION_PATH . '/modules/war/static/img/' . $gameIcon->getIcon() . '.png')) : ?>
+                                    <img src="<?=$this->getBaseUrl('application/modules/war/static/img/' . $gameIcon->getIcon() . '.png') ?>" alt="<?=$this->escape($gameIcon->getTitle()) ?>" width="16" height="16">
+                                <?php endif; ?>
+                            </td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $gameIcon->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $gameIcon->getId()]) ?></td>
+                            <td><?=$this->escape($gameIcon->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
