@@ -24,3 +24,6 @@
 .choices__list--single .choices__item {
     border: 0 !important;
 }
+.choices__list--dropdown {
+  --choices-z-index: 2;
+}
