@@ -88,7 +88,7 @@ function rec(ForumItem $item, View $obj, ?int $i)
                     ">
                         <dt>
                             <a href="<?=$obj->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $item->getId()]) ?>">
-                                <?=$item->getTitle() ?>
+                                <?=$obj->escape($item->getTitle()) ?>
                             </a>
                             <br>
                             <div class="small">

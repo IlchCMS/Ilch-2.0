@@ -35,8 +35,8 @@ $pagination = $this->get('pagination');
     <div id="forum">
         <h1>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
-            <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>
-            <i class="fa-solid fa-chevron-right"></i> <?=$forum->getTitle() ?>
+            <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$this->escape($cat->getTitle()) ?></a>
+            <i class="fa-solid fa-chevron-right"></i> <?=$this->escape($forum->getTitle()) ?>
         </h1>
         <div class="topic-actions">
             <?php if ($this->getUser()) : ?>
