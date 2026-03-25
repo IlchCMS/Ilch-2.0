@@ -114,10 +114,17 @@ class Settings extends Admin
 
     public function dummyAction()
     {
-        if (!$this->getRequest()->isPost()) {
+        if (!$this->getRequest()->isPost() || !$this->getRequest()->isSecure()) {
             $this->redirect(['action' => 'index']);
             return;
         }
+
+        $groupMapper = new GroupMapper();
+        $enemyMapper = new EnemyMapper();
+        $mapsMapper = new MapsMapper();
+        $gameIconMapper = new GameIconMapper();
+        $warMapper = new WarMapper();
+        $gamesMapper = new GamesMapper();
 
         // 1. Dummy-Gruppe
         $groupModel = (new GroupModel())
@@ -126,7 +133,7 @@ class Settings extends Admin
             ->setGroupImage('')
             ->setGroupMember('')
             ->setGroupDesc('Diese Gruppe wurde automatisch als Demo-Eintrag erstellt.');
-        $groupId = (new GroupMapper())->save($groupModel);
+        $groupId = $groupMapper->save($groupModel);
 
         // 2. Dummy-Gegner
         $enemyModel = (new EnemyModel())
@@ -136,11 +143,11 @@ class Settings extends Admin
             ->setEnemyHomepage('')
             ->setEnemyContactName('')
             ->setEnemyContactEmail('');
-        $enemyId = (new EnemyMapper())->save($enemyModel);
+        $enemyId = $enemyMapper->save($enemyModel);
 
         // 3. Dummy-Map
         $mapsModel = (new MapsModel())->setName('Dust 2');
-        $mapId = (new MapsMapper())->save($mapsModel);
+        $mapId = $mapsMapper->save($mapsModel);
 
         // 4. Dummy-Game-Icon (16x16 PNG)
         $iconFilename = 'icon_' . str_replace('.', '', uniqid('', true));
@@ -161,7 +168,7 @@ class Settings extends Admin
         $gameIconModel = (new GameIconModel())
             ->setTitle('Counter-Strike')
             ->setIcon($iconFilename);
-        (new GameIconMapper())->save($gameIconModel);
+        $gameIconMapper->save($gameIconModel);
 
         // 5. Dummy-War (abgeschlossen)
         $warModel = (new WarModel())
@@ -179,7 +186,7 @@ class Settings extends Admin
             ->setShow(0)
             ->setReadAccess('all')
             ->setLastAcceptTime(0);
-        $warId = (new WarMapper())->save($warModel);
+        $warId = $warMapper->save($warModel);
 
         // 6. Dummy-Spielergebnis
         $gamesModel = (new GamesModel())
@@ -187,7 +194,7 @@ class Settings extends Admin
             ->setMap($mapId)
             ->setGroupPoints(13)
             ->setEnemyPoints(7);
-        (new GamesMapper())->save($gamesModel);
+        $gamesMapper->save($gamesModel);
 
         $this->redirect()
             ->withMessage('dummyCreateSuccess')

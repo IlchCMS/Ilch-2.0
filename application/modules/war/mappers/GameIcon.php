@@ -13,8 +13,13 @@ class GameIcon extends \Ilch\Mapper
 {
     public string $tablename = 'war_game_icon';
 
+    public function checkDB(): bool
+    {
+        return $this->db()->ifTableExists($this->tablename);
+    }
+
     /**
-     * Returns all game icons.
+     * Returns all game icons ordered by title.
      *
      * @return GameIconModel[]
      */
@@ -31,7 +36,7 @@ class GameIcon extends \Ilch\Mapper
             return [];
         }
 
-        return array_map(function ($row) {
+        return array_map(static function (array $row): GameIconModel {
             return (new GameIconModel())->setByArray($row);
         }, $rows);
     }
@@ -57,22 +62,16 @@ class GameIcon extends \Ilch\Mapper
 
     /**
      * Returns a map of title => icon filename for quick lookup in views.
+     * Derived from getGameIcons() to avoid duplicate query logic.
      *
      * @return array<string, string>
      */
     public function getGameIconMap(): array
     {
-        $rows = $this->db()->select()
-            ->fields(['title', 'icon'])
-            ->from([$this->tablename])
-            ->execute()
-            ->fetchRows();
-
         $map = [];
-        foreach ($rows ?? [] as $row) {
-            $map[$row['title']] = $row['icon'];
+        foreach ($this->getGameIcons() as $icon) {
+            $map[$icon->getTitle()] = $icon->getIcon();
         }
-
         return $map;
     }
 
@@ -105,9 +104,9 @@ class GameIcon extends \Ilch\Mapper
     /**
      * Deletes a game icon by its ID.
      */
-    public function delete(int $id): void
+    public function delete(int $id): bool
     {
-        $this->db()->delete($this->tablename)
+        return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
     }
