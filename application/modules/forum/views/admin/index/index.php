@@ -31,7 +31,7 @@ function rec(ForumItem $item, \Ilch\View $obj)
             <input type="hidden" class="hidden_create_access" name="items[' . $item->getId() . '][createAccess]" value="' . $item->getCreateAccess() . '" />
             <span></span>
         </span>
-        <span class="title">' . $item->getTitle() . '</span>
+        <span class="title">' . $obj->escape($item->getTitle()) . '</span>
         <span class="item_delete">
             <i class="fa-solid fa-circle-xmark"></i>
         </span><span class="item_edit">
@@ -149,6 +149,16 @@ $(document).ready (
         let choicesAssignedGroupsReply;
         let choicesAssignedGroupsCreate;
 
+        function escapeHtml(unsafe) {
+            if (!unsafe) return ""; // Handle null/undefined
+            return unsafe
+                .replace(/&/g, "&amp;")   // First: escape & to avoid double-escaping entities
+                .replace(/</g, "&lt;")    // Escape <
+                .replace(/>/g, "&gt;")    // Escape >
+                .replace(/"/g, "&quot;")  // Escape " (for attributes)
+                .replace(/'/g, "&#39;");  // Escape ' (for attributes)
+        }
+
         $('.disclose').on('click', function () {
             $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
             $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-plus-circle');
@@ -167,7 +177,7 @@ $(document).ready (
 
             $('#sortable').find('li').each(function() {
                 if ($(this).find('input.hidden_type:first').val() == 0) {
-                    options += '<option value="'+$(this).find('input.hidden_id:first').val()+'">'+$(this).find('input.hidden_title:first').val()+'</option>';
+                    options += '<option value="'+$(this).find('input.hidden_id:first').val()+'">'+escapeHtml($(this).find('input.hidden_title:first').val())+'</option>';
                 }
             });
 
