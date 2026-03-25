@@ -7,7 +7,7 @@
                 <?=$this->getTrans('rules') ?>
             </div>
             <div class="card-body ck-content" style="background: #eee;">
-                <?=$this->get('regist_rules') ?>
+                <?=$this->purify($this->get('regist_rules')) ?>
             </div>
             <div class="card-footer clearfix">
                 <div class="float-start checkbox inline<?=$this->validation()->hasError('acceptRule') ? ' has-error' : '' ?>">
