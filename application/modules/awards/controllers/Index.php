@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -11,7 +12,7 @@ use Modules\User\Mappers\User as UserMapper;
 use Modules\Teams\Mappers\Teams as TeamsMapper;
 
 class Index extends \Ilch\Controller\Frontend
-{    
+{
     public function indexAction()
     {
         $awardsMapper = new AwardsMapper();
@@ -27,7 +28,7 @@ class Index extends \Ilch\Controller\Frontend
 
         $awards = $awardsMapper->getAwards();
         foreach ($awards as $award) {
-            foreach($award->getRecipients() as $recipient) {
+            foreach ($award->getRecipients() as $recipient) {
                 if ($recipient->getTyp() == 1) {
                     $userIds[] = $recipient->getUtId();
                 } else {
@@ -69,7 +70,7 @@ class Index extends \Ilch\Controller\Frontend
             $award = $awardsMapper->getAwardsById($this->getRequest()->getParam('id'));
 
             if ($award) {
-                foreach($award->getRecipients() as $recipient) {
+                foreach ($award->getRecipients() as $recipient) {
                     if ($recipient->getTyp() == 1) {
                         $userIds[] = $recipient->getUtId();
                     } else {
