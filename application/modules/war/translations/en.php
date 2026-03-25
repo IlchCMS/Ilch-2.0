@@ -167,4 +167,9 @@ return [
     'iconWidth' => 'width',
     'iconHeight' => 'height',
     'allowedFileExtensions' => 'Allowed file extensions',
+
+    'dummyData' => 'Demo Data',
+    'dummyDataDesc' => 'Automatically creates a demo war including group, enemy, map and game icon.',
+    'dummyDataCreate' => 'Create demo war',
+    'dummyCreateSuccess' => 'Demo war was created successfully.',
 ];

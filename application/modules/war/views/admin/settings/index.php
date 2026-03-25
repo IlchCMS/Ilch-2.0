@@ -74,3 +74,13 @@
     </div>
     <?=$this->getSaveBar() ?>
 </form>
+
+<h1><?=$this->getTrans('dummyData') ?></h1>
+<p><?=$this->getTrans('dummyDataDesc') ?></p>
+<form method="POST" action="<?=$this->getUrl(['action' => 'dummy']) ?>">
+    <?=$this->getTokenField() ?>
+    <button type="submit" class="btn btn-warning">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <?=$this->getTrans('dummyDataCreate') ?>
+    </button>
+</form>
