@@ -14,7 +14,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'shop',
-        'version' => '1.4.1',
+        'version' => '1.4.2',
         'icon_small' => 'fa-solid fa-cart-shopping',
         'author' => 'blackcoder & LordSchirmer',
         'link' => 'https://ilch.de',
@@ -29,7 +29,7 @@ class Config extends Install
                 'description' => 'A small shop can be created here.',
             ],
         ],
-        'ilchCore' => '2.2.2',
+        'ilchCore' => '2.2.13',
         'phpVersion' => '7.4'
     ];
 
@@ -473,6 +473,8 @@ class Config extends Install
                 // no break
             case '1.4.0':
                 $this->migrateForeignKeysToShortNames();
+                // no break
+            case '1.4.1':
                 // no break
         }
     }
