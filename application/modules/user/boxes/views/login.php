@@ -73,7 +73,7 @@
                 </button>
                 <span class="social-logins">
                     <?php if (count($this->get('providers')) > 0) : ?>
-                        <i class="fa-solid fa-fw fa-angle-right"></i>
+                        <i class="fa-solid fa-width-auto fa-angle-right"></i>
                     <?php endif; ?>
                     <?php foreach ($this->get('providers') as $provider) : ?>
                         <a
@@ -84,7 +84,7 @@
                                 'action' => $provider->getAuthAction()
                             ]) ?>"
                         >
-                            <i class="fa-solid fa-2x fa-fw <?= $provider->getIcon() ?>"></i>
+                            <i class="fa-solid fa-2x fa-width-auto <?= $provider->getIcon() ?>"></i>
                         </a>
                     <?php endforeach; ?>
                 </span>

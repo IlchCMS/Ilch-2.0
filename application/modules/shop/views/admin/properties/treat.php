@@ -91,8 +91,8 @@ $localeList = $this->get('localeList');
             <ul class="list-group propertyValuesList" id="sortable">
                 <?php foreach ($propertyValues as $id => $propertyValue) : ?>
                     <li class="list-group-item" id="value-<?= $id ?>" data-id="<?= $id ?>" data-value="<?= $this->escape($propertyValue->getValue()) ?>"><?= $this->escape($propertyValue->getValue()) ?>
-                        <i class="delete text-danger float-end fa-regular fa-fw fa-trash-can"></i>
-                        <i class="edit text-success float-end fa-solid fa-fw fa-pen-to-square"></i>
+                        <i class="delete text-danger float-end fa-regular fa-width-auto fa-trash-can"></i>
+                        <i class="edit text-success float-end fa-solid fa-width-auto fa-pen-to-square"></i>
                     </li>
                 <?php endforeach; ?>
             </ul>
