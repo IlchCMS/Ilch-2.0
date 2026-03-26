@@ -532,7 +532,7 @@ $shopItem = $this->get('shopItem');
                     <?php continue; ?>
                 <?php endif; ?>
                 <li class="variant-properties-selection list-group-item">
-                    <i class="fa-solid fa-width-auto fa-chevron-right collapseButton" id="collapseButton-<?=$property->getId() ?>" data-bs-toggle="collapse" data-bs-target="#item-<?=$property->getId() ?>"></i>
+                    <i class="fa-solid fa-chevron-right collapseButton" id="collapseButton-<?=$property->getId() ?>" data-bs-toggle="collapse" data-bs-target="#item-<?=$property->getId() ?>"></i>
                     <input class="form-check-input me-1 propertyCheckbox" type="checkbox" value="<?=$property->getId() ?>" name="propertyCheckbox" id="propertyCheckbox-<?=$property->getId() ?>" data-property-id="<?=$property->getId() ?>" form="shopItemForm">
                     <label class="form-check-label" for="propertyCheckbox-<?=$property->getId() ?>"><?=$this->escape($propertiesTranslation[$property->getId()] ?? $property->getName()) ?></label>
                 </li>

@@ -60,11 +60,11 @@ if ($this->getUser() == null) : ?>
         <div class="row mb-3">
             <div class="offset-xl-2 col-xl-10">
                 <button type="submit" name="login" class="btn btn-outline-secondary">
-                    <i class="fa-solid fa-width-auto fa-right-to-bracket"></i> <?=$this->getTrans('login') ?>
+                    <i class="fa-solid fa-right-to-bracket"></i> <?=$this->getTrans('login') ?>
                 </button>
                 <span class="social-logins">
                     <?php if (count($this->get('providers')) > 0) : ?>
-                        <i class="fa-solid fa-width-auto fa-angle-right"></i>
+                        <i class="fa-solid fa-angle-right"></i>
                     <?php endif; ?>
                     <?php foreach ($this->get('providers') as $provider) : ?>
                         <a
@@ -75,7 +75,7 @@ if ($this->getUser() == null) : ?>
                                 'action' => $provider->getAuthAction()
                             ]) ?>"
                         >
-                            <i class="fa-solid fa-2x fa-width-auto <?= $provider->getIcon() ?>"></i>
+                            <i class="fa-solid fa-2x <?= $provider->getIcon() ?>"></i>
                         </a>
                     <?php endforeach; ?>
                 </span>
