@@ -17,7 +17,7 @@
 <form method="POST" action="<?=$_SESSION['media-url-action-button'] ?><?=(int)$this->getRequest()->getParam('id') ?>">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-pills navbar-fixed-top">
-        <li class="nav-item"><a href="<?=$this->getUrl(['controller' => 'iframe', 'action' => 'upload', 'id' => $this->getRequest()->getParam('id')]) ?>" class="nav-link"><?=$this->getTrans('upload') ?></a></li>
+        <li class="nav-item"><a href="<?=$this->getUrl(['controller' => 'iframe', 'action' => 'upload', 'id' => (int)$this->getRequest()->getParam('id')]) ?>" class="nav-link"><?=$this->getTrans('upload') ?></a></li>
         <li class="nav-item"><a href="<?=$_SESSION['media-url-media-button'] ?><?=(int)$this->getRequest()->getParam('id') ?>" class="nav-link"><?=$this->getTrans('media') ?></a></li>
         <li class="float-end nav-item"><button type="submit" class="btn btn-primary" name="save" value="save"><?=$this->getTrans('add') ?></button></li>
     </ul>
