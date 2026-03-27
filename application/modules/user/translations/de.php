@@ -138,7 +138,7 @@ return [
     'maxFilesize' => 'Maximale Dateigröße',
     'allowedFileExtensions' => 'Erlaubte Dateiendungen',
     'forbiddenExtension' => 'Sie haben versucht eine unerlaubte Dateiendung einzutragen.',
-    'avatarDelete' => 'Avatar löschen?',
+    'avatarDelete' => 'Avatar löschen',
     'avatarSuccessDelete' => 'Avatar wurde erfolgreich gelöscht',
     'rulesForRegist' => 'Regeln für die Registrierung',
     'mailForRegist' => 'Text für die Bestätigungs E-Mail',

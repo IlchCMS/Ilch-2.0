@@ -138,7 +138,7 @@ return [
     'maxFilesize' => 'Maximum file size',
     'allowedFileExtensions' => 'Allowed file extensions',
     'forbiddenExtension' => 'You tried to add an forbidden file extension.',
-    'avatarDelete' => 'Avatar delete?',
+    'avatarDelete' => 'Delete avatar',
     'avatarSuccessDelete' => 'Avatar successfully deleted',
     'rulesForRegist' => 'Rules for registration',
     'mailForRegist' => 'Text for confirm E-Mail',
