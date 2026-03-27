@@ -1,6 +1,12 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 $profil = $this->get('profil');
+/** @var \Modules\User\Models\Notification[] $notifications */
 $notifications = $this->get('notifications');
+
+/** @var \Modules\User\Models\Friend[] $openFriendRequests */
 $openFriendRequests = $this->get('openFriendRequests');
 ?>
 

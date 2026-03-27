@@ -30,6 +30,9 @@ class Index extends \Ilch\Controller\Admin
             foreach ($this->getRequest()->getPost('check_notifications') as $notificationId) {
                 $notificationsMapper->deleteNotificationById($notificationId);
             }
+
+            $this->addMessage('deleteSuccess');
+            $this->redirect(['action' => 'index']);
         }
 
         // Delete all expired authTokens of the remember-me-feature

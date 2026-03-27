@@ -51,6 +51,9 @@ class Panel extends BaseController
             foreach ($this->getRequest()->getPost('check_notifications') as $notificationId) {
                 $notificationsMapper->deleteNotificationById($notificationId, $this->getUser()->getId());
             }
+
+            $this->addMessage('deleteSuccess');
+            $this->redirect(['action' => 'index']);
         }
 
         $this->getView()->set('notifications', $notificationsMapper->getNotifications($this->getUser()->getId()));
