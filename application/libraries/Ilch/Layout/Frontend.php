@@ -546,17 +546,11 @@ class Frontend extends Base
         $user = $this->getUser();
         $isAdmin = $user && $user->isAdmin();
 
-        $escapedTitle = $this->escape($this->getTitle());
-        $escapedKeywords = $this->escape($this->getKeywords());
-        $escapedDescription = $this->escape($this->getDescription());
-        $escapedFavicon = $this->getBaseUrl($this->escape($this->getFavicon()));
-        $escapedAppleIcon = $this->getBaseUrl($this->escape($this->getAppleIcon()));
-
         $html = '<meta charset="utf-8">
-            <title>' . $escapedTitle . '</title>
-            <link rel="icon" href="' . $escapedFavicon . '" type="image/x-icon">
-            <meta name="keywords" content="' . $escapedKeywords . '" />
-            <meta name="description" content="' . $escapedDescription . '" />';
+            <title>' . $this->escape($this->getTitle()) . '</title>
+            <link rel="icon" href="' . $this->getBaseUrl($this->escape($this->getFavicon())) . '" type="image/x-icon">
+            <meta name="keywords" content="' . $this->escape($this->getKeywords()) . '" />
+            <meta name="description" content="' . $this->escape($this->getDescription()) . '" />';
 
         if (is_array($this->get('metaTags'))) {
             foreach ($this->get('metaTags') as $key => $metaTag) {
@@ -575,22 +569,19 @@ class Frontend extends Base
         $html .= '
             <link href="' . $this->getStaticUrl('js/ckeditor5/build/ckeditor.css') . '" rel="stylesheet" type="text/css">
             <link href="' . $this->getStaticUrl('js/ckeditor5/styles.css') . '" rel="stylesheet" type="text/css">
-            <link rel="apple-touch-icon" href="' . $escapedAppleIcon . '">
+            <link rel="apple-touch-icon" href="' . $this->getBaseUrl($this->escape($this->getAppleIcon())) . '">
             <link href="' . $this->getVendorUrl('fortawesome/font-awesome/css/all.min.css') . '" rel="stylesheet">
             <link href="' . $this->getVendorUrl('fortawesome/font-awesome/css/v4-shims.min.css') . '" rel="stylesheet">
             <link href="' . $this->getStaticUrl('css/ilch.css') . '" rel="stylesheet">
             <link href="' . $this->getVendorUrl('npm-asset/jquery-ui/dist/themes/ui-lightness/jquery-ui.min.css') . '" rel="stylesheet">
             <link href="' . $this->getStaticUrl('js/highlight/default.min.css') . '" rel="stylesheet">
-            <link href="' . $this->getVendorUrl('twbs/bootstrap/dist/css/bootstrap.min.css') . '" rel="stylesheet">';
-
-        $html .= '
+            <link href="' . $this->getVendorUrl('twbs/bootstrap/dist/css/bootstrap.min.css') . '" rel="stylesheet">
             <script src="' . $this->getVendorUrl('npm-asset/jquery/dist/jquery.min.js') . '"></script>
             <script src="' . $this->getVendorUrl('npm-asset/jquery-ui/dist/jquery-ui.min.js') . '"></script>
             <script src="' . $this->getStaticUrl('js/ckeditor5/build/ckeditor.js') . '"></script>
             <script src="' . $this->getStaticUrl('js/jquery.mjs.nestedSortable.js') . '"></script>
             <script src="' . $this->getStaticUrl('../application/modules/admin/static/js/functions.js') . '"></script>
-            <script src="' . $this->getStaticUrl('js/highlight/highlight.min.js') . '"></script>
-            <script src="' . $this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.bundle.min.js') . '"></script>';
+            <script src="' . $this->getStaticUrl('js/highlight/highlight.min.js') . '"></script>';
 
         $html .= '
             <script>
