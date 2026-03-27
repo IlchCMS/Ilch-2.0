@@ -14,11 +14,11 @@
 }
 </style>
 
-<form method="POST" action="<?=$_SESSION['media-url-action-button'] ?><?=$this->getRequest()->getParam('id') ?>">
+<form method="POST" action="<?=$_SESSION['media-url-action-button'] ?><?=(int)$this->getRequest()->getParam('id') ?>">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-pills navbar-fixed-top">
-        <li class="nav-item"><a href="<?=$this->getUrl(['controller' => 'iframe', 'action' => 'upload', 'id' => $this->getRequest()->getParam('id')]) ?>" class="nav-link"><?=$this->getTrans('upload') ?></a></li>
-        <li class="nav-item"><a href="<?=$_SESSION['media-url-media-button'] ?><?=$this->getRequest()->getParam('id') ?>" class="nav-link"><?=$this->getTrans('media') ?></a></li>
+        <li class="nav-item"><a href="<?=$this->getUrl(['controller' => 'iframe', 'action' => 'upload', 'id' => (int)$this->getRequest()->getParam('id')]) ?>" class="nav-link"><?=$this->getTrans('upload') ?></a></li>
+        <li class="nav-item"><a href="<?=$_SESSION['media-url-media-button'] ?><?=(int)$this->getRequest()->getParam('id') ?>" class="nav-link"><?=$this->getTrans('media') ?></a></li>
         <li class="float-end nav-item"><button type="submit" class="btn btn-primary" name="save" value="save"><?=$this->getTrans('add') ?></button></li>
     </ul>
 
@@ -79,7 +79,7 @@ $(document).on("click", "img.image", function() {
 $(document).ready(function() {
     function media_loader() {
         var ID=$(".media_loader:last").attr("id");
-        $.post("<?=$this->getUrl('admin/media/ajax/multi/type/') ?><?=$this->getRequest()->getParam('type') ?>/lastid/"+ID,
+        $.post("<?=$this->getUrl('admin/media/ajax/multi/type/') ?>"+encodeURIComponent(<?=json_encode($this->getRequest()->getParam('type')) ?>)+"/lastid/"+ID,
             function(data)
             {
                 if (data !== "")
