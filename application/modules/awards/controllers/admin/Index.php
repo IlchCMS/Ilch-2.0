@@ -129,7 +129,7 @@ class Index extends \Ilch\Controller\Admin
 
             // Add BASE_URL if image starts with application to get a complete URL for validation
             if (!empty($post['image']) && strncmp($post['image'], 'application', 11) === 0) {
-                $post['image'] = BASE_URL . '/' . $post['image'];
+                $post['image'] = BASE_URL . '/' . rawurlencode($post['image']);
             }
 
             Validation::setCustomFieldAliases([
