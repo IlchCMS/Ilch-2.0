@@ -94,7 +94,7 @@ $users = $this->get('users');
                         echo '<option ' . $selected . ' value="1_' . $user->getId() . '">' . $this->escape($user->getName()) . '</option>';
                     } ?>
                 </optgroup>
-            <?php if ($awardsMapper->existsTable('teams') && count($teams)) : ?>
+            <?php if ($awardsMapper->existsTable('teams') && !empty($teams)) : ?>
                 <optgroup label="<?=$this->getTrans('team') ?>">
                     <?php
                     foreach ($teams as $team) {
