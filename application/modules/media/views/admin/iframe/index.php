@@ -85,9 +85,13 @@
 <?php endif; ?>
 
 <?php if ($this->getRequest()->getParam('type') === 'single'): ?>
+    <?php
+    $inputParam = $this->getRequest()->getParam('input');
+    $inputSuffix = ($inputParam !== null && $inputParam !== '') ? (int)$inputParam : '';
+    ?>
     <script>
     $(".image").click(function() {
-        window.top.$('#selectedImage<?=(int)$this->getRequest()->getParam('input') ?>').val($(this).data('url'));
+        window.top.$('#selectedImage<?=$inputSuffix ?>').val($(this).data('url'));
         window.top.$('#mediaModal').modal('hide');
     });
     </script>
