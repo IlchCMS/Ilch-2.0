@@ -33,7 +33,7 @@ $icons = $this->get('icons');
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_icons', $gameIcon->getId()) ?></td>
                             <td>
-                                <?php if (file_exists(APPLICATION_PATH . '/modules/war/static/img/' . $gameIcon->getIcon() . '.png')) : ?>
+                                <?php if (!empty($gameIcon->getIcon())) : ?>
                                     <img src="<?=$this->getBaseUrl('application/modules/war/static/img/' . $gameIcon->getIcon() . '.png') ?>" alt="<?=$this->escape($gameIcon->getTitle()) ?>" width="16" height="16">
                                 <?php endif; ?>
                             </td>
