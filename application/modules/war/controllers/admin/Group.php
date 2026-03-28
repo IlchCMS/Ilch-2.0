@@ -150,7 +150,7 @@ class Group extends Admin
                 $groupModel->setGroupMember($this->getRequest()->getPost('userGroup'))
                     ->setGroupName($this->getRequest()->getPost('groupName'))
                     ->setGroupTag($this->getRequest()->getPost('groupTag'))
-                    ->setGroupImage($this->getRequest()->getPost('groupImage'))
+                    ->setGroupImage($groupImage)
                     ->setGroupDesc($this->getRequest()->getPost('groupDesc'));
                 $groupMapper->save($groupModel);
 
