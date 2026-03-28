@@ -59,6 +59,14 @@ class Config extends Install
             $this->db()->insert('calendar_events')->values(['url' => 'war/wars/index/'])->execute();
         }
 
+        // Seed default icons from static/img/ into the database.
+        foreach (glob(ROOT_PATH . '/application/modules/war/static/img/*.png') ?: [] as $iconFile) {
+            $name = basename($iconFile, '.png');
+            $this->db()->insert('war_game_icon')
+                ->values(['title' => $name, 'icon' => $name])
+                ->execute();
+        }
+
         $databaseConfig = new Database($this->db());
         $databaseConfig->set('war_boxNextWarLimit', '5')
             ->set('war_boxLastWarLimit', '5');
