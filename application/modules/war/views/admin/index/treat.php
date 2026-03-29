@@ -129,30 +129,43 @@ $entry = $this->get('war');
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('warGame') ? ' has-error' : '' ?>">
             <label for="warGame" class="col-xl-2 col-form-label">
-                <label for="warGameNew">
-                    <?=$this->getTrans('warGame') ?>:
-                </label>
+                <?=$this->getTrans('warGame') ?>:
             </label>
             <div class="col-xl-2">
-                <select class="form-select" id="warGame" name="warGame">
-                    <optgroup label="<?=$this->getTrans('warGame') ?>">
-                        <option value="new" <?=$this->originalInput('warGame', $entry->getWarGame()) == 'new' ? 'selected=""' : '' ?>><?=$this->getTrans('warNew') ?></option>
-                        <?php if ($this->get('warOptGames') != '') : ?>
-                            <?php
-                            /** @var \Modules\War\Models\War $opt */
-                            foreach ($this->get('warOptGames') as $opt) : ?>
-                                <option value="<?=$opt->getWarGame() ?>" <?=$this->originalInput('warGame', $entry->getWarGame()) == $opt->getWarGame() ? 'selected=""' : '' ?>><?=$this->escape($opt->getWarGame()) ?></option>
-                            <?php endforeach; ?>
+                <?php
+                /** @var \Modules\War\Models\GameIcon[] $gameIcons */
+                $gameIcons = $this->get('gameIcons') ?? [];
+                $currentGame = $this->originalInput('warGame', $entry->getWarGame());
+                $iconsByTitle = [];
+                foreach ($gameIcons as $gi) {
+                    $iconsByTitle[$gi->getTitle()] = $gi->getIcon();
+                }
+                ?>
+                <div class="input-group">
+                    <span class="input-group-text" id="warGameIconPreview" style="min-width:2.5rem;justify-content:center;">
+                        <?php if ($currentGame && isset($iconsByTitle[$currentGame])) : ?>
+                            <img src="<?=$this->getModuleUrl('static/img/' . $this->escape($iconsByTitle[$currentGame]) . '.png') ?>" width="16" height="16" alt="">
+                        <?php else : ?>
+                            <i class="fa-solid fa-gamepad"></i>
                         <?php endif; ?>
-                    </optgroup>
-                </select>
-            </div>
-            <div class="col-xl-2">
-                <input type="text"
-                       class="form-control"
-                       id="warGameNew"
-                       name="warGameNew"
-                       value="<?=$this->escape($this->originalInput('warGameNew')) ?>" />
+                    </span>
+                    <select class="form-select" id="warGame" name="warGame">
+                        <?php if (empty($gameIcons)) : ?>
+                            <option value="new"><?=$this->getTrans('warNew') ?></option>
+                        <?php else : ?>
+                            <?php foreach ($gameIcons as $gi) : ?>
+                                <option value="<?=$this->escape($gi->getTitle()) ?>"
+                                        data-icon="<?=$this->escape($this->getModuleUrl('static/img/' . $gi->getIcon() . '.png')) ?>"
+                                    <?=$currentGame === $gi->getTitle() ? 'selected=""' : '' ?>>
+                                    <?=$this->escape($gi->getTitle()) ?>
+                                </option>
+                            <?php endforeach; ?>
+                            <?php if ($currentGame && $currentGame !== 'new' && !isset($iconsByTitle[$currentGame])) : ?>
+                                <option value="<?=$this->escape($currentGame) ?>" selected=""><?=$this->escape($currentGame) ?></option>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('warMatchtype') ? ' has-error' : '' ?>">
@@ -310,13 +323,25 @@ $(document).ready(function () {
     });
 
     diasableXonx();
-    diasableGame();
     diasableMatchtype();
+    updateGameIconPreview();
     loadGames();
 
     document.getElementById('warXonx').onchange = diasableXonx;
-    document.getElementById('warGame').onchange = diasableGame;
+    document.getElementById('warGame').onchange = updateGameIconPreview;
     document.getElementById('warMatchtype').onchange = diasableMatchtype;
+
+    function updateGameIconPreview() {
+        var select = document.getElementById('warGame');
+        var preview = document.getElementById('warGameIconPreview');
+        var selected = select.options[select.selectedIndex];
+        var iconUrl = selected ? selected.getAttribute('data-icon') : null;
+        if (iconUrl) {
+            preview.innerHTML = '<img src="' + iconUrl + '" width="16" height="16" alt="">';
+        } else {
+            preview.innerHTML = '<i class="fa-solid fa-gamepad"></i>';
+        }
+    }
 
     function diasableXonx() {
         if (document.getElementById('warXonx').value === 'new') {
@@ -325,16 +350,6 @@ $(document).ready(function () {
         } else {
             document.getElementById("warXonxNew").style.display = "none";
             document.getElementById("warXonxNew").value = '';
-        }
-    }
-
-    function diasableGame() {
-        if (document.getElementById('warGame').value === 'new') {
-            document.getElementById("warGameNew").style.display = "block";
-            document.getElementById("warGame").style.margin = "0 0 5px";
-        } else {
-            document.getElementById("warGameNew").style.display = "none";
-            document.getElementById("warGameNew").value = '';
         }
     }
 

@@ -48,7 +48,7 @@ $pagination = $this->get('pagination');
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $group->getId()]) ?></td>
                             <td><?=$this->escape($group->getGroupName()) ?></td>
                             <td><?=$this->escape($group->getGroupTag()) ?></td>
-                            <td><img class="group-image" src="<?=$this->getBaseUrl($group->getGroupImage()) ?>"  alt="<?=$this->escape($group->getGroupName()) ?>"/></td>
+                            <td><?=(empty($group->getGroupImage())) ? '' : '<img class="group-image" src="' . $this->getBaseUrl($group->getGroupImage()) . '" alt="' . $this->escape($group->getGroupName()) . '" />' ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

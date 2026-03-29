@@ -125,21 +125,22 @@ class Group extends Admin
 
         if ($this->getRequest()->isPost()) {
             $groupImage = $this->getRequest()->getPost('groupImage');
+            $groupImageForValidation = '';
             if (!empty($groupImage)) {
-                $groupImage = BASE_URL . '/' . urlencode($groupImage);
+                $groupImageForValidation = BASE_URL . '/' . $groupImage;
             }
 
             $post = [
                 'groupName' => $this->getRequest()->getPost('groupName'),
                 'groupTag' => $this->getRequest()->getPost('groupTag'),
-                'groupImage' => $groupImage,
+                'groupImage' => $groupImageForValidation,
                 'userGroup' => $this->getRequest()->getPost('userGroup')
             ];
 
             $validator = [
                 'groupName' => 'required|unique:' . $groupMapper->tablename . ',name,' . $groupModel->getId(),
                 'groupTag' => 'required|unique:' . $groupMapper->tablename . ',tag,' . $groupModel->getId(),
-                'groupImage' => 'required|url',
+                'groupImage' => 'url',
                 'userGroup' => 'required|numeric|integer|min:1|exists:groups',
                 //'groupDesc' => '',
             ];
@@ -150,7 +151,7 @@ class Group extends Admin
                 $groupModel->setGroupMember($this->getRequest()->getPost('userGroup'))
                     ->setGroupName($this->getRequest()->getPost('groupName'))
                     ->setGroupTag($this->getRequest()->getPost('groupTag'))
-                    ->setGroupImage($this->getRequest()->getPost('groupImage'))
+                    ->setGroupImage($groupImage)
                     ->setGroupDesc($this->getRequest()->getPost('groupDesc'));
                 $groupMapper->save($groupModel);
 

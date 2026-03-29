@@ -99,4 +99,5 @@ class Settings extends Admin
             ->set('boxNextWarLimit', $this->getConfig()->get('war_boxNextWarLimit'))
             ->set('boxLastWarLimit', $this->getConfig()->get('war_boxLastWarLimit'));
     }
+
 }

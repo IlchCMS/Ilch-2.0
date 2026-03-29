@@ -18,6 +18,7 @@ use Modules\War\Models\Games as GamesModel;
 use Modules\War\Mappers\Games as GamesMapper;
 use Modules\User\Mappers\Group as UserGroupMapper;
 use Modules\War\Mappers\Maps as MapsMapper;
+use Modules\War\Mappers\GameIcon as GameIconMapper;
 use Ilch\Validation;
 
 use function count;
@@ -126,6 +127,7 @@ class Index extends Admin
         $gameModel = new GamesModel();
         $userGroupMapper = new UserGroupMapper();
         $mapsMapper = new MapsMapper();
+        $gameIconMapper = new GameIconMapper();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
@@ -150,9 +152,6 @@ class Index extends Admin
                 $_POST['warXonx'] = $this->getRequest()->getPost('warXonxNew');
             }
 
-            if ($this->getRequest()->getPost('warGame') === 'new') {
-                $_POST['warGame'] = $this->getRequest()->getPost('warGameNew');
-            }
 
             if ($this->getRequest()->getPost('warMatchtype') === 'new') {
                 $_POST['warMatchtype'] = $this->getRequest()->getPost('warMatchtypeNew');
@@ -276,8 +275,8 @@ class Index extends Admin
             ->set('groups', $groupMapper->getGroups())
             ->set('enemies', $enemyMapper->getEnemy())
             ->set('warOptXonxs', $warMapper->getWarOptDistinctXonx())
-            ->set('warOptGames', $warMapper->getWarOptDistinctGame())
             ->set('warOptMatchtypes', $warMapper->getWarOptDistinctMatchtype())
+            ->set('gameIcons', $gameIconMapper->getGameIcons())
             ->set('userGroupList', $userGroupMapper->getGroupList())
             ->set('wargroups', $groups)
             ->set('warMaps', $maps)

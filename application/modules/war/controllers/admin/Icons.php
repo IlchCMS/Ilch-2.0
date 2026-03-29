@@ -10,10 +10,20 @@ namespace Modules\War\Controllers\Admin;
 
 use Ilch\Controller\Admin;
 use Ilch\Validation;
+use Modules\War\Mappers\GameIcon as GameIconMapper;
+use Modules\War\Models\GameIcon as GameIconModel;
 
 class Icons extends Admin
 {
+    /** @var GameIconModel[] */
     protected array $icons = [];
+
+    protected GameIconMapper $gameIconMapper;
+
+    private function getIconFilePath(string $iconFilename): string
+    {
+        return ROOT_PATH . '/application/modules/war/static/img/' . $iconFilename . '.png';
+    }
 
     public function init()
     {
@@ -73,12 +83,10 @@ class Icons extends Admin
             $items
         );
 
+        $this->gameIconMapper = new GameIconMapper();
         $this->icons = [];
-        foreach (glob(ROOT_PATH . '/application/modules/war/static/img/*') as $iconfile) {
-            $icon = basename($iconfile);
-            if (strtolower(substr($icon, -4)) == '.png') {
-                $this->icons[] = substr($icon, 0, -4);
-            }
+        foreach ($this->gameIconMapper->getGameIcons() as $gameIcon) {
+            $this->icons[$gameIcon->getId()] = $gameIcon;
         }
     }
 
@@ -88,9 +96,14 @@ class Icons extends Admin
             ->add($this->getTranslator()->trans('menuGameIcons'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_icons')) {
-            foreach ($this->getRequest()->getPost('check_icons') as $game) {
-                if (in_array($game, $this->icons)) {
-                    unlink(ROOT_PATH . '/application/modules/war/static/img/' . $game . '.png');
+            foreach ($this->getRequest()->getPost('check_icons') as $id) {
+                $id = (int) $id;
+                if (isset($this->icons[$id])) {
+                    $iconFile = $this->getIconFilePath($this->icons[$id]->getIcon());
+                    if (is_file($iconFile)) {
+                        unlink($iconFile);
+                    }
+                    $this->gameIconMapper->delete($id);
                 }
             }
             $this->redirect()
@@ -103,14 +116,15 @@ class Icons extends Admin
 
     public function treatAction()
     {
-        $icon = '';
+        $gameIconModel = null;
 
-        if ($this->getRequest()->getParam('key')) {
+        if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuGameIcons'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('treatGameIcon'), ['action' => 'treat']);
-            if (in_array($this->getRequest()->getParam('key'), $this->icons)) {
-                $icon = $this->getRequest()->getParam('key');
+            $id = (int) $this->getRequest()->getParam('id');
+            if (isset($this->icons[$id])) {
+                $gameIconModel = $this->icons[$id];
             } else {
                 $this->redirect()
                     ->to(['action' => 'index']);
@@ -124,47 +138,64 @@ class Icons extends Admin
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'gameName' => 'required',
-                'gameIcon' => 'required',
             ]);
 
             if (!empty($_FILES['icon']['name']) && file_exists($_FILES['icon']['tmp_name'])) {
-                $imageInfo = getimagesize($_FILES['icon']['tmp_name']);
-                if ($imageInfo[0] > 16 || $imageInfo[1] > 16) {
+                if (getimagesize($_FILES['icon']['tmp_name']) === false) {
                     $validation->getErrorBag()->addError('icon', 'failedFilesize');
                 }
-                if (strtolower(pathinfo($_FILES['icon']['name'], PATHINFO_EXTENSION)) != 'png') {
+                if (strtolower(pathinfo($_FILES['icon']['name'], PATHINFO_EXTENSION)) !== 'png') {
                     $validation->getErrorBag()->addError('icon', 'forbiddenExtension');
                 }
             }
 
             if ($validation->isValid()) {
-                $gameName = preg_replace('/[^a-z0-9_\-]/', '', strtolower($this->getRequest()->getPost('gameName')));
-                if (!empty($_FILES['icon']['name']) && file_exists($_FILES['icon']['tmp_name'])) {
-                    move_uploaded_file($_FILES['icon']['tmp_name'], ROOT_PATH . '/application/modules/war/static/img/' . $gameName . '.png');
-                } elseif ($this->getRequest()->getParam('key')) {
-                    rename(ROOT_PATH . '/application/modules/war/static/img/' . $this->getRequest()->getParam('key') . '.png', ROOT_PATH . '/application/modules/war/static/img/' . $gameName . '.png');
+                if ($gameIconModel === null) {
+                    $gameIconModel = new GameIconModel();
                 }
+
+                $gameIconModel->setTitle($this->getRequest()->getPost('gameName'));
+
+                if (!empty($_FILES['icon']['name']) && file_exists($_FILES['icon']['tmp_name'])) {
+                    if ($gameIconModel->getId() > 0 && $gameIconModel->getIcon() !== '') {
+                        $oldFile = $this->getIconFilePath($gameIconModel->getIcon());
+                        if (is_file($oldFile)) {
+                            unlink($oldFile);
+                        }
+                    }
+
+                    $iconFilename = 'icon_' . str_replace('.', '', uniqid('', true));
+                    move_uploaded_file($_FILES['icon']['tmp_name'], $this->getIconFilePath($iconFilename));
+                    $gameIconModel->setIcon($iconFilename);
+                }
+
+                $this->gameIconMapper->save($gameIconModel);
 
                 $this->redirect()
                     ->withMessage('saveSuccess')
                     ->to(['action' => 'index']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(array_merge(['action' => 'treat'], ($this->getRequest()->getParam('id') ? ['id' => (int) $this->getRequest()->getParam('id')] : [])));
             }
-
-            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-            $this->redirect()
-                ->withInput()
-                ->withErrors($validation->getErrorBag())
-                ->to(array_merge(['action' => 'treat'], ($this->getRequest()->getParam('key') ? ['key' => $this->getRequest()->getParam('key')] : [])));
         }
 
-        $this->getView()->set('icon', $icon);
+        $this->getView()->set('gameIconModel', $gameIconModel);
     }
 
     public function delAction()
     {
-        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('key'))) {
-            if (in_array($this->getRequest()->getParam('key'), $this->icons)) {
-                unlink(ROOT_PATH . '/application/modules/war/static/img/' . $this->getRequest()->getParam('key') . '.png');
+        if ($this->getRequest()->isSecure() && !empty($this->getRequest()->getParam('id'))) {
+            $id = (int) $this->getRequest()->getParam('id');
+            if (isset($this->icons[$id])) {
+                $iconFile = $this->getIconFilePath($this->icons[$id]->getIcon());
+                if (is_file($iconFile)) {
+                    unlink($iconFile);
+                }
+                $this->gameIconMapper->delete($id);
             }
             $this->addMessage('deleteSuccess');
         }
