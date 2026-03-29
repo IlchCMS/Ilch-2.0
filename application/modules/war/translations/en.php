@@ -155,7 +155,7 @@ return [
     'treatMaps' => 'Treat map',
     'selectAssignedMaps' => 'Maps',
     'menuActionNewMap' => 'Add new map',
-    'failedFilesize' => 'Avatar has unauthorized width, height or is too big.',
+    'failedFilesize' => 'The uploaded file is not a valid image.',
     'forbiddenExtension' => 'You tried to add an forbidden file extension.',
     'menuGameIcons' => 'Game Icons',
     'treatGameIcon' => 'Manage Game Icon',

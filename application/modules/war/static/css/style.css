@@ -52,6 +52,85 @@
 }
 
 
+/* War-Hero (show.php) */
+.war-hero {
+    padding: 20px 0 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+    margin-bottom: 1.5rem;
+}
+.war-hero-img {
+    max-height: 100px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 6px;
+}
+.war-hero-vs {
+    font-size: 1.4rem;
+    font-weight: 800;
+    opacity: .35;
+    letter-spacing: .05em;
+}
+.war-hero-game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+.war-hero-game-icon {
+    width: 48px;
+    height: 48px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+.war-hero-game-fallback {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, .07);
+    border-radius: 10px;
+    font-size: 1.4rem;
+    opacity: .5;
+}
+.war-hero-game-name {
+    font-size: .7rem;
+    font-weight: 600;
+    text-align: center;
+    opacity: .6;
+    letter-spacing: .03em;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* War-Info-Tiles (show.php) */
+.war-info-tile {
+    background: rgba(0, 0, 0, .03);
+    border: 1px solid rgba(0, 0, 0, .08);
+    border-radius: 8px;
+    padding: 12px 14px;
+    height: 100%;
+}
+.war-info-label {
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    opacity: .5;
+    margin-bottom: 4px;
+}
+.war-info-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.war-info-sub {
+    font-size: .8rem;
+    opacity: .6;
+    margin-top: 3px;
+}
+
 /* Box */
 .war-box-entry {
     display: flex;

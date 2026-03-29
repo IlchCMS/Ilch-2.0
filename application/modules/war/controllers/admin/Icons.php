@@ -141,8 +141,7 @@ class Icons extends Admin
             ]);
 
             if (!empty($_FILES['icon']['name']) && file_exists($_FILES['icon']['tmp_name'])) {
-                $imageInfo = getimagesize($_FILES['icon']['tmp_name']);
-                if ($imageInfo === false || $imageInfo[0] > 16 || $imageInfo[1] > 16) {
+                if (getimagesize($_FILES['icon']['tmp_name']) === false) {
                     $validation->getErrorBag()->addError('icon', 'failedFilesize');
                 }
                 if (strtolower(pathinfo($_FILES['icon']['name'], PATHINFO_EXTENSION)) !== 'png') {

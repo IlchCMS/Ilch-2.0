@@ -155,7 +155,7 @@ return [
     'treatMaps' => 'Karten bearbeiten',
     'selectAssignedMaps' => 'Karten',
     'menuActionNewMap' => 'Neue Karte erstellen',
-    'failedFilesize' => 'Bild hat unerlaubte Breite, Höhe oder ist zu groß.',
+    'failedFilesize' => 'Die hochgeladene Datei ist kein gültiges Bild.',
     'forbiddenExtension' => 'Sie haben versucht eine unerlaubte Dateiendung einzutragen.',
     'menuGameIcons' => 'Game Icons',
     'treatGameIcon' => 'Game Icon bearbeiten',

@@ -19,6 +19,7 @@ use Modules\User\Mappers\Group as UserGroupMapper;
 use Modules\War\Models\Accept as AcceptModel;
 use Modules\War\Mappers\Accept as AcceptMapper;
 use Modules\War\Mappers\Maps as MapsMapper;
+use Modules\War\Mappers\GameIcon as GameIconMapper;
 use Ilch\Comments;
 use Ilch\Validation;
 
@@ -51,11 +52,24 @@ class Index extends Frontend
             }
         }
 
+        $gameIconMapper = new GameIconMapper();
+        $mapsMapper = new MapsMapper();
+
+        $allMaps = $mapsMapper->getList();
+        $mapNamesById = [];
+        if ($allMaps) {
+            foreach ($allMaps as $map) {
+                $mapNamesById[$map->getId()] = $map->getName();
+            }
+        }
+
         $this->getView()->set('gamesMapper', $gamesMapper)
             ->set('wars', $warMapper->getWarList($pagination, $readAccess))
             ->set('pagination', $pagination)
             ->set('groupMapper', $groupMapper)
-            ->set('enemyMapper', $enemyMapper);
+            ->set('enemyMapper', $enemyMapper)
+            ->set('gameIconMap', $gameIconMapper->getGameIconMap())
+            ->set('mapNamesById', $mapNamesById);
     }
 
     public function showAction()
@@ -171,6 +185,8 @@ class Index extends Frontend
                 ->add(($group) ? $group->getGroupName() : '', ($group) ? ['controller' => 'group', 'action' => 'show', 'id' => $group->getId()] : '')
                 ->add($this->getTranslator()->trans('warPlay'), ['action' => 'show', 'id' => $war->getId()]);
 
+            $gameIconMapper = new GameIconMapper();
+
             $this->getView()->set('userMapper', $userMapper)
                 ->set('userGroupIds', $userGroupMapper->getUsersForGroup($group ? $group->getGroupMember() : ''))
                 ->set('games', $gamesMapper->getGamesByWarId($war->getId()))
@@ -182,7 +198,8 @@ class Index extends Frontend
                 ->set('acceptCheck', $checkAccept)
                 ->set('commentsKey', 'war/index/show/id/' . $war->getId())
                 ->set('datenow', $datenow)
-                ->set('mapsMapper', $mapsMapper);
+                ->set('mapsMapper', $mapsMapper)
+                ->set('gameIconMap', $gameIconMapper->getGameIconMap());
         } else {
             $this->redirect()
                 ->withMessage('warNotFound', 'warning')
