@@ -45,7 +45,7 @@ class Archive extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index']);
 
-        $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPageArchive') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPageArchive'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $user = null;
@@ -96,7 +96,7 @@ class Archive extends \Ilch\Controller\Frontend
             $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans($date->format('F', true)) . $date->format(' Y', true), ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
 
-            $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPage'));
+            $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPageArchive') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPageArchive'));
             $pagination->setPage($this->getRequest()->getParam('page'));
 
             $user = null;
