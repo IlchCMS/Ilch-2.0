@@ -422,6 +422,7 @@ class Config extends Install
             case "1.16.2":
             case "1.16.3":
             case "1.16.4":
+            case "1.16.5":
                 // Create war_game_icon table and migrate existing icon files.
                 $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_war_game_icon` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
