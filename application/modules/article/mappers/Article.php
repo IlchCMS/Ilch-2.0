@@ -725,10 +725,11 @@ class Article extends \Ilch\Mapper
             ->from('articles_content')
             ->join(['p' => 'articles'], 'p.id = article_id', 'LEFT')
             ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT')
-            ->where(['ra.group_id' => $groupIds]);
+            ->where(['ra.group_id' => $groupIds])
+            ->group(['p.id']);
 
         if ($limit !== null) {
-            $sql = $sql->limit((int)$limit);
+            $sql = $sql->limit($limit);
         }
 
         $keywordsArray = $sql->execute()
