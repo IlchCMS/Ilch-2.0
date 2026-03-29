@@ -10,52 +10,33 @@ $gameIconMap = $this->get('gameIconMap') ?? [];
 
 <?php if ($this->get('wars') != '') :
     $displayed = 0;
-    $adminAccess = null;
-    if ($this->getUser()) {
-        $adminAccess = $this->getUser()->isAdmin();
-    }
 
     /** @var \Modules\War\Models\War $war */
     foreach ($this->get('wars') as $war) :
         $displayed++;
-
         $iconFilename = $gameIconMap[$war->getWarGame()] ?? null;
-        if ($iconFilename !== null && file_exists(APPLICATION_PATH . '/modules/war/static/img/' . $iconFilename . '.png')) {
-            $gameImg = '<img src="' . $this->getBoxUrl('static/img/' . $iconFilename . '.png') . '" title="' . $this->escape($war->getWarGame()) . '" width="16" height="16">';
-        } else {
-            $gameImg = '<i class="fa-solid fa-question-circle text-muted" title="' . $this->escape($war->getWarGame()) . '"></i>';
-        }
         ?>
-        <div class="nextwar-box">
-            <div class="row">
-                <a href="<?=$this->getUrl('war/index/show/id/' . $war->getId()) ?>" title="<?=$this->escape($war->getWarGroupTag()) . ' ' . $this->getTrans('vs') . ' ' . $this->escape($war->getWarEnemyTag()) ?>">
-                    <div class="col-4 ellipsis">
-                        <?=$gameImg ?>
-                        <div class="ellipsis-item">
-                            <?=$this->escape($war->getWarGroupTag()) ?>
-                        </div>
-                    </div>
-                    <div class="col-2 small float-start nextwar-vs"><?=$this->getTrans('vs') ?></div>
-                    <div class="col-3 ellipsis">
-                        <div class="ellipsis-item">
-                            <?=$this->escape($war->getWarEnemyTag()) ?>
-                        </div>
-                    </div>
-                </a>
-                <div class="col-3 small nextwar-date">
-                    <?php
-                    $countdown = $warMapper->countdown($war->getWarTime());
-                    ?>
-                    <div class="ellipsis-item text-end" title="<?=$countdown ?>">
-                        <i><?=$countdown ?></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <a class="war-box-entry text-decoration-none" href="<?=$this->getUrl('war/index/show/id/' . $war->getId()) ?>">
+            <span class="war-box-icon">
+                <?php if ($iconFilename !== null) : ?>
+                    <img src="<?=$this->getBoxUrl('static/img/' . $iconFilename . '.png') ?>" title="<?=$this->escape($war->getWarGame()) ?>" width="16" height="16" alt="<?=$this->escape($war->getWarGame()) ?>">
+                <?php else : ?>
+                    <i class="fa-solid fa-gamepad text-muted" title="<?=$this->escape($war->getWarGame()) ?>"></i>
+                <?php endif; ?>
+            </span>
+            <span class="war-box-teams">
+                <span class="war-box-tag"><?=$this->escape($war->getWarGroupTag()) ?></span>
+                <span class="war-box-vs"><?=$this->getTrans('vs') ?></span>
+                <span class="war-box-tag"><?=$this->escape($war->getWarEnemyTag()) ?></span>
+            </span>
+            <span class="war-box-meta">
+                <?=$this->escape($warMapper->countdown($war->getWarTime())) ?>
+            </span>
+        </a>
     <?php endforeach; ?>
     <?php if (!$displayed) : ?>
-        <?=$this->getTrans('noWars') ?>
+        <p class="text-muted small mb-0"><?=$this->getTrans('noWars') ?></p>
     <?php endif; ?>
 <?php else : ?>
-    <?=$this->getTrans('noWars') ?>
+    <p class="text-muted small mb-0"><?=$this->getTrans('noWars') ?></p>
 <?php endif; ?>
