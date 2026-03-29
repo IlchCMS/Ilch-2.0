@@ -55,6 +55,9 @@ class Settings extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'articlesPerPage' => 'numeric|integer|min:1',
+                'articlesPerPageArchive' => 'numeric|integer|min:1',
+                'articlesPerPageCats' => 'numeric|integer|min:1',
+                'articlesPerPageKeywords' => 'numeric|integer|min:1',
                 'articleRating' => 'numeric|integer|min:0|max:1',
                 'disableComments' => 'numeric|integer|min:0|max:1',
                 'boxArticleLimit' => 'numeric|integer|min:1',
@@ -67,6 +70,9 @@ class Settings extends \Ilch\Controller\Admin
 
             if ($validation->isValid()) {
                 $this->getConfig()->set('article_articlesPerPage', $this->getRequest()->getPost('articlesPerPage'));
+                $this->getConfig()->set('article_articlesPerPageArchive', $this->getRequest()->getPost('articlesPerPageArchive'));
+                $this->getConfig()->set('article_articlesPerPageCats', $this->getRequest()->getPost('articlesPerPageCats'));
+                $this->getConfig()->set('article_articlesPerPageKeywords', $this->getRequest()->getPost('articlesPerPageKeywords'));
                 $this->getConfig()->set('article_articleRating', $this->getRequest()->getPost('articleRating'));
                 $this->getConfig()->set('article_disableComments', $this->getRequest()->getPost('disableComments'));
                 $this->getConfig()->set('article_box_articleLimit', $this->getRequest()->getPost('boxArticleLimit'));
@@ -91,6 +97,9 @@ class Settings extends \Ilch\Controller\Admin
 
         $keywordsFontSizes = explode(',', $this->getConfig()->get('article_box_keywords'));
         $this->getView()->set('articlesPerPage', $this->getConfig()->get('article_articlesPerPage'))
+            ->set('articlesPerPageArchive', $this->getConfig()->get('article_articlesPerPageArchive'))
+            ->set('articlesPerPageCats', $this->getConfig()->get('article_articlesPerPageCats'))
+            ->set('articlesPerPageKeywords', $this->getConfig()->get('article_articlesPerPageKeywords'))
             ->set('articleRating', $this->getConfig()->get('article_articleRating'))
             ->set('disableComments', $this->getConfig()->get('article_disableComments'))
             ->set('boxArticleLimit', $this->getConfig()->get('article_box_articleLimit'))

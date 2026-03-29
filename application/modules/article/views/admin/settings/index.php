@@ -18,6 +18,45 @@
                    value="<?=($this->get('articlesPerPage') != '') ? $this->escape($this->get('articlesPerPage')) : $this->originalInput('articlesPerPage') ?>" />
         </div>
     </div>
+    <div class="row mb-3<?=$this->validation()->hasError('articlesPerPageArchive') ? ' has-error' : '' ?>">
+        <label for="articlesPerPageArchiveInput" class="col-lg-2 col-form-label">
+            <?=$this->getTrans('articlesPerPageArchive') ?>
+        </label>
+        <div class="col-lg-1">
+            <input type="number"
+                   class="form-control"
+                   id="articlesPerPageArchiveInput"
+                   name="articlesPerPageArchive"
+                   min="1"
+                   value="<?=($this->get('articlesPerPageArchive') != '') ? $this->escape($this->get('articlesPerPageArchive')) : $this->originalInput('articlesPerPageArchive') ?>" />
+        </div>
+    </div>
+    <div class="row mb-3<?=$this->validation()->hasError('articlesPerPageCats') ? ' has-error' : '' ?>">
+        <label for="articlesPerPageCatsInput" class="col-lg-2 col-form-label">
+            <?=$this->getTrans('articlesPerPageCats') ?>
+        </label>
+        <div class="col-lg-1">
+            <input type="number"
+                   class="form-control"
+                   id="articlesPerPageCatsInput"
+                   name="articlesPerPageCats"
+                   min="1"
+                   value="<?=($this->get('articlesPerPageCats') != '') ? $this->escape($this->get('articlesPerPageCats')) : $this->originalInput('articlesPerPageCats') ?>" />
+        </div>
+    </div>
+    <div class="row mb-3<?=$this->validation()->hasError('articlesPerPageKeywords') ? ' has-error' : '' ?>">
+        <label for="articlesPerPageKeywordsInput" class="col-lg-2 col-form-label">
+            <?=$this->getTrans('articlesPerPageKeywords') ?>
+        </label>
+        <div class="col-lg-1">
+            <input type="number"
+                   class="form-control"
+                   id="articlesPerPageKeywordsInput"
+                   name="articlesPerPageKeywords"
+                   min="1"
+                   value="<?=($this->get('articlesPerPageKeywords') != '') ? $this->escape($this->get('articlesPerPageKeywords')) : $this->originalInput('articlesPerPageKeywords') ?>" />
+        </div>
+    </div>
     <div class="row mb-3<?=$this->validation()->hasError('articleRating') ? ' has-error' : '' ?>">
         <div class="col-lg-2 col-form-label">
             <?=$this->getTrans('articleRating') ?>

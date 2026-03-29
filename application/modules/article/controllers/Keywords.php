@@ -94,7 +94,7 @@ class Keywords extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuKeywords'), ['action' => 'index'])
             ->add($keyword, ['action' => 'show', 'keyword' => $keyword]);
 
-        $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPageKeywords') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPageKeywords'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $user = null;
