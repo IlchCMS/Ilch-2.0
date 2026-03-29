@@ -437,22 +437,6 @@ class Config extends Install
                         ->execute();
                 }
                 // no break
-            case "1.16.5":
-                // Seed default icons if the table is empty.
-                // Fixes installations that were done fresh at 1.16.5 before the install() seeding was added.
-                $iconCount = $this->db()->select('COUNT(*) AS cnt')
-                    ->from(['war_game_icon'])
-                    ->execute()
-                    ->fetchAssoc();
-                if ((int)($iconCount['cnt'] ?? 0) === 0) {
-                    foreach (glob(ROOT_PATH . '/application/modules/war/static/img/*.png') ?: [] as $iconFile) {
-                        $name = basename($iconFile, '.png');
-                        $this->db()->insert('war_game_icon')
-                            ->values(['title' => $name, 'icon' => $name])
-                            ->execute();
-                    }
-                }
-                // no break
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
