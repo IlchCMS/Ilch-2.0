@@ -174,7 +174,7 @@ img {
 
 /* sortable table rows and tables that can be filtered */
 #sortTable th.sort:after {
-    font-family: "Font Awesome 6 Free", sans-serif;
+    font-family: "Font Awesome 7 Free", sans-serif;
     font-weight: 900;
     display: inline;
     content: ' \f0dc';
@@ -186,14 +186,14 @@ img {
     color: #f00;
 }
 #sortTable th.sort.asc:after {
-    font-family: "Font Awesome 6 Free", sans-serif;
+    font-family: "Font Awesome 7 Free", sans-serif;
     font-weight: 900;
     display: inline;
     content: ' \f0dd';
     color: #000;
 }
 #sortTable th.sort.desc:after {
-    font-family: "Font Awesome 6 Free", sans-serif;
+    font-family: "Font Awesome 7 Free", sans-serif;
     font-weight: 900;
     display: inline;
     content: ' \f0de';
