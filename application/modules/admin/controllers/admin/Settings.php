@@ -124,6 +124,10 @@ class Settings extends \Ilch\Controller\Admin
                 $validationRules['captcha_apikey'] = 'required';
                 $validationRules['captcha_seckey'] = 'required';
             }
+            
+            if ((int)$this->getRequest()->getPost('captcha') == 3){
+                $validationRules['captcha_score'] = 'numeric|min:0|max:1';
+            }
 
             $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
@@ -140,6 +144,7 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('captcha', $this->getRequest()->getPost('captcha'));
                 $this->getConfig()->set('captcha_apikey', $this->getRequest()->getPost('captcha_apikey'));
                 $this->getConfig()->set('captcha_seckey', $this->getRequest()->getPost('captcha_seckey'));
+                $this->getConfig()->set('captcha_score', $this->getRequest()->getPost('captcha_score', 0.5));
                 if ($this->getRequest()->getPost('hmenuFixed') === '1') {
                     $this->getConfig()->set('admin_layout_hmenu', 'hmenu-fixed');
                 } elseif ($this->getRequest()->getPost('hmenuFixed') === '0') {
@@ -176,6 +181,7 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('captcha', (int)$this->getConfig()->get('captcha'));
         $this->getView()->set('captcha_apikey', $this->getConfig()->get('captcha_apikey'));
         $this->getView()->set('captcha_seckey', $this->getConfig()->get('captcha_seckey'));
+        $this->getView()->set('captcha_score', $this->getConfig()->get('captcha_score', 0.5));
         $this->getView()->set('groupList', $groupMapper->getGroupList());
         $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'));
         $this->getView()->set('updateservers', $updateserversMapper->getUpdateservers());
