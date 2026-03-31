@@ -11,6 +11,7 @@ use Ilch\Box;
 use Ilch\Registry;
 use Modules\War\Mappers\War as WarMapper;
 use Modules\War\Mappers\Games as GamesMapper;
+use Modules\War\Mappers\GameIcons as GameIconMapper;
 use Modules\User\Mappers\User as UserMapper;
 
 class Lastwar extends Box
@@ -19,6 +20,7 @@ class Lastwar extends Box
     {
         $warMapper = new WarMapper();
         $gamesMapper = new GamesMapper();
+        $gameIconMapper = new GameIconMapper();
         $userMapper = new UserMapper();
         /** @var \Ilch\Config\Database $config */
         $config = Registry::get('config');
@@ -37,6 +39,7 @@ class Lastwar extends Box
 
         $this->getView()->set('warMapper', $warMapper)
             ->set('gamesMapper', $gamesMapper)
+            ->set('gameIconMap', $gameIconMapper->getGameIconMap())
             ->set('wars', $warMapper->getWarListByStatusAndLimt(2, $config->get('war_boxLastWarLimit'), $readAccess, 'DESC'));
     }
 }
