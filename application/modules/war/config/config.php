@@ -422,7 +422,7 @@ class Config extends Install
             case "1.16.2":
             case "1.16.3":
             case "1.16.4":
-                // Create war_game_icon table and migrate existing icons.
+                // Create war_game_icons table and migrate existing icons.
                 $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_war_game_icons` (
                       `id` INT(11) NOT NULL AUTO_INCREMENT,
                       `title` VARCHAR(255) NOT NULL,
@@ -432,7 +432,7 @@ class Config extends Install
 
                 foreach (glob(ROOT_PATH . '/application/modules/war/static/img/*.png') ?: [] as $iconfile) {
                     $name = basename($iconfile, '.png');
-                    $this->db()->insert('war_game_icon')
+                    $this->db()->insert('war_game_icons')
                         ->values(['title' => $name, 'icon' => $name])
                         ->execute();
                 }
