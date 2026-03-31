@@ -2,7 +2,7 @@
 
 /** @var \Ilch\View $this */
 
-/** @var string $icon */
+/** @var \Modules\War\Models\GameIcon $icon */
 $icon = $this->get('icon');
 ?>
 <h1><?=$this->getTrans(!$icon ? 'createNewGameIcon' : 'treatGameIcon') ?></h1>
@@ -17,7 +17,7 @@ $icon = $this->get('icon');
                    class="form-control"
                    id="gameNameInput"
                    name="gameName"
-                   value="<?=$this->escape($this->originalInput('gameName', ($icon ?? ''))) ?>" />
+                   value="<?=$this->escape($this->originalInput('gameName', ($icon ? $icon->getTitle() : ''))) ?>" />
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('gameIcon') ? ' has-error' : '' ?>">
@@ -33,9 +33,9 @@ $icon = $this->get('icon');
                        name="gameIcon"
                        aria-describedby="iconHelpBlock"
                        readonly />
-                <?php if ($icon && file_exists(APPLICATION_PATH . '/modules/war/static/img/' . $icon . '.png')) : ?>
+                <?php if ($icon && file_exists(APPLICATION_PATH . '/modules/war/static/img/' . $icon->getIcon() . '.png')) : ?>
                     <span class="input-group-text">
-                        <img src="<?=$this->getBaseUrl() . 'application/modules/war/static/img/' . $icon . '.png' ?>" title="<?=$this->escape($icon) ?>" alt="<?=$this->escape($icon) ?>">
+                        <img src="<?=$this->getBaseUrl() . 'application/modules/war/static/img/' . $icon->getIcon() . '.png' ?>" title="<?=$this->escape($icon->getTitle()) ?>" alt="<?=$this->escape($icon->getTitle()) ?>">
                     </span>
                 <?php endif; ?>
             </div>

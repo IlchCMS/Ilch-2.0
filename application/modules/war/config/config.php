@@ -62,6 +62,14 @@ class Config extends Install
         $databaseConfig = new Database($this->db());
         $databaseConfig->set('war_boxNextWarLimit', '5')
             ->set('war_boxLastWarLimit', '5');
+
+        // Import existing icons on install.
+        foreach (glob(ROOT_PATH . '/application/modules/war/static/img/*.png') ?: [] as $iconFile) {
+            $name = basename($iconFile, '.png');
+            $this->db()->insert('war_game_icons')
+                ->values(['title' => $name, 'icon' => $name])
+                ->execute();
+        }
     }
 
     public function uninstall()
@@ -79,6 +87,7 @@ class Config extends Install
         $this->db()->drop('war_groups', true);
         $this->db()->drop('war_enemy', true);
         $this->db()->drop('war_maps', true);
+        $this->db()->drop('war_game_icons', true);
         $this->db()->drop('war', true);
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
@@ -167,7 +176,14 @@ class Config extends Install
             INDEX `FK_[prefix]_war_access_[prefix]_groups` (`group_id`) USING BTREE,
             CONSTRAINT `FK_[prefix]_war_access_[prefix]_war` FOREIGN KEY (`war_id`) REFERENCES `[prefix]_war` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
             CONSTRAINT `FK_[prefix]_war_access_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;';
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+        CREATE TABLE IF NOT EXISTS `[prefix]_war_game_icons` (
+          `id` INT(11) NOT NULL AUTO_INCREMENT,
+          `title` VARCHAR(255) NOT NULL,
+          `icon` VARCHAR(255) NOT NULL,
+          PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
     public function getUpdate(string $installedVersion): string
@@ -406,6 +422,21 @@ class Config extends Install
             case "1.16.2":
             case "1.16.3":
             case "1.16.4":
+                // Create war_game_icon table and migrate existing icons.
+                $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_war_game_icons` (
+                      `id` INT(11) NOT NULL AUTO_INCREMENT,
+                      `title` VARCHAR(255) NOT NULL,
+                      `icon` VARCHAR(255) NOT NULL,
+                      PRIMARY KEY (`id`)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
+
+                foreach (glob(ROOT_PATH . '/application/modules/war/static/img/*.png') ?: [] as $iconfile) {
+                    $name = basename($iconfile, '.png');
+                    $this->db()->insert('war_game_icon')
+                        ->values(['title' => $name, 'icon' => $name])
+                        ->execute();
+                }
+                // no break
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

@@ -93,6 +93,7 @@ return [
     'noGroup' => 'No Groups',
     'noEnemy' => 'No Enemies',
     'noMaps' => 'No Maps',
+    'noGameIcons' => 'No game icons existing',
     'warEnemy' => 'Add Enemy',
     'warGroup' => 'Add Group',
     'warTime' => 'Date/Time',

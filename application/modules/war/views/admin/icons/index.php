@@ -24,13 +24,13 @@
                 </thead>
                 <tbody>
                     <?php
-                    /** @var string $game */
+                    /** @var \Modules\War\Models\GameIcon $game */
                     foreach ($this->get('icons') as $game) : ?>
                         <tr>
-                            <td><?=$this->getDeleteCheckbox('check_icons', $game) ?></td>
-                            <td><?=$this->getEditIcon(['action' => 'treat', 'key' => $game]) ?></td>
-                            <td><?=$this->getDeleteIcon(['action' => 'del', 'key' => $game]) ?></td>
-                            <td><?=$this->escape($game) ?></td>
+                            <td><?=$this->getDeleteCheckbox('check_icons', $game->getId()) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $game->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $game->getId()]) ?></td>
+                            <td><?=$this->escape($game->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -39,5 +39,5 @@
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else : ?>
-    <?=$this->getTranslator()->trans('noMaps') ?>
+    <?=$this->getTranslator()->trans('noGameIcons') ?>
 <?php endif; ?>

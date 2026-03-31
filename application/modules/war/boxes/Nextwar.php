@@ -10,6 +10,7 @@ namespace Modules\War\Boxes;
 use Ilch\Box;
 use Ilch\Registry;
 use Modules\War\Mappers\War as WarMapper;
+use Modules\War\Mappers\GameIcons as GameIconMapper;
 use Modules\User\Mappers\User as UserMapper;
 
 class Nextwar extends Box
@@ -17,6 +18,7 @@ class Nextwar extends Box
     public function render()
     {
         $warMapper = new WarMapper();
+        $gameIconMapper = new GameIconMapper();
         $userMapper = new UserMapper();
         /** @var \Ilch\Config\Database $config */
         $config = Registry::get('config');
@@ -34,6 +36,7 @@ class Nextwar extends Box
         }
 
         $this->getView()->set('warMapper', $warMapper)
+            ->set('gameIconMap', $gameIconMapper->getGameIconMap())
             ->set('wars', $warMapper->getWarListByStatusAndLimt(1, $config->get('war_boxNextWarLimit'), $readAccess));
     }
 }
