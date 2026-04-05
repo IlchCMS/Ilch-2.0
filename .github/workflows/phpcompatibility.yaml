@@ -1,0 +1,52 @@
+name: PHPCompatibility (changed files)
+
+on:
+  pull_request:
+    paths:
+      - '**.php'
+
+jobs:
+  phpcompat:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code (fetch all history)
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer
+
+      - name: Install Composer dependencies (including PHPCompatibility)
+        run: |
+          composer require --dev squizlabs/php_codesniffer:^4 PHPCompatibility/PHPCompatibility:^10.0.0@dev || true
+          composer install --no-interaction --no-scripts --prefer-dist
+
+      - name: Determine changed PHP files
+        id: changed
+        run: |
+          # Ensure refs are present
+          git fetch origin ${{ github.event.pull_request.base.ref }}:refs/remotes/origin/${{ github.event.pull_request.base.ref }} || true
+          git fetch origin ${{ github.event.pull_request.head.ref }}:refs/remotes/origin/${{ github.event.pull_request.head.ref }} || true
+
+          # List added/modified php files between base..head (ignore deletions)
+          FILES=$(git diff --name-only --diff-filter=AM origin/${{ github.event.pull_request.base.ref }}..origin/${{ github.event.pull_request.head.ref }} -- '*.php' || true)
+
+          # Remove empty lines and output as JSON array
+          if [ -z "$FILES" ]; then
+            echo "::set-output name=files::"
+            echo "no_files"
+          else
+            echo "$FILES" | tr '\n' ' ' > /tmp/php_files.txt
+            echo "::set-output name=files::$(cat /tmp/php_files.txt)"
+          fi
+
+      - name: Run PHPCompatibility on changed files
+        if: steps.changed.outputs.files != '' && steps.changed.outputs.files != 'no_files'
+        run: |
+          echo "Running phpcs on: ${{ steps.changed.outputs.files }}"
+          # Run phpcs only on the changed files. Replace testVersion as needed (e.g. 7.4-)
+          vendor/bin/phpcs -p --standard=PHPCompatibility --runtime-set testVersion 7.4- --extensions=php ${{ steps.changed.outputs.files }}
