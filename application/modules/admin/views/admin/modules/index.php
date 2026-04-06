@@ -19,14 +19,15 @@ if ($modulesOnUpdateServer === null) {
     $modulesOnUpdateServer = [];
 }
 
-function checkOthersDependencies($module, $dependencies) {
+function checkOthersDependencies($module, $dependencies): array
+{
     $dependencyCheck = [];
     foreach ($dependencies as $dependency) {
         $key = key($module);
         if (array_key_exists($key, $dependency)) {
             $parsed = explode(',', $dependency[$key]);
             if (!version_compare($module[$key], $parsed[1], $parsed[0])) {
-                $dependencyCheck[array_search(array($key => $dependency[$key]), $dependencies)] = [$key => str_replace(',','', $dependency[$key])];
+                $dependencyCheck[array_search([$key => $dependency[$key]], $dependencies)] = [$key => str_replace(',','', $dependency[$key])];
             }
         }
     }
@@ -34,7 +35,8 @@ function checkOthersDependencies($module, $dependencies) {
     return $dependencyCheck;
 }
 
-function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
+function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer): bool
+{
     if (empty($moduleOnUpdateServer->depends)) {
         return true;
     }
@@ -123,8 +125,8 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                             <?php endif; ?>
                             <?php
                             foreach($moduleUpdate as $source => $moduleUpdateInformation) {
+                                $extensionCheck = [];
                                 if (!empty($moduleUpdateInformation->phpExtensions)) {
-                                    $extensionCheck = [];
                                     foreach ($moduleUpdateInformation->phpExtensions as $extension) {
                                         $extensionCheck[] = extension_loaded($extension);
                                     }
@@ -201,7 +203,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                         <td><?=$module->getVersion() ?></td>
                         <td>
                             <?=$content['description'] ?>
-                            <?=(!empty($moduleOnUpdateServer->official) && $moduleOnUpdateServer->official == true) ? '<span class="ilch-official">ilch</span>' : '' ?>
+                            <?=(!empty($moduleUpdate['updateserver']->official)) ? '<span class="ilch-official">ilch</span>' : '' ?>
                         </td>
                     </tr>
 

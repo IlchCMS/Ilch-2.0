@@ -19,8 +19,8 @@ foreach ($modules as $module): ?>
     <?php if ($module->id == $this->getRequest()->getParam('id')): ?>
         <?php
         $phpExtension = [];
+        $extensionCheck = [];
         if (!empty($module->phpExtensions)) {
-            $extensionCheck = [];
             foreach ($module->phpExtensions as $extension) {
                 $extensionCheck[] = extension_loaded($extension);
             }
