@@ -1,4 +1,7 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 $modulesList = url_get_contents($this->get('updateserver') . 'modules.json');
 $modules = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');

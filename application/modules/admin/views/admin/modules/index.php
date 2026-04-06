@@ -1,5 +1,7 @@
 <?php
 
+/** @var \Ilch\View $this */
+
 /** @var \Modules\Admin\Models\Module[] $modules */
 $modules = $this->get('modules');
 

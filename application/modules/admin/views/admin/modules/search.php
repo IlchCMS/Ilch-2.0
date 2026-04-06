@@ -1,5 +1,7 @@
 <?php
 
+/** @var \Ilch\View $this */
+
 $modulesList = url_get_contents($this->get('updateserver'));
 $modulesOnUpdateServer = json_decode($modulesList);
 if ($modulesOnUpdateServer instanceof \stdClass) {
