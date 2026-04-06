@@ -631,6 +631,7 @@ class Transfer
             if (PHP_VERSION_ID >= 80000) {
                 unset($this->transferUrl);
             } else {
+                // @codingStandardsIgnoreLine
                 curl_close($this->transferUrl);
             }
         }
