@@ -1,3 +1,8 @@
+<?php
+
+/** @var \Ilch\View $this */
+?>
+
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('modulesNotInstalled') ?></h1>
 <?php if (!empty($this->get('modulesNotInstalled'))): ?>

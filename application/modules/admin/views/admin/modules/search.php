@@ -1,4 +1,7 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 $modulesList = url_get_contents($this->get('updateserver'));
 $modulesOnUpdateServer = json_decode($modulesList);
 if ($modulesOnUpdateServer instanceof \stdClass) {
@@ -16,12 +19,12 @@ if (file_exists($cacheFilename)) {
 }
 
 // Define the custom sort function
-function custom_sort($a,$b)
+function custom_sort($a,$b): int
 {
     return strcmp($a->name, $b->name);
 }
 
-function checkOthersDependencies($module, $dependencies)
+function checkOthersDependencies($module, $dependencies): array
 {
     $dependencyCheck = [];
     foreach ($dependencies as $dependency) {
@@ -29,7 +32,7 @@ function checkOthersDependencies($module, $dependencies)
         if (array_key_exists($key, $dependency)) {
             $parsed = explode(',', $dependency[$key]);
             if (!version_compare($module[$key], $parsed[1], $parsed[0])) {
-                $dependencyCheck[array_search(array($key => $dependency[$key]), $dependencies)] = [$key => str_replace(',','', $dependency[$key])];
+                $dependencyCheck[array_search([$key => $dependency[$key]], $dependencies)] = [$key => str_replace(',','', $dependency[$key])];
             }
         }
     }
@@ -37,7 +40,7 @@ function checkOthersDependencies($module, $dependencies)
     return $dependencyCheck;
 }
 
-function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer)
+function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer): bool
 {
     if (empty($moduleOnUpdateServer->depends)) {
         return true;
@@ -116,8 +119,8 @@ usort($modulesOnUpdateServer, 'custom_sort');
         <tbody>
             <?php foreach ($modulesOnUpdateServer as $moduleOnUpdateServer):  ?>
                 <?php
+                $extensionCheck = [];
                 if (!empty($moduleOnUpdateServer->phpExtensions)) {
-                    $extensionCheck = [];
                     foreach ($moduleOnUpdateServer->phpExtensions as $extension) {
                         $extensionCheck[] = extension_loaded($extension);
                     }
@@ -208,7 +211,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
                     <td><?=$moduleOnUpdateServer->version?></td>
                     <td>
                         <?=$moduleOnUpdateServer->desc ?>
-                        <?=(!empty($moduleOnUpdateServer->official) && $moduleOnUpdateServer->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
+                        <?=(!empty($moduleOnUpdateServer->official)) ? '<span class="ilch-official">ilch</span>' : '' ?>
                     </td>
                 </tr>
                 <?php
