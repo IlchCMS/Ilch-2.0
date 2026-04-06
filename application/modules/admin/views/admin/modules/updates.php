@@ -1,5 +1,7 @@
 <?php
 
+/** @var \Ilch\View $this */
+
 /** @var \Modules\Admin\Models\Module[] $modules */
 $modules = $this->get('modules');
 $modulesList = url_get_contents($this->get('updateserver'));
@@ -95,8 +97,7 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                 if (!$module->getSystemModule() && $this->getUser()->hasAccess('module_' . $module->getKey())):
                     // Skip if there are no updates available either locally or on the updateserver
                     if ((empty($moduleUpdate['local']) && empty($moduleUpdate['updateserver'])) || (empty($moduleUpdate['local']) && (!empty($moduleUpdate['updateserver']) && !version_compare($versionsOfModules[$moduleUpdate['updateserver']->key]['version'], $moduleUpdate['updateserver']->version, '<')))) : ?>
-                    <tr id="Module_<?=$module->getKey() ?>"></tr>
-                    <?php continue; ?>
+                        <?php continue; ?>
                     <?php else:
                     $found = true;
                     ?>
@@ -212,7 +213,7 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                         <td><?=$module->getVersion() ?></td>
                         <td>
                             <?=$content['description'] ?>
-                            <?=(!empty($moduleUpdateInformation->official) && $moduleUpdateInformation->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
+                            <?=(!empty($moduleUpdateInformation->official)) ? '<span class="ilch-official">ilch</span>' : '' ?>
                         </td>
                     </tr>
                     <?php endif; ?>

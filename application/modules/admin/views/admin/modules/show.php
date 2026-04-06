@@ -1,4 +1,7 @@
 <?php
+
+/** @var \Ilch\View $this */
+
 $modulesList = url_get_contents($this->get('updateserver') . 'modules.json');
 $modules = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
@@ -19,8 +22,8 @@ foreach ($modules as $module): ?>
     <?php if ($module->id == $this->getRequest()->getParam('id')): ?>
         <?php
         $phpExtension = [];
+        $extensionCheck = [];
         if (!empty($module->phpExtensions)) {
-            $extensionCheck = [];
             foreach ($module->phpExtensions as $extension) {
                 $extensionCheck[] = extension_loaded($extension);
             }
