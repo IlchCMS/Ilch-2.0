@@ -22,6 +22,7 @@ jobs:
 
       - name: Install Composer dependencies (including PHPCompatibility)
         run: |
+          composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
           composer require --dev squizlabs/php_codesniffer:^4 phpcompatibility/php-compatibility:^10.0.0@dev || true
           composer install --no-interaction --no-scripts --prefer-dist
 
