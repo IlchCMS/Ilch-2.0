@@ -524,7 +524,7 @@ class Transfer
                     invalidateOpcache($thisFileName, true);
                     include $thisFileName;
 
-                    $configClass = str_replace(array('.php', 'application', '/'), array('', '', "\\"), $thisFileName);
+                    $configClass = str_replace(['.php', 'application', '/'], ['', '', "\\"], $thisFileName);
                     if (class_exists($configClass)) {
                         $config = new $configClass();
 
@@ -573,7 +573,7 @@ class Transfer
                 if ($thisFileName == $thisFileDir . '/config.php') {
                     invalidateOpcache($thisFileName, true);
                     include $thisFileName;
-                    $configClass = str_replace(array('.php', 'application', '/'), array('', '', "\\"), $thisFileName);
+                    $configClass = str_replace(['.php', 'application', '/'], ['', '', "\\"], $thisFileName);
                     if (class_exists($configClass)) {
                         $config = new $configClass();
                         if (method_exists($config, 'install')) {
