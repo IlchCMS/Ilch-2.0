@@ -22,7 +22,7 @@ jobs:
 
       - name: Install Composer dependencies (including PHPCompatibility)
         run: |
-          composer require --dev squizlabs/php_codesniffer:^4 PHPCompatibility/PHPCompatibility:^10.0.0@dev || true
+          composer require --dev squizlabs/php_codesniffer:^4 phpcompatibility/php-compatibility:^10.0.0@dev || true
           composer install --no-interaction --no-scripts --prefer-dist
 
       - name: Determine changed PHP files
