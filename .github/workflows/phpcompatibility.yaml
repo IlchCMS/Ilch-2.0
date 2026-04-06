@@ -29,25 +29,22 @@ jobs:
       - name: Determine changed PHP files
         id: changed
         run: |
-          # Ensure refs are present
+          # ensure base/head refs exist for diff
           git fetch origin ${{ github.event.pull_request.base.ref }}:refs/remotes/origin/${{ github.event.pull_request.base.ref }} || true
           git fetch origin ${{ github.event.pull_request.head.ref }}:refs/remotes/origin/${{ github.event.pull_request.head.ref }} || true
 
-          # List added/modified php files between base..head (ignore deletions)
+          # list added/modified PHP files between base..head (ignore deletions)
           FILES=$(git diff --name-only --diff-filter=AM origin/${{ github.event.pull_request.base.ref }}..origin/${{ github.event.pull_request.head.ref }} -- '*.php' || true)
 
-          # Remove empty lines and output as JSON array
           if [ -z "$FILES" ]; then
-            echo "::set-output name=files::"
-            echo "no_files"
+            echo "files=" >> $GITHUB_OUTPUT
           else
-            echo "$FILES" | tr '\n' ' ' > /tmp/php_files.txt
-            echo "::set-output name=files::$(cat /tmp/php_files.txt)"
+            echo "files=$(echo $FILES | tr '\n' ' ')" >> $GITHUB_OUTPUT
           fi
 
       - name: Run PHPCompatibility on changed files
-        if: steps.changed.outputs.files != '' && steps.changed.outputs.files != 'no_files'
+        if: steps.changed.outputs.files != ''
         run: |
-          echo "Running phpcs on: ${{ steps.changed.outputs.files }}"
-          # Run phpcs only on the changed files. Replace testVersion as needed (e.g. 7.4-)
+          echo "Running PHPCompatibility on: ${{ steps.changed.outputs.files }}"
+          # adjust testVersion to the target PHP versions (example: 7.4- means test for 7.4+)
           vendor/bin/phpcs -p --standard=PHPCompatibility --runtime-set testVersion 7.4- --extensions=php ${{ steps.changed.outputs.files }}
