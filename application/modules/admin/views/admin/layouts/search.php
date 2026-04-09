@@ -1,7 +1,7 @@
-<link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
-
-<h1><?=$this->getTrans('search') ?></h1>
 <?php
+
+/** @var \Ilch\View $this */
+
 $layoutsList = url_get_contents($this->get('updateserver') . 'layouts.json');
 $layoutsOnUpdateServer = json_decode($layoutsList);
 $versionsOfLayouts = $this->get('versionsOfLayouts');
@@ -17,6 +17,9 @@ if (empty($layoutsOnUpdateServer)) {
     return;
 }
 ?>
+<link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
+
+<h1><?=$this->getTrans('search') ?></h1>
 <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'search']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <span class="small"><?=(!empty($cacheFileDate)) ? $this->getTrans('lastUpdateOn') . ' ' . $this->getTrans($cacheFileDate->format('l', true)) . $cacheFileDate->format(', d. ', true) . $this->getTrans($cacheFileDate->format('F', true)) . $cacheFileDate->format(' Y H:i', true) : $this->getTrans('lastUpdateOn') . ': ' . $this->getTrans('lastUpdateUnknown') ?></span></p>
 <div class="row">
 <?php foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer): ?>
@@ -40,7 +43,7 @@ if (empty($layoutsOnUpdateServer)) {
                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]) ?>" title="<?=$this->getTrans('info') ?>">
                     <img src="<?=$this->get('updateserver') . 'layouts/images/' . $layoutOnUpdateServer->thumbs[0]->img ?>" alt="<?=$this->escape($layoutOnUpdateServer->name) ?>" />
                 </a>
-                <?=(!empty($layoutOnUpdateServer->official) && $layoutOnUpdateServer->official) ? '<span class="ilch-official">ilch</span>' : '' ?>
+                <?=(!empty($layoutOnUpdateServer->official)) ? '<span class="ilch-official">ilch</span>' : '' ?>
             </div>
             <div class="card-footer">
                 <div class="clearfix">

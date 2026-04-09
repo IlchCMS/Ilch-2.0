@@ -1,5 +1,7 @@
 <?php
 
+/** @var \Ilch\View $this */
+
 /** @var \Modules\Admin\Models\Layout[] $layouts */
 $layouts = $this->get('layouts');
 
@@ -20,6 +22,29 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
 <p><a href="<?=$this->getUrl(['action' => 'refreshurl', 'from' => 'index']) ?>" class="btn btn-primary"><?=$this->getTrans('searchForUpdates') ?></a> <span class="small"><?=(!empty($cacheFileDate)) ? $this->getTrans('lastUpdateOn') . ' ' . $this->getTrans($cacheFileDate->format('l', true)) . $cacheFileDate->format(', d. ', true) . $this->getTrans($cacheFileDate->format('F', true)) . $cacheFileDate->format(' Y H:i', true) : $this->getTrans('lastUpdateOn') . ': ' . $this->getTrans('lastUpdateUnknown') ?></span></p>
 <div class="row">
 <?php foreach ($layouts as $layout): ?>
+<?php
+    // "layoutTooOld" was added to prevent the usage of old and likely with Ilch 2.2.0 and newer incompatible layouts.
+    if (empty($layout->getIlchCore())) {
+        $ilchCoreTooOld = false;
+        $layoutTooOld = true;
+    } else {
+        $ilchCoreTooOld = version_compare($coreVersion, $layout->getIlchCore(), '<');
+        $layoutTooOld = version_compare('2.2.0', $layout->getIlchCore(), '>');
+    }
+
+    $moduleNotInstalled = ($layout->getModulekey() != '' && isset($modulesNotInstalled[$layout->getModulekey()]));
+    $layoutOnUpdateServerFound = null;
+    $layoutsOnUpdateServer = (empty($layoutsOnUpdateServer)) ? [] : $layoutsOnUpdateServer;
+    foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer) {
+        if ($layoutOnUpdateServer->key == $layout->getKey()) {
+            $layoutOnUpdateServerFound = $layoutOnUpdateServer;
+
+            $ilchCoreTooOld = version_compare($coreVersion, $layoutOnUpdateServer->ilchCore, '<');
+            $layoutTooOld = version_compare('2.2.0', $layoutOnUpdateServer->ilchCore, '>');
+            break;
+        }
+    }
+?>
     <div id="layouts" class="col-xl-3 col-md-6">
         <div class="card mb-3">
             <div class="card-header">
@@ -44,35 +69,12 @@ $modulesNotInstalled = $this->get('modulesNotInstalled');
                       title="<?=$this->getTrans('info') ?>">
                     <img src="<?=$this->getStaticUrl('../application/layouts/' . $layout->getKey() . '/config/screen.png') ?>" alt="<?=$this->escape($layout->getName()) ?>" title="<?=$this->escape($layout->getName()) ?>" />
                 </span>
-                <?=($layout->getOfficial()) ? '<span class="ilch-official">ilch</span>' : '' ?>
+                <?=(!empty($layoutOnUpdateServer->official)) ? '<span class="ilch-official">ilch</span>' : '' ?>
             </div>
             <div class="card-footer">
                 <div class="clearfix">
                     <div class="float-start">
-                        <?php
-                        // "layoutTooOld" was added to prevent the usage of old and likely with Ilch 2.2.0 and newer incompatible layouts.
-                        if (empty($layout->getIlchCore())) {
-                            $ilchCoreTooOld = false;
-                            $layoutTooOld = true;
-                        } else {
-                            $ilchCoreTooOld = version_compare($coreVersion, $layout->getIlchCore(), '<');
-                            $layoutTooOld = version_compare('2.2.0', $layout->getIlchCore(), '>');
-                        }
-
-                        $moduleNotInstalled = ($layout->getModulekey() != '' && isset($modulesNotInstalled[$layout->getModulekey()]));
-                        $layoutOnUpdateServerFound = null;
-                        $layoutsOnUpdateServer = (empty($layoutsOnUpdateServer)) ? [] : $layoutsOnUpdateServer;
-                        foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer) {
-                            if ($layoutOnUpdateServer->key == $layout->getKey()) {
-                                $layoutOnUpdateServerFound = $layoutOnUpdateServer;
-
-                                $ilchCoreTooOld = version_compare($coreVersion, $layoutOnUpdateServer->ilchCore, '<');
-                                $layoutTooOld = version_compare('2.2.0', $layoutOnUpdateServer->ilchCore, '>');
-                                break;
-                            }
-                        }
-
-                        if (!empty($layoutOnUpdateServerFound) && version_compare($versionsOfLayouts[$layoutOnUpdateServerFound->key], $layoutOnUpdateServerFound->version, '<')): ?>
+                        <?php if (!empty($layoutOnUpdateServerFound) && version_compare($versionsOfLayouts[$layoutOnUpdateServerFound->key], $layoutOnUpdateServerFound->version, '<')): ?>
                             <?php if (version_compare($coreVersion, $layoutOnUpdateServerFound->ilchCore, '<')): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('ilchCoreError') ?>">
