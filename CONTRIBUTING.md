@@ -14,13 +14,27 @@
 
 * Open a new GitHub pull request with the patch.
 
+* If possible, use the repository pull_request_template template to create the pull request.
+
 * Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
 
 #### **Do you intend to add a new feature or change an existing one?**
 
 * Open a new GitHub pull request with the patch.
 
+* If possible, use the repository pull_request_template template to create the pull request.
+
 * Keep in mind that the Ilch CMS isn't only intended for usage in gaming clans, but also for a more general usage. Features therefore should be useful outside the gaming world too.
+
+#### **AI-assisted contributions**
+
+AI assistance is allowed but must be disclosed in the PR using the repository pull_request_template. When using AI you must:
+
+* State the tool and what it produced in the PR description.
+
+* Ensure all AI output is compatible with this project's GPL-3.0 license and does not contain copied third-party copyrighted text.
+
+Responsibility: the contributor submitting the PR is fully responsible for reviewing and validating any AI-generated content.
 
 #### **Do you have questions about Ilch?**
 
