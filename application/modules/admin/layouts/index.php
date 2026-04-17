@@ -22,7 +22,7 @@ $accesses = $this->get('accesses');
     <link rel="shortcut icon" type="image/x-icon" href="<?=$this->getStaticUrl('img/favicon.ico') ?>">
 
     <!-- STYLES -->
-    <link href="<?=$this->getStaticUrl('js/ckeditor5/build/ckeditor.css') ?>" rel="stylesheet" type="text/css">
+    <link href="<?=$this->getStaticUrl('js/ckeditor5/ckeditor5.css') ?>" rel="stylesheet" type="text/css">
     <link href="<?=$this->getStaticUrl('js/ckeditor5/styles.css') ?>" rel="stylesheet" type="text/css">
     <link href="<?=$this->getVendorUrl('twbs/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
     <link href="<?=$this->getVendorUrl('fortawesome/font-awesome/css/all.min.css') ?>" rel="stylesheet">
@@ -36,7 +36,7 @@ $accesses = $this->get('accesses');
     <link href="<?=$this->getStaticUrl('js/highlight/default.min.css') ?>" rel="stylesheet" type="text/css">
 
     <script>
-        const baseUrl = "<?=BASE_URL ?>";
+        const baseUrl = <?=json_encode(BASE_URL, JSON_HEX_TAG | JSON_HEX_APOS) ?>;
         // Set a bunch of variables to later display translated messages. Used in ../application/modules/admin/static/js/functions.js
         var enableSelectedEntries = <?=json_encode($this->getTrans('enableSelectedEntries')) ?>;
         var deleteSelectedEntries = <?=json_encode($this->getTrans('deleteSelectedEntries')) ?>;
@@ -44,6 +44,16 @@ $accesses = $this->get('accesses');
     </script>
 
     <!-- SCRIPTS -->
+    <script type="importmap">
+        {
+            "imports": {
+                "ckeditor5": "<?=$this->getStaticUrl('js/ckeditor5/ckeditor5.js') ?>",
+                "ckeditor5/": "<?=$this->getStaticUrl('js/ckeditor5/') ?>",
+                "Ilchps": "<?=$this->getStaticUrl('js/ckeditor5/ckeditor5-ilchps/dist/browser/index.es.js') ?>",
+                "Ilchmedia": "<?=$this->getStaticUrl('js/ckeditor5/ckeditor5-ilchmedia/dist/browser/index.es.js') ?>"
+            }
+        }
+    </script>
     <script src="<?=$this->getVendorUrl('npm-asset/jquery/dist/jquery.min.js') ?>"></script>
     <script src="<?=$this->getVendorUrl('npm-asset/jquery-ui/dist/jquery-ui.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/jquery.mjs.nestedSortable.js') ?>"></script>
@@ -54,9 +64,9 @@ $accesses = $this->get('accesses');
     <script src="<?=$this->getStaticUrl('js/validate/jquery.validate.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/validate/additional-methods.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/validate/ilch-validate.js') ?>"></script>
-    <script src="<?=$this->getStaticUrl('js/ckeditor5/build/ckeditor.js') ?>"></script>
+    <script type="module" src="<?=$this->getStaticUrl('js/editor-setup.js') ?>"></script>
     <?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/ckeditor5/build/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.umd.js') ?>"></script>
+    <script src="<?=$this->getStaticUrl('js/ckeditor5/translations/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.umd.js') ?>"></script>
     <?php endif; ?>
     <script src="<?=$this->getStaticUrl('js/highlight/highlight.min.js') ?>"></script>
     <script src="<?=$this->getStaticUrl('js/jquery.key.js') ?>"></script>

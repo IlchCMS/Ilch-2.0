@@ -106,9 +106,11 @@ $directories = [
 $directoriesStaticJs = [
     'ckeditor5' => [
         'keep' => [
-            'build/translations/',
-            'build/ckeditor.css',
-            'build/ckeditor.js',
+            'ckeditor5-ilchmedia/dist/browser/index.es.js',
+            'ckeditor5-ilchps/dist/browser/index.es.js',
+            'translations/',
+            'ckeditor5.css',
+            'ckeditor5.js',
             'LICENSE.md',
             'styles.css',
             'emoji-definitions.json',
