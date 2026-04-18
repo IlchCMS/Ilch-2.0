@@ -567,7 +567,17 @@ class Frontend extends Base
         }
 
         $html .= '
-            <link href="' . $this->getStaticUrl('js/ckeditor5/build/ckeditor.css') . '" rel="stylesheet" type="text/css">
+            <script type="importmap">
+                {
+                    "imports": {
+                      "ckeditor5": "' . $this->getStaticUrl('js/ckeditor5/ckeditor5.js') . '",
+                      "ckeditor5/": "' . $this->getStaticUrl('js/ckeditor5/') . '",
+                      "Ilchps": "' . $this->getStaticUrl('js/ckeditor5/ckeditor5-ilchps/dist/browser/index.es.js') . '",
+                      "Ilchmedia": "' . $this->getStaticUrl('js/ckeditor5/ckeditor5-ilchmedia/dist/browser/index.es.js') . '"
+                    }
+                }
+            </script>
+            <link href="' . $this->getStaticUrl('js/ckeditor5/ckeditor5.css') . '" rel="stylesheet" type="text/css">
             <link href="' . $this->getStaticUrl('js/ckeditor5/styles.css') . '" rel="stylesheet" type="text/css">
             <link rel="apple-touch-icon" href="' . $this->getBaseUrl($this->escape($this->getAppleIcon())) . '">
             <link href="' . $this->getVendorUrl('fortawesome/font-awesome/css/all.min.css') . '" rel="stylesheet">
@@ -578,7 +588,8 @@ class Frontend extends Base
             <link href="' . $this->getVendorUrl('twbs/bootstrap/dist/css/bootstrap.min.css') . '" rel="stylesheet">
             <script src="' . $this->getVendorUrl('npm-asset/jquery/dist/jquery.min.js') . '"></script>
             <script src="' . $this->getVendorUrl('npm-asset/jquery-ui/dist/jquery-ui.min.js') . '"></script>
-            <script src="' . $this->getStaticUrl('js/ckeditor5/build/ckeditor.js') . '"></script>
+            <script>const baseUrl = ' . json_encode(BASE_URL, JSON_HEX_TAG | JSON_HEX_APOS) . ';</script>
+            <script type="module" src="' . $this->getStaticUrl('js/editor-setup.js') . '"></script>
             <script src="' . $this->getStaticUrl('js/jquery.mjs.nestedSortable.js') . '"></script>
             <script src="' . $this->getStaticUrl('../application/modules/admin/static/js/functions.js') . '"></script>
             <script src="' . $this->getStaticUrl('js/highlight/highlight.min.js') . '"></script>';
@@ -587,7 +598,6 @@ class Frontend extends Base
             <script>
                 hljs.highlightAll();
                 var iframeUrlUserGallery = "' . $this->getUrl('user/iframe/indexckeditor/type/imageckeditor/') . '";
-                const baseUrl = ' . json_encode(BASE_URL, JSON_HEX_TAG | JSON_HEX_APOS) . ';
                 $(function () {
                     const tooltipTriggerList = document.querySelectorAll(\'[data-bs-toggle="tooltip"]\')
                     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
@@ -605,7 +615,7 @@ class Frontend extends Base
         }
 
         if (!$isEnglish) {
-            $html .= '<script src="' . $this->getStaticUrl('js/ckeditor5/build/translations/' . $shortLang . '.umd.js') . '" charset="UTF-8"></script>';
+            $html .= '<script src="' . $this->getStaticUrl('js/ckeditor5/translations/' . $shortLang . '.umd.js') . '" charset="UTF-8"></script>';
         }
 
         if (is_array($this->get('scriptTags'))) {
