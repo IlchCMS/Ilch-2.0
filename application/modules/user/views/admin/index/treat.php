@@ -171,10 +171,10 @@ if ($user->getId()) {
     </div>
     <?php if ($user->getId()) : ?>
     <div class="row mb-3">
-        <label for="assignedGroups" class="col-xl-3 col-form-label">
+        <label for="treatProfile" class="col-xl-3 col-form-label">
             <?=$this->getTrans('userProfile') ?>
         </label>
-        <div class="col-xl-4">
+        <div class="col-xl-4" id="treatProfile">
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'treatProfile', 'user' => $user->getId()]) ?>" class="btn btn-outline-secondary"><?=$this->getTrans('editUserProfile') ?></a>
         </div>
     </div>

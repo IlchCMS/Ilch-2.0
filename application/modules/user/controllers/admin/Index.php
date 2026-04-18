@@ -492,6 +492,7 @@ class Index extends \Ilch\Controller\Admin
 
         $this->redirect(['action' => 'index']);
     }
+
     /**
      * Deletes the given user.
      */
