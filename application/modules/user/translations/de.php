@@ -63,6 +63,8 @@ return [
     'editUserProfile' => 'Profil bearbeiten',
     'editUserProfileOf' => 'Profil von %s bearbeiten',
     'editUserProfileInfoText' => 'Hier können Inhalte vom Profil gelöscht werden, die möglicherweise unangemessene Inhalte haben.',
+    'signature' => 'Signatur',
+    'noSignatureEntered' => 'Es wurde keine Signatur eingegeben.',
 
     'groupName' => 'Gruppenname',
     'groupAssignedUsers' => 'Anzahl "Zugeordnete Benutzer"',

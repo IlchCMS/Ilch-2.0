@@ -63,6 +63,8 @@ return [
     'editUserProfile' => 'Edit profile',
     'editUserProfileOf' => 'Edit profile of %s',
     'editUserProfileInfoText' => 'Here you can delete content from a user profile which might contain inappropriate texts.',
+    'signature' => 'Signature',
+    'noSignatureEntered' => 'No signature was entered.',
 
     'groupName' => 'Groupname',
     'groupAssignedUsers' => 'Number "Assigned users"',
