@@ -5,8 +5,9 @@ Ilch 2 ist der direkte Nachfolger der Ilch Versionen 1.1.
 - [Zur neuesten Version](https://github.com/IlchCMS/Ilch-2.0/releases/latest)
 
 ### Aktueller Entwicklungsstand (für Entwickler und Tester)
-- Userversion [![Download](http://ilch2.de/downloads/download-ilch.png)](http://www.ilch.de/ilch2/versions/master.zip)
-- Entwicklerversion [![Download](http://ilch2.de/downloads/download-ilch.png)](https://github.com/IlchCMS/Ilch-2.0/archive/master.zip)
+- Userversion: [Download](http://www.ilch.de/ilch2/versions/master.zip)
+- Entwicklerversion: [Download](https://github.com/IlchCMS/Ilch-2.0/archive/master.zip)
+- Entwicklerversion (inklusive Vagrant): Klonen Sie das Repository, um daran zu arbeiten. Siehe auch: [development/README.md](https://github.com/IlchCMS/Ilch-2.0/blob/master/development/README.md)
 
 ### Installation
 - Dateien in das Webverzeichnis legen
