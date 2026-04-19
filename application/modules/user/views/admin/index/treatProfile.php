@@ -84,4 +84,15 @@ foreach ($profileFields as $profileField) {
     <?php endif;
 }
 ?>
+<br><h1><?=$this->getTrans('signature') ?></h1>
+<?php if (!empty($user->getSignature())) : ?>
+    <div class="row">
+        <div class="col-xl-12">
+            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'deleteSignature', 'user' => $this->getRequest()->getParam('user')], null, true) ?>"><i class="fa-regular fa-trash-can text-danger"></i></a>
+            <?=$this->escape($user->getSignature()) ?>
+        </div>
+    </div>
+<?php else : ?>
+    <p><?=$this->getTrans('noSignatureEntered') ?></p>
+<?php endif; ?>
 <?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('editUserProfileInfoText')) ?>

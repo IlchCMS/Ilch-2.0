@@ -473,6 +473,26 @@ class Index extends \Ilch\Controller\Admin
         $this->redirect(['action' => 'index']);
     }
 
+    public function deleteSignatureAction()
+    {
+        $userId = $this->getRequest()->getParam('user');
+
+        if ($userId && $this->getRequest()->isSecure()) {
+            $userMapper = new UserMapper();
+            $user = $userMapper->getUserById($userId);
+
+            if ($user) {
+                $user->setSignature('');
+                $userMapper->save($user);
+
+                $this->addMessage('success');
+                $this->redirect(['action' => 'treatProfile', 'user' => $userId]);
+            }
+        }
+
+        $this->redirect(['action' => 'index']);
+    }
+
     /**
      * Deletes the given user.
      */
