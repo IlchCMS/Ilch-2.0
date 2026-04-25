@@ -8,12 +8,12 @@ echo 'cd /vagrant' >> ~/.bashrc
 # run setup.sh if no vendor directory exists
 if [ ! -d "/vagrant/development/vendor" ];
 then
-   /vagrant/development/bin/setup.sh
+   sh /vagrant/development/bin/setup.sh
 fi
 # run setup.sh if no vendor directory exists
 if [ ! -d "/vagrant/vendor" ];
 then
-   /vagrant/development/bin/setup.sh
+   sh /vagrant/development/bin/setup.sh
 fi
 
 cd ~/bin
