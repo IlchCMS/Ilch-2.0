@@ -217,6 +217,26 @@
             </div>
         </div>
     </div>
+    <div id="captcha_score" class="">
+        <div class="row mb-3">
+            <label for="captcha_score" class="col-xl-2 col-form-label">
+                <?= $this->getTrans('captcha_score') ?>:
+            </label>
+            <div class="col-xl-4">
+                <input class="form-control"
+                       type="number"
+                       id="captcha_score"
+                       name="captcha_score"
+                       min="0.0"
+                       max="1.0"
+                       step="0.1"
+                       value="<?= $this->get('captcha_score', 0.5) ?>" />
+                <small class="form-text text-muted">
+                    <?= $this->getTrans('captcha_score_info') ?>
+                </small>
+            </div>
+        </div>
+    </div>
     <div class="row mb-3">
         <label for="hideCaptchaFor" class="col-xl-2 col-form-label">
             <?= $this->getTrans('hideCaptchaFor') ?>:
@@ -341,10 +361,16 @@ $('[name="captcha"]').change(function () {
         $('#captcha_apikey').removeAttr('hidden');
         $('#captcha_seckey').removeAttr('hidden');
         $('#captcha_apikey_info').removeAttr('hidden');
+        if ($(this).val() == "3") {
+            $('#captcha_score').removeAttr('hidden');
+        } else {
+            $('#captcha_score').attr('hidden', '');
+        }
     } else {
         $('#captcha_apikey').attr('hidden', '');
         $('#captcha_seckey').attr('hidden', '');
         $('#captcha_apikey_info').attr('hidden', '');
+        $('#captcha_score').attr('hidden', '');
     }
 });
 $('[name="captcha"]').change();
