@@ -90,86 +90,6 @@ class File extends Model
     }
 
     /**
-     * Gets the fileId of the file.
-     *
-     * @return string
-     */
-    public function getFileId(): string
-    {
-        return $this->file_id;
-    }
-
-    /**
-     * Gets the fileThumb of the file.
-     *
-     * @return string
-     */
-    public function getFileThumb(): string
-    {
-        return $this->filethumb;
-    }
-
-    /**
-     * Gets the file title.
-     *
-     * @return string
-     */
-    public function getFileTitle(): string
-    {
-        return $this->file_title;
-    }
-
-    /**
-     * Gets the file desc.
-     *
-     * @return string
-     */
-    public function getFileDesc(): string
-    {
-        return $this->file_desc;
-    }
-
-    /**
-     * Gets the file image.
-     *
-     * @return string
-     */
-    public function getFileImage(): string
-    {
-        return $this->file_image;
-    }
-
-    /**
-     * Gets the item id of the file.
-     *
-     * @return string
-     */
-    public function getItemId(): string
-    {
-        return $this->item_id;
-    }
-
-    /**
-     * Gets the visits of the file.
-     *
-     * @return int
-     */
-    public function getVisits(): int
-    {
-        return $this->visits;
-    }
-
-    /**
-     * Gets the FileUrl of the file.
-     *
-     * @return string
-     */
-    public function getFileUrl(): string
-    {
-        return $this->file_url;
-    }
-
-    /**
      * Sets the id of the file.
      *
      * @param int $id
@@ -177,6 +97,16 @@ class File extends Model
     public function setId(int $id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * Gets the fileId of the file.
+     *
+     * @return string
+     */
+    public function getFileId(): string
+    {
+        return $this->file_id;
     }
 
     /**
@@ -190,6 +120,16 @@ class File extends Model
     }
 
     /**
+     * Gets the fileThumb of the file.
+     *
+     * @return string
+     */
+    public function getFileThumb(): string
+    {
+        return $this->filethumb;
+    }
+
+    /**
      * Sets the fileThumb of the file.
      *
      * @param string $fileThumb
@@ -197,6 +137,16 @@ class File extends Model
     public function setFileThumb(string $fileThumb)
     {
         $this->filethumb = $fileThumb;
+    }
+
+    /**
+     * Gets the file title.
+     *
+     * @return string
+     */
+    public function getFileTitle(): string
+    {
+        return $this->file_title;
     }
 
     /**
@@ -210,13 +160,13 @@ class File extends Model
     }
 
     /**
-     * Sets the image.
+     * Gets the file desc.
      *
-     * @param string $fileImage
+     * @return string
      */
-    public function setFileImage(string $fileImage)
+    public function getFileDesc(): string
     {
-        $this->file_image = $fileImage;
+        return $this->file_desc;
     }
 
     /**
@@ -230,6 +180,36 @@ class File extends Model
     }
 
     /**
+     * Gets the file image.
+     *
+     * @return string
+     */
+    public function getFileImage(): string
+    {
+        return $this->file_image;
+    }
+
+    /**
+     * Sets the image.
+     *
+     * @param string $fileImage
+     */
+    public function setFileImage(string $fileImage)
+    {
+        $this->file_image = $fileImage;
+    }
+
+    /**
+     * Gets the item id of the file.
+     *
+     * @return string
+     */
+    public function getItemId(): string
+    {
+        return $this->item_id;
+    }
+
+    /**
      * Sets the item id of the file.
      *
      * @param int $itemId
@@ -240,6 +220,16 @@ class File extends Model
     }
 
     /**
+     * Gets the visits of the file.
+     *
+     * @return int
+     */
+    public function getVisits(): int
+    {
+        return $this->visits;
+    }
+
+    /**
      * Sets the visits of the file.
      *
      * @param int $visits
@@ -247,6 +237,16 @@ class File extends Model
     public function setVisits(int $visits)
     {
         $this->visits = $visits;
+    }
+
+    /**
+     * Gets the FileUrl of the file.
+     *
+     * @return string
+     */
+    public function getFileUrl(): string
+    {
+        return $this->file_url;
     }
 
     /**

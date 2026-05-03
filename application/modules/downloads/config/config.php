@@ -183,7 +183,6 @@ class Config extends \Ilch\Config\Install
                     CONSTRAINT `FK_[prefix]_downloads_files_access_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
                 // no break
-
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
