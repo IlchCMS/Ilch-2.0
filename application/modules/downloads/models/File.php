@@ -68,6 +68,13 @@ class File extends Model
     protected string $file_url;
 
     /**
+     * The access rights of the file.
+     *
+     * @var string|null
+     */
+    protected ?string $access = null;
+
+    /**
      * @var string
      */
     private string $filethumb;
@@ -250,5 +257,27 @@ class File extends Model
     public function setFileUrl(string $fileUrl)
     {
         $this->file_url = $fileUrl;
+    }
+
+    /**
+     * Get the access rights of the file.
+     *
+     * @return string|null
+     */
+    public function getAccess(): ?string
+    {
+        return $this->access;
+    }
+
+    /**
+     * Set the access rights of the file.
+     *
+     * @param string $access
+     * @return $this
+     */
+    public function setAccess(string $access): File
+    {
+        $this->access = $access;
+        return $this;
     }
 }

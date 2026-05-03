@@ -11,6 +11,7 @@ use Ilch\Controller\Admin;
 use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
 use Modules\Downloads\Mappers\File as FileMapper;
 use Modules\Downloads\Models\DownloadsItem;
+use Modules\User\Mappers\Group as UserGroupMapper;
 
 class Index extends Admin
 {
@@ -44,6 +45,7 @@ class Index extends Admin
 
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
+        $userGroupMapper = new UserGroupMapper();
 
         // Saves the item tree to database.
         if ($this->getRequest()->isPost()) {
@@ -82,6 +84,7 @@ class Index extends Admin
                         $downloadsItem->setType($item['type']);
                         $downloadsItem->setTitle($item['title']);
                         $downloadsItem->setDesc($item['desc']);
+                        $downloadsItem->setAccess($item['access']);
                         $newId = $downloadsMapper->saveItem($downloadsItem);
 
                         if (isset($tmpId)) {
@@ -119,5 +122,6 @@ class Index extends Admin
         $this->getView()->set('downloadsItems', $downloadsItems);
         $this->getView()->set('downloadsMapper', $downloadsMapper);
         $this->getView()->set('fileMapper', $fileMapper);
+        $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
     }
 }

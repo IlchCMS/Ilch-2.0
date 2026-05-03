@@ -25,6 +25,7 @@ return [
     'menuActionDownloadsInsertFile' => 'Datei auswählen',
     'menuActionDownloadsEdit' => 'Downloads Bearbeiten',
     'selectcat' => 'Kategorie auswählen',
+    'access' => 'Sichtbar für',
     'downloadsedit' => 'Downloads bearbeiten',
     'title' => 'Name',
     'type' => 'Art',

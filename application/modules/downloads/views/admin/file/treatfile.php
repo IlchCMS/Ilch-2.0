@@ -63,6 +63,22 @@ if ($file->getFileImage() != '') {
                                       rows="8"><?=$this->escape($file->getFileDesc()) ?></textarea>
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <label for="access" class="col-xl-2 col-form-label"><?=$this->getTrans('access') ?></label>
+                        <div class="col-xl-8">
+                            <select class="choices-select form-control"
+                                    id="access"
+                                    name="access[]"
+                                    data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
+                                    multiple>
+                                <?php
+                                /** @var \Modules\User\Models\Group $group */
+                                foreach ($this->get('userGroupList') as $group) : ?>
+                                    <option value="<?=$group->getId() ?>"<?=(in_array($group->getId(), explode(',', $file->getAccess()))) ? ' selected' : '' ?>><?=$this->escape($group->getName()) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,4 +94,9 @@ if ($file->getFileImage() != '') {
         ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/'))
         ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>
+
+choicesAccess = new Choices('#access', {
+    ...choicesOptions,
+    searchEnabled: true
+});
 </script>

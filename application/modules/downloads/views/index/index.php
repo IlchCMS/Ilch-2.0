@@ -31,7 +31,6 @@
 }
 .lib-panel .lib-row.lib-desc {
     position: relative;
-    height: 100%;
     display: block;
     font-size: 13px;
 }
@@ -60,18 +59,17 @@
 /** @var \Modules\Downloads\Models\DownloadsItem[]|null $downloadsItems */
 $downloadsItems = $this->get('downloadsItems');
 
+/** @var \Modules\Downloads\Models\DownloadsItem[]|null $subItems */
+$subItems = $this->get('subItems');
+
 /**
  * @param \Modules\Downloads\Models\DownloadsItem $item
  * @param \Ilch\View $obj
  */
 function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
 {
-    /** @var \Modules\Downloads\Mappers\Downloads $downloadsMapper */
-    $downloadsMapper = $obj->get('downloadsMapper');
     /** @var \Modules\Downloads\Mappers\File $fileMapper */
     $fileMapper = $obj->get('fileMapper');
-
-    $subItems = $downloadsMapper->getDownloadsItemsByParent($item->getId());
     $fileCount = $fileMapper->getCountOfFilesByItemId($item->getId());
 
     if ($item->getType() === 0) {
@@ -110,11 +108,6 @@ function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
                 </div>
             </div>';
     }
-    if (!empty($subItems)) {
-        foreach ($subItems as $subItem) {
-            rec($subItem, $obj);
-        }
-    }
 }
 ?>
 <div class="row">
@@ -124,6 +117,9 @@ function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
             if (!empty($downloadsItems)) {
                 foreach ($downloadsItems as $item) {
                     rec($item, $this);
+                    foreach($subItems[$item->getId()] as $subItem) {
+                        rec($subItem, $this);
+                    }
                 }
             } else {
                 echo $this->getTrans('noDownloads');

@@ -11,6 +11,7 @@ use Ilch\Database\Mysql\Result;
 use Ilch\Mapper;
 use Ilch\Pagination;
 use Modules\Downloads\Models\File as FileModel;
+use Modules\Downloads\Mappers\Access as AccessMapper;
 
 class File extends Mapper
 {
@@ -25,7 +26,9 @@ class File extends Mapper
         $fileRow = $this->db()->select(['g.file_id', 'g.item_id', 'fileid' => 'g.id', 'g.visits', 'g.file_title', 'g.file_description', 'g.file_image', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'downloads_files'])
             ->join(['m' => 'media'], 'g.file_id = m.id', 'LEFT')
+            ->join(['da' => 'downloads_files_access'], 'da.file_id = g.id', 'LEFT', ['access' => 'GROUP_CONCAT(DISTINCT da.group_id)'])
             ->where(['g.id' => $id])
+            ->group(['g.id'])
             ->execute()
             ->fetchAssoc();
 
@@ -42,6 +45,7 @@ class File extends Mapper
         $entryModel->setFileDesc($fileRow['file_description']);
         $entryModel->setItemId($fileRow['item_id']);
         $entryModel->setVisits($fileRow['visits']);
+        $entryModel->setAccess($fileRow['access'] ?? '');
 
         return $entryModel;
     }
@@ -57,7 +61,9 @@ class File extends Mapper
         $fileRow = $this->db()->select(['g.file_id', 'g.item_id', 'fileid' => 'g.id', 'g.visits', 'g.file_title', 'g.file_description', 'g.file_image', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'downloads_files'])
             ->join(['m' => 'media'], 'g.file_id = m.id', 'LEFT')
+            ->join(['da' => 'downloads_files_access'], ['da.file_id = g.id'], 'LEFT', ['access' => 'GROUP_CONCAT(DISTINCT da.group_id)'])
             ->where(['g.item_id' => $itemId])
+            ->group(['g.id'])
             ->order(['g.id' => 'DESC'])
             ->limit(1)
             ->execute()
@@ -74,6 +80,7 @@ class File extends Mapper
         $entryModel->setFileImage($fileRow['file_image']);
         $entryModel->setFileDesc($fileRow['file_description']);
         $entryModel->setVisits($fileRow['visits']);
+        $entryModel->setAccess($fileRow['access'] ?? '');
 
         return $entryModel;
     }
@@ -105,7 +112,9 @@ class File extends Mapper
         $sql = $this->db()->select(['g.item_id', 'fileid' => 'g.id', 'g.file_title', 'g.file_image', 'g.file_description', 'g.visits', 'm.url', 'm.url_thumb'])
             ->from(['g' => 'downloads_files'])
             ->join(['m' => 'media'], 'g.file_image = m.url', 'LEFT')
+            ->join(['da' => 'downloads_files_access'], 'da.file_id = g.id', 'LEFT', ['access' => 'GROUP_CONCAT(DISTINCT da.group_id)'])
             ->where(['g.item_id' => $itemId])
+            ->group(['g.id'])
             ->order(['g.id' => 'DESC']);
 
         if ($pagination !== null) {
@@ -130,6 +139,7 @@ class File extends Mapper
             $fileModel->setFileDesc($entry['file_description']);
             $fileModel->setVisits($entry['visits']);
             $fileModel->setItemId($entry['item_id']);
+            $fileModel->setAccess($entry['access'] ?? '');
             $entries[] = $fileModel;
         }
 
@@ -194,5 +204,8 @@ class File extends Mapper
             ->values(['file_title' => $model->getFileTitle(), 'file_image' => $model->getFileImage(), 'file_description' => $model->getFileDesc()])
             ->where(['id' => $model->getId()])
             ->execute();
+
+        $accessMapper = new AccessMapper();
+        $accessMapper->saveFileAccess($model->getId(), $model->getAccess());
     }
 }

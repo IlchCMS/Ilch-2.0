@@ -25,6 +25,7 @@ return [
     'menuActionDownloadsInsertFile' => 'Select file',
     'menuActionDownloadsEdit' => 'Downloads edit',
     'selectcat' => 'Select category',
+    'access' => 'Visible for',
     'downloadsedit' => 'Edit downloads',
     'title' => 'Title',
     'type' => 'Type',

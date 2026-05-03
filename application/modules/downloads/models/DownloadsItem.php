@@ -59,6 +59,13 @@ class DownloadsItem extends Model
     protected ?string $desc = null;
 
     /**
+     * Access rights of the item.
+     *
+     * @var string|null
+     */
+    protected ?string $access = null;
+
+    /**
      * Gets the id.
      *
      * @return int|null
@@ -176,5 +183,27 @@ class DownloadsItem extends Model
     public function setDesc(string $desc)
     {
         $this->desc = $desc;
+    }
+
+    /**
+     * Get the access rights of the item.
+     *
+     * @return string|null
+     */
+    public function getAccess(): ?string
+    {
+        return $this->access;
+    }
+
+    /**
+     * Set the access rights of the item.
+     *
+     * @param string $access
+     * @return $this
+     */
+    public function setAccess(string $access): DownloadsItem
+    {
+        $this->access = $access;
+        return $this;
     }
 }
