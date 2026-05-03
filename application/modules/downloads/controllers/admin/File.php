@@ -11,6 +11,7 @@ use Ilch\Controller\Admin;
 use Modules\Downloads\Mappers\File as FileMapper;
 use Modules\Downloads\Models\File as FileModel;
 use Ilch\Validation;
+use Modules\User\Mappers\Group as UserGroupMapper;
 
 class File extends Admin
 {
@@ -56,6 +57,7 @@ class File extends Admin
     public function treatFileAction()
     {
         $fileMapper = new FileMapper();
+        $userGroupMapper = new UserGroupMapper();
         $id = (int)$this->getRequest()->getParam('id');
 
         if ($this->getRequest()->getPost()) {
@@ -67,7 +69,8 @@ class File extends Admin
             $post = [
                 'fileTitle' => $this->getRequest()->getPost('fileTitle'),
                 'fileImage' => $fileImage,
-                'fileDesc' => $this->getRequest()->getPost('fileDesc')
+                'fileDesc' => $this->getRequest()->getPost('fileDesc'),
+                'access' => $this->getRequest()->getPost('access')
             ];
 
             $validation = Validation::create($post, ['fileTitle' => 'required', 'fileImage' => 'url']);
@@ -81,6 +84,7 @@ class File extends Admin
                 $model->setFileImage($fileImage);
                 $model->setFileTitle($this->getRequest()->getPost('fileTitle'));
                 $model->setFileDesc($fileDesc);
+                $model->setAccess(implode(',', $this->getRequest()->getPost('access') ?? []));
                 $fileMapper->saveFileTreat($model);
 
                 $this->addMessage('saveSuccess');
@@ -90,5 +94,6 @@ class File extends Admin
         }
 
         $this->getView()->set('file', $fileMapper->getFileById($id));
+        $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
     }
 }

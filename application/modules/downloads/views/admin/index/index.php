@@ -30,6 +30,7 @@ function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
                     <input type="hidden" class="hidden_title" name="items[' . $item->getId() . '][title]" value="' . $item->getTitle() . '" />
                     <input type="hidden" class="hidden_desc" name="items[' . $item->getId() . '][desc]" value="' . $item->getDesc() . '" />
                     <input type="hidden" class="hidden_type" name="items[' . $item->getId() . '][type]" value="' . $item->getType() . '" />
+                    <input type="hidden" class="hidden_access" name="items[' . $item->getId() . '][access]" value="' . $item->getAccess() . '" />
                     <span></span>
                 </span>
                 <span class="title">' . $item->getTitle() . '</span>
@@ -115,6 +116,22 @@ function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
             </div>
             <div class="dyn"></div>
             <div class="row mb-3">
+                <label for="access" class="col-xl-3 col-form-label"><?=$this->getTrans('access') ?></label>
+                <div class="col-xl-6">
+                    <select class="choices-select form-control"
+                            id="access"
+                            name="user[groups][]"
+                            data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
+                            multiple>
+                        <?php
+                        /** @var \Modules\User\Models\Group $group */
+                        foreach ($this->get('userGroupList') as $group) : ?>\n\
+                            <option value="<?=$group->getId() ?>"><?=$this->escape($group->getName()) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
                 <label class="col-xl-3 col-form-label"></label>
                 <div class="col-xl-6 actions">
                     <input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?=$this->getTrans('downloadsItemAdd') ?>">
@@ -134,6 +151,7 @@ function resetBox() {
     .val('')
     .removeAttr('checked')
     .removeAttr('selected');
+    choicesAccess.removeActiveItems();
 
     $('#type').change();
 }
@@ -158,6 +176,13 @@ $(document).ready (
             startCollapsed: false,
             protectRoot: true
         });
+
+        let choicesAccess;
+        choicesAccess = new Choices('#access', {
+            ...choicesOptions,
+            searchEnabled: true
+        });
+
         $('.disclose').on('click', function () {
             $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
             $(this).find('i').toggleClass('fa-circle-minus').toggleClass('fa-circle-plus');
@@ -229,11 +254,14 @@ $(document).ready (
 
             }
 
+            const accessVal = choicesAccess.getValue(true).join(',');
+
             $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
                     +'<input type="hidden" class="hidden_id" name="items[tmp_'+itemId+'][id]" value="tmp_'+itemId+'" />'
                     +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+$('#title').val()+'" />'
                     +'<input type="hidden" class="hidden_desc" name="items[tmp_'+itemId+'][desc]" value="'+$('#desc').val()+'" />'
                     +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
+                    +'<input type="hidden" class="hidden_access" name="items[tmp_'+itemId+'][access]" value="'+ accessVal +'" />'
                     +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa-solid fa-circle-xmark"></i></span></div></li>').appendTo(append);
             itemId++;
             resetBox();
@@ -241,28 +269,33 @@ $(document).ready (
         );
 
         $('.sortable').on('click', '.item_edit', function() {
-           $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>">\n\
+            $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>">\n\
                                <input type="button" class="btn" id="menuItemEditCancel" value="<?=$this->getTrans('cancel') ?>">');
-           $('#title').val($(this).parent().find('.hidden_title').val());
-           $('#desc').val($(this).parent().find('.hidden_desc').val());
-           $('#type').val($(this).parent().find('.hidden_type').val());
-           $('#id').val($(this).closest('li').attr('id'));
-           $('#type').change();
+            $('#title').val($(this).parent().find('.hidden_title').val());
+            $('#desc').val($(this).parent().find('.hidden_desc').val());
+            $('#type').val($(this).parent().find('.hidden_type').val());
+            $('#id').val($(this).closest('li').attr('id'));
+            $('#type').change();
+
+            let hidden_access_values = $(this).parent().find('.hidden_access').val().split(',').map(value => value.trim());
+            choicesAccess.removeActiveItems();
+            choicesAccess.setChoiceByValue(hidden_access_values);
         });
 
         $('#downloadsForm').on('click', '#menuItemEdit', function () {
-                if ($('#title').val() == '') {
-                    alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
-                    return;
-                }
-
-                $('#'+$('#id').val()).find('.title:first').text($('#title').val());
-                $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
-                $('#'+$('#id').val()).find('.hidden_desc:first').val($('#desc').val());
-                $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
-                resetBox();
+            if ($('#title').val() == '') {
+                alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
+                return;
             }
-        );
+
+            const accessVal = choicesAccess.getValue(true).join(',');
+            $('#'+$('#id').val()).find('.title:first').text($('#title').val());
+            $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
+            $('#'+$('#id').val()).find('.hidden_desc:first').val($('#desc').val());
+            $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
+            $('#'+$('#id').val()).find('.hidden_access:first').val(accessVal);
+            resetBox();
+        });
 
         $('#downloadsForm').on('click', '#menuItemEditCancel', function() {
             $('.actions').html('<input type="button" class="btn" id="menuItemAdd" value="Menuitem hinzufügen">');

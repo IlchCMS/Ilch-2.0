@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'downloads',
-        'version' => '1.14.3',
+        'version' => '1.15.0',
         'icon_small' => 'fa-regular fa-circle-down',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -38,6 +38,8 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
+        $this->db()->drop('downloads_access', true);
+        $this->db()->drop('downloads_files_access', true);
         $this->db()->drop('downloads_files', true);
         $this->db()->drop('downloads_items', true);
 
@@ -47,7 +49,17 @@ class Config extends \Ilch\Config\Install
 
     public function getInstallSql(): string
     {
-        return 'CREATE TABLE IF NOT EXISTS `[prefix]_downloads_files` (
+        return 'CREATE TABLE IF NOT EXISTS `[prefix]_downloads_items` (
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `sort` INT(11) NULL DEFAULT 0,
+                  `parent_id` INT(11) NULL DEFAULT 0,
+                  `type` TINYINT(1) NOT NULL,
+                  `title` VARCHAR(255) NOT NULL,
+                  `description` VARCHAR(255) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_downloads_files` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `file_id` INT(11) NOT NULL,
                   `file_title` VARCHAR(255) NOT NULL DEFAULT \'\',
@@ -60,15 +72,23 @@ class Config extends \Ilch\Config\Install
                   CONSTRAINT `FK_[prefix]_downloads_files_[prefix]_downloads_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_downloads_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
-                CREATE TABLE IF NOT EXISTS `[prefix]_downloads_items` (
-                  `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `sort` INT(11) NULL DEFAULT 0,
-                  `parent_id` INT(11) NULL DEFAULT 0,
-                  `type` TINYINT(1) NOT NULL,
-                  `title` VARCHAR(255) NOT NULL,
-                  `description` VARCHAR(255) NOT NULL,
-                  PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
+                CREATE TABLE IF NOT EXISTS `[prefix]_downloads_access` (
+                    `item_id` INT(11) NOT NULL,
+                    `group_id` INT(11) NOT NULL,
+                    INDEX `FK_[prefix]_downloads_access_downloads_items` (`item_id`) USING BTREE,
+                    INDEX `FK_[prefix]_downloads_access_groups` (`group_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_downloads_access_downloads_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_downloads_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_downloads_access_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_downloads_files_access` (
+                    `file_id` INT(11) NOT NULL,
+                    `group_id` INT(11) NOT NULL,
+                    INDEX `FK_[prefix]_downloads_files_access_downloads_files` (`file_id`) USING BTREE,
+                    INDEX `FK_[prefix]_downloads_files_access_groups` (`group_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_downloads_files_access_downloads_files` FOREIGN KEY (`file_id`) REFERENCES `[prefix]_downloads_files` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_downloads_files_access_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;';
     }
 
     public function getUpdate(string $installedVersion): string
@@ -143,6 +163,27 @@ class Config extends \Ilch\Config\Install
                     $this->db()->query('ALTER TABLE `[prefix]_downloads_files` ADD CONSTRAINT `FK_[prefix]_downloads_files_[prefix]_downloads_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_downloads_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
                 }
                 // no break
+            case "1.14.3":
+                // Create new tables "downloads_access" and "downloads_files_access".
+                $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_downloads_access` (
+                    `item_id` INT(11) NOT NULL,
+                    `group_id` INT(11) NOT NULL,
+                    INDEX `FK_[prefix]_downloads_access_downloads_items` (`item_id`) USING BTREE,
+                    INDEX `FK_[prefix]_downloads_access_groups` (`group_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_downloads_access_downloads_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_downloads_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_downloads_access_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_downloads_files_access` (
+                    `file_id` INT(11) NOT NULL,
+                    `group_id` INT(11) NOT NULL,
+                    INDEX `FK_[prefix]_downloads_files_access_downloads_files` (`file_id`) USING BTREE,
+                    INDEX `FK_[prefix]_downloads_files_access_groups` (`group_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_downloads_files_access_downloads_files` FOREIGN KEY (`file_id`) REFERENCES `[prefix]_downloads_files` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_downloads_files_access_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
+                // no break
+
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

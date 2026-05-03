@@ -12,6 +12,7 @@ use Ilch\Controller\Frontend;
 use Ilch\Pagination;
 use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
 use Modules\Downloads\Mappers\File as FileMapper;
+use Modules\Downloads\Models\DownloadsItem;
 use Modules\Downloads\Models\File as FileModel;
 
 class Index extends Frontend
@@ -23,6 +24,13 @@ class Index extends Frontend
 
         $downloadsItems = $downloadsMapper->getDownloadsItemsByParent(0);
 
+        $downloadsItems = $this->checkAccess($downloadsItems);
+        $subItems = [];
+        foreach ($downloadsItems as $downloadItem) {
+            $subItems[$downloadItem->getId()] = $downloadsMapper->getDownloadsItemsByParent($downloadItem->getId());
+        }
+        $subItems = $this->checkAccess($subItems);
+
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('downloads'));
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads'));
@@ -30,8 +38,52 @@ class Index extends Frontend
                 ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index']);
 
         $this->getView()->set('downloadsItems', $downloadsItems);
-        $this->getView()->set('downloadsMapper', $downloadsMapper);
+        $this->getView()->set('subItems', $subItems);
         $this->getView()->set('fileMapper', $fileMapper);
+    }
+
+    /**
+     *  Check if the user or guest has access to the downloadsItems.
+     *
+     * @param DownloadsItem[]|FileModel $downloadsItems
+     * @return array
+     */
+    private function checkAccess($downloadsItems)
+    {
+        if (!($this->getUser() && $this->getUser()->isAdmin())) {
+            // Check which downloadsItems should be visible for the user or guest.
+            $downloadsItemsVisible = [];
+            foreach ($downloadsItems ?? [] as $key => $downloadsItem) {
+                if (!is_array($downloadsItem)) {
+                    if (empty($downloadsItem->getAccess())) {
+                        // Visible for everyone.
+                        $downloadsItemsVisible[$key] = $downloadsItem;
+                        continue;
+                    }
+
+                    if (is_in_array(explode(',', $downloadsItem->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ?: [3])) {
+                        $downloadsItemsVisible[$key] = $downloadsItem;
+                    }
+                } else {
+                    // Subitems
+                    foreach ($downloadsItem as $downloadItem) {
+                        if (empty($downloadItem->getAccess())) {
+                            // Visible for everyone.
+                            $downloadsItemsVisible[$key][] = $downloadItem;
+                            continue;
+                        }
+
+                        if (is_in_array(explode(',', $downloadItem->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ?: [3])) {
+                            $downloadsItemsVisible[$key][] = $downloadItem;
+                        }
+                    }
+                }
+            }
+
+            $downloadsItems = $downloadsItemsVisible;
+        }
+
+        return $downloadsItems;
     }
 
     public function showAction()
@@ -42,6 +94,7 @@ class Index extends Frontend
 
         $id = $this->getRequest()->getParam('id');
         $downloads = $downloadsMapper->getDownloadsById($id);
+        $downloads = $this->checkAccess($downloads);
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('downloads'));
@@ -49,7 +102,7 @@ class Index extends Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index']);
 
-        if ($downloads !== null) {
+        if (!empty($downloads)) {
             $this->getLayout()->getTitle()
                     ->add($downloads->getTitle());
             $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads') . ' - ' . $downloads->getDesc());
@@ -60,7 +113,7 @@ class Index extends Frontend
         $pagination->setRowsPerPage(!$this->getConfig()->get('downloads_downloadsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('downloads_downloadsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('files', $fileMapper->getFilesByItemId($id, $pagination));
+        $this->getView()->set('files', ($downloads) ? $fileMapper->getFilesByItemId($id, $pagination) : []);
         $this->getView()->set('pagination', $pagination);
     }
 
@@ -71,6 +124,7 @@ class Index extends Frontend
 
         $id = $this->getRequest()->getParam('id');
         $file = $fileMapper->getFileById($id);
+        $file = $this->checkAccess($file);
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('downloads'));
@@ -78,7 +132,7 @@ class Index extends Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index']);
 
-        if ($file !== null) {
+        if (!empty($file)) {
             $download = $downloadsMapper->getDownloadsById($file->getItemId());
 
             $this->getLayout()->getTitle()
@@ -116,7 +170,7 @@ class Index extends Frontend
             }
         }
 
-        $this->getView()->set('file', $file);
+        $this->getView()->set('file', ($file) ?: null);
         $this->getView()->set('commentsKey', 'downloads/index/showfile/id/' . $id);
     }
 }

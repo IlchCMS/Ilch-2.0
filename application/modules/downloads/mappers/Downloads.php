@@ -9,6 +9,7 @@ namespace Modules\Downloads\Mappers;
 
 use Ilch\Mapper;
 use Modules\Downloads\Models\DownloadsItem;
+use Modules\Downloads\Mappers\Access as AccessMapper;
 
 class Downloads extends Mapper
 {
@@ -20,8 +21,10 @@ class Downloads extends Mapper
     public function getDownloadsItems(): ?array
     {
         $items = [];
-        $itemRows = $this->db()->select('*')
-            ->from('downloads_items')
+        $itemRows = $this->db()->select(['di.id', 'di.type', 'di.title', 'di.description', 'di.parent_id'])
+            ->from(['di' => 'downloads_items'])
+            ->join(['da' => 'downloads_access'], 'da.item_id = di.id', 'LEFT', ['access' => 'GROUP_CONCAT(DISTINCT da.group_id)'])
+            ->group(['di.id'])
             ->order(['sort' => 'ASC'])
             ->execute()
             ->fetchRows();
@@ -37,6 +40,7 @@ class Downloads extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
+            $itemModel->setAccess($itemRow['access'] ?? '');
             $items[] = $itemModel;
         }
 
@@ -52,12 +56,14 @@ class Downloads extends Mapper
     public function getDownloadsItemsByParent(int $itemId): ?array
     {
         $items = [];
-        $itemRows = $this->db()->select('*')
-                ->from('downloads_items')
-                ->where(['parent_id' => $itemId])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
+        $itemRows = $this->db()->select(['di.id', 'di.type', 'di.title', 'di.description'])
+            ->from(['di' => 'downloads_items'])
+            ->join(['da' => 'downloads_access'], 'da.item_id = di.id', 'LEFT', ['access' => 'GROUP_CONCAT(DISTINCT da.group_id)'])
+            ->where(['parent_id' => $itemId])
+            ->group(['di.id'])
+            ->order(['sort' => 'ASC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($itemRows)) {
             return null;
@@ -70,6 +76,7 @@ class Downloads extends Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemId);
+            $itemModel->setAccess($itemRow['access'] ?? '');
             $items[] = $itemModel;
         }
 
@@ -84,12 +91,13 @@ class Downloads extends Mapper
      */
     public function getDownloadsById(int $id): ?DownloadsItem
     {
-        $itemRows = $this->db()->select('*')
-                ->from('downloads_items')
-                ->where(['id' => $id])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchAssoc();
+        $itemRows = $this->db()->select(['di.id', 'di.type', 'di.title', 'di.description', 'di.parent_id'])
+            ->from(['di' => 'downloads_items'])
+            ->join(['da' => 'downloads_access'], 'da.item_id = di.id', 'LEFT', ['access' => 'GROUP_CONCAT(DISTINCT da.group_id)'])
+            ->where(['id' => $id])
+            ->order(['sort' => 'ASC'])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($itemRows)) {
             return null;
@@ -101,6 +109,7 @@ class Downloads extends Mapper
         $itemModel->setTitle($itemRows['title']);
         $itemModel->setDesc($itemRows['description']);
         $itemModel->setParentId($itemRows['parent_id']);
+        $itemModel->setAccess($itemRow['access'] ?? '');
 
         return $itemModel;
     }
@@ -143,6 +152,10 @@ class Downloads extends Mapper
                 ->values($fields)
                 ->execute();
         }
+
+        // Store access rights.
+        $accessMapper = new AccessMapper();
+        $accessMapper->save($itemId, $downloadsItem->getAccess());
 
         return $itemId;
     }
