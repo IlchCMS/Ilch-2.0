@@ -11,9 +11,9 @@ use Ilch\Layout\Admin;
 use Ilch\Request;
 use Ilch\Router;
 use Ilch\Translator;
-use PHPUnit\Ilch\DatabaseTestCase;
+use PHPUnit\Ilch\TestCase;
 
-class GetAdminHmenuTest extends DatabaseTestCase
+class GetAdminHmenuTest extends TestCase
 {
     protected Request $request;
     protected Admin $layout;

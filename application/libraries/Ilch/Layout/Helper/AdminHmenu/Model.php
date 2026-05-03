@@ -38,7 +38,7 @@ class Model
      */
     public function add(string $key, $value = ''): Model
     {
-        $this->data[$key] = $value;
+        $this->data[] = ['key' => $key, 'value' => $value];
 
         return $this;
     }
@@ -54,11 +54,11 @@ class Model
             return '<div aria-label="breadcrumb"><ol class="breadcrumb">&raquo; &nbsp;<li class="breadcrumb-item active"><a href="' . $this->layout->getUrl('admin/admin/index/index') . '">Admincenter</a></li></ol></div>';
         }
         $html = '<div aria-label="breadcrumb"><ol class="breadcrumb">&raquo; &nbsp;<li class="breadcrumb-item active"><a href="' . $this->layout->getUrl('admin/admin/index/index') . '">Admincenter</a></li>';
-        foreach ($this->data as $key => $value) {
-            if (empty($value)) {
-                $html .= $this->layout->escape($key);
+        foreach ($this->data as $value) {
+            if (empty($value['value'])) {
+                $html .= $this->layout->escape($value['key']);
             } else {
-                $html .= '<li class="breadcrumb-item"><a href="' . $this->layout->getUrl($value) . '">' . $this->layout->escape($key) . '</a></li>';
+                $html .= '<li class="breadcrumb-item"><a href="' . $this->layout->getUrl($value['value']) . '">' . $this->layout->escape($value['key']) . '</a></li>';
             }
         }
         $html .= '</ol></div>';
