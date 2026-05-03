@@ -49,7 +49,17 @@ class Config extends \Ilch\Config\Install
 
     public function getInstallSql(): string
     {
-        return 'CREATE TABLE IF NOT EXISTS `[prefix]_downloads_files` (
+        return 'CREATE TABLE IF NOT EXISTS `[prefix]_downloads_items` (
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `sort` INT(11) NULL DEFAULT 0,
+                  `parent_id` INT(11) NULL DEFAULT 0,
+                  `type` TINYINT(1) NOT NULL,
+                  `title` VARCHAR(255) NOT NULL,
+                  `description` VARCHAR(255) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_downloads_files` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `file_id` INT(11) NOT NULL,
                   `file_title` VARCHAR(255) NOT NULL DEFAULT \'\',
@@ -60,16 +70,6 @@ class Config extends \Ilch\Config\Install
                   PRIMARY KEY (`id`) USING BTREE,
                   INDEX `FK_[prefix]_downloads_files_[prefix]_downloads_items` (`item_id`) USING BTREE,
                   CONSTRAINT `FK_[prefix]_downloads_files_[prefix]_downloads_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_downloads_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
-
-                CREATE TABLE IF NOT EXISTS `[prefix]_downloads_items` (
-                  `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `sort` INT(11) NULL DEFAULT 0,
-                  `parent_id` INT(11) NULL DEFAULT 0,
-                  `type` TINYINT(1) NOT NULL,
-                  `title` VARCHAR(255) NOT NULL,
-                  `description` VARCHAR(255) NOT NULL,
-                  PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_downloads_access` (
