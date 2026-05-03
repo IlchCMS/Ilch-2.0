@@ -45,7 +45,7 @@ class Index extends Frontend
     /**
      *  Check if the user or guest has access to the downloadsItems.
      *
-     * @param DownloadsItem[]|FileModel $downloadsItems
+     * @param DownloadsItem[]|DownloadsItem|FileModel $downloadsItems
      * @return array
      */
     private function checkAccess($downloadsItems)

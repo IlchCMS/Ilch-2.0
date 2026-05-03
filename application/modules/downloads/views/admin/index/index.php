@@ -33,7 +33,7 @@ function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
                     <input type="hidden" class="hidden_access" name="items[' . $item->getId() . '][access]" value="' . $item->getAccess() . '" />
                     <span></span>
                 </span>
-                <span class="title">' . $item->getTitle() . '</span>
+                <span class="title">' . $obj->escape($item->getTitle()) . '</span>
                 <span class="item_delete">
                     <i class="fa-solid fa-circle-xmark"></i>
                 </span><span class="item_edit">
@@ -66,6 +66,7 @@ function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
 }
 ?>
 
+<link href="<?=$this->getModuleUrl('../downloads/static/css/admincenter.css') ?>" rel="stylesheet">
 <form id="downloadsForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="row">
@@ -183,6 +184,16 @@ $(document).ready (
             searchEnabled: true
         });
 
+        function escapeHtml(unsafe) {
+            if (!unsafe) return ""; // Handle null/undefined
+            return unsafe
+                .replace(/&/g, "&amp;")   // First: escape & to avoid double-escaping entities
+                .replace(/</g, "&lt;")    // Escape <
+                .replace(/>/g, "&gt;")    // Escape >
+                .replace(/"/g, "&quot;")  // Escape " (for attributes)
+                .replace(/'/g, "&#39;");  // Escape ' (for attributes)
+        }
+
         $('.disclose').on('click', function () {
             $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
             $(this).find('i').toggleClass('fa-circle-minus').toggleClass('fa-circle-plus');
@@ -201,7 +212,7 @@ $(document).ready (
 
             $('#sortable').find('li').each(function() {
                 if ($(this).find('input.hidden_type:first').val() == 0) {
-                    options += '<option value="'+$(this).find('input.hidden_id:first').val()+'">'+$(this).find('input.hidden_title:first').val()+'</option>';
+                    options += '<option value="'+$(this).find('input.hidden_id:first').val()+'">'+escapeHtml($(this).find('input.hidden_title:first').val())+'</option>';
                 }
             });
 
@@ -315,100 +326,3 @@ function reload() {
     setTimeout(function(){window.location.reload(1);}, 1000);
 }
 </script>
-
-<style>
-.item_delete {
-    float: right;
-    cursor: pointer;
-}
-
-.item_edit {
-    margin-right: 6px;
-    float: right;
-    cursor: pointer;
-}
-
-ol.sortable, ol.sortable ol {
-    margin: 0 0 0 25px;
-    padding: 0;
-    list-style-type: none;
-}
-
-ol.sortable {
-    margin: 0;
-}
-
-.sortable li {
-    margin: 5px 0 0 0;
-    padding: 0;
-}
-
-.sortable li div  {
-    border: 1px solid;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    border-color: #D4D4D4 #D4D4D4 #BCBCBC;
-    padding: 6px;
-    margin: 0;
-    cursor: move;
-    background: #f6f6f6;
-    background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #ededed 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed));
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-    background: -o-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-    background: -ms-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-    background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 );
-}
-
-.sortable li.mjs-nestedSortable-branch div {
-    background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #f0ece9 100%);
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#f0ece9 100%);
-
-}
-
-.sortable li.mjs-nestedSortable-leaf div {
-    background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #bcccbc 100%);
-    background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#bcccbc 100%);
-
-}
-
-li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
-    border-color: #999;
-    background: #fafafa;
-}
-
-.disclose {
-    cursor: pointer;
-    width: 18px;
-    display: none;
-}
-
-.sortable > li > div > .upload {
-    display: none;
-}
-
-.sortable > li > div > .view {
-    display: none;
-}
-
-.sortable > li > div > .count {
-    display: none;
-}
-.sortable li.mjs-nestedSortable-collapsed > ol {
-    display: none;
-}
-
-.sortable li.mjs-nestedSortable-branch > div > .disclose {
-    display: inline-block;
-}
-
-.placeholder {
-    outline: 1px dashed #4183C4;
-    /*-webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    margin: -1px;*/
-}
-</style>

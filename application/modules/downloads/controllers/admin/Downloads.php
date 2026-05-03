@@ -45,10 +45,6 @@ class Downloads extends Admin
         );
     }
 
-    public function indexAction()
-    {
-    }
-
     public function treatDownloadsAction()
     {
         $fileMapper = new FileMapper();
@@ -58,8 +54,8 @@ class Downloads extends Admin
         $downloadsTitle = $downloadsMapper->getDownloadsById($id);
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('downloads'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans($downloadsTitle->getTitle()), ['action' => 'treatdownloads', 'id' => $id]);
+            ->add($this->getTranslator()->trans('downloads'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getLayout()->escape($downloadsTitle->getTitle()), ['action' => 'treatdownloads', 'id' => $id]);
 
         if ($this->getRequest()->getPost('action') === 'delete') {
             foreach ($this->getRequest()->getPost('check_downloads') as $fileId) {
@@ -87,26 +83,6 @@ class Downloads extends Admin
         $this->getView()->set('files', $fileMapper->getFilesByItemId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
         $this->getView()->set('downloadsTitle', $downloadsTitle->getTitle());
-    }
-
-    public function treatFileAction()
-    {
-        $fileMapper = new FileMapper();
-        $id = $this->getRequest()->getParam('id');
-
-        if ($this->getRequest()->getPost()) {
-            $fileTitle = $this->getRequest()->getPost('fileTitle');
-            $fileDesc = $this->getRequest()->getPost('fileDesc');
-            $model = new FileModel();
-            $model->setId($id);
-            $model->setFileTitle($fileTitle);
-            $model->setFileDesc($fileDesc);
-            $fileMapper->saveFileTreat($model);
-
-            $this->addMessage('Success');
-        }
-
-        $this->getView()->set('file', $fileMapper->getFileById($id));
     }
 
     public function delAction()

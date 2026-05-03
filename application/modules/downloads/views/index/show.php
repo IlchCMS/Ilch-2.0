@@ -7,42 +7,7 @@ $commentMapper = new \Modules\Comment\Mappers\Comment();
 $pagination = $this->get('pagination');
 ?>
 
-<style>
-    @media (max-width: 990px) {
-        #gallery > [class*="col-"] {
-            padding: 0 !important;
-        }
-    }
-
-    .panel-heading ~ .card-image img {
-        border-radius: 0;
-    }
-
-    .card-body {
-        overflow: hidden;
-    }
-
-    .card-image ~ .card-footer a {
-        padding: 0 10px;
-        font-size: 1.3em;
-        color: rgb(100, 100, 100);
-    }
-
-    .card-footer {
-        padding: 5px !important;
-    }
-
-    .thumbnail {
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 0 !important;
-    }
-
-    #gallery img {
-        min-height: 20px;
-    }
-</style>
-
+<link href="<?=$this->getModuleUrl('../downloads/static/css/frontend.css') ?>" rel="stylesheet">
 <div id="gallery">
     <div class="row">
         <?php

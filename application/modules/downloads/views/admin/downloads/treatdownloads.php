@@ -5,18 +5,9 @@
 /** @var \Ilch\Pagination $pagination */
 $pagination = $this->get('pagination');
 ?>
-<style>
-tbody tr td {
-    padding-bottom: 0 !important;
-}
-.file {
-    width: 100px;
-    max-width: 100px;
-    margin-bottom: 10px !important;
-}
-</style>
 
-<h1><?=$this->getTrans('downloads') ?>: <?=$this->get('downloadsTitle') ?></h1>
+<link href="<?=$this->getModuleUrl('../downloads/static/css/admincenter.css') ?>" rel="stylesheet">
+<h1><?=$this->getTrans('downloads') ?>: <?=$this->escape($this->get('downloadsTitle')) ?></h1>
 <?php if ($this->get('files') != '') : ?>
     <?=$pagination->getHtml($this, ['action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('id')]) ?>
     <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">

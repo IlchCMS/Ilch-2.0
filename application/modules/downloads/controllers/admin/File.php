@@ -50,15 +50,16 @@ class File extends Admin
         );
     }
 
-    public function indexAction()
-    {
-    }
-
     public function treatFileAction()
     {
         $fileMapper = new FileMapper();
         $userGroupMapper = new UserGroupMapper();
         $id = (int)$this->getRequest()->getParam('id');
+        $file = $fileMapper->getFileById($id);
+
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('downloads'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getLayout()->escape($file->getFileTitle()), ['action' => 'treatdownloads', 'id' => $id]);
 
         if ($this->getRequest()->getPost()) {
             $fileImage = '';
@@ -93,7 +94,7 @@ class File extends Admin
             }
         }
 
-        $this->getView()->set('file', $fileMapper->getFileById($id));
+        $this->getView()->set('file', $file);
         $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
     }
 }
