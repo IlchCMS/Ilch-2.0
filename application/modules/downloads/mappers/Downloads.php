@@ -95,6 +95,7 @@ class Downloads extends Mapper
             ->from(['di' => 'downloads_items'])
             ->join(['da' => 'downloads_access'], 'da.item_id = di.id', 'LEFT', ['access' => 'GROUP_CONCAT(DISTINCT da.group_id)'])
             ->where(['id' => $id])
+            ->group(['di.id'])
             ->order(['sort' => 'ASC'])
             ->execute()
             ->fetchAssoc();

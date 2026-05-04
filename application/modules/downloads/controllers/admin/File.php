@@ -55,11 +55,17 @@ class File extends Admin
         $fileMapper = new FileMapper();
         $userGroupMapper = new UserGroupMapper();
         $id = (int)$this->getRequest()->getParam('id');
+        $downloadsId = (int)$this->getRequest()->getParam('downloads');
         $file = $fileMapper->getFileById($id);
+
+        if (!$file) {
+            $this->addMessage('fileNotFound', 'danger');
+            $this->redirect(['controller' => 'downloads', 'action' => 'treatdownloads', 'id' => $downloadsId]);
+        }
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('downloads'), ['controller' => 'index', 'action' => 'index'])
-            ->add($this->getLayout()->escape($file->getFileTitle()), ['action' => 'treatdownloads', 'id' => $id]);
+            ->add($this->getLayout()->escape($file->getFileTitle()), ['action' => 'treatfile', 'downloads' => $downloadsId, 'id' => $id]);
 
         if ($this->getRequest()->getPost()) {
             $fileImage = '';
@@ -92,6 +98,8 @@ class File extends Admin
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
+
+            $this->redirect(['action' => 'treatfile', 'downloads' => $downloadsId, 'id' => $id]);
         }
 
         $this->getView()->set('file', $file);

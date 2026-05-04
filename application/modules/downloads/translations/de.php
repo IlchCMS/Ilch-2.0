@@ -33,6 +33,7 @@ return [
     'menuDownloadsOverview' => 'Downloads Übersicht',
     'files' => 'Dateien',
     'file' => 'Datei',
+    'fileNotFound' => 'Datei nicht gefunden',
     'treatFile' => 'Datei bearbeiten',
     'menuDownloadsBack' => 'zurück zu Downloads',
     'fileTitle' => 'Titel',

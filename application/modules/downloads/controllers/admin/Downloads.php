@@ -50,8 +50,13 @@ class Downloads extends Admin
         $fileMapper = new FileMapper();
         $pagination = new Pagination();
         $downloadsMapper = new DownloadsMapper();
-        $id = $this->getRequest()->getParam('id');
+        $id = (int)$this->getRequest()->getParam('id');
         $downloadsTitle = $downloadsMapper->getDownloadsById($id);
+
+        if (!$downloadsTitle) {
+            $this->addMessage('downloadNotFound', 'danger');
+            $this->redirect(['controller' => 'index', 'action' => 'index']);
+        }
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('downloads'), ['controller' => 'index', 'action' => 'index'])
