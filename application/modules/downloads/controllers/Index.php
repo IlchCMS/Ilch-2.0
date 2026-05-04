@@ -92,8 +92,14 @@ class Index extends Frontend
         $pagination = new Pagination();
         $downloadsMapper = new DownloadsMapper();
 
-        $id = $this->getRequest()->getParam('id');
+        $id = (int)$this->getRequest()->getParam('id');
         $downloads = $downloadsMapper->getDownloadsById($id);
+
+        if (!$downloads) {
+            $this->addMessage('downloadNotFound', 'danger');
+            $this->redirect(['controller' => 'index', 'action' => 'index']);
+        }
+
         $downloads = $this->checkAccess($downloads);
 
         $this->getLayout()->getTitle()
@@ -122,8 +128,14 @@ class Index extends Frontend
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
 
-        $id = $this->getRequest()->getParam('id');
+        $id = (int)$this->getRequest()->getParam('id');
         $file = $fileMapper->getFileById($id);
+
+        if (!$file) {
+            $this->addMessage('fileNotFound', 'danger');
+            $this->redirect(['controller' => 'index', 'action' => 'index']);
+        }
+
         $file = $this->checkAccess($file);
 
         $this->getLayout()->getTitle()
