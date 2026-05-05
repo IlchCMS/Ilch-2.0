@@ -48,6 +48,22 @@ class GetAdminHmenuTest extends TestCase
         self::assertSame('<div aria-label="breadcrumb"><ol class="breadcrumb">&raquo; &nbsp;<li class="breadcrumb-item active"><a href="/index.php/admin/admin/index/index">Admincenter</a></li><li class="breadcrumb-item"><a href="/index.php/article/index/index">test2</a></li><li class="breadcrumb-item"><a href="/index.php/article/index/index">test</a></li></ol></div>', (string)$test->getAdminHmenu());
     }
 
+    /**
+     * This would have failed with Ilch 2.2.15 and earlier as the indices of the array
+     * wouldn't be unique.
+     *
+     * @return void
+     */
+    public function testGetAdminHmenuDuplicateKeysIndices()
+    {
+        $test = new GetAdminHmenu($this->layout);
+        $test->getAdminHmenu()
+            ->add('test', ['controller' => 'index', 'action' => 'index'])
+            ->add('test', ['controller' => 'index', 'action' => 'index', 'id' => '1']);
+
+        self::assertSame('<div aria-label="breadcrumb"><ol class="breadcrumb">&raquo; &nbsp;<li class="breadcrumb-item active"><a href="/index.php/admin/admin/index/index">Admincenter</a></li><li class="breadcrumb-item"><a href="/index.php/article/index/index">test</a></li><li class="breadcrumb-item"><a href="/index.php/article/index/index/id/1">test</a></li></ol></div>', (string)$test->getAdminHmenu());
+    }
+
     public function testGetAdminHmenuEmptyKey()
     {
         $test = new GetAdminHmenu($this->layout);
