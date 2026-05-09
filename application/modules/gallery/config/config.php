@@ -15,7 +15,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'gallery',
-        'version' => '1.24.1',
+        'version' => '1.24.2',
         'icon_small' => 'fa-regular fa-image',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
