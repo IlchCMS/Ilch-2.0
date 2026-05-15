@@ -180,7 +180,7 @@ class Index extends \Ilch\Controller\Frontend
 
                 if (!$imageError) {
                     if ($this->getConfig()->get('event_google_maps_api_key') != '') {
-                        $eventModel->setLatLong($eventMapper->getLatLongFromAddress($this->getRequest()->getPost('place'), $this->getConfig()->get('event_google_maps_api_key')));
+                        $eventModel->setLatLong($eventMapper->getLatLongFromAddress($this->getRequest()->getPost('place'), $this->getConfig()->get('event_google_maps_api_key')) ?? '');
                     }
 
                     $groups = '';
