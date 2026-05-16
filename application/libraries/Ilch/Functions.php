@@ -109,7 +109,7 @@ function buildPath(...$segments): string
 function removeDir(string $path): bool
 {
     if (is_dir($path)) {
-        $dircontent = array_diff(scandir($path), array('..', '.'));
+        $dircontent = array_diff(scandir($path), ['..', '.']);
         $isEmpty = true;
         foreach ($dircontent as $content) {
             $filePath = buildPath($path, $content);
@@ -603,7 +603,7 @@ function formatBytes($bytes, int $decimals = 0)
         return false;
     }
 
-    $units = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+    $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
     $bytes = max($bytes, 0);
     $pow = floor(($bytes ? log($bytes) : 0) / log(1024));

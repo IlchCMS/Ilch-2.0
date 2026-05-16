@@ -1304,6 +1304,9 @@ class Config extends \Ilch\Config\Install
             case "2.2.16":
                 // Update vendor folder to update PHPMailer.
                 replaceVendorDirectory();
+
+                // The file is no longer part of tarteaucitron.
+                unlink(ROOT_PATH . '/static/js/tarteaucitron/build/lang/tarteaucitron.kr.min.js');
                 break;
         }
 

@@ -69,6 +69,9 @@ class Config extends \Ilch\Config\Install
                 }
                 removeDir(ROOT_PATH . '/static/js/cookieconsent');
                 break;
+            case "2.2.16":
+                removeDir(ROOT_PATH . '/static/js/cookieconsent');
+                break;
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
