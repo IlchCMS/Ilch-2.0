@@ -1301,6 +1301,10 @@ class Config extends \Ilch\Config\Install
                 // Update vendor folder to remove blueimp/jquery-file-upload.
                 replaceVendorDirectory();
                 break;
+            case "2.2.16":
+                // Update vendor folder to update PHPMailer.
+                replaceVendorDirectory();
+                break;
         }
 
         return 'Update function executed.';
