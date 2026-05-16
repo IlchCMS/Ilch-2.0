@@ -272,6 +272,7 @@ function url_get_contents(string $url, bool $write_cache = true, bool $ignoreCac
         if (PHP_VERSION_ID >= 80000) {
             unset($ch);
         } else {
+            // phpcs:ignore
             curl_close($ch);
         }
 
