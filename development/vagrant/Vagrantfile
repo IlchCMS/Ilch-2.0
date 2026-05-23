@@ -6,9 +6,9 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   if Vagrant.has_plugin?("vagrant-vbguest")
-    config.vm.box = "generic/debian11"
+    config.vm.box = "generic/debian12"
   else
-    config.vm.box = "debian/bullseye64"
+    config.vm.box = "debian/bookworm64"
   end
 
   config.vm.network "forwarded_port", guest: 80, host: 8080
@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
 
   config.vm.provider "virtualbox" do |vb|
-    vb.name = "Vagrant_Ilch2_debian11_php7_4"
+    vb.name = "Vagrant_Ilch2_debian12_php8_2"
 #    # Use VBoxManage to customize the VM. For example to change memory:
 #    vb.customize ["modifyvm", :id, "--memory", "1024"]
   end

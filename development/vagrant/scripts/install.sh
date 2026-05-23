@@ -45,15 +45,15 @@ echo "CREATE DATABASE ilch2; CREATE DATABASE ilch2test;" | mysql -uroot -proot
 echo "GRANT ALL PRIVILEGES ON ilch2.* TO 'ilch2'@'localhost' IDENTIFIED BY 'ilch2'" | mysql -uroot -proot
 
 # install php
-apt-get -y install php7.4 php7.4-{curl,gd,intl,mbstring,mysql,xdebug,xml,zip}
-apt-get -y install libapache2-mod-php7.4
+apt-get -y install php8.2 php8.2-{curl,gd,intl,mbstring,mysql,xdebug,xml,zip}
+apt-get -y install libapache2-mod-php8.2
 
 # install phpmyadmin
 sh /vagrant/development/vagrant/scripts/install_phpmyadmin.sh
 
 # configure xdebug fore remote debugging
 echo "--- configure xdebug"
-cat /vagrant/development/vagrant/xdebug.ini | tee -a /etc/php/7.4/mods-available/xdebug.ini > /dev/null
+cat /vagrant/development/vagrant/xdebug.ini | tee -a /etc/php/8.2/mods-available/xdebug.ini > /dev/null
 
 # configure web server
 echo "--- configure web server"
