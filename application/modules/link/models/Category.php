@@ -14,37 +14,49 @@ class Category extends \Ilch\Mapper
      *
      * @var int
      */
-    private $id = 0;
+    protected int $id = 0;
+
     /**
      * The position of the category.
      *
      * @var int
      */
-    protected $position = 0;
+    protected int $position = 0;
+
     /**
      * The name of the category.
      *
      * @var string
      */
-    private $name = '';
+    protected string $name = '';
+
     /**
      * The catid of the category.
      *
      * @var int
      */
-    private $cat = 0;
+    protected int $cat = 0;
+
     /**
      * The description of the category.
      *
      * @var string
      */
-    private $desc = '';
+    protected string $desc = '';
+
     /**
      * The links count of the category.
      *
-     * @var integer
+     * @var int
      */
-    private $linksCount = 0;
+    protected int $linksCount = 0;
+
+    /**
+     * The access rights of the category.
+     *
+     * @var string
+     */
+    protected string $access = '';
 
     /**
      * @param array $entries
@@ -69,6 +81,9 @@ class Category extends \Ilch\Mapper
         }
         if (isset($entries['count'])) {
             $this->setLinksCount($entries['count']);
+        }
+        if (isset($entries['access'])) {
+            $this->setAccess($entries['access']);
         }
 
         return $this;
@@ -226,8 +241,30 @@ class Category extends \Ilch\Mapper
                 'name'      => $this->getName(),
                 'desc'      => $this->getDesc(),
                 'parent_id' => $this->getParentId(),
-                'pos'       => $this->getPosition()
+                'pos'       => $this->getPosition(),
             ]
         );
+    }
+
+    /**
+     * Get the access rights of the category.
+     *
+     * @return string
+     */
+    public function getAccess(): string
+    {
+        return $this->access;
+    }
+
+    /**
+     * Sets the access rights of the category.
+     *
+     * @param string $access
+     * @return $this
+     */
+    public function setAccess(string $access): Category
+    {
+        $this->access = $access;
+        return $this;
     }
 }

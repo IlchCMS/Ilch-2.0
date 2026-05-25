@@ -2,14 +2,14 @@
 
 /** @var \Ilch\View $this */
 
-/** @var \Modules\Link\Models\Category[]|null $categorys */
-$categorys = $this->get('categorys');
+/** @var \Modules\Link\Models\Category[]|null $categories */
+$categories = $this->get('categories');
 
 /** @var \Modules\Link\Models\Link[]|null $links */
 $links = $this->get('links');
 ?>
 <h1><?=$this->getTrans('menuLinks') ?></h1>
-<?php if ($categorys) : ?>
+<?php if ($categories) : ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -20,7 +20,7 @@ $links = $this->get('links');
                 <th><?=$this->getTrans('category') ?></th>
                 <th class="text-center"><?=$this->getTrans('links') ?></th>
             </tr>
-            <?php foreach ($categorys as $category) : ?>
+            <?php foreach ($categories as $category) : ?>
             <tr>
                 <?php
                 $getDesc = $this->escape($category->getDesc());

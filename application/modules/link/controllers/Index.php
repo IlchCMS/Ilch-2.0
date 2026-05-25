@@ -20,6 +20,7 @@ class Index extends \Ilch\Controller\Frontend
         $category = null;
         if ($this->getRequest()->getParam('cat_id')) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('cat_id'));
+            $category = $this->checkAccess($category);
 
             if (!$category) {
                 $this->redirect()
@@ -43,14 +44,14 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($category->getName(), ['action' => 'index', 'cat_id' => $category->getId()]);
 
             $links = $linkMapper->getLinksByCatId($category->getId());
-            $categorys = $categoryMapper->getCategorysByParentId($category->getId());
+            $categories = $categoryMapper->getCategoriesByParentId($category->getId());
         } else {
             $links = $linkMapper->getLinksByCatId(0);
-            $categorys = $categoryMapper->getCategorysByParentId(0);
+            $categories = $categoryMapper->getCategoriesByParentId(0);
         }
 
-        $this->getView()->set('links', $links);
-        $this->getView()->set('categorys', $categorys);
+        $this->getView()->set('links', $this->checkAccess($links));
+        $this->getView()->set('categories', $this->checkAccess($categories));
     }
 
     public function redirectAction()
@@ -58,6 +59,7 @@ class Index extends \Ilch\Controller\Frontend
         $linkMapper = new LinkMapper();
 
         $linkModel = ($this->getRequest()->getParam('link_id') && is_numeric($this->getRequest()->getParam('link_id'))) ? $linkMapper->getLinkById($this->getRequest()->getParam('link_id') ?? 0) : 0;
+        $linkModel = $this->checkAccess($linkModel);
         if ($linkModel) {
             $linkModel->addHits();
             $linkMapper->save($linkModel);
@@ -66,5 +68,62 @@ class Index extends \Ilch\Controller\Frontend
             exit;
         }
         $this->redirect(['action' => 'index']);
+    }
+
+    private function checkAccess($linkOrCategoryItems)
+    {
+        if (!$linkOrCategoryItems) {
+            // Object is null? Early return.
+            return $linkOrCategoryItems;
+        }
+
+        if (!($this->getUser() && $this->getUser()->isAdmin())) {
+            if (!is_array($linkOrCategoryItems)) {
+                // Single link or category.
+                if (empty($linkOrCategoryItems->getAccess())) {
+                    // Visible for everyone.
+                    return $linkOrCategoryItems;
+                }
+
+                if (is_in_array(explode(',', $linkOrCategoryItems->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ?: [3])) {
+                    return $linkOrCategoryItems;
+                }
+
+                return null;
+            }
+
+            // Check which links or categories should be visible for the user or guest.
+            $linkOrCategoryItemsVisible = [];
+            foreach ($linkOrCategoryItems as $key => $linksOrCategoriesItem) {
+                if (!is_array($linksOrCategoriesItem)) {
+                    if (empty($linksOrCategoriesItem->getAccess())) {
+                        // Visible for everyone.
+                        $linkOrCategoryItemsVisible[$key] = $linksOrCategoriesItem;
+                        continue;
+                    }
+
+                    if (is_in_array(explode(',', $linksOrCategoriesItem->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ?: [3])) {
+                        $linkOrCategoryItemsVisible[$key] = $linksOrCategoriesItem;
+                    }
+                } else {
+                    // Subitems
+                    foreach ($linksOrCategoriesItem as $linkOrCategoryItem) {
+                        if (empty($linkOrCategoryItem->getAccess())) {
+                            // Visible for everyone.
+                            $linkOrCategoryItemsVisible[$key][] = $linkOrCategoryItem;
+                            continue;
+                        }
+
+                        if (is_in_array(explode(',', $linkOrCategoryItem->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ?: [3])) {
+                            $linkOrCategoryItemsVisible[$key][] = $linkOrCategoryItem;
+                        }
+                    }
+                }
+            }
+
+            $linkOrCategoryItems = $linkOrCategoryItemsVisible;
+        }
+
+        return $linkOrCategoryItems;
     }
 }

@@ -78,6 +78,22 @@ $cats = $this->get('cats');
             </select>
         </div>
     </div>
+    <div class="row mb-3">
+        <label for="access" class="col-xl-2 col-form-label"><?=$this->getTrans('access') ?></label>
+        <div class="col-xl-4">
+            <select class="choices-select form-control"
+                    id="access"
+                    name="access[]"
+                    data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
+                    multiple>
+                <?php
+                /** @var \Modules\User\Models\Group $group */
+                foreach ($this->get('userGroupList') as $group) : ?>
+                    <option value="<?=$group->getId() ?>"<?=(in_array($group->getId(), explode(',', $link->getAccess()))) ? ' selected' : '' ?>><?=$this->escape($group->getName()) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
     <?=$this->getSaveBar($link->getId() ? 'updateButton' : 'addButton') ?>
 </form>
 
@@ -88,4 +104,9 @@ $cats = $this->get('cats');
         ->addInputId('_1')
         ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>
+
+choicesAccess = new Choices('#access', {
+    ...choicesOptions,
+    searchEnabled: true
+});
 </script>

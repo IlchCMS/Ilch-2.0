@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'link',
-        'version' => '1.11.2',
+        'version' => '1.12.0',
         'icon_small' => 'fa-solid fa-arrow-up-right-from-square',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -36,13 +36,15 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->drop('links', true);
+        $this->db()->drop('link_links_access', true);
+        $this->db()->drop('link_access', true);
+        $this->db()->drop('link_links', true);
         $this->db()->drop('link_cats', true);
     }
 
     public function getInstallSql(): string
     {
-        return 'CREATE TABLE IF NOT EXISTS `[prefix]_links` (
+        return 'CREATE TABLE IF NOT EXISTS `[prefix]_link_links` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `cat_id` INT(11) NULL DEFAULT 0,
                   `pos` INT(11) NOT NULL DEFAULT 0,
@@ -63,7 +65,25 @@ class Config extends \Ilch\Config\Install
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
-                INSERT INTO `[prefix]_links` (`id`, `name`, `desc`, `banner`, `link`) VALUES
+                CREATE TABLE IF NOT EXISTS `[prefix]_link_access` (
+                    `cat_id` INT(11) NOT NULL,
+                    `group_id` INT(11) NOT NULL,
+                    INDEX `FK_[prefix]_link_access_groups` (`group_id`) USING BTREE,
+                    INDEX `FK_[prefix]_link_access_link_cats` (`cat_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_link_access_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_link_access_link_cats` FOREIGN KEY (`cat_id`) REFERENCES `[prefix]_link_cats` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_link_links_access` (
+                    `link_id` INT(11) NOT NULL,
+                    `group_id` INT(11) NOT NULL,
+                    INDEX `FK_[prefix]_link_links_access_groups` (`group_id`) USING BTREE,
+                    INDEX `FK_[prefix]_link_links_access_links` (`link_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_link_links_access_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_link_links_access_links` FOREIGN KEY (`link_id`) REFERENCES `[prefix]_link_links` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+                INSERT INTO `[prefix]_link_links` (`id`, `name`, `desc`, `banner`, `link`) VALUES
                 (1, "ilch", "Du suchst ein einfach strukturiertes Content Management System? Dann bist du bei ilch genau richtig! ", "https://www.ilch.de/include/images/linkus/468x60.png", "https://ilch.de");';
     }
 
@@ -98,6 +118,28 @@ class Config extends \Ilch\Config\Install
             case "1.10.1":
             case "1.11.0":
             case "1.11.1":
+            case "1.11.2":
+                // Rename table "links" to "link_links".
+                $this->db()->query('RENAME TABLE `[prefix]_links` TO `[prefix]_link_links`;');
+
+                // Create new tables "link_access" and "link_links_access".
+                $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_link_access` (
+                    `cat_id` INT(11) NOT NULL,
+                    `group_id` INT(11) NOT NULL,
+                    INDEX `FK_[prefix]_link_access_groups` (`group_id`) USING BTREE,
+                    INDEX `FK_[prefix]_link_access_link_cats` (`cat_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_link_access_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_link_access_link_cats` FOREIGN KEY (`cat_id`) REFERENCES `[prefix]_link_cats` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_link_links_access` (
+                    `link_id` INT(11) NOT NULL,
+                    `group_id` INT(11) NOT NULL,
+                    INDEX `FK_[prefix]_link_links_access_groups` (`group_id`) USING BTREE,
+                    INDEX `FK_[prefix]_link_links_access_links` (`link_id`) USING BTREE,
+                    CONSTRAINT `FK_[prefix]_link_links_access_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
+                    CONSTRAINT `FK_[prefix]_link_links_access_links` FOREIGN KEY (`link_id`) REFERENCES `[prefix]_link_links` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;');
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

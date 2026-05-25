@@ -14,56 +14,63 @@ class Link extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The position of the link.
      *
      * @var int
      */
-    protected $position = 0;
+    protected int $position = 0;
 
     /**
      * The name of the link.
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * The link of the link.
      *
      * @var string
      */
-    protected $link = '';
+    protected string $link = '';
 
     /**
      * The banner of the link.
      *
      * @var string
      */
-    protected $banner = '';
+    protected string $banner = '';
 
     /**
      * The category of the link.
      *
      * @var int
      */
-    protected $cat_id = 0;
+    protected int $cat_id = 0;
 
     /**
      * The category of the link.
      *
      * @var string
      */
-    protected $desc = '';
+    protected string $desc = '';
 
     /**
      * The category of the link.
      *
      * @var int
      */
-    protected $hits = 0;
+    protected int $hits = 0;
+
+    /**
+     * The access rights of the link.
+     *
+     * @var string
+     */
+    protected string $access = '';
 
     /**
      * @param array $entries
@@ -94,6 +101,9 @@ class Link extends \Ilch\Model
         }
         if (isset($entries['hits'])) {
             $this->setHits($entries['hits']);
+        }
+        if (isset($entries['access'])) {
+            $this->setAccess($entries['access']);
         }
         return $this;
     }
@@ -311,8 +321,30 @@ class Link extends \Ilch\Model
                 'desc'      => $this->getDesc(),
                 'cat_id'    => $this->getCatId(),
                 'pos'       => $this->getPosition(),
-                'hits'      => $this->getHits()
+                'hits'      => $this->getHits(),
             ]
         );
+    }
+
+    /**
+     * Get the access rights of the link.
+     *
+     * @return string
+     */
+    public function getAccess(): string
+    {
+        return $this->access;
+    }
+
+    /**
+     * Set the access rights of the link.
+     *
+     * @param string $access
+     * @return $this
+     */
+    public function setAccess(string $access): Link
+    {
+        $this->access = $access;
+        return $this;
     }
 }
