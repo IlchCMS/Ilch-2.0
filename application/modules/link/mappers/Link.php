@@ -8,6 +8,7 @@
 namespace Modules\Link\Mappers;
 
 use Ilch\Pagination;
+use Modules\Link\Mappers\Access as AccessMapper;
 use Modules\Link\Models\Link as LinkModel;
 
 class Link extends \Ilch\Mapper
@@ -15,7 +16,7 @@ class Link extends \Ilch\Mapper
     /**
      * @var string
      */
-    public $tablename = 'links';
+    public string $tablename = 'link_links';
 
     /**
      * returns if the module is installed.
@@ -40,7 +41,9 @@ class Link extends \Ilch\Mapper
         $select = $this->db()->select();
         $select->fields(['l.id', 'l.cat_id', 'l.pos', 'l.name', 'l.desc', 'l.banner', 'l.link', 'l.hits'])
             ->from(['l' => $this->tablename])
+            ->join(['la' => 'link_links_access'], 'la.link_id = l.id', 'LEFT', ['access' => 'GROUP_CONCAT(DISTINCT la.group_id)'])
             ->where($where)
+            ->group(['l.id'])
             ->order($orderBy);
 
         if ($pagination !== null) {
@@ -136,12 +139,18 @@ class Link extends \Ilch\Mapper
                 ->values($fields)
                 ->where(['id' => $link->getId()])
                 ->execute();
-            return $link->getId();
+            $id = $link->getId();
         } else {
-            return $this->db()->insert($this->tablename)
+            $id = $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
+
+        // Store access rights.
+        $accessMapper = new AccessMapper();
+        $accessMapper->saveLinksAccess($id, $link->getAccess());
+
+        return $id;
     }
 
     /**

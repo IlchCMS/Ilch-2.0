@@ -2,8 +2,8 @@
 
 /** @var \Ilch\View $this */
 
-/** @var \Modules\Link\Models\Category[]|null $categorys */
-$categorys = $this->get('categorys');
+/** @var \Modules\Link\Models\Category[]|null $categories */
+$categories = $this->get('categories');
 
 /** @var \Modules\Link\Models\Link[]|null $links */
 $links = $this->get('links');
@@ -16,7 +16,7 @@ $links = $this->get('links');
 </h1>
 <form id="downloadsForm" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <?php if ($categorys) : ?>
+    <?php if ($categories) : ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
@@ -37,7 +37,7 @@ $links = $this->get('links');
                 </thead>
                 <tbody id="sortableCat">
                     <?php
-                    foreach ($categorys as $category) :
+                    foreach ($categories as $category) :
                         $getDesc = $this->escape($category->getDesc());
                         if ($getDesc != '') {
                             $getDesc = '&raquo; ' . $getDesc;

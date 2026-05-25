@@ -33,5 +33,28 @@ $cat = $this->get('category');
                       rows="3"><?=$this->escape($this->originalInput('desc', $cat->getDesc())) ?></textarea>
         </div>
     </div>
+    <div class="row mb-3">
+        <label for="access" class="col-xl-2 col-form-label"><?=$this->getTrans('access') ?></label>
+        <div class="col-xl-4">
+            <select class="choices-select form-control"
+                    id="access"
+                    name="access[]"
+                    data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>"
+                    multiple>
+                <?php
+                /** @var \Modules\User\Models\Group $group */
+                foreach ($this->get('userGroupList') as $group) : ?>
+                    <option value="<?=$group->getId() ?>"<?=(in_array($group->getId(), explode(',', $cat->getAccess()))) ? ' selected' : '' ?>><?=$this->escape($group->getName()) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
     <?=$this->getSaveBar($cat->getId() ? 'updateButton' : 'addButton') ?>
 </form>
+
+<script>
+    choicesAccess = new Choices('#access', {
+        ...choicesOptions,
+        searchEnabled: true
+    });
+</script>

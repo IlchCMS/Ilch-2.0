@@ -26,4 +26,5 @@ return [
     'deleteFailed' => 'There are still entries in the category',
     'linkInfoText' => 'The links of a category can be edited inside the category. Links and categories can be sorted by drag and drop.',
     'categoryNotFound' => 'Category not found.',
+    'access' => 'Visible for',
 ];

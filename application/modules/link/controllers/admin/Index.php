@@ -12,6 +12,7 @@ use Modules\Link\Models\Link as LinkModel;
 use Modules\Link\Mappers\Category as CategoryMapper;
 use Modules\Link\Models\Category as CategoryModel;
 use Ilch\Validation;
+use Modules\User\Mappers\Group as UserGroupMapper;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -86,10 +87,10 @@ class Index extends \Ilch\Controller\Admin
                 ->add($category->getName(), ['action' => 'index', 'cat_id' => $category->getId()]);
 
             $links = $linkMapper->getLinksByCatId($this->getRequest()->getParam('cat_id'));
-            $categorys = $categoryMapper->getCategorysByParentId($this->getRequest()->getParam('cat_id'));
+            $categories = $categoryMapper->getCategoriesByParentId($this->getRequest()->getParam('cat_id'));
         } else {
             $links = $linkMapper->getLinksByCatId(0);
-            $categorys = $categoryMapper->getCategorysByParentId(0);
+            $categories = $categoryMapper->getCategoriesByParentId(0);
         }
 
         $this->getLayout()->getAdminHmenu()
@@ -127,7 +128,7 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('links', $links);
-        $this->getView()->set('categorys', $categorys);
+        $this->getView()->set('categories', $categories);
     }
 
     public function redirectAction()
@@ -180,6 +181,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $categoryMapper = new CategoryMapper();
         $linkMapper = new LinkMapper();
+        $userGroupMapper = new UserGroupMapper();
 
         $model = new LinkModel();
         if ($this->getRequest()->getParam('id')) {
@@ -211,7 +213,7 @@ class Index extends \Ilch\Controller\Admin
                 'link' => $this->getRequest()->getPost('link'),
                 'banner' => $banner,
                 'desc' => $this->getRequest()->getPost('desc'),
-                'catId' => $this->getRequest()->getPost('catId'),
+                'catId' => $this->getRequest()->getPost('catId')
             ];
 
             Validation::setCustomFieldAliases([
@@ -229,7 +231,8 @@ class Index extends \Ilch\Controller\Admin
                     ->setLink($this->getRequest()->getPost('link', ''))
                     ->setBanner($this->getRequest()->getPost('banner', ''))
                     ->setDesc($this->getRequest()->getPost('desc', ''))
-                    ->setCatId($this->getRequest()->getPost('catId', 0));
+                    ->setCatId($this->getRequest()->getPost('catId', 0))
+                    ->setAccess(implode(',', $this->getRequest()->getPost('access') ?? []));
                 $linkMapper->save($model);
 
                 $this->addMessage('saveSuccess');
@@ -243,11 +246,13 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('cats', $categoryMapper->getCategories() ?? []);
+        $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
     }
 
     public function treatCatAction()
     {
         $categorykMapper = new CategoryMapper();
+        $userGroupMapper = new UserGroupMapper();
 
         $model = new CategoryModel();
         if ($this->getRequest()->getParam('id')) {
@@ -279,7 +284,8 @@ class Index extends \Ilch\Controller\Admin
                     $model->setParentID($this->getRequest()->getParam('parentId'));
                 }
                 $model->setName($this->getRequest()->getPost('name'))
-                    ->setDesc($this->getRequest()->getPost('desc'));
+                    ->setDesc($this->getRequest()->getPost('desc'))
+                    ->setAccess(implode(',', $this->getRequest()->getPost('access') ?? []));
                 $categorykMapper->save($model);
 
                 $this->addMessage('saveSuccess');
@@ -291,5 +297,7 @@ class Index extends \Ilch\Controller\Admin
                 ->withErrors($validation->getErrorBag())
                 ->to(array_merge(['action' => 'treatCat'], ($model->getId() ? ['id' => $model->getId()] : [])));
         }
+
+        $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
     }
 }

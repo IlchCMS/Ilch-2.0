@@ -10,17 +10,19 @@ namespace Modules\Link\Mappers;
 use Ilch\Pagination;
 use Modules\Link\Models\Category as CategoryModel;
 use Modules\Link\Mappers\Link as LinkMapper;
+use Modules\Link\Mappers\Access as AccessMapper;
 
 class Category extends \Ilch\Mapper
 {
     /**
      * @var string
      */
-    public $tablename = 'link_cats';
+    public string $tablename = 'link_cats';
+
     /**
-     * @var string
+     * @var string|null
      */
-    public $tablename_entries = null;
+    public ?string $tablename_entries = null;
 
     /**
      */
@@ -57,13 +59,15 @@ class Category extends \Ilch\Mapper
         $select = $this->db()->select();
         $select->fields(['lc.id', 'lc.parent_id', 'lc.pos', 'lc.name', 'lc.desc'])
             ->from(['lc' => $this->tablename])
+            ->join(['ca' => 'link_access'], 'ca.cat_id = lc.id', 'LEFT', ['access' => 'GROUP_CONCAT(DISTINCT ca.group_id)'])
             ->where($where)
             ->order($orderBy);
 
         if ($countEntries) {
-            $select->join(['l' => $this->tablename_entries], ['l.cat_id = lc.id'], 'LEFT', ['count' => 'COUNT(l.id)'])
-                ->group(['lc.id', 'lc.parent_id', 'lc.pos', 'lc.name', 'lc.desc']);
+            $select->join(['l' => $this->tablename_entries], ['l.cat_id = lc.id'], 'LEFT', ['count' => 'COUNT(l.id)']);
         }
+
+        $select->group(['lc.id', 'lc.parent_id', 'lc.pos', 'lc.name', 'lc.desc']);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -90,7 +94,7 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Gets categorys.
+     * Gets categories.
      *
      * @param array $where
      * @return CategoryModel[]|null
@@ -122,8 +126,20 @@ class Category extends \Ilch\Mapper
      *
      * @param int $parentId
      * @return CategoryModel[]|null
+     * @deprecated Use getCategoriesByParentId instead
      */
     public function getCategorysByParentId(int $parentId): ?array
+    {
+        return $this->getCategoriesByParentId($parentId);
+    }
+
+    /**
+     * Returns user model found by the id or false if none found.
+     *
+     * @param int $parentId
+     * @return CategoryModel[]|null
+     */
+    public function getCategoriesByParentId(int $parentId): ?array
     {
         return $this->getEntriesBy(['lc.parent_id' => $parentId], ['lc.pos' => 'ASC'], null, true);
     }
@@ -191,12 +207,18 @@ class Category extends \Ilch\Mapper
                 ->values($fields)
                 ->where(['id' => $category->getId()])
                 ->execute();
-            return $category->getId();
+            $id = $category->getId();
         } else {
-            return $this->db()->insert($this->tablename)
+            $id = $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
+
+        // Store access rights.
+        $accessMapper = new AccessMapper();
+        $accessMapper->save($id, $category->getAccess());
+
+        return $id;
     }
 
     /**
