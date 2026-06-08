@@ -29,15 +29,16 @@ nav {
 }
 .event-list > li > time > .day {
     display: block;
-    font-size: 56pt;
+    font-size: 44pt;
     font-weight: 100;
     line-height: 1;
 }
-.event-list > li time > .month {
+.event-list > li time > .month, .event-list > li time > .year {
     display: block;
-    font-size: 24pt;
+    font-size: 18pt;
     font-weight: 900;
     line-height: 1;
+    padding: 2px 0;
 }
 .event-list > li > img {
     width: 100%;
