@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'events',
-        'version' => '1.23.7',
+        'version' => '1.23.8',
         'icon_small' => 'fa-solid fa-ticket',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -212,16 +212,13 @@ class Config extends \Ilch\Config\Install
             case "1.22.1":
             case "1.22.2":
             case "1.23.0":
-                // no break
             case "1.23.1":
-                // no break
             case "1.23.2":
-                // no break
             case "1.23.3":
-                // no break
             case "1.23.4":
-                // no break
             case "1.23.5":
+            case "1.23.6":
+            case "1.23.7":
                 // no break
         }
 
