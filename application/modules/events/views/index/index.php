@@ -33,6 +33,7 @@ $entrantsMapper = $this->get('entrantsMapper');
                                 <time>
                                     <span class="day"><?=$date->format('j') ?></span>
                                     <span class="month"><?=$this->getTrans($date->format('M')) ?></span>
+                                    <span class="year"><?=$this->getTrans($date->format('Y')) ?></span>
                                 </time>
                                 <div class="info">
                                     <h2 class="title"><a href="<?=$this->getUrl('events/show/event/id/' . $event->getId()) ?>"><?=$this->escape($event->getTitle()) ?></a></h2>
@@ -96,6 +97,7 @@ $entrantsMapper = $this->get('entrantsMapper');
                             <time>
                                 <span class="day"><?=$date->format('j', true) ?></span>
                                 <span class="month"><?=$this->getTrans($date->format('M', true)) ?></span>
+                                <span class="year"><?=$this->getTrans($date->format('Y')) ?></span>
                             </time>
                             <div class="info">
                                 <h2 class="title"><a href="<?=$this->getUrl('events/show/event/id/' . $event->getId()) ?>"><?=$this->escape($event->getTitle()) ?></a></h2>
@@ -156,6 +158,7 @@ $entrantsMapper = $this->get('entrantsMapper');
                             <time>
                                 <span class="day"><?=$date->format('j', true) ?></span>
                                 <span class="month"><?=$this->getTrans($date->format('M', true)) ?></span>
+                                <span class="year"><?=$this->getTrans($date->format('Y')) ?></span>
                             </time>
                             <div class="info">
                                 <h2 class="title"><a href="<?=$this->getUrl('events/show/event/id/' . $event->getId()) ?>"><?=$this->escape($event->getTitle()) ?></a></h2>
