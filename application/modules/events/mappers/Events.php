@@ -101,7 +101,7 @@ class Events extends \Ilch\Mapper
             $pagination->setRowsPerPage($limit);
         }
 
-        return $this->getEntriesBy([new \Ilch\Database\Mysql\Expression\Comparison('`start`', '>', 'NOW()')], [], $pagination);
+        return $this->getEntriesBy([new \Ilch\Database\Mysql\Expression\Comparison('`start`', '>', 'NOW()')], ['start' => 'ASC'] , $pagination);
     }
 
     /**
@@ -129,7 +129,7 @@ class Events extends \Ilch\Mapper
             $pagination->setRowsPerPage($limit);
         }
 
-        return $this->getEntriesBy([new \Ilch\Database\Mysql\Expression\Comparison('`end`', '<', 'NOW()')], [], $pagination);
+        return $this->getEntriesBy([new \Ilch\Database\Mysql\Expression\Comparison('`end`', '<', 'NOW()')], ['start' => 'DESC'] , $pagination);
     }
 
     /**
@@ -151,7 +151,7 @@ class Events extends \Ilch\Mapper
                 new \Ilch\Database\Mysql\Expression\Comparison('`start`', '<', 'NOW()'),
                 new \Ilch\Database\Mysql\Expression\Comparison('`end`', '>', 'NOW()'),
             ],
-            [],
+         ['start' => 'ASC'],
             $pagination
         );
     }
