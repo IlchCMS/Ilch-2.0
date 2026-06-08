@@ -126,18 +126,6 @@ class Category extends \Ilch\Mapper
      *
      * @param int $parentId
      * @return CategoryModel[]|null
-     * @deprecated Use getCategoriesByParentId instead
-     */
-    public function getCategorysByParentId(int $parentId): ?array
-    {
-        return $this->getCategoriesByParentId($parentId);
-    }
-
-    /**
-     * Returns user model found by the id or false if none found.
-     *
-     * @param int $parentId
-     * @return CategoryModel[]|null
      */
     public function getCategoriesByParentId(int $parentId): ?array
     {
