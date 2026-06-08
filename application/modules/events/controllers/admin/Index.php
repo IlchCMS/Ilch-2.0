@@ -65,7 +65,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('events', $eventMapper->getEntries());
+        $this->getView()->set('events', $eventMapper->getEntries(), ['start' => 'DESC']);
     }
 
     public function delAction()
