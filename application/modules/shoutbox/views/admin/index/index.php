@@ -2,7 +2,14 @@
 
 /** @var \Ilch\View $this */
 
-$userMapper = $this->get('userMapper');
+/** @var string[] $userNames */
+$userNames = $this->get('userNames');
+
+/** @var string $dummyUserName */
+$dummyUserName = $this->get('dummyUserName');
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
 ?>
 <h1><?=$this->getTrans('manage') ?></h1>
 <?php if ($this->get('shoutbox') != '') : ?>
@@ -37,8 +44,8 @@ $userMapper = $this->get('userMapper');
                             <?php if ($shoutbox->getUid() == '0') : ?>
                                 <td><?=$this->escape($shoutbox->getName()) ?></td>
                             <?php else : ?>
-                                <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
-                                <td><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>" target="_blank"><?=$this->escape($user ? $user->getName() : $userMapper->getDummyUser()->getName()) ?></a></td>
+                                <?php $userName = $userNames[$shoutbox->getUid()] ?? $dummyUserName ?>
+                                <td><a href="<?=$this->getUrl('user/profil/index/user/' . $shoutbox->getUid()) ?>" target="_blank"><?=$this->escape($userName) ?></a></td>
                             <?php endif; ?>
                             <td><?=$date->format('d.m.Y H:i', true) ?></td>
                             <td><?=$this->escape($shoutbox->getTextarea()) ?></td>
@@ -49,6 +56,7 @@ $userMapper = $this->get('userMapper');
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
+    <?=$pagination->getHtml($this, ['action' => 'index']) ?>
 <?php else : ?>
-    <?=$this->getTrans('noEntrys') ?>
+    <?=$this->getTrans('noEntries') ?>
 <?php endif; ?>

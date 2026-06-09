@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'shoutbox',
-        'version' => '1.6.3',
+        'version' => '1.7.0',
         'icon_small' => 'fa-solid fa-bullhorn',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -45,6 +45,8 @@ class Config extends \Ilch\Config\Install
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('shoutbox_limit', '5')
+            ->set('shoutbox_messagesPerPageAdmincenter', '20')
+            ->set('shoutbox_messagesPerPage', '20')
             ->set('shoutbox_maxtextlength', '50')
             ->set('shoutbox_writeaccess', '1,2');
     }
@@ -55,6 +57,8 @@ class Config extends \Ilch\Config\Install
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->delete('shoutbox_limit')
+            ->delete('shoutbox_messagesPerPageAdmincenter')
+            ->delete('shoutbox_messagesPerPage')
             ->delete('shoutbox_maxtextlength')
             ->delete('shoutbox_writeaccess');
     }
@@ -75,17 +79,13 @@ class Config extends \Ilch\Config\Install
     {
         switch ($installedVersion) {
             case "1.0":
-                // no break
             case "1.1":
-                // no break
             case "1.2":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_shoutbox` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 // no break
             case "1.3.0":
-                // no break
             case "1.4.0":
-                // no break
             case "1.4.1":
                 // Update description
                 foreach ($this->config['languages'] as $key => $value) {
@@ -103,6 +103,12 @@ class Config extends \Ilch\Config\Install
             case "1.6.0":
             case "1.6.1":
             case "1.6.2":
+            case "1.6.3":
+                // Add default values for new settings.
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('shoutbox_messagesPerPageAdmincenter', '20')
+                    ->set('shoutbox_messagesPerPage', '20');
+                // no break
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
