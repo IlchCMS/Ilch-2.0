@@ -58,7 +58,8 @@
                 /** @var \Modules\User\Models\Group $groupList */
                 foreach ($this->get('userGroupList') as $groupList) : ?>
                     <option value="<?=$groupList->getId() ?>"
-                        <?php $writeAccess = explode(',', $this->originalInput('writeAccess', $this->get('writeAccess')));
+                        <?php $writeAccess = $this->originalInput('writeAccess', $this->get('writeAccess')) ?>
+                        <?php $writeAccess = is_array($writeAccess) ? $writeAccess : explode(',', $writeAccess);
                         foreach ($writeAccess as $access) {
                             if ($groupList->getId() == $access) {
                                 echo 'selected="selected"';
