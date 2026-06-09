@@ -12,7 +12,7 @@ return [
     'name' => 'Name',
     'archive' => 'Archive',
     'message' => 'Message',
-    'noEntrys' => 'No entries exist',
+    'noEntries' => 'No entries exist',
     'numberOfMessagesDisplayed' => 'Number of messages displayed',
     'maximumTextLength' => 'Maximum text length',
     'settings' => 'Settings',

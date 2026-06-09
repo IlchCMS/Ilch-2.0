@@ -199,7 +199,7 @@ $config = \Ilch\Registry::get('config');
                 <?php endforeach; ?>
             <?php else : ?>
                 <tr>
-                    <td><?=$this->getTrans('noEntrys') ?></td>
+                    <td><?=$this->getTrans('noEntries') ?></td>
                 </tr>
             <?php endif; ?>
         </table>

@@ -12,7 +12,7 @@ return [
     'name' => 'Name',
     'archive' => 'Archiv',
     'message' => 'Nachricht',
-    'noEntrys' => 'Keine Einträge vorhanden',
+    'noEntries' => 'Keine Einträge vorhanden',
     'numberOfMessagesDisplayed' => 'Anzahl angezeigter Nachrichten',
     'maximumTextLength' => 'Maximale Textlänge',
     'settings' => 'Einstellungen',

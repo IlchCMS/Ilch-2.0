@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'shoutbox',
-        'version' => '1.6.3',
+        'version' => '1.6.4',
         'icon_small' => 'fa-solid fa-bullhorn',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -75,17 +75,13 @@ class Config extends \Ilch\Config\Install
     {
         switch ($installedVersion) {
             case "1.0":
-                // no break
             case "1.1":
-                // no break
             case "1.2":
                 // Convert table to new character set and collate
                 $this->db()->query('ALTER TABLE `[prefix]_shoutbox` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
                 // no break
             case "1.3.0":
-                // no break
             case "1.4.0":
-                // no break
             case "1.4.1":
                 // Update description
                 foreach ($this->config['languages'] as $key => $value) {
@@ -103,6 +99,7 @@ class Config extends \Ilch\Config\Install
             case "1.6.0":
             case "1.6.1":
             case "1.6.2":
+            case "1.6.3":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
