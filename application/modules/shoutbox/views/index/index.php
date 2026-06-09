@@ -2,7 +2,14 @@
 
 /** @var \Ilch\View $this */
 
-$userMapper = new \Modules\User\Mappers\User();
+/** @var string[] $userNames */
+$userNames = $this->get('userNames');
+
+/** @var string $dummyUserName */
+$dummyUserName = $this->get('dummyUserName');
+
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
 ?>
 <h1><?=$this->getTrans('menuShoutbox') ?></h1>
 <?php if ($this->get('shoutbox')) : ?>
@@ -17,9 +24,9 @@ $userMapper = new \Modules\User\Mappers\User();
                         <b><?=$this->escape($shoutbox->getName()) ?>:</b> <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>
                     </td>
                 <?php else : ?>
-                    <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
+                    <?php $userName = $userNames[$shoutbox->getUid()] ?? $dummyUserName ?>
                     <td>
-                        <b><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>"><?=$this->escape($user ? $user->getName() : $userMapper->getDummyUser()->getName()) ?></a></b>: <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>
+                        <a href="<?=$this->getUrl('user/profil/index/user/' . $shoutbox->getUid()) ?>"><b><?=$this->escape($userName) ?></b></a>: <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>
                     </td>
                 <?php endif; ?>
             </tr>
@@ -28,6 +35,7 @@ $userMapper = new \Modules\User\Mappers\User();
             </tr>
         <?php endforeach; ?>
     </table>
+    <?=$pagination->getHtml($this, ['action' => 'index']) ?>
 <?php else : ?>
-    <?=$this->getTrans('noEntrys') ?>
+    <?=$this->getTrans('noEntries') ?>
 <?php endif; ?>

@@ -80,7 +80,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('dummyUserName',$userMapper->getDummyUser()->getName());
+        $this->getView()->set('dummyUserName', $userMapper->getDummyUser()->getName());
         $this->getView()->set('userNames', $userNameCache);
         $this->getView()->set('shoutbox', $shoutboxEntries);
         $this->getView()->set('pagination', $pagination);
