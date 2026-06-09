@@ -14,6 +14,8 @@ return [
     'message' => 'Nachricht',
     'noEntries' => 'Keine Einträge vorhanden',
     'numberOfMessagesDisplayed' => 'Anzahl angezeigter Nachrichten',
+    'messagesPerPageAdmincenter' => 'Nachrichten pro Seite im Admincenter',
+    'messagesPerPage' => 'Nachrichten pro Seite',
     'maximumTextLength' => 'Maximale Textlänge',
     'settings' => 'Einstellungen',
     'answer' => 'Antworten',

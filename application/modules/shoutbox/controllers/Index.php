@@ -21,7 +21,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuShoutbox'), ['action' => 'index']);
 
-        $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
+        $pagination->setRowsPerPage($this->getConfig()->get('shoutbox_messagesPerPage') ?: $this->getConfig()->get('defaultPaginationObjects'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $shoutboxEntries = $shoutboxMapper->getEntriesBy([], ['id' => 'DESC'], $pagination);

@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'shoutbox',
-        'version' => '1.6.4',
+        'version' => '1.7.0',
         'icon_small' => 'fa-solid fa-bullhorn',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -55,6 +55,8 @@ class Config extends \Ilch\Config\Install
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->delete('shoutbox_limit')
+            ->delete('shoutbox_messagesPerPageAdmincenter')
+            ->delete('shoutbox_messagesPerPage')
             ->delete('shoutbox_maxtextlength')
             ->delete('shoutbox_writeaccess');
     }
@@ -100,6 +102,7 @@ class Config extends \Ilch\Config\Install
             case "1.6.1":
             case "1.6.2":
             case "1.6.3":
+                // no break
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

@@ -14,6 +14,8 @@ return [
     'message' => 'Message',
     'noEntries' => 'No entries exist',
     'numberOfMessagesDisplayed' => 'Number of messages displayed',
+    'messagesPerPageAdmincenter' => 'Messages per page in admincenter',
+    'messagesPerPage' => 'Messages per page',
     'maximumTextLength' => 'Maximum text length',
     'settings' => 'Settings',
     'answer' => 'Answer',

@@ -63,7 +63,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
+        $pagination->setRowsPerPage($this->getConfig()->get('shoutbox_messagesPerPageAdmincenter') ?: $this->getConfig()->get('defaultPaginationObjects'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $shoutboxEntries = $shoutboxMapper->getEntriesBy([], ['id' => 'DESC'], $pagination);
