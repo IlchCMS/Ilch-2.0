@@ -45,6 +45,8 @@ class Config extends \Ilch\Config\Install
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('shoutbox_limit', '5')
+            ->set('shoutbox_messagesPerPageAdmincenter', '20')
+            ->set('shoutbox_messagesPerPage', '20')
             ->set('shoutbox_maxtextlength', '50')
             ->set('shoutbox_writeaccess', '1,2');
     }
@@ -102,6 +104,10 @@ class Config extends \Ilch\Config\Install
             case "1.6.1":
             case "1.6.2":
             case "1.6.3":
+                // Add default values for new settings.
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('shoutbox_messagesPerPageAdmincenter', '20')
+                    ->set('shoutbox_messagesPerPage', '20');
                 // no break
         }
 
