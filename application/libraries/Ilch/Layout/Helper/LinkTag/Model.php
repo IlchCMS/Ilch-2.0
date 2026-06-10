@@ -17,11 +17,11 @@ use InvalidArgumentException;
  */
 class Model
 {
-    private const validReferrerPolicy = ['no-referrer', 'no-referrer-when-downgrade', 'origin', 'origin-when-cross-origin', 'same-origin', 'strict-origin', 'strict-origin-when-cross-origin', 'unsafe-url'];
-    private const validCrossOrigin = ['anonymous', 'use-credentials'];
-    private const validAs = ['audio', 'document', 'embed', 'fetch', 'font', 'image', 'object', 'script', 'style', 'track', 'video', 'worker'];
-    private const validBlocking = ['render'];
-    private const validFetchPriority = ['high', 'low', 'auto'];
+    private const VALID_REFERRER_POLICY = ['no-referrer', 'no-referrer-when-downgrade', 'origin', 'origin-when-cross-origin', 'same-origin', 'strict-origin', 'strict-origin-when-cross-origin', 'unsafe-url'];
+    private const VALID_CROSS_ORIGIN = ['anonymous', 'use-credentials'];
+    private const VALID_AS = ['audio', 'document', 'embed', 'fetch', 'font', 'image', 'object', 'script', 'style', 'track', 'video', 'worker'];
+    private const VALID_BLOCKING = ['render'];
+    private const VALID_FETCH_PRIORITY = ['high', 'low', 'auto'];
 
     /**
      * The href of the link tag.
@@ -222,7 +222,7 @@ class Model
      */
     public function setCrossorigin(string $crossorigin): Model
     {
-        if (!in_array(strtolower($crossorigin), self::validCrossOrigin)) {
+        if (!in_array(strtolower($crossorigin), self::VALID_CROSS_ORIGIN)) {
             throw new InvalidArgumentException('Invalid value for crossorigin.');
         }
 
@@ -388,7 +388,7 @@ class Model
      */
     public function setReferrerpolicy(string $referrerpolicy): Model
     {
-        if (!in_array(strtolower($referrerpolicy), self::validReferrerPolicy)) {
+        if (!in_array(strtolower($referrerpolicy), self::VALID_REFERRER_POLICY)) {
             throw new InvalidArgumentException('Invalid referrer policy.');
         }
 
@@ -492,7 +492,7 @@ class Model
      */
     public function setAs(string $as): Model
     {
-        if (!in_array(strtolower($as), self::validAs)) {
+        if (!in_array(strtolower($as), self::VALID_AS)) {
             throw new InvalidArgumentException('Invalid value for as.');
         }
 
@@ -520,7 +520,7 @@ class Model
      */
     public function setBlocking(string $blocking): Model
     {
-        if (!in_array(strtolower($blocking), self::validBlocking)) {
+        if (!in_array(strtolower($blocking), self::VALID_BLOCKING)) {
             throw new InvalidArgumentException('Invalid value for blocking.');
         }
 
@@ -596,7 +596,7 @@ class Model
      */
     public function setFetchpriority(string $fetchpriority): Model
     {
-        if (!in_array(strtolower($fetchpriority), self::validFetchPriority)) {
+        if (!in_array(strtolower($fetchpriority), self::VALID_FETCH_PRIORITY)) {
             throw new InvalidArgumentException('Invalid value for fetchpriority.');
         }
 
