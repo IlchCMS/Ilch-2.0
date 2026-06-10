@@ -267,7 +267,7 @@ function url_get_contents(string $url, bool $write_cache = true, bool $ignoreCac
             CURLOPT_URL            => $url,
         ]);
         $output = curl_exec($ch);
-        
+
         // Can be replaced with just "unset($ch);" if we no longer need to support PHP 8.0 or older.
         if (PHP_VERSION_ID >= 80000) {
             unset($ch);

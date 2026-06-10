@@ -375,7 +375,8 @@ class Frontend extends Base
             $boxKey = $moduleKey;
         }
 
-        if ($this->getAccessMapper()->hasAccess('Module', $moduleKey)
+        if (
+            $this->getAccessMapper()->hasAccess('Module', $moduleKey)
             || ($moduleKey == 'user' && $boxKey == 'login')
             || ($moduleKey == 'admin' && in_array($boxKey, ['layoutswitch', 'langswitch']))
         ) {

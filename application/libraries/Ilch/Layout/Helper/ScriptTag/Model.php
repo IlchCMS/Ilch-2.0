@@ -15,11 +15,11 @@ namespace Ilch\Layout\Helper\ScriptTag;
  */
 class Model
 {
-    private const validReferrerPolicy = ['no-referrer', 'no-referrer-when-downgrade', 'origin', 'origin-when-cross-origin', 'same-origin', 'strict-origin', 'strict-origin-when-cross-origin', 'unsafe-url'];
-    private const validCrossOrigin = ['anonymous', 'use-credentials'];
-    private const validBlocking = ['render'];
-    private const validFetchPriority = ['high', 'low', 'auto'];
-    private const validJavaScriptMIMEType = [
+    private const VALID_REFERRER_POLICY = ['no-referrer', 'no-referrer-when-downgrade', 'origin', 'origin-when-cross-origin', 'same-origin', 'strict-origin', 'strict-origin-when-cross-origin', 'unsafe-url'];
+    private const VALID_CROSS_ORIGIN = ['anonymous', 'use-credentials'];
+    private const VALID_BLOCKING = ['render'];
+    private const VALID_FETCH_PRIORITY = ['high', 'low', 'auto'];
+    private const VALID_JAVASCRIPT_MIME_TYPE = [
         'application/ecmascript',
         'application/javascript',
         'application/x-ecmascript',
@@ -290,7 +290,7 @@ class Model
      */
     public function setCrossorigin(string $crossorigin): Model
     {
-        if (!in_array(strtolower($crossorigin), self::validCrossOrigin)) {
+        if (!in_array(strtolower($crossorigin), self::VALID_CROSS_ORIGIN)) {
             throw new \InvalidArgumentException('Invalid value for crossorigin.');
         }
 
@@ -342,7 +342,7 @@ class Model
      */
     public function setReferrerpolicy(string $referrerpolicy): Model
     {
-        if (!in_array(strtolower($referrerpolicy), self::validReferrerPolicy)) {
+        if (!in_array(strtolower($referrerpolicy), self::VALID_REFERRER_POLICY)) {
             throw new \InvalidArgumentException('Invalid referrer policy.');
         }
 
@@ -369,7 +369,7 @@ class Model
      */
     public function setBlocking(string $blocking): Model
     {
-        if (!in_array(strtolower($blocking), self::validBlocking)) {
+        if (!in_array(strtolower($blocking), self::VALID_BLOCKING)) {
             throw new \InvalidArgumentException('Invalid value for blocking.');
         }
 
@@ -397,7 +397,7 @@ class Model
      */
     public function setFetchpriority(string $fetchpriority): Model
     {
-        if (!in_array(strtolower($fetchpriority), self::validFetchPriority)) {
+        if (!in_array(strtolower($fetchpriority), self::VALID_FETCH_PRIORITY)) {
             throw new \InvalidArgumentException('Invalid value for fetchpriority.');
         }
 
@@ -462,6 +462,6 @@ class Model
         }
 
         // If it has a valid JavaScript MIME type it's not a datablock.
-        return !in_array(strtolower($this->getType()), self::validJavaScriptMIMEType);
+        return !in_array(strtolower($this->getType()), self::VALID_JAVASCRIPT_MIME_TYPE);
     }
 }
