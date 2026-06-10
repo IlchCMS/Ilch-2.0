@@ -1,0 +1,44 @@
+name: PHPCS (changed files)
+
+on:
+  pull_request:
+    paths:
+      - '**.php'
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code (fetch all history)
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP and PHP_CodeSniffer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: phpcs
+
+      - name: Determine changed PHP files
+        id: changed
+        run: |
+          # ensure base/head refs exist for diff
+          git fetch origin ${{ github.event.pull_request.base.ref }}:refs/remotes/origin/${{ github.event.pull_request.base.ref }} || true
+          git fetch origin ${{ github.event.pull_request.head.ref }}:refs/remotes/origin/${{ github.event.pull_request.head.ref }} || true
+
+          # list added/modified PHP files between base..head (ignore deletions)
+          FILES=$(git diff --name-only --diff-filter=AM origin/${{ github.event.pull_request.base.ref }}..origin/${{ github.event.pull_request.head.ref }} -- '*.php' || true)
+
+          if [ -z "$FILES" ]; then
+            echo "files=" >> $GITHUB_OUTPUT
+          else
+            echo "files=$(echo $FILES | tr '\n' ' ')" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run PHPCS on changed files
+        if: steps.changed.outputs.files != ''
+        run: |
+          echo "Running PHPCS on: ${{ steps.changed.outputs.files }}"
+          # Choose the standard you prefer (PSR12 shown here)
+          phpcs -p --extensions=php ${{ steps.changed.outputs.files }}
