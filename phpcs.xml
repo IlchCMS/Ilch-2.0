@@ -8,6 +8,7 @@
 
     <exclude-pattern>./modules/layouts/</exclude-pattern>
     <exclude-pattern>./modules/**/views/*.php</exclude-pattern>
+    <exclude-pattern>./modules/shop/static/class/fpdf</exclude-pattern>
 
     <exclude-pattern>./application/libraries/Captcha</exclude-pattern>
     <exclude-pattern>./application/libraries/Thumb</exclude-pattern>
