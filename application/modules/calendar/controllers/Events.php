@@ -73,12 +73,10 @@ class Events extends \Ilch\Controller\Frontend
                 }
             }
 
-            if (!is_in_array($readAccess, explode(',', $calendar->getReadAccess())) or !$adminAccess) {
+            if (!$adminAccess && !is_in_array($readAccess, explode(',', $calendar->getReadAccess()))) {
                 $this->redirect()
                     ->withMessage('noCalendar', 'warning')
                     ->to(['controller' => 'index', 'action' => 'index']);
-
-                return;
             }
 
             $this->getLayout()->getTitle()
