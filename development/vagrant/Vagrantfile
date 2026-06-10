@@ -18,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 #  # Use this option if you want an extended VM
 #  config.vm.network "public_network"
 
-  config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+  config.vm.synced_folder ".", "/vagrant", type: "virtualbox", :mount_options => ["dmode=777", "fmode=777"]
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "Vagrant_Ilch2_debian12_php8_2"

@@ -7,6 +7,14 @@ on:
   pull_request:
     branches:
       - '**'
+    paths:
+      - '.github/workflows/*'
+      - 'admin/**'
+      - 'application/**'
+      - 'tests/**'
+      - '!tests/README.md'
+      - 'composer.json'
+      - 'index.php'
 
 jobs:
   run-ci:
