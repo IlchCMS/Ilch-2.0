@@ -38,7 +38,7 @@ Die Vagrant Box wird so konfiguriert, dass eine Verbindung von außen also beisp
 Der Port zur Verbindung ist dann 13306, funktioniert aber wohl erst nach einem *vagrant reload*
 
 ## PHPmyAdmin
-Um die Datenbanken einfach kontrollieren oder bearbeiten zu können, ist PHPmyAdmin vorkonfigugiert und ist unter der Adresse erreichbar:
+Um die Datenbanken einfach kontrollieren oder bearbeiten zu können, ist PHPmyAdmin vorkonfiguriert und ist unter der Adresse erreichbar:
 http://localhost:8080/phpmyadmin
 
 ## Mails (Mailhog)
@@ -59,22 +59,24 @@ was etwas mehr Komfort bieten sollte. Bei der Verwendung von putty sind die Para
 * alternativ zur Verwendung von Benutzer und Passwort kann auch ein Privatekey verwendet werden,
   wo sich dieser befindet kann mit __vagrant ssh-config__ geprüft werden und mithilfe von PuttyGen zu einem Putty Key umgewandelt werden
 
-Nachdem man sich eingeloggt hat, sollte man sich im Verzeichnis /vagrant befinden, was zum Root des Ilch-2.0 Verzeichnises
+Nachdem man sich eingeloggt hat, sollte man sich im Verzeichnis /vagrant befinden, was zum Root des Ilch-2.0 Verzeichnisses
 gelinkt ist.
 Falls man seine VM noch umkonfigurieren will, sind dazu ggf. root Rechte notwendig, dazu kann sudo verwendet werden.
 
 ### PHP CodeSniffer (phpcs)
 Der CodeSniffer kann verwendet werden, um Verstöße gegen den CodingStandard zu suchen.
 
-Da das Scannen aller Dateien sehr lange dauern kann, empfielt es sich auch der Übersichtlichkeit halber, nur einzelne Dateien zu scannen.
+Da das Scannen aller Dateien sehr lange dauern kann, empfiehlt es sich auch der Übersichtlichkeit halber, nur einzelne Dateien zu scannen.
 phpcs auf der VM verwendet (durch die phpcs.xml) dabei als Standard automatisch PSR12. 
 
-Beispiel:
+Beispiele:
 ```
 phpcs ./application/libraries/Ilch/Date.php
+
+phpcs --report-full ./application/libraries/Ilch/Date.php
 ```
 
-Siehe auch die Dokumentation zu PHP CodeSniffer: [Dokumentation auf github.com/squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/wiki)
+Siehe auch die Dokumentation zu PHP CodeSniffer: [Dokumentation auf github.com/PHPCSStandards/PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer/wiki)
 ### PHP Code Beautifier and Fixer (phpcbf)
 Der Code Beautifier and Fixer kann verwendet werden, um Verstöße gegen den CodingStandard zu suchen und automatisch zu beheben.
 
@@ -98,9 +100,15 @@ phpcsfix ./application/libraries/Ilch/Date.php
 php-cs-fixer fix ./application/libraries/Ilch/Date.php --level=psr12
 ```
 
+Durch Angabe von "check" lässt sich auch nur die angegebene Datei überprüfen.
+
+Beispiel:
+```
+php-cs-fixer check ./application/libraries/Ilch/Date.php
+```
 ### PHP Compatibility Coding Standard for PHP CodeSniffer (phpcs)
 Dies ist eine Sammlung von "sniffs" für PHP CodeSniffer die auf PHP-Kompatibilität prüfen. Dies kann genutzt werden um den Code auf Kompatibilität mit höheren oder niedrigeren Versionen von PHP zu prüfen.
-Da das Scannen aller Dateien sehr lange dauern kann, empfielt es sich auch der Übersichtlichkeit halber, z.B. nur einzelne Module zu scannen.
+Da das Scannen aller Dateien sehr lange dauern kann, empfiehlt es sich auch der Übersichtlichkeit halber, z.B. nur einzelne Module zu scannen.
 
 Beispiele:
 ```
@@ -130,13 +138,13 @@ phpcs ./* --standard=PHPCompatibility --runtime-set testVersion 7.4- --report-fi
 phpcs --extensions=php ./application/* ./admin/* ./build/* ./tests/* --standard=PHPCompatibility --runtime-set testVersion 7.4- --report-file=/home/vagrant/output.txt --report-full=/home/vagrant/full.txt --report-summary=/home/vagrant/summary.txt
 ```
 
-Siehe auch die Dokumentation zu PHP CodeSniffer: [Dokumentation auf github.com/squizlabs/PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/wiki)
+Siehe auch die Dokumentation zu PHP CodeSniffer: [Dokumentation auf github.com/PHPCSStandards/PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer/wiki)
 Siehe auch die Readme des Projekts: [Readme auf github.com/PHPCompatibility/PHPCompatibility](https://github.com/PHPCompatibility/PHPCompatibility/blob/develop/README.md)
 
 Sinnvolle Prüfungen wären:
-* Ein Modul gibt eine Kompatibilität ab Version 7.0 an. Es empfielt sich dieses Modul durch Angabe von "--runtime-set testVersion 7.0-" auf Kompatibilität mit PHP 7.0 zu prüfen.
-* Ilch soll mit einer bestimmten Version PHP 7.3 und neuer unterstützen. Es empfielt sich durch Angabe von "--runtime-set testVersion 7.3-" auf Kompatibilität mit PHP 7.3 und neuer zu prüfen.
-* Es steht die Veröffentlichung von PHP 8.1 an. Es empfielt sich durch Angabe von "--runtime-set testVersion 8.1" auf Kompatibilität mit PHP 8.1 zu prüfen.
+* Ein Modul gibt eine Kompatibilität ab Version 7.0 an. Es empfiehlt sich dieses Modul durch Angabe von "--runtime-set testVersion 7.0-" auf Kompatibilität mit PHP 7.0 zu prüfen.
+* Ilch soll mit einer bestimmten Version PHP 7.3 und neuer unterstützen. Es empfiehlt sich durch Angabe von "--runtime-set testVersion 7.3-" auf Kompatibilität mit PHP 7.3 und neuer zu prüfen.
+* Es steht die Veröffentlichung von PHP 8.1 an. Es empfiehlt sich durch Angabe von "--runtime-set testVersion 8.1" auf Kompatibilität mit PHP 8.1 zu prüfen.
 
 ### PHPUnit (phpunit)
 Die Verwendung von phpunit wird in der tests/README.md beschrieben.
