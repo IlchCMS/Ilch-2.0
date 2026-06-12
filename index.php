@@ -25,13 +25,13 @@ session_set_cookie_params([
     'samesite' => 'Lax',
     'secure' => ISHTTPSPAGE,
     'httponly' => true,
-]
+]);
 session_start();
 header('Content-Type: text/html; charset=utf-8');
 $serverTimeZone = @date_default_timezone_get();
 date_default_timezone_set('UTC');
 
-define('VERSION', '2.2.16');
+define('VERSION', '2.2.17');
 define('SERVER_TIMEZONE', $serverTimeZone);
 define('DEFAULT_MODULE', 'page');
 define('DEFAULT_LAYOUT', 'index');
