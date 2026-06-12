@@ -1,12 +1,12 @@
-name: PHPCompatibility (changed files)
+name: PHP Quality Checks (changed files)
 
 on:
   pull_request:
     paths:
-      - '**.php'
+      - '**/*.php'
 
 jobs:
-  phpcompat:
+  php-quality:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code (fetch all history)
@@ -14,11 +14,18 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup PHP
+      - name: Cache Composer vendor
+        uses: actions/cache@v5
+        with:
+          path: vendor
+          key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - name: Setup PHP (composer + tools)
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-          tools: composer
+          tools: composer,phpcs,phplint
 
       - name: Install Composer dependencies (including PHPCompatibility)
         run: |
@@ -42,9 +49,21 @@ jobs:
             echo "files=$(echo $FILES | tr '\n' ' ')" >> $GITHUB_OUTPUT
           fi
 
-      - name: Run PHPCompatibility on changed files
+      - name: Run PHPLint on changed files
+        if: steps.changed.outputs.files != ''
+        run: |
+          echo "Running phplint on: ${{ steps.changed.outputs.files }}"
+          set -e
+          phplint ${{ steps.changed.outputs.files }}
+
+      - name: Run PHPCS on changed files
+        if: steps.changed.outputs.files != ''
+        run: |
+          echo "Running phpcs on: ${{ steps.changed.outputs.files }}"
+          phpcs -p --extensions=php ${{ steps.changed.outputs.files }}
+
+      - name: Run PHPCompatibility (phpcs standard) on changed files
         if: steps.changed.outputs.files != ''
         run: |
           echo "Running PHPCompatibility on: ${{ steps.changed.outputs.files }}"
-          # adjust testVersion to the target PHP versions (example: 7.4- means test for 7.4+)
           vendor/bin/phpcs -p --standard=PHPCompatibility --runtime-set testVersion 7.4- --extensions=php ${{ steps.changed.outputs.files }}
