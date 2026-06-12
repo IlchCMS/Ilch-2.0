@@ -25,7 +25,7 @@ session_set_cookie_params([
     'samesite' => 'Lax',
     'secure' => ISHTTPSPAGE,
     'httponly' => true,
-]);
+]
 session_start();
 header('Content-Type: text/html; charset=utf-8');
 $serverTimeZone = @date_default_timezone_get();
