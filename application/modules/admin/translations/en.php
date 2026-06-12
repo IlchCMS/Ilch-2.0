@@ -167,6 +167,8 @@ return [
     'menuLayout' => 'Layout',
     'menuLayouts' => 'Layouts',
     'menuSettings' => 'Settings',
+    'debugModus' => 'Debug mode',
+    'debugModusInfo' => 'Shows PHP errors and the debug bar. Enable only for development, turn it off on live sites.',
     'menuMaintenance' => 'Maintenance',
     'menuBackup' => 'Database backup',
     'createBackupInfoText' => '<p>Enable "Add CREATE DATABASE statement" to create the database with the previous name on import.

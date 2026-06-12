@@ -288,6 +288,21 @@
             </div>
         </div>
     </div>
+    <div id="debugModus" class="row mb-3">
+        <div class="col-xl-2 col-form-label">
+            <?= $this->getTrans('debugModus') ?>:
+        </div>
+        <div class="col-xl-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="debugModus-on" name="debugModus" value="1" <?= $this->get('debugModus') ? 'checked="checked"' : '' ?> />
+                <label for="debugModus-on" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="debugModus-off" name="debugModus" value="0" <?= !$this->get('debugModus') ? 'checked="checked"' : '' ?> />
+                <label for="debugModus-off" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+            <small class="form-text text-muted"><?= $this->getTrans('debugModusInfo') ?></small>
+        </div>
+    </div>
 
     <h1><?= $this->getTrans('updateserver') ?></h1>
     <div class="table-responsive">

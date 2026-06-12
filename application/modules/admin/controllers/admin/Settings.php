@@ -117,7 +117,8 @@ class Settings extends \Ilch\Controller\Admin
                 'hmenuFixed' => 'required|numeric|integer|min:0|max:1',
                 'htmlPurifier' => 'required|numeric|integer|min:0|max:1',
                 'updateserver' => 'required|url',
-                'captcha' => 'required|numeric|integer|min:0|max:3'
+                'captcha' => 'required|numeric|integer|min:0|max:3',
+                'debugModus' => 'required|numeric|integer|min:0|max:1'
             ];
 
             if ((int)$this->getRequest()->getPost('captcha') >= 1) {
@@ -147,6 +148,9 @@ class Settings extends \Ilch\Controller\Admin
                 }
                 $this->getConfig()->set('disable_purifier', !$this->getRequest()->getPost('htmlPurifier'));
                 $this->getConfig()->set('updateserver', $this->getRequest()->getPost('updateserver'));
+                // debugModus lives in the file config (application/config.php), because index.php
+                // reads it before the database is available.
+                $this->setDebugModus((bool) $this->getRequest()->getPost('debugModus'));
 
                 $this->addMessage('saveSuccess');
             } else {
@@ -179,6 +183,33 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('groupList', $groupMapper->getGroupList());
         $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'));
         $this->getView()->set('updateservers', $updateserversMapper->getUpdateservers());
+        $this->getView()->set('debugModus', $this->getDebugModus());
+    }
+
+    /**
+     * Reads the debugModus flag from the file config (application/config.php).
+     *
+     * @return bool
+     */
+    private function getDebugModus(): bool
+    {
+        $fileConfig = new \Ilch\Config\File();
+        $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
+
+        return (bool) $fileConfig->get('debugModus');
+    }
+
+    /**
+     * Writes the debugModus flag to the file config, keeping all other entries intact.
+     *
+     * @param bool $debugModus
+     */
+    private function setDebugModus(bool $debugModus): void
+    {
+        $fileConfig = new \Ilch\Config\File();
+        $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
+        $fileConfig->set('debugModus', $debugModus);
+        $fileConfig->saveConfigToFile(CONFIG_PATH . '/config.php');
     }
 
     public function maintenanceAction()

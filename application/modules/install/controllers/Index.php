@@ -414,6 +414,9 @@ class Index extends \Ilch\Controller\Frontend
                 $fileConfig->set('dbPassword', $_SESSION['install']['dbPassword']);
                 $fileConfig->set('dbName', $_SESSION['install']['dbName']);
                 $fileConfig->set('dbPrefix', $_SESSION['install']['dbPrefix']);
+                // Default to off so a fresh production install does not expose errors or the DebugBar.
+                // Can be toggled afterwards in the admin settings.
+                $fileConfig->set('debugModus', false);
                 $fileConfig->saveConfigToFile(CONFIG_PATH . '/config.php');
 
                 // Initialize install database.
