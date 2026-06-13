@@ -300,7 +300,7 @@
                 <label for="debugModus-off" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
-            <small class="form-text text-muted"><?= $this->getTrans('debugModusInfo') ?></small>
+            <div class="form-text" style="clear: both;"><?= $this->getTrans('debugModusInfo') ?></div>
         </div>
     </div>
 
