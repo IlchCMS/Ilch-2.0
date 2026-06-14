@@ -57,7 +57,9 @@ class File
     /**
      * Saves the whole config in a file.
      *
-     * @param string $fileName
+     * @param  string $fileName
+     * @return bool   true on success, false if the file could not be written
+     *                (e.g. missing write permissions on the config file).
      */
     public function saveConfigToFile($fileName)
     {
@@ -66,6 +68,7 @@ class File
         $fileString .= '$config = ' . var_export_short_syntax($this->configData) . ';';
         $fileString .= "\n";
         $fileString .= '';
-        file_put_contents($fileName, $fileString);
+
+        return file_put_contents($fileName, $fileString) !== false;
     }
 }

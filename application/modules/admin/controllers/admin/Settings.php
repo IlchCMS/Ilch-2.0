@@ -117,7 +117,8 @@ class Settings extends \Ilch\Controller\Admin
                 'hmenuFixed' => 'required|numeric|integer|min:0|max:1',
                 'htmlPurifier' => 'required|numeric|integer|min:0|max:1',
                 'updateserver' => 'required|url',
-                'captcha' => 'required|numeric|integer|min:0|max:3'
+                'captcha' => 'required|numeric|integer|min:0|max:3',
+                'debugModus' => 'required|numeric|integer|min:0|max:1'
             ];
 
             if ((int)$this->getRequest()->getPost('captcha') >= 1) {
@@ -147,6 +148,13 @@ class Settings extends \Ilch\Controller\Admin
                 }
                 $this->getConfig()->set('disable_purifier', !$this->getRequest()->getPost('htmlPurifier'));
                 $this->getConfig()->set('updateserver', $this->getRequest()->getPost('updateserver'));
+                // debugModus lives in the file config (application/config.php), because index.php
+                // reads it before the database is available.
+                if (!$this->setDebugModus((bool) $this->getRequest()->getPost('debugModus'))) {
+                    // The file config could not be written (e.g. missing write permissions),
+                    // so the toggle would silently have no effect without this warning.
+                    $this->addMessage('debugModusSaveError', 'danger');
+                }
 
                 $this->addMessage('saveSuccess');
             } else {
@@ -179,6 +187,35 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('groupList', $groupMapper->getGroupList());
         $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'));
         $this->getView()->set('updateservers', $updateserversMapper->getUpdateservers());
+        $this->getView()->set('debugModus', $this->getDebugModus());
+    }
+
+    /**
+     * Reads the debugModus flag from the file config (application/config.php).
+     *
+     * @return bool
+     */
+    private function getDebugModus(): bool
+    {
+        $fileConfig = new \Ilch\Config\File();
+        $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
+
+        return (bool) $fileConfig->get('debugModus');
+    }
+
+    /**
+     * Writes the debugModus flag to the file config, keeping all other entries intact.
+     *
+     * @param  bool $debugModus
+     * @return bool true on success, false if the config file could not be written.
+     */
+    private function setDebugModus(bool $debugModus): bool
+    {
+        $fileConfig = new \Ilch\Config\File();
+        $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
+        $fileConfig->set('debugModus', $debugModus);
+
+        return $fileConfig->saveConfigToFile(CONFIG_PATH . '/config.php');
     }
 
     public function maintenanceAction()

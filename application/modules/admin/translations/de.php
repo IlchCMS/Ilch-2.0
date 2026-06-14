@@ -167,6 +167,9 @@ return [
     'menuLayout' => 'Layout',
     'menuLayouts' => 'Layouts',
     'menuSettings' => 'Einstellungen',
+    'debugModus' => 'Debug-Modus',
+    'debugModusInfo' => 'Zeigt PHP-Fehler und die Debug-Leiste an. Nur für die Entwicklung aktivieren, im Live-Betrieb ausschalten.',
+    'debugModusSaveError' => 'Der Debug-Modus konnte nicht gespeichert werden. Bitte die Schreibrechte der Datei application/config.php prüfen.',
     'menuMaintenance' => 'Wartungsarbeiten',
     'menuBackup' => 'Datenbank-Backup',
     'createBackupInfoText' => '<p>"CREATE DATABASE-Befehl hinzufügen" möchte man aktiviert haben, wenn beim Import die Datenbank mit gleicher Bezeichnung erstellt werden soll.
