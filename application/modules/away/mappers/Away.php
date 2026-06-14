@@ -64,7 +64,7 @@ class Away extends \Ilch\Mapper
 
     public function existsTable($table): bool
     {
-        return $this->db()->ifTableExists('[prefix]_'.$table);
+        return $this->db()->ifTableExists('[prefix]_' . $table);
     }
 
     /**
