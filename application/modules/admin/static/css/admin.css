@@ -349,6 +349,7 @@ aside nav ul .active > a {
     border: 1px solid #ccc !important;
     border-radius: 0;
     margin: 4px;
+    width: auto;
 }
 
 ul > .heading {
@@ -1020,7 +1021,7 @@ table tbody i.fa.fa-sort {
         border-right: 1px solid silver;
     }
     header .rightbar .navbar-nav.navbar-right > li:last-of-type {
-        padding-right: 0;
+        padding-right: 10px;
         border-right: 0;
     }
     header .rightbar li > #search-header {
