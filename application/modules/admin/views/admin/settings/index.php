@@ -170,6 +170,21 @@
                    value="<?= $this->escape($this->get('defaultPaginationObjects')) ?>" />
         </div>
     </div>
+    <div id="debugModus" class="row mb-3">
+        <div class="col-xl-2 col-form-label">
+            <?= $this->getTrans('debugModus') ?>:
+        </div>
+        <div class="col-xl-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="debugModus-on" name="debugModus" value="1" <?= $this->get('debugModus') ? 'checked="checked"' : '' ?> />
+                <label for="debugModus-on" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" id="debugModus-off" name="debugModus" value="0" <?= !$this->get('debugModus') ? 'checked="checked"' : '' ?> />
+                <label for="debugModus-off" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+            <div class="form-text" style="clear: both;"><?= $this->getTrans('debugModusInfo') ?></div>
+        </div>
+    </div>
 
     <h1><?= $this->getTrans('captcha') ?></h1>
     <div class="row mb-3">
@@ -286,21 +301,6 @@
                 <label for="hmenuFixed-off" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
-        </div>
-    </div>
-    <div id="debugModus" class="row mb-3">
-        <div class="col-xl-2 col-form-label">
-            <?= $this->getTrans('debugModus') ?>:
-        </div>
-        <div class="col-xl-4">
-            <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="debugModus-on" name="debugModus" value="1" <?= $this->get('debugModus') ? 'checked="checked"' : '' ?> />
-                <label for="debugModus-on" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="debugModus-off" name="debugModus" value="0" <?= !$this->get('debugModus') ? 'checked="checked"' : '' ?> />
-                <label for="debugModus-off" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('off') ?></label>
-                <span class="flipswitch-selection"></span>
-            </div>
-            <div class="form-text" style="clear: both;"><?= $this->getTrans('debugModusInfo') ?></div>
         </div>
     </div>
 
