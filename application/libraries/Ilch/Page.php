@@ -94,7 +94,7 @@ class Page
 
         if (($this->fileConfig->get('dbUser')) !== null) {
             // Cms is installed
-            // Note: debug mode (error display + DebugBar) is determined centrally in index.php
+            // Note: debug mode (PHP error display) is determined centrally in index.php
             // from the "debugModus" config key, so no error_reporting handling is needed here.
             $dbFactory = new Database\Factory();
             $db = $dbFactory->getInstanceByConfig($this->fileConfig);

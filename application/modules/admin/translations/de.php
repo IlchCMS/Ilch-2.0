@@ -168,7 +168,7 @@ return [
     'menuLayouts' => 'Layouts',
     'menuSettings' => 'Einstellungen',
     'debugModus' => 'Debug-Modus',
-    'debugModusInfo' => 'Zeigt PHP-Fehler und die Debug-Leiste an. Nur für die Entwicklung aktivieren, im Live-Betrieb ausschalten.',
+    'debugModusInfo' => 'Zeigt PHP-Fehlermeldungen an. Nur für die Entwicklung aktivieren, im Live-Betrieb ausschalten.',
     'debugModusSaveError' => 'Der Debug-Modus konnte nicht gespeichert werden. Bitte die Schreibrechte der Datei application/config.php prüfen.',
     'menuMaintenance' => 'Wartungsarbeiten',
     'menuBackup' => 'Datenbank-Backup',

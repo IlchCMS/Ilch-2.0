@@ -168,7 +168,7 @@ return [
     'menuLayouts' => 'Layouts',
     'menuSettings' => 'Settings',
     'debugModus' => 'Debug mode',
-    'debugModusInfo' => 'Shows PHP errors and the debug bar. Enable only for development, turn it off on live sites.',
+    'debugModusInfo' => 'Shows PHP error messages. Enable only for development, turn it off on live sites.',
     'debugModusSaveError' => 'The debug mode could not be saved. Please check the write permissions of the file application/config.php.',
     'menuMaintenance' => 'Maintenance',
     'menuBackup' => 'Database backup',

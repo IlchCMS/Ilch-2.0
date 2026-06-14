@@ -11,8 +11,8 @@ if (!version_compare(PHP_VERSION, PHPVERSION, '>=')) {
 }
 
 // Determine debug mode from the file config (application/config.php).
-// This single setting controls both the PHP error display and the DebugBar.
-// Defaults to off when the key is absent, so production stays quiet by default.
+// This setting controls the PHP error display (and, only in the developer version of Ilch,
+// the DebugBar). Defaults to off when the key is absent, so production stays quiet by default.
 $debugMode = false;
 $configFile = __DIR__ . '/application/config.php';
 if (file_exists($configFile)) {

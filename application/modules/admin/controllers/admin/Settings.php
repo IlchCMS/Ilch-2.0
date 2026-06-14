@@ -150,13 +150,13 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('updateserver', $this->getRequest()->getPost('updateserver'));
                 // debugModus lives in the file config (application/config.php), because index.php
                 // reads it before the database is available.
-                if (!$this->setDebugModus((bool) $this->getRequest()->getPost('debugModus'))) {
+                if ($this->setDebugModus((bool) $this->getRequest()->getPost('debugModus'))) {
+                    $this->addMessage('saveSuccess');
+                } else {
                     // The file config could not be written (e.g. missing write permissions),
                     // so the toggle would silently have no effect without this warning.
                     $this->addMessage('debugModusSaveError', 'danger');
                 }
-
-                $this->addMessage('saveSuccess');
             } else {
                 $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
