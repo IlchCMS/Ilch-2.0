@@ -10,8 +10,26 @@ if (!version_compare(PHP_VERSION, PHPVERSION, '>=')) {
     die('Ilch CMS 2 needs at least php version ' . PHPVERSION);
 }
 
-@ini_set('display_errors', 'on');
-error_reporting(E_ALL);
+// Determine debug mode from the file config (application/config.php).
+// This setting controls the PHP error display (and, only in the developer version of Ilch,
+// the DebugBar). Defaults to off when the key is absent, so production stays quiet by default.
+$debugMode = false;
+$configFile = __DIR__ . '/application/config.php';
+if (file_exists($configFile)) {
+    require $configFile;
+    if (!empty($config['debugModus'])) {
+        $debugMode = (bool) $config['debugModus'];
+    }
+    unset($config);
+}
+
+if ($debugMode) {
+    @ini_set('display_errors', 'on');
+    error_reporting(E_ALL);
+} else {
+    @ini_set('display_errors', 'off');
+    error_reporting(0);
+}
 
 $isHttps = $_SERVER['HTTPS'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? null;
 $isHttps = $isHttps && (strcasecmp('on', $isHttps) == 0 || strcasecmp('https', $isHttps) == 0);
@@ -35,7 +53,7 @@ define('VERSION', '2.2.17');
 define('SERVER_TIMEZONE', $serverTimeZone);
 define('DEFAULT_MODULE', 'page');
 define('DEFAULT_LAYOUT', 'index');
-define('DEBUG_MODE', true);
+define('DEBUG_MODE', $debugMode);
 
 // Path could not be under root.
 define('ROOT_PATH', __DIR__);
