@@ -844,12 +844,15 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
 }
 
 #ilch_dropdown .list-group-horizontal .list-group-item {
-    display: inline-flex;
     background: none;
     margin-bottom: 0;
     margin-left: 0;
     margin-right: 0;
     border: none;
+}
+
+.list-group-item i, .list-group-item img {
+    margin-right: 5px;
 }
 
 #ilch_dropdown .list-group-item:hover, .list-group-item {

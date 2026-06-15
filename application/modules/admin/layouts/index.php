@@ -125,7 +125,7 @@ $accesses = $this->get('accesses');
 <!-- HEADER -->
 <header id="header">
     <!-- TOP NAVBAR -->
-    <nav class="navbar navbar-expand-lg topnavbar navbar-light bg-light" style="padding:0px;">
+    <nav class="navbar navbar-expand-lg topnavbar navbar-light bg-light">
         <!-- TOP NAVBAR LEFT -->
         <div class="navbar-header leftbar">
             <?php if ($this->hasSidebar()) : ?>
@@ -171,9 +171,9 @@ $accesses = $this->get('accesses');
                     if ($user->hasAccess('module_' . $module->getKey()) || ($module->getKey() == 'article' && ($accesses && $accesses->hasAccess('Admin', null, $accesses::TYPE_ARTICLE)))) {
                         $content = $module->getContentForLocale($this->getTranslator()->getLocale());
                         if (strncmp($module->getIconSmall(), 'fa-', 3) === 0) {
-                            $smallIcon = '<i class="fa ' . $module->getIconSmall() . '" style="padding-right: 5px;"></i>';
+                            $smallIcon = '<i class="fa ' . $module->getIconSmall() . '"></i>';
                         } else {
-                            $smallIcon = '<img style="padding-right: 5px;" src="' . $this->getStaticUrl('../application/modules/' . $module->getKey() . '/config/' . $module->getIconSmall()) . '" />';
+                            $smallIcon = '<img src="' . $this->getStaticUrl('../application/modules/' . $module->getKey() . '/config/' . $module->getIconSmall()) . '" />';
                         }
 
                         if ($accesses && ($accesses->hasAccess('Admin_' . $module->getKey(), $module->getKey()))) {
