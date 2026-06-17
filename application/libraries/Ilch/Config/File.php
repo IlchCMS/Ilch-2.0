@@ -41,9 +41,10 @@ class File
      *
      * @param string $fileName
      */
-    public function loadConfigFromFile($fileName)
+    public function loadConfigFromFile(string $fileName)
     {
         if (file_exists($fileName)) {
+            opcache_invalidate($fileName);
             require $fileName;
         }
 
@@ -57,11 +58,11 @@ class File
     /**
      * Saves the whole config in a file.
      *
-     * @param  string $fileName
+     * @param string $fileName
      * @return bool   true on success, false if the file could not be written
      *                (e.g. missing write permissions on the config file).
      */
-    public function saveConfigToFile($fileName)
+    public function saveConfigToFile(string $fileName): bool
     {
         $fileString = '<?php';
         $fileString .= "\n";
