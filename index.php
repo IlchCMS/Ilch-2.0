@@ -26,9 +26,6 @@ if (file_exists($configFile)) {
 if ($debugMode) {
     @ini_set('display_errors', 'on');
     error_reporting(E_ALL);
-} else {
-    @ini_set('display_errors', 'off');
-    error_reporting(0);
 }
 
 $isHttps = $_SERVER['HTTPS'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? null;
