@@ -44,7 +44,7 @@ class File
     public function loadConfigFromFile(string $fileName)
     {
         if (file_exists($fileName)) {
-            opcache_invalidate($fileName);
+            invalidateOpcache($fileName);
             require $fileName;
         }
 
