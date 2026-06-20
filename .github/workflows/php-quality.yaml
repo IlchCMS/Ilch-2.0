@@ -24,7 +24,7 @@ jobs:
       - name: Setup PHP (composer + tools)
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.1'
           tools: composer,phpcs,phplint
 
       - name: Install Composer dependencies (including PHPCompatibility)
@@ -70,4 +70,4 @@ jobs:
         if: steps.changed.outputs.files != ''
         run: |
           echo "Running PHPCompatibility on: ${{ steps.changed.outputs.files }}"
-          vendor/bin/phpcs -p --standard=PHPCompatibility --runtime-set testVersion 7.4- --extensions=php ${{ steps.changed.outputs.files }}
+          vendor/bin/phpcs -p --standard=PHPCompatibility --runtime-set testVersion 8.1- --extensions=php ${{ steps.changed.outputs.files }}

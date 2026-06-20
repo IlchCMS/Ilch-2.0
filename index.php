@@ -5,7 +5,7 @@
  * @package ilch
  */
 
-define('PHPVERSION', '7.4');
+define('PHPVERSION', '8.1');
 if (!version_compare(PHP_VERSION, PHPVERSION, '>=')) {
     die('Ilch CMS 2 needs at least php version ' . PHPVERSION);
 }

@@ -12,7 +12,7 @@ class PhpunitDataset extends DatabaseTestCase
 {
     public function __construct($db)
     {
-        parent::__construct();
+        parent::__construct("");
         $this->db = $db;
     }
 

@@ -740,13 +740,13 @@ class Thumbnail
     public function __destruct()
     {
         if (is_resource($this->im)) {
-            $this->deprecatedImageDestroy($this->im);
+            unset($this->im);
         }
         if (is_resource($this->thumb)) {
-            $this->deprecatedImageDestroy($this->thumb);
+            unset($this->thumb);
         }
         if (is_resource($this->newimage)) {
-            $this->deprecatedImageDestroy($this->newimage);
+            unset($this->newimage);
         }
     }
 
@@ -1143,8 +1143,8 @@ class Thumbnail
         if ($this->Chmodlevel != '') {
             chmod($this->Thumblocation . $this->Thumbprefix . basename($this->image), octdec($this->Chmodlevel));
         }
-        $this->deprecatedImageDestroy($this->im);
-        $this->deprecatedImageDestroy($this->thumb);
+        unset($this->im);
+        unset($this->thumb);
     }
 
     /**
@@ -1167,8 +1167,8 @@ class Thumbnail
                 imagepng($this->thumb);
                 break;
         }
-        $this->deprecatedImageDestroy($this->im);
-        $this->deprecatedImageDestroy($this->thumb);
+        unset($this->im);
+        unset($this->thumb);
         exit;
     }
 
@@ -1188,7 +1188,7 @@ class Thumbnail
             $this->newimage = imagecreatefrompng($this->Watermarkpng);
             $wpos = explode(' ', str_replace('%', '', $this->Watermarkposition));
             imagecopymerge($this->im, $this->newimage, min(max(imagesx($this->im) * ($wpos[0] / 100) - 0.5 * imagesx($this->newimage), 0), imagesx($this->im) - imagesx($this->newimage)), min(max(imagesy($this->im) * ($wpos[1] / 100) - 0.5 * imagesy($this->newimage), 0), imagesy($this->im) - imagesy($this->newimage)), 0, 0, imagesx($this->newimage), imagesy($this->newimage), intval($this->Watermarktransparency));
-            $this->deprecatedImageDestroy($this->newimage);
+            unset($this->newimage);
         }
     }
 
@@ -1292,32 +1292,17 @@ class Thumbnail
             $random3 = 1;
             $random4 = 1;
         }
-        if (version_compare(PHP_VERSION, '8.1.0', '>=')) {
-            if ($this->Clipcorner[3] && $random1) {
-                imagefilledpolygon($this->im, $points_tl, $bgcolor);
-            }
-            if ($this->Clipcorner[4] && $random2) {
-                imagefilledpolygon($this->im, $points_bl, $bgcolor);
-            }
-            if ($this->Clipcorner[5] && $random3) {
-                imagefilledpolygon($this->im, $points_tr, $bgcolor);
-            }
-            if ($this->Clipcorner[6] && $random4) {
-                imagefilledpolygon($this->im, $points_br, $bgcolor);
-            }
-        } else {
-            if ($this->Clipcorner[3] && $random1) {
-                imagefilledpolygon($this->im, $points_tl, count($points_tl) / 2, $bgcolor);
-            }
-            if ($this->Clipcorner[4] && $random2) {
-                imagefilledpolygon($this->im, $points_bl, count($points_bl) / 2, $bgcolor);
-            }
-            if ($this->Clipcorner[5] && $random3) {
-                imagefilledpolygon($this->im, $points_tr, count($points_tr) / 2, $bgcolor);
-            }
-            if ($this->Clipcorner[6] && $random4) {
-                imagefilledpolygon($this->im, $points_br, count($points_br) / 2, $bgcolor);
-            }
+        if ($this->Clipcorner[3] && $random1) {
+            imagefilledpolygon($this->im, $points_tl, $bgcolor);
+        }
+        if ($this->Clipcorner[4] && $random2) {
+            imagefilledpolygon($this->im, $points_bl, $bgcolor);
+        }
+        if ($this->Clipcorner[5] && $random3) {
+            imagefilledpolygon($this->im, $points_tr, $bgcolor);
+        }
+        if ($this->Clipcorner[6] && $random4) {
+            imagefilledpolygon($this->im, $points_br, $bgcolor);
         }
     }
 
@@ -1354,7 +1339,7 @@ class Thumbnail
         if (file_exists($this->Borderpng)) {
             $borderim = imagecreatefrompng($this->Borderpng);
             imagecopyresampled($this->thumb, $borderim, $this->bind_offset, 0, 0, 0, $this->thumbx - $this->shadow_offset - $this->bind_offset, $this->thumby - $this->shadow_offset, imagesx($borderim), imagesy($borderim));
-            $this->deprecatedImageDestroy($borderim);
+            unset($borderim);
         }
     }
 
@@ -1509,10 +1494,10 @@ class Thumbnail
                     }
                 }
             }
-            $this->deprecatedImageDestroy($this->im);
+            unset($this->im);
             $this->im = imagecreatetruecolor(imagesx($this->newimage), imagesy($this->newimage));
             imagecopy($this->im, $this->newimage, 0, 0, 0, 0, imagesx($this->newimage), imagesy($this->newimage));
-            $this->deprecatedImageDestroy($this->newimage);
+            unset($this->newimage);
             $this->size[0] = imagesx($this->im);
             $this->size[1] = imagesy($this->im);
         }
@@ -1567,10 +1552,10 @@ class Thumbnail
                 }
             }
         }
-        $this->deprecatedImageDestroy($this->im);
+        unset($this->im);
         $this->im = imagecreatetruecolor(imagesx($this->newimage), imagesy($this->newimage));
         imagecopy($this->im, $this->newimage, 0, 0, 0, 0, imagesx($this->newimage), imagesy($this->newimage));
-        $this->deprecatedImageDestroy($this->newimage);
+        unset($this->newimage);
         $this->size[0] = imagesx($this->im);
         $this->size[1] = imagesy($this->im);
     }
@@ -1620,10 +1605,10 @@ class Thumbnail
             imagefilledrectangle($this->newimage, 0, 0, imagesx($this->newimage), imagesy($this->newimage), imagecolorallocate($this->newimage, hexdec(substr($this->Polaroidframecolor, 1, 2)), hexdec(substr($this->Polaroidframecolor, 3, 2)), hexdec(substr($this->Polaroidframecolor, 5, 2))));
         }
         imagecopy($this->newimage, $this->im, 0, 0, $crop2, $crop4, $this->size[0] - $crop2 - $crop3, $this->size[1] - $crop4 - $crop5);
-        $this->deprecatedImageDestroy($this->im);
+        unset($this->im);
         $this->im = imagecreatetruecolor(imagesx($this->newimage), imagesy($this->newimage));
         imagecopy($this->im, $this->newimage, 0, 0, 0, 0, imagesx($this->newimage), imagesy($this->newimage));
-        $this->deprecatedImageDestroy($this->newimage);
+        unset($this->newimage);
         $this->size[0] = imagesx($this->im);
         $this->size[1] = imagesy($this->im);
     }
@@ -1640,10 +1625,10 @@ class Thumbnail
         $centerx = floor(($squaresize - $this->thumbx) / 2);
         $centery = floor(($squaresize - $this->thumby) / 2);
         imagecopy($this->newimage, $this->thumb, $centerx, $centery, 0, 0, $this->thumbx, $this->thumby);
-        $this->deprecatedImageDestroy($this->thumb);
+        unset($this->thumb);
         $this->thumb = imagecreatetruecolor($squaresize, $squaresize);
         imagecopy($this->thumb, $this->newimage, 0, 0, 0, 0, $squaresize, $squaresize);
-        $this->deprecatedImageDestroy($this->newimage);
+        unset($this->newimage);
     }
 
     /**
@@ -1687,7 +1672,7 @@ class Thumbnail
                 }
             }
             imagecopy($this->im, $this->newimage, 0, 0, 0, 0, $this->size[0], $this->size[1]);
-            $this->deprecatedImageDestroy($this->newimage);
+            unset($this->newimage);
         }
     }
 
@@ -1746,7 +1731,7 @@ class Thumbnail
             }
         }
         imagecopy($this->im, $this->newimage, 0, 0, 0, 0, $this->size[0], $this->size[1]);
-        $this->deprecatedImageDestroy($this->newimage);
+        unset($this->newimage);
     }
 
     /**
@@ -1891,7 +1876,7 @@ class Thumbnail
             }
         }
         imagecopy($this->im, $this->newimage, 0, 0, 0, 0, $this->size[0], $this->size[1]);
-        $this->deprecatedImageDestroy($this->newimage);
+        unset($this->newimage);
     }
 
     /**
@@ -1924,7 +1909,7 @@ class Thumbnail
             }
         }
         imagecopy($this->thumb, $this->newimage, 0, 0, 0, 0, $this->thumbx, $this->thumby);
-        $this->deprecatedImageDestroy($this->newimage);
+        unset($this->newimage);
     }
 
     /**
@@ -1965,7 +1950,7 @@ class Thumbnail
                 imagecopymerge($this->im, $this->newimage, 0, $c, 0, 0, $this->size[0], 1, max(min($opacity, 100), 0));
             }
         }
-        $this->deprecatedImageDestroy($this->newimage);
+        unset($this->newimage);
     }
 
     /**
@@ -1978,10 +1963,10 @@ class Thumbnail
         $this->newimage = imagecreatetruecolor($this->thumbx, $this->thumby + $bottom);
         imagefilledrectangle($this->newimage, 0, 0, $this->thumbx, $this->thumby + $bottom, imagecolorallocate($this->newimage, hexdec(substr($this->Backgroundcolor, 1, 2)), hexdec(substr($this->Backgroundcolor, 3, 2)), hexdec(substr($this->Backgroundcolor, 5, 2))));
         imagecopy($this->newimage, $this->thumb, 0, 0, 0, 0, $this->thumbx, $this->thumby);
-        $this->deprecatedImageDestroy($this->thumb);
+        unset($this->thumb);
         $this->thumb = imagecreatetruecolor($this->thumbx, $this->thumby + $bottom);
         imagecopy($this->thumb, $this->newimage, 0, 0, 0, 0, $this->thumbx, $this->thumby + $bottom);
-        $this->deprecatedImageDestroy($this->newimage);
+        unset($this->newimage);
         $this->thumbx = imagesx($this->thumb);
         $this->thumby = imagesy($this->thumb);
         for ($px = 0; $px < $this->thumbx; $px++) {
@@ -1996,7 +1981,7 @@ class Thumbnail
             $opacity = $this->Mirror[1] + floor(($bottom - ($this->thumby - $c)) * $shadingstrength);
             imagecopymerge($this->thumb, $this->newimage, 0, $c, 0, 0, $this->thumbx, 1, max(min($opacity, 100), 0));
         }
-        $this->deprecatedImageDestroy($this->newimage);
+        unset($this->newimage);
     }
 
     /**
@@ -2067,7 +2052,7 @@ class Thumbnail
                 }
             }
             imagecopy($this->im, $this->newimage, 0, 0, 0, 0, $this->size[0], $this->size[1]);
-            $this->deprecatedImageDestroy($this->newimage);
+            unset($this->newimage);
         }
     }
 
@@ -2242,7 +2227,7 @@ class Thumbnail
             }
         }
         imagecopy($this->im, $this->newimage, 0, 0, 0, 0, $this->size[0], $this->size[1]);
-        $this->deprecatedImageDestroy($this->newimage);
+        unset($this->newimage);
     }
 
     /**
@@ -2263,7 +2248,7 @@ class Thumbnail
             }
         }
         imagecopy($this->im, $this->newimage, 0, 0, 0, 0, $this->size[0], $this->size[1]);
-        $this->deprecatedImageDestroy($this->newimage);
+        unset($this->newimage);
     }
 
     /**
@@ -2285,7 +2270,7 @@ class Thumbnail
             }
         }
         imagecopy($this->im, $this->newimage, 0, 0, 0, 0, $this->size[0], $this->size[1]);
-        $this->deprecatedImageDestroy($this->newimage);
+        unset($this->newimage);
     }
 
     /**
@@ -2314,7 +2299,7 @@ class Thumbnail
             }
         }
         imagecopy($this->im, $this->newimage, 0, 0, 0, 0, $this->size[0], $this->size[1]);
-        $this->deprecatedImageDestroy($this->newimage);
+        unset($this->newimage);
     }
 
     /**
@@ -2595,10 +2580,10 @@ class Thumbnail
         if ($this->Displacementmap[2] == 0) {
             $maptmp = imagecreatetruecolor($this->size[0], $this->size[1]);
             imagecopyresampled($maptmp, $map, 0, 0, 0, 0, $this->size[0], $this->size[1], $mapxmax, $mapymax);
-            $this->deprecatedImageDestroy($map);
+            unset($map);
             $map = imagecreatetruecolor($this->size[0], $this->size[1]);
             imagecopy($map, $maptmp, 0, 0, 0, 0, $this->size[0], $this->size[1]);
-            $this->deprecatedImageDestroy($maptmp);
+            unset($maptmp);
             $mapxmax = $this->size[0];
             $mapymax = $this->size[1];
         }
@@ -2622,8 +2607,8 @@ class Thumbnail
             }
         }
         imagecopy($this->im, $this->newimage, 0, 0, 0, 0, $this->size[0], $this->size[1]);
-        $this->deprecatedImageDestroy($this->newimage);
-        $this->deprecatedImageDestroy($map);
+        unset($this->newimage);
+        unset($map);
     }
 
     /**
@@ -2634,7 +2619,7 @@ class Thumbnail
     {
         if (is_resource($this->thumb)) {
             $temparray = $this->Displacementmap;
-            $this->deprecatedImageDestroy($this->im);
+            unset($this->im);
             $this->im = imagecreatetruecolor($this->thumbx, $this->thumby);
             imagecopy($this->im, $this->thumb, 0, 0, 0, 0, $this->thumbx, $this->thumby);
             $this->size[0] = $this->thumbx;
@@ -2750,18 +2735,6 @@ class Thumbnail
                     fclose($src_file);
                 }
             }
-        }
-    }
-
-    /**
-     * The call of this function (and this function) can be replaced by just unset() if we no longer need to support PHP 8.0 or older.
-     */
-    protected function deprecatedImageDestroy(&$resource)
-    {
-        if (PHP_VERSION_ID >= 80000) {
-            unset($resource);
-        } else {
-            imagedestroy($resource);
         }
     }
 }

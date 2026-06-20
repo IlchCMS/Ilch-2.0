@@ -203,8 +203,8 @@ class Captcha
     protected function ImageAllocate()
     {
         // Cleanup
-        if (!empty($this->im)) {            
-            $this->deprecatedImageDestroy();
+        if (!empty($this->im)) {
+            unset($this->im);
         }
 
         $this->im = imagecreatetruecolor($this->width * $this->scale, $this->height * $this->scale);
@@ -421,7 +421,7 @@ class Captcha
             $this->width * $this->scale, $this->height * $this->scale
         );
 
-        $this->deprecatedImageDestroy();
+        unset($this->im);
 
         $this->im = $imResampled;
     }
@@ -445,18 +445,6 @@ class Captcha
      */
     protected function Cleanup()
     {
-        $this->deprecatedImageDestroy();
-    }
-
-    /**
-     * The call of this function (and this function) can be replaced by just unset() if we no longer need to support PHP 8.0 or older.
-     */
-    protected function deprecatedImageDestroy()
-    {
-        if (PHP_VERSION_ID >= 80000) {
-            unset($this->im);
-        } else {
-            imagedestroy($this->im);
-        }
+        unset($this->im);
     }
 }
