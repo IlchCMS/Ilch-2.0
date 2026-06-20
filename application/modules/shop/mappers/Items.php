@@ -118,7 +118,7 @@ class Items extends Mapper
      */
     public function getCountOfItemsPerCategory(array $catIds = [], int $status = 1): array
     {
-        if (empty($catIds)){
+        if (empty($catIds)) {
             return [];
         }
         $itemsArray = $this->db()->select(['cat_id', 'count' => 'COUNT(id)'])
@@ -127,7 +127,7 @@ class Items extends Mapper
             ->group(['cat_id'])
             ->execute()
             ->fetchRows();
-        
+
         return array_column($itemsArray, 'count', 'cat_id');
     }
 

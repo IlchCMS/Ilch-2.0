@@ -1444,13 +1444,7 @@ protected function _parsegif($file)
 	ob_start();
 	imagepng($im);
 	$data = ob_get_clean();
-
-	// Can be replaced by just unset() if we no longer need to support PHP 8.0 or older.
-	if (PHP_VERSION_ID >= 80000) {
-		unset($im);
-	} else {
-		imagedestroy($im);
-	}
+	unset($im);
 
 	$f = fopen('php://temp','rb+');
 	if(!$f)

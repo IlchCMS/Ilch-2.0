@@ -197,14 +197,14 @@ class Items extends Admin
         // Get the translations for the properties.
         $propertiesTranslations = $propertiesIds ? $propertiesTranslationsMapper->getTranslationsByLocaleAndPropertyIds($this->getTranslator()->getLocale(), $propertiesIds) : [];
         $propertyTranslationAssoc = [];
-        foreach($propertiesTranslations as $propertyTranslation) {
+        foreach ($propertiesTranslations as $propertyTranslation) {
             $propertyTranslationAssoc[$propertyTranslation->getPropertyId()] = $propertyTranslation->getText();
         }
 
         // Get the translations for the values.
         $propertyValuesTranslations = $propertiesValues ? $propertyvaluestranslationsMapper->getTranslationsByLocaleAndValueIds($this->getTranslator()->getLocale(), array_keys($propertiesValues)) ?? [] : [];
         $propertyValueTranslationAssoc = [];
-        foreach($propertyValuesTranslations as $propertyValueTranslation) {
+        foreach ($propertyValuesTranslations as $propertyValueTranslation) {
             $propertyValueTranslationAssoc[$propertyValueTranslation->getValueId()] = $propertyValueTranslation->getText();
         }
 
@@ -266,7 +266,7 @@ class Items extends Admin
                     $usedValueIds[$propertyVariant->getValueId()] = $propertyVariant;
                 }
 
-                foreach($this->getRequest()->getPost('valueCheckbox') ?? [] as $propertyValue) {
+                foreach ($this->getRequest()->getPost('valueCheckbox') ?? [] as $propertyValue) {
                     if (!isset($usedValueIds[$propertyValue])) {
                         // Variant doesn't already exist. Save the variant as a new product.
                         // Set initial values suitable for a variant of a product.

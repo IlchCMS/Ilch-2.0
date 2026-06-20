@@ -539,7 +539,7 @@ class Index extends Frontend
             }
             $items = $itemsMapper->getShopItems(['items.id' => $itemVariantIds, 'items.status' => 1]);
 
-            foreach($propertyVariants as $propertyVariant) {
+            foreach ($propertyVariants as $propertyVariant) {
                 if (!isset($items[$propertyVariant->getItemVariantId()])) {
                     unset($propertyVariants[$propertyVariant->getId()]);
                 }
@@ -569,7 +569,7 @@ class Index extends Frontend
                     $variants[$propertyVariant->getItemVariantId()]['property'] ?? $variants[$propertyVariant->getItemVariantId()]['property'] = $properties[$propertyVariant->getPropertyId()]->getName();
                 }
 
-                foreach($propertyTranslations as $propertyTranslation) {
+                foreach ($propertyTranslations as $propertyTranslation) {
                     if ($propertyTranslation->getPropertyId() == $propertyVariant->getPropertyId()) {
                         $variants[$propertyVariant->getItemVariantId()]['property'] = $propertyTranslation->getText();
                         break;
@@ -584,7 +584,7 @@ class Index extends Frontend
                     $variants[$propertyVariant->getItemVariantId()]['value'] ?? $variants[$propertyVariant->getItemVariantId()]['value'] = $propertyValues[$propertyVariant->getValueId()]->getValue();
                 }
 
-                foreach($propertyValuesTranslations as $propertyValueTranslation) {
+                foreach ($propertyValuesTranslations as $propertyValueTranslation) {
                     if ($propertyValueTranslation->getValueId() == $propertyVariant->getValueId()) {
                         $variants[$propertyVariant->getItemVariantId()]['value'] = $propertyValueTranslation->getText();
                         break;
