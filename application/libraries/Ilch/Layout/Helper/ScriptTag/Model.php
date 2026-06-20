@@ -40,7 +40,7 @@ class Model
     /**
      * @var bool
      */
-    private $isDataBlock = false;
+    private bool $isDataBlock = false;
 
     /**
      * Address of the resource
@@ -48,7 +48,7 @@ class Model
      * @see https://html.spec.whatwg.org/multipage/scripting.html#attr-script-src
      * @var string
      */
-    protected $src;
+    protected string $src = '';
 
     /**
      * Type of script
@@ -56,7 +56,7 @@ class Model
      * @see https://html.spec.whatwg.org/multipage/scripting.html#attr-script-type
      * @var string
      */
-    protected $type;
+    protected string $type = '';
 
     /**
      * Prevents execution in user agents that support module scripts
@@ -64,7 +64,7 @@ class Model
      * @see https://html.spec.whatwg.org/multipage/scripting.html#attr-script-nomodule
      * @var bool
      */
-    protected $nomodule = false;
+    protected bool $nomodule = false;
 
     /**
      * Execute script when available, without blocking while fetching
@@ -72,7 +72,7 @@ class Model
      * @see https://html.spec.whatwg.org/multipage/scripting.html#attr-script-async
      * @var bool
      */
-    protected $async = false;
+    protected bool $async = false;
 
     /**
      * Defer script execution
@@ -80,7 +80,7 @@ class Model
      * @see https://html.spec.whatwg.org/multipage/scripting.html#attr-script-defer
      * @var bool
      */
-    protected $defer = false;
+    protected bool $defer = false;
 
     /**
      * How the element handles crossorigin requests
@@ -88,7 +88,7 @@ class Model
      * @see https://html.spec.whatwg.org/multipage/scripting.html#attr-script-crossorigin
      * @var string
      */
-    protected $crossorigin;
+    protected string $crossorigin = '';
 
     /**
      * Integrity metadata used in Subresource Integrity checks
@@ -97,7 +97,7 @@ class Model
      * @see https://w3c.github.io/webappsec-subresource-integrity/
      * @var string
      */
-    protected $integrity;
+    protected string $integrity = '';
 
     /**
      * Referrer policy for fetches initiated by the element
@@ -105,7 +105,7 @@ class Model
      * @see https://html.spec.whatwg.org/multipage/scripting.html#attr-script-referrerpolicy
      * @var string
      */
-    protected $referrerpolicy;
+    protected string $referrerpolicy = '';
 
     /**
      * Whether the element is potentially render-blocking.
@@ -116,7 +116,7 @@ class Model
      * @see https://dom.spec.whatwg.org/#interface-domtokenlist
      * @var string
      */
-    protected $blocking;
+    protected string $blocking = '';
 
     /**
      * Sets the priority for fetches initiated by the element
@@ -124,14 +124,14 @@ class Model
      * @see https://html.spec.whatwg.org/multipage/scripting.html#attr-script-fetchpriority
      * @var string
      */
-    protected $fetchpriority;
+    protected string $fetchpriority = '';
 
     /**
      * For example the inline script code.
      *
      * @var string
      */
-    protected $inline;
+    protected string $inline = '';
 
     /**
      * If type specifies a data block then this holds the data.
@@ -139,14 +139,14 @@ class Model
      * @see https://html.spec.whatwg.org/multipage/scripting.html#data-block
      * @var string
      */
-    protected $data;
+    protected string $data = '';
 
     /**
      * Gets the address of the resource.
      *
      * @return string
      */
-    public function getSrc(): ?string
+    public function getSrc(): string
     {
         return $this->src;
     }
@@ -164,18 +164,18 @@ class Model
     }
 
     /**
-     * Gets the type of the the script.
+     * Gets the type of the script.
      *
      * @return string
      */
-    public function getType(): ?string
+    public function getType(): string
     {
         return $this->type;
     }
 
     /**
      * Sets the type of the script.
-     * A JavaScript MIME type (optional), "module", "importmap' or valid MIME type string that is not a JavaScript MIME type (data block).
+     * A JavaScript MIME type (optional), "module", "importmap" or valid MIME type string that is not a JavaScript MIME type (data block).
      * Omitting the attribute, setting it to the empty string, or setting it to a JavaScript MIME type essence match,
      * means that the script is a classic script, to be interpreted according to the JavaScript Script top-level production.
      * Authors should omit the type attribute instead of redundantly setting it.
@@ -274,7 +274,7 @@ class Model
      *
      * @return string
      */
-    public function getCrossorigin(): ?string
+    public function getCrossorigin(): string
     {
         return $this->crossorigin;
     }
@@ -303,7 +303,7 @@ class Model
      *
      * @return string
      */
-    public function getIntegrity(): ?string
+    public function getIntegrity(): string
     {
         return $this->integrity;
     }
@@ -327,7 +327,7 @@ class Model
      *
      * @return string
      */
-    public function getReferrerpolicy(): ?string
+    public function getReferrerpolicy(): string
     {
         return $this->referrerpolicy;
     }
@@ -355,7 +355,7 @@ class Model
      *
      * @return string
      */
-    public function getBlocking(): ?string
+    public function getBlocking(): string
     {
         return $this->blocking;
     }
@@ -382,7 +382,7 @@ class Model
      *
      * @return string
      */
-    public function getFetchpriority(): ?string
+    public function getFetchpriority(): string
     {
         return $this->fetchpriority;
     }

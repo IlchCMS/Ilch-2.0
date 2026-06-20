@@ -20,7 +20,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-http-equiv
      * @var string
      */
-    protected $httpEquiv = '';
+    protected string $httpEquiv = '';
 
     /**
      * The name of the meta tag.
@@ -28,7 +28,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-name
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * The content of the meta tag.
@@ -36,7 +36,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-content
      * @var string
      */
-    protected $content = '';
+    protected string $content = '';
 
     /**
      * The charset of the meta tag.
@@ -44,7 +44,7 @@ class Model
      * @see https://www.w3.org/TR/html5/document-metadata.html#attr-meta-charset
      * @var string
      */
-    protected $charset = '';
+    protected string $charset = '';
 
     /**
      * Gets the http-equiv of the meta tag.
