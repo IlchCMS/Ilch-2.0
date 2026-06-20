@@ -21,7 +21,7 @@
         "ezyang/htmlpurifier": "^4.19"
     },
     "require-dev": {
-        "maximebf/debugbar": "^2.2.6",
+        "php-debugbar/php-debugbar": "^2.2.6",
         "phpunit/phpunit": "^10.5.63",
         "symfony/yaml": "^6.4.41"
     },
