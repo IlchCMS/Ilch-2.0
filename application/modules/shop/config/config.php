@@ -29,8 +29,8 @@ class Config extends Install
                 'description' => 'A small shop can be created here.',
             ],
         ],
-        'ilchCore' => '2.2.18',
-        'phpVersion' => '8.1'
+        'ilchCore' => '2.2.13',
+        'phpVersion' => '8.0'
     ];
 
     public function install()
