@@ -51,7 +51,7 @@ class GetMenuTest extends DatabaseTestCase
         self::assertSame($expected, $out->getMenu(1, '<h2>%s</h2>%c', $options));
     }
 
-    public function dpForTestGetMenu(): array
+    public static function dpForTestGetMenu(): array
     {
         $menuTitle = '<h2>Menue</h2>';
         $testBox = '<h2>Testbox</h2><p>Inhalt der Testbox</p>';

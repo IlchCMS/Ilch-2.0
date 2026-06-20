@@ -140,7 +140,7 @@ class RouterTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestUpdateRequestByQuery(): array
+    public static function dpForTestUpdateRequestByQuery(): array
     {
         return [
             'route without params' => [

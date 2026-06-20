@@ -37,35 +37,35 @@ class IntegerTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidator(): array
+    public static function dpForTestValidator(): array
     {
         return [
             'valid integer' => [
-                'data'                    => $this->createData(1),
+                'data'                    => IntegerTest::createData(1),
                 'expectedIsValid'         => true
             ],
             'valid integer string' => [
-                'data'                    => $this->createData('1'),
+                'data'                    => IntegerTest::createData('1'),
                 'expectedIsValid'         => true
             ],
             'valid integer empty' => [
-                'data'                    => $this->createData(''),
+                'data'                    => IntegerTest::createData(''),
                 'expectedIsValid'         => true
             ],
             'invalid integer' => [
-                'data'                    => $this->createData(1.5),
+                'data'                    => IntegerTest::createData(1.5),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.integer.mustBeInteger',
                 'expectedErrorParameters' => []
             ],
             'invalid integer string' => [
-                'data'                    => $this->createData('1.5'),
+                'data'                    => IntegerTest::createData('1.5'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.integer.mustBeInteger',
                 'expectedErrorParameters' => []
             ],
             'invalid integer invert' => [
-                'data'                    => $this->createData(1.5, true),
+                'data'                    => IntegerTest::createData(1.5, true),
                 'expectedIsValid'         => true
             ],
         ];
@@ -78,7 +78,7 @@ class IntegerTest extends TestCase
      * @param bool $invertResult
      * @return stdClass
      */
-    private function createData($value, bool $invertResult = false): stdClass
+    private static function createData($value, bool $invertResult = false): stdClass
     {
         $data = new stdClass();
         $data->field = 'fieldName';

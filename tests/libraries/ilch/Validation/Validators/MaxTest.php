@@ -37,52 +37,52 @@ class MaxTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidator(): array
+    public static function dpForTestValidator(): array
     {
         return [
             // string validations
             'string correct'                    => [
-                'data'                    => $this->createData('abcde', 5),
+                'data'                    => MaxTest::createData('abcde', 5),
                 'expectedIsValid'         => true
             ],
             'string too short'                  => [
-                'data'                    => $this->createData('abcdef', 5),
+                'data'                    => MaxTest::createData('abcdef', 5),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.max.string',
                 'expectedErrorParameters' => [5]
             ],
             'number string as string correct'   => [
-                'data'                    => $this->createData('12345', 5, true),
+                'data'                    => MaxTest::createData('12345', 5, true),
                 'expectedIsValid'         => true
             ],
             'number string as string too short' => [
-                'data'                    => $this->createData('123456', 5, true),
+                'data'                    => MaxTest::createData('123456', 5, true),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.max.string',
                 'expectedErrorParameters' => [5]
             ],
             // numeric
             'number (int) correct'              => [
-                'data'                    => $this->createData(5, 5),
+                'data'                    => MaxTest::createData(5, 5),
                 'expectedIsValid'         => true
             ],
             'number string correct'             => [
-                'data'                    => $this->createData('5', 5),
+                'data'                    => MaxTest::createData('5', 5),
                 'expectedIsValid'         => true
             ],
             'number too low'                    => [
-                'data'                    => $this->createData('6', 5),
+                'data'                    => MaxTest::createData('6', 5),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.max.numeric',
                 'expectedErrorParameters' => [5]
             ],
             //array
             'array correct'                     => [
-                'data'                    => $this->createData([1, 2, 3], 3),
+                'data'                    => MaxTest::createData([1, 2, 3], 3),
                 'expectedIsValid'         => true
             ],
             'array too small'                   => [
-                'data'                    => $this->createData([1, 2, 3], 4),
+                'data'                    => MaxTest::createData([1, 2, 3], 4),
                 'expectedIsValid'         => true,
                 'expectedErrorKey'        => 'validation.errors.max.array',
                 'expectedErrorParameters' => [4]
@@ -98,7 +98,7 @@ class MaxTest extends TestCase
      * @param bool $forceString
      * @return stdClass
      */
-    private function createData($value, int $max, bool $forceString = false): stdClass
+    private static function createData($value, int $max, bool $forceString = false): stdClass
     {
         $data = new stdClass();
         $data->field = 'fieldName';

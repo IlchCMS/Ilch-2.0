@@ -108,14 +108,14 @@ class TranslatorTest extends TestCase
     /**
      * Tests if the Translator replaces the placeholders withing the translated texts
      * with one replacement.
-     * @dataProvider placeholderDataProvider
+     * @dataProvider dpForTransPlaceholders
      */
     public function testTransPlaceholders(string $key, array $placeholders, string $expected)
     {
         self::assertSame($expected, $this->translator->trans($key, ...$placeholders));
     }
 
-    public function placeholderDataProvider(): array
+    public static function dpForTransPlaceholders(): array
     {
         return [
             ['welcomeUser', ['Hans'], 'Welcome, Hans'],

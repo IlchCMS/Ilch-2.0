@@ -37,27 +37,27 @@ class SameTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidator(): array
+    public static function dpForTestValidator(): array
     {
         return [
             'passwords are the same' => [
-                'data'                    => $this->createData('password', 'god', 'password_confirm', 'god'),
+                'data'                    => SameTest::createData('password', 'god', 'password_confirm', 'god'),
                 'expectedIsValid'         => true
             ],
             'password are not the same' => [
-                'data'                    => $this->createData('password', '123', 'password_confirm', 'god'),
+                'data'                    => SameTest::createData('password', '123', 'password_confirm', 'god'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.same.fieldsDontMatch',
                 'expectedErrorParameters' => ['password_confirm']
             ],
             'strict comparison' => [
-                'data'                    => $this->createData('password', '123', 'password_confirm', 123, true),
+                'data'                    => SameTest::createData('password', '123', 'password_confirm', 123, true),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.same.fieldsDontMatch',
                 'expectedErrorParameters' => ['password_confirm']
             ],
             'passwords are the same inverted' => [
-                'data'                    => $this->createData('password', 'god', 'password_confirm', 'god', null, true),
+                'data'                    => SameTest::createData('password', 'god', 'password_confirm', 'god', null, true),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.same.fieldsDontMatch',
                 'expectedErrorParameters' => ['password_confirm']
@@ -76,7 +76,7 @@ class SameTest extends TestCase
      * @param bool $invertResult
      * @return stdClass
      */
-    private function createData(string $firstField, $valueFirstField, string $secondField, $valueSecondField, ?bool $strict = null, bool $invertResult = false): stdClass
+    private static function createData(string $firstField, $valueFirstField, string $secondField, $valueSecondField, ?bool $strict = null, bool $invertResult = false): stdClass
     {
         $data = new stdClass();
         $data->field = $firstField;

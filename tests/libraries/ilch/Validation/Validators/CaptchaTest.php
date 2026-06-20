@@ -38,21 +38,21 @@ class CaptchaTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidator(): array
+    public static function dpForTestValidator(): array
     {
         return [
             'valid' => [
-                'data'                    => $this->createData('test'),
+                'data'                    => CaptchaTest::createData('test'),
                 'expectedIsValid'         => true
             ],
             'invalid captcha' => [
-                'data'                    => $this->createData('abc'),
+                'data'                    => CaptchaTest::createData('abc'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.captcha.wrongCaptcha',
                 'expectedErrorParameters' => []
             ],
             'invalid empty' => [
-                'data'                    => $this->createData(''),
+                'data'                    => CaptchaTest::createData(''),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.captcha.wrongCaptcha',
                 'expectedErrorParameters' => []
@@ -66,7 +66,7 @@ class CaptchaTest extends TestCase
      * @param string $value
      * @return stdClass
      */
-    private function createData(string $value): stdClass
+    private static function createData(string $value): stdClass
     {
         $data = new stdClass();
         $data->field = 'fieldName';

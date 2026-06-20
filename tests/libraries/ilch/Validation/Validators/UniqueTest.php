@@ -63,31 +63,31 @@ class UniqueTest extends DatabaseTestCase
     /**
      * @return array
      */
-    public function dpForTestValidator(): array
+    public static function dpForTestValidator(): array
     {
         return [
             'unique value for name' => [
-                'data'                    => $this->createData(['groups'], 'moderator'),
+                'data'                    => UniqueTest::createData(['groups'], 'moderator'),
                 'expectedIsValid'         => true
             ],
             'existing value for name ignored' => [
-                'data'                    => $this->createData(['groups', 'name', 1], 'admin'),
+                'data'                    => UniqueTest::createData(['groups', 'name', 1], 'admin'),
                 'expectedIsValid'         => true
             ],
             'existing value for name ignore different id' => [
-                'data'                    => $this->createData(['groups', 'name', 2], 'admin'),
+                'data'                    => UniqueTest::createData(['groups', 'name', 2], 'admin'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.unique.valueExists',
                 'expectedErrorParameters' => ['admin']
             ],
             'existing value for name' => [
-                'data'                    => $this->createData(['groups'], 'admin'),
+                'data'                    => UniqueTest::createData(['groups'], 'admin'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.unique.valueExists',
                 'expectedErrorParameters' => ['admin']
             ],
             'unique value for name inverted' => [
-                'data'                    => $this->createData(['groups'], 'moderator', true),
+                'data'                    => UniqueTest::createData(['groups'], 'moderator', true),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.unique.valueExists',
                 'expectedErrorParameters' => ['moderator']
@@ -103,7 +103,7 @@ class UniqueTest extends DatabaseTestCase
      * @param bool $invertResult
      * @return stdClass
      */
-    private function createData(array $parameter = [], ?string $value = null, bool $invertResult = false): stdClass
+    private static function createData(array $parameter = [], ?string $value = null, bool $invertResult = false): stdClass
     {
         $data = new stdClass();
         $data->field = 'name';

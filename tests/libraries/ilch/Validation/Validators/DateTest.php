@@ -37,63 +37,63 @@ class DateTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidator(): array
+    public static function dpForTestValidator(): array
     {
         return [
             // date validations
             'date correct' => [
-                'data'                    => $this->createData('2020-08-01'),
+                'data'                    => DateTest::createData('2020-08-01'),
                 'expectedIsValid'         => true
             ],
             'date wrong' => [
-                'data'                    => $this->createData('2020-08-01 12:00:00'),
+                'data'                    => DateTest::createData('2020-08-01 12:00:00'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.date.mustBeDate',
                 'expectedErrorParameters' => ['Y-m-d']
             ],
             // datetime validations
             'datetime correct' => [
-                'data'                    => $this->createData('2020-08-01 12:00:00', 'Y-m-d H\\:i\\:s'),
+                'data'                    => DateTest::createData('2020-08-01 12:00:00', 'Y-m-d H\\:i\\:s'),
                 'expectedIsValid'         => true
             ],
             'datetime wrong' => [
-                'data'                    => $this->createData('2020-08-01 24:00:00', 'Y-m-d H\\:i\\:s'),
+                'data'                    => DateTest::createData('2020-08-01 24:00:00', 'Y-m-d H\\:i\\:s'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.date.mustBeDate',
                 'expectedErrorParameters' => ['Y-m-d H\\:i\\:s']
             ],
             // time validations
             'time correct' => [
-                'data'                    => $this->createData('12:00:00', 'H\\:i\\:s'),
+                'data'                    => DateTest::createData('12:00:00', 'H\\:i\\:s'),
                 'expectedIsValid'         => true
             ],
             'time wrong' => [
-                'data'                    => $this->createData('24:00:00', 'H\\:i\\:s'),
+                'data'                    => DateTest::createData('24:00:00', 'H\\:i\\:s'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.date.mustBeDate',
                 'expectedErrorParameters' => ['H\\:i\\:s']
             ],
             // other
             'string too short' => [
-                'data'                    => $this->createData('abcd'),
+                'data'                    => DateTest::createData('abcd'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.date.mustBeDate',
                 'expectedErrorParameters' => ['Y-m-d']
             ],
             'Null byte' => [
-                'data'                    => $this->createData("\0"),
+                'data'                    => DateTest::createData("\0"),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.date.mustBeDate',
                 'expectedErrorParameters' => ['Y-m-d']
             ],
             'Null' => [
-                'data'                    => $this->createData(null),
+                'data'                    => DateTest::createData(null),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.date.mustBeDate',
                 'expectedErrorParameters' => ['Y-m-d']
             ],
             'empty string' => [
-                'data'                    => $this->createData(""),
+                'data'                    => DateTest::createData(""),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.date.mustBeDate',
                 'expectedErrorParameters' => ['Y-m-d']
@@ -108,7 +108,7 @@ class DateTest extends TestCase
      * @param string $parameter
      * @return stdClass
      */
-    private function createData(?string $value, string $parameter = 'Y-m-d'): stdClass
+    private static function createData(?string $value, string $parameter = 'Y-m-d'): stdClass
     {
         $data = new stdClass();
         $data->field = 'fieldName';

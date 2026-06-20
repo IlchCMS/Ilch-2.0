@@ -37,43 +37,43 @@ class UrlTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidator(): array
+    public static function dpForTestValidator(): array
     {
         return [
             'valid url domain with subdomain and protocol' => [
-                'data'                    => $this->createData('https://www.ilch.de'),
+                'data'                    => UrlTest::createData('https://www.ilch.de'),
                 'expectedIsValid'         => true
             ],
             'valid url domain with subdomain and ftp protocol' => [
-                'data'                    => $this->createData('ftp://www.ilch.de'),
+                'data'                    => UrlTest::createData('ftp://www.ilch.de'),
                 'expectedIsValid'         => true
             ],
             'invalid url domain with subdomain and invalid protocol' => [
-                'data'                    => $this->createData('invalid://www.ilch.de'),
+                'data'                    => UrlTest::createData('invalid://www.ilch.de'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.url.noValidUrl',
                 'expectedErrorParameters' => []
             ],
             'invalid url no protocol' => [
-                'data'                    => $this->createData('ilch.de'),
+                'data'                    => UrlTest::createData('ilch.de'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.url.noValidUrl',
                 'expectedErrorParameters' => []
             ],
             'invalid url domain with subdomain no protocol' => [
-                'data'                    => $this->createData('www.ilch.de'),
+                'data'                    => UrlTest::createData('www.ilch.de'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.url.noValidUrl',
                 'expectedErrorParameters' => []
             ],
             'invalid url no domain' => [
-                'data'                    => $this->createData('ilch'),
+                'data'                    => UrlTest::createData('ilch'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.url.noValidUrl',
                 'expectedErrorParameters' => []
             ],
             'empty string' => [
-                'data'                    => $this->createData(''),
+                'data'                    => UrlTest::createData(''),
                 'expectedIsValid'         => true
             ],
         ];
@@ -85,7 +85,7 @@ class UrlTest extends TestCase
      * @param string $value
      * @return stdClass
      */
-    private function createData(string $value): stdClass
+    private static function createData(string $value): stdClass
     {
         $data = new stdClass();
         $data->field = 'fieldName';

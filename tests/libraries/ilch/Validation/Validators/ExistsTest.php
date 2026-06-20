@@ -63,60 +63,60 @@ class ExistsTest extends DatabaseTestCase
     /**
      * @return array
      */
-    public function dpForTestValidator(): array
+    public static function dpForTestValidator(): array
     {
         return [
             'existing table, column and value' => [
-                'data'                    => $this->createData(['groups', 'id'], '1'),
+                'data'                    => ExistsTest::createData(['groups', 'id'], '1'),
                 'expectedIsValid'         => true
             ],
             'existing table and column' => [
-                'data'                    => $this->createData(['groups', 'id']),
+                'data'                    => ExistsTest::createData(['groups', 'id']),
                 'expectedIsValid'         => true
             ],
             'existing table, other column' => [
-                'data'                    => $this->createData(['groups', 'name']),
+                'data'                    => ExistsTest::createData(['groups', 'name']),
                 'expectedIsValid'         => true
             ],
             'existing table, other column and value' => [
-                'data'                    => $this->createData(['groups', 'name'], 'admin'),
+                'data'                    => ExistsTest::createData(['groups', 'name'], 'admin'),
                 'expectedIsValid'         => true
             ],
             'existing table, two columns' => [
-                'data'                    => $this->createData(['groups', 'name', 'id']),
+                'data'                    => ExistsTest::createData(['groups', 'name', 'id']),
                 'expectedIsValid'         => true
             ],
             'existing table, other column and wrong value' => [
-                'data'                    => $this->createData(['groups', 'name'], 'star'),
+                'data'                    => ExistsTest::createData(['groups', 'name'], 'star'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.exists.resourceNotFound',
                 'expectedErrorParameters' => []
             ],
             'existing table, column wrong value' => [
-                'data'                    => $this->createData(['groups', 'id'], '3'),
+                'data'                    => ExistsTest::createData(['groups', 'id'], '3'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.exists.resourceNotFound',
                 'expectedErrorParameters' => []
             ],
             // Returns true for a not existing column?
             'existing table wrong column' => [
-                'data'                    => $this->createData(['groups', 'abc']),
+                'data'                    => ExistsTest::createData(['groups', 'abc']),
                 'expectedIsValid'         => true
             ],
             //  MySQL Error: Unknown column 'abc' in 'field list'
 //            'existing table wrong column with value' => [
-//                'data'                    => $this->createData(['groups', 'abc'], '1'),
+//                'data'                    => ExistsTest::createData(['groups', 'abc'], '1'),
 //                'expectedIsValid'         => false,
 //                'expectedErrorKey'        => 'validation.errors.exists.resourceNotFound',
 //                'expectedErrorParameters' => []
 //            ],
             // Returns true for a not existing table?
             'wrong table' => [
-                'data'                    => $this->createData(['abc']),
+                'data'                    => ExistsTest::createData(['abc']),
                 'expectedIsValid'         => true
             ],
             'wrong table inverted' => [
-                'data'                    => $this->createData(['abc'], null, true),
+                'data'                    => ExistsTest::createData(['abc'], null, true),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.exists.resourceNotFound',
                 'expectedErrorParameters' => []
@@ -132,7 +132,7 @@ class ExistsTest extends DatabaseTestCase
      * @param bool $invertResult
      * @return stdClass
      */
-    private function createData(array $parameter = [], ?string $value = null, bool $invertResult = false): stdClass
+    private static function createData(array $parameter = [], ?string $value = null, bool $invertResult = false): stdClass
     {
         $data = new stdClass();
         $data->field = 'fieldName';
