@@ -380,7 +380,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
                 'expectedSqlPart' => '5'
             ],
             'with array'    => [
-                'where'           => [5, 10],
+                'limit'           => [5, 10],
                 'expectedSqlPart' => '5, 10'
             ]
         ];

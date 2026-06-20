@@ -36,13 +36,13 @@ class ResultTest extends DatabaseTestCase
     /**
      * @dataProvider dpForFetchCell
      *
-     * @param integer|string $cellParam
+     * @param integer|string $param
      * @param string $expected
      */
-    public function testFetchCell($cellParam, string $expected)
+    public function testFetchCell($param, string $expected)
     {
         $result = $this->db->select('*', 'groups')->execute();
-        self::assertEquals($expected, $result->fetchCell($cellParam));
+        self::assertEquals($expected, $result->fetchCell($param));
     }
 
     /**
