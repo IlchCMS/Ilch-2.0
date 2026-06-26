@@ -14,7 +14,7 @@
         "ifsnop/mysqldump-php": "^2.12",
         "kartik-v/bootstrap-star-rating": "^4.1.2",
         "twbs/bootstrap": "^5.3.8",
-        "fortawesome/font-awesome": "^7.2.0",
+        "fortawesome/font-awesome": "^7.3.0",
         "npm-asset/jquery": "^4.0.0",
         "npm-asset/jquery-ui": "^1.14.2",
         "phpmailer/phpmailer": "^7.1.1",

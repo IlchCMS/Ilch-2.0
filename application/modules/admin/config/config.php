@@ -1308,6 +1308,10 @@ class Config extends \Ilch\Config\Install
                 // The file is no longer part of tarteaucitron.
                 unlink(ROOT_PATH . '/static/js/tarteaucitron/build/lang/tarteaucitron.kr.min.js');
                 break;
+            case "2.2.17":
+                // Update vendor folder to update various dependencies.
+                replaceVendorDirectory();
+                break;
         }
 
         return 'Update function executed.';
