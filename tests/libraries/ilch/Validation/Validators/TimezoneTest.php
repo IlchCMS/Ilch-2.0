@@ -37,36 +37,36 @@ class TimezoneTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidator(): array
+    public static function dpForTestValidator(): array
     {
         return [
             // timezone validations
             'timezone valid' => [
-                'data'                    => $this->createData('Europe/Berlin'),
+                'data'                    => TimezoneTest::createData('Europe/Berlin'),
                 'expectedIsValid'         => true
             ],
             'timezone valid including outdated' => [
-                'data'                    => $this->createData('America/Shiprock', true),
+                'data'                    => TimezoneTest::createData('America/Shiprock', true),
                 'expectedIsValid'         => true
             ],
             'empty timezone valid' => [
-                'data'                    => $this->createData(''),
+                'data'                    => TimezoneTest::createData(''),
                 'expectedIsValid'         => true
             ],
             'timezone invalid' => [
-                'data'                    => $this->createData('test'),
+                'data'                    => TimezoneTest::createData('test'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.timezone.notAValidTimezone',
                 'expectedErrorParameters' => []
             ],
             'timezone invalid completely removed' => [
-                'data'                    => $this->createData('Canada/East-Saskatchewan'),
+                'data'                    => TimezoneTest::createData('Canada/East-Saskatchewan'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.timezone.notAValidTimezone',
                 'expectedErrorParameters' => []
             ],
             'timezone invalid outdated' => [
-                'data'                    => $this->createData('America/Shiprock'),
+                'data'                    => TimezoneTest::createData('America/Shiprock'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.timezone.notAValidTimezone',
                 'expectedErrorParameters' => []
@@ -80,7 +80,7 @@ class TimezoneTest extends TestCase
      * @param string $value
      * @return stdClass
      */
-    private function createData(string $value, bool $includeOutdated = false): stdClass
+    private static function createData(string $value, bool $includeOutdated = false): stdClass
     {
         $data = new stdClass();
         $data->field = 'fieldName';

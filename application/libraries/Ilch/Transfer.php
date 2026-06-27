@@ -627,13 +627,7 @@ class Transfer
     private function curlClose()
     {
         if (is_resource($this->transferUrl)) {
-            // Can be replaced with just "unset($this->transferUrl);" if we no longer need to support PHP 8.0 or older.
-            if (PHP_VERSION_ID >= 80000) {
-                unset($this->transferUrl);
-            } else {
-                // phpcs:ignore
-                curl_close($this->transferUrl);
-            }
+            unset($this->transferUrl);
         }
     }
 

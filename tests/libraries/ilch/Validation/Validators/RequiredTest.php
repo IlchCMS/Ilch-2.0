@@ -37,21 +37,21 @@ class RequiredTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidator(): array
+    public static function dpForTestValidator(): array
     {
         return [
             'valid' => [
-                'data'                    => $this->createData('test'),
+                'data'                    => RequiredTest::createData('test'),
                 'expectedIsValid'         => true
             ],
             'invalid' => [
-                'data'                    => $this->createData(''),
+                'data'                    => RequiredTest::createData(''),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.required.fieldIsRequired',
                 'expectedErrorParameters' => []
             ],
             'invalid inverted' => [
-                'data'                    => $this->createData('', true),
+                'data'                    => RequiredTest::createData('', true),
                 'expectedIsValid'         => true
             ]
         ];
@@ -64,7 +64,7 @@ class RequiredTest extends TestCase
      * @param bool $invertResult
      * @return stdClass
      */
-    private function createData($value, bool $invertResult = false): stdClass
+    private static function createData($value, bool $invertResult = false): stdClass
     {
         $data = new stdClass();
         $data->field = 'fieldName';

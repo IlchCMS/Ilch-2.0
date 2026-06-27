@@ -37,43 +37,43 @@ class NumericTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidator(): array
+    public static function dpForTestValidator(): array
     {
         return [
             'valid numeric' => [
-                'data'                    => $this->createData(1),
+                'data'                    => NumericTest::createData(1),
                 'expectedIsValid'         => true
             ],
             'valid numeric string' => [
-                'data'                    => $this->createData('1'),
+                'data'                    => NumericTest::createData('1'),
                 'expectedIsValid'         => true
             ],
             'valid numeric empty' => [
-                'data'                    => $this->createData(''),
+                'data'                    => NumericTest::createData(''),
                 'expectedIsValid'         => true
             ],
             'valid numeric float' => [
-                'data'                    => $this->createData(1.5),
+                'data'                    => NumericTest::createData(1.5),
                 'expectedIsValid'         => true
             ],
             'valid numeric float string' => [
-                'data'                    => $this->createData('1.5'),
+                'data'                    => NumericTest::createData('1.5'),
                 'expectedIsValid'         => true
             ],
             'invalid numeric string' => [
-                'data'                    => $this->createData('a'),
+                'data'                    => NumericTest::createData('a'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.numeric.mustBeNumeric',
                 'expectedErrorParameters' => []
             ],
             'valid numeric invert' => [
-                'data'                    => $this->createData(1.5, true),
+                'data'                    => NumericTest::createData(1.5, true),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.numeric.mustBeNumeric',
                 'expectedErrorParameters' => []
             ],
             'invalid numeric invert' => [
-                'data'                    => $this->createData('a', true),
+                'data'                    => NumericTest::createData('a', true),
                 'expectedIsValid'         => true
             ],
         ];
@@ -86,7 +86,7 @@ class NumericTest extends TestCase
      * @param bool $invertResult
      * @return stdClass
      */
-    private function createData($value, bool $invertResult = false): stdClass
+    private static function createData($value, bool $invertResult = false): stdClass
     {
         $data = new stdClass();
         $data->field = 'fieldName';

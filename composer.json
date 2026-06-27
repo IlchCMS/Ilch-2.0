@@ -6,24 +6,24 @@
     "minimum-stability": "stable",
     "config": {
         "platform": {
-            "php": "7.4"
+            "php": "8.1"
         }
     },
     "require": {
-        "php": ">=7.4",
-        "ifsnop/mysqldump-php": "^2.11",
+        "php": ">=8.1",
+        "ifsnop/mysqldump-php": "^2.12",
         "kartik-v/bootstrap-star-rating": "^4.1.2",
-        "twbs/bootstrap": "^5.3.3",
-        "fortawesome/font-awesome": "^7.2.0",
+        "twbs/bootstrap": "^5.3.8",
+        "fortawesome/font-awesome": "^7.3.0",
         "npm-asset/jquery": "^4.0.0",
-        "npm-asset/jquery-ui": "^1.14.0",
-        "phpmailer/phpmailer": "^7.0.2",
-        "ezyang/htmlpurifier": "^4.17"
+        "npm-asset/jquery-ui": "^1.14.2",
+        "phpmailer/phpmailer": "^7.1.1",
+        "ezyang/htmlpurifier": "^4.19"
     },
     "require-dev": {
-        "maximebf/debugbar": "^1.22.3",
-        "phpunit/phpunit": "^9.6.19",
-        "symfony/yaml": "^5.4.39"
+        "php-debugbar/php-debugbar": "^2.2.6",
+        "phpunit/phpunit": "^10.5.63",
+        "symfony/yaml": "^6.4.41"
     },
     "autoload": {
         "psr-0": {

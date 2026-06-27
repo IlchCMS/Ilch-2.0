@@ -36,19 +36,19 @@ class ResultTest extends DatabaseTestCase
     /**
      * @dataProvider dpForFetchCell
      *
-     * @param integer|string $cellParam
+     * @param integer|string $param
      * @param string $expected
      */
-    public function testFetchCell($cellParam, string $expected)
+    public function testFetchCell($param, string $expected)
     {
         $result = $this->db->select('*', 'groups')->execute();
-        self::assertEquals($expected, $result->fetchCell($cellParam));
+        self::assertEquals($expected, $result->fetchCell($param));
     }
 
     /**
      * @return array
      */
-    public function dpForFetchCell(): array
+    public static function dpForFetchCell(): array
     {
         return [
             'null' => [
@@ -89,7 +89,7 @@ class ResultTest extends DatabaseTestCase
     /**
      * @return array
      */
-    public function dpForFetchArray(): array
+    public static function dpForFetchArray(): array
     {
         return [
             'both' => [
@@ -160,7 +160,7 @@ class ResultTest extends DatabaseTestCase
     /**
      * @return array
      */
-    public function dpForFetchRows(): array
+    public static function dpForFetchRows(): array
     {
         return [
             'simple assoc' => [
@@ -226,7 +226,7 @@ class ResultTest extends DatabaseTestCase
     /**
      * @return array
      */
-    public function dpForFetchList(): array
+    public static function dpForFetchList(): array
     {
         return [
             'without args' => [
@@ -273,7 +273,7 @@ class ResultTest extends DatabaseTestCase
     /**
      * @return array
      */
-    public function dpForTestGetNumRows(): array
+    public static function dpForTestGetNumRows(): array
     {
         return [[1], [4]];
     }
@@ -296,7 +296,7 @@ class ResultTest extends DatabaseTestCase
     /**
      * @return array
      */
-    public function dpForGetFieldCount(): array
+    public static function dpForGetFieldCount(): array
     {
         return [
             [

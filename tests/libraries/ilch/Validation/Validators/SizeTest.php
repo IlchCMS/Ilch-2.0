@@ -37,64 +37,64 @@ class SizeTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidator(): array
+    public static function dpForTestValidator(): array
     {
         return [
             // numeric
             'valid' => [
-                'data'                    => $this->createData(3, 3),
+                'data'                    => SizeTest::createData(3, 3),
                 'expectedIsValid'         => true
             ],
             'invalid' => [
-                'data'                    => $this->createData(3, 2),
+                'data'                    => SizeTest::createData(3, 2),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.size.numeric',
                 'expectedErrorParameters' => [2]
             ],
             // array
             'array valid' => [
-                'data'                    => $this->createData(['a', 'b', 'c'], 3),
+                'data'                    => SizeTest::createData(['a', 'b', 'c'], 3),
                 'expectedIsValid'         => true
             ],
             'array invalid' => [
-                'data'                    => $this->createData(['a', 'b', 'c'], 2),
+                'data'                    => SizeTest::createData(['a', 'b', 'c'], 2),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.size.array',
                 'expectedErrorParameters' => [2]
             ],
             'array empty invalid' => [
-                'data'                    => $this->createData([], 2),
+                'data'                    => SizeTest::createData([], 2),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.size.array',
                 'expectedErrorParameters' => [2]
             ],
             // string
             'string valid' => [
-                'data'                    => $this->createData('abc', 3),
+                'data'                    => SizeTest::createData('abc', 3),
                 'expectedIsValid'         => true
             ],
             'numeric string valid' => [
-                'data'                    => $this->createData('123', 3, true),
+                'data'                    => SizeTest::createData('123', 3, true),
                 'expectedIsValid'         => true
             ],
             'numeric string invalid force string false' => [
-                'data'                    => $this->createData('123', 3),
+                'data'                    => SizeTest::createData('123', 3),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.size.numeric',
                 'expectedErrorParameters' => [3]
             ],
             'numeric string valid force string false' => [
-                'data'                    => $this->createData('123', 123),
+                'data'                    => SizeTest::createData('123', 123),
                 'expectedIsValid'         => true
             ],
             'string invalid' => [
-                'data'                    => $this->createData('abc', 2),
+                'data'                    => SizeTest::createData('abc', 2),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.size.string',
                 'expectedErrorParameters' => [2]
             ],
 //            'string empty invalid' => [
-//                'data'                    => $this->createData('', 2),
+//                'data'                    => SizeTest::createData('', 2),
 //                'expectedIsValid'         => false,
 //                'expectedErrorKey'        => 'validation.errors.size.string',
 //                'expectedErrorParameters' => [2]
@@ -110,7 +110,7 @@ class SizeTest extends TestCase
      * @param bool $forceString
      * @return stdClass
      */
-    private function createData($value, int $size, bool $forceString = false): stdClass
+    private static function createData($value, int $size, bool $forceString = false): stdClass
     {
         $data = new stdClass();
         $data->field = 'fieldName';

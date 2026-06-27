@@ -62,7 +62,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dpForTable(): array
+    public static function dpForTable(): array
     {
         return [
             'simple tablename' => [
@@ -99,7 +99,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dpForFields(): array
+    public static function dpForFields(): array
     {
         return [
             'string all' => [
@@ -170,7 +170,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      * Data provider for testGenerateSqlForWhere
      * @return array
      */
-    public function dpForWhere(): array
+    public static function dpForWhere(): array
     {
         return [
             'simple condition'  => [
@@ -259,7 +259,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      * Operator data provider
      * @return array
      */
-    public function dpOperators(): array
+    public static function dpOperators(): array
     {
         return [['='], ['<='], ['>='], ['<'], ['>'], ['!='], ['<>'], ['LIKE'], ['NOT LIKE']];
     }
@@ -289,7 +289,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dpForOrWhere(): array
+    public static function dpForOrWhere(): array
     {
         return [
             'with empty where and single condition' => [
@@ -338,7 +338,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dpForTestGenerateSqlForOrderBy(): array
+    public static function dpForTestGenerateSqlForOrderBy(): array
     {
         return [
             'field without table' => [
@@ -372,7 +372,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dpForLimit(): array
+    public static function dpForLimit(): array
     {
         return [
             'with integer'  => [
@@ -380,7 +380,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
                 'expectedSqlPart' => '5'
             ],
             'with array'    => [
-                'where'           => [5, 10],
+                'limit'           => [5, 10],
                 'expectedSqlPart' => '5, 10'
             ]
         ];
@@ -420,7 +420,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      * Data provider for testGenerateSqlForLimitWithPage
      * @return array
      */
-    public function dpForLimitWithPage(): array
+    public static function dpForLimitWithPage(): array
     {
         //expected offset for limit 10
         return [
@@ -453,7 +453,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dpForTestGenerateSqlWithGroup(): array
+    public static function dpForTestGenerateSqlWithGroup(): array
     {
         return [
             'one field' => [
@@ -503,7 +503,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
     /**
      * @return array
      */
-    public function dpForJoinConditions(): array
+    public static function dpForJoinConditions(): array
     {
         return [
             'single field comparison' => [

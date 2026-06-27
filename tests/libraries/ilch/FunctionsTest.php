@@ -60,7 +60,7 @@ class FunctionsTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestArrayDot(): array
+    public static function dpForTestArrayDot(): array
     {
         return [
             'no key provided' => ['params' => ['data' => ['1', '2'], 'key' => null, 'default' => null], ['1', '2']],
@@ -85,7 +85,7 @@ class FunctionsTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestArrayDotSet(): array
+    public static function dpForTestArrayDotSet(): array
     {
         return [
             'test 1' => ['params' => ['array' => [], 'key' => 'test.value', 'value' => 'admin'], ['value' => 'admin']],
@@ -106,7 +106,7 @@ class FunctionsTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestIsInArray(): array
+    public static function dpForTestIsInArray(): array
     {
         return [
             'is in array' => ['params' => ['needle' => ['test'], 'haystack' => ['test']], true],
@@ -128,7 +128,7 @@ class FunctionsTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestUrlGetContents(): array
+    public static function dpForTestUrlGetContents(): array
     {
         return [
             'valid url' => ['params' => ['url' => 'https://raw.githubusercontent.com/IlchCMS/Ilch-2.0/master/development/.gitignore'], '/vendor' . "\n" . '/bin/*' . "\n"],
@@ -150,7 +150,7 @@ class FunctionsTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestVarExportShortSyntax(): array
+    public static function dpForTestVarExportShortSyntax(): array
     {
         return [
             'string' => ['params' => ['var' => 'test', 'indent' => ''], '"test"'],
@@ -217,7 +217,7 @@ class FunctionsTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestFormatBytes(): array
+    public static function dpForTestFormatBytes(): array
     {
         return [
             'invalid empty string' => ['params' => ['bytes' => '', 'decimals' => 0], false],
@@ -254,7 +254,7 @@ class FunctionsTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidateDate(): array
+    public static function dpForTestValidateDate(): array
     {
         return [
             'invalid empty string' => ['params' => ['date' => '', 'format' => 'Y-m-d H:i:s'], false],

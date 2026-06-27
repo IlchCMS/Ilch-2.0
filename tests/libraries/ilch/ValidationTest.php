@@ -52,7 +52,7 @@ class ValidationTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidationWithSingleValidator(): array
+    public static function dpForTestValidationWithSingleValidator(): array
     {
         return [
             'int'                            => ['params' => ['testField' => 5], 'expected' => true, 'inverted' => false],
@@ -90,7 +90,7 @@ class ValidationTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidationWithValidatorChainBreakingChain(): array
+    public static function dpForTestValidationWithValidatorChainBreakingChain(): array
     {
         return [
             '2 validators chained - correct'       => [
@@ -162,7 +162,7 @@ class ValidationTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidationWithValidatorChainWithoutBreakingChain(): array
+    public static function dpForTestValidationWithValidatorChainWithoutBreakingChain(): array
     {
         return [
             '2 validators chained - correct'       => [
@@ -230,7 +230,7 @@ class ValidationTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidationWithVariousValidators(): array
+    public static function dpForTestValidationWithVariousValidators(): array
     {
         // Excluding the validators Grecaptcha, Integer (not inverted; already covered above), Exists and Unique.
         return [

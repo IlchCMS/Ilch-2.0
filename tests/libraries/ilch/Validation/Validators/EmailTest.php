@@ -37,44 +37,44 @@ class EmailTest extends TestCase
     /**
      * @return array
      */
-    public function dpForTestValidator(): array
+    public static function dpForTestValidator(): array
     {
         return [
             // email validations
             'email valid' => [
-                'data'                    => $this->createData('test@test.de'),
+                'data'                    => EmailTest::createData('test@test.de'),
                 'expectedIsValid'         => true
             ],
             'empty email valid' => [
-                'data'                    => $this->createData(''),
+                'data'                    => EmailTest::createData(''),
                 'expectedIsValid'         => true
             ],
             'email invalid' => [
-                'data'                    => $this->createData('test'),
+                'data'                    => EmailTest::createData('test'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.email.noValidEmail',
                 'expectedErrorParameters' => []
             ],
             'email invalid missing domain' => [
-                'data'                    => $this->createData('test@'),
+                'data'                    => EmailTest::createData('test@'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.email.noValidEmail',
                 'expectedErrorParameters' => []
             ],
             'email invalid missing name' => [
-                'data'                    => $this->createData('@test.de'),
+                'data'                    => EmailTest::createData('@test.de'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.email.noValidEmail',
                 'expectedErrorParameters' => []
             ],
             'email invalid space as name and domain' => [
-                'data'                    => $this->createData(' @ '),
+                'data'                    => EmailTest::createData(' @ '),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.email.noValidEmail',
                 'expectedErrorParameters' => []
             ],
             'email invalid domain invalid' => [
-                'data'                    => $this->createData(' @.de'),
+                'data'                    => EmailTest::createData(' @.de'),
                 'expectedIsValid'         => false,
                 'expectedErrorKey'        => 'validation.errors.email.noValidEmail',
                 'expectedErrorParameters' => []
@@ -88,7 +88,7 @@ class EmailTest extends TestCase
      * @param string $value
      * @return stdClass
      */
-    private function createData(string $value): stdClass
+    private static function createData(string $value): stdClass
     {
         $data = new stdClass();
         $data->field = 'fieldName';
