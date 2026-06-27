@@ -29,20 +29,20 @@ class Model
      * Must be present and must contain a valid non-empty URL potentially surrounded by spaces.
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-href
-     * @var string|null
+     * @var string
      * @since 2.1.22
      */
-    protected $href;
+    protected string $href = '';
 
     /**
      * The crossorigin of the link tag.
      * How the element handles crossorigin requests
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-crossorigin
-     * @var string|null
+     * @var string
      * @since 2.1.22
      */
-    protected $crossorigin;
+    protected string $crossorigin = '';
 
     /**
      * The rel of the link tag.
@@ -50,39 +50,39 @@ class Model
      * A link element must have a rel attribute.
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-rel
-     * @var string|null
+     * @var string
      * @since 2.1.22
      */
-    protected $rel;
+    protected string $rel = '';
 
     /**
      * The media of the link tag.
      * Applicable media
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-media
-     * @var string|null
+     * @var string
      * @since 2.1.22
      */
-    protected $media;
+    protected string $media = '';
 
     /**
      * Integrity metadata used in Subresource Integrity checks
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-integrity
-     * @var string|null
+     * @var string
      * @since 2.1.50
      */
-    protected $integrity;
+    protected string $integrity = '';
 
     /**
      * The hreflang of the link tag.
      * Language of the linked resource
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-hreflang
-     * @var string|null
+     * @var string
      * @since 2.1.22
      */
-    protected $hreflang;
+    protected string $hreflang = '';
 
     /**
      * The type of the link tag.
@@ -91,74 +91,74 @@ class Model
      * The value must be a valid MIME type.
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-type
-     * @var string|null
+     * @var string
      * @since 2.1.22
      */
-    protected $type;
+    protected string $type = '';
 
     /**
      * Referrer policy for fetches initiated by the element
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-referrerpolicy
-     * @var string|null
+     * @var string
      * @since 2.1.50
      */
-    protected $referrerpolicy;
+    protected string $referrerpolicy = '';
 
     /**
      * The sizes of the link tag.
      * Sizes of the icons (for rel="icon")
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-sizes
-     * @var string|null
+     * @var string
      * @since 2.1.22
      */
-    protected $sizes;
+    protected string $sizes = '';
 
     /**
      * Images to use in different situations, e.g., high-resolution displays, small monitors, etc. (for rel="preload")
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-imagesrcset
-     * @var string|null
+     * @var string
      * @since 2.1.50
      */
-    protected $imagesrcset;
+    protected string $imagesrcset = '';
 
     /**
      * Image sizes for different page layouts (for rel="preload")
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-imagesizes
-     * @var string|null
+     * @var string
      * @since 2.1.50
      */
-    protected $imagesizes;
+    protected string $imagesizes = '';
 
     /**
      * Potential destination for a preload request (for rel="preload" and rel="modulepreload")
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-as
-     * @var string|null
+     * @var string
      * @since 2.1.50
      */
-    protected $as;
+    protected string $as = '';
 
     /**
      * Whether the element is potentially render-blocking
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-blocking
-     * @var string|null
+     * @var string
      * @since 2.1.50
      */
-    protected $blocking;
+    protected string $blocking = '';
 
     /**
      * Color to use when customizing a site's icon (for rel="mask-icon")
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-color
-     * @var string|null
+     * @var string
      * @since 2.1.50
      */
-    protected $color;
+    protected string $color = '';
 
     /**
      * Whether the link is disabled
@@ -167,26 +167,26 @@ class Model
      * @var bool
      * @since 2.1.50
      */
-    protected $disabled = false;
+    protected bool $disabled = false;
 
     /**
      * Sets the priority for fetches initiated by the element
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-fetchpriority
-     * @var string|null
+     * @var string
      * @since 2.1.50
      */
-    protected $fetchpriority;
+    protected string $fetchpriority = '';
 
     /**
      * The title of the link tag.
      * title attribute has special semantics on this element: Title of the link; alternative style sheet set name.
      *
      * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-link-title
-     * @var string|null
+     * @var string
      * @since 2.1.22
      */
-    protected $title;
+    protected string $title = '';
 
     /**
      * Set href for the link tag.
@@ -203,10 +203,10 @@ class Model
 
     /**
      * Get href for the link tag.
-     * @return null|string
+     * @return string
      * @since 2.1.22
      */
-    public function getHref(): ?string
+    public function getHref(): string
     {
         return $this->href;
     }
@@ -233,10 +233,10 @@ class Model
     /**
      * Get crossorigin for the link tag.
      *
-     * @return null|string
+     * @return string
      * @since 2.1.22
      */
-    public function getCrossorigin(): ?string
+    public function getCrossorigin(): string
     {
         return $this->crossorigin;
     }
@@ -284,10 +284,10 @@ class Model
     /**
      * Get the media for the link tag.
      *
-     * @return null|string
+     * @return string
      * @since 2.1.22
      */
-    public function getMedia(): ?string
+    public function getMedia(): string
     {
         return $this->media;
     }
@@ -295,10 +295,10 @@ class Model
     /**
      * Get the Integrity metadata
      *
-     * @return null|string
+     * @return string
      * @since 2.1.50
      */
-    public function getIntegrity(): ?string
+    public function getIntegrity(): string
     {
         return $this->integrity;
     }
@@ -334,10 +334,10 @@ class Model
     /**
      * Get hreflang for the link tag.
      *
-     * @return null|string
+     * @return string
      * @since 2.1.22
      */
-    public function getHreflang(): ?string
+    public function getHreflang(): string
     {
         return $this->hreflang;
     }
@@ -360,10 +360,10 @@ class Model
     /**
      * Get the type for the link tag.
      *
-     * @return null|string
+     * @return string
      * @since 2.1.22
      */
-    public function getType(): ?string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -371,10 +371,10 @@ class Model
     /**
      * Get the referrer policy
      *
-     * @return null|string
+     * @return string
      * @since 2.1.50
      */
-    public function getReferrerpolicy(): ?string
+    public function getReferrerpolicy(): string
     {
         return $this->referrerpolicy;
     }
@@ -413,10 +413,10 @@ class Model
     /**
      * Get sizes for the link tag.
      *
-     * @return null|string
+     * @return string
      * @since 2.1.22
      */
-    public function getSizes(): ?string
+    public function getSizes(): string
     {
         return $this->sizes;
     }
@@ -424,10 +424,10 @@ class Model
     /**
      * Get imagesrcset
      *
-     * @return null|string
+     * @return string
      * @since 2.1.50
      */
-    public function getImagesrcset(): ?string
+    public function getImagesrcset(): string
     {
         return $this->imagesrcset;
     }
@@ -448,10 +448,10 @@ class Model
     /**
      * Get Imagesizes
      *
-     * @return null|string
+     * @return string
      * @since 2.1.50
      */
-    public function getImagesizes(): ?string
+    public function getImagesizes(): string
     {
         return $this->imagesizes;
     }
@@ -472,10 +472,10 @@ class Model
     /**
      * Get as (potential destination for a preload request)
      *
-     * @return null|string
+     * @return string
      * @since 2.1.50
      */
-    public function getAs(): ?string
+    public function getAs(): string
     {
         return $this->as;
     }
@@ -503,10 +503,10 @@ class Model
     /**
      * Get whether the element is potentially render-blocking
      *
-     * @return null|string
+     * @return string
      * @since 2.1.50
      */
-    public function getBlocking(): ?string
+    public function getBlocking(): string
     {
         return $this->blocking;
     }
@@ -531,10 +531,10 @@ class Model
     /**
      * Get color to use when customizing a site's icon (for rel="mask-icon")
      *
-     * @return null|string
+     * @return string
      * @since 2.1.50
      */
-    public function getColor(): ?string
+    public function getColor(): string
     {
         return $this->color;
     }
@@ -579,10 +579,10 @@ class Model
     /**
      * Get the priority for fetches initiated by the element
      *
-     * @return null|string
+     * @return string
      * @since 2.1.50
      */
-    public function getFetchpriority(): ?string
+    public function getFetchpriority(): string
     {
         return $this->fetchpriority;
     }
@@ -620,10 +620,10 @@ class Model
     /**
      * Get title for the link tag.
      *
-     * @return null|string
+     * @return string
      * @since 2.1.22
      */
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
