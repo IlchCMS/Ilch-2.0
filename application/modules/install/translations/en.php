@@ -72,7 +72,8 @@ return [
     'optionalModules' => 'optionally modules',
     'private' => 'private site',
     'clan' => 'clan site',
-    'dependencyMessage' => 'Other modules were selected to fullfill dependencies.',
+    'dependencyMessage' => 'Other modules were selected to fulfill dependencies.',
     'frontend' => 'Frontend',
     'administration' => 'Administration',
+    'sessionResetInstallEmpty' => 'Settings have been lost. For example, the web server may have been restarted in the meantime.'
 ];

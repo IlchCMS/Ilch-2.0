@@ -195,6 +195,11 @@ class Index extends \Ilch\Controller\Frontend
             $errors['phpVersion'] = true;
         }
 
+        if (empty($_SESSION['install'])) {
+            $this->addMessage($this->getTranslator()->trans('sessionResetInstallEmpty'), 'danger');
+            $this->redirect(['action' => 'index']);
+        }
+
         $hostParts = explode(':', $_SESSION['install']['dbHost']);
         $port = (!empty($hostParts[1])) ? $hostParts[1] : null;
         $dbLinkIdentifier = mysqli_connect($_SESSION['install']['dbHost'], $_SESSION['install']['dbUser'], $_SESSION['install']['dbPassword'], null, $port);
@@ -295,6 +300,11 @@ class Index extends \Ilch\Controller\Frontend
     public function databaseAction()
     {
         $fields = ['dbName' => '', 'dbPrefix' => 'ilch_'];
+
+        if (empty($_SESSION['install'])) {
+            $this->addMessage($this->getTranslator()->trans('sessionResetInstallEmpty'), 'danger');
+            $this->redirect(['action' => 'index']);
+        }
 
         $port = null;
         $hostParts = explode(':', $_SESSION['install']['dbHost']);
