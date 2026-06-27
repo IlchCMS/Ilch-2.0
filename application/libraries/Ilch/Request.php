@@ -337,27 +337,43 @@ class Request
      */
     public function isSecure(): bool
     {
-        // Return false if ilch_token is empty or not a string.
-        // Fixes "Illegal offset type in isset or empty"
-        if ($this->isPost()) {
-            if (empty($this->getPost('ilch_token')) || !is_string($this->getPost('ilch_token'))) {
-                return false;
-            }
-        } elseif (empty($this->getParam('ilch_token'))) {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
             return false;
         }
 
-        $returnValue = false;
+        $postToken  = $this->getPost('ilch_token');
+        $paramToken = $this->getParam('ilch_token');
 
-        if (isset($_SESSION['token'][$this->getPost('ilch_token')]) || isset($_SESSION['token'][$this->getParam('ilch_token')])) {
-            $returnValue = true;
+        // Normalize keys so we never index with null
+        $postKey  = is_string($postToken)  ? $postToken  : '';
+        $paramKey = is_string($paramToken) ? $paramToken : '';
+
+        // Return false if the token is an empty string.
+        if ($this->isPost()) {
+            // Only POST matters here
+            if ($postKey === '') {
+                return false;
+            }
+        } else {
+            // Only GET/param matters here
+            if ($paramKey === '') {
+                return false;
+            }
         }
 
-        // Delete the used tokens.
+        // Ensure token storage is an array. Return false if not.
+        if (!isset($_SESSION['token']) || !is_array($_SESSION['token'])) {
+            return false;
+        }
+
+        $returnValue =
+            ($postKey !== '' && isset($_SESSION['token'][$postKey])) ||
+            ($paramKey !== '' && isset($_SESSION['token'][$paramKey]));
+
+        // Delete the used token in a GET request
         // Just delete the token used in a GET-Request to avoid "no valid secure token given, add function getTokenField() to formular".
-        // unset($_SESSION['token'][$this->getPost('ilch_token')]);
-        if (!$this->isPost()) {
-            unset($_SESSION['token'][$this->getParam('ilch_token')]);
+        if (!$this->isPost() && $paramKey !== '') {
+            unset($_SESSION['token'][$paramKey]);
         }
 
         return $returnValue;
