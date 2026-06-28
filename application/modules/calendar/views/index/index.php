@@ -3,6 +3,9 @@
 /** @var \Ilch\View $this */
 ?>
 <link href="<?=$this->getModuleUrl('static/css/calendar.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/js/fullcalendar-7.0.0/dist/skeleton.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/js/fullcalendar-7.0.0/dist/themes/classic/theme.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/js/fullcalendar-7.0.0/dist/themes/classic/palette.css') ?>" rel="stylesheet">
 
 <div class="calendar">
     <div id="loading"></div>
@@ -10,8 +13,9 @@
     <div id='calendar'></div>
 </div>
 
-<script src="<?=$this->getModuleUrl('static/js/fullcalendar-6.1.17/dist/index.global.min.js') ?>"></script>
-<script src="<?=$this->getModuleUrl('static/js/fullcalendar-6.1.17/packages/core/locales-all.global.min.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar-7.0.0/dist/fullcalendar.global.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar-7.0.0/dist/locales-all/global.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar-7.0.0/dist/themes/classic/global.js') ?>"></script>
 <script>
     if (typeof languagecalendar === 'undefined') {
         var languagecalendar = '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>';
@@ -34,12 +38,15 @@
     document.addEventListener('DOMContentLoaded', function() {
         let calendarEl = document.getElementById('calendar');
         let calendar = new FullCalendar.Calendar(calendarEl, {
-            customButtons: {
+            buttons: {
                 icalButton: {
                     text: 'iCal',
                     click: function() {
                         window.location = '<?=BASE_URL . '/index.php/calendar/events/iCal/' ?>';
                     }
+                },
+                listSevenDay: {
+                    text: '<?=$this->getTrans('listweek') ?>',
                 }
             },
             headerToolbar: {
@@ -52,8 +59,7 @@
                     type: 'list',
                     duration: {
                         days: 7
-                    },
-                    buttonText: '<?=$this->getTrans('listweek') ?>'
+                    }
                 }
             },
             locale: languagecalendar,
