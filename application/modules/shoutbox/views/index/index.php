@@ -2,15 +2,16 @@
 
 /** @var \Ilch\View $this */
 
-/** @var string[] $userNames */
-$userNames = $this->get('userNames');
+/** @var \Modules\User\Models\User[] $users */
+$users = $this->get('users');
 
-/** @var string $dummyUserName */
-$dummyUserName = $this->get('dummyUserName');
+/** @var \Modules\User\Models\User $dummyUser */
+$dummyUser = $this->get('dummyUser');
 
 /** @var \Ilch\Pagination $pagination */
 $pagination = $this->get('pagination');
 ?>
+<link href="<?=$this->getModuleUrl('../shoutbox/static/css/shoutbox.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('menuShoutbox') ?></h1>
 <?php if ($this->get('shoutbox')) : ?>
     <table class="table table-striped table-responsive">
@@ -24,9 +25,11 @@ $pagination = $this->get('pagination');
                         <b><?=$this->escape($shoutbox->getName()) ?>:</b> <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>
                     </td>
                 <?php else : ?>
-                    <?php $userName = $userNames[$shoutbox->getUid()] ?? $dummyUserName ?>
+                    <?php $userName = $this->escape(isset($users[$shoutbox->getUid()]) ? $users[$shoutbox->getUid()]->getName() : $dummyUser->getName()) ?>
+                    <?php $avatar = isset($users[$shoutbox->getUid()]) ? $users[$shoutbox->getUid()]->getAvatar() : $dummyUser->getAvatar() ?>
                     <td>
-                        <a href="<?=$this->getUrl('user/profil/index/user/' . $shoutbox->getUid()) ?>"><b><?=$this->escape($userName) ?></b></a>: <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>
+                        <img class="avatar" src="<?=$this->getStaticUrl() . '../' . $avatar ?>" alt="<?=$userName ?>">
+                        <a href="<?=$this->getUrl('user/profil/index/user/' . $shoutbox->getUid()) ?>"><b><?=$userName ?></b></a>: <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>
                     </td>
                 <?php endif; ?>
             </tr>

@@ -29,9 +29,11 @@ class Shoutbox extends \Ilch\Box
             $userId = $this->getUser()->getId();
         }
 
+        $userCache = [];
         $user = $userId ? $userMapper->getUserById($userId) : null;
         $ids = [3];
         if ($user) {
+            $userCache[$user->getId()] = $user;
             $ids = [];
             foreach ($user->getGroups() as $group) {
                 $ids[] = $group->getId();
@@ -70,9 +72,17 @@ class Shoutbox extends \Ilch\Box
             }
         }
 
+        $shoutbox = $shoutboxMapper->getShoutboxLimit($this->getConfig()->get('shoutbox_limit'));
+        foreach ($shoutbox as $shoutboxItem) {
+            if (!isset($userCache[$shoutboxItem->getUid()])) {
+                $userCache[$shoutboxItem->getUid()] = $userMapper->getUserById($shoutboxItem->getUid());
+            }
+        }
+
         $this->getView()->setArray([
+            'userCache'     => $userCache,
             'uniqid'        => $uniqid,
-            'shoutbox'      => $shoutboxMapper->getShoutboxLimit($this->getConfig()->get('shoutbox_limit')),
+            'shoutbox'      => $shoutbox,
             'writeAccess'   => $ids,
             'captchaNeeded' => $captchaNeeded,
             'validation'    => $validation
