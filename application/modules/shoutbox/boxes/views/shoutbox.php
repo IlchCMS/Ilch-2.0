@@ -2,17 +2,13 @@
 
 /** @var \Ilch\View $this */
 
-
-$userMapper = new \Modules\User\Mappers\User();
+/** @var \Modules\User\Models\User[] $userCache */
+$userCache = $this->get('userCache');
 
 /** @var \Ilch\Config\Database $config */
 $config = \Ilch\Registry::get('config');
 ?>
-<style>
-.shoutbox-text {
-    line-break: anywhere;
-}
-</style>
+<link href="<?=$this->getModuleUrl('../shoutbox/static/css/shoutbox.css') ?>" rel="stylesheet">
 <script>
     $(function() {
         let $shoutboxContainer = $('#shoutbox-container<?=$this->get('uniqid') ?>'),
@@ -172,13 +168,13 @@ $config = \Ilch\Registry::get('config');
         </div>
     <?php endif; ?>
 
-    <div class="table-responsive">
+    <div class="shoutbox table-responsive">
         <table class="table table-bordered table-striped">
             <?php if (!empty($this->get('shoutbox'))) : ?>
                 <?php
                 /** @var \Modules\Shoutbox\Models\Shoutbox $shoutbox */
                 foreach ($this->get('shoutbox') as $shoutbox) : ?>
-                    <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
+                    <?php $user = $userCache[$shoutbox->getUid()] ?>
                     <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
                     <tr>
                         <?php if ($shoutbox->getUid() == '0' || empty($user)) : ?>
@@ -188,6 +184,7 @@ $config = \Ilch\Registry::get('config');
                             </td>
                         <?php else : ?>
                             <td>
+                                <img class="avatar" src="<?=$this->getStaticUrl() . '../' . $user->getAvatar() ?>" alt="<?=$this->escape($user->getName()) ?>">
                                 <b><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></b>:<br />
                                 <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>
                             </td>

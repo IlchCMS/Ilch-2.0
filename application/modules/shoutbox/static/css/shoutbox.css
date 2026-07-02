@@ -1,0 +1,21 @@
+.shoutbox-text {
+    word-break: normal;
+    overflow-wrap: break-word;
+}
+
+img.avatar {
+    height: 30px;
+    width: 30px;
+    transition: transform 1.0s;
+    position: relative;
+    z-index: 1;
+}
+
+img.avatar:hover {
+    transform: scale(2);
+    z-index: 9999;
+}
+
+.shoutbox.table-responsive {
+    overflow: visible !important
+}
