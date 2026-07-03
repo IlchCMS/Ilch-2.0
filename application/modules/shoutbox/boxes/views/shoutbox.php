@@ -5,6 +5,12 @@
 /** @var \Modules\User\Models\User[] $userCache */
 $userCache = $this->get('userCache');
 
+/** @var \Ilch\Validation|null $validationResult */
+$validationResult = $this->get('validation');
+
+/** @var int $remainingFloodSeconds */
+$remainingFloodSeconds = (int)$this->get('remainingFloodSeconds');
+
 /** @var \Ilch\Config\Database $config */
 $config = \Ilch\Registry::get('config');
 ?>
@@ -21,7 +27,46 @@ $config = \Ilch\Registry::get('config');
                 $("#shoutbox-form-container<?=$this->get('uniqid') ?>").slideUp(400, function() {
                     $("#shoutbox-button-container<?=$this->get('uniqid') ?>").slideDown(200, afterHide);
                 });
+            },
+            floodTimer = null,
+            startFloodCountdown = function() {
+                let $floodAlert = $shoutboxContainer.find('.shoutbox-flood-alert');
+
+                if (floodTimer !== null) {
+                    clearInterval(floodTimer);
+                    floodTimer = null;
+                }
+
+                if (!$floodAlert.length) {
+                    return;
+                }
+
+                let remaining = parseInt($floodAlert.data('seconds'), 10);
+
+                floodTimer = setInterval(function() {
+                    remaining--;
+
+                    if (remaining <= 0) {
+                        clearInterval(floodTimer);
+                        floodTimer = null;
+                        $floodAlert.slideUp(300, function() {
+                            $(this).remove();
+                        });
+                    } else {
+                        $floodAlert.find('.shoutbox-flood-seconds').text(remaining);
+                    }
+                }, 1000);
             };
+
+        startFloodCountdown();
+
+        // Stop the countdown if the alert gets dismissed manually.
+        $shoutboxContainer.on('closed.bs.alert', '.shoutbox-flood-alert', function() {
+            if (floodTimer !== null) {
+                clearInterval(floodTimer);
+                floodTimer = null;
+            }
+        });
 
 
         //slideup-down
@@ -46,6 +91,7 @@ $config = \Ilch\Registry::get('config');
                     let $htmlWithoutScript = $(html).filter('#shoutbox-container<?=$this->get('uniqid') ?>');
                     hideForm(function() {
                         $shoutboxContainer.html($htmlWithoutScript.html());
+                        startFloodCountdown();
                     });
                 }
             });
@@ -87,6 +133,20 @@ $config = \Ilch\Registry::get('config');
     });
 </script>
 <div id="shoutbox-container<?=$this->get('uniqid') ?>">
+    <?php if ($validationResult !== null && !$validationResult->isValid()) : ?>
+        <div class="alert alert-danger alert-dismissible">
+            <?php foreach ($validationResult->getErrorBag()->getErrorMessages() as $errorMessage) : ?>
+                <div><?=$this->escape($errorMessage) ?></div>
+            <?php endforeach; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+    <?php if ($remainingFloodSeconds > 0) : ?>
+        <div class="alert alert-warning alert-dismissible shoutbox-flood-alert" data-seconds="<?=$remainingFloodSeconds ?>">
+            <?=$this->getTrans('floodProtection', '<span class="shoutbox-flood-seconds">' . $remainingFloodSeconds . '</span>') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
     <div id="shoutbox-button-container<?=$this->get('uniqid') ?>">
         <div class="row mb-3">
             <div class="col-xl-12">

@@ -96,6 +96,26 @@ class Shoutbox extends \Ilch\Mapper
     }
 
     /**
+     * Gets the time of the latest entry of a user.
+     *
+     * @param int $userId
+     * @return string|null
+     * @since 1.8.0
+     */
+    public function getLastPostTimeOfUser(int $userId): ?string
+    {
+        $time = $this->db()->select(['time'])
+            ->from($this->tablename)
+            ->where(['user_id' => $userId])
+            ->order(['id' => 'DESC'])
+            ->limit(1)
+            ->execute()
+            ->fetchCell();
+
+        return $time ?: null;
+    }
+
+    /**
      * Insert shoutbox model.
      *
      * @param ShoutboxModel $shoutbox

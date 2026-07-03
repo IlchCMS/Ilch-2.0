@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'shoutbox',
-        'version' => '1.7.2',
+        'version' => '1.8.0',
         'icon_small' => 'fa-solid fa-bullhorn',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -48,6 +48,7 @@ class Config extends \Ilch\Config\Install
             ->set('shoutbox_messagesPerPageAdmincenter', '20')
             ->set('shoutbox_messagesPerPage', '20')
             ->set('shoutbox_maxtextlength', '50')
+            ->set('shoutbox_floodInterval', '30')
             ->set('shoutbox_writeaccess', '1,2');
     }
 
@@ -60,6 +61,7 @@ class Config extends \Ilch\Config\Install
             ->delete('shoutbox_messagesPerPageAdmincenter')
             ->delete('shoutbox_messagesPerPage')
             ->delete('shoutbox_maxtextlength')
+            ->delete('shoutbox_floodInterval')
             ->delete('shoutbox_writeaccess');
     }
 
@@ -108,6 +110,13 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('shoutbox_messagesPerPageAdmincenter', '20')
                     ->set('shoutbox_messagesPerPage', '20');
+                // no break
+            case "1.7.0":
+            case "1.7.1":
+            case "1.7.2":
+                // Add default value for the flood protection setting.
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('shoutbox_floodInterval', '30');
                 // no break
         }
 

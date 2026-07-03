@@ -73,6 +73,19 @@
             </select>
         </div>
     </div>
+    <div class="row mb-3<?=$this->validation()->hasError('floodInterval') ? ' has-error' : '' ?>">
+        <label for="floodInterval" class="col-xl-2 col-form-label">
+            <?=$this->getTrans('floodInterval') ?>
+        </label>
+        <div class="col-xl-1">
+            <input type="number"
+                   class="form-control"
+                   id="floodInterval"
+                   name="floodInterval"
+                   min="0"
+                   value="<?=$this->originalInput('floodInterval', $this->get('floodInterval')) ?>">
+        </div>
+    </div>
     <h1><?=$this->getTrans('boxSettings') ?></h1>
     <div class="row mb-3<?=$this->validation()->hasError('limit') ? ' has-error' : '' ?>">
         <label for="limit" class="col-xl-2 col-form-label">

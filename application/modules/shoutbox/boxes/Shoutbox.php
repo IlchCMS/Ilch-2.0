@@ -41,6 +41,7 @@ class Shoutbox extends \Ilch\Box
         }
 
         $validation = null;
+        $remainingFloodSeconds = 0;
         if (($this->getRequest()->getPost('saveshoutboxbox_' . $uniqid) || $this->getRequest()->isAjax()) && $this->getRequest()->getPost('bot') === '') {
             Validation::setCustomFieldAliases([
                 'grecaptcha' => 'token',
@@ -63,13 +64,18 @@ class Shoutbox extends \Ilch\Box
             $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
             if ($validation->isValid()) {
-                $date = new \Ilch\Date();
-                $shoutboxModel = new ShoutboxModel();
-                $shoutboxModel->setUid($userId ?? 0)
-                    ->setName($userId ? $user->getName() : $this->getRequest()->getPost('shoutbox_name'))
-                    ->setTextarea($this->getRequest()->getPost('shoutbox_textarea'))
-                    ->setTime($date->toDb());
-                $shoutboxMapper->save($shoutboxModel);
+                $remainingFloodSeconds = $this->getRemainingFloodSeconds($shoutboxMapper, $userId);
+
+                if ($remainingFloodSeconds === 0) {
+                    $date = new \Ilch\Date();
+                    $shoutboxModel = new ShoutboxModel();
+                    $shoutboxModel->setUid($userId ?? 0)
+                        ->setName($userId ? $user->getName() : $this->getRequest()->getPost('shoutbox_name'))
+                        ->setTextarea($this->getRequest()->getPost('shoutbox_textarea'))
+                        ->setTime($date->toDb());
+                    $shoutboxMapper->save($shoutboxModel);
+                    $_SESSION['shoutbox_lastPost'] = time();
+                }
             }
         }
 
@@ -86,7 +92,8 @@ class Shoutbox extends \Ilch\Box
             'shoutbox'      => $shoutbox,
             'writeAccess'   => $ids,
             'captchaNeeded' => $captchaNeeded,
-            'validation'    => $validation
+            'validation'    => $validation,
+            'remainingFloodSeconds' => $remainingFloodSeconds
         ]);
         if ($captchaNeeded) {
             if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {
@@ -97,5 +104,35 @@ class Shoutbox extends \Ilch\Box
                 $this->getView()->set('defaultcaptcha', $defaultcaptcha);
             }
         }
+    }
+
+    /**
+     * Gets the remaining waiting time in seconds until the visitor may post again.
+     * Logged in users are checked against their latest entry, guests against the session.
+     *
+     * @param ShoutboxMapper $shoutboxMapper
+     * @param int|null $userId
+     * @return int
+     */
+    private function getRemainingFloodSeconds(ShoutboxMapper $shoutboxMapper, ?int $userId): int
+    {
+        $floodInterval = (int)$this->getConfig()->get('shoutbox_floodInterval');
+        if ($floodInterval <= 0) {
+            return 0;
+        }
+
+        $lastPostTime = (int)($_SESSION['shoutbox_lastPost'] ?? 0);
+        if ($userId) {
+            $lastEntryTime = $shoutboxMapper->getLastPostTimeOfUser($userId);
+            if ($lastEntryTime) {
+                $lastPostTime = max($lastPostTime, (new \Ilch\Date($lastEntryTime))->getTimestamp());
+            }
+        }
+
+        if ($lastPostTime <= 0) {
+            return 0;
+        }
+
+        return max(0, $floodInterval - (time() - $lastPostTime));
     }
 }
