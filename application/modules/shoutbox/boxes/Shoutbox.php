@@ -46,9 +46,10 @@ class Shoutbox extends \Ilch\Box
                 'grecaptcha' => 'token',
             ]);
 
+            $maxTextLength = (int)$this->getConfig()->get('shoutbox_maxtextlength');
             $validationRules = [
-                'shoutbox_name'     => 'required',
-                'shoutbox_textarea' => 'required',
+                'shoutbox_name'     => 'required|max:100,string',
+                'shoutbox_textarea' => 'required' . ($maxTextLength > 0 ? '|max:' . $maxTextLength . ',string' : ''),
             ];
 
             if ($captchaNeeded) {

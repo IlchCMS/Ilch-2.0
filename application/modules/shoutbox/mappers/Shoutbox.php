@@ -36,7 +36,7 @@ class Shoutbox extends \Ilch\Mapper
      * @return ShoutboxModel[]|array
      *  @since 1.5.0
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['text' => 'ASC'], ?\Ilch\Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select('*')
             ->from($this->tablename)

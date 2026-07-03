@@ -40,7 +40,7 @@
                    class="form-control"
                    id="maxtextlength"
                    name="maxtextlength"
-                   min="1"
+                   min="20"
                    value="<?=$this->originalInput('maxtextlength', $this->get('maxtextlength')) ?>">
         </div>
     </div>

@@ -60,8 +60,12 @@ $config = \Ilch\Registry::get('config');
 
             if ($form.find('[name=shoutbox_name]').val() === '') {
                 alert(<?=json_encode($this->getTrans('missingName')) ?>);
-            } else if ($form.find('[name=shoutbox_textarea]').val() === '') {
+                return;
+            }
+
+            if ($form.find('[name=shoutbox_textarea]').val() === '') {
                 alert(<?=json_encode($this->getTrans('missingMessage')) ?>);
+                return;
             }
 
             <?php if ($this->get('googlecaptcha') && $this->get('googlecaptcha')->getVersion() === 3) : ?>
@@ -123,6 +127,7 @@ $config = \Ilch\Registry::get('config');
                                class="form-control"
                                name="shoutbox_name"
                                placeholder="Name"
+                               maxlength="100"
                                value="<?=($this->getUser() !== null) ? $this->escape($this->getUser()->getName()) : '' ?>"
                                <?=($this->getUser() !== null) ? 'readonly' : 'required' ?> />
                     </div>
