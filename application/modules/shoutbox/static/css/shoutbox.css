@@ -20,6 +20,18 @@ img.avatar:hover {
     overflow: visible !important
 }
 
+/* Fixed layout so long words and URLs wrap instead of stretching the table beyond the box. */
+.shoutbox-messages table,
+table.shoutbox-messages {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.shoutbox-messages td,
+table.shoutbox-messages td {
+    overflow-wrap: break-word;
+}
+
 img.shoutbox-captcha-image {
     max-width: 100%;
     height: auto;

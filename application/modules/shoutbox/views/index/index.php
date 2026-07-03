@@ -14,7 +14,7 @@ $pagination = $this->get('pagination');
 <link href="<?=$this->getModuleUrl('../shoutbox/static/css/shoutbox.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('menuShoutbox') ?></h1>
 <?php if ($this->get('shoutbox')) : ?>
-    <table class="table table-striped table-responsive">
+    <table class="table table-striped table-responsive shoutbox-messages">
         <?php
         /** @var \Modules\Shoutbox\Models\Shoutbox $shoutbox */
         foreach ($this->get('shoutbox') as $shoutbox) : ?>
@@ -34,7 +34,7 @@ $pagination = $this->get('pagination');
                 <?php endif; ?>
             </tr>
             <tr>
-                <td><?=$this->escape($shoutbox->getTextarea()) ?></td>
+                <td class="shoutbox-text"><?=\Modules\Shoutbox\Libs\TextFormatter::format($shoutbox->getTextarea()) ?></td>
             </tr>
         <?php endforeach; ?>
     </table>

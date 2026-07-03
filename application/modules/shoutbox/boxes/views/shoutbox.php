@@ -319,7 +319,7 @@ $config = \Ilch\Registry::get('config');
                         <?php endif; ?>
                     </tr>
                     <tr>
-                        <td class="shoutbox-text"><?=$this->escape($shoutbox->getTextarea()) ?></td>
+                        <td class="shoutbox-text"><?=\Modules\Shoutbox\Libs\TextFormatter::format($shoutbox->getTextarea()) ?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>
