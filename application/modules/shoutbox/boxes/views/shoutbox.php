@@ -69,9 +69,32 @@ $config = \Ilch\Registry::get('config');
                         $floodAlert.find('.shoutbox-flood-seconds').text(remaining);
                     }
                 }, 1000);
+            },
+            autoRefreshPending = false,
+            refreshMessages = function() {
+                if (document.visibilityState === 'hidden' || autoRefreshPending) {
+                    return;
+                }
+
+                autoRefreshPending = true;
+                $.get('<?=$this->getUrl('shoutbox/index/ajax') ?>', function(html) {
+                    // parseHTML (keepScripts=false) prevents the inline script of the response from being executed again.
+                    let $newMessages = $($.parseHTML(html)).find('.shoutbox-messages').first(),
+                        $currentMessages = $shoutboxContainer.find('.shoutbox-messages').first();
+
+                    if ($newMessages.length && $currentMessages.length && $newMessages.html() !== $currentMessages.html()) {
+                        $currentMessages.html($newMessages.html());
+                    }
+                }).always(function() {
+                    autoRefreshPending = false;
+                });
             };
 
         startFloodCountdown();
+
+        <?php if ((int)$this->get('autoRefreshInterval') > 0) : ?>
+        setInterval(refreshMessages, <?=(int)$this->get('autoRefreshInterval') ?> * 1000);
+        <?php endif; ?>
 
         // Stop the countdown if the alert gets dismissed manually.
         $shoutboxContainer.on('closed.bs.alert', '.shoutbox-flood-alert', function() {
@@ -273,7 +296,7 @@ $config = \Ilch\Registry::get('config');
         </div>
     <?php endif; ?>
 
-    <div class="shoutbox table-responsive">
+    <div class="shoutbox shoutbox-messages table-responsive">
         <table class="table table-bordered table-striped">
             <?php if (!empty($this->get('shoutbox'))) : ?>
                 <?php

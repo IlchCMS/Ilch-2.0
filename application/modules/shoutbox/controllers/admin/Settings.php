@@ -56,6 +56,7 @@ class Settings extends \Ilch\Controller\Admin
                 'messagesPerPage' => 'required|integer|min:1',
                 'messagesPerPageAdmincenter' => 'required|integer|min:1',
                 'floodInterval' => 'required|integer|min:0',
+                'autoRefreshInterval' => 'required|integer|min:0',
             ]);
 
             if ($validation->isValid()) {
@@ -70,6 +71,7 @@ class Settings extends \Ilch\Controller\Admin
                     ->set('shoutbox_messagesPerPageAdmincenter', $this->getRequest()->getPost('messagesPerPageAdmincenter'))
                     ->set('shoutbox_maxtextlength', $this->getRequest()->getPost('maxtextlength'))
                     ->set('shoutbox_floodInterval', $this->getRequest()->getPost('floodInterval'))
+                    ->set('shoutbox_autoRefreshInterval', $this->getRequest()->getPost('autoRefreshInterval'))
                     ->set('shoutbox_writeaccess', $writeAccess);
 
                 $this->redirect()
@@ -88,6 +90,7 @@ class Settings extends \Ilch\Controller\Admin
             ->set('messagesPerPageAdmincenter', $this->getConfig()->get('shoutbox_messagesPerPageAdmincenter'))
             ->set('maxtextlength', $this->getConfig()->get('shoutbox_maxtextlength'))
             ->set('floodInterval', $this->getConfig()->get('shoutbox_floodInterval'))
+            ->set('autoRefreshInterval', $this->getConfig()->get('shoutbox_autoRefreshInterval'))
             ->set('userGroupList', $userGroupMapper->getGroupList())
             ->set('writeAccess', $this->getConfig()->get('shoutbox_writeaccess'));
     }

@@ -98,7 +98,8 @@ class Shoutbox extends \Ilch\Box
             'writeAccess'   => $ids,
             'captchaNeeded' => $captchaNeeded,
             'validation'    => $validation,
-            'remainingFloodSeconds' => $remainingFloodSeconds
+            'remainingFloodSeconds' => $remainingFloodSeconds,
+            'autoRefreshInterval' => (int)$this->getConfig()->get('shoutbox_autoRefreshInterval')
         ]);
         if ($captchaNeeded) {
             if (in_array((int)$this->getConfig()->get('captcha'), [2, 3])) {

@@ -87,6 +87,19 @@
         </div>
     </div>
     <h1><?=$this->getTrans('boxSettings') ?></h1>
+    <div class="row mb-3<?=$this->validation()->hasError('autoRefreshInterval') ? ' has-error' : '' ?>">
+        <label for="autoRefreshInterval" class="col-xl-2 col-form-label">
+            <?=$this->getTrans('autoRefreshInterval') ?>
+        </label>
+        <div class="col-xl-1">
+            <input type="number"
+                   class="form-control"
+                   id="autoRefreshInterval"
+                   name="autoRefreshInterval"
+                   min="0"
+                   value="<?=$this->originalInput('autoRefreshInterval', $this->get('autoRefreshInterval')) ?>">
+        </div>
+    </div>
     <div class="row mb-3<?=$this->validation()->hasError('limit') ? ' has-error' : '' ?>">
         <label for="limit" class="col-xl-2 col-form-label">
             <?=$this->getTrans('numberOfMessagesDisplayed') ?>

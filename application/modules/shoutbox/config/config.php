@@ -49,6 +49,7 @@ class Config extends \Ilch\Config\Install
             ->set('shoutbox_messagesPerPage', '20')
             ->set('shoutbox_maxtextlength', '50')
             ->set('shoutbox_floodInterval', '30')
+            ->set('shoutbox_autoRefreshInterval', '30')
             ->set('shoutbox_writeaccess', '1,2');
     }
 
@@ -62,6 +63,7 @@ class Config extends \Ilch\Config\Install
             ->delete('shoutbox_messagesPerPage')
             ->delete('shoutbox_maxtextlength')
             ->delete('shoutbox_floodInterval')
+            ->delete('shoutbox_autoRefreshInterval')
             ->delete('shoutbox_writeaccess');
     }
 
@@ -114,9 +116,10 @@ class Config extends \Ilch\Config\Install
             case "1.7.0":
             case "1.7.1":
             case "1.7.2":
-                // Add default value for the flood protection setting.
+                // Add default values for the flood protection and auto refresh settings.
                 $databaseConfig = new \Ilch\Config\Database($this->db());
-                $databaseConfig->set('shoutbox_floodInterval', '30');
+                $databaseConfig->set('shoutbox_floodInterval', '30')
+                    ->set('shoutbox_autoRefreshInterval', '30');
                 // no break
         }
 
