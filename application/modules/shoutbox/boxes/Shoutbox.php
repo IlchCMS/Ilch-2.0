@@ -63,6 +63,11 @@ class Shoutbox extends \Ilch\Box
 
             $validation = Validation::create($this->getRequest()->getPost(), $validationRules);
 
+            if ($validation->isValid() && !$userId && $userMapper->getUserByName(trim($this->getRequest()->getPost('shoutbox_name'))) !== null) {
+                // Prevent guests from impersonating registered users.
+                $validation->getErrorBag()->addError('shoutbox_name', $this->getTranslator()->trans('nameReserved'));
+            }
+
             if ($validation->isValid()) {
                 $remainingFloodSeconds = $this->getRemainingFloodSeconds($shoutboxMapper, $userId);
 
@@ -70,7 +75,7 @@ class Shoutbox extends \Ilch\Box
                     $date = new \Ilch\Date();
                     $shoutboxModel = new ShoutboxModel();
                     $shoutboxModel->setUid($userId ?? 0)
-                        ->setName($userId ? $user->getName() : $this->getRequest()->getPost('shoutbox_name'))
+                        ->setName($userId ? $user->getName() : trim($this->getRequest()->getPost('shoutbox_name')))
                         ->setTextarea($this->getRequest()->getPost('shoutbox_textarea'))
                         ->setTime($date->toDb());
                     $shoutboxMapper->save($shoutboxModel);

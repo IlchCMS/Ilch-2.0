@@ -25,6 +25,8 @@ return [
     'missingCaptcha' => 'Bitte eine Captcha eingeben.',
     'reset' => 'Zurücksetzen',
     'floodInterval' => 'Mindestwartezeit zwischen Beiträgen (Sekunden, 0 = deaktiviert)',
+    'nameReserved' => 'Dieser Name gehört einem registrierten Benutzer. Bitte wähle einen anderen Namen oder melde dich an.',
+    'reloadCaptcha' => 'Neues Captcha laden',
     'floodProtection' => 'Bitte warte noch %s Sekunden, bevor du erneut etwas schreibst.',
     'shoutbox_name' => 'Name',
     'shoutbox_textarea' => 'Nachricht',

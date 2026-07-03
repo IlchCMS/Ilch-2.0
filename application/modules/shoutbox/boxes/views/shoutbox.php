@@ -11,6 +11,9 @@ $validationResult = $this->get('validation');
 /** @var int $remainingFloodSeconds */
 $remainingFloodSeconds = (int)$this->get('remainingFloodSeconds');
 
+/** @var \Ilch\Validation\ErrorBag|null $errorBag */
+$errorBag = $validationResult !== null ? $validationResult->getErrorBag() : null;
+
 /** @var \Ilch\Config\Database $config */
 $config = \Ilch\Registry::get('config');
 ?>
@@ -18,7 +21,17 @@ $config = \Ilch\Registry::get('config');
 <script>
     $(function() {
         let $shoutboxContainer = $('#shoutbox-container<?=$this->get('uniqid') ?>'),
+            reloadCaptcha = function() {
+                let $img = $shoutboxContainer.find('.shoutbox-captcha-image');
+
+                if ($img.length) {
+                    $img.attr('src', '<?=$this->getUrl() ?>/application/libraries/Captcha/Captcha.php?' + Math.random());
+                }
+            },
             showForm = function() {
+                // Reload the captcha so the visible image always matches the session value,
+                // even with multiple captchas on the page.
+                reloadCaptcha();
                 $("#shoutbox-button-container<?=$this->get('uniqid') ?>").slideUp(200, function() {
                     $("#shoutbox-form-container<?=$this->get('uniqid') ?>").slideDown(400);
                 });
@@ -66,6 +79,12 @@ $config = \Ilch\Registry::get('config');
                 clearInterval(floodTimer);
                 floodTimer = null;
             }
+        });
+
+        // Load a new captcha on demand.
+        $shoutboxContainer.on('click', '.shoutbox-captcha-reload', function() {
+            reloadCaptcha();
+            $shoutboxContainer.find('input[name=captcha]').val('').trigger('focus');
         });
 
 
@@ -181,7 +200,7 @@ $config = \Ilch\Registry::get('config');
                                placeholder="Bot" />
                     </div>
                 </div>
-                <div class="row mb-3<?=$this->validation()->hasError('shoutbox_name') ? ' has-error' : '' ?>">
+                <div class="row mb-3<?=($errorBag !== null && $errorBag->hasError('shoutbox_name')) ? ' has-error' : '' ?>">
                     <div class="col-xl-12">
                         <input type="text"
                                class="form-control"
@@ -192,7 +211,7 @@ $config = \Ilch\Registry::get('config');
                                <?=($this->getUser() !== null) ? 'readonly' : 'required' ?> />
                     </div>
                 </div>
-                <div class="row mb-3<?=$this->validation()->hasError('shoutbox_textarea') ? ' has-error' : '' ?>">
+                <div class="row mb-3<?=($errorBag !== null && $errorBag->hasError('shoutbox_textarea')) ? ' has-error' : '' ?>">
                     <div class="col-xl-12">
                         <textarea class="form-control"
                                   style="resize: vertical"
@@ -207,7 +226,28 @@ $config = \Ilch\Registry::get('config');
                 <div class="row mb-3">
                     <div class="col-xl-12">
                         <?php if ($this->get('captchaNeeded') && $this->get('defaultcaptcha')) : ?>
-                            <?=$this->get('defaultcaptcha')->getCaptcha($this) ?>
+                            <div class="row mb-3<?=($errorBag !== null && $errorBag->hasError('captcha')) ? ' has-error' : '' ?>">
+                                <div class="col-xl-12 mb-2">
+                                    <img src="<?=$this->getUrl() ?>/application/libraries/Captcha/Captcha.php"
+                                         class="shoutbox-captcha-image"
+                                         alt="<?=$this->getTrans('captcha') ?>">
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="input-group">
+                                        <input type="text"
+                                               class="form-control"
+                                               name="captcha"
+                                               autocomplete="off"
+                                               placeholder="<?=$this->getTrans('captcha') ?>"
+                                               required>
+                                        <span class="input-group-text">
+                                            <a href="javascript:void(0)" class="shoutbox-captcha-reload" title="<?=$this->getTrans('reloadCaptcha') ?>">
+                                                <i class="fa-solid fa-arrows-rotate"></i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         <?php endif; ?>
                         <div class="float-start">
                             <?php

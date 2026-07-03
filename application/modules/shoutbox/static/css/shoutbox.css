@@ -19,3 +19,8 @@ img.avatar:hover {
 .shoutbox.table-responsive {
     overflow: visible !important
 }
+
+img.shoutbox-captcha-image {
+    max-width: 100%;
+    height: auto;
+}
