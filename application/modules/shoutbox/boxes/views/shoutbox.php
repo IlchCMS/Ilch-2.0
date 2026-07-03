@@ -110,6 +110,19 @@ $config = \Ilch\Registry::get('config');
             $shoutboxContainer.find('input[name=captcha]').val('').trigger('focus');
         });
 
+        // Delete an own entry and refresh the list afterwards.
+        $shoutboxContainer.on('click', '.shoutbox-delete', function(ev) {
+            ev.preventDefault();
+
+            if (!confirm(<?=json_encode($this->getTrans('confirmDelete')) ?>)) {
+                return;
+            }
+
+            $.get($(this).attr('href')).always(function() {
+                refreshMessages();
+            });
+        });
+
 
         //slideup-down
         $shoutboxContainer.on('click', '#shoutbox-slide-down<?=$this->get('uniqid') ?>', showForm);
@@ -299,19 +312,31 @@ $config = \Ilch\Registry::get('config');
     <div class="shoutbox shoutbox-messages table-responsive">
         <table class="table table-bordered table-striped">
             <?php if (!empty($this->get('shoutbox'))) : ?>
+                <?php $currentUser = $this->getUser(); ?>
                 <?php
                 /** @var \Modules\Shoutbox\Models\Shoutbox $shoutbox */
                 foreach ($this->get('shoutbox') as $shoutbox) : ?>
                     <?php $user = $userCache[$shoutbox->getUid()] ?>
                     <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
+                    <?php $canDelete = $currentUser !== null && ($shoutbox->getUid() === $currentUser->getId() || $currentUser->isAdmin()); ?>
+                    <?php
+                    $deleteIcon = '';
+                    if ($canDelete) {
+                        $deleteIcon = '<a href="' . $this->getUrl(['module' => 'shoutbox', 'controller' => 'index', 'action' => 'delete', 'id' => $shoutbox->getId()], null, true) . '"'
+                            . ' class="float-end shoutbox-delete text-danger" title="' . $this->getTrans('deleteOwnPost') . '">'
+                            . '<i class="fa-solid fa-trash-can"></i></a>';
+                    }
+                    ?>
                     <tr>
                         <?php if ($shoutbox->getUid() == '0' || empty($user)) : ?>
                             <td>
+                                <?=$deleteIcon ?>
                                 <b><?=$this->escape($shoutbox->getName()) ?>:</b><br />
                                 <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>
                             </td>
                         <?php else : ?>
                             <td>
+                                <?=$deleteIcon ?>
                                 <img class="avatar" src="<?=$this->getStaticUrl() . '../' . $user->getAvatar() ?>" alt="<?=$this->escape($user->getName()) ?>">
                                 <b><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></b>:<br />
                                 <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>

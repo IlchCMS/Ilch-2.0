@@ -28,6 +28,8 @@ return [
     'nameReserved' => 'This name belongs to a registered user. Please choose a different name or log in.',
     'reloadCaptcha' => 'Load new captcha',
     'autoRefreshInterval' => 'Auto refresh of the box (seconds, 0 = disabled)',
+    'deleteOwnPost' => 'Delete post',
+    'confirmDelete' => 'Really delete this post?',
     'floodProtection' => 'Please wait %s more seconds before posting again.',
     'shoutbox_name' => 'Name',
     'shoutbox_textarea' => 'Message',

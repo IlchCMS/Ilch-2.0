@@ -51,4 +51,25 @@ class Index extends \Ilch\Controller\Frontend
     {
         echo $this->getLayout()->getBox('shoutbox', 'shoutbox');
     }
+
+    /**
+     * Deletes an own entry (or any entry as admin).
+     *
+     * @since 1.8.0
+     */
+    public function deleteAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $shoutboxMapper = new ShoutboxMapper();
+            $entry = $shoutboxMapper->getEntryById((int)$this->getRequest()->getParam('id'));
+            $user = $this->getUser();
+
+            if ($entry !== null && $user !== null && ($entry->getUid() === $user->getId() || $user->isAdmin())) {
+                $shoutboxMapper->delete($entry->getId());
+                $this->addMessage('deleteSuccess');
+            }
+        }
+
+        $this->redirect(['action' => 'index']);
+    }
 }

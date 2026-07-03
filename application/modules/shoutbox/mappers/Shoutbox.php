@@ -96,6 +96,20 @@ class Shoutbox extends \Ilch\Mapper
     }
 
     /**
+     * Gets a shoutbox entry by its id.
+     *
+     * @param int $id
+     * @return ShoutboxModel|null
+     * @since 1.8.0
+     */
+    public function getEntryById(int $id): ?ShoutboxModel
+    {
+        $entries = $this->getEntriesBy(['id' => $id]);
+
+        return $entries[0] ?? null;
+    }
+
+    /**
      * Gets the time of the latest entry of a user.
      *
      * @param int $userId
