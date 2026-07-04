@@ -64,7 +64,18 @@ jobs:
         if: steps.changed.outputs.files != ''
         run: |
           echo "Running phpcs on: ${{ steps.changed.outputs.files }}"
-          phpcs -p --extensions=php ${{ steps.changed.outputs.files }}
+          # phpcs applies the exclude-patterns from phpcs.xml. If every changed
+          # file is excluded (e.g. bundled libraries like Captcha/Thumb or module
+          # views), it reports "No files were checked" and exits with code 16.
+          # Treat that case as success instead of failing the check.
+          phpcs -p --extensions=php ${{ steps.changed.outputs.files }} || {
+            ec=$?
+            if [ "$ec" -eq 16 ]; then
+              echo "All changed files are excluded by phpcs.xml - nothing to check."
+              exit 0
+            fi
+            exit $ec
+          }
 
       - name: Run PHPCompatibility (phpcs standard) on changed files
         if: steps.changed.outputs.files != ''
