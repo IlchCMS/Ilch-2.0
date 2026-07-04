@@ -18,6 +18,7 @@ $errorBag = $validationResult !== null ? $validationResult->getErrorBag() : null
 $config = \Ilch\Registry::get('config');
 ?>
 <link href="<?=$this->getModuleUrl('../shoutbox/static/css/shoutbox.css') ?>" rel="stylesheet">
+<?=\Modules\Shoutbox\Libs\DesignCss::render() ?>
 <script>
     $(function() {
         let $shoutboxContainer = $('#shoutbox-container<?=$this->get('uniqid') ?>'),
@@ -187,7 +188,7 @@ $config = \Ilch\Registry::get('config');
         });
     });
 </script>
-<div id="shoutbox-container<?=$this->get('uniqid') ?>">
+<div id="shoutbox-container<?=$this->get('uniqid') ?>" class="shoutbox-box">
     <?php if ($validationResult !== null && !$validationResult->isValid()) : ?>
         <div class="alert alert-danger alert-dismissible">
             <?php foreach ($validationResult->getErrorBag()->getErrorMessages() as $errorMessage) : ?>
@@ -337,7 +338,9 @@ $config = \Ilch\Registry::get('config');
                         <?php else : ?>
                             <td>
                                 <?=$deleteIcon ?>
-                                <img class="avatar" src="<?=$this->getStaticUrl() . '../' . $user->getAvatar() ?>" alt="<?=$this->escape($user->getName()) ?>">
+                                <?php if ($config->get('shoutbox_showAvatars') !== '0') : ?>
+                                    <img class="avatar" src="<?=$this->getStaticUrl() . '../' . $user->getAvatar() ?>" alt="<?=$this->escape($user->getName()) ?>">
+                                <?php endif; ?>
                                 <b><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></b>:<br />
                                 <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>
                             </td>

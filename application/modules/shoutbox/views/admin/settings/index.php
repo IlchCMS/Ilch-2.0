@@ -113,6 +113,89 @@
                    value="<?=$this->originalInput('limit', $this->get('limit')) ?>">
         </div>
     </div>
+    <h1><?=$this->getTrans('designSettings') ?></h1>
+    <?php
+    $colorFields = [
+        'designBackgroundColor' => '#ffffff',
+        'designTextColor' => '#212529',
+        'designNameColor' => '#0d6efd',
+        'designBoxBackgroundColor' => '#ffffff',
+        'designButtonColor' => '#6c757d',
+        'designButtonTextColor' => '#ffffff',
+        'designInputBackgroundColor' => '#ffffff',
+        'designInputTextColor' => '#212529',
+    ];
+    ?>
+    <?php foreach ($colorFields as $colorField => $colorFallback) : ?>
+        <?php $colorValue = $this->get($colorField) ?>
+        <div class="row mb-3">
+            <label for="<?=$colorField ?>" class="col-xl-2 col-form-label">
+                <?=$this->getTrans($colorField) ?>
+            </label>
+            <div class="col-xl-1">
+                <input type="color"
+                       class="form-control form-control-color"
+                       id="<?=$colorField ?>"
+                       name="<?=$colorField ?>"
+                       value="<?=$this->escape($colorValue !== '' ? $colorValue : $colorFallback) ?>">
+            </div>
+            <div class="col-xl-3">
+                <div class="form-check mt-2">
+                    <input type="checkbox"
+                           class="form-check-input"
+                           id="<?=$colorField ?>Default"
+                           name="<?=$colorField ?>Default"
+                           value="1"
+                           <?=$colorValue === '' ? 'checked' : '' ?>>
+                    <label class="form-check-label" for="<?=$colorField ?>Default">
+                        <?=$this->getTrans('useThemeDefault') ?>
+                    </label>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    <div class="row mb-3<?=$this->validation()->hasError('designFontSize') ? ' has-error' : '' ?>">
+        <label for="designFontSize" class="col-xl-2 col-form-label">
+            <?=$this->getTrans('designFontSize') ?>
+        </label>
+        <div class="col-xl-1">
+            <input type="number"
+                   class="form-control"
+                   id="designFontSize"
+                   name="designFontSize"
+                   min="0"
+                   max="50"
+                   value="<?=$this->originalInput('designFontSize', $this->get('designFontSize')) ?>">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="showAvatars" class="col-xl-2 col-form-label">
+            <?=$this->getTrans('showAvatars') ?>
+        </label>
+        <div class="col-xl-3">
+            <div class="form-check form-switch mt-2">
+                <input type="checkbox"
+                       class="form-check-input"
+                       id="showAvatars"
+                       name="showAvatars"
+                       value="1"
+                       <?=$this->get('showAvatars') ? 'checked' : '' ?>>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="customCss" class="col-xl-2 col-form-label">
+            <?=$this->getTrans('customCss') ?>
+        </label>
+        <div class="col-xl-6">
+            <textarea class="form-control font-monospace"
+                      style="resize: vertical"
+                      id="customCss"
+                      name="customCss"
+                      rows="6"
+                      placeholder=".shoutbox-messages td { }"><?=$this->escape($this->originalInput('customCss', $this->get('customCss'))) ?></textarea>
+        </div>
+    </div>
     <?=$this->getSaveBar() ?>
 </form>
 

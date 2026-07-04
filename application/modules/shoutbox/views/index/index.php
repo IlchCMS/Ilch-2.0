@@ -10,8 +10,12 @@ $dummyUser = $this->get('dummyUser');
 
 /** @var \Ilch\Pagination $pagination */
 $pagination = $this->get('pagination');
+
+/** @var \Ilch\Config\Database $config */
+$config = \Ilch\Registry::get('config');
 ?>
 <link href="<?=$this->getModuleUrl('../shoutbox/static/css/shoutbox.css') ?>" rel="stylesheet">
+<?=\Modules\Shoutbox\Libs\DesignCss::render() ?>
 <h1><?=$this->getTrans('menuShoutbox') ?></h1>
 <?php if ($this->get('shoutbox')) : ?>
     <?php $currentUser = $this->getUser(); ?>
@@ -41,7 +45,9 @@ $pagination = $this->get('pagination');
                     <?php $avatar = isset($users[$shoutbox->getUid()]) ? $users[$shoutbox->getUid()]->getAvatar() : $dummyUser->getAvatar() ?>
                     <td>
                         <?=$deleteIcon ?>
-                        <img class="avatar" src="<?=$this->getStaticUrl() . '../' . $avatar ?>" alt="<?=$userName ?>">
+                        <?php if ($config->get('shoutbox_showAvatars') !== '0') : ?>
+                            <img class="avatar" src="<?=$this->getStaticUrl() . '../' . $avatar ?>" alt="<?=$userName ?>">
+                        <?php endif; ?>
                         <a href="<?=$this->getUrl('user/profil/index/user/' . $shoutbox->getUid()) ?>"><b><?=$userName ?></b></a>: <span class="small"><?=$date->format('d.m.Y H:i', true) ?></span>
                     </td>
                 <?php endif; ?>

@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'shoutbox',
-        'version' => '1.8.0',
+        'version' => '1.9.0',
         'icon_small' => 'fa-solid fa-bullhorn',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -50,7 +50,18 @@ class Config extends \Ilch\Config\Install
             ->set('shoutbox_maxtextlength', '50')
             ->set('shoutbox_floodInterval', '30')
             ->set('shoutbox_autoRefreshInterval', '30')
-            ->set('shoutbox_writeaccess', '1,2');
+            ->set('shoutbox_writeaccess', '1,2')
+            ->set('shoutbox_designBackgroundColor', '')
+            ->set('shoutbox_designTextColor', '')
+            ->set('shoutbox_designNameColor', '')
+            ->set('shoutbox_designBoxBackgroundColor', '')
+            ->set('shoutbox_designButtonColor', '')
+            ->set('shoutbox_designButtonTextColor', '')
+            ->set('shoutbox_designInputBackgroundColor', '')
+            ->set('shoutbox_designInputTextColor', '')
+            ->set('shoutbox_designFontSize', '0')
+            ->set('shoutbox_showAvatars', '1')
+            ->set('shoutbox_customCss', '');
     }
 
     public function uninstall()
@@ -64,7 +75,18 @@ class Config extends \Ilch\Config\Install
             ->delete('shoutbox_maxtextlength')
             ->delete('shoutbox_floodInterval')
             ->delete('shoutbox_autoRefreshInterval')
-            ->delete('shoutbox_writeaccess');
+            ->delete('shoutbox_writeaccess')
+            ->delete('shoutbox_designBackgroundColor')
+            ->delete('shoutbox_designTextColor')
+            ->delete('shoutbox_designNameColor')
+            ->delete('shoutbox_designBoxBackgroundColor')
+            ->delete('shoutbox_designButtonColor')
+            ->delete('shoutbox_designButtonTextColor')
+            ->delete('shoutbox_designInputBackgroundColor')
+            ->delete('shoutbox_designInputTextColor')
+            ->delete('shoutbox_designFontSize')
+            ->delete('shoutbox_showAvatars')
+            ->delete('shoutbox_customCss');
     }
 
     public function getInstallSql(): string
@@ -120,6 +142,21 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig = new \Ilch\Config\Database($this->db());
                 $databaseConfig->set('shoutbox_floodInterval', '30')
                     ->set('shoutbox_autoRefreshInterval', '30');
+                // no break
+            case "1.8.0":
+                // Add default values for the design settings.
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $databaseConfig->set('shoutbox_designBackgroundColor', '')
+                    ->set('shoutbox_designTextColor', '')
+                    ->set('shoutbox_designNameColor', '')
+                    ->set('shoutbox_designBoxBackgroundColor', '')
+                    ->set('shoutbox_designButtonColor', '')
+                    ->set('shoutbox_designButtonTextColor', '')
+                    ->set('shoutbox_designInputBackgroundColor', '')
+                    ->set('shoutbox_designInputTextColor', '')
+                    ->set('shoutbox_designFontSize', '0')
+                    ->set('shoutbox_showAvatars', '1')
+                    ->set('shoutbox_customCss', '');
                 // no break
         }
 
