@@ -33,4 +33,7 @@ return [
     'floodProtection' => 'Bitte warte noch %s Sekunden, bevor du erneut etwas schreibst.',
     'shoutbox_name' => 'Name',
     'shoutbox_textarea' => 'Nachricht',
+    'search' => 'Suchen',
+    'editEntry' => 'Eintrag bearbeiten',
+    'entryNotFound' => 'Der Eintrag wurde nicht gefunden.',
 ];

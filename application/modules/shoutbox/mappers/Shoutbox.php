@@ -34,15 +34,22 @@ class Shoutbox extends \Ilch\Mapper
      * @param array $where
      * @param array $orderBy
      * @param \Ilch\Pagination|null $pagination
+     * @param string $search filters entries by name or text (since 1.8.0)
      * @return ShoutboxModel[]|array
      *  @since 1.5.0
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?\Ilch\Pagination $pagination = null, string $search = ''): ?array
     {
         $select = $this->db()->select('*')
             ->from($this->tablename)
             ->where($where)
             ->order($orderBy);
+
+        if ($search !== '') {
+            // Escape LIKE wildcards so they are matched literally.
+            $like = '%' . addcslashes($search, '\\%_') . '%';
+            $select->andWhere($select->orX(['name LIKE' => $like, 'textarea LIKE' => $like]));
+        }
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())

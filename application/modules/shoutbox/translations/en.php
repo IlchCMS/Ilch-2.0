@@ -33,4 +33,7 @@ return [
     'floodProtection' => 'Please wait %s more seconds before posting again.',
     'shoutbox_name' => 'Name',
     'shoutbox_textarea' => 'Message',
+    'search' => 'Search',
+    'editEntry' => 'Edit entry',
+    'entryNotFound' => 'The entry was not found.',
 ];
