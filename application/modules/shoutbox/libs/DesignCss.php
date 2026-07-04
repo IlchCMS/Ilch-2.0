@@ -13,7 +13,7 @@ use Ilch\Registry;
  * Renders the configured design overrides for the shoutbox as a style block.
  * Used by the box and the frontend page so both look the same.
  *
- * @since 1.9.0
+ * @since 1.8.0
  */
 class DesignCss
 {
