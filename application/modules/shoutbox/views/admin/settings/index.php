@@ -124,18 +124,19 @@
                 </div>
                 <div class="card-body">
                     <?php
-                    $renderColorField = function (string $colorField, string $colorFallback) {
-                        $colorValue = $this->get($colorField); ?>
+                    $view = $this;
+                    $renderColorField = function (string $colorField, string $colorFallback) use ($view) {
+                        $colorValue = $view->get($colorField); ?>
                         <div class="mb-3">
                             <label for="<?=$colorField ?>" class="form-label mb-1">
-                                <?=$this->getTrans($colorField) ?>
+                                <?=$view->getTrans($colorField) ?>
                             </label>
                             <div class="d-flex align-items-center gap-3">
                                 <input type="color"
                                        class="form-control form-control-color"
                                        id="<?=$colorField ?>"
                                        name="<?=$colorField ?>"
-                                       value="<?=$this->escape($colorValue !== '' ? $colorValue : $colorFallback) ?>">
+                                       value="<?=$view->escape($colorValue !== '' ? $colorValue : $colorFallback) ?>">
                                 <div class="form-check mb-0">
                                     <input type="checkbox"
                                            class="form-check-input"
@@ -144,7 +145,7 @@
                                            value="1"
                                            <?=$colorValue === '' ? 'checked' : '' ?>>
                                     <label class="form-check-label" for="<?=$colorField ?>Default">
-                                        <?=$this->getTrans('useThemeDefault') ?>
+                                        <?=$view->getTrans('useThemeDefault') ?>
                                     </label>
                                 </div>
                             </div>
