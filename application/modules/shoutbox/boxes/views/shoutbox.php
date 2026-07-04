@@ -316,7 +316,7 @@ $config = \Ilch\Registry::get('config');
                 <?php
                 /** @var \Modules\Shoutbox\Models\Shoutbox $shoutbox */
                 foreach ($this->get('shoutbox') as $shoutbox) : ?>
-                    <?php $user = $userCache[$shoutbox->getUid()] ?>
+                    <?php $user = $userCache[$shoutbox->getUid()] ?? null ?>
                     <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
                     <?php $canDelete = $currentUser !== null && ($shoutbox->getUid() === $currentUser->getId() || $currentUser->isAdmin()); ?>
                     <?php

@@ -85,11 +85,8 @@ class Shoutbox extends \Ilch\Box
         }
 
         $shoutbox = $shoutboxMapper->getShoutboxLimit($this->getConfig()->get('shoutbox_limit'));
-        foreach ($shoutbox as $shoutboxItem) {
-            if (!isset($userCache[$shoutboxItem->getUid()])) {
-                $userCache[$shoutboxItem->getUid()] = $userMapper->getUserById($shoutboxItem->getUid());
-            }
-        }
+        // Keep the already loaded current user, fetch the remaining ones with a single query.
+        $userCache += $shoutboxMapper->getUsersOfEntries($shoutbox);
 
         $this->getView()->setArray([
             'userCache'     => $userCache,

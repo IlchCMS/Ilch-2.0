@@ -8,6 +8,7 @@
 namespace Modules\Shoutbox\Mappers;
 
 use Modules\Shoutbox\Models\Shoutbox as ShoutboxModel;
+use Modules\User\Mappers\User as UserMapper;
 
 class Shoutbox extends \Ilch\Mapper
 {
@@ -107,6 +108,35 @@ class Shoutbox extends \Ilch\Mapper
         $entries = $this->getEntriesBy(['id' => $id]);
 
         return $entries[0] ?? null;
+    }
+
+    /**
+     * Gets the users of the given entries with a single query instead of one per entry.
+     * Guest entries (uid 0) are skipped.
+     *
+     * @param ShoutboxModel[] $entries
+     * @return \Modules\User\Models\User[] user id => user model
+     * @since 1.8.0
+     */
+    public function getUsersOfEntries(array $entries): array
+    {
+        $userIds = [];
+        foreach ($entries as $entry) {
+            if ($entry->getUid()) {
+                $userIds[$entry->getUid()] = $entry->getUid();
+            }
+        }
+
+        if (empty($userIds)) {
+            return [];
+        }
+
+        $users = [];
+        foreach ((new UserMapper())->getUserList(['id' => array_values($userIds)]) ?? [] as $user) {
+            $users[$user->getId()] = $user;
+        }
+
+        return $users;
     }
 
     /**

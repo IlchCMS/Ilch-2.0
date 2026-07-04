@@ -67,21 +67,14 @@ class Index extends \Ilch\Controller\Admin
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $shoutboxEntries = $shoutboxMapper->getEntriesBy([], ['id' => 'DESC'], $pagination);
-        $userNameCache = [];
+        $userNames = [];
 
-        foreach ($shoutboxEntries as $entry) {
-            if (!isset($userNameCache[$entry->getUid()])) {
-                // User not in cache.
-                $user = $userMapper->getUserById($entry->getUid());
-
-                if ($user) {
-                    $userNameCache[$entry->getUid()] = $user->getName();
-                }
-            }
+        foreach ($shoutboxMapper->getUsersOfEntries($shoutboxEntries) as $userId => $user) {
+            $userNames[$userId] = $user->getName();
         }
 
         $this->getView()->set('dummyUserName', $userMapper->getDummyUser()->getName());
-        $this->getView()->set('userNames', $userNameCache);
+        $this->getView()->set('userNames', $userNames);
         $this->getView()->set('shoutbox', $shoutboxEntries);
         $this->getView()->set('pagination', $pagination);
     }
