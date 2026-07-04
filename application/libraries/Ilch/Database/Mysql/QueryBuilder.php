@@ -180,7 +180,7 @@ abstract class QueryBuilder
             if (\is_array($where)) {
                 $this->where->addParts($this->createCompositePartArray($where));
             } elseif ($where instanceof Expression\CompositePart) {
-                $this->where->addPart($where);
+                $this->where->add($where);
             } else {
                 throw new \InvalidArgumentException('array or Expression\CompositePart expected');
             }
