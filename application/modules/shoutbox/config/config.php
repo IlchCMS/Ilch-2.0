@@ -9,9 +9,35 @@ namespace Modules\Shoutbox\Config;
 
 class Config extends \Ilch\Config\Install
 {
+    /**
+     * Default values for all settings of the module. Used on install and to
+     * repair missing settings on update. The admincenter settings page falls
+     * back to these defaults for missing config values.
+     */
+    public const SETTINGS_DEFAULTS = [
+        'shoutbox_limit' => '5',
+        'shoutbox_messagesPerPageAdmincenter' => '20',
+        'shoutbox_messagesPerPage' => '20',
+        'shoutbox_maxtextlength' => '50',
+        'shoutbox_floodInterval' => '30',
+        'shoutbox_autoRefreshInterval' => '30',
+        'shoutbox_writeaccess' => '1,2',
+        'shoutbox_designBackgroundColor' => '',
+        'shoutbox_designTextColor' => '',
+        'shoutbox_designNameColor' => '',
+        'shoutbox_designBoxBackgroundColor' => '',
+        'shoutbox_designButtonColor' => '',
+        'shoutbox_designButtonTextColor' => '',
+        'shoutbox_designInputBackgroundColor' => '',
+        'shoutbox_designInputTextColor' => '',
+        'shoutbox_designFontSize' => '0',
+        'shoutbox_showAvatars' => '1',
+        'shoutbox_customCss' => '',
+    ];
+
     public $config = [
         'key' => 'shoutbox',
-        'version' => '1.8.0',
+        'version' => '1.8.1',
         'icon_small' => 'fa-solid fa-bullhorn',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -44,24 +70,9 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
-        $databaseConfig->set('shoutbox_limit', '5')
-            ->set('shoutbox_messagesPerPageAdmincenter', '20')
-            ->set('shoutbox_messagesPerPage', '20')
-            ->set('shoutbox_maxtextlength', '50')
-            ->set('shoutbox_floodInterval', '30')
-            ->set('shoutbox_autoRefreshInterval', '30')
-            ->set('shoutbox_writeaccess', '1,2')
-            ->set('shoutbox_designBackgroundColor', '')
-            ->set('shoutbox_designTextColor', '')
-            ->set('shoutbox_designNameColor', '')
-            ->set('shoutbox_designBoxBackgroundColor', '')
-            ->set('shoutbox_designButtonColor', '')
-            ->set('shoutbox_designButtonTextColor', '')
-            ->set('shoutbox_designInputBackgroundColor', '')
-            ->set('shoutbox_designInputTextColor', '')
-            ->set('shoutbox_designFontSize', '0')
-            ->set('shoutbox_showAvatars', '1')
-            ->set('shoutbox_customCss', '');
+        foreach (self::SETTINGS_DEFAULTS as $key => $value) {
+            $databaseConfig->set($key, $value);
+        }
     }
 
     public function uninstall()
@@ -69,24 +80,9 @@ class Config extends \Ilch\Config\Install
         $this->db()->drop('shoutbox', true);
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
-        $databaseConfig->delete('shoutbox_limit')
-            ->delete('shoutbox_messagesPerPageAdmincenter')
-            ->delete('shoutbox_messagesPerPage')
-            ->delete('shoutbox_maxtextlength')
-            ->delete('shoutbox_floodInterval')
-            ->delete('shoutbox_autoRefreshInterval')
-            ->delete('shoutbox_writeaccess')
-            ->delete('shoutbox_designBackgroundColor')
-            ->delete('shoutbox_designTextColor')
-            ->delete('shoutbox_designNameColor')
-            ->delete('shoutbox_designBoxBackgroundColor')
-            ->delete('shoutbox_designButtonColor')
-            ->delete('shoutbox_designButtonTextColor')
-            ->delete('shoutbox_designInputBackgroundColor')
-            ->delete('shoutbox_designInputTextColor')
-            ->delete('shoutbox_designFontSize')
-            ->delete('shoutbox_showAvatars')
-            ->delete('shoutbox_customCss');
+        foreach (array_keys(self::SETTINGS_DEFAULTS) as $key) {
+            $databaseConfig->delete($key);
+        }
     }
 
     public function getInstallSql(): string
@@ -130,28 +126,18 @@ class Config extends \Ilch\Config\Install
             case "1.6.1":
             case "1.6.2":
             case "1.6.3":
-                // Add default values for new settings.
-                $databaseConfig = new \Ilch\Config\Database($this->db());
-                $databaseConfig->set('shoutbox_messagesPerPageAdmincenter', '20')
-                    ->set('shoutbox_messagesPerPage', '20');
-                // no break
             case "1.7.0":
             case "1.7.1":
-                // Add default values for the flood protection, auto refresh and design settings.
+            case "1.7.2":
+            case "1.8.0":
+                // Add default values for settings added in later versions.
+                // Only adds missing settings without overwriting existing values.
                 $databaseConfig = new \Ilch\Config\Database($this->db());
-                $databaseConfig->set('shoutbox_floodInterval', '30')
-                    ->set('shoutbox_autoRefreshInterval', '30')
-                    ->set('shoutbox_designBackgroundColor', '')
-                    ->set('shoutbox_designTextColor', '')
-                    ->set('shoutbox_designNameColor', '')
-                    ->set('shoutbox_designBoxBackgroundColor', '')
-                    ->set('shoutbox_designButtonColor', '')
-                    ->set('shoutbox_designButtonTextColor', '')
-                    ->set('shoutbox_designInputBackgroundColor', '')
-                    ->set('shoutbox_designInputTextColor', '')
-                    ->set('shoutbox_designFontSize', '0')
-                    ->set('shoutbox_showAvatars', '1')
-                    ->set('shoutbox_customCss', '');
+                foreach (self::SETTINGS_DEFAULTS as $key => $value) {
+                    if ($databaseConfig->get($key) === null) {
+                        $databaseConfig->set($key, $value);
+                    }
+                }
                 // no break
         }
 

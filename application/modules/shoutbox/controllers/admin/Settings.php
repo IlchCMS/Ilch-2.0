@@ -7,6 +7,7 @@
 
 namespace Modules\Shoutbox\Controllers\Admin;
 
+use Modules\Shoutbox\Config\Config as ShoutboxConfig;
 use Modules\Shoutbox\Libs\DesignCss;
 use Modules\User\Mappers\Group as UserGroupMapper;
 use Ilch\Validation;
@@ -101,25 +102,37 @@ class Settings extends \Ilch\Controller\Admin
                 ->to(['action' => 'index']);
         }
 
-        $this->getView()->set('limit', $this->getConfig()->get('shoutbox_limit'))
-            ->set('messagesPerPage', $this->getConfig()->get('shoutbox_messagesPerPage'))
-            ->set('messagesPerPageAdmincenter', $this->getConfig()->get('shoutbox_messagesPerPageAdmincenter'))
-            ->set('maxtextlength', $this->getConfig()->get('shoutbox_maxtextlength'))
-            ->set('floodInterval', $this->getConfig()->get('shoutbox_floodInterval'))
-            ->set('autoRefreshInterval', $this->getConfig()->get('shoutbox_autoRefreshInterval'))
+        $this->getView()->set('limit', $this->getConfigOrDefault('shoutbox_limit'))
+            ->set('messagesPerPage', $this->getConfigOrDefault('shoutbox_messagesPerPage'))
+            ->set('messagesPerPageAdmincenter', $this->getConfigOrDefault('shoutbox_messagesPerPageAdmincenter'))
+            ->set('maxtextlength', $this->getConfigOrDefault('shoutbox_maxtextlength'))
+            ->set('floodInterval', $this->getConfigOrDefault('shoutbox_floodInterval'))
+            ->set('autoRefreshInterval', $this->getConfigOrDefault('shoutbox_autoRefreshInterval'))
             ->set('userGroupList', $userGroupMapper->getGroupList())
-            ->set('writeAccess', $this->getConfig()->get('shoutbox_writeaccess'))
-            ->set('designBackgroundColor', (string)$this->getConfig()->get('shoutbox_designBackgroundColor'))
-            ->set('designTextColor', (string)$this->getConfig()->get('shoutbox_designTextColor'))
-            ->set('designNameColor', (string)$this->getConfig()->get('shoutbox_designNameColor'))
-            ->set('designBoxBackgroundColor', (string)$this->getConfig()->get('shoutbox_designBoxBackgroundColor'))
-            ->set('designButtonColor', (string)$this->getConfig()->get('shoutbox_designButtonColor'))
-            ->set('designButtonTextColor', (string)$this->getConfig()->get('shoutbox_designButtonTextColor'))
-            ->set('designInputBackgroundColor', (string)$this->getConfig()->get('shoutbox_designInputBackgroundColor'))
-            ->set('designInputTextColor', (string)$this->getConfig()->get('shoutbox_designInputTextColor'))
-            ->set('designFontSize', (int)$this->getConfig()->get('shoutbox_designFontSize'))
-            ->set('showAvatars', $this->getConfig()->get('shoutbox_showAvatars') !== '0')
-            ->set('customCss', (string)$this->getConfig()->get('shoutbox_customCss'));
+            ->set('writeAccess', $this->getConfigOrDefault('shoutbox_writeaccess'))
+            ->set('designBackgroundColor', $this->getConfigOrDefault('shoutbox_designBackgroundColor'))
+            ->set('designTextColor', $this->getConfigOrDefault('shoutbox_designTextColor'))
+            ->set('designNameColor', $this->getConfigOrDefault('shoutbox_designNameColor'))
+            ->set('designBoxBackgroundColor', $this->getConfigOrDefault('shoutbox_designBoxBackgroundColor'))
+            ->set('designButtonColor', $this->getConfigOrDefault('shoutbox_designButtonColor'))
+            ->set('designButtonTextColor', $this->getConfigOrDefault('shoutbox_designButtonTextColor'))
+            ->set('designInputBackgroundColor', $this->getConfigOrDefault('shoutbox_designInputBackgroundColor'))
+            ->set('designInputTextColor', $this->getConfigOrDefault('shoutbox_designInputTextColor'))
+            ->set('designFontSize', (int)$this->getConfigOrDefault('shoutbox_designFontSize'))
+            ->set('showAvatars', $this->getConfigOrDefault('shoutbox_showAvatars') !== '0')
+            ->set('customCss', $this->getConfigOrDefault('shoutbox_customCss'));
+    }
+
+    /**
+     * Gets a config value, falling back to the module default if the value
+     * is missing in the database (e.g. after an incomplete update).
+     *
+     * @param string $key
+     * @return string
+     */
+    private function getConfigOrDefault(string $key): string
+    {
+        return (string)($this->getConfig()->get($key) ?? ShoutboxConfig::SETTINGS_DEFAULTS[$key]);
     }
 
     /**
