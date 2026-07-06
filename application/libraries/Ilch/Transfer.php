@@ -519,10 +519,16 @@ class Transfer
                     return false;
                 }
 
+                // Invalidate opcache after file is written.
+                if (str_ends_with(strtolower($thisFileName), '.php')) {
+                    $targetPath = rtrim(ROOT_PATH, '/') . '/' . ltrim($thisFileName, '/');
+                    invalidateOpcache($targetPath, true);
+                }
+
                 // Execute getUpdate() in config.php if needed.
                 if ($thisFileName == $thisFileDir . '/config.php') {
-                    invalidateOpcache($thisFileName, true);
-                    include $thisFileName;
+                    $targetPath = rtrim(ROOT_PATH, '/') . '/' . ltrim($thisFileName, '/');
+                    include $targetPath;
 
                     $configClass = str_replace(['.php', 'application', '/'], ['', '', "\\"], $thisFileName);
                     if (class_exists($configClass)) {

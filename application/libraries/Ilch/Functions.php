@@ -559,28 +559,33 @@ function generateUUID(?string $data = null)
  */
 function invalidateOpcache(string $filepath, bool $force = false): bool
 {
-    $invalidatePossible = false;
-
-    // Check if the function is available to call and if the host has restricted the ability to run the function.
-    if (function_exists('opcache_invalidate') && (!ini_get('opcache.restrict_api') || stripos(realpath($_SERVER['SCRIPT_FILENAME']), ini_get('opcache.restrict_api')) === 0)) {
-        $invalidatePossible = true;
-    }
-
-    // If invalidation is not available, return early.
-    if (!$invalidatePossible) {
+    // Check if the function is available to call.
+    if (!function_exists('opcache_invalidate')) {
         return false;
     }
 
-    // Verify that file to be invalidated has a PHP extension.
-    if ('.php' !== strtolower(substr($filepath, -4))) {
+    // Verify PHP file
+    if (!str_ends_with(strtolower($filepath), '.php')) {
         return false;
     }
 
-    return opcache_invalidate($filepath, $force);
+    // Check if the host has restricted the ability to run the function.
+    $restrictApi = (string)ini_get('opcache.restrict_api');
+    if ($restrictApi !== '') {
+        // Use a safe "script filename" check; fall back to document root if missing.
+        $scriptFile = $_SERVER['SCRIPT_FILENAME'] ?? ($_SERVER['SCRIPT_NAME'] ?? '');
+        $scriptReal = $scriptFile ? @realpath($scriptFile) : false;
+
+        if ($scriptReal === false || stripos($scriptReal, $restrictApi) !== 0) {
+            return false;
+        }
+    }
+
+    return @opcache_invalidate($filepath, $force);
 }
 
 /**
- * Get the bytes in a human readable format like 350 KB instead of 358400 bytes.
+ * Get the bytes in a human-readable format like 350 KB instead of 358400 bytes.
  * Integers in PHP are limited to 32 bits, unless they are on 64 bit architecture, then they have 64 bit size.
  * For a larger size use string. It will be converted to a double, which should always have 64 bit length.
  * Technically the correct unit names for powers of 1024 are KiB, MiB etc.
