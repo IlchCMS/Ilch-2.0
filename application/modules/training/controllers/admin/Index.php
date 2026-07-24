@@ -98,8 +98,8 @@ class Index extends \Ilch\Controller\Admin
 
             $rules = [
                 'title' => 'required',
-                'date' => 'required|date:d.m.Y H\:i',
-                'end' => 'required|date:d.m.Y H\:i',
+                'date' => 'required|date:Y-m-d\TH\:i',
+                'end' => 'required|date:Y-m-d\TH\:i',
                 'contact' => 'required|integer|min:1|exists:users,id,id,' . $this->getRequest()->getPost('contact'),
                 'voiceServer' => 'required|integer|min:0|max:1',
                 'gameServer' => 'required|integer|min:0|max:1',
@@ -116,7 +116,7 @@ class Index extends \Ilch\Controller\Admin
             }
 
             if ($this->getRequest()->getPost('periodType') != '') {
-                $rules['repeatUntil'] = 'required|date:d.m.Y H\:i';
+                $rules['repeatUntil'] = 'required|date:Y-m-d\TH\:i';
             }
 
             // Require atleast the address of the voice or gameserver if enabled.

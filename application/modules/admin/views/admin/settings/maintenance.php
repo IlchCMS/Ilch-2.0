@@ -1,5 +1,3 @@
-<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
-
 <h1><?=$this->getTrans('menuMaintenance') ?></h1>
 <form method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
@@ -21,16 +19,12 @@
         <label for="maintenanceEndDateTime" class="col-lg-2 col-form-label">
             <?=$this->getTrans('maintenanceEndDateTime') ?>:
         </label>
-        <div id="maintenanceEndDateTime" class="col-xl-2 input-group date form_datetime">
-            <input type="text"
+        <div class="col-xl-2">
+            <input type="datetime-local"
                    class="form-control"
                    id="maintenanceEndDateTime"
                    name="maintenanceDateTime"
-                   value="<?=date('d.m.Y H:i', strtotime($this->get('maintenanceDate'))) ?>"
-                   readonly>
-            <span class="input-group-text">
-                <span class="fa-solid fa-calendar"></span>
-            </span>
+                   value="<?=date('Y-m-d\TH:i', strtotime($this->get('maintenanceDate'))) ?>">
         </div>
     </div>
     <div class="row mb-3">
@@ -61,36 +55,3 @@
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
-<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
-<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
-<?php endif; ?>
-<script>
-$(document).ready(function() {
-    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
-        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
-        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
-    }
-
-    new tempusDominus.TempusDominus(document.getElementById('maintenanceEndDateTime'), {
-        restrictions: {
-          minDate: new Date()
-        },
-        display: {
-            sideBySide: true,
-            calendarWeeks: true,
-            buttons: {
-                today: true,
-                close: true
-            }
-        },
-        localization: {
-            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-            startOfTheWeek: 1,
-            format: "dd.MM.yyyy HH:mm"
-        },
-        stepping: 15
-    });
-});
-</script>

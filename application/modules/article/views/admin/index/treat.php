@@ -10,7 +10,6 @@ if ($article) {
     $articleID = $article->getId();
 }
 ?>
-<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 <h1><?=($article) ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form id="article_form" method="POST">
     <?=$this->getTokenField() ?>
@@ -62,16 +61,12 @@ if ($article) {
         <label for="date_created" class="col-xl-2 col-form-label">
             <?=$this->getTrans('date') ?>:
         </label>
-        <div id="date_created" class="col-xl-4 input-group date form_datetime">
-            <input type="text"
+        <div class="col-xl-4">
+            <input type="datetime-local"
                    class="form-control"
                    id="date_created"
                    name="date_created"
-                   value="<?=($article && $article->getDateCreated()) ? date('d.m.Y H:i', strtotime($article->getDateCreated())) : '' ?>"
-                   readonly>
-            <span class="input-group-text">
-                <span class="fa-solid fa-calendar"></span>
-            </span>
+                   value="<?=($article && $article->getDateCreated()) ? date('Y-m-d\TH:i', strtotime($article->getDateCreated())) : '' ?>">
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('cats') ? ' has-error' : '' ?>">
@@ -272,11 +267,6 @@ if ($article) {
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
-<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
-<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
-<?php endif; ?>
 <script>
 $(document).ready(function() {
     new Choices('#access', {
@@ -293,32 +283,6 @@ $(document).ready(function() {
     });
 
     new Tokenfield('keywords', choicesOptions);
-
-
-    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
-        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
-        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
-    }
-
-    new tempusDominus.TempusDominus(document.getElementById('date_created'), {
-        restrictions: {
-          minDate: new Date()
-        },
-        display: {
-            sideBySide: true,
-            calendarWeeks: true,
-            buttons: {
-                today: true,
-                close: true
-            }
-        },
-        localization: {
-            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-            startOfTheWeek: 1,
-            format: "dd.MM.yyyy HH:mm"
-        },
-        stepping: 15
-    });
 });
 
 $('#title').change(

@@ -44,8 +44,8 @@ class Index extends \Ilch\Controller\Frontend
 
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'reason' => 'required',
-                'start' => 'required|date:d.m.Y',
-                'end' => 'required|date:d.m.Y',
+                'start' => 'required|date:Y-m-d',
+                'end' => 'required|date:Y-m-d',
                 'text' => 'required',
                 'calendarShow' => 'numeric|integer|min:1|max:1'
             ]);

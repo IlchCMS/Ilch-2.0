@@ -119,12 +119,19 @@ class Index extends \Ilch\Controller\Admin
                 'groups' => 'visibleFor',
             ]);
 
-            $validation = Validation::create($this->getRequest()->getPost(), [
+            $rules = [
                 'cats' => 'required',
                 'title' => 'required',
                 'content' => 'required',
                 'groups' => 'required',
-            ]);
+            ];
+
+            // Leeres Datum bedeutet weiterhin "jetzt", daher nur validieren, wenn gefuellt.
+            if ($this->getRequest()->getPost('date_created')) {
+                $rules['date_created'] = 'date:Y-m-d\TH\:i';
+            }
+
+            $validation = Validation::create($this->getRequest()->getPost(), $rules);
 
             if ($validation->isValid()) {
                 $catIds = implode(',', $this->getRequest()->getPost('cats'));

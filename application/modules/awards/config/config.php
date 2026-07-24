@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'awards',
-        'version' => '1.12.2',
+        'version' => '1.12.3',
         'icon_small' => 'fa-solid fa-trophy',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -137,6 +137,8 @@ class Config extends \Ilch\Config\Install
             case '1.12.0':
                 // no break
             case '1.12.1':
+                // no break
+            case '1.12.2':
                 // no break
         }
 

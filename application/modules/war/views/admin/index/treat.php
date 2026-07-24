@@ -7,7 +7,6 @@ use Ilch\Date;
 /** @var \Modules\War\Models\War $entry */
 $entry = $this->get('war');
 ?>
-<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans(!$entry->getId() ? 'menuActionNewWar' : 'manageWar') ?></h1>
 <?php if ($this->get('groups') != '' && $this->get('enemies') != '') : ?>
     <form method="POST" action="">
@@ -48,17 +47,12 @@ $entry = $this->get('war');
             <label for="warTimeInput" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('warTime') ?>:
             </label>
-            <div id="warTime" class="input-group date form_datetime col-xl-4">
-                <input type="text"
+            <div class="col-xl-4">
+                <input type="datetime-local"
                        class="form-control"
                        id="warTimeInput"
                        name="warTime"
-                       size="16"
-                       value="<?=$this->escape($this->originalInput('warTime', ($entry->getId() ? (new Date($entry->getWarTime()))->format('d.m.Y H:i') : ''))) ?>"
-                       readonly />
-                <span class="input-group-text">
-                    <span class="fa-solid fa-calendar"></span>
-                </span>
+                       value="<?=$this->escape($this->originalInput('warTime', ($entry->getId() ? (new Date($entry->getWarTime()))->format('Y-m-d\TH:i') : ''))) ?>" />
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('warMap') ? ' has-error' : '' ?>">
@@ -271,11 +265,6 @@ $entry = $this->get('war');
 <?php endif; ?>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
-<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
-<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
-<?php endif; ?>
 <script>
 $(document).ready(function () {
     new Choices('#warMapInput', {
@@ -286,28 +275,6 @@ $(document).ready(function () {
         ...choicesOptions,
         searchEnabled: true
     })
-
-    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
-        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
-        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
-    }
-
-    new tempusDominus.TempusDominus(document.getElementById('warTime'), {
-        display: {
-            sideBySide: true,
-            calendarWeeks: true,
-            buttons: {
-                today: true,
-                close: true
-            }
-        },
-        localization: {
-            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-            startOfTheWeek: 1,
-            format: "dd.MM.yyyy HH:mm"
-        },
-        stepping: 15
-    });
 
     diasableXonx();
     diasableGame();

@@ -15,7 +15,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'war',
-        'version' => '1.16.5',
+        'version' => '1.16.6',
         'icon_small' => 'fa-solid fa-shield',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -436,6 +436,8 @@ class Config extends Install
                         ->values(['title' => $name, 'icon' => $name])
                         ->execute();
                 }
+                // no break
+            case "1.16.5":
                 // no break
         }
 

@@ -10,7 +10,6 @@ $profileFields = $this->get('profileFields');
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 ?>
 
-<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 <?php include APPLICATION_PATH . '/modules/user/views/regist/navi.php'; ?>
 
 <form id="registForm" name="registForm" method="POST">
@@ -145,12 +144,16 @@ $profileFieldsTranslation = $this->get('profileFieldsTranslation');
                             </div>
                         <!-- date -->
                         <?php elseif ($profileField->getType() == 6) : ?>
+                            <?php
+                            // Gespeichert wird weiterhin d.m.Y, das native Datumsfeld braucht Y-m-d.
+                            if ($value && validateDate($value, 'd.m.Y')) {
+                                $value = \DateTime::createFromFormat('d.m.Y', $value)->format('Y-m-d');
+                            } ?>
                             <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '' ?>
-                                <input type="text"
-                                       class="form-control date form_datetime"
+                                <input type="date"
+                                       class="form-control"
                                        name="<?=$index ?>"
                                        id="<?=$index ?>"
-                                       placeholder="<?=$value ?>"
                                        value="<?=$value ?>"
                                        <?= ($profileField->getRegistration() === 2) ? 'required' : '' ?> />
                             <?php if ($profileField->getShow() == 0) : ?>
@@ -205,11 +208,6 @@ $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 </form>
 
 <script src="<?=$this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js') ?>"></script>
-<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
-<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
-<?php endif; ?>
 <script>
 $(document).ready(function() {
     $('#password').pStrength({
@@ -221,32 +219,6 @@ $(document).ready(function() {
         'passwordValidFrom': 60, // 60% // If you define a onValidatePassword function, this will be called only if the passwordStrength is bigger than passwordValidFrom. In that case you can use the percentage argument as you wish;
         'onValidatePassword': function(percentage) { }, // Define a function which will be called each time the password becomes valid;
         'onPasswordStrengthChanged' : function(passwordStrength, percentage) { } // Define a function which will be called each time the password strength is recalculated. You can use passwordStrength and percentage arguments for designing your own password meter
-    });
-
-    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
-        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
-        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
-    }
-
-    let datetimeElements = document.getElementsByClassName('form_datetime');
-    Array.from(datetimeElements).forEach((datetimeElement) => {
-        new tempusDominus.TempusDominus(datetimeElement, {
-            display: {
-                calendarWeeks: true,
-                buttons: {
-                    today: true,
-                    close: true
-                },
-                components: {
-                    clock: false
-                }
-            },
-            localization: {
-                locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-                startOfTheWeek: 1,
-                format: "dd.MM.yyyy"
-            }
-        });
     });
 });
 </script>

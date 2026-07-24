@@ -88,7 +88,7 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'date' => 'required|date:d.m.Y',
+                'date' => 'required|date:Y-m-d',
                 'title' => 'required',
                 'text' => 'required',
                 'color' => 'required',

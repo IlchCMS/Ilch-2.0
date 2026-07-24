@@ -10,7 +10,6 @@ if (!empty($profil->getBirthday())) {
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
 <div class="row">
     <div class="col-xl-12 profile">
@@ -90,15 +89,13 @@ if (!empty($profil->getBirthday())) {
                     <label class="col-xl-2 col-form-label" for="birthday">
                         <?=$this->getTrans('profileBirthday') ?>
                     </label>
-                    <div id="birthday" class="col-xl-8 input-group date form_datetime">
-                        <input type="text"
+                    <div class="col-xl-8">
+                        <input type="date"
                                class="form-control"
                                id="birthday"
                                name="birthday"
-                               value="<?=($birthday != '') ? $birthday->format('d.m.Y') : '' ?>">
-                        <span class="input-group-text">
-                            <span class="fa-solid fa-calendar"></span>
-                        </span>
+                               max="<?=(new \Ilch\Date())->format('Y-m-d', true) ?>"
+                               value="<?=($birthday != '') ? $birthday->format('Y-m-d') : '' ?>">
                     </div>
                 </div>
                 <?php foreach ($profileFields as $profileField) :
@@ -176,12 +173,16 @@ if (!empty($profil->getBirthday())) {
                                 </div>
                             <!-- date -->
                             <?php elseif ($profileField->getType() == 6) : ?>
+                                <?php
+                                // Gespeichert wird weiterhin d.m.Y, das native Datumsfeld braucht Y-m-d.
+                                if ($value && validateDate($value, 'd.m.Y')) {
+                                    $value = \DateTime::createFromFormat('d.m.Y', $value)->format('Y-m-d');
+                                } ?>
                                 <?=($profileField->getShow() == 0) ? '<div class="input-group">' : '' ?>
-                                    <input type="text"
-                                           class="form-control date form_datetime"
+                                    <input type="date"
+                                           class="form-control"
                                            name="<?=$index ?>"
                                            id="<?=$index ?>"
-                                           placeholder="<?=$value ?>"
                                            value="<?=$value ?>">
                                 <?php if ($profileField->getShow() == 0) : ?>
                                     <span class="input-group-text" rel="tooltip" title="<?=$this->getTrans('profileFieldHidden') ?>">
@@ -224,60 +225,8 @@ if (!empty($profil->getBirthday())) {
     </div>
 </div>
 
-<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
-<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
-<?php endif; ?>
 <script>
 $(document).ready(function() {
-    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
-        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
-        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
-    }
-
-    new tempusDominus.TempusDominus(document.getElementById('birthday'), {
-        restrictions: {
-          maxDate: new Date()
-        },
-        display: {
-            calendarWeeks: true,
-            buttons: {
-                today: true,
-                close: true
-            },
-            components: {
-                clock: false
-            }
-        },
-        localization: {
-            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-            startOfTheWeek: 1,
-            format: "dd.MM.yyyy"
-        }
-    });
-
-    let datetimeElements = document.getElementsByClassName('form_datetime');
-    Array.from(datetimeElements).forEach((datetimeElement) => {
-        new tempusDominus.TempusDominus(datetimeElement, {
-            display: {
-                calendarWeeks: true,
-                buttons: {
-                    today: true,
-                    close: true
-                },
-                components: {
-                    clock: false
-                }
-            },
-            localization: {
-                locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-                startOfTheWeek: 1,
-                format: "dd.MM.yyyy"
-            }
-        });
-    });
-
     $("[rel='tooltip']").tooltip();
 });
 </script>

@@ -94,7 +94,7 @@ class Index extends \Ilch\Controller\Admin
 
             $validator = [
                 'title' => 'required',
-                'start' => 'required|date:d.m.Y H\:i',
+                'start' => 'required|date:Y-m-d\TH\:i',
                 'color' => 'required',
             ];
 
@@ -106,11 +106,11 @@ class Index extends \Ilch\Controller\Admin
             }
 
             if ($this->getRequest()->getPost('periodType') != '') {
-                $validator['repeatUntil'] = 'required|date:d.m.Y H\:i';
+                $validator['repeatUntil'] = 'required|date:Y-m-d\TH\:i';
             }
 
             if ($this->getRequest()->getPost('end')) {
-                $validator['end'] = 'required|date:d.m.Y H\:i';
+                $validator['end'] = 'required|date:Y-m-d\TH\:i';
             }
 
             $validation = Validation::create(

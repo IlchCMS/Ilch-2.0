@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.25.1',
+        'version' => '1.25.2',
         'icon_small' => 'fa-solid fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -257,6 +257,8 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('teams_userNotification', 1);
                 // no break
             case "1.25.0":
+                // no break
+            case "1.25.1":
                 // no break
         }
 

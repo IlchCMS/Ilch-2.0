@@ -98,8 +98,8 @@ class Index extends \Ilch\Controller\Frontend
             ]);
 
             $validator = [
-                'start' => 'required|date:d.m.Y H\\:i',
-                'end' => 'date:d.m.Y H\\:i',
+                'start' => 'required|date:Y-m-d\TH\:i',
+                'end' => 'date:Y-m-d\TH\:i',
                 'title' => 'required',
                 'place' => 'required',
                 'website' => 'url',

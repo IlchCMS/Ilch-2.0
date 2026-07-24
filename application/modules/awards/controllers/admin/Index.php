@@ -137,7 +137,7 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             $validation = Validation::create($post, [
-                'date'  => 'required|date:d.m.Y',
+                'date'  => 'required|date:Y-m-d',
                 'rank'  => 'required|numeric|integer|min:1',
                 'image' => 'url',
                 'utId'  => 'required',

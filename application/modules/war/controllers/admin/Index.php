@@ -164,7 +164,7 @@ class Index extends Admin
                 'warMatchtype'      => 'required',
                 'warEnemy'          => 'required|numeric|integer|exists:' . $enemyMapper->tablename,
                 'warGroup'          => 'required|numeric|integer|exists:' . $groupMapper->tablename,
-                'warTime'           => 'required|date:d.m.Y H\:i',
+                'warTime'           => 'required|date:Y-m-d\TH\:i',
                 'warMap'            => 'required',
                 'warServer'         => 'required',
                 'lastAcceptTime'    => 'numeric|numeric|integer',

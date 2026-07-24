@@ -16,8 +16,6 @@ if ($this->getUser()) {
 $teams = $this->get('teams');
 ?>
 
-<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
-
 <h1><?=$this->getTrans('menuJoin') ?></h1>
 <?php if ($teams) : ?>
     <form id="joinForm" name="joinForm" method="POST">
@@ -128,28 +126,23 @@ $teams = $this->get('teams');
                 <?=$this->getTrans('birthday') ?>
             </label>
             <?php if ($this->getUser() && $this->getUser()->getBirthday() && $this->getUser()->getBirthday() != '0000-00-00') : ?>
-                <div class="col-xl-2 input-group">
+                <div class="col-xl-2">
                     <?php $birthday = new \Ilch\Date($this->getUser()->getBirthday()); ?>
-                    <input type="text"
+                    <input type="date"
                            class="form-control"
                            id="birthday"
                            name="birthday"
-                           value="<?=$birthday->format('d.m.Y') ?>"
+                           value="<?=$birthday->format('Y-m-d') ?>"
                            readonly />
-                    <span class="input-group-text">
-                        <span class="fa-solid fa-calendar"></span>
-                    </span>
                 </div>
             <?php else : ?>
-                <div id="birthday" class="col-xl-2 input-group date form_datetime">
-                    <input type="text"
+                <div class="col-xl-2">
+                    <input type="date"
                            class="form-control"
                            id="birthday"
                            name="birthday"
+                           max="<?=(new \Ilch\Date())->format('Y-m-d', true) ?>"
                            value="<?=($this->originalInput('birthday') != '') ? $this->originalInput('birthday') : '' ?>" />
-                    <span class="input-group-text">
-                        <span class="fa-solid fa-calendar"></span>
-                    </span>
                 </div>
             <?php endif; ?>
         </div>
@@ -214,37 +207,3 @@ $teams = $this->get('teams');
     <?=$this->getTrans('noTeams') ?>
 <?php endif; ?>
 
-<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
-<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
-<?php endif; ?>
-<script>
-$(document).ready(function() {
-    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
-        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
-        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
-    }
-
-    new tempusDominus.TempusDominus(document.getElementById('birthday'), {
-        restrictions: {
-          maxDate: new Date()
-        },
-        display: {
-            calendarWeeks: true,
-            buttons: {
-                today: true,
-                close: true
-            },
-            components: {
-                clock: false
-            }
-        },
-        localization: {
-            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-            startOfTheWeek: 1,
-            format: "dd.MM.yyyy"
-        }
-    });
-});
-</script>

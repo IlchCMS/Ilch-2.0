@@ -6,7 +6,6 @@
 $history = $this->get('history');
 ?>
 <link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/history.css') ?>">
-<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
 <h1>
     <?=$this->getTrans($history->getId() ? 'edit' : 'add') ?>
@@ -17,19 +16,15 @@ $history = $this->get('history');
         <label for="date" class="col-lg-2 col-form-label">
             <?=$this->getTrans('date') ?>:
         </label>
-        <div id="date" class="col-lg-2 input-group date form_datetime">
+        <div class="col-lg-2">
             <?php
             $getDate = new \Ilch\Date($history->getDate() ?? 'now');
             ?>
-            <input type="text"
+            <input type="date"
                    class="form-control"
                    id="date"
                    name="date"
-                   value="<?=$this->originalInput('date', $getDate->format('d.m.Y', true)) ?>"
-                   readonly>
-            <span class="input-group-text">
-                <span class="fa-solid fa-calendar"></span>
-            </span>
+                   value="<?=$this->originalInput('date', $getDate->format('Y-m-d', true)) ?>">
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
@@ -112,36 +107,8 @@ $history = $this->get('history');
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
 <script src="<?=$this->getStaticUrl('js/jscolor/jscolor.min.js') ?>"></script>
-<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
-<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
-<?php endif; ?>
 <script>
 $(document).ready(function() {
-    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
-        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
-        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
-    }
-
-    new tempusDominus.TempusDominus(document.getElementById('date'), {
-        display: {
-            calendarWeeks: true,
-            buttons: {
-                today: true,
-                close: true
-            },
-            components: {
-                clock: false
-            }
-        },
-        localization: {
-            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-            startOfTheWeek: 1,
-            format: "dd.MM.yyyy"
-        }
-    });
-
     $("#symbolDialog").on('shown.bs.modal', function () {
         let content = JSON.parse(<?=json_encode(file_get_contents(ROOT_PATH . '/vendor/fortawesome/font-awesome/metadata/icons.json')) ?>);
         let icons = [];

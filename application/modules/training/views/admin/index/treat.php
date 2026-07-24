@@ -33,7 +33,6 @@ $periodAppendix = [
 ];
 ?>
 <link href="<?=$this->getModuleUrl('static/css/training.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 
 <h1>
     <?=$this->getTrans($training->getId() ? 'edit' : 'add') ?>
@@ -56,41 +55,34 @@ $periodAppendix = [
         <label for="start" class="col-md-2 col-form-label">
             <?=$this->getTrans('start') ?>:
         </label>
-        <div class="col-xl-2 input-group date form_datetime" id="date">
+        <div class="col-xl-2">
             <?php
-            $datecreate = '';
             if ($training->getDate()) {
                 $date = new \Ilch\Date($training->getDate());
             } else {
                 $date = new \Ilch\Date();
             }
-            $datecreate = $date->format('d.m.Y H:i');
+            $datecreate = $date->format('Y-m-d\TH:i');
             ?>
-            <input type="text"
+            <input type="datetime-local"
                    class="form-control"
                    id="start"
                    name="date"
-                   value="<?=$this->escape($this->originalInput('date', $datecreate)) ?>"
-                   readonly>
-            <span class="input-group-text">
-                <span class="fa-solid fa-calendar"></span>
-            </span>
+                   <?php if (!$training->getId()) : ?>min="<?=(new \Ilch\Date())->format('Y-m-d\TH:i', true) ?>"<?php endif; ?>
+                   value="<?=$this->escape($this->originalInput('date', $datecreate)) ?>">
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('end') ? ' has-error' : '' ?>">
         <label for="end" class="col-xl-2 col-form-label">
             <?=$this->getTrans('end') ?>:
         </label>
-        <div id="end" class="col-xl-4 input-group date form_datetime_2">
-            <input type="text"
+        <div class="col-xl-4">
+            <input type="datetime-local"
                    class="form-control"
                    id="end"
                    name="end"
-                   value="<?=$this->escape($this->originalInput('end', ($training->getId() ? ($training->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($training->getEnd()))->format('d.m.Y H:i') : '') : ''))) ?>"
-                   readonly>
-            <span class="input-group-text">
-                <span class="fa-solid fa-calendar"></span>
-            </span>
+                   <?php if (!$training->getId()) : ?>min="<?=(new \Ilch\Date())->format('Y-m-d\TH:i', true) ?>"<?php endif; ?>
+                   value="<?=$this->escape($this->originalInput('end', ($training->getId() ? ($training->getEnd() != '1000-01-01 00:00:00' ? (new \Ilch\Date($training->getEnd()))->format('Y-m-d\TH:i') : '') : ''))) ?>">
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('periodType') ? ' has-error' : '' ?>">
@@ -138,16 +130,13 @@ $periodAppendix = [
             <label for="repeatUntil" class="col-xl-2 col-form-label">
                 <?=$this->getTrans('repeatUntil') ?>:
             </label>
-            <div id="repeatUntil" class="col-xl-4 input-group date form_datetime_3">
-                <input type="text"
+            <div class="col-xl-4">
+                <input type="datetime-local"
                        class="form-control"
                        id="repeatUntil"
                        name="repeatUntil"
-                       value="<?=$this->escape($this->originalInput('repeatUntil', ($training->getId() ? ($training->getRepeatUntil() != '1000-01-01 00:00:00' ? (new \Ilch\Date($training->getRepeatUntil()))->format('d.m.Y H:i') : '') : ''))) ?>"
-                       readonly>
-                <span class="input-group-text">
-                <span class="fa-solid fa-calendar"></span>
-            </span>
+                       <?php if (!$training->getId()) : ?>min="<?=(new \Ilch\Date())->format('Y-m-d\TH:i', true) ?>"<?php endif; ?>
+                       value="<?=$this->escape($this->originalInput('repeatUntil', ($training->getId() ? ($training->getRepeatUntil() != '1000-01-01 00:00:00' ? (new \Ilch\Date($training->getRepeatUntil()))->format('Y-m-d\TH:i') : '') : ''))) ?>">
             </div>
         </div>
     </div>
@@ -325,11 +314,6 @@ $periodAppendix = [
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe style="border:0;"></iframe>') ?>
-<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
-<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
-<?php endif; ?>
 <script>
     let jsPeriodAppendix = <?=json_encode($periodAppendix) ?>;
 
@@ -340,93 +324,29 @@ $periodAppendix = [
         })
     });
 
-    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
-        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
-        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
-    }
-
     $(document).ready(function() {
-        const start = new tempusDominus.TempusDominus(document.getElementById('date'), {
-            restrictions: {
-              minDate: new Date()
-            },
-            display: {
-                sideBySide: true,
-                calendarWeeks: true,
-                buttons: {
-                    today: true,
-                    close: true
-                }
-            },
-            localization: {
-                locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-                startOfTheWeek: 1,
-                format: "dd.MM.yyyy HH:mm"
-            },
-            stepping: 15
-        });
+        const startInput = document.getElementById('start');
+        const endInput = document.getElementById('end');
+        const repeatUntilInput = document.getElementById('repeatUntil');
 
-        const end = new tempusDominus.TempusDominus(document.getElementById('end'), {
-            restrictions: {
-                minDate: new Date()
-            },
-            display: {
-                sideBySide: true,
-                calendarWeeks: true,
-                buttons: {
-                    today: true,
-                    close: true
-                }
-            },
-            localization: {
-                locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-                startOfTheWeek: 1,
-                format: "dd.MM.yyyy HH:mm"
-            },
-            stepping: 15
-        });
+        function syncDateLimits() {
+            if (startInput.value) {
+                endInput.min = startInput.value;
+            } else {
+                endInput.removeAttribute('min');
+            }
+            if (endInput.value) {
+                startInput.max = endInput.value;
+                repeatUntilInput.min = endInput.value;
+            } else {
+                startInput.removeAttribute('max');
+                repeatUntilInput.removeAttribute('min');
+            }
+        }
 
-        const repeatUntil = new tempusDominus.TempusDominus(document.getElementById('repeatUntil'), {
-            restrictions: {
-                minDate: new Date()
-            },
-            display: {
-                sideBySide: true,
-                calendarWeeks: true,
-                buttons: {
-                    today: true,
-                    close: true
-                }
-            },
-            localization: {
-                locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-                startOfTheWeek: 1,
-                format: "dd.MM.yyyy HH:mm"
-            },
-            promptTimeOnDateChange: true,
-            stepping: 15
-        });
-
-        start.subscribe('change.td', (e) => {
-            end.updateOptions({
-                restrictions: {
-                    minDate: e.date,
-                },
-            });
-        });
-
-        end.subscribe('change.td', (e) => {
-            repeatUntil.updateOptions({
-                restrictions: {
-                    minDate: e.date,
-                },
-            });
-            start.updateOptions({
-                restrictions: {
-                    maxDate: e.date,
-                },
-            });
-        });
+        startInput.addEventListener('change', syncDateLimits);
+        endInput.addEventListener('change', syncDateLimits);
+        syncDateLimits();
 
         disableDays();
 
@@ -438,25 +358,18 @@ $periodAppendix = [
             adjustRepeatUntilDate();
         };
 
-        document.getElementById("date").onchange = function() {
-            adjustRepeatUntilDate();
-        }
+        startInput.addEventListener('change', adjustRepeatUntilDate);
 
         function adjustRepeatUntilDate() {
             let value = document.getElementById('periodType').value;
 
             if (value !== '') {
                 let repeatUntilDate;
-                let startValue = document.getElementById("date").value;
+                let startValue = startInput.value;
 
                 if (startValue !== '') {
-                    // d.m.Y H:i
-                    let startdateArray = startValue.split(' ');
-                    let startDateArrayDateParts = startdateArray[0].split('.');
-                    let startDateArrayTimeParts = startdateArray[1].split(':');
-
-                    // new Date(year, monthIndex, day, hours, minutes)
-                    repeatUntilDate = new Date(startDateArrayDateParts[2], startDateArrayDateParts[1] - 1, startDateArrayDateParts[0], startDateArrayTimeParts[0], startDateArrayTimeParts[1]);
+                    // Y-m-d\TH:i wird von Date() als lokale Zeit geparst
+                    repeatUntilDate = new Date(startValue);
                 } else {
                     repeatUntilDate = new Date();
                 }
@@ -478,8 +391,8 @@ $periodAppendix = [
                         break;
                 }
 
-                document.getElementById("repeatUntil").value = [repeatUntilDate.getDate().toString().padStart(2, '0'), (repeatUntilDate.getMonth() + 1).toString().padStart(2, '0'), repeatUntilDate.getFullYear()].join('.')
-                    + ' ' + [repeatUntilDate.getHours().toString().padStart(2, '0'), repeatUntilDate.getMinutes().toString().padStart(2, '0')].join(':');
+                repeatUntilInput.value = [repeatUntilDate.getFullYear(), (repeatUntilDate.getMonth() + 1).toString().padStart(2, '0'), repeatUntilDate.getDate().toString().padStart(2, '0')].join('-')
+                    + 'T' + [repeatUntilDate.getHours().toString().padStart(2, '0'), repeatUntilDate.getMinutes().toString().padStart(2, '0')].join(':');
             }
         }
 

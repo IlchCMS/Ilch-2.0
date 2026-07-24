@@ -110,7 +110,7 @@ class Index extends \Ilch\Controller\Frontend
                 'email' => 'required|email|unique:' . $joinsMapper->tablename . ',email,0,undecided',
                 'teamId' => 'numeric|integer|numeric|exists:' . $teamsMapper->tablename,
                 'gender' => 'numeric|integer|min:1|max:3',
-                'birthday' => 'required|date:d.m.Y',
+                'birthday' => 'required|date:Y-m-d',
                 'text' => 'required',
             ];
 

@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public array $config = [
         'key' => 'training',
-        'version' => '1.10.2',
+        'version' => '1.10.3',
         'icon_small' => 'fa-solid fa-graduation-cap',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -302,6 +302,7 @@ class Config extends \Ilch\Config\Install
                 // no break
             case "1.10.0":
             case "1.10.1":
+            case "1.10.2":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

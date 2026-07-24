@@ -2,7 +2,6 @@
 $userMapper = $this->get('userMapper');
 $userCache = [];
 ?>
-<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 <h1><?=$this->getTrans('logs') ?></h1>
 <p>
     <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -17,32 +16,24 @@ $userCache = [];
                 <label for="startDate" class="col-xl-2 col-form-label">
                     <?=$this->getTrans('startDate') ?>:
                 </label>
-                <div id="startDate" class="col-xl-4 input-group date form_datetime">
-                    <input type="text"
+                <div class="col-xl-4">
+                    <input type="datetime-local"
                            class="form-control"
                            id="startDate"
                            name="startDate"
-                           value="<?=date('d.m.Y 00:00', strtotime('-7 days')) ?>"
-                           readonly>
-                    <span class="input-group-text">
-                        <span class="fa-solid fa-calendar"></span>
-                    </span>
+                           value="<?=date('Y-m-d\T00:00', strtotime('-7 days')) ?>">
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="endDate" class="col-xl-2 col-form-label">
                     <?=$this->getTrans('endDate') ?>:
                 </label>
-                <div id="endDate" class="col-xl-4 input-group date form_datetime">
-                    <input type="text"
+                <div class="col-xl-4">
+                    <input type="datetime-local"
                            class="form-control"
                            id="endDate"
                            name="endDate"
-                           value="<?=date('d.m.Y 23:59') ?>"
-                           readonly>
-                    <span class="input-group-text">
-                        <span class="fa-solid fa-calendar"></span>
-                    </span>
+                           value="<?=date('Y-m-d\T23:59') ?>">
                 </div>
             </div>
         </div>
@@ -104,67 +95,26 @@ $userCache = [];
     </form>
 </div>
 
-<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
-<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
-<?php endif; ?>
 <script>
-$(document).ready(function() {
-    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
-        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
-        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
+document.addEventListener('DOMContentLoaded', function () {
+    const startInput = document.getElementById('startDate');
+    const endInput = document.getElementById('endDate');
+
+    function syncDateLimits() {
+        if (startInput.value) {
+            endInput.min = startInput.value;
+        } else {
+            endInput.removeAttribute('min');
+        }
+        if (endInput.value) {
+            startInput.max = endInput.value;
+        } else {
+            startInput.removeAttribute('max');
+        }
     }
 
-    const start = new tempusDominus.TempusDominus(document.getElementById('startDate'), {
-        display: {
-            sideBySide: true,
-            calendarWeeks: true,
-            buttons: {
-                today: true,
-                close: true
-            }
-        },
-        localization: {
-            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-            startOfTheWeek: 1,
-            format: "dd.MM.yyyy HH:mm"
-        },
-        promptTimeOnDateChange: true,
-        stepping: 15
-    });
-
-    const end = new tempusDominus.TempusDominus(document.getElementById('endDate'), {
-        display: {
-            sideBySide: true,
-            calendarWeeks: true,
-            buttons: {
-                today: true,
-                close: true
-            }
-        },
-        localization: {
-            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-            startOfTheWeek: 1,
-            format: "dd.MM.yyyy HH:mm"
-        },
-        stepping: 15
-    });
-
-    start.subscribe('change.td', (e) => {
-        end.updateOptions({
-            restrictions: {
-                minDate: e.date,
-            },
-        });
-    });
-
-    end.subscribe('change.td', (e) => {
-        start.updateOptions({
-            restrictions: {
-                maxDate: e.date,
-            },
-        });
-    });
+    startInput.addEventListener('change', syncDateLimits);
+    endInput.addEventListener('change', syncDateLimits);
+    syncDateLimits();
 });
 </script>

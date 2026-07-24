@@ -23,7 +23,6 @@ $types = $this->get('types');
 $event = $this->get('event');
 ?>
 
-<link href="<?=$this->getStaticUrl('js/tempus-dominus/dist/css/tempus-dominus.min.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('css/bootstrap-choices.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/choices/build/choices.min.css') ?>" rel="stylesheet">
 
@@ -89,37 +88,26 @@ $event = $this->get('event');
             <label for="start" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('startTime') ?>
             </label>
-            <div id="start" class="col-xl-4 input-group date form_datetime">
-                <input type="text"
+            <div class="col-xl-4">
+                <input type="datetime-local"
                        class="form-control"
                        id="start"
                        name="start"
-                       size="16"
-                       value="<?=$startDate->format('d.m.Y H:i') ?>"
-                       readonly>
-                <span class="input-group-text">
-                    <span class="fa-regular fa-calendar"></span>
-                </span>
+                       <?php if (!$event->getId()) : ?>min="<?=(new \Ilch\Date())->format('Y-m-d\TH:i', true) ?>"<?php endif; ?>
+                       value="<?=$startDate->format('Y-m-d\TH:i') ?>">
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('end') ? ' has-error' : '' ?>">
             <label for="end" class="col-lg-2 col-form-label">
                 <?=$this->getTrans('endTime') ?>
             </label>
-            <div id="end" class="col-xl-4 input-group date form_datetime">
-                <input type="text"
+            <div class="col-xl-4">
+                <input type="datetime-local"
                        class="form-control"
                        id="end"
                        name="end"
-                       size="16"
-                       value="<?=$endDate->format('d.m.Y H:i') ?>"
-                       readonly>
-                <span class="input-group-text">
-                    <span class="fa-solid fa-xmark"></span>
-                </span>
-                <span class="input-group-text">
-                    <span class="fa-regular fa-calendar"></span>
-                </span>
+                       <?php if (!$event->getId()) : ?>min="<?=(new \Ilch\Date())->format('Y-m-d\TH:i', true) ?>"<?php endif; ?>
+                       value="<?=$endDate->format('Y-m-d\TH:i') ?>">
             </div>
         </div>
         <div class="row mb-3<?=$this->validation()->hasError('title') ? ' has-error' : '' ?>">
@@ -279,11 +267,6 @@ $event = $this->get('event');
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script src="<?=$this->getStaticUrl('js/choices/build/choices.min.js') ?>"></script>
-<script src="<?=$this->getStaticUrl('js/popper/dist/umd/popper.min.js') ?>" charset="UTF-8"></script>
-<script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/js/tempus-dominus.min.js') ?>" charset="UTF-8"></script>
-<?php if (strncmp($this->getTranslator()->getLocale(), 'en', 2) !== 0) : ?>
-    <script src="<?=$this->getStaticUrl('js/tempus-dominus/dist/locales/' . substr($this->getTranslator()->getLocale(), 0, 2) . '.js') ?>" charset="UTF-8"></script>
-<?php endif; ?>
 <?php if ($this->get('event_google_maps_api_key') != '') : ?>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>&libraries=places&region=<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>"></script>
 <?php endif; ?>
@@ -313,66 +296,29 @@ $event = $this->get('event');
     });
 
 $(document).ready(function() {
-    if ("<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>" !== 'en') {
-        tempusDominus.loadLocale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>);
-        tempusDominus.locale(tempusDominus.locales.<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>.name);
+    const startInput = document.getElementById('start');
+    const endInput = document.getElementById('end');
+
+    const endDefaultMin = endInput.min;
+
+    function syncDateLimits() {
+        if (startInput.value) {
+            endInput.min = startInput.value;
+        } else if (endDefaultMin) {
+            endInput.min = endDefaultMin;
+        } else {
+            endInput.removeAttribute('min');
+        }
+        if (endInput.value) {
+            startInput.max = endInput.value;
+        } else {
+            startInput.removeAttribute('max');
+        }
     }
 
-    const start = new tempusDominus.TempusDominus(document.getElementById('start'), {
-        restrictions: {
-          minDate: new Date()
-        },
-        display: {
-            sideBySide: true,
-            calendarWeeks: true,
-            buttons: {
-                today: true,
-                close: true
-            }
-        },
-        localization: {
-            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-            startOfTheWeek: 1,
-            format: "dd.MM.yyyy HH:mm"
-        },
-        stepping: 15
-    });
-
-    const end = new tempusDominus.TempusDominus(document.getElementById('end'), {
-        restrictions: {
-          minDate: new Date()
-        },
-        display: {
-            sideBySide: true,
-            calendarWeeks: true,
-            buttons: {
-                today: true,
-                close: true
-            }
-        },
-        localization: {
-            locale: "<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>",
-            startOfTheWeek: 1,
-            format: "dd.MM.yyyy HH:mm"
-        },
-        stepping: 15
-    });
-
-    start.subscribe('change.td', (e) => {
-        end.updateOptions({
-            restrictions: {
-                minDate: e.date,
-            },
-        });
-    });
-
-    end.subscribe('change.td', (e) => {
-        start.updateOptions({
-            restrictions: {
-                maxDate: e.date,
-            },
-        });
-    });
+    startInput.addEventListener('change', syncDateLimits);
+    endInput.addEventListener('change', syncDateLimits);
+    syncDateLimits();
 });
 
 $(document).on('change', '.btn-file :file', function() {
