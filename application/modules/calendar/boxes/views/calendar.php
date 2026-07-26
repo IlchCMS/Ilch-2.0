@@ -46,7 +46,7 @@
 
         let calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: "dayGridMonth",
-            // Der Titel wird ueber datesSet selbst gerendert, damit er verlinkt werden kann.
+            // Title is rendered via datesSet so that it can be linked.
             headerToolbar: {
               left: '',
               center: '',
@@ -55,8 +55,8 @@
             locale: languagecalendar,
             nowIndicator: true,
             height: 450,
-            // In der Box ist kein Platz fuer Termintitel: alle Termine eines Tages
-            // werden zu einem "+N"-Zaehler zusammengefasst.
+            // In the box there is no space for event titles: all events of a day
+            // are summarized as a "+N" counter.
             dayMaxEvents: 0,
             moreLinkClass: 'calendarbox-event-count',
             moreLinkContent: function (arg) {
@@ -65,7 +65,7 @@
             moreLinkClick: function () {
                 window.location = calendarUrl;
 
-                // Ein truthy Rueckgabewert unterdrueckt das Popover von FullCalendar.
+                // A truthy return value suppresses FullCalendar's popover.
                 return true;
             },
             eventSources: [
