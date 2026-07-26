@@ -19,10 +19,10 @@
 }
 
 /*
- * Kalender-Box.
- * FullCalendar 7 vergibt seine CSS-Klassen ueber CSS-Module (z. B. .fc-oH) und
- * damit bei jedem Build neu. Die Box gestaltet deshalb nur eigene Klassen, die
- * ueber die Optionen moreLinkClass bzw. ueber eigenes Markup gesetzt werden.
+ * Calendar box.
+ * FullCalendar 7 assigns its CSS classes via CSS modules (e.g. .fc-oH) and
+ * therefore generates them new with each build. The box therefore only styles
+ * its own classes, which are set via the moreLinkClass option or via custom markup.
  */
 .calendar .calendarbox-title {
     padding: 10px 0;
