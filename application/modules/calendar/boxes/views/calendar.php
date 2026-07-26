@@ -8,6 +8,8 @@
 <link href="<?=$this->getBoxUrl('static/js/fullcalendar-7.0.0/dist/themes/classic/palette.css') ?>" rel="stylesheet">
 
 <div class="calendar">
+    <div class="calendarbox-title" id='calendarboxTitle<?=$this->get('uniqid') ?>'></div>
+
     <div id='calendarbox<?=$this->get('uniqid') ?>'></div>
 </div>
 
@@ -35,16 +37,37 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         let calendarEl = document.getElementById('calendarbox<?=$this->get('uniqid') ?>');
+        let titleEl = document.getElementById('calendarboxTitle<?=$this->get('uniqid') ?>');
+        let calendarUrl = '<?=$this->getUrl(['module' => 'calendar']) ?>';
+
+        if (!calendarEl) {
+            return;
+        }
+
         let calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: "dayGridMonth",
+            // Title is rendered via datesSet so that it can be linked.
             headerToolbar: {
               left: '',
-              center: 'title',
+              center: '',
               right: ''
             },
             locale: languagecalendar,
             nowIndicator: true,
             height: 450,
+            // In the box there is no space for event titles: all events of a day
+            // are summarized as a "+N" counter.
+            dayMaxEvents: 0,
+            moreLinkClass: 'calendarbox-event-count',
+            moreLinkContent: function (arg) {
+                return '+' + arg.num;
+            },
+            moreLinkClick: function () {
+                window.location = calendarUrl;
+
+                // A truthy return value suppresses FullCalendar's popover.
+                return true;
+            },
             eventSources: [
                 <?php foreach ($this->get('events') ?? [] as $url) : ?>
                 {
@@ -52,25 +75,17 @@
                 },
                 <?php endforeach; ?>
             ],
-            eventDidMount: function (info) {
-                $('#calendarbox<?=$this->get('uniqid') ?> .fc-daygrid-day.fc-day').each(function() {
-                    let eventframe = $(this).find('.fc-daygrid-day-frame .fc-daygrid-day-events');
-                    
-                    let count = eventframe[0].childElementCount;
-                    count--;
-                    if (count > 0) {
-                        $(this).find('.fc-daygrid-day-frame .fc-daygrid-day-events').html('<div class="fc-event-count">+' + count + '<div>');
-                    }
-                });
-                info.event.remove();
-            },
-            loading: function( isLoading ) {
-                if(isLoading) {// isLoading gives bool value
-                    //show your loader here 
-                } else {
-                    let titleframe = $('#calendarbox<?=$this->get('uniqid') ?> .fc-toolbar-title');
-                    titleframe[0].innerHTML = '<a href="<?=$this->getUrl(['module' => 'calendar']) ?>">' + titleframe[0].innerHTML + '</a>';
+            datesSet: function (info) {
+                if (!titleEl) {
+                    return;
                 }
+
+                let link = document.createElement('a');
+                link.href = calendarUrl;
+                link.textContent = info.view.title;
+
+                titleEl.textContent = '';
+                titleEl.appendChild(link);
             }
         });
         calendar.render();
