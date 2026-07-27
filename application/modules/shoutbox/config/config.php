@@ -37,7 +37,7 @@ class Config extends \Ilch\Config\Install
 
     public $config = [
         'key' => 'shoutbox',
-        'version' => '1.8.1',
+        'version' => '1.8.2',
         'icon_small' => 'fa-solid fa-bullhorn',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -130,6 +130,7 @@ class Config extends \Ilch\Config\Install
             case "1.7.1":
             case "1.7.2":
             case "1.8.0":
+            case "1.8.1":
                 // Add default values for settings added in later versions.
                 // Only adds missing settings without overwriting existing values.
                 $databaseConfig = new \Ilch\Config\Database($this->db());
