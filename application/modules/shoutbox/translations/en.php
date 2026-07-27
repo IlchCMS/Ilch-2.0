@@ -50,6 +50,7 @@ return [
     'designInputBackgroundColor' => 'Input fields',
     'designInputTextColor' => 'Input field text',
     'designFontSize' => 'Font size in pixels (0 = theme default)',
+    'designOpacity' => 'Opacity',
     'guest' => 'Guest',
     'showAvatars' => 'Show avatars',
     'customCss' => 'Custom CSS (applies to box and page)',

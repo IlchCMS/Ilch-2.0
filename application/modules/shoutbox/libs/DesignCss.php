@@ -120,13 +120,64 @@ class DesignCss
     }
 
     /**
-     * Returns the color if it is a valid hex color like #aabbcc, otherwise an empty string.
+     * Returns the color if it is a valid hex color like #aabbcc or #aabbccdd
+     * (with alpha channel), otherwise an empty string.
+     *
+     * This is the boundary that keeps the rendered style block free of injected
+     * CSS, so it stays strict on purpose: no color names, no rgba() notation.
      *
      * @param string $color
      * @return string
      */
     public static function sanitizeColor(string $color): string
     {
-        return preg_match('/^#[0-9a-f]{6}$/i', $color) ? $color : '';
+        return preg_match('/^#([0-9a-f]{6}|[0-9a-f]{8})$/i', $color) ? $color : '';
+    }
+
+    /**
+     * Combines a color from the color picker with an opacity in percent into a
+     * hex color. 100 percent keeps the six digit notation so existing values
+     * stay untouched, everything below adds the alpha channel (0 = transparent).
+     *
+     * @param string $color color like #aabbcc, an alpha channel gets replaced
+     * @param string $opacity opacity in percent (0-100)
+     * @return string
+     * @since 1.8.2
+     */
+    public static function composeColor(string $color, string $opacity): string
+    {
+        if (self::sanitizeColor($color) === '') {
+            return '';
+        }
+        // The color input only ever submits #rrggbb, drop a manually added alpha channel.
+        $color = substr($color, 0, 7);
+
+        if (!preg_match('/^\d{1,3}$/', trim($opacity))) {
+            return $color;
+        }
+
+        $opacity = min(100, (int)$opacity);
+        if ($opacity === 100) {
+            return $color;
+        }
+
+        return $color . sprintf('%02x', (int)round($opacity * 255 / 100));
+    }
+
+    /**
+     * Returns the opacity of a hex color in percent. Colors without an alpha
+     * channel are fully opaque.
+     *
+     * @param string $color
+     * @return int
+     * @since 1.8.2
+     */
+    public static function getOpacity(string $color): int
+    {
+        if (strlen(self::sanitizeColor($color)) !== 9) {
+            return 100;
+        }
+
+        return (int)round(hexdec(substr($color, 7, 2)) * 100 / 255);
     }
 }

@@ -50,6 +50,7 @@ return [
     'designInputBackgroundColor' => 'Eingabefelder',
     'designInputTextColor' => 'Eingabefelder-Text',
     'designFontSize' => 'Schriftgröße in Pixel (0 = Theme-Standard)',
+    'designOpacity' => 'Deckkraft',
     'guest' => 'Gast',
     'showAvatars' => 'Avatare anzeigen',
     'customCss' => 'Eigenes CSS (wirkt auf Box und Seite)',

@@ -79,13 +79,13 @@ class Settings extends \Ilch\Controller\Admin
                     ->set('shoutbox_floodInterval', $this->getRequest()->getPost('floodInterval'))
                     ->set('shoutbox_autoRefreshInterval', $this->getRequest()->getPost('autoRefreshInterval'))
                     ->set('shoutbox_writeaccess', $writeAccess)
-                    ->set('shoutbox_designBackgroundColor', $this->getColorFromPost('designBackgroundColor'))
+                    ->set('shoutbox_designBackgroundColor', $this->getColorFromPost('designBackgroundColor', true))
                     ->set('shoutbox_designTextColor', $this->getColorFromPost('designTextColor'))
                     ->set('shoutbox_designNameColor', $this->getColorFromPost('designNameColor'))
-                    ->set('shoutbox_designBoxBackgroundColor', $this->getColorFromPost('designBoxBackgroundColor'))
-                    ->set('shoutbox_designButtonColor', $this->getColorFromPost('designButtonColor'))
+                    ->set('shoutbox_designBoxBackgroundColor', $this->getColorFromPost('designBoxBackgroundColor', true))
+                    ->set('shoutbox_designButtonColor', $this->getColorFromPost('designButtonColor', true))
                     ->set('shoutbox_designButtonTextColor', $this->getColorFromPost('designButtonTextColor'))
-                    ->set('shoutbox_designInputBackgroundColor', $this->getColorFromPost('designInputBackgroundColor'))
+                    ->set('shoutbox_designInputBackgroundColor', $this->getColorFromPost('designInputBackgroundColor', true))
                     ->set('shoutbox_designInputTextColor', $this->getColorFromPost('designInputTextColor'))
                     ->set('shoutbox_designFontSize', $this->getRequest()->getPost('designFontSize'))
                     ->set('shoutbox_showAvatars', $this->getRequest()->getPost('showAvatars') ? '1' : '0')
@@ -139,15 +139,25 @@ class Settings extends \Ilch\Controller\Admin
      * Gets a design color from the post data. Returns an empty string (theme default)
      * if the corresponding default checkbox is set or the color is invalid.
      *
+     * Background colors additionally carry an opacity slider, its value gets
+     * merged into the color as an alpha channel (0 percent = transparent).
+     *
      * @param string $field
+     * @param bool $withOpacity
      * @return string
      */
-    private function getColorFromPost(string $field): string
+    private function getColorFromPost(string $field, bool $withOpacity = false): string
     {
         if ($this->getRequest()->getPost($field . 'Default')) {
             return '';
         }
 
-        return DesignCss::sanitizeColor((string)$this->getRequest()->getPost($field));
+        $color = (string)$this->getRequest()->getPost($field);
+
+        if ($withOpacity) {
+            return DesignCss::composeColor($color, (string)$this->getRequest()->getPost($field . 'Opacity'));
+        }
+
+        return DesignCss::sanitizeColor($color);
     }
 }
