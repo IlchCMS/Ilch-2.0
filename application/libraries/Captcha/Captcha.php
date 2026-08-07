@@ -45,11 +45,13 @@ class Captcha
     /**
      * Path for resource files (fonts, words, etc.)
      *
-     * "resources" by default. For security reasons, is better move this
-     * directory to another location outise the web server
+     * The "resources" folder next to this file by default. Resolved absolutely
+     * so it does not depend on the current working directory. For security
+     * reasons, is better move this directory to another location outise the
+     * web server
      *
      */
-    public $resourcesPath = 'resources';
+    public $resourcesPath = __DIR__ . '/resources';
 
     /** Min word length (for non-dictionary random text generation) */
     public $minWordLength = 5;
