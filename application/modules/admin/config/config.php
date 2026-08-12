@@ -1334,6 +1334,8 @@ class Config extends \Ilch\Config\Install
                         ->execute();
                 }
 
+                // Update vendor folder to update various dependencies.
+                replaceVendorDirectory();
                 break;
         }
 
