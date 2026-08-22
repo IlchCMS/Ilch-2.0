@@ -15,7 +15,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'calendar',
-        'version' => '1.11.7',
+        'version' => '1.11.8',
         'icon_small' => 'fa-solid fa-calendar',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -137,14 +137,6 @@ class Config extends \Ilch\Config\Install
             case "1.5.0":
                 // no break
             case "1.6.0":
-            // update zu 1.7.0
-                /*
-                Update ilch Core
-                Rechtesystem geändert
-                Code verbesserung
-                Box hinzugefügt #461
-                Zyklische / wiederkehrende Termine #424
-                */
                 // Update description
                 foreach ($this->config['languages'] as $key => $value) {
                     $this->db()->query(sprintf("UPDATE `[prefix]_modules_content` SET `description` = '%s' WHERE `key` = 'calendar' AND `locale` = '%s';", $value['description'], $key));
@@ -274,6 +266,7 @@ class Config extends \Ilch\Config\Install
                 // Remove old version of fullcalendar as this version comes with version 7.0.0.
                 removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar-6.1.17/');
                 // no break
+            case "1.11.7":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
