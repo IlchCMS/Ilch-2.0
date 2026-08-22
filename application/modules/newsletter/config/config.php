@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Ilch 2
  * @package ilch
@@ -13,7 +14,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'newsletter',
-        'version' => '1.8.2',
+        'version' => '1.8.3',
         'icon_small' => 'fa-regular fa-newspaper',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -147,6 +148,9 @@ class Config extends Install
                 // no break
             case "1.7.0":
             case "1.7.1":
+            case "1.8.0":
+            case "1.8.1":
+            case "1.8.2":
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

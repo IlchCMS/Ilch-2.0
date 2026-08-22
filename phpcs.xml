@@ -13,6 +13,9 @@
     <exclude-pattern>./application/libraries/Captcha/Captcha.php</exclude-pattern>
     <exclude-pattern>./application/libraries/Thumb</exclude-pattern>
 
+    <exclude-pattern>./vendor</exclude-pattern>
+    <exclude-pattern>./development/vendor</exclude-pattern>
+
     <arg name="extensions" value="php" />
     <arg name="report" value="summary"/>
     <arg value="np"/>

@@ -417,7 +417,7 @@ class TrainingTest extends DatabaseTestCase
         $model->setReadAccess('1');
         $id = $this->mapper->save($model);
 
-        $entry = $this->mapper->getNextTrainings(5,1)[0];
+        $entry = $this->mapper->getNextTrainings(5, 1)[0];
 
         self::assertSame(4, $id);
         self::assertSame(4, $entry->getId());
