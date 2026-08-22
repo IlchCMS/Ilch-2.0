@@ -16,6 +16,7 @@ Hier gibts Antworten [PHPUnit](http://phpunit.de/manual/current/en/)
 
         ```php
         <?php
+
         // Config for tests
         $config["dbEngine"] = "Mysql";
         $config["dbHost"] = "localhost";
@@ -25,8 +26,8 @@ Hier gibts Antworten [PHPUnit](http://phpunit.de/manual/current/en/)
         $config["dbPrefix"] = "";
         ```
 
-3. **xDebug auf dem Server aktivieren.**
-In Xampp muss man dafür, je nach Installation, nur die Kommentare in folgendem Teil in der php.ini rausnehmen bzw. den Teil einfügen:
+3. **Xdebug auf dem Server aktivieren.**
+In XAMPP muss man dafür, je nach Installation, nur die Kommentare in folgendem Teil in der php.ini rausnehmen bzw. den Teil einfügen:
 
         [XDebug]
         zend_extension = "C:\xampp\php\ext\php_xdebug.dll"
@@ -84,7 +85,7 @@ class SomeObjectTest extends TestCase
 ### \PHPUnit\Ilch\TestCase
 
 Die \PHPUnit\Ilch\TestCase ist die Testklasse für Tests welche z. B. ein Model/Mapper/Ilch_libraryclass betreffen.
-Sie erweitert die Standard PHPUnit TestCase lediglich um die Funktion, Configparameter vor dem Testlauf anzupassen.
+Sie erweitert die Standard PHPUnit TestCase lediglich um die Funktion, Config-Parameter vor dem Testlauf anzupassen.
 
 Ein Beispiel: Setzen der Zeitzone um Zeitvergleiche konsistent über alle Serverstandorte ausführen zu können.
 
@@ -161,6 +162,6 @@ public function testSomeFunction()
 
 ### Best Practices
 
-* Jeder Tests sollte einen Fall prüfen. Bei zuvielen Assertions im Tests ist schwerer nachzuvollziehen was wieso fehlschlägt.
-* Grenzwerte Testen: Nimmt eine Funktion Integers von 0-100 an, macht es Sinn Tests mit 0, 1, -1, 99, 100, 101 zu schreiben da sich an solchen Stellen leicht Fehler einschleichen.
-* Auch den Fehlerfall testen: Soll eine Funktion in einem bestimmten Fall eine Exception werfen kann man überprüfen ob dies zutrifft.
+* Jeder Tests sollte einen Fall prüfen. Bei zu vielen Assertions im Tests ist schwerer nachzuvollziehen was wieso fehlschlägt.
+* Grenzwerte Testen: Nimmt eine Funktion Integers von 0 bis 100 an, macht es Sinn Tests mit 0, 1, -1, 99, 100, 101 zu schreiben da sich an solchen Stellen leicht Fehler einschleichen.
+* Auch den Fehlerfall testen: Soll eine Funktion in einem bestimmten Fall eine Exception werfen kann man überprüfen, ob dies zutrifft.
