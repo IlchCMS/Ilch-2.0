@@ -126,7 +126,7 @@ class Index extends \Ilch\Controller\Admin
                 'groups' => 'required',
             ];
 
-            // Leeres Datum bedeutet weiterhin "jetzt", daher nur validieren, wenn gefuellt.
+            // An empty date still means “now” - so validate it only when it is filled in.
             if ($this->getRequest()->getPost('date_created')) {
                 $rules['date_created'] = 'date:Y-m-d\TH\:i';
             }

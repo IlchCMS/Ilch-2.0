@@ -368,7 +368,7 @@ $periodAppendix = [
                 let startValue = startInput.value;
 
                 if (startValue !== '') {
-                    // Y-m-d\TH:i wird von Date() als lokale Zeit geparst
+                    // Y-m-d\TH:i is parsed by Date() as local time.
                     repeatUntilDate = new Date(startValue);
                 } else {
                     repeatUntilDate = new Date();

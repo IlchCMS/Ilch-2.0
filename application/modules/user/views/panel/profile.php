@@ -174,7 +174,7 @@ if (!empty($profil->getBirthday())) {
                             <!-- date -->
                             <?php elseif ($profileField->getType() == 6) : ?>
                                 <?php
-                                // Gespeichert wird weiterhin d.m.Y, das native Datumsfeld braucht Y-m-d.
+                                // It is still stored as d.m.Y; the native date field requires Y-m-d.
                                 if ($value && validateDate($value, 'd.m.Y')) {
                                     $value = \DateTime::createFromFormat('d.m.Y', $value)->format('Y-m-d');
                                 } ?>
