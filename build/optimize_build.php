@@ -193,7 +193,7 @@ function removeEmptySubFolders(string $path): bool
         }
     }
     if ($empty) {
-        return @rmdir($path); 
+        return @rmdir($path);
     }
 
     return false;

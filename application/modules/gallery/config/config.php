@@ -15,7 +15,7 @@ class Config extends Install
 {
     public $config = [
         'key' => 'gallery',
-        'version' => '1.24.2',
+        'version' => '1.24.3',
         'icon_small' => 'fa-regular fa-image',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -248,6 +248,8 @@ class Config extends Install
             case "1.23.2":
             case "1.23.3":
             case "1.24.0":
+            case "1.24.1":
+            case "1.24.2":
         }
 
         return '"' . $this->config['key'] . '" Update function executed.';

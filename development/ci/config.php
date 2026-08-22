@@ -1,4 +1,5 @@
 <?php
+
 //Config for Tests
 $config = [
     "dbEngine"   => "Mysql",
@@ -8,4 +9,3 @@ $config = [
     "dbName"     => "ilch2_test",
     "dbPrefix"   => "",
 ];
-

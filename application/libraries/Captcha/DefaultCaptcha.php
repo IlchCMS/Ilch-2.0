@@ -67,7 +67,7 @@ class DefaultCaptcha
                 ' . $view->getCaptchaField() . '
             </div>
         </div>
-        <div class="row mb-15'. ($view->validation()->hasError('captcha') ? ' has-error' : '') . '">
+        <div class="row mb-15' . ($view->validation()->hasError('captcha') ? ' has-error' : '') . '">
             <div class="offset-xl-2 col-xl-8 input-group captcha">
                 <input type="text"
                        class="form-control"

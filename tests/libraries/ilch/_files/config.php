@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Config file for testing purposes.
  *

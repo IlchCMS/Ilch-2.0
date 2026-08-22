@@ -105,4 +105,3 @@ class Settings extends Admin
         }
     }
 }
-
