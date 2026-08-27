@@ -2,11 +2,11 @@
 <?php
 
 /**
- * Script to remove not needed files from the vendor and static/js directory, when creating a build (just --no-dev dependencies).
+ * Script to remove not needed files from the vendor, static/js and application directory, when creating a build (just --no-dev dependencies).
  *
  * Configuration of files/directories to remove or keep.
  * Directories must be given with a trailing /
- * Only the provided directories in vendor will be processes, all other directories in vendor will be kept untouched.
+ * Only the provided directories in for example vendor will be processes, all other directories in vendor will be kept untouched.
  *
  * Select files that should be kept, all other files/dirs in dir-in-vendor will be removed
  * 'dir-in-vendor' => [
@@ -136,6 +136,19 @@ $directoriesStaticJs = [
     ],
 ];
 
+$directoriesModulesLayouts = [
+    'modules' => [
+        'remove' => [
+            'sample/',
+            'checkout/'
+        ]
+    ],
+    'layouts' => [
+        'remove' => [
+        ]
+    ],
+];
+
 /**
  * Returns an array with all files in the directory and all its subdirectories
  * @param string $dirname
@@ -199,7 +212,6 @@ function removeEmptySubFolders(string $path): bool
     return false;
 }
 
-
 /**
  * Quote the file for the regular expression pattern
  * @param string $fileOrDir
@@ -216,7 +228,7 @@ function quoteForPattern(string $fileOrDir): string
 }
 
 /**
- * Optimize spezific directory
+ * Optimize specific directory
  * @param string $pathString
  * @param array $directories
  * @return string
@@ -270,3 +282,8 @@ echo optimizeDirectory('vendor', $directories);
 
 // Optimize static/js directory
 echo optimizeDirectory('static/js', $directoriesStaticJs);
+
+if ($argc == 2 && $argv[1] === 'release') {
+    // Remove additional optional modules and layouts that are not supposed to be part of the release.
+    echo optimizeDirectory('application', $directoriesModulesLayouts);
+}
