@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -43,7 +43,7 @@ jobs:
             Ilch-2.zip
       - name: Upload archive to ilch.de
         if: ${{ github.ref_name == 'master' }}
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
           username: 'ilch2'
           server: 'ilch.de'
