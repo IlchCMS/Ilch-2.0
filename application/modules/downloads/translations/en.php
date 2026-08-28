@@ -29,6 +29,7 @@ return [
     'downloadsedit' => 'Edit downloads',
     'title' => 'Title',
     'type' => 'Type',
+    'accessEmptyHelp' => 'No selection means visible to everyone.',
     'downloadsItemAdd' => 'Append',
     'menuDownloadsOverview' => 'Downloads Overview',
     'file' => 'File',
