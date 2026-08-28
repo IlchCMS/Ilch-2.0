@@ -15,7 +15,7 @@ use Modules\User\Mappers\Group as UserGroupMapper;
 
 class Index extends Admin
 {
-    public function init()
+    public function init(): void
     {
         $items = [
             [
@@ -38,7 +38,7 @@ class Index extends Admin
         );
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('downloads'), ['action' => 'index']);
@@ -75,7 +75,7 @@ class Index extends Admin
                     foreach ($items as $item) {
                         $downloadsItem = new DownloadsItem();
 
-                        if (strpos($item['id'], 'tmp_') !== false) {
+                        if (str_contains($item['id'], 'tmp_')) {
                             $tmpId = str_replace('tmp_', '', $item['id']);
                         } else {
                             $downloadsItem->setId($item['id']);

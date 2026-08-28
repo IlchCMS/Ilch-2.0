@@ -166,7 +166,7 @@ class Downloads extends Mapper
      *
      * @param DownloadsItem $downloadsItem
      */
-    public function deleteItem(DownloadsItem $downloadsItem)
+    public function deleteItem(DownloadsItem $downloadsItem): void
     {
         $this->db()->delete('downloads_items')
             ->where(['id' => $downloadsItem->getId()])

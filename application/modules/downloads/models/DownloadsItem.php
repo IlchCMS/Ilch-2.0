@@ -80,7 +80,7 @@ class DownloadsItem extends Model
      *
      * @param int $id
      */
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -100,7 +100,7 @@ class DownloadsItem extends Model
      *
      * @param int $sort
      */
-    public function setSort(int $sort)
+    public function setSort(int $sort): void
     {
         $this->sort = $sort;
     }
@@ -120,7 +120,7 @@ class DownloadsItem extends Model
      *
      * @param int $type
      */
-    public function setType(int $type)
+    public function setType(int $type): void
     {
         $this->type = $type;
     }
@@ -140,7 +140,7 @@ class DownloadsItem extends Model
      *
      * @param int $id
      */
-    public function setParentId(int $id)
+    public function setParentId(int $id): void
     {
         $this->parentId = $id;
     }
@@ -160,7 +160,7 @@ class DownloadsItem extends Model
      *
      * @param string $title
      */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
@@ -180,7 +180,7 @@ class DownloadsItem extends Model
      *
      * @param string $desc
      */
-    public function setDesc(string $desc)
+    public function setDesc(string $desc): void
     {
         $this->desc = $desc;
     }

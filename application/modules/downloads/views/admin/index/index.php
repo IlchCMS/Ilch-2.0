@@ -9,7 +9,7 @@ $downloadsItems = $this->get('downloadsItems');
  * @param \Modules\Downloads\Models\DownloadsItem $item
  * @param \Ilch\View $obj
  */
-function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
+function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj): void
 {
     /** @var \Modules\Downloads\Mappers\Downloads $downloadsMapper */
     $downloadsMapper = $obj->get('downloadsMapper');

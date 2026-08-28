@@ -15,7 +15,7 @@ $subItems = $this->get('subItems');
  * @param \Modules\Downloads\Models\DownloadsItem $item
  * @param \Ilch\View $obj
  */
-function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
+function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj): void
 {
     /** @var \Modules\Downloads\Mappers\File $fileMapper */
     $fileMapper = $obj->get('fileMapper');

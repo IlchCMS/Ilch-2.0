@@ -11,7 +11,7 @@ use Modules\Comment\Mappers\Comment as CommentMapper;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = [
+    public array $config = [
         'key' => 'downloads',
         'version' => '1.15.1',
         'icon_small' => 'fa-regular fa-circle-down',
@@ -28,15 +28,15 @@ class Config extends \Ilch\Config\Install
             ],
         ],
         'ilchCore' => '2.2.7',
-        'phpVersion' => '7.4'
+        'phpVersion' => '8.1'
     ];
 
-    public function install()
+    public function install(): void
     {
         $this->db()->queryMulti($this->getInstallSql());
     }
 
-    public function uninstall()
+    public function uninstall(): void
     {
         $this->db()->drop('downloads_access', true);
         $this->db()->drop('downloads_files_access', true);

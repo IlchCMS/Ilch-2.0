@@ -11,7 +11,7 @@ use Ilch\Controller\Admin;
 
 class Settings extends Admin
 {
-    public function init()
+    public function init(): void
     {
         $items = [
             [
@@ -34,7 +34,7 @@ class Settings extends Admin
         );
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('downloads'), ['action' => 'index'])
