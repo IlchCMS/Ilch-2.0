@@ -66,7 +66,7 @@ function rec(\Modules\Downloads\Models\DownloadsItem $item, \Ilch\View $obj)
             if (!empty($downloadsItems)) {
                 foreach ($downloadsItems as $item) {
                     rec($item, $this);
-                    foreach($subItems[$item->getId()] as $subItem) {
+                    foreach($subItems[$item->getId()] ?? [] as $subItem) {
                         rec($subItem, $this);
                     }
                 }

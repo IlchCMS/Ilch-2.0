@@ -135,7 +135,13 @@ class Index extends Frontend
         $pagination->setRowsPerPage(!$this->getConfig()->get('downloads_downloadsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('downloads_downloadsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('files', ($downloads) ? $fileMapper->getFilesByItemId($id, $pagination) : []);
+        $files = [];
+        if ($downloads) {
+            $files = $fileMapper->getFilesByItemId($id, $pagination);
+            $files = $this->checkAccess($files);
+        }
+
+        $this->getView()->set('files', $files);
         $this->getView()->set('pagination', $pagination);
     }
 
