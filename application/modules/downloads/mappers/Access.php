@@ -34,7 +34,7 @@ class Access extends Mapper
      * @return void
      * @since 1.15.0
      */
-    public function save(int $itemId, ?string $access)
+    public function save(int $itemId, ?string $access): void
     {
         $this->saveAccess($itemId, $access);
     }
@@ -47,7 +47,7 @@ class Access extends Mapper
      * @return void
      * @since 1.15.0
      */
-    public function saveFileAccess(int $fileId, ?string $access)
+    public function saveFileAccess(int $fileId, ?string $access): void
     {
         $this->saveAccess($fileId, $access, true);
     }
@@ -61,7 +61,7 @@ class Access extends Mapper
      * @return void
      * @since 1.15.0
      */
-    private function saveAccess(int $id, ?string $access, bool $isFileId = false)
+    private function saveAccess(int $id, ?string $access, bool $isFileId = false): void
     {
         if ($access === null) {
             return;

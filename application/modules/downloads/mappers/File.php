@@ -151,7 +151,7 @@ class File extends Mapper
      *
      * @param FileModel $model
      */
-    public function save(FileModel $model)
+    public function save(FileModel $model): void
     {
         if ($model->getId()) {
             $this->db()->update('downloads_files')
@@ -166,12 +166,12 @@ class File extends Mapper
     }
 
     /**
-     * Delete a file by it's id.
+     * Delete a file by its id.
      *
      * @param int $id the id of the file
      * @return Result|int
      */
-    public function deleteById(int $id)
+    public function deleteById(int $id): Result|int
     {
         return $this->db()->delete('downloads_files')
             ->where(['id' => $id])
@@ -183,7 +183,7 @@ class File extends Mapper
      *
      * @param FileModel $model
      */
-    public function saveVisits(FileModel $model)
+    public function saveVisits(FileModel $model): void
     {
         if ($model->getVisits()) {
             $this->db()->update('downloads_files')
@@ -198,7 +198,7 @@ class File extends Mapper
      *
      * @param FileModel $model
      */
-    public function saveFileTreat(FileModel $model)
+    public function saveFileTreat(FileModel $model): void
     {
         $this->db()->update('downloads_files')
             ->values(['file_title' => $model->getFileTitle(), 'file_image' => $model->getFileImage(), 'file_description' => $model->getFileDesc()])

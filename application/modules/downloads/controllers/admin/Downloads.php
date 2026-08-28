@@ -16,7 +16,7 @@ use Modules\Downloads\Models\File as FileModel;
 
 class Downloads extends Admin
 {
-    public function init()
+    public function init(): void
     {
         $items = [
             [
@@ -45,7 +45,7 @@ class Downloads extends Admin
         );
     }
 
-    public function treatDownloadsAction()
+    public function treatDownloadsAction(): void
     {
         $fileMapper = new FileMapper();
         $pagination = new Pagination();
@@ -90,7 +90,7 @@ class Downloads extends Admin
         $this->getView()->set('downloadsTitle', $downloadsTitle->getTitle());
     }
 
-    public function delAction()
+    public function delAction(): void
     {
         if ($this->getRequest()->isSecure()) {
             $fileMapper = new FileMapper();

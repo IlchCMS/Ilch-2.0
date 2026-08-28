@@ -15,7 +15,7 @@ use Modules\User\Mappers\Group as UserGroupMapper;
 
 class File extends Admin
 {
-    public function init()
+    public function init(): void
     {
         $items = [
             [
@@ -50,7 +50,7 @@ class File extends Admin
         );
     }
 
-    public function treatFileAction()
+    public function treatFileAction(): void
     {
         $fileMapper = new FileMapper();
         $userGroupMapper = new UserGroupMapper();

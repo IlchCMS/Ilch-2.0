@@ -17,19 +17,19 @@ use Modules\Downloads\Models\File as FileModel;
 
 class Index extends Frontend
 {
-    public function indexAction()
+    public function indexAction(): void
     {
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
 
         $downloadsItems = $downloadsMapper->getDownloadsItemsByParent(0);
 
-        $downloadsItems = $this->checkAccess($downloadsItems);
+        $downloadsItems = $downloadsItems ? $this->checkAccess($downloadsItems) : [];
         $subItems = [];
         foreach ($downloadsItems as $downloadItem) {
             $subItems[$downloadItem->getId()] = $downloadsMapper->getDownloadsItemsByParent($downloadItem->getId());
         }
-        $subItems = $this->checkAccess($subItems);
+        $subItems = $subItems ? $this->checkAccess($subItems) : [];
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('downloads'));
@@ -45,48 +45,63 @@ class Index extends Frontend
     /**
      *  Check if the user or guest has access to the downloadsItems.
      *
-     * @param DownloadsItem[]|DownloadsItem|FileModel $downloadsItems
-     * @return array
+     * @param DownloadsItem|DownloadsItem[]|FileModel $downloadsItems
+     * @return FileModel|array|DownloadsItem
      */
-    private function checkAccess($downloadsItems)
+    private function checkAccess(FileModel|DownloadsItem|array $downloadsItems): FileModel|array|DownloadsItem
     {
-        if (!($this->getUser() && $this->getUser()->isAdmin())) {
-            // Check which downloadsItems should be visible for the user or guest.
-            $downloadsItemsVisible = [];
-            foreach ($downloadsItems ?? [] as $key => $downloadsItem) {
-                if (!is_array($downloadsItem)) {
-                    if (empty($downloadsItem->getAccess())) {
+        $downloadsItemsVisible = [];
+        $isAdmin = $this->getUser() && $this->getUser()->isAdmin();
+
+        // Handle the case when downloadsItems is a single item.
+        if (!is_array($downloadsItems)) {
+            // Early return if the user is an admin.
+            if ($isAdmin) {
+                return [$downloadsItems];
+            }
+
+            if (is_in_array(explode(',', $downloadsItems->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ? $this->getUser()->getGroups() : [3])) {
+                return [$downloadsItems];
+            }
+        }
+
+        // Early return if the user is an admin.
+        if ($isAdmin) {
+            return $downloadsItems;
+        }
+
+        // Check which downloadsItems should be visible for the user or guest.
+        foreach ($downloadsItems as $key => $downloadsItem) {
+            if (!is_array($downloadsItem)) {
+                if (empty($downloadsItem->getAccess())) {
+                    // Visible for everyone.
+                    $downloadsItemsVisible[$key] = $downloadsItem;
+                    continue;
+                }
+
+                if (is_in_array(explode(',', $downloadsItem->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ? $this->getUser()->getGroups() : [3])) {
+                    $downloadsItemsVisible[$key] = $downloadsItem;
+                }
+            } else {
+                // Subitems
+                foreach ($downloadsItem as $downloadItem) {
+                    if (empty($downloadItem->getAccess())) {
                         // Visible for everyone.
-                        $downloadsItemsVisible[$key] = $downloadsItem;
+                        $downloadsItemsVisible[$key][] = $downloadItem;
                         continue;
                     }
 
-                    if (is_in_array(explode(',', $downloadsItem->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ?: [3])) {
-                        $downloadsItemsVisible[$key] = $downloadsItem;
-                    }
-                } else {
-                    // Subitems
-                    foreach ($downloadsItem as $downloadItem) {
-                        if (empty($downloadItem->getAccess())) {
-                            // Visible for everyone.
-                            $downloadsItemsVisible[$key][] = $downloadItem;
-                            continue;
-                        }
-
-                        if (is_in_array(explode(',', $downloadItem->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ?: [3])) {
-                            $downloadsItemsVisible[$key][] = $downloadItem;
-                        }
+                    if (is_in_array(explode(',', $downloadItem->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ? $this->getUser()->getGroups() : [3])) {
+                        $downloadsItemsVisible[$key][] = $downloadItem;
                     }
                 }
             }
-
-            $downloadsItems = $downloadsItemsVisible;
         }
 
-        return $downloadsItems;
+        return $downloadsItemsVisible;
     }
 
-    public function showAction()
+    public function showAction(): void
     {
         $fileMapper = new FileMapper();
         $pagination = new Pagination();
@@ -100,7 +115,8 @@ class Index extends Frontend
             $this->redirect(['controller' => 'index', 'action' => 'index']);
         }
 
-        $downloads = $this->checkAccess($downloads);
+        $downloads = $downloads ? $this->checkAccess($downloads) : null;
+        $downloads = $downloads ? $downloads[0] : null;
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('downloads'));
@@ -119,11 +135,17 @@ class Index extends Frontend
         $pagination->setRowsPerPage(!$this->getConfig()->get('downloads_downloadsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('downloads_downloadsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('files', ($downloads) ? $fileMapper->getFilesByItemId($id, $pagination) : []);
+        $files = [];
+        if ($downloads) {
+            $files = $fileMapper->getFilesByItemId($id, $pagination);
+            $files = $files ? $this->checkAccess($files) : [];
+        }
+
+        $this->getView()->set('files', $files);
         $this->getView()->set('pagination', $pagination);
     }
 
-    public function showFileAction()
+    public function showFileAction(): void
     {
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
@@ -136,7 +158,8 @@ class Index extends Frontend
             $this->redirect(['controller' => 'index', 'action' => 'index']);
         }
 
-        $file = $this->checkAccess($file);
+        $file = $file ? $this->checkAccess($file) : null;
+        $file = $file ? $file[0] : null;
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('downloads'));

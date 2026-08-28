@@ -91,7 +91,7 @@ class Downloads extends Mapper
      */
     public function getDownloadsById(int $id): ?DownloadsItem
     {
-        $itemRows = $this->db()->select(['di.id', 'di.type', 'di.title', 'di.description', 'di.parent_id'])
+        $itemRow = $this->db()->select(['di.id', 'di.type', 'di.title', 'di.description', 'di.parent_id'])
             ->from(['di' => 'downloads_items'])
             ->join(['da' => 'downloads_access'], 'da.item_id = di.id', 'LEFT', ['access' => 'GROUP_CONCAT(DISTINCT da.group_id)'])
             ->where(['id' => $id])
@@ -100,16 +100,16 @@ class Downloads extends Mapper
             ->execute()
             ->fetchAssoc();
 
-        if (empty($itemRows)) {
+        if (empty($itemRow)) {
             return null;
         }
 
         $itemModel = new DownloadsItem();
-        $itemModel->setId($itemRows['id']);
-        $itemModel->setType($itemRows['type']);
-        $itemModel->setTitle($itemRows['title']);
-        $itemModel->setDesc($itemRows['description']);
-        $itemModel->setParentId($itemRows['parent_id']);
+        $itemModel->setId($itemRow['id']);
+        $itemModel->setType($itemRow['type']);
+        $itemModel->setTitle($itemRow['title']);
+        $itemModel->setDesc($itemRow['description']);
+        $itemModel->setParentId($itemRow['parent_id']);
         $itemModel->setAccess($itemRow['access'] ?? '');
 
         return $itemModel;
@@ -166,7 +166,7 @@ class Downloads extends Mapper
      *
      * @param DownloadsItem $downloadsItem
      */
-    public function deleteItem(DownloadsItem $downloadsItem)
+    public function deleteItem(DownloadsItem $downloadsItem): void
     {
         $this->db()->delete('downloads_items')
             ->where(['id' => $downloadsItem->getId()])

@@ -94,7 +94,7 @@ class File extends Model
      *
      * @param int $id
      */
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -114,7 +114,7 @@ class File extends Model
      *
      * @param string $file_id
      */
-    public function setFileId(string $file_id)
+    public function setFileId(string $file_id): void
     {
         $this->file_id = $file_id;
     }
@@ -134,7 +134,7 @@ class File extends Model
      *
      * @param string $fileThumb
      */
-    public function setFileThumb(string $fileThumb)
+    public function setFileThumb(string $fileThumb): void
     {
         $this->filethumb = $fileThumb;
     }
@@ -154,7 +154,7 @@ class File extends Model
      *
      * @param string $fileTitle
      */
-    public function setFileTitle(string $fileTitle)
+    public function setFileTitle(string $fileTitle): void
     {
         $this->file_title = $fileTitle;
     }
@@ -174,7 +174,7 @@ class File extends Model
      *
      * @param string $fileDesc
      */
-    public function setFileDesc(string $fileDesc)
+    public function setFileDesc(string $fileDesc): void
     {
         $this->file_desc = $fileDesc;
     }
@@ -194,7 +194,7 @@ class File extends Model
      *
      * @param string $fileImage
      */
-    public function setFileImage(string $fileImage)
+    public function setFileImage(string $fileImage): void
     {
         $this->file_image = $fileImage;
     }
@@ -214,7 +214,7 @@ class File extends Model
      *
      * @param int $itemId
      */
-    public function setItemId(int $itemId)
+    public function setItemId(int $itemId): void
     {
         $this->item_id = $itemId;
     }
@@ -234,7 +234,7 @@ class File extends Model
      *
      * @param int $visits
      */
-    public function setVisits(int $visits)
+    public function setVisits(int $visits): void
     {
         $this->visits = $visits;
     }
@@ -254,7 +254,7 @@ class File extends Model
      *
      * @param string $fileUrl
      */
-    public function setFileUrl(string $fileUrl)
+    public function setFileUrl(string $fileUrl): void
     {
         $this->file_url = $fileUrl;
     }
