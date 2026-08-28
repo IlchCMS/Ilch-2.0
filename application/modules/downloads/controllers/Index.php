@@ -50,40 +50,55 @@ class Index extends Frontend
      */
     private function checkAccess($downloadsItems)
     {
-        if (!($this->getUser() && $this->getUser()->isAdmin())) {
-            // Check which downloadsItems should be visible for the user or guest.
-            $downloadsItemsVisible = [];
-            foreach ($downloadsItems ?? [] as $key => $downloadsItem) {
-                if (!is_array($downloadsItem)) {
-                    if (empty($downloadsItem->getAccess())) {
+        $downloadsItemsVisible = [];
+        $isAdmin = $this->getUser() && $this->getUser()->isAdmin();
+
+        // Handle the case when downloadsItems is a single item.
+        if (!is_array($downloadsItems)) {
+            // Early return if the user is an admin.
+            if ($isAdmin) {
+                return [$downloadsItems];
+            }
+
+            if (is_in_array(explode(',', $downloadsItems->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ? $this->getUser()->getGroups() : [3])) {
+                return [$downloadsItems];
+            }
+        }
+
+        // Early return if the user is an admin.
+        if ($isAdmin) {
+            return $downloadsItems;
+        }
+
+        // Check which downloadsItems should be visible for the user or guest.
+        foreach ($downloadsItems ?? [] as $key => $downloadsItem) {
+            if (!is_array($downloadsItem)) {
+                if (empty($downloadsItem->getAccess())) {
+                    // Visible for everyone.
+                    $downloadsItemsVisible[$key] = $downloadsItem;
+                    continue;
+                }
+
+                if (is_in_array(explode(',', $downloadsItem->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ? $this->getUser()->getGroups() : [3])) {
+                    $downloadsItemsVisible[$key] = $downloadsItem;
+                }
+            } else {
+                // Subitems
+                foreach ($downloadsItem as $downloadItem) {
+                    if (empty($downloadItem->getAccess())) {
                         // Visible for everyone.
-                        $downloadsItemsVisible[$key] = $downloadsItem;
+                        $downloadsItemsVisible[$key][] = $downloadItem;
                         continue;
                     }
 
-                    if (is_in_array(explode(',', $downloadsItem->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ?: [3])) {
-                        $downloadsItemsVisible[$key] = $downloadsItem;
-                    }
-                } else {
-                    // Subitems
-                    foreach ($downloadsItem as $downloadItem) {
-                        if (empty($downloadItem->getAccess())) {
-                            // Visible for everyone.
-                            $downloadsItemsVisible[$key][] = $downloadItem;
-                            continue;
-                        }
-
-                        if (is_in_array(explode(',', $downloadItem->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ?: [3])) {
-                            $downloadsItemsVisible[$key][] = $downloadItem;
-                        }
+                    if (is_in_array(explode(',', $downloadItem->getAccess()) ? : [], $this->getUser() && $this->getUser()->getGroups() ? $this->getUser()->getGroups() : [3])) {
+                        $downloadsItemsVisible[$key][] = $downloadItem;
                     }
                 }
             }
-
-            $downloadsItems = $downloadsItemsVisible;
         }
 
-        return $downloadsItems;
+        return $downloadsItemsVisible;
     }
 
     public function showAction()
@@ -101,6 +116,7 @@ class Index extends Frontend
         }
 
         $downloads = $this->checkAccess($downloads);
+        $downloads = $downloads ? $downloads[0] : null;
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('downloads'));
@@ -137,6 +153,7 @@ class Index extends Frontend
         }
 
         $file = $this->checkAccess($file);
+        $file = $file ? $file[0] : null;
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('downloads'));
