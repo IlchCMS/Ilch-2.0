@@ -29,6 +29,7 @@ return [
     'downloadsedit' => 'Downloads bearbeiten',
     'title' => 'Name',
     'type' => 'Art',
+    'accessEmptyHelp' => 'Keine Auswahl bedeutet sichtbar für alle.',
     'downloadsItemAdd' => 'Hinzufügen',
     'menuDownloadsOverview' => 'Downloads Übersicht',
     'files' => 'Dateien',

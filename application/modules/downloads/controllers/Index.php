@@ -55,8 +55,8 @@ class Index extends Frontend
 
         // Handle the case when downloadsItems is a single item.
         if (!is_array($downloadsItems)) {
-            // Early return if the user is an admin.
-            if ($isAdmin) {
+            // Early return if the user is an admin or if empty as it is visible for everyone then.
+            if ($isAdmin || empty($downloadsItems->getAccess())) {
                 return [$downloadsItems];
             }
 

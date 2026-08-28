@@ -64,7 +64,12 @@ if ($file->getFileImage() != '') {
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="access" class="col-xl-2 col-form-label"><?=$this->getTrans('access') ?></label>
+                        <label for="access" class="col-xl-2 col-form-label">
+                            <?=$this->getTrans('access') ?><br>
+                            <span id="accessHelp" class="form-text">
+                                <?=$this->getTrans('accessEmptyHelp') ?>
+                            </span>
+                        </label>
                         <div class="col-xl-8">
                             <select class="choices-select form-control"
                                     id="access"
