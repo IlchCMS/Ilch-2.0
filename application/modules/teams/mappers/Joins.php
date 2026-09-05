@@ -7,6 +7,7 @@
 
 namespace Modules\Teams\Mappers;
 
+use Ilch\Date;
 use Modules\Teams\Models\Joins as JoinsModel;
 
 class Joins extends \Ilch\Mapper
@@ -80,7 +81,7 @@ class Joins extends \Ilch\Mapper
      */
     public function getEntryById($id): ?JoinsModel
     {
-        if (is_a($id, JoinsModel::class)) {
+        if ($id instanceof JoinsModel) {
             $id = $id->getId();
         }
 
@@ -148,7 +149,7 @@ class Joins extends \Ilch\Mapper
      */
     public function getJoinInHistoryById($id): ?JoinsModel
     {
-        if (is_a($id, JoinsModel::class)) {
+        if ($id instanceof JoinsModel) {
             $id = $id->getId();
         }
 
@@ -181,8 +182,8 @@ class Joins extends \Ilch\Mapper
      */
     public function getAge($date): int
     {
-        if (!is_a($date, \ilch\Date::class)) {
-            $date = new \ilch\Date($date);
+        if (!$date instanceof Date) {
+            $date = new Date($date);
         }
 
         return (int)(substr(date('Ymd') - date('Ymd', strtotime($date)), 0, -4));
@@ -198,7 +199,7 @@ class Joins extends \Ilch\Mapper
      */
     public function updateDecision($id, int $decision): bool
     {
-        if (is_a($id, JoinsModel::class)) {
+        if ($id instanceof JoinsModel) {
             $id = $id->getId();
         }
 
@@ -239,7 +240,7 @@ class Joins extends \Ilch\Mapper
      */
     public function delete($id): bool
     {
-        if (is_a($id, JoinsModel::class)) {
+        if ($id instanceof JoinsModel) {
             $id = $id->getId();
         }
 

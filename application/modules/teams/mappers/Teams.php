@@ -80,7 +80,7 @@ class Teams extends \Ilch\Mapper
      */
     public function getEntryById($id): ?TeamsModel
     {
-        if (is_a($id, TeamsModel::class)) {
+        if ($id instanceof TeamsModel) {
             $id = $id->getId();
         }
 
@@ -123,7 +123,7 @@ class Teams extends \Ilch\Mapper
      */
     public function getTeamByGroupId($groupId): ?TeamsModel
     {
-        if (is_a($groupId, TeamsModel::class)) {
+        if ($groupId instanceof TeamsModel) {
             $groupId = $groupId->getGroupId();
         }
 
@@ -145,7 +145,7 @@ class Teams extends \Ilch\Mapper
      */
     public function delImageById($id, bool $noUpdate = false): bool
     {
-        if (is_a($id, TeamsModel::class)) {
+        if ($id instanceof TeamsModel) {
             $entry = $id;
         } else {
             $entry = $this->getTeamById($id);
@@ -176,7 +176,7 @@ class Teams extends \Ilch\Mapper
      */
     public function sort($id, int $pos): bool
     {
-        if (is_a($id, TeamsModel::class)) {
+        if ($id instanceof TeamsModel) {
             $id = $id->getId();
         }
 
@@ -196,7 +196,7 @@ class Teams extends \Ilch\Mapper
         if ($show !== -1) {
             $showNow = $show;
         } else {
-            if (is_a($id, TeamsModel::class)) {
+            if ($id instanceof TeamsModel) {
                 $show = $id->getOptShow();
             } else {
                 $show = (int) $this->db()->select('a.optShow')
@@ -212,7 +212,7 @@ class Teams extends \Ilch\Mapper
                 $showNow = 1;
             }
         }
-        if (is_a($id, TeamsModel::class)) {
+        if ($id instanceof TeamsModel) {
             $id = $id->getId();
         }
 
@@ -253,7 +253,7 @@ class Teams extends \Ilch\Mapper
      */
     public function delete($id): bool
     {
-        if (is_a($id, TeamsModel::class)) {
+        if ($id instanceof TeamsModel) {
             $entry = $id;
         } else {
             $entry = $this->getTeamById($id);
