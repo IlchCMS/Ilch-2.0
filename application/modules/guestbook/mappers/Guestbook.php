@@ -85,7 +85,7 @@ class Guestbook extends \Ilch\Mapper
         if ($setfree !== -1) {
             $setfreeNow = $setfree;
         } else {
-            if (is_a($id, GuestbookModel::class)) {
+            if ($id instanceof GuestbookModel) {
                 $setfree = $id->getFree();
             } else {
                 $setfree = (int) $this->db()->select('setfree')
@@ -101,7 +101,7 @@ class Guestbook extends \Ilch\Mapper
                 $setfreeNow = 1;
             }
         }
-        if (is_a($id, GuestbookModel::class)) {
+        if ($id instanceof GuestbookModel) {
             $id = $id->getId();
         }
 
