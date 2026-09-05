@@ -3,9 +3,9 @@
 /** @var \Ilch\View $this */
 ?>
 <link href="<?=$this->getModuleUrl('static/css/calendar.css') ?>" rel="stylesheet">
-<link href="<?=$this->getModuleUrl('static/js/fullcalendar-7.0.0/dist/skeleton.css') ?>" rel="stylesheet">
-<link href="<?=$this->getModuleUrl('static/js/fullcalendar-7.0.0/dist/themes/classic/theme.css') ?>" rel="stylesheet">
-<link href="<?=$this->getModuleUrl('static/js/fullcalendar-7.0.0/dist/themes/classic/palette.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/js/fullcalendar-7.1.0/dist/skeleton.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/js/fullcalendar-7.1.0/dist/themes/classic/theme.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/js/fullcalendar-7.1.0/dist/themes/classic/palette.css') ?>" rel="stylesheet">
 
 <div class="calendar">
     <div id="loading"></div>
@@ -13,9 +13,9 @@
     <div id='calendar'></div>
 </div>
 
-<script src="<?=$this->getModuleUrl('static/js/fullcalendar-7.0.0/dist/fullcalendar.global.js') ?>"></script>
-<script src="<?=$this->getModuleUrl('static/js/fullcalendar-7.0.0/dist/locales-all/global.js') ?>"></script>
-<script src="<?=$this->getModuleUrl('static/js/fullcalendar-7.0.0/dist/themes/classic/global.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar-7.1.0/dist/fullcalendar.global.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar-7.1.0/dist/locales-all/global.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar-7.1.0/dist/themes/classic/global.js') ?>"></script>
 <script>
     if (typeof languagecalendar === 'undefined') {
         var languagecalendar = '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>';
