@@ -84,7 +84,7 @@ class Events extends \Ilch\Mapper
      */
     public function getEntryById(int $id): ?EntryModel
     {
-        if (is_a($id, EntryModel::class)) {
+        if ($id instanceof EntryModel) {
             $id = $id->getId();
         }
 
@@ -128,7 +128,7 @@ class Events extends \Ilch\Mapper
      */
     public function delete($id): bool
     {
-        if (is_a($id, EntryModel::class)) {
+        if ($id instanceof EntryModel) {
             $id = $id->getId();
         }
 
