@@ -16,16 +16,13 @@ class DefaultCaptcha
      *
      * @var string
      */
-    protected $form = '';
+    protected string $form = '';
 
     /**
      * Start Default Captcha.
-     *
-     * @return $this
      */
     public function __construct()
     {
-        return $this;
     }
 
     /**
