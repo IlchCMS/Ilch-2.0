@@ -176,7 +176,7 @@ abstract class QueryBuilder
     {
         $oppositeType = $type === 'and' ? 'or' : 'and';
         // add to existing or
-        if (is_a($this->where, __NAMESPACE__ . '\Expression\\' . ucfirst($type) . 'X')) {
+        if (is_a($this->where, __NAMESPACE__ . '\Expression\\' . ucfirst($type) . 'X', true)) {
             if (\is_array($where)) {
                 $this->where->addParts($this->createCompositePartArray($where));
             } elseif ($where instanceof Expression\CompositePart) {
@@ -188,7 +188,7 @@ abstract class QueryBuilder
         }
 
         // new or insert existing where into condition
-        if (is_a($this->where, __NAMESPACE__ . '\Expression\\' . ucfirst($oppositeType) . 'X')) {
+        if (is_a($this->where, __NAMESPACE__ . '\Expression\\' . ucfirst($oppositeType) . 'X', true)) {
             if (!\is_array($where)) {
                 $where = [$where];
             }
