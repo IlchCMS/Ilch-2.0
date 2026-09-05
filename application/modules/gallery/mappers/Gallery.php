@@ -148,7 +148,7 @@ class Gallery extends Mapper
      */
     public function sort($id, int $pos, int $parent): bool
     {
-        if (is_a($id, GalleryItem::class)) {
+        if ($id instanceof GalleryItem) {
             $id = $id->getId();
         }
 
@@ -166,7 +166,7 @@ class Gallery extends Mapper
      */
     public function deleteItem($id): bool
     {
-        if (is_a($id, GalleryItem::class)) {
+        if ($id instanceof GalleryItem) {
             $id = $id->getId();
         }
 
