@@ -267,6 +267,9 @@ class Config extends \Ilch\Config\Install
                 removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar-6.1.17/');
                 // no break
             case "1.11.7":
+                // Remove old version of fullcalendar as this version comes with version 7.1.0.
+                removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar-7.0.0/');
+                // no break
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
