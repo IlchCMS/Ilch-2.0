@@ -257,7 +257,7 @@ class War extends Mapper
      */
     public function delete($id): bool
     {
-        if (is_a($id, EntriesModel::class)) {
+        if ($id instanceof EntriesModel) {
             $id = $id->getId();
         }
 
@@ -391,18 +391,16 @@ class War extends Mapper
     /**
      * Returns the Countdown
      *
-     * @param Date|string $datum
+     * @param Date|string $date
      * @return string
      */
-    public function countdown($datum): string
+    public function countdown($date): string
     {
         $datenow = new Date();
         $datenow = $datenow->format(null, true);
 
-        if (is_a($datum, Date::class)) {
-            $date = $datum;
-        } else {
-            $date = new Date($datum);
+        if (!$date instanceof Date) {
+            $date = new Date($date);
         }
 
         // make a unix timestamp for the given date
@@ -459,7 +457,7 @@ class War extends Mapper
         if ($status !== -1) {
             $statusNow = $status;
         } else {
-            if (is_a($id, EntriesModel::class)) {
+            if ($id instanceof EntriesModel) {
                 $status = $id->getWarStatus();
             } else {
                 $status = (int) $this->db()->select('status')
@@ -475,7 +473,7 @@ class War extends Mapper
                 $statusNow = 1;
             }
         }
-        if (is_a($id, EntriesModel::class)) {
+        if ($id instanceof EntriesModel) {
             $id = $id->getId();
         }
 
@@ -497,7 +495,7 @@ class War extends Mapper
         if ($show !== -1) {
             $showNow = $show;
         } else {
-            if (is_a($id, EntriesModel::class)) {
+            if ($id instanceof EntriesModel) {
                 $show = $id->getShow();
             } else {
                 $show = (int) $this->db()->select('show')
@@ -513,7 +511,7 @@ class War extends Mapper
                 $showNow = 1;
             }
         }
-        if (is_a($id, EntriesModel::class)) {
+        if ($id instanceof EntriesModel) {
             $id = $id->getId();
         }
 
