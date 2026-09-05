@@ -117,14 +117,14 @@ class War extends Mapper
      */
     public function getWarById($id): ?EntriesModel
     {
-        if (is_a($id, EntriesModel::class)) {
+        if ($id instanceof EntriesModel) {
             $id = $id->getId();
         }
 
-        $entrys = $this->getEntriesBy(['w.id' => (int)$id], []);
+        $entries = $this->getEntriesBy(['w.id' => (int)$id], []);
 
-        if (!empty($entrys)) {
-            return reset($entrys);
+        if (!empty($entries)) {
+            return reset($entries);
         }
 
         return null;
@@ -145,10 +145,10 @@ class War extends Mapper
         }
 
         if ($start && $end) {
-            if (!is_a($start, Date::class)) {
+            if (!$start instanceof Date) {
                 $start = new Date($start);
             }
-            if (!is_a($end, Date::class)) {
+            if (!$end instanceof Date) {
                 $end = new Date($end);
             }
 

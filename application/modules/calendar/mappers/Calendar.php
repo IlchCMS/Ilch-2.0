@@ -122,10 +122,10 @@ class Calendar extends \Ilch\Mapper
         }
 
         if ($start && $end) {
-            if (!is_a($start, Date::class)) {
+            if (!$start instanceof Date) {
                 $start = new Date($start);
             }
-            if (!is_a($end, Date::class)) {
+            if (!$end instanceof Date) {
                 $end = new Date($end);
             }
             $select = $this->db()->select();
