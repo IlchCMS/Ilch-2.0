@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Kevin Veldscholten
  * @package ilch
@@ -57,5 +58,4 @@ class Category extends \Ilch\Model
 
         return $this;
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Kevin Veldscholten
  * @package ilch
@@ -85,6 +86,5 @@ class Category extends \Ilch\Mapper
         $this->db()->delete('kvticket_cat')
             ->where(['id' => $id])
             ->execute();
-
     }
 }

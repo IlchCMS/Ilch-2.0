@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Kevin Veldscholten
  * @package ilch
@@ -30,7 +31,7 @@ class Index extends \Ilch\Controller\Admin
                 ]
             ],
             [
-                
+
                 'name' => 'cat',
                 'active' => false,
                 'icon' => 'fa-solid fa-table-list',
@@ -44,8 +45,7 @@ class Index extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuTickets',
             $items
         );
@@ -78,7 +78,7 @@ class Index extends \Ilch\Controller\Admin
             ->set('catMapper', $catMapper);
     }
 
-    public function treatAction() 
+    public function treatAction()
     {
         $ticketMapper = new TicketMapper();
         $catMapper = new CategoryMapper();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Kevin Veldscholten
  * @package ilch
@@ -10,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'kvticket',
-        'version' => '1.6.1',
+        'version' => '1.6.2',
         'icon_small' => 'fa-solid fa-ticket',
         'author' => 'Veldscholten, Kevin',
         'languages' => [
@@ -70,6 +71,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_kvticket` MODIFY COLUMN `text` MEDIUMTEXT NOT NULL;');
                 // Add ticket editor
                 $this->db()->query('ALTER TABLE `[prefix]_kvticket` ADD `editor` INT(11) NOT NULL DEFAULT 0 AFTER `status`;');
+                // no break
             case "1.1":
                 $this->db()->query('ALTER TABLE `[prefix]_kvticket` ADD `cat` INT(11) NOT NULL DEFAULT 0 AFTER `editor`;');
                 $this->db()->query('CREATE TABLE IF NOT EXISTS `[prefix]_kvticket_cat` (
@@ -77,9 +79,11 @@ class Config extends \Ilch\Config\Install
                                         `title` VARCHAR(255) NOT NULL,
                                         PRIMARY KEY (`id`)
                                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
+                // no break
             case "1.2":
                 // Add ticket creator
                 $this->db()->query('ALTER TABLE `[prefix]_kvticket` ADD `creator` INT(11) NOT NULL DEFAULT 0 AFTER `editor`;');
+                // no break
             case "1.3.0":
                 // Add created_at and updated_at
                 $this->db()->query('ALTER TABLE `[prefix]_kvticket` ADD `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP AFTER `cat`;');
@@ -99,10 +103,15 @@ class Config extends \Ilch\Config\Install
                 }
                 // Remove no longer used datetime.
                 $this->db()->query('ALTER TABLE `[prefix]_kvticket` DROP COLUMN `datetime`;');
+                // no break
             case "1.4.0":
                 // Update icon for FontAwesome 6.
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = '" . $this->config['icon_small'] . "' WHERE `key` = '" . $this->config['key'] . "';");
+                // no break
             case "1.5.0":
+            case "1.6.0":
+            case "1.6.1":
+                // no break
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

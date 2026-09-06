@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Kevin Veldscholten
  * @package ilch
@@ -16,14 +17,14 @@ class Cat extends \Ilch\Controller\Admin
     {
         $items = [
             [
-                
+
                 'name' => 'manage',
                 'active' => false,
                 'icon' => 'fa-solid fa-table-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
-                
+
                 'name' => 'cat',
                 'active' => false,
                 'icon' => 'fa-solid fa-table-list',
@@ -43,8 +44,7 @@ class Cat extends \Ilch\Controller\Admin
             $items[1]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuTickets',
             $items
         );
@@ -70,7 +70,7 @@ class Cat extends \Ilch\Controller\Admin
         $this->getView()->set('cats', $categoryMapper->getCategorys());
     }
 
-    public function treatAction() 
+    public function treatAction()
     {
         $categoryMapper = new CategoryMapper();
 

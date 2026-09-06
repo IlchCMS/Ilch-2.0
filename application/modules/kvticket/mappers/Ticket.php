@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Kevin Veldscholten
  * @package ilch
@@ -99,6 +100,5 @@ class Ticket extends \Ilch\Mapper
         $this->db()->delete('kvticket')
             ->where(['id' => $id])
             ->execute();
-
     }
 }
