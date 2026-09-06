@@ -35,8 +35,8 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_kvticket`');
-        $this->db()->queryMulti('DROP TABLE `[prefix]_kvticket_cat`');
+        $this->db()->queryMulti('DROP TABLE IF EXISTS `[prefix]_kvticket`');
+        $this->db()->queryMulti('DROP TABLE IF EXISTS `[prefix]_kvticket_cat`');
     }
 
     public function getInstallSql()

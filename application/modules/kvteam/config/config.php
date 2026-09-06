@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'kvteam',
-        'version' => '1.3.2',
+        'version' => '1.3.3',
         'icon_small' => 'fa-solid fa-users',
         'author' => 'Veldscholten, Kevin',
         'languages' => [
@@ -35,7 +35,7 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_kvteam`');
+        $this->db()->queryMulti('DROP TABLE IF EXISTS `[prefix]_kvteam`');
     }
 
     public function getInstallSql(): string
