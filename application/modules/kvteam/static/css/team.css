@@ -13,8 +13,6 @@
     background-color: rgba(0, 0, 0, 0.65);
     opacity: 0;
 
-    -webkit-transition: all 0.5s ease-in-out 0s;
-    -moz-transition: all 0.5s ease-in-out 0s;
     transition: all 0.5s ease-in-out 0s;
 }
 .teams .user-image:hover .image:after,
@@ -31,8 +29,6 @@
 
     text-align: center;
 
-    -webkit-transition: all 0.5s ease-in-out 0s;
-    -moz-transition: all 0.5s ease-in-out 0s;
     transition: all 0.5s ease-in-out 0s;
 }
 .teams .user-image .contact a {
@@ -41,8 +37,6 @@
     border: 1px solid #22b14c;
     font-size: 20px;
 
-    -webkit-transition: all 0.3s ease-in-out 0s;
-    -moz-transition: all 0.3s ease-in-out 0s;
     transition: all 0.3s ease-in-out 0s;
 }
 .teams .user-image .contact a:hover,
