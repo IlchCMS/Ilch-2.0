@@ -81,7 +81,7 @@ class Index extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuTickets'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('entry'), ['action' => 'new']);
 
-        $this->getView()->set('cats', $catMapper->getCategorys());
+        $this->getView()->set('cats', $catMapper->getCategories());
         $this->getView()->set('captchaNeeded', $captchaNeeded);
 
         if ($this->getRequest()->getPost('saveTicket')) {

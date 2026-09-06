@@ -67,7 +67,7 @@ class Cat extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('cats', $categoryMapper->getCategorys());
+        $this->getView()->set('cats', $categoryMapper->getCategories());
     }
 
     public function treatAction()

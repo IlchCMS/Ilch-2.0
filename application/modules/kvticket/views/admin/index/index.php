@@ -37,7 +37,7 @@
                         <?php foreach ($this->get('openTickets') as $ticket): ?>
                             <?php $creator = $userMapper->getUserById($ticket->getCreator()); ?>
                             <?php $editor = $userMapper->getUserById($ticket->getEditor()); ?>
-                            <?php $cat = $catMapper->getCategoryById($ticket->getCat()); ?>
+                            <?php $cat = ($ticket->getCat()) ? $catMapper->getCategoryById($ticket->getCat()) : null; ?>
                             <?php $createdAt = new \Ilch\Date($ticket->getCreatedAt()); ?>
                             <?php $updatedAt = new \Ilch\Date($ticket->getUpdatedAt()); ?>
                             <tr>
@@ -89,7 +89,7 @@
                     <?php foreach ($this->get('editTickets') as $ticket): ?>
                         <?php $creator = $userMapper->getUserById($ticket->getCreator()); ?>
                         <?php $editor = $userMapper->getUserById($ticket->getEditor()); ?>
-                        <?php $cat = $catMapper->getCategoryById($ticket->getCat()); ?>
+                        <?php $cat = ($ticket->getCat()) ? $catMapper->getCategoryById($ticket->getCat()) : null; ?>
                         <?php $createdAt = new \Ilch\Date($ticket->getCreatedAt()); ?>
                         <?php $updatedAt = new \Ilch\Date($ticket->getUpdatedAt()); ?>
                         <tr>
@@ -141,7 +141,7 @@
                     <?php foreach ($this->get('compTickets') as $ticket): ?>
                         <?php $creator = $userMapper->getUserById($ticket->getCreator()); ?>
                         <?php $editor = $userMapper->getUserById($ticket->getEditor()); ?>
-                        <?php $cat = $catMapper->getCategoryById($ticket->getCat()); ?>
+                        <?php $cat = ($ticket->getCat()) ? $catMapper->getCategoryById($ticket->getCat()) : null; ?>
                         <?php $createdAt = new \Ilch\Date($ticket->getCreatedAt()); ?>
                         <?php $updatedAt = new \Ilch\Date($ticket->getUpdatedAt()); ?>
                         <tr>
@@ -191,7 +191,7 @@
                     <?php foreach ($this->get('closeTickets') as $ticket): ?>
                         <?php $creator = $userMapper->getUserById($ticket->getCreator()); ?>
                         <?php $editor = $userMapper->getUserById($ticket->getEditor()); ?>
-                        <?php $cat = $catMapper->getCategoryById($ticket->getCat()); ?>
+                        <?php $cat = ($ticket->getCat()) ? $catMapper->getCategoryById($ticket->getCat()) : null; ?>
                         <?php $createdAt = new \Ilch\Date($ticket->getCreatedAt()); ?>
                         <?php $updatedAt = new \Ilch\Date($ticket->getUpdatedAt()); ?>
                         <tr>

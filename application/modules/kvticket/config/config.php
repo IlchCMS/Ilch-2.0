@@ -9,11 +9,13 @@ namespace Modules\Kvticket\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = [
+    public array $config = [
         'key' => 'kvticket',
         'version' => '1.6.2',
         'icon_small' => 'fa-solid fa-ticket',
         'author' => 'Veldscholten, Kevin',
+        'link' => 'https://ilch.de',
+        'official' => true,
         'languages' => [
             'de_DE' => [
                 'name' => 'Tickets',
@@ -25,7 +27,7 @@ class Config extends \Ilch\Config\Install
             ],
         ],
         'ilchCore' => '2.2.0',
-        'phpVersion' => '7.3'
+        'phpVersion' => '7.4'
     ];
 
     public function install()
@@ -39,7 +41,7 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti('DROP TABLE IF EXISTS `[prefix]_kvticket_cat`');
     }
 
-    public function getInstallSql()
+    public function getInstallSql(): string
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_kvticket` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -61,7 +63,7 @@ class Config extends \Ilch\Config\Install
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
     }
 
-    public function getUpdate($installedVersion)
+    public function getUpdate($installedVersion): string
     {
         switch ($installedVersion) {
             case "1.0":

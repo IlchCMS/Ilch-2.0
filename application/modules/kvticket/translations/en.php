@@ -8,7 +8,7 @@
 return [
     'menuTicket' => 'Ticket',
     'menuTickets' => 'Tickets',
-    'menuCats' => 'Categorys',
+    'menuCats' => 'Categories',
     'entry' => 'Entry',
     'status' => 'Status',
     'editor' => 'Editor',
@@ -23,7 +23,7 @@ return [
     'compTickets' => 'Done',
     'closeTickets' => 'Closed',
     'noTickets' => 'No tickets available',
-    'noCats' => 'No categorys available',
+    'noCats' => 'No categories available',
     'errorTicket' => 'Ticket not available',
     'addButton' => 'Add',
     'show' => 'Show',

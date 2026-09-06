@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var activeSystemClass = $('.list-group-item.active');
 
-    //something is entered in search form
+    // something is entered in search form
     $('#system-search').keyup( function() {
         var that = this;
         // affect all table rows on in systems table
@@ -9,7 +9,7 @@ $(document).ready(function() {
         var tableRowsClass = $('.table-list-search tbody tr');
         $('.search-sf').remove();
         tableRowsClass.each( function(i, val) {
-            //Lower text for case insensitive
+            // Lower text for case-insensitive
             var rowText = $(val).text().toLowerCase();
             var inputText = $(that).val().toLowerCase();
             if(inputText != '') {
@@ -22,7 +22,7 @@ $(document).ready(function() {
             }
 
             if (rowText.indexOf(inputText) == -1) {
-                //hide rows
+                // hide rows
                 tableRowsClass.eq(i).hide();
 
             } else {
@@ -30,7 +30,7 @@ $(document).ready(function() {
                 tableRowsClass.eq(i).show();
             }
         });
-        //all tr elements are hidden
+        // all table row elements are hidden
         if (tableRowsClass.children(':visible').length == 0) {
             tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="3">Keinen Eintrag gefunden.</td></tr>');
         }
