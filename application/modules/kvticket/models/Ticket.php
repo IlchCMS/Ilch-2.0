@@ -12,75 +12,85 @@ class Ticket extends \Ilch\Model
     /**
      * The Id.
      *
-     * @var int
+     * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The Title.
      *
      * @var string
      */
-    protected $title;
+    protected string $title = '';
 
     /**
      * The Text.
      *
      * @var string
      */
-    protected $text;
+    protected string $text = '';
 
     /**
      * The Status.
      *
      * @var int
      */
-    protected $status;
+    protected int $status = 0;
 
     /**
      * The Editor.
      *
-     * @var int
+     * @var int|null
      */
-    protected $editor;
+    protected ?int $editor = null;
 
     /**
      * The Creator.
      *
-     * @var int
+     * @var int|null
      */
-    protected $creator;
+    protected ?int $creator = null;
 
     /**
      * The Category.
      *
      * @var int
      */
-    protected $cat;
+    protected int $cat;
 
     /**
      * The created at Datetime.
      *
      * @var string
      */
-    protected $created_at;
+    protected string $created_at;
 
     /**
      * The updated at Datetime.
      *
      * @var string
      */
-    protected $updated_at;
+    protected string $updated_at;
 
     /**
-     * Sets the Id.
+     * Get the id.
+     *
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Sets the id.
      *
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Ticket
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -90,7 +100,7 @@ class Ticket extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -101,9 +111,9 @@ class Ticket extends \Ilch\Model
      * @param string $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Ticket
     {
-        $this->title = (string)$title;
+        $this->title = $title;
 
         return $this;
     }
@@ -113,7 +123,7 @@ class Ticket extends \Ilch\Model
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -124,9 +134,9 @@ class Ticket extends \Ilch\Model
      * @param string $text
      * @return $this
      */
-    public function setText($text)
+    public function setText(string $text): Ticket
     {
-        $this->text = (string)$text;
+        $this->text = $text;
 
         return $this;
     }
@@ -136,7 +146,7 @@ class Ticket extends \Ilch\Model
      *
      * @return int
      */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
@@ -147,9 +157,9 @@ class Ticket extends \Ilch\Model
      * @param int $status
      * @return $this
      */
-    public function setStatus($status)
+    public function setStatus(int $status): Ticket
     {
-        $this->status = (int)$status;
+        $this->status = $status;
 
         return $this;
     }
@@ -157,9 +167,9 @@ class Ticket extends \Ilch\Model
     /**
      * Gets the Editor.
      *
-     * @return int
+     * @return int|null
      */
-    public function getEditor()
+    public function getEditor(): ?int
     {
         return $this->editor;
     }
@@ -170,9 +180,9 @@ class Ticket extends \Ilch\Model
      * @param int $editor
      * @return $this
      */
-    public function setEditor($editor)
+    public function setEditor(int $editor): Ticket
     {
-        $this->editor = (int)$editor;
+        $this->editor = $editor;
 
         return $this;
     }
@@ -180,9 +190,9 @@ class Ticket extends \Ilch\Model
     /**
      * Gets the Creator.
      *
-     * @return int
+     * @return int|null
      */
-    public function getCreator()
+    public function getCreator(): ?int
     {
         return $this->creator;
     }
@@ -193,7 +203,7 @@ class Ticket extends \Ilch\Model
      * @param $creator
      * @return $this
      */
-    public function setCreator($creator)
+    public function setCreator($creator): Ticket
     {
         $this->creator = (int)$creator;
 
@@ -205,7 +215,7 @@ class Ticket extends \Ilch\Model
      *
      * @return int
      */
-    public function getCat()
+    public function getCat(): int
     {
         return $this->cat;
     }
@@ -216,9 +226,9 @@ class Ticket extends \Ilch\Model
      * @param int $cat
      * @return $this
      */
-    public function setCat($cat)
+    public function setCat(int $cat): Ticket
     {
-        $this->cat = (int)$cat;
+        $this->cat = $cat;
 
         return $this;
     }
@@ -228,7 +238,7 @@ class Ticket extends \Ilch\Model
      *
      * @return string
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): string
     {
         return $this->created_at;
     }
@@ -239,9 +249,9 @@ class Ticket extends \Ilch\Model
      * @param string $created_at
      * @return $this
      */
-    public function setCreatedAt($created_at)
+    public function setCreatedAt(string $created_at): Ticket
     {
-        $this->created_at = (string)$created_at;
+        $this->created_at = $created_at;
 
         return $this;
     }
@@ -251,7 +261,7 @@ class Ticket extends \Ilch\Model
      *
      * @return string
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): string
     {
         return $this->updated_at;
     }
@@ -262,9 +272,9 @@ class Ticket extends \Ilch\Model
      * @param string $updated_at
      * @return $this
      */
-    public function setUpdatedAt($updated_at)
+    public function setUpdatedAt(string $updated_at): Ticket
     {
-        $this->updated_at = (string)$updated_at;
+        $this->updated_at = $updated_at;
 
         return $this;
     }

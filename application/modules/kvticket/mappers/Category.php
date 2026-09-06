@@ -17,7 +17,7 @@ class Category extends \Ilch\Mapper
      * @param array $where
      * @return CatModel[]|array
      */
-    public function getCategorys($where = [])
+    public function getCategories(array $where = []): array
     {
         $entryArray = $this->db()->select('*')
             ->from('kvticket_cat')
@@ -41,14 +41,14 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Get Ticket by given Id.
+     * Get Ticket by given id.
      *
-     * @param integer $id
+     * @param int $id
      * @return CatModel|null
      */
-    public function getCategoryById($id)
+    public function getCategoryById(int $id): ?CatModel
     {
-        $team = $this->getCategorys(['id' => $id]);
+        $team = $this->getCategories(['id' => $id]);
 
         return reset($team);
     }
@@ -58,7 +58,7 @@ class Category extends \Ilch\Mapper
      *
      * @param CatModel $cat
      */
-    public function save(CatModel $cat)
+    public function save(CatModel $cat): void
     {
         $fields = [
             'title' => $cat->getTitle()
@@ -77,11 +77,11 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Delete Ticket with given Id.
+     * Delete Ticket with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id): void
     {
         $this->db()->delete('kvticket_cat')
             ->where(['id' => $id])

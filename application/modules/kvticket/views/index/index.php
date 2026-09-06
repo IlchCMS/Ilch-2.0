@@ -66,7 +66,7 @@
                             $editor = $userMapper->getUserById($ticket->getEditor());
                             $createdAt = new \Ilch\Date($ticket->getCreatedAt());
                             $updatedAt = new \Ilch\Date($ticket->getUpdatedAt());
-                            $cat = $catMapper->getCategoryById($ticket->getCat());
+                            $cat = ($ticket->getCat()) ? $catMapper->getCategoryById($ticket->getCat()) : null;
 
                             if ($ticket->getStatus() == 1) {
                                 $ticketCSS = 'bg-info';
@@ -87,27 +87,27 @@
                             } ?>
 
                             <tr <?=($ticketCSS) ? 'class="'.$ticketCSS.'"' : '' ?>>
-                                <td class="<?=($ticketCSS) ? $ticketCSS : '' ?><?=($this->get('sort_column') == 'title'?' table-active':'') ?>">
+                                <td class="<?=($ticketCSS) ?: '' ?><?=($this->get('sort_column') == 'title'?' table-active':'') ?>">
                                     <a href="<?=$this->getUrl(['action' => 'show', 'id' => $ticket->getId()]) ?>" class="<?=$linkcolor ?>" title="<?=$this->escape($ticket->getTitle()) ?>">
                                         <?=$this->escape($ticket->getTitle()) ?>
                                     </a>
                                 </td>
-                                <td class="<?=($ticketCSS) ? $ticketCSS : '' ?><?=($this->get('sort_column') == 'cat'?' table-active':'') ?>">
+                                <td class="<?=($ticketCSS) ?: '' ?><?=($this->get('sort_column') == 'cat'?' table-active':'') ?>">
                                     <?=($cat ? $this->escape($cat->getTitle()) : '') ?>
                                 </td>
-                                <td class="<?=($ticketCSS) ? $ticketCSS : '' ?><?=($this->get('sort_column') == 'status'?' table-active':'') ?>">
+                                <td class="<?=($ticketCSS) ?: '' ?><?=($this->get('sort_column') == 'status'?' table-active':'') ?>">
                                     <?=$ticketStatus ?>
                                 </td>
-                                <td class="<?=($ticketCSS) ? $ticketCSS : '' ?><?=($this->get('sort_column') == 'creator'?' table-active':'') ?>">
+                                <td class="<?=($ticketCSS) ?: '' ?><?=($this->get('sort_column') == 'creator'?' table-active':'') ?>">
                                     <?=($creator) ? $this->escape($creator->getName()) : '' ?>
                                 </td>
-                                <td class="<?=($ticketCSS) ? $ticketCSS : '' ?><?=($this->get('sort_column') == 'editor'?' table-active':'') ?>">
+                                <td class="<?=($ticketCSS) ?: '' ?><?=($this->get('sort_column') == 'editor'?' table-active':'') ?>">
                                     <?=($editor) ? $this->escape($editor->getName()) : '' ?>
                                 </td>
-                                <td class="<?=($ticketCSS) ? $ticketCSS : '' ?><?=($this->get('sort_column') == 'created_at'?' table-active':'') ?>">
+                                <td class="<?=($ticketCSS) ?: '' ?><?=($this->get('sort_column') == 'created_at'?' table-active':'') ?>">
                                     <?=$createdAt->format('d.m.Y H:i') ?>
                                 </td>
-                                <td class="<?=($ticketCSS) ? $ticketCSS : '' ?><?=($this->get('sort_column') == 'updated_at'?' table-active':'') ?>">
+                                <td class="<?=($ticketCSS) ?: '' ?><?=($this->get('sort_column') == 'updated_at'?' table-active':'') ?>">
                                     <?=$updatedAt->format('d.m.Y H:i') ?>
                                 </td>
                             </tr>

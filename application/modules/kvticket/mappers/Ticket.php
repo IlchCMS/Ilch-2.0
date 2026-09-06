@@ -18,7 +18,7 @@ class Ticket extends \Ilch\Mapper
      * @param array $order
      * @return TicketModel[]|array
      */
-    public function getTickets($where = [], $order = ['created_at' => 'DESC'])
+    public function getTickets(array $where = [], array $order = ['created_at' => 'DESC']): array
     {
         $entryArray = $this->db()->select('*')
             ->from('kvticket')
@@ -50,12 +50,12 @@ class Ticket extends \Ilch\Mapper
     }
 
     /**
-     * Get Ticket by given Id.
+     * Get Ticket by given id.
      *
-     * @param integer $id
+     * @param int $id
      * @return TicketModel|null
      */
-    public function getTicketById($id)
+    public function getTicketById(int $id): ?TicketModel
     {
         $team = $this->getTickets(['id' => $id]);
 
@@ -67,7 +67,7 @@ class Ticket extends \Ilch\Mapper
      *
      * @param TicketModel $ticket
      */
-    public function save(TicketModel $ticket)
+    public function save(TicketModel $ticket): void
     {
         $fields = [
             'title' => $ticket->getTitle(),
@@ -91,11 +91,11 @@ class Ticket extends \Ilch\Mapper
     }
 
     /**
-     * Delete Ticket with given Id.
+     * Delete Ticket with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id): void
     {
         $this->db()->delete('kvticket')
             ->where(['id' => $id])

@@ -12,26 +12,31 @@ class Category extends \Ilch\Model
     /**
      * The Id.
      *
-     * @var int
+     * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The Title.
      *
      * @var string
      */
-    protected $title;
+    protected string $title = '';
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     /**
-     * Sets the Id.
+     * Sets the id.
      *
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Category
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -41,7 +46,7 @@ class Category extends \Ilch\Model
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -52,9 +57,9 @@ class Category extends \Ilch\Model
      * @param string $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Category
     {
-        $this->title = (string)$title;
+        $this->title = $title;
 
         return $this;
     }

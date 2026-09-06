@@ -95,7 +95,7 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuTickets'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
-        $this->getView()->set('cats', $catMapper->getCategorys());
+        $this->getView()->set('cats', $catMapper->getCategories());
         $this->getView()->set('users', $userMapper->getUserList());
 
         if ($this->getRequest()->isPost()) {

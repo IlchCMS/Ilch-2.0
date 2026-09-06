@@ -9,8 +9,6 @@
                     <col class="icon_width" />
                     <col class="icon_width" />
                     <col />
-                    <col class="col-xl-1" />
-                    <col class="col-xl-1" />
                 </colgroup>
                 <thead>
                 <tr>
