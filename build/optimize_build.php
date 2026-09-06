@@ -140,7 +140,9 @@ $directoriesModulesLayouts = [
     'modules' => [
         'remove' => [
             'sample/',
-            'checkout/'
+            'checkout/',
+            'kvteam/',
+            'kvticket/',
         ]
     ],
     'layouts' => [

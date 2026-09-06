@@ -1,0 +1,14 @@
+.searchfield {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+::-ms-clear {
+    display: none;
+}
+
+.form-control-clear {
+    z-index: 10;
+    pointer-events: auto;
+    cursor: pointer;
+}
