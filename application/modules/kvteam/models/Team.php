@@ -14,31 +14,31 @@ class Team extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The Title.
      *
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * The User Ids.
      *
      * @var string
      */
-    protected $userIds = '';
+    protected string $userIds = '';
 
     /**
      * The Position.
      *
      * @var int
      */
-    protected $position = 0;
+    protected int $position = 0;
 
     /**
-     * Gets the Id.
+     * Gets the id.
      *
      * @return int
      */
@@ -48,7 +48,7 @@ class Team extends \Ilch\Model
     }
 
     /**
-     * Sets the Id.
+     * Sets the id.
      *
      * @param int $id
      * @return $this
@@ -97,10 +97,13 @@ class Team extends \Ilch\Model
      * Sets the User Ids.
      *
      * @param string $userIds
+     * @return Team
      */
-    public function setUserIds(string $userIds)
+    public function setUserIds(string $userIds): Team
     {
         $this->userIds = $userIds;
+
+        return $this;
     }
 
     /**

@@ -9,11 +9,13 @@ namespace Modules\Kvteam\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = [
+    public array $config = [
         'key' => 'kvteam',
         'version' => '1.3.3',
         'icon_small' => 'fa-solid fa-users',
         'author' => 'Veldscholten, Kevin',
+        'link' => 'https://ilch.de',
+        'official' => true,
         'languages' => [
             'de_DE' => [
                 'name' => 'Team',
@@ -25,7 +27,7 @@ class Config extends \Ilch\Config\Install
             ],
         ],
         'ilchCore' => '2.2.4',
-        'phpVersion' => '7.3'
+        'phpVersion' => '7.4'
     ];
 
     public function install()

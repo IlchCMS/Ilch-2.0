@@ -45,7 +45,7 @@ class Team extends \Ilch\Mapper
     }
 
     /**
-     * Get Team by given Id.
+     * Get Team by given id.
      *
      * @param int $id
      * @return TeamModel|null
@@ -62,10 +62,11 @@ class Team extends \Ilch\Mapper
      *
      * @param int $id
      * @param int $position
+     * @return bool
      */
-    public function updatePositionById(int $id, int $position)
+    public function updatePositionById(int $id, int $position): bool
     {
-        $this->db()->update('kvteam')
+        return (bool)$this->db()->update('kvteam')
             ->values(['position' => $position])
             ->where(['id' => $id])
             ->execute();
@@ -76,10 +77,11 @@ class Team extends \Ilch\Mapper
      *
      * @param int $teamId
      * @param int $i
+     * @return bool
      */
-    public function sort(int $teamId, int $i)
+    public function sort(int $teamId, int $i): bool
     {
-        $this->db()->update('kvteam')
+        return (bool)$this->db()->update('kvteam')
             ->values(['position' => $i])
             ->where(['id' => $teamId])
             ->execute();
@@ -89,8 +91,9 @@ class Team extends \Ilch\Mapper
      * Inserts or updates Team Model.
      *
      * @param TeamModel $team
+     * @return bool
      */
-    public function save(TeamModel $team)
+    public function save(TeamModel $team): bool
     {
         $fields = [
             'title' => $team->getTitle(),
@@ -99,25 +102,26 @@ class Team extends \Ilch\Mapper
         ];
 
         if ($team->getId()) {
-            $this->db()->update('kvteam')
+            return (bool)$this->db()->update('kvteam')
                 ->values($fields)
                 ->where(['id' => $team->getId()])
                 ->execute();
         } else {
-            $this->db()->insert('kvteam')
+            return (bool)$this->db()->insert('kvteam')
                 ->values($fields)
                 ->execute();
         }
     }
 
     /**
-     * Delete Team with given Id.
+     * Delete Team with given id.
      *
      * @param int $id
+     * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('kvteam')
+        return (bool)$this->db()->delete('kvteam')
             ->where(['id' => $id])
             ->execute();
     }

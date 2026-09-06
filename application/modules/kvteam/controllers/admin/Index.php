@@ -98,13 +98,17 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('team', $team);
 
         if ($this->getRequest()->isPost()) {
+            Validation::setCustomFieldAliases([
+                'userIds' => 'members',
+            ]);
+
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'title' => 'required|unique:kvteam,title,' . $this->getRequest()->getParam('id'),
                 'userIds' => 'required'
             ]);
 
             if ($validation->isValid()) {
-                $userIds = implode(",", $this->getRequest()->getPost('userIds'));
+                $userIds = implode(',', $this->getRequest()->getPost('userIds'));
 
                 $team->setTitle($this->getRequest()->getPost('title'))
                     ->setUserIds($userIds);
@@ -118,7 +122,7 @@ class Index extends \Ilch\Controller\Admin
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'treat']);
+                ->to(($this->getRequest()->getParam('id')) ? ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')] : ['action' => 'treat']);
         }
 
         $this->getView()->set('userList', $userMapper->getUserList());
