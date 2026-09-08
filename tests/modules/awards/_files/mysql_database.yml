@@ -1,0 +1,31 @@
+# application/modules/awards/_files/mysql_database.yml
+awards:
+  - id: 1
+    date: '2024-01-15'
+    rank: 1
+    image: 'trophy.png'
+    event: 'Annual Competition'
+    url: 'https://example.com/award1'
+  - id: 2
+    date: '2024-02-20'
+    rank: 2
+    image: 'silver.png'
+    event: 'Spring Tournament'
+    url: 'https://example.com/award2'
+  - id: 3
+    date: '2024-03-10'
+    rank: 3
+    image: 'bronze.png'
+    event: 'Summer Cup'
+    url: 'https://example.com/award3'
+
+awards_recipients:
+  - award_id: 1
+    ut_id: 10
+    typ: 0
+  - award_id: 1
+    ut_id: 11
+    typ: 0
+  - award_id: 2
+    ut_id: 12
+    typ: 1

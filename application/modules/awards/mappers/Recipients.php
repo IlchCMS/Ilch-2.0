@@ -37,7 +37,7 @@ class Recipients extends Mapper
         $recipients = [];
         foreach ($recipientsArray as $recipient) {
             $recipientModel = new RecipientModel();
-            $recipientModel->setAwardId($recipient['id'])
+            $recipientModel->setAwardId($recipient['award_id'])
                 ->setUtId($recipient['ut_id'])
                 ->setTyp($recipient['typ']);
             $recipients[] = $recipientModel;
@@ -55,6 +55,10 @@ class Recipients extends Mapper
      */
     public function saveMulti(array $recipients): int
     {
+        if (count($recipients) === 0) {
+            return 0;
+        }
+
         if (count($recipients) > 1000) {
             throw new InvalidArgumentException('Too many recipients. There is a limit of 1000.');
         }
