@@ -320,6 +320,10 @@ class Index extends \Ilch\Controller\Admin
                     $confirmedCode = bin2hex(random_bytes(32));
                     $user->setSelector($selector);
                     $user->setConfirmedCode($confirmedCode);
+                    // The mail below links to "user/login/newpassword", which only accepts requests
+                    // with a valid expiry date. Allow more time than for a password reset requested
+                    // by the user themselves, because this mail is not triggered by the recipient.
+                    $user->setExpires(date('Y-m-d\TH:i:s', strtotime('+7 days')));
 
                     $name = $this->getLayout()->escape($user->getName());
                     $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));

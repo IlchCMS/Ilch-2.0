@@ -108,8 +108,17 @@ class Login extends \Ilch\Controller\Frontend
                 $userMapper = new UserMapper();
                 $user = $userMapper->getUserBySelector($selector);
 
-                // Compare confirmedCode from the database with the one provided as parameter in the url
-                if ($user !== null && (empty($user->getExpires()) || (($user->getExpires() && (strtotime($user->getExpires()) >= time())) && hash_equals($user->getConfirmedCode(), $confirmedCode)))) {
+                // Compare confirmedCode from the database with the one provided as parameter in the url.
+                // The code has to be checked in every case. A missing or expired expiry date counts as
+                // invalid: otherwise knowing the selector alone would be enough to set a new password,
+                // because a selector created during registration is stored without an expiry date.
+                $validRequest = $user !== null
+                    && !empty($user->getExpires())
+                    && strtotime($user->getExpires()) >= time()
+                    && !empty($user->getConfirmedCode())
+                    && hash_equals($user->getConfirmedCode(), $confirmedCode);
+
+                if ($validRequest) {
                     Validation::setCustomFieldAliases([
                         'password' => 'profileNewPassword',
                         'password2' => 'profileNewPasswordRetype',
