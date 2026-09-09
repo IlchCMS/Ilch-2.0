@@ -1,0 +1,13 @@
+users:
+  - id: 1
+    name: 'alice'
+    birthday: '1990-09-09'
+  - id: 2
+    name: 'bob'
+    birthday: '1985-05-15'
+  - id: 3
+    name: 'carol'
+    birthday: '1978-12-25'
+  - id: 4
+    name: 'dave'
+    birthday: '1992-01-10'
