@@ -1,0 +1,29 @@
+checkoutbasic:
+  - id: 1
+    date_created: '2025-01-15 10:30:00'
+    name: 'Alice'
+    usage: 'Membership fee'
+    amount: 100.50
+  - id: 2
+    date_created: '2025-02-20 14:00:00'
+    name: 'Bob'
+    usage: 'Equipment refund'
+    amount: -50.25
+  - id: 3
+    date_created: '2025-03-10 09:00:00'
+    name: 'Carol'
+    usage: 'Zero balance'
+    amount: 0.00
+  - id: 4
+    date_created: '2025-04-05 16:45:00'
+    name: 'Dave'
+    usage: 'Sponsorship'
+    amount: 200.00
+
+checkoutbasic_currencies:
+  - id: 1
+    name: 'EUR (€)'
+  - id: 2
+    name: 'USD ($)'
+  - id: 3
+    name: 'GBP (£)'
