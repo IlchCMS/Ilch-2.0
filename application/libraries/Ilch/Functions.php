@@ -524,6 +524,24 @@ function setcookieIlch(string $name, string $value = '', int $expires = 0, ?arra
 }
 
 /**
+ * Renew the session id while keeping the session data.
+ *
+ * Called whenever the login state of a session changes, e.g. after a successful login.
+ *
+ * @since 2.2.21
+ *
+ * @return bool
+ */
+function regenerateSessionId(): bool
+{
+    if (session_status() !== PHP_SESSION_ACTIVE || headers_sent()) {
+        return false;
+    }
+
+    return session_regenerate_id(true);
+}
+
+/**
  * Generate a UUID v4.
  *
  * @since 2.1.48

@@ -103,6 +103,9 @@ class Login
             return new LoginResult(false, $user, LoginResult::USER_LOCKED);
         }
 
+        // The user is authenticated from here on, so the session gets a new id.
+        regenerateSessionId();
+
         $selectsDelete = $user->getSelectsDelete();
         if ($selectsDelete != '' && $selectsDelete != '1000-01-01 00:00:00') {
             $this->mapper->selectsdelete($user->getId());

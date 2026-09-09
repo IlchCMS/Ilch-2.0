@@ -12,6 +12,20 @@
 
 namespace Captcha;
 
+// This file is requested directly and starts its own session, so it uses the same session
+// settings as index.php.
+$isHttps = $_SERVER['HTTPS'] ?? $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? null;
+$isHttps = $isHttps && (strcasecmp('on', $isHttps) == 0 || strcasecmp('https', $isHttps) == 0);
+
+@ini_set('session.use_strict_mode', '1');
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => $_SERVER['SERVER_NAME'],
+    'samesite' => 'Lax',
+    'secure' => (bool) $isHttps,
+    'httponly' => true,
+]);
 session_start();
 
 $captcha = new Captcha();

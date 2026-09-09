@@ -33,6 +33,9 @@ $isHttps = $isHttps && (strcasecmp('on', $isHttps) == 0 || strcasecmp('https', $
 
 define('ISHTTPSPAGE', $isHttps);
 
+// Only accept session ids that PHP created itself.
+@ini_set('session.use_strict_mode', '1');
+
 session_set_cookie_params([
     'lifetime' => 0,
     'path' => '/',

@@ -63,6 +63,8 @@ class Remember
 
         if ($authToken !== null && strtotime($authToken->getExpires()) >= time()) {
             if (hash_equals($authToken->getToken(), hash('sha256', base64_decode($authenticator)))) {
+                // Reauthentication is a login as well, so the session gets a new id.
+                regenerateSessionId();
                 $_SESSION['user_id'] = $authToken->getUserid();
                 // A new token is generated, a new hash for the token is stored over the old record, and a new login cookie is issued to the user.
                 $authTokenModel = new AuthTokenModel();
