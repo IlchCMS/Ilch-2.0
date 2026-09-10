@@ -20,8 +20,8 @@ use Modules\Teams\Models\Joins as EntriesModel;
  */
 class JoinsTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
-    private $mapper;
+    protected PhpunitDataset $phpunitDataset;
+    private Joins $mapper;
 
     public function setUp(): void
     {
@@ -37,48 +37,48 @@ class JoinsTest extends DatabaseTestCase
      */
     public function testgetJoinsAllRows()
     {
-        $entrys = $this->mapper->getEntriesBy();
+        $entries = $this->mapper->getEntriesBy();
 
-        self::assertCount(2, $entrys);
+        self::assertCount(2, $entries);
     }
 
     public function testgetJoins()
     {
-        $entrys = $this->mapper->getEntriesBy();
+        $entries = $this->mapper->getEntriesBy();
 
-        self::assertCount(2, $entrys);
+        self::assertCount(2, $entries);
 
         $i = 0;
-        self::assertEquals(1, $entrys[$i]->getId());
-        self::assertEquals(0, $entrys[$i]->getUserId());
-        self::assertEquals('Testuser', $entrys[$i]->getName());
-        self::assertEquals('Testuser@localhost.net', $entrys[$i]->getEmail());
-        self::assertEquals(3, $entrys[$i]->getGender());
-        self::assertEquals('2000-01-02', $entrys[$i]->getBirthday());
-        self::assertEquals('Zuhause', $entrys[$i]->getPlace());
-        self::assertEquals(1, $entrys[$i]->getSkill());
-        self::assertEquals(2, $entrys[$i]->getTeamId());
-        self::assertEquals('de_DE', $entrys[$i]->getLocale());
-        self::assertEquals('2023-03-23 00:00:00', $entrys[$i]->getDateCreated());
-        self::assertEquals('', $entrys[$i]->getText());
-        self::assertEquals(0, $entrys[$i]->getDecision());
-        self::assertEquals(1, $entrys[$i]->getUndecided());
+        self::assertEquals(1, $entries[$i]->getId());
+        self::assertEquals(0, $entries[$i]->getUserId());
+        self::assertEquals('Testuser', $entries[$i]->getName());
+        self::assertEquals('Testuser@localhost.net', $entries[$i]->getEmail());
+        self::assertEquals(3, $entries[$i]->getGender());
+        self::assertEquals('2000-01-02', $entries[$i]->getBirthday());
+        self::assertEquals('Zuhause', $entries[$i]->getPlace());
+        self::assertEquals(1, $entries[$i]->getSkill());
+        self::assertEquals(2, $entries[$i]->getTeamId());
+        self::assertEquals('de_DE', $entries[$i]->getLocale());
+        self::assertEquals('2023-03-23 00:00:00', $entries[$i]->getDateCreated());
+        self::assertEquals('', $entries[$i]->getText());
+        self::assertEquals(0, $entries[$i]->getDecision());
+        self::assertEquals(1, $entries[$i]->getUndecided());
 
         $i++;
-        self::assertEquals(2, $entrys[$i]->getId());
-        self::assertEquals(4, $entrys[$i]->getUserId());
-        self::assertEquals('', $entrys[$i]->getName());
-        self::assertEquals('', $entrys[$i]->getEmail());
-        self::assertEquals(1, $entrys[$i]->getGender());
-        self::assertEquals('2000-01-01', $entrys[$i]->getBirthday());
-        self::assertEquals('Server', $entrys[$i]->getPlace());
-        self::assertEquals(3, $entrys[$i]->getSkill());
-        self::assertEquals(3, $entrys[$i]->getTeamId());
-        self::assertEquals('de_DE', $entrys[$i]->getLocale());
-        self::assertEquals('2023-03-23 00:00:00', $entrys[$i]->getDateCreated());
-        self::assertEquals('', $entrys[$i]->getText());
-        self::assertEquals(0, $entrys[$i]->getDecision());
-        self::assertEquals(1, $entrys[$i]->getUndecided());
+        self::assertEquals(2, $entries[$i]->getId());
+        self::assertEquals(4, $entries[$i]->getUserId());
+        self::assertEquals('', $entries[$i]->getName());
+        self::assertEquals('', $entries[$i]->getEmail());
+        self::assertEquals(1, $entries[$i]->getGender());
+        self::assertEquals('2000-01-01', $entries[$i]->getBirthday());
+        self::assertEquals('Server', $entries[$i]->getPlace());
+        self::assertEquals(3, $entries[$i]->getSkill());
+        self::assertEquals(3, $entries[$i]->getTeamId());
+        self::assertEquals('de_DE', $entries[$i]->getLocale());
+        self::assertEquals('2023-03-23 00:00:00', $entries[$i]->getDateCreated());
+        self::assertEquals('', $entries[$i]->getText());
+        self::assertEquals(0, $entries[$i]->getDecision());
+        self::assertEquals(1, $entries[$i]->getUndecided());
     }
 
     public function testsaveNewJoins()

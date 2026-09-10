@@ -18,7 +18,7 @@ use Modules\User\Mappers\Group as GroupMapper;
 class GroupTest extends TestCase
 {
     /**
-     * Tests if the user group mapper returns the right user group model using an
+     * Tests if the user group mapper returns the right user group model using a
      * data array.
      */
     public function testLoadFromArray()

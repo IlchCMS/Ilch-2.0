@@ -23,8 +23,8 @@ use PHPUnit\Ilch\PhpunitDataset;
  */
 class TemplateTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
-    private $templateMapper;
+    protected PhpunitDataset $phpunitDataset;
+    private Template $templateMapper;
 
     public function setUp(): void
     {
@@ -231,7 +231,7 @@ class TemplateTest extends DatabaseTestCase
     }
 
     /**
-     * Returns database schema sql statements to initialize database
+     * Returns database schema SQL statements to initialize database
      *
      * @return string
      */

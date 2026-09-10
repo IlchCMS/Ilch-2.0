@@ -23,8 +23,8 @@ class NotificationPermissionTest extends DatabaseTestCase
     /**
      * @var NotificationPermissionMapper
      */
-    protected $out;
-    protected $phpunitDataset;
+    protected NotificationPermission $out;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
@@ -91,7 +91,7 @@ class NotificationPermissionTest extends DatabaseTestCase
 
     /**
      * Tests if updateLimitOfModule() successfully returns the maximum value of limit (UNSIGNED TINYINT) if one
-     * tries to set it to an bigger value.
+     * tries to set it to a bigger value.
      *
      */
     public function testUpdateLimitOfModuleInvalidLimit()
@@ -104,7 +104,7 @@ class NotificationPermissionTest extends DatabaseTestCase
 
     /**
      * Tests if updateLimitOfModule() successfully returns the minimum value of limit (UNSIGNED TINYINT) if one
-     * tries to set it to an negative value.
+     * tries to set it to a negative value.
      *
      */
     public function testUpdateLimitOfModuleInvalidLimitNegative()

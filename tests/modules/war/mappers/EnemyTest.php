@@ -21,8 +21,8 @@ use Modules\War\Models\Enemy as EntriesModel;
  */
 class EnemyTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
-    private $mapper;
+    protected PhpunitDataset $phpunitDataset;
+    private Enemy $mapper;
 
     public function setUp(): void
     {
@@ -38,34 +38,34 @@ class EnemyTest extends DatabaseTestCase
      */
     public function testgetWarEnemyAllRows()
     {
-        $entrys = $this->mapper->getEnemy();
+        $entries = $this->mapper->getEnemy();
 
-        self::assertCount(2, $entrys);
+        self::assertCount(2, $entries);
     }
 
     public function testgetWarEnemy()
     {
-        $entrys = $this->mapper->getEnemy();
+        $entries = $this->mapper->getEnemy();
 
-        self::assertCount(2, $entrys);
+        self::assertCount(2, $entries);
 
         $i = 0;
-        self::assertEquals(2, $entrys[$i]->getId());
-        self::assertSame('Testgegner2', $entrys[$i]->getEnemyName());
-        self::assertSame('TG2', $entrys[$i]->getEnemyTag());
-        self::assertSame('', $entrys[$i]->getEnemyImage());
-        self::assertSame('', $entrys[$i]->getEnemyHomepage());
-        self::assertSame('', $entrys[$i]->getEnemyContactName());
-        self::assertSame('', $entrys[$i]->getEnemyContactEmail());
+        self::assertEquals(2, $entries[$i]->getId());
+        self::assertSame('Testgegner2', $entries[$i]->getEnemyName());
+        self::assertSame('TG2', $entries[$i]->getEnemyTag());
+        self::assertSame('', $entries[$i]->getEnemyImage());
+        self::assertSame('', $entries[$i]->getEnemyHomepage());
+        self::assertSame('', $entries[$i]->getEnemyContactName());
+        self::assertSame('', $entries[$i]->getEnemyContactEmail());
 
         $i++;
-        self::assertEquals(1, $entrys[$i]->getId());
-        self::assertSame('Testgegner1', $entrys[$i]->getEnemyName());
-        self::assertSame('TG1', $entrys[$i]->getEnemyTag());
-        self::assertSame('', $entrys[$i]->getEnemyImage());
-        self::assertSame('', $entrys[$i]->getEnemyHomepage());
-        self::assertSame('', $entrys[$i]->getEnemyContactName());
-        self::assertSame('', $entrys[$i]->getEnemyContactEmail());
+        self::assertEquals(1, $entries[$i]->getId());
+        self::assertSame('Testgegner1', $entries[$i]->getEnemyName());
+        self::assertSame('TG1', $entries[$i]->getEnemyTag());
+        self::assertSame('', $entries[$i]->getEnemyImage());
+        self::assertSame('', $entries[$i]->getEnemyHomepage());
+        self::assertSame('', $entries[$i]->getEnemyContactName());
+        self::assertSame('', $entries[$i]->getEnemyContactEmail());
     }
 
     public function testsaveNewWarEnemy()

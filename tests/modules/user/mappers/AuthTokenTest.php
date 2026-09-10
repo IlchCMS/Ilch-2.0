@@ -21,7 +21,7 @@ use PHPUnit\Ilch\PhpunitDataset;
  */
 class AuthTokenTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
@@ -98,7 +98,7 @@ class AuthTokenTest extends DatabaseTestCase
     }
 
     /**
-     * Tests if trying to update an non-existing auth token returns the expected value.
+     * Tests if trying to update a non-existing auth token returns the expected value.
      */
     public function testUpdateAuthTokenNotExisting()
     {
@@ -124,7 +124,7 @@ class AuthTokenTest extends DatabaseTestCase
     }
 
     /**
-     * Tests deleting an non-existing auth token - invalid selector.
+     * Tests deleting a non-existing auth token - invalid selector.
      */
     public function testDeleteAuthTokenNotExisting()
     {

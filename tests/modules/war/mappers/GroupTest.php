@@ -21,8 +21,8 @@ use Modules\War\Models\Group as EntriesModel;
  */
 class GroupTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
-    private $mapper;
+    protected PhpunitDataset $phpunitDataset;
+    private Group $mapper;
 
     public function setUp(): void
     {
@@ -38,32 +38,32 @@ class GroupTest extends DatabaseTestCase
      */
     public function testgetWarGroupAllRows()
     {
-        $entrys = $this->mapper->getGroups();
+        $entries = $this->mapper->getGroups();
 
-        self::assertCount(2, $entrys);
+        self::assertCount(2, $entries);
     }
 
     public function testgetWarGroup()
     {
-        $entrys = $this->mapper->getGroups();
+        $entries = $this->mapper->getGroups();
 
-        self::assertCount(2, $entrys);
+        self::assertCount(2, $entries);
 
         $i = 0;
-        self::assertEquals(2, $entrys[$i]->getId());
-        self::assertSame('Testgruppe2', $entrys[$i]->getGroupName());
-        self::assertSame('ILCH2-TG2', $entrys[$i]->getGroupTag());
-        self::assertSame('', $entrys[$i]->getGroupImage());
-        self::assertSame('1', $entrys[$i]->getGroupMember());
-        self::assertSame('', $entrys[$i]->getGroupDesc());
+        self::assertEquals(2, $entries[$i]->getId());
+        self::assertSame('Testgruppe2', $entries[$i]->getGroupName());
+        self::assertSame('ILCH2-TG2', $entries[$i]->getGroupTag());
+        self::assertSame('', $entries[$i]->getGroupImage());
+        self::assertSame('1', $entries[$i]->getGroupMember());
+        self::assertSame('', $entries[$i]->getGroupDesc());
 
         $i++;
-        self::assertEquals(1, $entrys[$i]->getId());
-        self::assertSame('Testgruppe1', $entrys[$i]->getGroupName());
-        self::assertSame('ILCH2-TG1', $entrys[$i]->getGroupTag());
-        self::assertSame('', $entrys[$i]->getGroupImage());
-        self::assertSame('2', $entrys[$i]->getGroupMember());
-        self::assertSame('', $entrys[$i]->getGroupDesc());
+        self::assertEquals(1, $entries[$i]->getId());
+        self::assertSame('Testgruppe1', $entries[$i]->getGroupName());
+        self::assertSame('ILCH2-TG1', $entries[$i]->getGroupTag());
+        self::assertSame('', $entries[$i]->getGroupImage());
+        self::assertSame('2', $entries[$i]->getGroupMember());
+        self::assertSame('', $entries[$i]->getGroupDesc());
     }
 
     public function testsaveNewWarGroup()

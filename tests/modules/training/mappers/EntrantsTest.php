@@ -20,9 +20,9 @@ use Modules\Training\Models\Entrants as EntriesModel;
  */
 class EntrantsTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
+    protected PhpunitDataset $phpunitDataset;
     /** @var EntrantsMapper $mapper */
-    private $mapper;
+    private Entrants $mapper;
 
     public function setUp(): void
     {

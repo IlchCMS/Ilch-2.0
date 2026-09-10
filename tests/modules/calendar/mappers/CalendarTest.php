@@ -22,8 +22,8 @@ use Modules\Calendar\Models\Calendar as EntriesModel;
  */
 class CalendarTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
-    private $mapper;
+    protected PhpunitDataset $phpunitDataset;
+    private Calendar $mapper;
 
     public function setUp(): void
     {
@@ -39,87 +39,87 @@ class CalendarTest extends DatabaseTestCase
      */
     public function testgetCalendarAllRows()
     {
-        $entrys = $this->mapper->getEntries();
+        $entries = $this->mapper->getEntries();
 
-        self::assertCount(4, $entrys);
+        self::assertCount(4, $entries);
     }
 
     public function testgetCalendar()
     {
-        $entrys = $this->mapper->getEntries();
+        $entries = $this->mapper->getEntries();
 
-        self::assertCount(4, $entrys);
+        self::assertCount(4, $entries);
 
         $i = 0;
-        self::assertEquals(1, $entrys[$i]->getId());
-        self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc1', $entrys[$i]->getUid());
-        self::assertSame('Training 1', $entrys[$i]->getTitle());
-        self::assertSame('', $entrys[$i]->getPlace());
-        self::assertSame('2021-05-09 08:10:38', $entrys[$i]->getStart());
-        self::assertSame('2021-05-09 08:10:38', $entrys[$i]->getEnd());
-        self::assertSame('', $entrys[$i]->getText());
-        self::assertSame('#32333B', $entrys[$i]->getColor());
-        self::assertSame(0, $entrys[$i]->getPeriodDay());
-        self::assertSame('1,3', $entrys[$i]->getReadAccess());
+        self::assertEquals(1, $entries[$i]->getId());
+        self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc1', $entries[$i]->getUid());
+        self::assertSame('Training 1', $entries[$i]->getTitle());
+        self::assertSame('', $entries[$i]->getPlace());
+        self::assertSame('2021-05-09 08:10:38', $entries[$i]->getStart());
+        self::assertSame('2021-05-09 08:10:38', $entries[$i]->getEnd());
+        self::assertSame('', $entries[$i]->getText());
+        self::assertSame('#32333B', $entries[$i]->getColor());
+        self::assertSame(0, $entries[$i]->getPeriodDay());
+        self::assertSame('1,3', $entries[$i]->getReadAccess());
 
         $i++;
-        self::assertEquals(2, $entrys[$i]->getId());
-        self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc2', $entrys[$i]->getUid());
-        self::assertSame('Training 2', $entrys[$i]->getTitle());
-        self::assertSame('', $entrys[$i]->getPlace());
-        self::assertSame('2021-05-09 09:10:38', $entrys[$i]->getStart());
-        self::assertSame('2021-05-09 09:10:38', $entrys[$i]->getEnd());
-        self::assertSame('', $entrys[$i]->getText());
-        self::assertSame('#32333B', $entrys[$i]->getColor());
-        self::assertSame(0, $entrys[$i]->getPeriodDay());
-        self::assertSame('1', $entrys[$i]->getReadAccess());
+        self::assertEquals(2, $entries[$i]->getId());
+        self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc2', $entries[$i]->getUid());
+        self::assertSame('Training 2', $entries[$i]->getTitle());
+        self::assertSame('', $entries[$i]->getPlace());
+        self::assertSame('2021-05-09 09:10:38', $entries[$i]->getStart());
+        self::assertSame('2021-05-09 09:10:38', $entries[$i]->getEnd());
+        self::assertSame('', $entries[$i]->getText());
+        self::assertSame('#32333B', $entries[$i]->getColor());
+        self::assertSame(0, $entries[$i]->getPeriodDay());
+        self::assertSame('1', $entries[$i]->getReadAccess());
 
         $i++;
-        self::assertEquals(3, $entrys[$i]->getId());
-        self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc3', $entrys[$i]->getUid());
-        self::assertSame('Training 3', $entrys[$i]->getTitle());
-        self::assertSame('', $entrys[$i]->getPlace());
-        self::assertSame('2021-05-10 09:10:38', $entrys[$i]->getStart());
-        self::assertSame('2021-05-10 09:10:38', $entrys[$i]->getEnd());
-        self::assertSame('', $entrys[$i]->getText());
-        self::assertSame('#32333B', $entrys[$i]->getColor());
-        self::assertSame(0, $entrys[$i]->getPeriodDay());
-        self::assertSame('all', $entrys[$i]->getReadAccess());
+        self::assertEquals(3, $entries[$i]->getId());
+        self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc3', $entries[$i]->getUid());
+        self::assertSame('Training 3', $entries[$i]->getTitle());
+        self::assertSame('', $entries[$i]->getPlace());
+        self::assertSame('2021-05-10 09:10:38', $entries[$i]->getStart());
+        self::assertSame('2021-05-10 09:10:38', $entries[$i]->getEnd());
+        self::assertSame('', $entries[$i]->getText());
+        self::assertSame('#32333B', $entries[$i]->getColor());
+        self::assertSame(0, $entries[$i]->getPeriodDay());
+        self::assertSame('all', $entries[$i]->getReadAccess());
 
         $i++;
-        self::assertEquals(4, $entrys[$i]->getId());
-        self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc4', $entrys[$i]->getUid());
-        self::assertSame('Training 4', $entrys[$i]->getTitle());
-        self::assertSame('', $entrys[$i]->getPlace());
-        self::assertSame('2021-05-10 18:00:00', $entrys[$i]->getStart());
-        self::assertSame('2021-05-10 21:00:00', $entrys[$i]->getEnd());
-        self::assertSame('', $entrys[$i]->getText());
-        self::assertSame('#32333B', $entrys[$i]->getColor());
-        self::assertSame('weekly', $entrys[$i]->getPeriodType());
-        self::assertSame(1, $entrys[$i]->getPeriodDay());
-        self::assertSame('2021-12-31 21:00:00', $entrys[$i]->getRepeatUntil());
-        self::assertSame('all', $entrys[$i]->getReadAccess());
+        self::assertEquals(4, $entries[$i]->getId());
+        self::assertSame('39efcc37-43dd-43b7-923a-06c4a0d98fc4', $entries[$i]->getUid());
+        self::assertSame('Training 4', $entries[$i]->getTitle());
+        self::assertSame('', $entries[$i]->getPlace());
+        self::assertSame('2021-05-10 18:00:00', $entries[$i]->getStart());
+        self::assertSame('2021-05-10 21:00:00', $entries[$i]->getEnd());
+        self::assertSame('', $entries[$i]->getText());
+        self::assertSame('#32333B', $entries[$i]->getColor());
+        self::assertSame('weekly', $entries[$i]->getPeriodType());
+        self::assertSame(1, $entries[$i]->getPeriodDay());
+        self::assertSame('2021-12-31 21:00:00', $entries[$i]->getRepeatUntil());
+        self::assertSame('all', $entries[$i]->getReadAccess());
     }
 
     public function testgetCalendarByAccess()
     {
-        $entrys = $this->mapper->getEntries(['ra.group_id' => [1,2,3]]);
+        $entries = $this->mapper->getEntries(['ra.group_id' => [1,2,3]]);
 
-        self::assertCount(4, $entrys);
+        self::assertCount(4, $entries);
     }
 
     public function testgetCalendarByAccessGuest()
     {
-        $entrys = $this->mapper->getEntries(['ra.group_id' => [3]]);
+        $entries = $this->mapper->getEntries(['ra.group_id' => [3]]);
 
-        self::assertCount(3, $entrys);
+        self::assertCount(3, $entries);
     }
 
     public function testgetCalendarByDate()
     {
-        $entrys = $this->mapper->getEntriesForJson('2021-05-03', '2021-05-09', '1,2,3');
+        $entries = $this->mapper->getEntriesForJson('2021-05-03', '2021-05-09', '1,2,3');
 
-        self::assertCount(2, $entrys);
+        self::assertCount(2, $entries);
     }
 
     public function testsaveNewCalendar()

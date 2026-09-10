@@ -22,8 +22,8 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
     /**
      * @var LayoutAdvSettings
      */
-    protected $out;
-    protected $phpunitDataset;
+    protected LayoutAdvSettings $out;
+    protected PhpunitDataset $phpunitDataset;
 
     /**
      * Filling the config object with individual testcase data.
@@ -55,9 +55,9 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
         $layoutSetting = $this->out->getSetting('testLayoutKey1', 'testKey1');
 
         self::assertEquals(1, $layoutSetting->getId());
-        self::assertSame($layoutSetting->getLayoutKey(), 'testLayoutKey1');
-        self::assertSame($layoutSetting->getKey(), 'testKey1');
-        self::assertSame($layoutSetting->getValue(), 'testValue1');
+        self::assertSame('testLayoutKey1', $layoutSetting->getLayoutKey());
+        self::assertSame('testKey1', $layoutSetting->getKey());
+        self::assertSame('testValue1', $layoutSetting->getValue());
     }
 
     /**
@@ -68,14 +68,14 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
         $layoutSetting = $this->out->getSettings('testLayoutKey1');
 
         self::assertEquals(1, $layoutSetting['testKey1']->getId());
-        self::assertSame($layoutSetting['testKey1']->getLayoutKey(), 'testLayoutKey1');
-        self::assertSame($layoutSetting['testKey1']->getKey(), 'testKey1');
-        self::assertSame($layoutSetting['testKey1']->getValue(), 'testValue1');
+        self::assertSame('testLayoutKey1', $layoutSetting['testKey1']->getLayoutKey());
+        self::assertSame('testKey1', $layoutSetting['testKey1']->getKey());
+        self::assertSame('testValue1', $layoutSetting['testKey1']->getValue());
 
         self::assertEquals(2, $layoutSetting['testKey2']->getId());
-        self::assertSame($layoutSetting['testKey2']->getLayoutKey(), 'testLayoutKey1');
-        self::assertSame($layoutSetting['testKey2']->getKey(), 'testKey2');
-        self::assertSame($layoutSetting['testKey2']->getValue(), 'testValue2');
+        self::assertSame('testLayoutKey1', $layoutSetting['testKey2']->getLayoutKey());
+        self::assertSame('testKey2', $layoutSetting['testKey2']->getKey());
+        self::assertSame('testValue2', $layoutSetting['testKey2']->getValue());
     }
 
     /**
@@ -86,8 +86,8 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
         $layoutKeyList = $this->out->getListOfLayoutKeys();
 
         self::assertCount(2, $layoutKeyList);
-        self::assertSame($layoutKeyList[0], 'testLayoutKey1');
-        self::assertSame($layoutKeyList[1], 'testLayoutKey2');
+        self::assertSame('testLayoutKey1', $layoutKeyList[0]);
+        self::assertSame('testLayoutKey2', $layoutKeyList[1]);
     }
 
     /**
@@ -99,7 +99,7 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
     }
 
     /**
-     * Test if hasSettings() returns false for non existing settings.
+     * Test if hasSettings() returns false for non-existing settings.
      */
     public function testHasSettingsNotExisting()
     {
@@ -120,9 +120,9 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
 
         $layoutSetting = $this->out->getSetting('testLayoutKey3', 'testKey5');
         self::assertEquals(5, $layoutSetting->getId());
-        self::assertSame($layoutSetting->getLayoutKey(), 'testLayoutKey3');
-        self::assertSame($layoutSetting->getKey(), 'testKey5');
-        self::assertSame($layoutSetting->getValue(), 'testValue5');
+        self::assertSame('testLayoutKey3', $layoutSetting->getLayoutKey());
+        self::assertSame('testKey5', $layoutSetting->getKey());
+        self::assertSame('testValue5', $layoutSetting->getValue());
     }
 
     /**
@@ -146,14 +146,14 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
 
         $layoutSetting = $this->out->getSettings('testLayoutKey3');
         self::assertEquals(5, $layoutSetting['testKey5']->getId());
-        self::assertSame($layoutSetting['testKey5']->getLayoutKey(), 'testLayoutKey3');
-        self::assertSame($layoutSetting['testKey5']->getKey(), 'testKey5');
-        self::assertSame($layoutSetting['testKey5']->getValue(), 'testValue5');
+        self::assertSame('testLayoutKey3', $layoutSetting['testKey5']->getLayoutKey());
+        self::assertSame('testKey5', $layoutSetting['testKey5']->getKey());
+        self::assertSame('testValue5', $layoutSetting['testKey5']->getValue());
 
         self::assertEquals(6, $layoutSetting['testKey6']->getId());
-        self::assertSame($layoutSetting['testKey6']->getLayoutKey(), 'testLayoutKey3');
-        self::assertSame($layoutSetting['testKey6']->getKey(), 'testKey6');
-        self::assertSame($layoutSetting['testKey6']->getValue(), 'testValue6');
+        self::assertSame('testLayoutKey3', $layoutSetting['testKey6']->getLayoutKey());
+        self::assertSame('testKey6', $layoutSetting['testKey6']->getKey());
+        self::assertSame('testValue6', $layoutSetting['testKey6']->getValue());
     }
 
     /**
