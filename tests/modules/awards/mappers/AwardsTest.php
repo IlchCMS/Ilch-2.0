@@ -20,8 +20,8 @@ class AwardsTest extends DatabaseTestCase
     /**
      * @var AwardsMapper
      */
-    protected $out;
-    protected $phpunitDataset;
+    protected Awards $out;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
@@ -293,7 +293,7 @@ class AwardsTest extends DatabaseTestCase
     public function testSaveRecipientsMultiExceedsLimit()
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Too many recipients. There is a limit of 1000.");
+        $this->expectExceptionMessage('Too many recipients. There is a limit of 1000.');
         $recipients = [];
         for ($i = 0; $i < 1001; $i++) {
             $r = new RecipientModel();

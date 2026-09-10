@@ -20,8 +20,8 @@ use Modules\War\Models\Maps as EntriesModel;
  */
 class MapsTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
-    private $mapper;
+    protected PhpunitDataset $phpunitDataset;
+    private Maps $mapper;
 
     public function setUp(): void
     {
@@ -37,24 +37,24 @@ class MapsTest extends DatabaseTestCase
      */
     public function testgetWarMapsAllRows()
     {
-        $entrys = $this->mapper->getEntries();
+        $entries = $this->mapper->getEntries();
 
-        self::assertCount(2, $entrys);
+        self::assertCount(2, $entries);
     }
 
     public function testgetWarMaps()
     {
-        $entrys = $this->mapper->getEntries();
+        $entries = $this->mapper->getEntries();
 
-        self::assertCount(2, $entrys);
+        self::assertCount(2, $entries);
 
         $i = 0;
-        self::assertEquals(1, $entrys[$i]->getId());
-        self::assertSame('Map1', $entrys[$i]->getName());
+        self::assertEquals(1, $entries[$i]->getId());
+        self::assertSame('Map1', $entries[$i]->getName());
 
         $i++;
-        self::assertEquals(2, $entrys[$i]->getId());
-        self::assertSame('Map2', $entrys[$i]->getName());
+        self::assertEquals(2, $entries[$i]->getId());
+        self::assertSame('Map2', $entries[$i]->getName());
     }
 
     public function testsaveNewWarMaps()

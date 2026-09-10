@@ -22,8 +22,8 @@ use Modules\Calendar\Models\Events as EntriesModel;
  */
 class EventsTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
-    private $mapper;
+    protected PhpunitDataset $phpunitDataset;
+    private Events $mapper;
 
     public function setUp(): void
     {
@@ -39,40 +39,40 @@ class EventsTest extends DatabaseTestCase
      */
     public function testgetEventsAllRows()
     {
-        $entrys = $this->mapper->getEntries();
+        $entries = $this->mapper->getEntries();
 
-        self::assertCount(6, $entrys);
+        self::assertCount(6, $entries);
     }
 
     public function testgetEvents()
     {
-        $entrys = $this->mapper->getEntries();
+        $entries = $this->mapper->getEntries();
 
-        self::assertCount(6, $entrys);
+        self::assertCount(6, $entries);
 
         $i = 0;
-        self::assertEquals(1, $entrys[$i]->getId());
-        self::assertSame('calendar/events/index/', $entrys[$i]->getUrl());
+        self::assertEquals(1, $entries[$i]->getId());
+        self::assertSame('calendar/events/index/', $entries[$i]->getUrl());
 
         $i++;
-        self::assertEquals(2, $entrys[$i]->getId());
-        self::assertSame('war/wars/index/', $entrys[$i]->getUrl());
+        self::assertEquals(2, $entries[$i]->getId());
+        self::assertSame('war/wars/index/', $entries[$i]->getUrl());
 
         $i++;
-        self::assertEquals(3, $entrys[$i]->getId());
-        self::assertSame('training/trainings/index/', $entrys[$i]->getUrl());
+        self::assertEquals(3, $entries[$i]->getId());
+        self::assertSame('training/trainings/index/', $entries[$i]->getUrl());
 
         $i++;
-        self::assertEquals(4, $entrys[$i]->getId());
-        self::assertSame('birthday/birthdays/index/', $entrys[$i]->getUrl());
+        self::assertEquals(4, $entries[$i]->getId());
+        self::assertSame('birthday/birthdays/index/', $entries[$i]->getUrl());
 
         $i++;
-        self::assertEquals(5, $entrys[$i]->getId());
-        self::assertSame('events/events/index/', $entrys[$i]->getUrl());
+        self::assertEquals(5, $entries[$i]->getId());
+        self::assertSame('events/events/index/', $entries[$i]->getUrl());
 
         $i++;
-        self::assertEquals(6, $entrys[$i]->getId());
-        self::assertSame('away/aways/index/', $entrys[$i]->getUrl());
+        self::assertEquals(6, $entries[$i]->getId());
+        self::assertSame('away/aways/index/', $entries[$i]->getUrl());
     }
 
     public function testsaveNewEvents()

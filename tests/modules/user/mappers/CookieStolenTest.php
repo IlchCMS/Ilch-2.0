@@ -20,7 +20,7 @@ use PHPUnit\Ilch\PhpunitDataset;
  */
 class CookieStolenTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {

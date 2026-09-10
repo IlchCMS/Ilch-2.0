@@ -26,9 +26,9 @@ class UserTest extends DatabaseTestCase
      *
      * @var Request
      */
-    protected $request;
+    protected Request $request;
 
-    protected $phpunitDataset;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
@@ -44,7 +44,7 @@ class UserTest extends DatabaseTestCase
     {
         $user = new User();
         $user->setId(123);
-        self::assertEquals(123, $user->getId(), 'The id wasnt saved or returned correctly.');
+        self::assertEquals(123, $user->getId(), 'The id was not saved or returned correctly.');
     }
 
     /**
@@ -54,7 +54,7 @@ class UserTest extends DatabaseTestCase
     {
         $user = new User();
         $user->setName('username');
-        self::assertEquals('username', $user->getName(), 'The username wasnt saved or returned correctly.');
+        self::assertEquals('username', $user->getName(), 'The username was not saved or returned correctly.');
     }
 
     /**
@@ -64,7 +64,7 @@ class UserTest extends DatabaseTestCase
     {
         $user = new User();
         $user->setEmail('email');
-        self::assertEquals('email', $user->getEmail(), 'The email wasnt saved or returned correctly.');
+        self::assertEquals('email', $user->getEmail(), 'The email was not saved or returned correctly.');
     }
 
     /**
@@ -86,12 +86,12 @@ class UserTest extends DatabaseTestCase
         self::assertEquals(
             [$group1, $group2, $group3],
             $user->getGroups(),
-            'The user groups wasnt saved or returned correctly.'
+            'The user groups was not saved or returned correctly.'
         );
     }
 
     /**
-     * Tests if its possible to add groups.
+     * Tests if it is possible to add groups.
      */
     public function testAddGroup()
     {
@@ -110,7 +110,7 @@ class UserTest extends DatabaseTestCase
         self::assertEquals(
             [$group1, $group3, $group2],
             $user->getGroups(),
-            'The user groups wasnt added or returned correctly.'
+            'The user groups was not added or returned correctly.'
         );
     }
 
@@ -158,7 +158,7 @@ class UserTest extends DatabaseTestCase
     }
 
     /**
-     * Returns database schema sql statements to initialize database
+     * Returns database schema SQL statements to initialize database
      *
      * @return string
      */

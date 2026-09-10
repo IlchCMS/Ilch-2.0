@@ -19,8 +19,8 @@ class RecipientsTest extends DatabaseTestCase
     /**
      * @var RecipientsMapper
      */
-    protected $out;
-    protected $phpunitDataset;
+    protected Recipients $out;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {

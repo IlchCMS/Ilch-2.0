@@ -23,8 +23,8 @@ use PHPUnit\Ilch\PhpunitDataset;
  */
 class ArticleTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
-    private $articleMapper;
+    protected PhpunitDataset $phpunitDataset;
+    private Article $articleMapper;
 
     public function setUp(): void
     {
@@ -465,7 +465,7 @@ class ArticleTest extends DatabaseTestCase
 
     public function testGetArticlesByKeywordAccessGuest()
     {
-        $articles = $this->articleMapper->getArticlesByKeywordAccess('keyword1', '3');
+        $articles = $this->articleMapper->getArticlesByKeywordAccess('keyword1');
 
         self::assertCount(1, $articles);
     }
@@ -618,7 +618,7 @@ class ArticleTest extends DatabaseTestCase
 
     public function testGetArticlesByDateAccessNoResult()
     {
-        $articles = $this->articleMapper->getArticlesByDateAccess(new \Ilch\Date('2021-05-09'), '3');
+        $articles = $this->articleMapper->getArticlesByDateAccess(new \Ilch\Date('2021-05-09'));
 
         self::assertNull($articles);
     }
@@ -632,47 +632,47 @@ class ArticleTest extends DatabaseTestCase
 
     public function testGetCountArticlesByCatId()
     {
-        self::assertSame(2, $this->articleMapper->getCountArticlesByCatId("1"));
+        self::assertSame(2, $this->articleMapper->getCountArticlesByCatId('1'));
     }
 
     public function testGetCountArticlesByCatIdNotExisting()
     {
-        self::assertSame(0, $this->articleMapper->getCountArticlesByCatId("3"));
+        self::assertSame(0, $this->articleMapper->getCountArticlesByCatId('3'));
     }
 
     public function testGetCountArticlesByCatIdAccess()
     {
-        self::assertSame(2, $this->articleMapper->getCountArticlesByCatIdAccess("1", '1,2,3'));
+        self::assertSame(2, $this->articleMapper->getCountArticlesByCatIdAccess('1', '1,2,3'));
     }
 
     public function testGetCountArticlesByCatIdNotExistingAccess()
     {
-        self::assertSame(0, $this->articleMapper->getCountArticlesByCatIdAccess("3"));
+        self::assertSame(0, $this->articleMapper->getCountArticlesByCatIdAccess('3'));
     }
 
     public function testGetCountArticlesByMonthYear()
     {
-        self::assertSame(3, $this->articleMapper->getCountArticlesByMonthYear("2021-05-10 08:10:38"));
+        self::assertSame(3, $this->articleMapper->getCountArticlesByMonthYear('2021-05-10 08:10:38'));
     }
 
     public function testGetCountArticlesByMonthYearNotExisting()
     {
-        self::assertSame(0, $this->articleMapper->getCountArticlesByMonthYear("2000-01-01 08:10:38"));
+        self::assertSame(0, $this->articleMapper->getCountArticlesByMonthYear('2000-01-01 08:10:38'));
     }
 
     public function testGetCountArticlesByMonthYearAccess()
     {
-        self::assertSame(3, $this->articleMapper->getCountArticlesByMonthYearAccess("2021-05-10 08:10:38", '1,2,3'));
+        self::assertSame(3, $this->articleMapper->getCountArticlesByMonthYearAccess('2021-05-10 08:10:38', '1,2,3'));
     }
 
     public function testGetCountArticlesByMonthYearAccessGuest()
     {
-        self::assertSame(1, $this->articleMapper->getCountArticlesByMonthYearAccess("2021-05-10 08:10:38"));
+        self::assertSame(1, $this->articleMapper->getCountArticlesByMonthYearAccess('2021-05-10 08:10:38'));
     }
 
     public function testGetCountArticlesByMonthYearAccessNotExisting()
     {
-        self::assertSame(0, $this->articleMapper->getCountArticlesByMonthYearAccess("2000-01-01 08:10:38"));
+        self::assertSame(0, $this->articleMapper->getCountArticlesByMonthYearAccess('2000-01-01 08:10:38'));
     }
 
     public function testGetArticleDateList()
@@ -816,6 +816,13 @@ class ArticleTest extends DatabaseTestCase
         self::assertSame('', $article->getImage());
         self::assertSame('', $article->getImageSource());
         self::assertSame('', $article->getVotes());
+    }
+
+    public function testGetTopArticlesNoTopArticle()
+    {
+        $articles = $this->articleMapper->getTopArticles();
+
+        self::assertEmpty($articles);
     }
 
     public function testGetTopArticles()

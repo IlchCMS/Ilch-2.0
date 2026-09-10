@@ -19,8 +19,8 @@ class GroupsTest extends DatabaseTestCase
     /**
      * @var GroupMapper
      */
-    protected $out;
-    protected $phpunitDataset;
+    protected Groups $out;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
@@ -54,12 +54,12 @@ class GroupsTest extends DatabaseTestCase
     /**
      * Tests if the new group gets added properly.
      */
-    public function addGroups()
+    public function testAddGroups()
     {
         $affectedRows = $this->out->addGroups([3]);
         $groups = $this->out->getGroups();
 
-        self::assertEquals(3, $affectedRows);
+        self::assertEquals(1, $affectedRows);
         self::assertEquals([1,2,3], $groups);
         self::assertCount(3, $groups);
     }

@@ -20,9 +20,9 @@ use Modules\Vote\Models\Ip as EntriesModel;
  */
 class IpTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
+    protected PhpunitDataset $phpunitDataset;
     /** @var IpMapper $mapper */
-    private $mapper;
+    private Ip $mapper;
 
     public function setUp(): void
     {

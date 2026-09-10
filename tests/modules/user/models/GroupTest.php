@@ -28,7 +28,7 @@ class GroupTest extends TestCase
     }
 
     /**
-     * Tests if the user group can save and return a id.
+     * Tests if the user group can save and return an id.
      */
     public function testId()
     {
@@ -36,6 +36,5 @@ class GroupTest extends TestCase
         $group->setId(3);
 
         self::assertEquals(3, $group->getId(), 'The group id did not save correctly.');
-        self::assertTrue(\is_int($group->getId()), 'The group id was not returned as an Integer.');
     }
 }

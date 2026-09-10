@@ -20,9 +20,9 @@ use Modules\Vote\Models\Result as EntriesModel;
  */
 class ResultTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
+    protected PhpunitDataset $phpunitDataset;
     /** @var ResultMapper $mapper */
-    private $mapper;
+    private Result $mapper;
 
     public function setUp(): void
     {

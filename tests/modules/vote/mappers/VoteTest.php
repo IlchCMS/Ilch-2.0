@@ -20,9 +20,9 @@ use Modules\Vote\Models\Vote as EntriesModel;
  */
 class VoteTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
+    protected PhpunitDataset $phpunitDataset;
     /** @var VoteMapper $mapper */
-    private $mapper;
+    private Vote $mapper;
 
     public function setUp(): void
     {

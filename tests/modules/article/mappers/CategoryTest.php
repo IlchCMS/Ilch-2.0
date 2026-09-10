@@ -22,8 +22,8 @@ use PHPUnit\Ilch\PhpunitDataset;
  */
 class CategoryTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
-    private $categoryMapper;
+    protected PhpunitDataset $phpunitDataset;
+    private Category $categoryMapper;
 
     public function setUp(): void
     {
@@ -113,7 +113,7 @@ class CategoryTest extends DatabaseTestCase
     }
 
     /**
-     * Returns database schema sql statements to initialize database
+     * Returns database schema SQL statements to initialize database
      *
      * @return string
      */

@@ -18,8 +18,8 @@ class CurrencyTest extends DatabaseTestCase
     /**
      * @var CurrencyMapper
      */
-    protected $out;
-    protected $phpunitDataset;
+    protected Currency $out;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {

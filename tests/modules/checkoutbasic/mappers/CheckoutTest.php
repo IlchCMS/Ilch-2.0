@@ -18,8 +18,8 @@ class CheckoutTest extends DatabaseTestCase
     /**
      * @var CheckoutMapper
      */
-    protected $out;
-    protected $phpunitDataset;
+    protected Checkout $out;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {

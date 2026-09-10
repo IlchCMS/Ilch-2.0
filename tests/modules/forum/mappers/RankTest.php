@@ -20,7 +20,7 @@ use PHPUnit\Ilch\PhpunitDataset;
  */
 class RankTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
@@ -49,7 +49,7 @@ class RankTest extends DatabaseTestCase
         $rank = $mapper->getRankById(1);
 
         self::assertEquals(1, $rank->getId());
-        self::assertSame($rank->getTitle(), 'Gruenschnabel');
+        self::assertSame('Gruenschnabel', $rank->getTitle());
         self::assertEquals(0, $rank->getPosts());
     }
 
@@ -62,7 +62,7 @@ class RankTest extends DatabaseTestCase
         $rank = $mapper->getRankByPosts(1);
 
         self::assertEquals(1, $rank->getId());
-        self::assertSame($rank->getTitle(), 'Gruenschnabel');
+        self::assertSame('Gruenschnabel', $rank->getTitle());
         self::assertEquals(0, $rank->getPosts());
     }
 
@@ -75,7 +75,7 @@ class RankTest extends DatabaseTestCase
         $rank = $mapper->getRankByPosts(25);
 
         self::assertEquals(2, $rank->getId());
-        self::assertSame($rank->getTitle(), 'Jungspund');
+        self::assertSame('Jungspund', $rank->getTitle());
         self::assertEquals(25, $rank->getPosts());
     }
 
@@ -89,7 +89,7 @@ class RankTest extends DatabaseTestCase
         $rank = $mapper->getRankByPosts(30);
 
         self::assertEquals(2, $rank->getId());
-        self::assertSame($rank->getTitle(), 'Jungspund');
+        self::assertSame('Jungspund', $rank->getTitle());
         self::assertEquals(25, $rank->getPosts());
     }
 
@@ -102,7 +102,7 @@ class RankTest extends DatabaseTestCase
         $rank = $mapper->getRankByPosts(50);
 
         self::assertEquals(3, $rank->getId());
-        self::assertSame($rank->getTitle(), 'Mitglied');
+        self::assertSame('Mitglied', $rank->getTitle());
         self::assertEquals(50, $rank->getPosts());
     }
 
@@ -122,7 +122,7 @@ class RankTest extends DatabaseTestCase
         $rank = $mapper->getRankById(4);
 
         self::assertEquals(4, $rank->getId());
-        self::assertSame($rank->getTitle(), 'TestTitle');
+        self::assertSame('TestTitle', $rank->getTitle());
         self::assertEquals(100, $rank->getPosts());
     }
 
@@ -143,7 +143,7 @@ class RankTest extends DatabaseTestCase
         $rank = $mapper->getRankById(3);
 
         self::assertEquals(3, $rank->getId());
-        self::assertSame($rank->getTitle(), 'TestTitle');
+        self::assertSame('TestTitle', $rank->getTitle());
         self::assertEquals(100, $rank->getPosts());
     }
 

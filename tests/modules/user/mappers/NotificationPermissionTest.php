@@ -21,7 +21,7 @@ use Modules\User\Mappers\NotificationPermission as NotificationPermissionMapper;
  */
 class NotificationPermissionTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
@@ -276,7 +276,7 @@ class NotificationPermissionTest extends DatabaseTestCase
     {
         $mapper = new NotificationPermissionMapper();
 
-        // Three IDs, but only two permissions get deleted, because the third one has an userid of 2.
+        // Three IDs, but only two permissions get deleted, because the third one has a userid of 2.
         self::assertEquals(2, $mapper->deletePermissionsById([1,2,3], 1));
     }
 
@@ -293,7 +293,7 @@ class NotificationPermissionTest extends DatabaseTestCase
     }
 
     /**
-     * Returns database schema sql statements to initialize database
+     * Returns database schema SQL statements to initialize database
      *
      * @return string
      */

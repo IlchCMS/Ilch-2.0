@@ -22,7 +22,7 @@ use Modules\User\Mappers\Notifications as NotificationsMapper;
  */
 class NotificationsTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
@@ -342,7 +342,7 @@ class NotificationsTest extends DatabaseTestCase
     }
 
     /**
-     * Returns database schema sql statements to initialize database
+     * Returns database schema SQL statements to initialize database
      *
      * @return string
      */

@@ -17,8 +17,8 @@ class BirthdayTest extends DatabaseTestCase
     /**
      * @var BirthdayMapper
      */
-    protected $out;
-    protected $phpunitDataset;
+    protected Birthday $out;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {

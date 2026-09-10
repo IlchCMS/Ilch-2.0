@@ -55,61 +55,61 @@ class TrainingTest extends DatabaseTestCase
         $entry = $entries[0];
         self::assertSame(1, $entry->getId());
         self::assertSame('Tag 1', $entry->getTitle());
-        self::assertSame("2024-01-15 05:00:00", $entry->getDate());
-        self::assertSame("2024-01-15 05:30:00", $entry->getEnd());
-        self::assertSame("", $entry->getPeriodType());
+        self::assertSame('2024-01-15 05:00:00', $entry->getDate());
+        self::assertSame('2024-01-15 05:30:00', $entry->getEnd());
+        self::assertSame('', $entry->getPeriodType());
         self::assertSame(1, $entry->getPeriodDay());
-        self::assertSame("1000-01-01 00:00:00", $entry->getRepeatUntil());
+        self::assertSame('1000-01-01 00:00:00', $entry->getRepeatUntil());
         self::assertSame(1, $entry->getContact());
         self::assertSame(false, $entry->getVoiceServer());
-        self::assertSame("", $entry->getVoiceServerIP());
-        self::assertSame("", $entry->getVoiceServerPW());
+        self::assertSame('', $entry->getVoiceServerIP());
+        self::assertSame('', $entry->getVoiceServerPW());
         self::assertSame(false, $entry->getGameServer());
-        self::assertSame("", $entry->getGameServerIP());
-        self::assertSame("", $entry->getGameServerPW());
-        self::assertSame("", $entry->getText());
+        self::assertSame('', $entry->getGameServerIP());
+        self::assertSame('', $entry->getGameServerPW());
+        self::assertSame('', $entry->getText());
         self::assertSame(false, $entry->getShow());
-        self::assertSame("1,2,3", $entry->getReadAccess());
+        self::assertSame('1,2,3', $entry->getReadAccess());
 
         $entry = $entries[1];
         self::assertSame(2, $entry->getId());
         self::assertSame('Tag 2', $entry->getTitle());
-        self::assertSame("2024-02-15 05:00:00", $entry->getDate());
-        self::assertSame("2024-02-15 05:30:00", $entry->getEnd());
-        self::assertSame("", $entry->getPeriodType());
+        self::assertSame('2024-02-15 05:00:00', $entry->getDate());
+        self::assertSame('2024-02-15 05:30:00', $entry->getEnd());
+        self::assertSame('', $entry->getPeriodType());
         self::assertSame(1, $entry->getPeriodDay());
-        self::assertSame("1000-01-01 00:00:00", $entry->getRepeatUntil());
-        self::assertSame("", $entry->getPlace());
+        self::assertSame('1000-01-01 00:00:00', $entry->getRepeatUntil());
+        self::assertSame('', $entry->getPlace());
         self::assertSame(1, $entry->getContact());
         self::assertSame(false, $entry->getVoiceServer());
-        self::assertSame("", $entry->getVoiceServerIP());
-        self::assertSame("", $entry->getVoiceServerPW());
+        self::assertSame('', $entry->getVoiceServerIP());
+        self::assertSame('', $entry->getVoiceServerPW());
         self::assertSame(false, $entry->getGameServer());
-        self::assertSame("", $entry->getGameServerIP());
-        self::assertSame("", $entry->getGameServerPW());
-        self::assertSame("", $entry->getText());
+        self::assertSame('', $entry->getGameServerIP());
+        self::assertSame('', $entry->getGameServerPW());
+        self::assertSame('', $entry->getText());
         self::assertSame(false, $entry->getShow());
-        self::assertSame("1,2", $entry->getReadAccess());
+        self::assertSame('1,2', $entry->getReadAccess());
 
         $entry = $entries[2];
         self::assertSame(3, $entry->getId());
         self::assertSame('Tag 3', $entry->getTitle());
-        self::assertSame("2024-03-15 05:00:00", $entry->getDate());
-        self::assertSame("2024-03-15 05:30:00", $entry->getEnd());
-        self::assertSame("", $entry->getPeriodType());
+        self::assertSame('2024-03-15 05:00:00', $entry->getDate());
+        self::assertSame('2024-03-15 05:30:00', $entry->getEnd());
+        self::assertSame('', $entry->getPeriodType());
         self::assertSame(1, $entry->getPeriodDay());
-        self::assertSame("1000-01-01 00:00:00", $entry->getRepeatUntil());
-        self::assertSame("", $entry->getPlace());
+        self::assertSame('1000-01-01 00:00:00', $entry->getRepeatUntil());
+        self::assertSame('', $entry->getPlace());
         self::assertSame(1, $entry->getContact());
         self::assertSame(false, $entry->getVoiceServer());
-        self::assertSame("", $entry->getVoiceServerIP());
-        self::assertSame("", $entry->getVoiceServerPW());
+        self::assertSame('', $entry->getVoiceServerIP());
+        self::assertSame('', $entry->getVoiceServerPW());
         self::assertSame(false, $entry->getGameServer());
-        self::assertSame("", $entry->getGameServerIP());
-        self::assertSame("", $entry->getGameServerPW());
-        self::assertSame("", $entry->getText());
+        self::assertSame('', $entry->getGameServerIP());
+        self::assertSame('', $entry->getGameServerPW());
+        self::assertSame('', $entry->getText());
         self::assertSame(false, $entry->getShow());
-        self::assertSame("all", $entry->getReadAccess());
+        self::assertSame('all', $entry->getReadAccess());
     }
 
     public function testSaveNewTraining()
@@ -259,7 +259,7 @@ class TrainingTest extends DatabaseTestCase
         $model->setEnd('2024-10-15 05:30:00');
         $model->setPeriodType('');
         $model->setPeriodDay('1');
-        $model->setRepeatUntil("1000-01-01 00:00:00");
+        $model->setRepeatUntil('1000-01-01 00:00:00');
         $model->setPlace('');
         $model->setContact(1);
         $model->setVoiceServer(false);
@@ -293,7 +293,7 @@ class TrainingTest extends DatabaseTestCase
         $model->setEnd('2024-10-15 05:30:00');
         $model->setPeriodType('weekly');
         $model->setPeriodDay('1');
-        $model->setRepeatUntil("2024-10-15 05:30:00");
+        $model->setRepeatUntil('2024-10-15 05:30:00');
         $model->setPlace('');
         $model->setContact(1);
         $model->setVoiceServer(false);
@@ -352,7 +352,7 @@ class TrainingTest extends DatabaseTestCase
     }
 
     /**
-     * Should return an updated start and end date as we are dealing with a reccurent training, the initial date is in the past
+     * Should return an updated start and end date as we are dealing with a recurrent training, the initial date is in the past
      * and the repeat until date in the future.
      *
      * @return void

@@ -134,7 +134,7 @@ class AwardsModelTest extends TestCase
     }
 
     /**
-     * Tests addRecipient() appends to the recipients collection.
+     * Tests addRecipient() appends to the recipient's collection.
      */
     public function testAddRecipient()
     {

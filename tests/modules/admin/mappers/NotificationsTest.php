@@ -23,9 +23,9 @@ class NotificationsTest extends DatabaseTestCase
     /**
      * @var NotificationsMapper
      */
-    protected $out;
+    protected Notifications $out;
 
-    protected $phpunitDataset;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
@@ -52,16 +52,16 @@ class NotificationsTest extends DatabaseTestCase
 
         $notification = $this->out->getNotificationById(1);
         self::assertEquals(1, $notification->getId());
-        // The timestamp can vary by one hour. Therefore for example comparing
+        // The timestamp can vary by one hour. Therefore, for example comparing
         // the notificationModel with the one from the database assertEquals() would not work always.
-        self::assertSame($notification->getModule(), 'article');
-        self::assertSame($notification->getMessage(), 'Testmessage1');
-        self::assertSame($notification->getURL(), 'https://www.google.de');
-        self::assertSame($notification->getType(), 'articleNewArticle');
+        self::assertSame('article', $notification->getModule());
+        self::assertSame('Testmessage1', $notification->getMessage());
+        self::assertSame('https://www.google.de', $notification->getURL());
+        self::assertSame('articleNewArticle', $notification->getType());
     }
 
     /**
-     * Tests if getNotificationById() returns null when trying to get a notification with an
+     * Tests if getNotificationById() returns null when trying to get a notification with a
      * non-existing id.
      *
      */
@@ -148,10 +148,10 @@ class NotificationsTest extends DatabaseTestCase
 
         self::assertEquals(3, $this->out->addNotification($notificationModel));
         $notification = $this->out->getNotificationById(3);
-        self::assertSame($notification->getModule(), 'awards');
-        self::assertSame($notification->getMessage(), 'Testmessage3');
-        self::assertSame($notification->getURL(), 'https://www.google.de');
-        self::assertSame($notification->getType(), 'awardsNewAward');
+        self::assertSame('awards', $notification->getModule());
+        self::assertSame('Testmessage3', $notification->getMessage());
+        self::assertSame('https://www.google.de', $notification->getURL());
+        self::assertSame('awardsNewAward', $notification->getType());
     }
 
     /**
@@ -171,10 +171,10 @@ class NotificationsTest extends DatabaseTestCase
 
         $this->out->updateNotificationById($notificationModel);
         $notification = $this->out->getNotificationById(2);
-        self::assertSame($notification->getModule(), 'awards');
-        self::assertSame($notification->getMessage(), 'Testmessage3');
-        self::assertSame($notification->getURL(), 'https://www.google.de');
-        self::assertSame($notification->getType(), 'awardsNewAward2');
+        self::assertSame('awards', $notification->getModule());
+        self::assertSame('Testmessage3', $notification->getMessage());
+        self::assertSame('https://www.google.de', $notification->getURL());
+        self::assertSame('awardsNewAward2', $notification->getType());
     }
 
     /**

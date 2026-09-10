@@ -20,8 +20,8 @@ use Modules\Teams\Models\Teams as EntriesModel;
  */
 class TeamsTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
-    private $mapper;
+    protected PhpunitDataset $phpunitDataset;
+    private Teams $mapper;
 
     public function setUp(): void
     {
@@ -37,53 +37,53 @@ class TeamsTest extends DatabaseTestCase
      */
     public function testgetTeamsAllRows()
     {
-        $entrys = $this->mapper->getTeams();
+        $entries = $this->mapper->getTeams();
 
-        self::assertCount(3, $entrys);
+        self::assertCount(3, $entries);
     }
 
     public function testgetTeams()
     {
-        $entrys = $this->mapper->getTeams();
+        $entries = $this->mapper->getTeams();
 
-        self::assertCount(3, $entrys);
+        self::assertCount(3, $entries);
 
         $i = 0;
-        self::assertEquals(1, $entrys[$i]->getId());
-        self::assertEquals('Team 1', $entrys[$i]->getName());
-        self::assertEquals(1, $entrys[$i]->getPosition());
-        self::assertEquals('', $entrys[$i]->getImg());
-        self::assertEquals('1,3', $entrys[$i]->getLeader());
-        self::assertEquals('4', $entrys[$i]->getCoLeader());
-        self::assertEquals(1, $entrys[$i]->getGroupId());
-        self::assertEquals(1, $entrys[$i]->getOptShow());
-        self::assertEquals(0, $entrys[$i]->getOptIn());
-        self::assertEquals(0, $entrys[$i]->getNotifyLeader());
+        self::assertEquals(1, $entries[$i]->getId());
+        self::assertEquals('Team 1', $entries[$i]->getName());
+        self::assertEquals(1, $entries[$i]->getPosition());
+        self::assertEquals('', $entries[$i]->getImg());
+        self::assertEquals('1,3', $entries[$i]->getLeader());
+        self::assertEquals('4', $entries[$i]->getCoLeader());
+        self::assertEquals(1, $entries[$i]->getGroupId());
+        self::assertEquals(1, $entries[$i]->getOptShow());
+        self::assertEquals(0, $entries[$i]->getOptIn());
+        self::assertEquals(0, $entries[$i]->getNotifyLeader());
 
 
         $i++;
-        self::assertEquals(3, $entrys[$i]->getId());
-        self::assertEquals('Team 3', $entrys[$i]->getName());
-        self::assertEquals(2, $entrys[$i]->getPosition());
-        self::assertEquals('', $entrys[$i]->getImg());
-        self::assertEquals('1', $entrys[$i]->getLeader());
-        self::assertEquals('', $entrys[$i]->getCoLeader());
-        self::assertEquals(3, $entrys[$i]->getGroupId());
-        self::assertEquals(1, $entrys[$i]->getOptShow());
-        self::assertEquals(1, $entrys[$i]->getOptIn());
-        self::assertEquals(1, $entrys[$i]->getNotifyLeader());
+        self::assertEquals(3, $entries[$i]->getId());
+        self::assertEquals('Team 3', $entries[$i]->getName());
+        self::assertEquals(2, $entries[$i]->getPosition());
+        self::assertEquals('', $entries[$i]->getImg());
+        self::assertEquals('1', $entries[$i]->getLeader());
+        self::assertEquals('', $entries[$i]->getCoLeader());
+        self::assertEquals(3, $entries[$i]->getGroupId());
+        self::assertEquals(1, $entries[$i]->getOptShow());
+        self::assertEquals(1, $entries[$i]->getOptIn());
+        self::assertEquals(1, $entries[$i]->getNotifyLeader());
 
         $i++;
-        self::assertEquals(2, $entrys[$i]->getId());
-        self::assertEquals('Team 2', $entrys[$i]->getName());
-        self::assertEquals(3, $entrys[$i]->getPosition());
-        self::assertEquals('', $entrys[$i]->getImg());
-        self::assertEquals('3', $entrys[$i]->getLeader());
-        self::assertEquals('4', $entrys[$i]->getCoLeader());
-        self::assertEquals(3, $entrys[$i]->getGroupId());
-        self::assertEquals(1, $entrys[$i]->getOptShow());
-        self::assertEquals(1, $entrys[$i]->getOptIn());
-        self::assertEquals(1, $entrys[$i]->getNotifyLeader());
+        self::assertEquals(2, $entries[$i]->getId());
+        self::assertEquals('Team 2', $entries[$i]->getName());
+        self::assertEquals(3, $entries[$i]->getPosition());
+        self::assertEquals('', $entries[$i]->getImg());
+        self::assertEquals('3', $entries[$i]->getLeader());
+        self::assertEquals('4', $entries[$i]->getCoLeader());
+        self::assertEquals(3, $entries[$i]->getGroupId());
+        self::assertEquals(1, $entries[$i]->getOptShow());
+        self::assertEquals(1, $entries[$i]->getOptIn());
+        self::assertEquals(1, $entries[$i]->getNotifyLeader());
     }
 
     public function testsaveNewTeams()

@@ -18,7 +18,7 @@ use Modules\Forum\Models\Rank as RankModel;
 class RankTest extends TestCase
 {
     /**
-     * Tests if the rank model can save and return a id.
+     * Tests if the rank model can save and return an id.
      */
     public function testId()
     {

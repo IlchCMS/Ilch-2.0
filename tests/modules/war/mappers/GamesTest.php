@@ -20,8 +20,8 @@ use Modules\War\Models\Games as EntriesModel;
  */
 class GamesTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
-    private $mapper;
+    protected PhpunitDataset $phpunitDataset;
+    private Games $mapper;
 
     public function setUp(): void
     {
@@ -37,51 +37,51 @@ class GamesTest extends DatabaseTestCase
      */
     public function testgetWarGamesAllRows()
     {
-        $entrys = $this->mapper->getGamesByWhere();
+        $entries = $this->mapper->getGamesByWhere();
 
-        self::assertCount(5, $entrys);
+        self::assertCount(5, $entries);
     }
 
     public function testgetWarGames()
     {
-        $entrys = $this->mapper->getGamesByWhere();
+        $entries = $this->mapper->getGamesByWhere();
 
-        self::assertCount(5, $entrys);
+        self::assertCount(5, $entries);
 
         $i = 0;
-        self::assertEquals(4, $entrys[$i]->getId());
-        self::assertEquals(4, $entrys[$i]->getWarId());
-        self::assertEquals(2, $entrys[$i]->getMap());
-        self::assertEquals(2, $entrys[$i]->getGroupPoints());
-        self::assertEquals(2, $entrys[$i]->getEnemyPoints());
+        self::assertEquals(4, $entries[$i]->getId());
+        self::assertEquals(4, $entries[$i]->getWarId());
+        self::assertEquals(2, $entries[$i]->getMap());
+        self::assertEquals(2, $entries[$i]->getGroupPoints());
+        self::assertEquals(2, $entries[$i]->getEnemyPoints());
 
         $i++;
-        self::assertEquals(5, $entrys[$i]->getId());
-        self::assertEquals(4, $entrys[$i]->getWarId());
-        self::assertEquals(1, $entrys[$i]->getMap());
-        self::assertEquals(1, $entrys[$i]->getGroupPoints());
-        self::assertEquals(2, $entrys[$i]->getEnemyPoints());
+        self::assertEquals(5, $entries[$i]->getId());
+        self::assertEquals(4, $entries[$i]->getWarId());
+        self::assertEquals(1, $entries[$i]->getMap());
+        self::assertEquals(1, $entries[$i]->getGroupPoints());
+        self::assertEquals(2, $entries[$i]->getEnemyPoints());
 
         $i++;
-        self::assertEquals(3, $entrys[$i]->getId());
-        self::assertEquals(3, $entrys[$i]->getWarId());
-        self::assertEquals(1, $entrys[$i]->getMap());
-        self::assertEquals(2, $entrys[$i]->getGroupPoints());
-        self::assertEquals(2, $entrys[$i]->getEnemyPoints());
+        self::assertEquals(3, $entries[$i]->getId());
+        self::assertEquals(3, $entries[$i]->getWarId());
+        self::assertEquals(1, $entries[$i]->getMap());
+        self::assertEquals(2, $entries[$i]->getGroupPoints());
+        self::assertEquals(2, $entries[$i]->getEnemyPoints());
 
         $i++;
-        self::assertEquals(2, $entrys[$i]->getId());
-        self::assertEquals(2, $entrys[$i]->getWarId());
-        self::assertEquals(2, $entrys[$i]->getMap());
-        self::assertEquals(2, $entrys[$i]->getGroupPoints());
-        self::assertEquals(2, $entrys[$i]->getEnemyPoints());
+        self::assertEquals(2, $entries[$i]->getId());
+        self::assertEquals(2, $entries[$i]->getWarId());
+        self::assertEquals(2, $entries[$i]->getMap());
+        self::assertEquals(2, $entries[$i]->getGroupPoints());
+        self::assertEquals(2, $entries[$i]->getEnemyPoints());
 
         $i++;
-        self::assertEquals(1, $entrys[$i]->getId());
-        self::assertEquals(1, $entrys[$i]->getWarId());
-        self::assertEquals(1, $entrys[$i]->getMap());
-        self::assertEquals(2, $entrys[$i]->getGroupPoints());
-        self::assertEquals(2, $entrys[$i]->getEnemyPoints());
+        self::assertEquals(1, $entries[$i]->getId());
+        self::assertEquals(1, $entries[$i]->getWarId());
+        self::assertEquals(1, $entries[$i]->getMap());
+        self::assertEquals(2, $entries[$i]->getGroupPoints());
+        self::assertEquals(2, $entries[$i]->getEnemyPoints());
     }
 
     public function testsaveNewWarGames()

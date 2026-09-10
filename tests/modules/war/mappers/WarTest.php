@@ -21,8 +21,8 @@ use Modules\War\Models\War as EntriesModel;
  */
 class WarTest extends DatabaseTestCase
 {
-    protected $phpunitDataset;
-    private $mapper;
+    protected PhpunitDataset $phpunitDataset;
+    private War $mapper;
 
     public function setUp(): void
     {
@@ -38,112 +38,112 @@ class WarTest extends DatabaseTestCase
      */
     public function testgetWarAllRows()
     {
-        $entrys = $this->mapper->getWars();
+        $entries = $this->mapper->getWars();
 
-        self::assertCount(4, $entrys);
+        self::assertCount(4, $entries);
     }
 
     public function testgetWar()
     {
-        $entrys = $this->mapper->getWars();
+        $entries = $this->mapper->getWars();
 
-        self::assertCount(4, $entrys);
+        self::assertCount(4, $entries);
 
         $i = 0;
-        self::assertEquals(2, $entrys[$i]->getId());
-        self::assertEquals(1, $entrys[$i]->getWarEnemy());
-        self::assertEquals(2, $entrys[$i]->getWarGroup());
-        self::assertSame('2021-05-09 08:10:38', $entrys[$i]->getWarTime());
-        self::assertSame('', $entrys[$i]->getWarMaps());
-        self::assertSame('localhost', $entrys[$i]->getWarServer());
-        self::assertSame('', $entrys[$i]->getWarPassword());
-        self::assertSame('1on1', $entrys[$i]->getWarXonx());
-        self::assertSame('CSS', $entrys[$i]->getWarGame());
-        self::assertSame('Train', $entrys[$i]->getWarMatchtype());
-        self::assertSame('', $entrys[$i]->getWarReport());
-        self::assertEquals(0, $entrys[$i]->getWarStatus());
-        self::assertEquals(1, $entrys[$i]->getShow());
-        self::assertSame('1,3', $entrys[$i]->getReadAccess());
-        self::assertEquals(0, $entrys[$i]->getLastAcceptTime());
-        self::assertSame('ILCH2-TG2', $entrys[$i]->getWarGroupTag());
-        self::assertSame('TG1', $entrys[$i]->getWarEnemyTag());
+        self::assertEquals(2, $entries[$i]->getId());
+        self::assertEquals(1, $entries[$i]->getWarEnemy());
+        self::assertEquals(2, $entries[$i]->getWarGroup());
+        self::assertSame('2021-05-09 08:10:38', $entries[$i]->getWarTime());
+        self::assertSame('', $entries[$i]->getWarMaps());
+        self::assertSame('localhost', $entries[$i]->getWarServer());
+        self::assertSame('', $entries[$i]->getWarPassword());
+        self::assertSame('1on1', $entries[$i]->getWarXonx());
+        self::assertSame('CSS', $entries[$i]->getWarGame());
+        self::assertSame('Train', $entries[$i]->getWarMatchtype());
+        self::assertSame('', $entries[$i]->getWarReport());
+        self::assertEquals(0, $entries[$i]->getWarStatus());
+        self::assertEquals(1, $entries[$i]->getShow());
+        self::assertSame('1,3', $entries[$i]->getReadAccess());
+        self::assertEquals(0, $entries[$i]->getLastAcceptTime());
+        self::assertSame('ILCH2-TG2', $entries[$i]->getWarGroupTag());
+        self::assertSame('TG1', $entries[$i]->getWarEnemyTag());
 
         $i++;
-        self::assertEquals(3, $entrys[$i]->getId());
-        self::assertEquals(2, $entrys[$i]->getWarEnemy());
-        self::assertEquals(1, $entrys[$i]->getWarGroup());
-        self::assertSame('2021-05-09 08:10:38', $entrys[$i]->getWarTime());
-        self::assertSame('', $entrys[$i]->getWarMaps());
-        self::assertSame('localhost', $entrys[$i]->getWarServer());
-        self::assertSame('', $entrys[$i]->getWarPassword());
-        self::assertSame('1on1', $entrys[$i]->getWarXonx());
-        self::assertSame('CSS', $entrys[$i]->getWarGame());
-        self::assertSame('Train', $entrys[$i]->getWarMatchtype());
-        self::assertSame('', $entrys[$i]->getWarReport());
-        self::assertEquals(0, $entrys[$i]->getWarStatus());
-        self::assertEquals(1, $entrys[$i]->getShow());
-        self::assertSame('1,2', $entrys[$i]->getReadAccess());
-        self::assertEquals(0, $entrys[$i]->getLastAcceptTime());
-        self::assertSame('ILCH2-TG1', $entrys[$i]->getWarGroupTag());
-        self::assertSame('TG2', $entrys[$i]->getWarEnemyTag());
+        self::assertEquals(3, $entries[$i]->getId());
+        self::assertEquals(2, $entries[$i]->getWarEnemy());
+        self::assertEquals(1, $entries[$i]->getWarGroup());
+        self::assertSame('2021-05-09 08:10:38', $entries[$i]->getWarTime());
+        self::assertSame('', $entries[$i]->getWarMaps());
+        self::assertSame('localhost', $entries[$i]->getWarServer());
+        self::assertSame('', $entries[$i]->getWarPassword());
+        self::assertSame('1on1', $entries[$i]->getWarXonx());
+        self::assertSame('CSS', $entries[$i]->getWarGame());
+        self::assertSame('Train', $entries[$i]->getWarMatchtype());
+        self::assertSame('', $entries[$i]->getWarReport());
+        self::assertEquals(0, $entries[$i]->getWarStatus());
+        self::assertEquals(1, $entries[$i]->getShow());
+        self::assertSame('1,2', $entries[$i]->getReadAccess());
+        self::assertEquals(0, $entries[$i]->getLastAcceptTime());
+        self::assertSame('ILCH2-TG1', $entries[$i]->getWarGroupTag());
+        self::assertSame('TG2', $entries[$i]->getWarEnemyTag());
 
         $i++;
-        self::assertEquals(4, $entrys[$i]->getId());
-        self::assertEquals(2, $entrys[$i]->getWarEnemy());
-        self::assertEquals(2, $entrys[$i]->getWarGroup());
-        self::assertSame('2021-05-09 08:10:38', $entrys[$i]->getWarTime());
-        self::assertSame('', $entrys[$i]->getWarMaps());
-        self::assertSame('localhost', $entrys[$i]->getWarServer());
-        self::assertSame('', $entrys[$i]->getWarPassword());
-        self::assertSame('1on1', $entrys[$i]->getWarXonx());
-        self::assertSame('CSS', $entrys[$i]->getWarGame());
-        self::assertSame('Train', $entrys[$i]->getWarMatchtype());
-        self::assertSame('', $entrys[$i]->getWarReport());
-        self::assertEquals(0, $entrys[$i]->getWarStatus());
-        self::assertEquals(1, $entrys[$i]->getShow());
-        self::assertSame('1', $entrys[$i]->getReadAccess());
-        self::assertEquals(0, $entrys[$i]->getLastAcceptTime());
-        self::assertSame('ILCH2-TG2', $entrys[$i]->getWarGroupTag());
-        self::assertSame('TG2', $entrys[$i]->getWarEnemyTag());
+        self::assertEquals(4, $entries[$i]->getId());
+        self::assertEquals(2, $entries[$i]->getWarEnemy());
+        self::assertEquals(2, $entries[$i]->getWarGroup());
+        self::assertSame('2021-05-09 08:10:38', $entries[$i]->getWarTime());
+        self::assertSame('', $entries[$i]->getWarMaps());
+        self::assertSame('localhost', $entries[$i]->getWarServer());
+        self::assertSame('', $entries[$i]->getWarPassword());
+        self::assertSame('1on1', $entries[$i]->getWarXonx());
+        self::assertSame('CSS', $entries[$i]->getWarGame());
+        self::assertSame('Train', $entries[$i]->getWarMatchtype());
+        self::assertSame('', $entries[$i]->getWarReport());
+        self::assertEquals(0, $entries[$i]->getWarStatus());
+        self::assertEquals(1, $entries[$i]->getShow());
+        self::assertSame('1', $entries[$i]->getReadAccess());
+        self::assertEquals(0, $entries[$i]->getLastAcceptTime());
+        self::assertSame('ILCH2-TG2', $entries[$i]->getWarGroupTag());
+        self::assertSame('TG2', $entries[$i]->getWarEnemyTag());
 
         $i++;
-        self::assertEquals(1, $entrys[$i]->getId());
-        self::assertEquals(1, $entrys[$i]->getWarEnemy());
-        self::assertEquals(1, $entrys[$i]->getWarGroup());
-        self::assertSame('2021-05-10 08:10:38', $entrys[$i]->getWarTime());
-        self::assertSame('', $entrys[$i]->getWarMaps());
-        self::assertSame('localhost', $entrys[$i]->getWarServer());
-        self::assertSame('', $entrys[$i]->getWarPassword());
-        self::assertSame('1on1', $entrys[$i]->getWarXonx());
-        self::assertSame('CSS', $entrys[$i]->getWarGame());
-        self::assertSame('Train', $entrys[$i]->getWarMatchtype());
-        self::assertSame('', $entrys[$i]->getWarReport());
-        self::assertEquals(0, $entrys[$i]->getWarStatus());
-        self::assertEquals(1, $entrys[$i]->getShow());
-        self::assertSame('1,2,3', $entrys[$i]->getReadAccess());
-        self::assertEquals(0, $entrys[$i]->getLastAcceptTime());
-        self::assertSame('ILCH2-TG1', $entrys[$i]->getWarGroupTag());
-        self::assertSame('TG1', $entrys[$i]->getWarEnemyTag());
+        self::assertEquals(1, $entries[$i]->getId());
+        self::assertEquals(1, $entries[$i]->getWarEnemy());
+        self::assertEquals(1, $entries[$i]->getWarGroup());
+        self::assertSame('2021-05-10 08:10:38', $entries[$i]->getWarTime());
+        self::assertSame('', $entries[$i]->getWarMaps());
+        self::assertSame('localhost', $entries[$i]->getWarServer());
+        self::assertSame('', $entries[$i]->getWarPassword());
+        self::assertSame('1on1', $entries[$i]->getWarXonx());
+        self::assertSame('CSS', $entries[$i]->getWarGame());
+        self::assertSame('Train', $entries[$i]->getWarMatchtype());
+        self::assertSame('', $entries[$i]->getWarReport());
+        self::assertEquals(0, $entries[$i]->getWarStatus());
+        self::assertEquals(1, $entries[$i]->getShow());
+        self::assertSame('1,2,3', $entries[$i]->getReadAccess());
+        self::assertEquals(0, $entries[$i]->getLastAcceptTime());
+        self::assertSame('ILCH2-TG1', $entries[$i]->getWarGroupTag());
+        self::assertSame('TG1', $entries[$i]->getWarEnemyTag());
     }
 
     public function testgetWarByAccess()
     {
-        $entrys = $this->mapper->getWars(['ra.group_id' => [1,2,3]]);
+        $entries = $this->mapper->getWars(['ra.group_id' => [1,2,3]]);
 
-        self::assertCount(4, $entrys);
+        self::assertCount(4, $entries);
     }
 
     public function testgetWarByAccessGuest()
     {
-        $entrys = $this->mapper->getWars(['ra.group_id' => [3]]);
+        $entries = $this->mapper->getWars(['ra.group_id' => [3]]);
 
-        self::assertCount(2, $entrys);
+        self::assertCount(2, $entries);
     }
 
     public function testgetWarByDate()
     {
-        $entrys = $this->mapper->getWarsForJson('2021-05-03', '2021-05-09', '1,2,3');
-        self::assertCount(3, $entrys);
+        $entries = $this->mapper->getWarsForJson('2021-05-03', '2021-05-09', '1,2,3');
+        self::assertCount(3, $entries);
     }
 
     public function testsaveNewWar()

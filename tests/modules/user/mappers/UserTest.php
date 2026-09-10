@@ -25,9 +25,9 @@ class UserTest extends DatabaseTestCase
     /**
      * @var UserMapper
      */
-    protected $out;
+    protected User $out;
 
-    protected $phpunitDataset;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
