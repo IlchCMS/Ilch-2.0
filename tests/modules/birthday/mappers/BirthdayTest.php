@@ -25,6 +25,7 @@ class BirthdayTest extends DatabaseTestCase
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
         $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+        $this->db->query("UPDATE users SET birthday = CONCAT('1990-', DATE_FORMAT(CURDATE(), '%m-%d')) WHERE id = 1");
         $this->out = new BirthdayMapper();
     }
 
@@ -63,7 +64,7 @@ class BirthdayTest extends DatabaseTestCase
     /**
      * Tests that getBirthdayUserList() returns users whose birthday is today.
      *
-     * Seeded: user 1 has birthday 09-09 → matches CURDATE() (2026-09-09).
+     * setUp() dynamically sets user 1's birthday to today's month/day.
      * Users 2, 3, 4 have different month/day → must be excluded.
      */
     public function testGetBirthdayUserList()
