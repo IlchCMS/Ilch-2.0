@@ -1,0 +1,7 @@
+contact_receivers:
+  - id: 1
+    email: 'webmaster@example.com'
+    name: 'Webmaster'
+  - id: 2
+    email: 'support@example.com'
+    name: 'Support Team'
