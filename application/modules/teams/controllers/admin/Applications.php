@@ -157,6 +157,10 @@ class Applications extends \Ilch\Controller\Admin
                     ->addGroup($userGroup)
                     ->setSelector($selector)
                     ->setConfirmedCode($confirmedCode)
+                    // The mail below links to "user/login/newpassword", which only accepts requests
+                    // with a valid expiry date. Allow more time than for a password reset requested
+                    // by the user themselves, because this mail is not triggered by the recipient.
+                    ->setExpires(date('Y-m-d\TH:i:s', strtotime('+7 days')))
                     ->setConfirmed(0);
                 $userId = $userMapper->save($userModel);
                 $join->setUserId($userId);
