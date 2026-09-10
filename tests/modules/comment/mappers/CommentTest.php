@@ -18,8 +18,8 @@ class CommentTest extends DatabaseTestCase
     /**
      * @var CommentMapper
      */
-    protected $out;
-    protected $phpunitDataset;
+    protected Comment $out;
+    protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
