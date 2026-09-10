@@ -1,0 +1,37 @@
+comments:
+  - id: 1
+    key: 'news/1/'
+    text: 'First comment on article 1'
+    date_created: '2025-03-01 10:00:00'
+    user_id: 10
+    fk_id: 0
+    up: 5
+    down: 2
+    voted: '10,11,12,13,14'
+  - id: 2
+    key: 'news/2/'
+    text: 'Second comment on article 2'
+    date_created: '2025-03-10 14:30:00'
+    user_id: 11
+    fk_id: 0
+    up: 1
+    down: 0
+    voted: '11'
+  - id: 3
+    key: 'news/2/1/'
+    text: 'Reply to second comment'
+    date_created: '2025-03-11 09:15:00'
+    user_id: 12
+    fk_id: 2
+    up: 0
+    down: 3
+    voted: '12'
+  - id: 4
+    key: 'news/3/'
+    text: 'Third comment on article 3'
+    date_created: '2025-04-05 16:45:00'
+    user_id: 10
+    fk_id: 0
+    up: 10
+    down: 1
+    voted: '10'
