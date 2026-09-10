@@ -310,7 +310,7 @@ class Comment extends \Ilch\Mapper
      */
     private function addMissingSlashIfNeeded(string $key): string
     {
-        if (!(strlen($key) - (strrpos($key, '/')) === 0)) {
+        if (!str_ends_with($key, '/')) {
             // Add missing slash at the end to usually terminate the id.
             // This is needed for example so that id 11 doesn't get counted as id 1.
             $key .= '/';
