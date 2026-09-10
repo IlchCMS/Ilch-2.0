@@ -9,7 +9,7 @@ namespace Modules\Comment\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = [
+    public array $config = [
         'key' => 'comment',
         'icon_small' => 'fa-regular fa-comments',
         'system_module' => true,

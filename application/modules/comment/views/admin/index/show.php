@@ -44,11 +44,11 @@ $moduleName = $modules ? $modules->getName() : $this->escape($this->getRequest()
                         }
                         ?>
                         <?php $date = new \Ilch\Date($comment->getDateCreated()) ?>
-                        <?php $commentKey = preg_replace("#[/].*#", "", $comment->getKey()); ?>
+                        <?php $commentKey = preg_replace('#[/].*#', '', $comment->getKey()); ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_comments', $comment->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'key' => $commentKey, 'id' => $comment->getId()]) ?></td>
-                            <td><?=$date->format("d.m.Y H:i", true) ?></td>
+                            <td><?=$date->format('d.m.Y H:i', true) ?></td>
                             <td><a href="<?=$this->getUrl('user/profil/index/user/' . $user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>
                             <td><a href="<?=$this->getUrl($comment->getKey()) ?>#comment_<?=$comment->getId() ?>" target="_blank"><?=$moduleName ?></a></td>
                             <td><?=nl2br($this->escape($comment->getText())) ?></td>

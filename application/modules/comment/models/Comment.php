@@ -10,86 +10,86 @@ namespace Modules\Comment\Models;
 class Comment extends \Ilch\Model
 {
     /**
-     * @var integer
+     * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
-     * @var integer
+     * @var int
      */
-    protected $fkId;
-
-    /**
-     * @var string
-     */
-    protected $key;
+    protected int $fkId = 0;
 
     /**
      * @var string
      */
-    protected $text;
-
-    /**
-     * @var integer
-     */
-    protected $userId;
-
-    /**
-     * @var \DateTime
-     */
-    protected $dateCreated;
-
-    /**
-     * @var integer
-     */
-    protected $up;
-
-    /**
-     * @var integer
-     */
-    protected $down;
+    protected string $key = '';
 
     /**
      * @var string
      */
-    protected $voted;
+    protected string $text = '';
 
     /**
-     * @return integer
+     * @var int|null
      */
-    public function getId()
+    protected ?int $userId = null;
+
+    /**
+     * @var string|null
+     */
+    protected ?string $dateCreated = null;
+
+    /**
+     * @var int
+     */
+    protected int $up = 0;
+
+    /**
+     * @var int
+     */
+    protected int $down = 0;
+
+    /**
+     * @var string|null
+     */
+    protected ?string $voted = null;
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @param integer $id
+     * @param int $id
      *
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): Comment
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
 
     /**
-     * @return integer
+     * @return int
      */
-    public function getFKId()
+    public function getFKId(): int
     {
         return $this->fkId;
     }
 
     /**
-     * @param integer $fkId
+     * @param int $fkId
      *
      * @return $this
      */
-    public function setFKId($fkId)
+    public function setFKId(int $fkId): Comment
     {
-        $this->fkId = (int)$fkId;
+        $this->fkId = $fkId;
 
         return $this;
     }
@@ -97,7 +97,7 @@ class Comment extends \Ilch\Model
     /**
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
@@ -107,9 +107,9 @@ class Comment extends \Ilch\Model
      *
      * @return $this
      */
-    public function setKey($key)
+    public function setKey(string $key): Comment
     {
-        $this->key = (string)$key;
+        $this->key = $key;
 
         return $this;
     }
@@ -117,7 +117,7 @@ class Comment extends \Ilch\Model
     /**
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -127,47 +127,47 @@ class Comment extends \Ilch\Model
      *
      * @return $this
      */
-    public function setText($text)
+    public function setText(string $text): Comment
     {
-        $this->text = (string)$text;
+        $this->text = $text;
 
         return $this;
     }
 
     /**
-     * @return integer
+     * @return int|null
      */
-    public function getUserId()
+    public function getUserId(): ?int
     {
         return $this->userId;
     }
 
     /**
-     * @param integer $userId
+     * @param int $userId
      *
      * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): Comment
     {
-        $this->userId = (int)$userId;
+        $this->userId = $userId;
 
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return string|null
      */
-    public function getDateCreated()
+    public function getDateCreated(): ?string
     {
         return $this->dateCreated;
     }
 
     /**
-     * @param \DateTime $dateCreated
+     * @param string $dateCreated
      *
      * @return $this
      */
-    public function setDateCreated($dateCreated)
+    public function setDateCreated(string $dateCreated): Comment
     {
         $this->dateCreated = $dateCreated;
 
@@ -175,61 +175,61 @@ class Comment extends \Ilch\Model
     }
 
     /**
-     * @return integer
+     * @return int
      */
-    public function getUp()
+    public function getUp(): int
     {
         return $this->up;
     }
 
     /**
-     * @param integer $up
+     * @param int $up
      *
      * @return $this
      */
-    public function setUp($up)
+    public function setUp(int $up): Comment
     {
-        $this->up = (int)$up;
+        $this->up = $up;
 
         return $this;
     }
 
     /**
-     * @return integer
+     * @return int
      */
-    public function getDown()
+    public function getDown(): int
     {
         return $this->down;
     }
 
     /**
-     * @param integer $down
+     * @param int $down
      *
      * @return $this
      */
-    public function setDown($down)
+    public function setDown(int $down): Comment
     {
-        $this->down = (int)$down;
+        $this->down = $down;
 
         return $this;
     }
 
     /**
-     * @return integer
+     * @return string|null
      */
-    public function getVoted()
+    public function getVoted(): ?string
     {
         return $this->voted;
     }
 
     /**
-     * @param integer $voted
+     * @param string $voted
      *
      * @return $this
      */
-    public function setVoted($voted)
+    public function setVoted(string $voted): Comment
     {
-        $this->voted = (string)$voted;
+        $this->voted = $voted;
 
         return $this;
     }

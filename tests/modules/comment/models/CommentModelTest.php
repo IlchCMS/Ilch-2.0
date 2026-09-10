@@ -13,20 +13,20 @@ use Modules\Comment\Models\Comment as CommentModel;
 class CommentModelTest extends TestCase
 {
     /**
-     * Tests that all properties default to null.
+     * Tests that all properties default to their initial values.
      */
     public function testDefaults()
     {
         $model = new CommentModel();
 
         self::assertNull($model->getId());
-        self::assertNull($model->getFKId());
-        self::assertNull($model->getKey());
-        self::assertNull($model->getText());
+        self::assertSame(0, $model->getFKId());
+        self::assertSame('', $model->getKey());
+        self::assertSame('', $model->getText());
         self::assertNull($model->getUserId());
         self::assertNull($model->getDateCreated());
-        self::assertNull($model->getUp());
-        self::assertNull($model->getDown());
+        self::assertSame(0, $model->getUp());
+        self::assertSame(0, $model->getDown());
         self::assertNull($model->getVoted());
     }
 
