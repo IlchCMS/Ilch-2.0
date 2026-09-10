@@ -36,7 +36,7 @@ class ResultTest extends DatabaseTestCase
     /**
      * @dataProvider dpForFetchCell
      *
-     * @param integer|string $param
+     * @param int|string $param
      * @param string $expected
      */
     public function testFetchCell($param, string $expected)

@@ -24,7 +24,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $db = $this->getMockBuilder('\Ilch\Database\Mysql')
             ->disableOriginalConstructor()
             ->onlyMethods(['escape'])
-            ->getMockForAbstractClass();
+            ->getMock();
         $db->method('escape')
             ->willReturnCallback(function ($value, $addQuotes = false) {
                 if ($addQuotes) {
