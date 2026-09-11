@@ -1,0 +1,44 @@
+media_cats:
+  - id: 1
+    cat_name: 'Images'
+  - id: 2
+    cat_name: 'Documents'
+  - id: 3
+    cat_name: 'Videos'
+
+media:
+  - id: 1
+    name: 'landscape.jpg'
+    url: 'upload/landscape.jpg'
+    url_thumb: 'upload/landscape_thumb.jpg'
+    ending: 'jpg'
+    datetime: '2024-01-15 10:30:00'
+    cat: 1
+  - id: 2
+    name: 'logo.png'
+    url: 'upload/logo.png'
+    url_thumb: 'upload/logo_thumb.png'
+    ending: 'png'
+    datetime: '2024-02-20 14:45:00'
+    cat: 1
+  - id: 3
+    name: 'report.pdf'
+    url: 'upload/report.pdf'
+    url_thumb: ''
+    ending: 'pdf'
+    datetime: '2024-03-10 09:00:00'
+    cat: 2
+  - id: 4
+    name: 'untitled.png'
+    url: 'upload/untitled.png'
+    url_thumb: 'upload/untitled_thumb.png'
+    ending: 'png'
+    datetime: '2024-04-05 16:20:00'
+    cat: 0
+  - id: 5
+    name: 'orphan.jpg'
+    url: 'upload/orphan.jpg'
+    url_thumb: 'upload/orphan_thumb.jpg'
+    ending: 'jpg'
+    datetime: '2023-12-01 08:00:00'
+    cat: 99
