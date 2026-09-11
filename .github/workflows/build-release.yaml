@@ -35,7 +35,7 @@ jobs:
         run: |
           git archive --format=zip HEAD > Ilch-2.zip
           zip -q -d Ilch-2.zip static/js/\* composer.json composer.lock CONTRIBUTING.md README.md
-          zip -q -r Ilch-2.zip vendor static/js
+          zip -q -r Ilch-2.zip vendor static/js application
       - name: Archive artifacts
         uses: actions/upload-artifact@v7
         with:
