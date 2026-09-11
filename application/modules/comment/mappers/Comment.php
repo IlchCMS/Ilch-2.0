@@ -206,7 +206,7 @@ class Comment extends \Ilch\Mapper
      * @return int|string
      * @since 2.1.50
      */
-    public function getDateOfLastCommentByUserId(int $userId)
+    public function getDateOfLastCommentByUserId(int $userId): int|string
     {
         $select = $this->db()->select('date_created')
             ->from('comments')
@@ -227,8 +227,9 @@ class Comment extends \Ilch\Mapper
      * Save comment like.
      *
      * @param CommentModel $comment
+     * @return bool
      */
-    public function saveLike(CommentModel $comment)
+    public function saveLike(CommentModel $comment): bool
     {
         $fields = [
             'down' => $comment->getDown(),
@@ -236,7 +237,7 @@ class Comment extends \Ilch\Mapper
             'voted' => $comment->getVoted()
         ];
 
-        $this->db()->update('comments')
+        return (bool)$this->db()->update('comments')
             ->values($fields)
             ->where(['id' => $comment->getId()])
             ->execute();
@@ -246,10 +247,11 @@ class Comment extends \Ilch\Mapper
      * Save comment.
      *
      * @param CommentModel $comment
+     * @return bool
      */
-    public function save(CommentModel $comment)
+    public function save(CommentModel $comment): bool
     {
-        $this->db()->insert('comments')
+        return (bool)$this->db()->insert('comments')
             ->values(
                 [
                     'key' => $this->addMissingSlashIfNeeded($comment->getKey()),
@@ -267,7 +269,7 @@ class Comment extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         do {
             $this->db()->delete('comments')
@@ -281,10 +283,11 @@ class Comment extends \Ilch\Mapper
      * Delete comment with given $key
      *
      * @param string $key
+     * @return bool
      */
-    public function deleteByKey(string $key)
+    public function deleteByKey(string $key): bool
     {
-        $this->db()->delete('comments')
+        return (bool)$this->db()->delete('comments')
             ->where(['key LIKE' => $key . '%'])
             ->execute();
     }
@@ -310,7 +313,7 @@ class Comment extends \Ilch\Mapper
      */
     private function addMissingSlashIfNeeded(string $key): string
     {
-        if (!(strlen($key) - (strrpos($key, '/')) === 0)) {
+        if (!str_ends_with($key, '/')) {
             // Add missing slash at the end to usually terminate the id.
             // This is needed for example so that id 11 doesn't get counted as id 1.
             $key .= '/';

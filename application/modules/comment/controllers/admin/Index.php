@@ -47,7 +47,7 @@ class Index extends \Ilch\Controller\Admin
 
         $modules = [];
         foreach ($commentMapper->getComments() as $comment) {
-            $commentKey = preg_replace("#[/].*#", "", $comment->getKey());
+            $commentKey = preg_replace('#[/].*#', '', $comment->getKey());
             $modules[] = $commentKey;
         }
         $modulesUnique = array_unique($modules);

@@ -19,7 +19,7 @@ $comments = $this->get('comments');
                             <?=substr($this->escape($comment->getText()), 0, 25) ?>
                         </a>
                         <br>
-                        <small><?=$date->format("d.m.y - H:i", true) ?> <?=$this->getTrans('clock') ?></small>
+                        <small><?=$date->format('d.m.y - H:i', true) ?> <?=$this->getTrans('clock') ?></small>
                     </span>
                 </li>
             <?php endforeach; ?>
