@@ -338,12 +338,16 @@ class Media extends \Ilch\Mapper
             ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
-        if (file_exists($mediaRow['url'])) {
-            unlink($mediaRow['url']);
+
+        if ($mediaRow !== null) {
+            if (file_exists($mediaRow['url'])) {
+                unlink($mediaRow['url']);
+            }
+            if (file_exists($mediaRow['url_thumb'])) {
+                unlink($mediaRow['url_thumb']);
+            }
         }
-        if (file_exists($mediaRow['url_thumb'])) {
-            unlink($mediaRow['url_thumb']);
-        }
+
         $this->db()->delete('media')
             ->where(['id' => $id])
             ->execute();
