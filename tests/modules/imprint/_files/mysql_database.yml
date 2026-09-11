@@ -1,0 +1,7 @@
+imprint:
+  - id: 1
+    imprint: ''
+  - id: 2
+    imprint: '<h1>Custom Imprint</h1><p>Company GmbH<br />Musterstr. 1, 12345 City</p>'
+  - id: 3
+    imprint: 'Simple plain-text imprint for testing.'
