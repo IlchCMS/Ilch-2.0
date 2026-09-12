@@ -1,0 +1,10 @@
+linkus:
+  - id: 1
+    title: 'Our Website'
+    banner: 'banner_home.html'
+  - id: 2
+    title: 'Forum'
+    banner: 'banner_forum.html'
+  - id: 3
+    title: 'Blog'
+    banner: ''
