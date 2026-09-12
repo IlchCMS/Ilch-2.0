@@ -1,0 +1,76 @@
+groups:
+  - id: 1
+  - id: 2
+  - id: 3
+
+media:
+  - id: 10
+    url: '/media/ubuntu.iso'
+    url_thumb: '/media/ubuntu_thumb.png'
+  - id: 11
+    url: '/media/fedora.iso'
+    url_thumb: '/media/fedora_thumb.png'
+  - id: 12
+    url: '/media/winrar.zip'
+    url_thumb: '/media/winrar_thumb.png'
+
+downloads_items:
+  - id: 1
+    sort: 0
+    parent_id: 0
+    type: 1
+    title: 'Software'
+    description: 'All software downloads'
+  - id: 2
+    sort: 1
+    parent_id: 1
+    type: 1
+    title: 'Linux'
+    description: 'Linux distributions'
+  - id: 3
+    sort: 2
+    parent_id: 1
+    type: 2
+    title: 'Windows'
+    description: 'Windows utilities'
+
+downloads_files:
+  - id: 1
+    file_id: 10
+    file_title: 'Ubuntu.iso'
+    file_description: 'Ubuntu 22.04 LTS'
+    file_image: '/media/ubuntu.iso'
+    item_id: 2
+    visits: 5
+  - id: 2
+    file_id: 11
+    file_title: 'Fedora.iso'
+    file_description: 'Fedora 39'
+    file_image: '/media/fedora.iso'
+    item_id: 2
+    visits: 3
+  - id: 3
+    file_id: 12
+    file_title: 'WinRAR.zip'
+    file_description: 'WinRAR 6.21'
+    file_image: '/media/winrar.zip'
+    item_id: 3
+    visits: 10
+
+downloads_access:
+  - item_id: 1
+    group_id: 1
+  - item_id: 2
+    group_id: 1
+  - item_id: 2
+    group_id: 2
+  - item_id: 3
+    group_id: 1
+
+downloads_files_access:
+  - file_id: 1
+    group_id: 1
+  - file_id: 2
+    group_id: 2
+  - file_id: 3
+    group_id: 1
