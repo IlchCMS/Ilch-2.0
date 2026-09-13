@@ -1,0 +1,16 @@
+jobs:
+  - id: 1
+    title: 'Web Developer'
+    text: 'Looking for an experienced web developer to join our team.'
+    email: 'hr@example.com'
+    show: 1
+  - id: 2
+    title: 'Project Manager'
+    text: 'Experienced project manager needed for ongoing projects.'
+    email: 'jobs@example.com'
+    show: 1
+  - id: 3
+    title: 'UX Designer'
+    text: 'Creative soul for designing user-friendly interfaces.'
+    email: 'design@example.com'
+    show: 0
