@@ -193,7 +193,7 @@ class Events extends \Ilch\Mapper
      * @param string $address
      * @param string $googleMapsKey
      *
-     * @return string $latlongitude
+     * @return string|null $latlongitude
      */
     public function getLatLongFromAddress(string $address, string $googleMapsKey): ?string
     {
@@ -227,18 +227,19 @@ class Events extends \Ilch\Mapper
      * Inserts or updates event model.
      *
      * @param EventModel $event
+     * @return int
      */
-    public function save(EventModel $event)
+    public function save(EventModel $event): int
     {
         $fields = $event->getArray();
 
         if ($event->getId()) {
-            $this->db()->update($this->tablename)
+            return $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $event->getId()])
                 ->execute();
         } else {
-            $this->db()->insert($this->tablename)
+            return $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
@@ -248,8 +249,9 @@ class Events extends \Ilch\Mapper
      * Deletes event with given id.
      *
      * @param int $id
+     * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
         $imageRow = $this->db()->select('*')
             ->from($this->tablename)
@@ -261,17 +263,15 @@ class Events extends \Ilch\Mapper
             unlink($imageRow['image']);
         }
 
-        $this->db()->delete($this->tablename)
+        $success = (bool)$this->db()->delete($this->tablename)
             ->where(['id' => $id])
-            ->execute();
-
-        $this->db()->delete('events_entrants')
-            ->where(['event_id' => $id])
             ->execute();
 
         $this->db()->delete('comments')
             ->where(['key' => 'events/show/event/id/' . $id])
             ->execute();
+
+        return $success;
     }
 
     /**
@@ -287,7 +287,7 @@ class Events extends \Ilch\Mapper
             ->execute()
             ->fetchAssoc();
 
-        if (file_exists($imageRow['image'])) {
+        if (isset($imageRow['image']) && file_exists($imageRow['image'])) {
             unlink($imageRow['image']);
         }
 

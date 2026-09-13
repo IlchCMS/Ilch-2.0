@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'events',
-        'version' => '1.23.9',
+        'version' => '1.23.10',
         'icon_small' => 'fa-solid fa-ticket',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -123,7 +123,9 @@ class Config extends \Ilch\Config\Install
             CREATE TABLE IF NOT EXISTS `[prefix]_events_entrants` (
                 `event_id` INT(11) NOT NULL,
                 `user_id` INT(11) NOT NULL,
-                `status` TINYINT(1) NOT NULL
+                `status` TINYINT(1) NOT NULL,
+	            INDEX `FK_[prefix]_events_entrants_events` (`event_id`) USING BTREE,
+	            CONSTRAINT `FK_[prefix]_events_entrants_events` FOREIGN KEY (`event_id`) REFERENCES `[prefix]_events` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_events_currencies` (
@@ -220,6 +222,29 @@ class Config extends \Ilch\Config\Install
             case "1.23.6":
             case "1.23.7":
             case "1.23.8":
+            case "1.23.9":
+                // Delete (orphaned) rows with an "event_id" that does not exist in the "events" table.
+                $eventIds = $this->db()->select('event_id')
+                    ->from('events_entrants')
+                    ->execute()
+                    ->fetchList();
+
+                $existingEventsIds = $this->db()->select('id')
+                    ->from('events')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($eventIds ?? [], $existingEventsIds ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()->from('events_entrants')
+                        ->where(['event_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                // Add FKC to the "events_entrants" table.
+                if (!$this->db()->ifForeignKeyConstraintExists('events_entrants', 'FK_[prefix]_events_entrants_events')) {
+                    $this->db()->query('ALTER TABLE `[prefix]_events_entrants` ADD CONSTRAINT `FK_[prefix]_events_entrants_events` FOREIGN KEY (`event_id`) REFERENCES `[prefix]_events` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                }
                 // no break
         }
 

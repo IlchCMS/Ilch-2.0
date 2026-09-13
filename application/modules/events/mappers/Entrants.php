@@ -93,10 +93,23 @@ class Entrants extends \Ilch\Mapper
      * @param int $eventId
      *
      * @return int
+     * @deprecated Function is replaced by getCountOfEventEntrants
      */
     public function getCountOfEventEntrans(int $eventId): int
     {
-        return $this->db()->select('COUNT(*)', $this->tablename)
+        return $this->getCountOfEventEntrants($eventId);
+    }
+
+    /**
+     * Gets the count of entrants of an event.
+     *
+     * @param int $eventId
+     *
+     * @return int
+     */
+    public function getCountOfEventEntrants(int $eventId): int
+    {
+        return (int)$this->db()->select('COUNT(*)', $this->tablename)
             ->where(['event_id' => $eventId])
             ->execute()
             ->fetchCell();
@@ -128,24 +141,20 @@ class Entrants extends \Ilch\Mapper
     {
         $fields = $event->getArray();
 
-        $userId = (int) $this->db()->select('*')
+        $exists = (bool) $this->db()->select('user_id')
             ->from($this->tablename)
             ->where(['user_id' => $event->getUserId(), 'event_id' => $event->getEventId()])
             ->execute()
             ->fetchCell();
 
-        if ($userId) {
-            /*
-             * User does exist already, update.
-             */
+        if ($exists) {
+            // User does exist already, update.
             $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['event_id' => $event->getEventId(), 'user_id' => $event->getUserId()])
                 ->execute();
         } else {
-            /*
-             * User does not exist yet, insert.
-             */
+            // User does not exist yet, insert.
             $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();

@@ -1,0 +1,113 @@
+events_currencies:
+  - id: 1
+    name: 'EUR (€)'
+  - id: 2
+    name: 'USD ($)'
+  - id: 3
+    name: 'GBP (£)'
+
+events:
+  - id: 1
+    user_id: 1
+    start: '2025-06-15 10:00:00'
+    end: '2025-06-15 18:00:00'
+    title: 'Tech Conference'
+    place: 'Berlin'
+    type: 'Conference'
+    website: 'https://techconf.example.com'
+    lat_long: '52.52,13.40'
+    image: ''
+    text: 'Annual tech conference'
+    currency: 1
+    price: '50'
+    price_art: 1
+    show: 1
+    user_limit: 100
+    read_access: '2,3'
+  - id: 2
+    user_id: 2
+    start: '2026-09-10 09:00:00'
+    end: '2026-09-15 17:00:00'
+    title: 'Music Festival'
+    place: 'Munich'
+    type: 'Festival'
+    website: ''
+    lat_long: ''
+    image: ''
+    text: 'Summer music festival'
+    currency: 2
+    price: ''
+    price_art: 0
+    show: 1
+    user_limit: 50
+    read_access: '2,3'
+  - id: 3
+    user_id: 1
+    start: '2027-01-15 14:00:00'
+    end: '2027-01-15 20:00:00'
+    title: 'Networking Lunch'
+    place: 'Hamburg'
+    type: 'Social'
+    website: ''
+    lat_long: ''
+    image: ''
+    text: ''
+    currency: 1
+    price: ''
+    price_art: 0
+    show: 1
+    user_limit: 20
+    read_access: '2'
+  - id: 4
+    user_id: 2
+    start: '2020-12-25 10:00:00'
+    end: '2020-12-25 22:00:00'
+    title: 'Holiday Party'
+    place: 'Berlin'
+    type: 'Social'
+    website: ''
+    lat_long: ''
+    image: ''
+    text: 'Christmas party'
+    currency: 1
+    price: '10'
+    price_art: 1
+    show: 0
+    user_limit: 50
+    read_access: '2,3'
+  - id: 5
+    user_id: 1
+    start: '2026-09-01 08:00:00'
+    end: '2026-09-20 22:00:00'
+    title: 'Art Exhibition'
+    place: 'Cologne'
+    type: 'Exhibition'
+    website: ''
+    lat_long: ''
+    image: ''
+    text: 'Modern art show'
+    currency: 3
+    price: ''
+    price_art: 0
+    show: 1
+    user_limit: 0
+    read_access: '2,3'
+
+events_entrants:
+  - event_id: 1
+    user_id: 1
+    status: 1
+  - event_id: 1
+    user_id: 2
+    status: 2
+  - event_id: 2
+    user_id: 1
+    status: 1
+
+comments:
+  - id: 1
+    key: 'events/show/event/id/1'
+    text: 'Great conference!'
+  - id: 2
+    key: 'events/show/event/id/2'
+    text: 'Loved the music'
