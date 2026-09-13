@@ -71,15 +71,15 @@ class Faq extends \Ilch\Mapper
         if (empty($entryArray)) {
             return null;
         }
-        $entrys = [];
+        $entriesArray = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new FaqModel();
             $entryModel->setByArray($entries);
 
-            $entrys[] = $entryModel;
+            $entriesArray[] = $entryModel;
         }
-        return $entrys;
+        return $entriesArray;
     }
 
     /**
@@ -123,10 +123,10 @@ class Faq extends \Ilch\Mapper
      */
     public function getFaqById(int $id): ?FaqModel
     {
-        $entrys = $this->getEntriesBy(['f.id' => $id], []);
+        $entries = $this->getEntriesBy(['f.id' => $id], []);
 
-        if (!empty($entrys)) {
-            return reset($entrys);
+        if (!empty($entries)) {
+            return reset($entries);
         }
 
         return null;

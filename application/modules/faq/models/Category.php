@@ -7,7 +7,7 @@
 
 namespace Modules\Faq\Models;
 
-class Category extends \Ilch\Mapper
+class Category extends \Ilch\Model
 {
     /**
      * The id of the category.
