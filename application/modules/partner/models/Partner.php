@@ -58,22 +58,22 @@ class Partner extends \Ilch\Model
      */
     public function setByArray(array $entries): Partner
     {
-        if (!empty($entries['id'])) {
+        if (isset($entries['id'])) {
             $this->setId($entries['id']);
         }
-        if (!empty($entries['name'])) {
+        if (isset($entries['name'])) {
             $this->setName($entries['name']);
         }
-        if (!empty($entries['link'])) {
+        if (isset($entries['link'])) {
             $this->setLink($entries['link']);
         }
-        if (!empty($entries['banner'])) {
+        if (isset($entries['banner'])) {
             $this->setBanner($entries['banner']);
         }
-        if (!empty($entries['target'])) {
+        if (isset($entries['target'])) {
             $this->setTarget($entries['target']);
         }
-        if (!empty($entries['setfree'])) {
+        if (isset($entries['setfree'])) {
             $this->setFree($entries['setfree']);
         }
         return $this;

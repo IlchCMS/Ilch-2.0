@@ -1,0 +1,22 @@
+partners:
+  - id: 1
+    pos: 1
+    name: 'ilch'
+    banner: 'https://www.ilch.de/include/images/linkus/88x31.png'
+    link: 'https://ilch.de'
+    target: 0
+    setfree: 1
+  - id: 2
+    pos: 2
+    name: 'Example Corp'
+    banner: 'https://example.com/banners/example.png'
+    link: 'https://example.com'
+    target: 1
+    setfree: 0
+  - id: 3
+    pos: 3
+    name: 'Tech Partner'
+    banner: 'https://techpartner.com/banner.png'
+    link: 'https://techpartner.com'
+    target: 0
+    setfree: 1
