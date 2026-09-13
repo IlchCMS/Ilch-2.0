@@ -10,7 +10,7 @@ namespace Modules\Events\Tests;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
 use Modules\Events\Config\Config as ModuleConfig;
-Use Modules\Comment\Config\Config as CommentModuleConfig;
+use Modules\Comment\Config\Config as CommentModuleConfig;
 use Modules\Events\Mappers\Events as EventsMapper;
 use Modules\Events\Models\Events as EventModel;
 
