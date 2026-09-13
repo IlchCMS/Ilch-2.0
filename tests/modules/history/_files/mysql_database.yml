@@ -1,0 +1,19 @@
+history:
+  - id: 1
+    date: '2020-01-15'
+    title: 'Founded'
+    type: 'fas fa-globe'
+    color: '#75ce66'
+    text: 'The club was officially founded by five members.'
+  - id: 2
+    date: '2021-06-20'
+    title: 'First Tournament'
+    type: 'fas fa-graduation-cap'
+    color: '#f0ad4e'
+    text: 'We held our first annual tournament with 32 participants.'
+  - id: 3
+    date: '2022-03-10'
+    title: 'New Building'
+    type: 'fas fa-camera'
+    color: '#5bc0de'
+    text: 'Moved to new premises with expanded facilities.'

@@ -1,0 +1,13 @@
+kvteam:
+  - id: 1
+    title: 'Board Members'
+    userIds: '1,2,3'
+    position: 1
+  - id: 2
+    title: 'Coaches'
+    userIds: '4,5'
+    position: 2
+  - id: 3
+    title: 'Support Team'
+    userIds: '6,7,8,9'
+    position: 3
