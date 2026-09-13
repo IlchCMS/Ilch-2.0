@@ -24,7 +24,7 @@ return [
     'settings' => 'Settings',
     'entrySettings' => 'Share entries directly',
     'notificationOnNewEntry' => 'Send notification on new entry',
-    'entrys' => 'Entries',
+    'entries' => 'Entries',
     'noEntries' => 'No entries available.',
     'setfree' => 'Set free ',
     'check' => 'Thanks. Entry is checked.',
