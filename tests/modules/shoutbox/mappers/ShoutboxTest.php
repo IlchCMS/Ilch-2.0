@@ -117,7 +117,7 @@ class ShoutboxTest extends DatabaseTestCase
      */
     public function testGetShoutboxLimitNull()
     {
-        $entries = $this->out->getShoutboxLimit(null);
+        $entries = $this->out->getShoutboxLimit();
 
         self::assertIsArray($entries);
         self::assertCount(3, $entries);
