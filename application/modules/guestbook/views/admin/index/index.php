@@ -12,7 +12,7 @@ $pagination = $this->get('pagination');
     <ul class="nav nav-tabs">
         <li <?=(!$this->getRequest()->getParam('showsetfree')) ? 'class="nav-item"' : '' ?>>
             <a class="nav-link active" href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>">
-                <?=$this->getTrans('entrys') ?>
+                <?=$this->getTrans('entries') ?>
             </a>
         </li>
         <?php if ($this->get('badge') > 0) : ?>

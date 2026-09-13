@@ -24,7 +24,7 @@ return [
     'settings' => 'Einstellungen',
     'entrySettings' => 'Einträge sofort freigeben',
     'notificationOnNewEntry' => 'Benachrichtigung bei neuen Eintrag',
-    'entrys' => 'Einträge',
+    'entries' => 'Einträge',
     'noEntries' => 'Keine Einträge vorhanden.',
     'setfree' => 'Freischalten ',
     'check' => 'Danke. Eintrag wird geprüft.',

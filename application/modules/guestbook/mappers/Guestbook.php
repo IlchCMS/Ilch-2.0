@@ -46,15 +46,15 @@ class Guestbook extends \Ilch\Mapper
         if (empty($entryArray)) {
             return null;
         }
-        $entrys = [];
+        $entriesArray = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new GuestbookModel();
             $entryModel->setByArray($entries);
 
-            $entrys[] = $entryModel;
+            $entriesArray[] = $entryModel;
         }
-        return $entrys;
+        return $entriesArray;
     }
 
     /**
@@ -74,40 +74,47 @@ class Guestbook extends \Ilch\Mapper
         return $entryArray;
     }
 
-
     /**
+     * Updates or toggles the setfree flag for a guestbook entry.
+     *
+     * Pass a value of 0 or 1 to explicitly set the state.
+     * Omit the second argument (or pass -1) to toggle the current state.
+     *
      * @param int|GuestbookModel $id
-     * @param int $setfree
-     * @return bool
+     * @param int $setfree 0, 1, or -1 (toggle)
+     * @return bool true if a row was updated, false otherwise
      */
-    public function updateSetfree($id, int $setfree = -1): bool
+    public function updateSetfree(int|GuestbookModel $id, int $setfree = -1): bool
     {
-        if ($setfree !== -1) {
-            $setfreeNow = $setfree;
-        } else {
-            if ($id instanceof GuestbookModel) {
-                $setfree = $id->getFree();
-            } else {
-                $setfree = (int) $this->db()->select('setfree')
-                    ->from($this->tablename)
-                    ->where(['id' => (int)$id])
-                    ->execute()
-                    ->fetchCell();
-            }
-
-            if ($setfree === 1) {
-                $setfreeNow = 0;
-            } else {
-                $setfreeNow = 1;
-            }
-        }
         if ($id instanceof GuestbookModel) {
             $id = $id->getId();
         }
 
+        // Verify the entry actually exists.
+        $currentFree = $this->db()->select('setfree')
+            ->from($this->tablename)
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchCell();
+
+        if ($currentFree === null) {
+            return false;
+        }
+
+        $currentFree = (int) $currentFree;
+
+        if ($setfree === -1) {
+            // Toggle: flip the current value.
+            $newFree = ($currentFree === 1) ? 0 : 1;
+        } elseif ($setfree === 0 || $setfree === 1) {
+            $newFree = $setfree;
+        } else {
+            throw new \InvalidArgumentException('setfree must be 0, 1, or -1 (toggle).');
+        }
+
         return $this->db()->update($this->tablename)
-            ->values(['setfree' => $setfreeNow])
-            ->where(['id' => (int)$id])
+            ->values(['setfree' => $newFree])
+            ->where(['id' => $id])
             ->execute();
     }
 
@@ -148,7 +155,7 @@ class Guestbook extends \Ilch\Mapper
     }
 
     /**
-     * Reset the Vote counts.
+     * Truncates or delete guestbook entries
      *
      * @param int|null $setfree
      * @return bool
@@ -157,7 +164,7 @@ class Guestbook extends \Ilch\Mapper
      */
     public function reset(?int $setfree = null): bool
     {
-        if ($setfree == null) {
+        if ($setfree === null) {
             $this->db()->truncate($this->tablename);
             return $this->db()->queryMulti('ALTER TABLE `[prefix]_' . $this->tablename . '` auto_increment = 1;');
         } else {

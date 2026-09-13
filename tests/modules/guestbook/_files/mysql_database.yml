@@ -1,0 +1,15 @@
+gbook:
+  - id: 1
+    email: 'alice@example.com'
+    text: 'Great website!'
+    datetime: '2024-01-15 10:30:00'
+    homepage: 'https://alice.example.com'
+    name: 'Alice'
+    setfree: 1
+  - id: 2
+    email: 'bob@example.com'
+    text: 'Nice guestbook.'
+    datetime: '2024-02-20 14:45:00'
+    homepage: 'https://bob.example.com'
+    name: 'Bob'
+    setfree: 0
