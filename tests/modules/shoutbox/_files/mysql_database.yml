@@ -1,0 +1,16 @@
+shoutbox:
+  - id: 1
+    user_id: 1
+    name: 'Alice'
+    textarea: 'Hello world!'
+    time: '2024-01-15 10:30:00'
+  - id: 2
+    user_id: 2
+    name: 'Bob'
+    textarea: 'Nice shoutbox!'
+    time: '2024-02-20 14:45:00'
+  - id: 3
+    user_id: 0
+    name: 'Guest'
+    textarea: 'Just passing by.'
+    time: '2024-03-10 08:00:00'

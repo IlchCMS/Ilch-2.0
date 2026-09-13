@@ -1,0 +1,47 @@
+groups:
+  - id: 1
+    name: 'Admin'
+  - id: 2
+    name: 'Member'
+  - id: 3
+    name: 'Guest'
+
+rules:
+  - id: 1
+    paragraph: '1'
+    title: 'General Rules'
+    text: 'These are the general rules.'
+    position: 1
+    parent_id: 0
+    access_all: 1
+  - id: 2
+    paragraph: '1.1'
+    title: 'Be Respectful'
+    text: 'Treat others with respect.'
+    position: 1
+    parent_id: 1
+    access_all: 0
+  - id: 3
+    paragraph: '1.2'
+    title: 'No Spam'
+    text: 'Spam is not allowed.'
+    position: 2
+    parent_id: 1
+    access_all: 0
+  - id: 4
+    paragraph: '2'
+    title: 'Technical Rules'
+    text: 'Technical guidelines.'
+    position: 2
+    parent_id: 0
+    access_all: 1
+
+rules_access:
+  - rule_id: 2
+    group_id: 1
+  - rule_id: 2
+    group_id: 2
+  - rule_id: 3
+    group_id: 1
+  - rule_id: 3
+    group_id: 3
