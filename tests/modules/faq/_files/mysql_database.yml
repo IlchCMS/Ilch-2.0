@@ -1,0 +1,31 @@
+groups:
+  - id: 1
+    name: 'Admin'
+  - id: 2
+    name: 'Member'
+  - id: 3
+    name: 'Guest'
+
+faqs_cats:
+  - id: 1
+    title: 'General'
+    read_access_all: 1
+  - id: 2
+    title: 'Technical'
+    read_access_all: 0
+
+faqs_cats_access:
+  - cat_id: 2
+    group_id: 1
+  - cat_id: 2
+    group_id: 2
+
+faqs:
+  - id: 1
+    cat_id: 1
+    question: 'What is Ilch?'
+    answer: 'Ilch is a CMS.'
+  - id: 2
+    cat_id: 2
+    question: 'How to install?'
+    answer: 'Follow the guide.'

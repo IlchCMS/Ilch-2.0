@@ -72,15 +72,15 @@ class Category extends \Ilch\Mapper
         if (empty($entryArray)) {
             return null;
         }
-        $entrys = [];
+        $entriesArray = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new CategoryModel();
             $entryModel->setByArray($entries);
 
-            $entrys[] = $entryModel;
+            $entriesArray[] = $entryModel;
         }
-        return $entrys;
+        return $entriesArray;
     }
 
     /**
@@ -113,10 +113,10 @@ class Category extends \Ilch\Mapper
             $groupIds = explode(',', $groupIds);
         }
 
-        $entrys = $this->getEntriesBy(array_merge(['c.id' => $id], ($groupIds ? ['ra.group_id' => $groupIds] : [])), []);
+        $entries = $this->getEntriesBy(array_merge(['c.id' => $id], ($groupIds ? ['ra.group_id' => $groupIds] : [])), []);
 
-        if (!empty($entrys)) {
-            return reset($entrys);
+        if (!empty($entries)) {
+            return reset($entries);
         }
 
         return null;
@@ -169,11 +169,14 @@ class Category extends \Ilch\Mapper
             ->where(['cat_id' => $faqId])
             ->execute();
 
+        // If read access is 'all', no specific group rows are needed.
+        if (in_array('all', $readAccess)) {
+            return [];
+        }
+
         $groupIds = [];
         if (!empty($readAccess)) {
-            if (!in_array('all', $readAccess)) {
-                $groupIds = $readAccess;
-            }
+            $groupIds = $readAccess;
         }
         if ($addAdmin && !in_array('1', $groupIds)) {
             $groupIds[] = '1';

@@ -9,9 +9,9 @@ namespace Modules\Faq\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = [
+    public array $config = [
         'key' => 'faq',
-        'version' => '1.10.3',
+        'version' => '1.10.4',
         'icon_small' => 'fa-regular fa-circle-question',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -164,7 +164,7 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_faqs_cats` DROP COLUMN `read_access`;');
                 $this->db()->query('ALTER TABLE `[prefix]_faqs_cats` ADD `read_access_all` TINYINT(1) NOT NULL AFTER `title`;');
 
-                // Add constraint to faq after deleting orphaned rows in it (rows with an cat id not
+                // Add constraint to faq after deleting orphaned rows in it (rows with a cat id not
                 // existing in the faq table) as this would lead to an error.
                 $idsCats = $this->db()->select('id')
                     ->from('faqs_cats')
