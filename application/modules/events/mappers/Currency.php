@@ -54,19 +54,19 @@ class Currency extends \Ilch\Mapper
             $result = $select->execute();
         }
 
-        $entryArray = $result->fetchRows();
-        if (empty($entryArray)) {
+        $entriesArray = $result->fetchRows();
+        if (empty($entriesArray)) {
             return null;
         }
-        $entrys = [];
+        $entriesModels = [];
 
-        foreach ($entryArray as $entries) {
+        foreach ($entriesArray as $entries) {
             $entryModel = new CurrencyModel();
             $entryModel->setByArray($entries);
 
-            $entrys[] = $entryModel;
+            $entriesModels[] = $entryModel;
         }
-        return $entrys;
+        return $entriesModels;
     }
 
     /**
@@ -109,18 +109,15 @@ class Currency extends \Ilch\Mapper
         $fields = $model->getArray(false);
 
         if ($model->getId()) {
-            $this->db()->update($this->tablename)
+            return $this->db()->update($this->tablename)
                 ->values($fields)
                 ->where(['id' => $model->getId()])
                 ->execute();
-            $result = $model->getId();
         } else {
-            $result = $this->db()->insert($this->tablename)
+            return $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
         }
-
-        return $result;
     }
 
     /**
