@@ -7,7 +7,7 @@
 
 namespace Modules\Link\Models;
 
-class Category extends \Ilch\Mapper
+class Category extends \Ilch\Model
 {
     /**
      * The id of the category.
@@ -31,11 +31,11 @@ class Category extends \Ilch\Mapper
     protected string $name = '';
 
     /**
-     * The catid of the category.
+     * The parentId of the category.
      *
      * @var int
      */
-    protected int $cat = 0;
+    protected int $parentId = 0;
 
     /**
      * The description of the category.
@@ -165,18 +165,18 @@ class Category extends \Ilch\Mapper
      */
     public function getParentId(): int
     {
-        return $this->cat;
+        return $this->parentId;
     }
 
     /**
      * Sets the category id.
      *
-     * @param int $cat
+     * @param int $parentId
      * @return $this
      */
-    public function setParentId(int $cat): Category
+    public function setParentId(int $parentId): Category
     {
-        $this->cat = $cat;
+        $this->parentId = $parentId;
 
         return $this;
     }

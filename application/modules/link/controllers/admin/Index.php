@@ -251,7 +251,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatCatAction()
     {
-        $categorykMapper = new CategoryMapper();
+        $categoryMapper = new CategoryMapper();
         $userGroupMapper = new UserGroupMapper();
 
         $model = new CategoryModel();
@@ -260,7 +260,7 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('menuActionEditCategory'), ['action' => 'treat']);
 
-            $model = $categorykMapper->getCategoryById($this->getRequest()->getParam('id'));
+            $model = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'));
 
             if (!$model) {
                 $this->redirect()
@@ -286,7 +286,7 @@ class Index extends \Ilch\Controller\Admin
                 $model->setName($this->getRequest()->getPost('name'))
                     ->setDesc($this->getRequest()->getPost('desc'))
                     ->setAccess(implode(',', $this->getRequest()->getPost('access') ?? []));
-                $categorykMapper->save($model);
+                $categoryMapper->save($model);
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(array_merge(['action' => 'index'], ($model->getParentId() ? ['cat_id' => $model->getParentId()] : [])));

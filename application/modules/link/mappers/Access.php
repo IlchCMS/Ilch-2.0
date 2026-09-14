@@ -56,7 +56,7 @@ class Access extends Mapper
      * Save access rights for a link or a category.
      *
      * @param int $id
-     * @param string|null $access
+     * @param string|null $access An empty string is a clear all.
      * @param bool $isLinkId
      * @return void
      * @since 1.12.0
