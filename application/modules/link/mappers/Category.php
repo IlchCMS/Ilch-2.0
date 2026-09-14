@@ -31,8 +31,6 @@ class Category extends \Ilch\Mapper
         parent::__construct();
 
         $this->tablename_entries = (new LinkMapper())->tablename;
-
-        return $this;
     }
 
     /**
@@ -64,7 +62,7 @@ class Category extends \Ilch\Mapper
             ->order($orderBy);
 
         if ($countEntries) {
-            $select->join(['l' => $this->tablename_entries], ['l.cat_id = lc.id'], 'LEFT', ['count' => 'COUNT(l.id)']);
+            $select->join(['l' => $this->tablename_entries], ['l.cat_id = lc.id'], 'LEFT', ['count' => 'COUNT(DISTINCT l.id)']);
         }
 
         $select->group(['lc.id', 'lc.parent_id', 'lc.pos', 'lc.name', 'lc.desc']);

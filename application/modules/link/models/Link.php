@@ -235,10 +235,10 @@ class Link extends \Ilch\Model
     /**
      * Sets the category of the link.
      *
-     * @param $cat
+     * @param int $cat
      * @return $this
      */
-    public function setCatId($cat): Link
+    public function setCatId(int $cat): Link
     {
         $this->cat_id = $cat;
 
@@ -281,10 +281,10 @@ class Link extends \Ilch\Model
     /**
      * Sets the hits of the link.
      *
-     * @param string $hits
+     * @param int $hits
      * @return $this
      */
-    public function setHits(string $hits): Link
+    public function setHits(int $hits): Link
     {
         $this->hits = $hits;
 

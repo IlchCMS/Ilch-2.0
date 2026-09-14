@@ -1,0 +1,67 @@
+
+groups:
+  - id: 1
+    name: 'Admin'
+  - id: 2
+    name: 'Editor'
+  - id: 3
+    name: 'Guest'
+
+link_cats:
+  - id: 1
+    parent_id: 0
+    pos: 1
+    name: 'Technology'
+    desc: 'Technology links'
+  - id: 2
+    parent_id: 1
+    pos: 1
+    name: 'Programming'
+    desc: 'Programming resources'
+  - id: 3
+    parent_id: 0
+    pos: 2
+    name: 'Design'
+    desc: 'Design resources'
+
+link_links:
+  - id: 1
+    cat_id: 1
+    pos: 1
+    name: 'ilch'
+    desc: 'Content Management System'
+    banner: 'https://www.ilch.de/include/images/linkus/468x60.png'
+    link: 'https://ilch.de'
+    hits: 10
+  - id: 2
+    cat_id: 2
+    pos: 1
+    name: 'PHP'
+    desc: 'PHP resource'
+    banner: 'https://php.net/images/logos/png/php-logo-200x59.png'
+    link: 'https://php.net'
+    hits: 5
+  - id: 3
+    cat_id: 3
+    pos: 1
+    name: 'Dribbble'
+    desc: 'Design inspiration'
+    banner: 'https://cdn.dribbble.com/assets/logo-280.png'
+    link: 'https://dribbble.com'
+    hits: 3
+
+link_access:
+  - cat_id: 1
+    group_id: 1
+  - cat_id: 1
+    group_id: 2
+  - cat_id: 3
+    group_id: 1
+
+link_links_access:
+  - link_id: 1
+    group_id: 1
+  - link_id: 2
+    group_id: 1
+  - link_id: 2
+    group_id: 2
