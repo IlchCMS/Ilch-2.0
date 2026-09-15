@@ -47,7 +47,7 @@ class Newsletter extends Mapper
     }
 
     /**
-     * Get id of last added newletter (biggest id).
+     * Get id of last added newsletter (biggest id).
      *
      * @return int
      */

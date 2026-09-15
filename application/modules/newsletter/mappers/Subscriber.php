@@ -139,6 +139,11 @@ class Subscriber extends Mapper
             ->where(['id' => $subscriber->getId()])
             ->execute()
             ->fetchRows();
+
+        if (empty($userRow)) {
+            throw new \InvalidArgumentException('User not found.');
+        }
+
         $userMail = $userRow[0]['email'];
 
         $newsletterMail = $this->countEmails($userMail);

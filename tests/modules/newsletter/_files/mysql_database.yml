@@ -1,0 +1,36 @@
+newsletter:
+  - id: 1
+    user_id: 1
+    date_created: '2024-01-15 10:00:00'
+    subject: 'Welcome'
+    text: 'Welcome to our newsletter!'
+  - id: 2
+    user_id: 2
+    date_created: '2024-02-20 14:30:00'
+    subject: 'Monthly Update'
+    text: 'Here are the latest updates.'
+
+newsletter_mails:
+  - id: 1
+    email: 'john@example.com'
+    selector: 'abc123def456ghi7'
+    confirmCode: 'hash111111111111111111111111111111111111111111111111'
+    doubleOptInDate: '2024-01-10 08:00:00'
+    doubleOptInConfirmed: 1
+  - id: 2
+    email: 'jane@example.com'
+    selector: 'xyz789uvw456rst3'
+    confirmCode: 'hash222222222222222222222222222222222222222222222222'
+    doubleOptInDate: '2024-02-05 12:00:00'
+    doubleOptInConfirmed: 0
+
+users:
+  - id: 1
+    name: 'John Doe'
+    email: 'john@example.com'
+  - id: 2
+    name: 'Jane Smith'
+    email: 'jane@example.com'
+  - id: 3
+    name: 'New User'
+    email: 'newuser@example.com'
