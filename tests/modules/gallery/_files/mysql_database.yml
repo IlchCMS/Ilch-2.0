@@ -1,0 +1,50 @@
+gallery_items:
+  - id: 1
+    sort: 0
+    parent_id: 0
+    type: 1
+    title: 'Main Gallery'
+    description: 'Root gallery'
+  - id: 2
+    sort: 1
+    parent_id: 1
+    type: 0
+    title: 'Photos'
+    description: 'Photo collection'
+  - id: 3
+    sort: 2
+    parent_id: 1
+    type: 0
+    title: 'Videos'
+    description: 'Video collection'
+
+gallery_imgs:
+  - id: 1
+    image_id: 100
+    image_title: 'Sunset'
+    image_description: 'Beautiful sunset'
+    gallery_id: 1
+    visits: 5
+  - id: 2
+    image_id: 200
+    image_title: 'Landscape'
+    image_description: 'Mountain view'
+    gallery_id: 1
+    visits: 10
+  - id: 3
+    image_id: 300
+    image_title: 'Portrait'
+    image_description: 'Person photo'
+    gallery_id: 2
+    visits: 3
+
+media:
+  - id: 100
+    url: '/media/sunset.jpg'
+    url_thumb: '/media/sunset_thumb.jpg'
+  - id: 200
+    url: '/media/landscape.jpg'
+    url_thumb: '/media/landscape_thumb.jpg'
+  - id: 300
+    url: '/media/portrait.jpg'
+    url_thumb: '/media/portrait_thumb.jpg'

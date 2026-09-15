@@ -84,7 +84,7 @@ class Index extends Admin
                     foreach ($items as $item) {
                         $galleryItem = new GalleryItem();
 
-                        if (strpos($item['id'], 'tmp_') !== false) {
+                        if (str_contains($item['id'], 'tmp_')) {
                             $tmpId = str_replace('tmp_', '', $item['id']);
                         } else {
                             $galleryItem->setId($item['id']);

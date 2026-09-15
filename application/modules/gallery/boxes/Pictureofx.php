@@ -25,22 +25,13 @@ class Pictureofx extends Box
         if (!empty($imageIds)) {
             $currentPicOfX = explode(',', $this->getConfig()->get('gallery_currentPicOfX') ?? '');
 
-            switch ($this->getConfig()->get('gallery_pictureOfXInterval')) {
-                case '1':
-                    $add = 'PT1H';
-                    break;
-                case '2':
-                    $add = 'P1D';
-                    break;
-                case '3':
-                    $add = 'P7D';
-                    break;
-                case '4':
-                    $add = 'P1M';
-                    break;
-                default:
-                    $add = '';
-            }
+            $add = match ($this->getConfig()->get('gallery_pictureOfXInterval')) {
+                '1' => 'PT1H',
+                '2' => 'P1D',
+                '3' => 'P7D',
+                '4' => 'P1M',
+                default => '',
+            };
 
             $currentTime = new DateTime();
             $currentIndex = (!empty($currentPicOfX[0])) ? $currentPicOfX[0] : 0;

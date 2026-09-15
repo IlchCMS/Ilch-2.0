@@ -80,7 +80,7 @@ class GalleryItem extends Model
         if (!empty($entries['parent_id'])) {
             $this->setParentId($entries['parent_id']);
         }
-        if (!empty($entries['sortid'])) {
+        if (!empty($entries['sort'])) {
             $this->setSort($entries['sort']);
         }
 
