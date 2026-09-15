@@ -51,15 +51,15 @@ class Gallery extends Mapper
         if (empty($entryArray)) {
             return null;
         }
-        $entrys = [];
+        $entriesArray = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new GalleryItem();
             $entryModel->setByArray($entries);
 
-            $entrys[] = $entryModel;
+            $entriesArray[] = $entryModel;
         }
-        return $entrys;
+        return $entriesArray;
     }
 
     /**
@@ -146,7 +146,7 @@ class Gallery extends Mapper
      * @param int $parent
      * @return bool
      */
-    public function sort($id, int $pos, int $parent): bool
+    public function sort(int|GalleryItem $id, int $pos, int $parent): bool
     {
         if ($id instanceof GalleryItem) {
             $id = $id->getId();
@@ -164,7 +164,7 @@ class Gallery extends Mapper
      * @param int|GalleryItem $id
      * @return bool
      */
-    public function deleteItem($id): bool
+    public function deleteItem(int|GalleryItem $id): bool
     {
         if ($id instanceof GalleryItem) {
             $id = $id->getId();

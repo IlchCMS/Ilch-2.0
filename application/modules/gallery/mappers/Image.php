@@ -27,11 +27,11 @@ class Image extends Mapper
      *
      * @param array $where
      * @param array $orderBy
-     * @param \Ilch\Pagination|null $pagination
+     * @param Pagination|null $pagination
      * @return ImageModel[]|null
      * @since 1.24.1
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC'], ?\Ilch\Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
         $select = $this->db()->select();
         $select->fields(['g.image_id', 'g.gallery_id', 'imgid' => 'g.id', 'g.visits', 'g.image_title', 'g.image_description'])
@@ -53,15 +53,15 @@ class Image extends Mapper
         if (empty($entryArray)) {
             return null;
         }
-        $entrys = [];
+        $entriesArray = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new ImageModel();
             $entryModel->setByArray($entries);
 
-            $entrys[] = $entryModel;
+            $entriesArray[] = $entryModel;
         }
-        return $entrys;
+        return $entriesArray;
     }
 
     /**

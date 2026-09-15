@@ -13,9 +13,9 @@ use Modules\Comment\Mappers\Comment as CommentMapper;
 
 class Config extends Install
 {
-    public $config = [
+    public array $config = [
         'key' => 'gallery',
-        'version' => '1.24.3',
+        'version' => '1.24.4',
         'icon_small' => 'fa-regular fa-image',
         'author' => 'Stantin, Thomas',
         'link' => 'https://ilch.de',
@@ -41,7 +41,7 @@ class Config extends Install
             ]
         ],
         'ilchCore' => '2.2.13',
-        'phpVersion' => '7.4'
+        'phpVersion' => '8.1'
     ];
 
     public function install()
