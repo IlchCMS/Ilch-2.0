@@ -57,9 +57,13 @@ class Ticket extends \Ilch\Mapper
      */
     public function getTicketById(int $id): ?TicketModel
     {
-        $team = $this->getTickets(['id' => $id]);
+        $tickets = $this->getTickets(['id' => $id]);
 
-        return reset($team);
+        if (empty($tickets)) {
+            return null;
+        }
+
+        return $tickets[0];
     }
 
     /**

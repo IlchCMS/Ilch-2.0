@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public array $config = [
         'key' => 'kvticket',
-        'version' => '1.6.2',
+        'version' => '1.6.3',
         'icon_small' => 'fa-solid fa-ticket',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',

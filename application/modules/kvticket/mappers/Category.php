@@ -48,9 +48,13 @@ class Category extends \Ilch\Mapper
      */
     public function getCategoryById(int $id): ?CatModel
     {
-        $team = $this->getCategories(['id' => $id]);
+        $categories = $this->getCategories(['id' => $id]);
 
-        return reset($team);
+        if (empty($categories)) {
+            return null;
+        }
+
+        return $categories[0];
     }
 
     /**
