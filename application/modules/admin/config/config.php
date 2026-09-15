@@ -1337,6 +1337,10 @@ class Config extends \Ilch\Config\Install
                 // Update vendor folder to update various dependencies.
                 replaceVendorDirectory();
                 break;
+            case "2.2.19":
+                // Update vendor folder to update various dependencies.
+                replaceVendorDirectory();
+                break;
         }
 
         return 'Update function executed.';

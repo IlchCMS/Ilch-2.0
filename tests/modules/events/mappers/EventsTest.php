@@ -179,31 +179,47 @@ class EventsTest extends DatabaseTestCase
         self::assertNull($event);
     }
 
-    /**
-     * Tests that getEventListUpcoming() returns events with start > NOW().
-     *
-     * Expected: event 3 (2027-01-15)
-     */
-    public function testGetEventListUpcoming()
-    {
-        $events = $this->out->getEventListUpcoming();
+        /**
+         * Tests that getEventListUpcoming() returns events with start > NOW().
+         */
+        public function testGetEventListUpcoming()
+        {
+            $future = (new \DateTime('+2 years'))->format('Y-m-d H:i:s');
+            $past = (new \DateTime('-2 years'))->format('Y-m-d H:i:s');
 
-        self::assertNotNull($events);
-        self::assertCount(1, $events);
-        self::assertEquals(3, $events[0]->getId());
-        self::assertEquals('Networking Lunch', $events[0]->getTitle());
-    }
+            $this->db->update('events')->values(['start' => $future, 'end' => $future])->where(['id' => 3])->execute();
+            $this->db->update('events')->values(['start' => $past, 'end' => $past])->where(['id' => 1])->execute();
+            $this->db->update('events')->values(['start' => $past, 'end' => $past])->where(['id' => 2])->execute();
+            $this->db->update('events')->values(['start' => $past, 'end' => $past])->where(['id' => 4])->execute();
+            $this->db->update('events')->values(['start' => $past, 'end' => $past])->where(['id' => 5])->execute();
 
-    /**
-     * Tests that getEventListUpcoming() with limit returns at most $limit events.
-     */
-    public function testGetEventListUpcomingWithLimit()
-    {
-        $events = $this->out->getEventListUpcoming(1);
+            $events = $this->out->getEventListUpcoming();
 
-        self::assertNotNull($events);
-        self::assertCount(1, $events);
-    }
+            self::assertNotNull($events);
+            self::assertCount(1, $events);
+            self::assertEquals(3, $events[0]->getId());
+            self::assertEquals('Networking Lunch', $events[0]->getTitle());
+        }
+
+        /**
+         * Tests that getEventListUpcoming() with limit returns at most $limit events.
+         */
+        public function testGetEventListUpcomingWithLimit()
+        {
+            $future = (new \DateTime('+2 years'))->format('Y-m-d H:i:s');
+            $past = (new \DateTime('-2 years'))->format('Y-m-d H:i:s');
+
+            $this->db->update('events')->values(['start' => $future, 'end' => $future])->where(['id' => 2])->execute();
+            $this->db->update('events')->values(['start' => $future, 'end' => $future])->where(['id' => 3])->execute();
+            $this->db->update('events')->values(['start' => $past, 'end' => $past])->where(['id' => 1])->execute();
+            $this->db->update('events')->values(['start' => $past, 'end' => $past])->where(['id' => 4])->execute();
+            $this->db->update('events')->values(['start' => $past, 'end' => $past])->where(['id' => 5])->execute();
+
+            $events = $this->out->getEventListUpcoming(1);
+
+            self::assertNotNull($events);
+            self::assertCount(1, $events);
+        }
 
     /**
      * Tests that getEventListUpcoming() returns null when no upcoming events exist.
@@ -219,31 +235,49 @@ class EventsTest extends DatabaseTestCase
         self::assertNull($events);
     }
 
-    /**
-     * Tests that getEventListPast() returns events with end < NOW().
-     *
-     * Expected: events 1 (2025-06-15) and 4 (2020-12-25), ordered by start DESC.
-     */
-    public function testGetEventListPast()
-    {
-        $events = $this->out->getEventListPast();
+        /**
+         * Tests that getEventListPast() returns events with end < NOW().
+         */
+        public function testGetEventListPast()
+        {
+            $past1 = (new \DateTime('-1 year'))->format('Y-m-d H:i:s');
+            $past2 = (new \DateTime('-5 years'))->format('Y-m-d H:i:s');
+            $future = (new \DateTime('+2 years'))->format('Y-m-d H:i:s');
 
-        self::assertNotNull($events);
-        self::assertCount(2, $events);
-        self::assertEquals(1, $events[0]->getId());
-        self::assertEquals(4, $events[1]->getId());
-    }
+            $this->db->update('events')->values(['start' => $past1, 'end' => $past1])->where(['id' => 1])->execute();
+            $this->db->update('events')->values(['start' => $past2, 'end' => $past2])->where(['id' => 4])->execute();
+            $this->db->update('events')->values(['start' => $future, 'end' => $future])->where(['id' => 2])->execute();
+            $this->db->update('events')->values(['start' => $future, 'end' => $future])->where(['id' => 3])->execute();
+            $this->db->update('events')->values(['start' => $future, 'end' => $future])->where(['id' => 5])->execute();
 
-    /**
-     * Tests that getEventListPast() with limit returns at most $limit events.
-     */
-    public function testGetEventListPastWithLimit()
-    {
-        $events = $this->out->getEventListPast(1);
+            $events = $this->out->getEventListPast();
 
-        self::assertNotNull($events);
-        self::assertCount(1, $events);
-    }
+            self::assertNotNull($events);
+            self::assertCount(2, $events);
+            self::assertEquals(1, $events[0]->getId());
+            self::assertEquals(4, $events[1]->getId());
+        }
+
+        /**
+         * Tests that getEventListPast() with limit returns at most $limit events.
+         */
+        public function testGetEventListPastWithLimit()
+        {
+            $past1 = (new \DateTime('-1 year'))->format('Y-m-d H:i:s');
+            $past2 = (new \DateTime('-5 years'))->format('Y-m-d H:i:s');
+            $future = (new \DateTime('+2 years'))->format('Y-m-d H:i:s');
+
+            $this->db->update('events')->values(['start' => $past1, 'end' => $past1])->where(['id' => 1])->execute();
+            $this->db->update('events')->values(['start' => $past2, 'end' => $past2])->where(['id' => 4])->execute();
+            $this->db->update('events')->values(['start' => $future, 'end' => $future])->where(['id' => 2])->execute();
+            $this->db->update('events')->values(['start' => $future, 'end' => $future])->where(['id' => 3])->execute();
+            $this->db->update('events')->values(['start' => $future, 'end' => $future])->where(['id' => 5])->execute();
+
+            $events = $this->out->getEventListPast(1);
+
+            self::assertNotNull($events);
+            self::assertCount(1, $events);
+        }
 
     /**
      * Tests that getEventListPast() returns null when no past events exist.
@@ -259,29 +293,49 @@ class EventsTest extends DatabaseTestCase
         self::assertNull($events);
     }
 
-    /**
-     * Tests that getEventListCurrent() returns events where start < NOW() AND end > NOW().
-     *
-     * Expected: events 2 (2026-09-10 to 2026-09-15) and 5 (2026-09-01 to 2026-09-20).
-     */
-    public function testGetEventListCurrent()
-    {
-        $events = $this->out->getEventListCurrent();
+        /**
+         * Tests that getEventListCurrent() returns events where start < NOW() AND end > NOW().
+         */
+        public function testGetEventListCurrent()
+        {
+            $past = (new \DateTime('-1 year'))->format('Y-m-d H:i:s');
+            $future = (new \DateTime('+1 year'))->format('Y-m-d H:i:s');
+            $farPast = (new \DateTime('-5 years'))->format('Y-m-d H:i:s');
 
-        self::assertNotNull($events);
-        self::assertCount(2, $events);
-    }
+            // Events 2 and 5 span the current time
+            $this->db->update('events')->values(['start' => $past, 'end' => $future])->where(['id' => 2])->execute();
+            $this->db->update('events')->values(['start' => $past, 'end' => $future])->where(['id' => 5])->execute();
+            // Events 1, 3, 4 are clearly not current
+            $this->db->update('events')->values(['start' => $farPast, 'end' => $farPast])->where(['id' => 1])->execute();
+            $this->db->update('events')->values(['start' => $future, 'end' => $future])->where(['id' => 3])->execute();
+            $this->db->update('events')->values(['start' => $farPast, 'end' => $farPast])->where(['id' => 4])->execute();
 
-    /**
-     * Tests that getEventListCurrent() with limit returns at most $limit events.
-     */
-    public function testGetEventListCurrentWithLimit()
-    {
-        $events = $this->out->getEventListCurrent(1);
+            $events = $this->out->getEventListCurrent();
 
-        self::assertNotNull($events);
-        self::assertCount(1, $events);
-    }
+            self::assertNotNull($events);
+            self::assertCount(2, $events);
+        }
+
+        /**
+         * Tests that getEventListCurrent() with limit returns at most $limit events.
+         */
+        public function testGetEventListCurrentWithLimit()
+        {
+            $past = (new \DateTime('-1 year'))->format('Y-m-d H:i:s');
+            $future = (new \DateTime('+1 year'))->format('Y-m-d H:i:s');
+            $farPast = (new \DateTime('-5 years'))->format('Y-m-d H:i:s');
+
+            $this->db->update('events')->values(['start' => $past, 'end' => $future])->where(['id' => 2])->execute();
+            $this->db->update('events')->values(['start' => $past, 'end' => $future])->where(['id' => 5])->execute();
+            $this->db->update('events')->values(['start' => $farPast, 'end' => $farPast])->where(['id' => 1])->execute();
+            $this->db->update('events')->values(['start' => $future, 'end' => $future])->where(['id' => 3])->execute();
+            $this->db->update('events')->values(['start' => $farPast, 'end' => $farPast])->where(['id' => 4])->execute();
+
+            $events = $this->out->getEventListCurrent(1);
+
+            self::assertNotNull($events);
+            self::assertCount(1, $events);
+        }
 
     /**
      * Tests that getEventListCurrent() returns null when no current events exist.
