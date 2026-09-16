@@ -210,6 +210,7 @@ class Modules extends \Ilch\Controller\Admin
             $this->getView()->set('updateserver', $this->getConfig()->get('updateserver') . 'modules.json')
                 ->set('versionsOfModules', $moduleMapper->getVersionsOfModules())
                 ->set('modules', $modulesDir)
+                ->set('installedModules', $moduleMapper->getKeysInstalledModules())
                 ->set('dependencies', $dependencies)
                 ->set('coreVersion', $this->getConfig()->get('version'))
                 ->set('gotokey', $gotokey);
@@ -278,7 +279,7 @@ class Modules extends \Ilch\Controller\Admin
                 $moduleMapper = new ModuleMapper();
                 $moduleModel = $moduleMapper->getModuleByKey($key);
 
-                if (!$transfer->update($moduleModel->getVersion())) {
+                if (!$moduleModel || !$transfer->update($moduleModel->getVersion())) {
                     $this->addMessage('moduleUpdateFailed', 'danger');
                     return;
                 }
