@@ -130,8 +130,12 @@ class FunctionsTest extends TestCase
      */
     public static function dpForTestUrlGetContents(): array
     {
+        $testFile = buildPath(sys_get_temp_dir(), 'ilch_test_url_content.txt');
+        $content = "/vendor" . "\n" . "/bin/*" . "\n";
+        file_put_contents($testFile, $content);
+
         return [
-            'valid url' => ['params' => ['url' => 'https://raw.githubusercontent.com/IlchCMS/Ilch-2.0/master/development/.gitignore'], '/vendor' . "\n" . '/bin/*' . "\n"],
+            'valid url' => ['params' => ['url' => 'file://' . $testFile], $content],
             'invalid url' => ['params' => ['url' => ''], false],
         ];
     }
