@@ -259,6 +259,8 @@ return [
     'noNotInstalledModules' => 'No entries available',
     'noUpdatesAvailable' => 'No updates available.',
     'noChangelog' => 'No changes available',
+    'moduleInstalled' => 'Installed',
+    'moduleAvailable' => 'Available',
     'media' => 'Media',
     'uninstall' => 'Uninstall',
     'menuSites' => 'Sites',

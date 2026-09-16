@@ -259,6 +259,8 @@ return [
     'noNotInstalledModules' => 'Keine Einträge vorhanden',
     'noUpdatesAvailable' => 'Keine Updates verfügbar.',
     'noChangelog' => 'Keine Änderungen vorhanden',
+    'moduleInstalled' => 'Installiert',
+    'moduleAvailable' => 'Verfügbar',
     'media' => 'Medien',
     'uninstall' => 'Deinstallieren',
     'menuSites' => 'Seiten',
@@ -419,7 +421,7 @@ return [
     'limit' => 'Limit',
     'notificationsInfoText' => 'Hier werden alle Module aufgelistet, die eine Benachrichtigung im Admincenter angezeigt haben.<br>
                                 Den Modulen kann die Erlaubnis Benachrichtigungen im Admincenter anzuzeigen entzogen werden.<br>
-                                Desweiteren kann begrenzt werden wie viele Benachrichtungen ein Modul im Admincenter anzeigen kann.
+                                Des Weiteren kann begrenzt werden wie viele Benachrichtigungen ein Modul im Admincenter anzeigen kann.
                                 Ein Limit von 0 ist gleichbedeutend mit kein Limit.',
     'moduleUpdatesAvailable' => 'Modul Update(s) verfügbar (%s)',
 
