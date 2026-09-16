@@ -445,7 +445,7 @@ class FunctionsTest extends TestCase
      */
     private function makeConfigStub(string $value): object
     {
-        return new class($value) {
+        return new class ($value) {
             private string $value;
             public function __construct(string $value)
             {
