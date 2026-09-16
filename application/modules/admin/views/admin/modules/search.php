@@ -140,8 +140,9 @@ usort($modulesOnUpdateServer, 'custom_sort');
                         </small>
                         <br /><br />
                         <?php
-                        $isInstalled = in_array($moduleOnUpdateServer->key, $this->get('modules'));
-                        $iconClass = ($isInstalled) ? 'fa-solid fa-arrows-rotate' : 'fa-solid fa-download';
+                        $isInstalled = in_array($moduleOnUpdateServer->key, $this->get('installedModules'));
+                        $isDownloaded = in_array($moduleOnUpdateServer->key, $this->get('modules'));
+                        $iconClass = ($isDownloaded) ? 'fa-solid fa-arrows-rotate' : 'fa-solid fa-download';
 
                         if (!empty($moduleOnUpdateServer->phpExtensions) && in_array(false, $extensionCheck)): ?>
                             <button class="btn disabled"
@@ -158,17 +159,22 @@ usort($modulesOnUpdateServer, 'custom_sort');
                                     title="<?=$this->getTrans('ilchCoreError') ?>">
                                 <i class="<?=$iconClass ?>"></i>
                             </button>
-                        <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<') && version_compare('2.2.0', $moduleOnUpdateServer->ilchCore, '>')): ?>
+                        <?php elseif ($isDownloaded && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<') && version_compare('2.2.0', $moduleOnUpdateServer->ilchCore, '>')): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('moduleTooOld') ?>">
                                 <i class="<?=$iconClass ?>"></i>
                             </button>
-                        <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '>=')): ?>
+                        <?php elseif ($isDownloaded && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '>=')): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('alreadyExists') ?>">
                                 <i class="fa-solid fa-check text-success"></i>
                             </button>
-                        <?php elseif ($isInstalled && !empty(checkOthersDependencies([$moduleOnUpdateServer->key => $moduleOnUpdateServer->version], $dependencies))): ?>
+                        <?php elseif ($isDownloaded && !$isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')): ?>
+                            <button class="btn disabled"
+                                    title="<?=$this->getTrans('alreadyExistsButOutdated') ?>">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                            </button>
+                        <?php elseif ($isDownloaded && !empty(checkOthersDependencies([$moduleOnUpdateServer->key => $moduleOnUpdateServer->version], $dependencies))): ?>
                             <button class="btn disabled"
                                     data-bs-toggle="modal"
                                     data-bs-target="#infoModal<?=$moduleOnUpdateServer->key ?>"
@@ -180,7 +186,7 @@ usort($modulesOnUpdateServer, 'custom_sort');
                                     title="<?=$this->getTrans('dependencyError') ?>">
                                 <i class="<?=$iconClass ?>"></i>
                             </button>
-                        <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')): ?>
+                        <?php elseif ($isDownloaded && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')): ?>
                             <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleOnUpdateServer->key, 'version' => $moduleOnUpdateServer->version, 'from' => 'search']) ?>">
                                 <?=$this->getTokenField() ?>
                                 <input type="hidden" name="gotokey" value="<?=$this->get('gotokey')? '1' : '0' ?>" />

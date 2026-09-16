@@ -198,6 +198,7 @@ return [
     'modrewriteLinesRemoved' => 'Removed lines for mod rewrite.',
     'adjustHtaccess' => 'Adjust the content for the htaccess file',
     'alreadyExists' => 'Already exists',
+    'alreadyExistsButOutdated' => 'Already exists, but outdated.',
     'layoutDownload' => 'Download layout',
     'layoutUpdate' => 'Update layout',
     'moduleDownload' => 'Download module',
