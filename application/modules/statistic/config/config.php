@@ -9,7 +9,7 @@ namespace Modules\Statistic\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = [
+    public array $config = [
         'key' => 'statistic',
         'icon_small' => 'fa-solid fa-chart-pie',
         'system_module' => true,

@@ -36,7 +36,7 @@ class Index extends \Ilch\Controller\Frontend
 
         $locale = '';
 
-        if ((bool)$this->getConfig()->get('multilingual_acp') && $this->getTranslator()->getLocale() != $this->getConfig()->get('content_language')) {
+        if ($this->getConfig()->get('multilingual_acp') && $this->getTranslator()->getLocale() != $this->getConfig()->get('content_language')) {
             $locale = $this->getTranslator()->getLocale();
         }
 

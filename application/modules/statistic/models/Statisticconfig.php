@@ -12,7 +12,7 @@ class Statisticconfig extends \Ilch\Model
     /**
      * @var array
      */
-    public $configNames = [
+    public array $configNames = [
         'siteStatistic',
         'ilchVersionStatistic',
         'modulesStatistic',
@@ -24,38 +24,38 @@ class Statisticconfig extends \Ilch\Model
     /**
      * @var bool
      */
-    protected $siteStatistic = true;
+    protected bool $siteStatistic = true;
 
     /**
      * @var bool
      */
-    protected $ilchVersionStatistic = true;
+    protected bool $ilchVersionStatistic = true;
 
     /**
      * @var bool
      */
-    protected $modulesStatistic = true;
+    protected bool $modulesStatistic = true;
 
     /**
      * @var bool
      */
-    protected $visitsStatistic = true;
+    protected bool $visitsStatistic = true;
 
     /**
      * @var bool
      */
-    protected $browserStatistic = true;
+    protected bool $browserStatistic = true;
 
     /**
      * @var bool
      */
-    protected $osStatistic = true;
+    protected bool $osStatistic = true;
 
     /**
-     * @param string|array|null $config
+     * @param array|string|null $config
      * @return $this
      */
-    public function setByArray($config = null): Statisticconfig
+    public function setByArray(array|string|null $config = null): Statisticconfig
     {
         if (is_string($config)) {
             $config = explode(',', $config);
@@ -78,48 +78,42 @@ class Statisticconfig extends \Ilch\Model
      */
     public function getConfigString(?Statisticconfig $config = null): string
     {
-        if ($config === null) {
-            $config = [];
-            foreach ($this->configNames as $name) {
-                $config[] = $this->getConfigBy($name);
-            }
+        $config = $config ?? $this;
+
+        $values = [];
+        foreach ($this->configNames as $name) {
+            $values[] = (int)$config->getConfigBy($name);
         }
 
-        return implode(',', $config);
+        return implode(',', $values);
     }
 
     /**
-     * @param string|int $key
+     * @param int|string $key
      * @return bool
      */
-    public function getConfigBy($key): bool
+    public function getConfigBy(int|string $key): bool
     {
         if (is_numeric($key)) {
             $key = $this->configNames[$key];
         }
-        switch ($key) {
-            case 'siteStatistic':
-                return $this->getSiteStatistic();
-            case 'ilchVersionStatistic':
-                return $this->getIlchVersionStatistic();
-            case 'modulesStatistic':
-                return $this->getModulesStatistic();
-            case 'visitsStatistic':
-                return $this->getVisitsStatistic();
-            case 'browserStatistic':
-                return $this->getBrowserStatistic();
-            case 'osStatistic':
-                return $this->getOsStatistic();
-        }
-        return false;
+        return match ($key) {
+            'siteStatistic' => $this->getSiteStatistic(),
+            'ilchVersionStatistic' => $this->getIlchVersionStatistic(),
+            'modulesStatistic' => $this->getModulesStatistic(),
+            'visitsStatistic' => $this->getVisitsStatistic(),
+            'browserStatistic' => $this->getBrowserStatistic(),
+            'osStatistic' => $this->getOsStatistic(),
+            default => false,
+        };
     }
 
     /**
-     * @param string|int $key
+     * @param int|string $key
      * @param bool $value
      * @return $this
      */
-    public function setConfigBy($key, bool $value = false): Statisticconfig
+    public function setConfigBy(int|string $key, bool $value = false): Statisticconfig
     {
         if (is_numeric($key)) {
             $key = $this->configNames[$key];

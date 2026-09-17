@@ -14,98 +14,98 @@ class Statistic extends \Ilch\Model
      *
      * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The userId of the Statistic.
      *
      * @var int
      */
-    protected $userId = 0;
+    protected int $userId = 0;
 
     /**
      * The sessionId of the Statistic.
      *
      * @var string
      */
-    protected $sessionId = '';
+    protected string $sessionId = '';
 
     /**
      * The visits of the Statistic.
      *
      * @var int
      */
-    protected $visits = 0;
+    protected int $visits = 0;
 
     /**
      * The site of the Statistic.
      *
      * @var string
      */
-    protected $site = '';
+    protected string $site = '';
 
     /**
      * The referer.
      *
      * @var string
      */
-    protected $referer = '';
+    protected string $referer = '';
 
     /**
      * The ip address of the Statistic.
      *
      * @var string
      */
-    protected $ipAddress = '';
+    protected string $ipAddress = '';
 
     /**
      * The os of the Statistic.
      *
      * @var string
      */
-    protected $os = '';
+    protected string $os = '';
 
     /**
      * The os version of the Statistic.
      *
      * @var string
      */
-    protected $osVersion = '';
+    protected string $osVersion = '';
 
     /**
      * The browser of the Statistic.
      *
      * @var string
      */
-    protected $browser = '';
+    protected string $browser = '';
 
     /**
      * The browser version of the Statistic.
      *
      * @var string
      */
-    protected $browserVersion = '';
+    protected string $browserVersion = '';
 
     /**
      * The lang of the Statistic.
      *
      * @var string
      */
-    protected $lang = '';
+    protected string $lang = '';
 
     /**
      * The Date last Activity of the Statistic.
      *
      * @var string
      */
-    protected $dateLastActivity = '';
+    protected string $dateLastActivity = '';
 
     /**
      * The date.
      *
      * @var string
      */
-    protected $date = '';
+    protected string $date = '';
 
     /**
      * @param array $entries

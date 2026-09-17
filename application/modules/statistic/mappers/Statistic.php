@@ -436,11 +436,11 @@ class Statistic extends \Ilch\Mapper
     }
 
     /**
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param string $locale
      * @return int
      */
-    public function getArticlesCount($groupIds = '3', string $locale = ''): int
+    public function getArticlesCount(array|string $groupIds = '3', string $locale = ''): int
     {
         $articleMapper = new ArticleMapper();
         $articles = $articleMapper->getArticlesByAccess($groupIds, $locale);
@@ -712,40 +712,40 @@ class Statistic extends \Ilch\Mapper
             $useragent = $_SERVER['HTTP_USER_AGENT'];
 
             if ($version != null) {
-                if (preg_match("=Firefox/([\.a-zA-Z0-9]*)=", $useragent)) {
+                if (preg_match('=Firefox/([\.a-zA-Z0-9]*)=', $useragent)) {
                     return 'Firefox';
                 }
-                if (preg_match("=MSIE ([0-9]{1,2})\.[0-9]{1,2}=", $useragent)) {
+                if (preg_match('=MSIE ([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
                     return 'Internet Explorer';
                 }
-                if (preg_match("=rv:([0-9]{1,2})\.[0-9]{1,2}=", $useragent)) {
+                if (preg_match('=rv:([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
                     return 'Internet Explorer';
                 }
-                if (preg_match("=Opera[/ ]([0-9\.]+)=", $useragent)) {
+                if (preg_match('=Opera[/ ]([0-9\.]+)=', $useragent)) {
                     return 'Opera';
                 }
-                if (preg_match("=OPR\/([0-9\.]*)=", $useragent)) {
+                if (preg_match('=OPR\/([0-9\.]*)=', $useragent)) {
                     return 'Opera';
                 }
-                if (preg_match("=Edge/([0-9\.]*)=", $useragent)) {
+                if (preg_match('=Edge/([0-9\.]*)=', $useragent)) {
                     return 'Edge';
                 }
-                if (preg_match("=Edg/([0-9\.]*)=", $useragent)) {
+                if (preg_match('=Edg/([0-9\.]*)=', $useragent)) {
                     return 'Edge';
                 }
-                if (preg_match("=Vivaldi\/([0-9\.]*)=", $useragent)) {
+                if (preg_match('=Vivaldi\/([0-9\.]*)=', $useragent)) {
                     return 'Vivaldi';
                 }
-                if (preg_match("=SamsungBrowser\/([0-9\.]*)=", $useragent)) {
+                if (preg_match('=SamsungBrowser\/([0-9\.]*)=', $useragent)) {
                     return 'Samsung Browser';
                 }
-                if (preg_match("=Chrome/([0-9\.]*)=", $useragent)) {
+                if (preg_match('=Chrome/([0-9\.]*)=', $useragent)) {
                     return 'Chrome';
                 }
-                if (preg_match('=Safari/=', $useragent)) {
+                if (str_contains($useragent, 'Safari/')) {
                     return 'Safari';
                 }
-                if (strpos($useragent, 'Konqueror') !== false) {
+                if (str_contains($useragent, 'Konqueror')) {
                     return 'Konqueror';
                 }
                 if (preg_match('=Netscape|Navigator=', $useragent)) {
@@ -755,54 +755,54 @@ class Statistic extends \Ilch\Mapper
                 return '';
             }
 
-            if (preg_match("=Firefox/([\.a-zA-Z0-9]*)=", $useragent, $browser)) {
+            if (preg_match('=Firefox/([\.a-zA-Z0-9]*)=', $useragent, $browser)) {
                 return $browser[1];
             }
-            if (preg_match("=MSIE ([0-9]{1,2})\.[0-9]{1,2}=", $useragent, $browser)) {
+            if (preg_match('=MSIE ([0-9]{1,2})\.[0-9]{1,2}=', $useragent, $browser)) {
                 return $browser[1];
             }
-            if (preg_match("=rv:([0-9]{1,2})\.[0-9]{1,2}=", $useragent, $browser)) {
+            if (preg_match('=rv:([0-9]{1,2})\.[0-9]{1,2}=', $useragent, $browser)) {
                 return $browser[1];
             }
-            if (preg_match("=Opera[/ ]([0-9\.]+)=", $useragent, $browser)) {
+            if (preg_match('=Opera[/ ]([0-9\.]+)=', $useragent, $browser)) {
                 return $browser[1];
             }
-            if (preg_match("=OPR\/([0-9\.]*)=", $useragent, $browser)) {
+            if (preg_match('=OPR\/([0-9\.]*)=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
                 }
                 return $browser[1];
             }
-            if (preg_match("=Edge/([0-9\.]*)=", $useragent, $browser)) {
+            if (preg_match('=Edge/([0-9\.]*)=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
                 }
                 return $browser[1];
             }
-            if (preg_match("=Edg/([0-9\.]*)=", $useragent, $browser)) {
+            if (preg_match('=Edg/([0-9\.]*)=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
                 }
                 return $browser[1];
             }
-            if (preg_match("=Vivaldi\/([0-9\.]*)=", $useragent, $browser)) {
+            if (preg_match('=Vivaldi\/([0-9\.]*)=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
                 }
                 return $browser[1];
             }
-            if (preg_match("=Chrome/([0-9\.]*)=", $useragent, $browser)) {
+            if (preg_match('=Chrome/([0-9\.]*)=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
                 }
                 return $browser[1];
             }
-            if (preg_match('=Safari/=', $useragent)) {
+            if (str_contains($useragent, 'Safari/')) {
                 if (preg_match('=Version/([\.0-9]*)=', $useragent, $browser)) {
                     return $browser[1];
                 } else {
@@ -849,7 +849,7 @@ class Statistic extends \Ilch\Mapper
 
         // Delete "temporary" row of user being online as a guest before logging in.
         // This is the case when the user was logged in before (so there is a row with his user id),
-        // but didn't logged out or not using remember me, returned as guest with different session_id (user_id is 0).
+        // but didn't log out or not using remember me, returned as guest with different session_id (user_id is 0).
         if ($row['user_id'] > 0) {
             $this->db()->delete()
                 ->from('visits_online')
