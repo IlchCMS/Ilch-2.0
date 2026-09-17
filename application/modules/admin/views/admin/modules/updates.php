@@ -211,8 +211,9 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                             <?php endif; ?>
                         </td>
                         <td>
-                            <?=$this->getTrans('moduleInstalled') . ': ' . $module->getVersion() ?><br>
-                            <?=(!empty($moduleUpdateInformation->version)) ? $this->getTrans('moduleAvailable') . ': ' . $moduleUpdateInformation->version : '' ?>
+                            <?='<i class="fa-solid fa-folder"></i> ' . $this->getTrans('moduleInstalled') . ': ' . $module->getVersion() ?><br>
+                            <?=($module->getVersion() !== $configurations[$module->getKey()]['version']) ? '<i class="fa-solid fa-download"></i> ' . $this->getTrans('moduleAvailable') . ': ' . $configurations[$module->getKey()]['version'] . '<br>' : '' ?>
+                            <?=(!empty($moduleUpdateInformation->version) && ($module->getVersion() !== $moduleUpdateInformation->version)) ? '<i class="fa-solid fa-cloud-arrow-down"></i> ' . $this->getTrans('moduleAvailable') . ': ' . $moduleUpdateInformation->version : '' ?>
                         </td>
                         <td>
                             <?=$content['description'] ?>
