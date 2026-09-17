@@ -78,14 +78,14 @@ class Statisticconfig extends \Ilch\Model
      */
     public function getConfigString(?Statisticconfig $config = null): string
     {
-        if ($config === null) {
-            $config = [];
-            foreach ($this->configNames as $name) {
-                $config[] = $this->getConfigBy($name);
-            }
+        $config = $config ?? $this;
+
+        $values = [];
+        foreach ($this->configNames as $name) {
+            $values[] = (int)$config->getConfigBy($name);
         }
 
-        return implode(',', $config);
+        return implode(',', $values);
     }
 
     /**

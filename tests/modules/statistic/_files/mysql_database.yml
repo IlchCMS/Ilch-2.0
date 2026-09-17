@@ -1,0 +1,70 @@
+
+visits_online:
+  - id: 1
+    user_id: 1
+    session_id: 'user_session_1'
+    site: 'ilch.de'
+    os: 'Windows'
+    os_version: '11'
+    browser: 'Chrome'
+    browser_version: '125.0'
+    ip_address: '192.168.1.10'
+    lang: 'en_EN'
+    date_last_activity: '2020-01-01 00:00:00'
+  - id: 2
+    user_id: 0
+    session_id: 'guest_session_1'
+    site: 'ilch.de'
+    os: 'Linux'
+    os_version: '5.15'
+    browser: 'Firefox'
+    browser_version: '121.0'
+    ip_address: '192.168.1.20'
+    lang: 'de_DE'
+    date_last_activity: '2020-01-01 00:00:00'
+
+visits_stats:
+  - id: 1
+    user_id: 0
+    session_id: 'sess_a'
+    os: 'Windows'
+    os_version: '11'
+    browser: 'Chrome'
+    browser_version: '125.0'
+    ip_address: '192.168.1.10'
+    referer: 'https://google.com'
+    lang: 'en_EN'
+    date: '2024-06-15 10:00:00'
+  - id: 2
+    user_id: 0
+    session_id: 'sess_b'
+    os: 'Linux'
+    os_version: '5.15'
+    browser: 'Chrome'
+    browser_version: '124.0'
+    ip_address: '192.168.1.20'
+    referer: 'https://bing.com'
+    lang: 'de_DE'
+    date: '2024-06-15 14:30:00'
+  - id: 3
+    user_id: 0
+    session_id: 'sess_c'
+    os: 'Linux'
+    os_version: '5.15'
+    browser: 'Firefox'
+    browser_version: '121.0'
+    ip_address: '192.168.1.30'
+    referer: ''
+    lang: 'en_EN'
+    date: '2024-06-20 09:00:00'
+  - id: 4
+    user_id: 0
+    session_id: 'sess_d'
+    os: 'Windows'
+    os_version: '11'
+    browser: 'Chrome'
+    browser_version: '125.0'
+    ip_address: '192.168.1.40'
+    referer: 'https://google.com'
+    lang: 'en_EN'
+    date: '2024-07-01 09:00:00'
