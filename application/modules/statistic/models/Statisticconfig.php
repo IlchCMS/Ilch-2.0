@@ -55,7 +55,7 @@ class Statisticconfig extends \Ilch\Model
      * @param array|string|null $config
      * @return $this
      */
-    public function setByArray(array|string $config = null): Statisticconfig
+    public function setByArray(array|string|null $config = null): Statisticconfig
     {
         if (is_string($config)) {
             $config = explode(',', $config);
