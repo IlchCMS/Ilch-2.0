@@ -212,8 +212,8 @@ function checkOwnDependencies(array $versionsOfModules, $moduleOnUpdateServer): 
                         </td>
                         <td>
                             <?='<i class="fa-solid fa-folder"></i> ' . $this->getTrans('moduleInstalled') . ': ' . $module->getVersion() ?><br>
-                            <?=($module->getVersion() !== $configurations[$module->getKey()]['version']) ? '<i class="fa-solid fa-download"></i> ' . $this->getTrans('moduleAvailable') . ': ' . $configurations[$module->getKey()]['version'] . '<br>' : '' ?>
-                            <?=(!empty($moduleUpdateInformation->version) && ($module->getVersion() !== $moduleUpdateInformation->version)) ? '<i class="fa-solid fa-cloud-arrow-down"></i> ' . $this->getTrans('moduleAvailable') . ': ' . $moduleUpdateInformation->version : '' ?>
+                            <?=(version_compare($configurations[$module->getKey()]['version'], $module->getVersion(), '>')) ? '<i class="fa-solid fa-download"></i> ' . $this->getTrans('moduleAvailable') . ': ' . $configurations[$module->getKey()]['version'] . '<br>' : '' ?>
+                            <?=(!empty($moduleUpdateInformation->version) && version_compare($moduleUpdateInformation->version, $module->getVersion(), '>')) ? '<i class="fa-solid fa-cloud-arrow-down"></i> ' . $this->getTrans('moduleAvailable') . ': ' . $moduleUpdateInformation->version : '' ?>
                         </td>
                         <td>
                             <?=$content['description'] ?>
