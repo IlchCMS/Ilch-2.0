@@ -1338,6 +1338,19 @@ class Config extends \Ilch\Config\Install
                 replaceVendorDirectory();
                 break;
             case "2.2.19":
+                // Add new updateserver.
+                $this->db()->insert('admin_updateservers')
+                    ->values(['url' => 'https://updates.nubbys.de/stable/', 'operator' => 'RTX2070 (ilch-Team)', 'country' => 'Germany'])
+                    ->execute();
+
+                $databaseConfig = new \Ilch\Config\Database($this->db());
+                $currentUpdateserver = $databaseConfig->get('updateserver');
+
+                if ($currentUpdateserver === 'https://www.ilch.de/ilch2_updates/stable/') {
+                    $updateservers = ['https://www.ilch.de/ilch2_updates/stable/', 'https://updates.nubbys.de/stable/'];
+                    $databaseConfig->set('updateserver', $updateservers[random_int(0, count($updateservers) - 1)]);
+                }
+
                 // Update vendor folder to update various dependencies.
                 replaceVendorDirectory();
                 break;
