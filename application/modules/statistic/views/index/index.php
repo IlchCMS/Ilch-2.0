@@ -374,7 +374,7 @@ $statistic_config = $this->get('statistic_config');
                     foreach ($this->get('statisticBrowserList') as $statisticList) : ?>
                         <?php $date = new \Ilch\Date(); ?>
                         <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
-                        <?php $barLabel = ($statisticList->getBrowser()) ? $statisticList->getBrowser() : $this->getTrans('unknown') ?>
+                        <?php $barLabel = ($statisticList->getBrowser()) ?: $this->getTrans('unknown') ?>
                         <div class="list-group-item">
                             <strong>
                                 <?php if (!$statisticList->getBrowser()) : ?>

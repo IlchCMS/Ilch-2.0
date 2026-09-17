@@ -11,7 +11,7 @@ return [
     'menuOnlineStatistic' => 'Online Statistic',
     'user' => 'User',
     'lastHere' => 'Last Activity',
-    'ipAdress' => 'IP-Adress',
+    'ipAdress' => 'IP-Address',
     'osBrowser' => 'OS-System / Browser',
     'findOnSite' => 'Is currently viewing',
     'onlineGuests' => 'Guests',
