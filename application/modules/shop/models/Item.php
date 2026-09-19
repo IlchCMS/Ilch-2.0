@@ -16,147 +16,147 @@ class Item extends Model
      *
      * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The cat_id of the item.
      *
      * @var int
      */
-    protected $catId = 0;
+    protected int $catId = 0;
 
     /**
      * The name of the item.
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
     * The code of the item.
     *
     * @var string
     */
-    protected $code = '';
+    protected string $code = '';
 
     /**
     * The itemnumber of the item.
     *
     * @var string
     */
-    protected $itemnumber = '';
+    protected string $itemnumber = '';
 
     /**
     * The stock of the item.
     *
     * @var int
     */
-    protected $stock = 0;
+    protected int $stock = 0;
 
     /**
     * The unitName of the item.
     *
     * @var string
     */
-    protected $unitName = '';
+    protected string $unitName = '';
 
     /**
     * The cordon of the item.
     *
     * @var int
     */
-    protected $cordon = 0;
+    protected int $cordon = 0;
 
     /**
     * The cordonText of the item.
     *
     * @var string
     */
-    protected $cordonText = '';
+    protected string $cordonText = '';
 
     /**
     * The cordonColor of the item.
     *
     * @var string|null
     */
-    protected $cordonColor;
+    protected ?string $cordonColor = null;
 
     /**
     * The price of the item.
     *
     * @var string
     */
-    protected $price = '';
+    protected string $price = '';
 
     /**
     * The tax of the item.
     *
     * @var int
     */
-    protected $tax = 0;
+    protected int $tax = 0;
 
     /**
     * The shippingCosts of the item.
     *
     * @var string
     */
-    protected $shippingCosts = '';
+    protected string $shippingCosts = '';
 
     /**
     * The shippingTime of the item.
     *
     * @var int
     */
-    protected $shippingTime = 0;
+    protected int $shippingTime = 0;
 
     /**
     * The image of the item.
     *
     * @var string
     */
-    protected $image = '';
+    protected string $image = '';
 
     /**
     * The image1 of the item.
     *
     * @var string
     */
-    protected $image1 = '';
+    protected string $image1 = '';
 
     /**
     * The image2 of the item.
     *
     * @var string
     */
-    protected $image2 = '';
+    protected string $image2 = '';
 
     /**
     * The image3 of the item.
     *
     * @var string
     */
-    protected $image3 = '';
+    protected string $image3 = '';
 
     /**
     * The info of the item.
     *
     * @var string
     */
-    protected $info = '';
+    protected string $info = '';
 
     /**
     * The desc of the item.
     *
     * @var string
     */
-    protected $desc = '';
+    protected string $desc = '';
 
     /**
     * The status of the item.
     *
     * @var int
     */
-    protected $status = 0;
+    protected int $status = 0;
 
     /**
      * Holds if this item is a variant.

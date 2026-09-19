@@ -100,11 +100,11 @@ class Propertytranslations extends Mapper
      * Deletes the translation by id.
      *
      * @param int $id
-     * @return Result|int
+     * @return bool
      */
-    public function deleteTranslationById(int $id)
+    public function deleteTranslationById(int $id): bool
     {
-        return $this->db()->delete('shop_properties_trans')
+        return (bool) $this->db()->delete('shop_properties_trans')
             ->where(['id' => $id])
             ->execute();
     }

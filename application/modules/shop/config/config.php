@@ -12,9 +12,9 @@ use Ilch\Config\Install;
 
 class Config extends Install
 {
-    public $config = [
+    public array $config = [
         'key' => 'shop',
-        'version' => '1.4.3',
+        'version' => '1.4.4',
         'icon_small' => 'fa-solid fa-cart-shopping',
         'author' => 'blackcoder & LordSchirmer',
         'link' => 'https://ilch.de',
@@ -30,7 +30,7 @@ class Config extends Install
             ],
         ],
         'ilchCore' => '2.2.13',
-        'phpVersion' => '8.0'
+        'phpVersion' => '8.1'
     ];
 
     public function install()

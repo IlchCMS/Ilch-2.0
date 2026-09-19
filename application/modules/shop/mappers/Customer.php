@@ -61,7 +61,7 @@ class Customer extends Mapper
      * @param int $userId
      * @return false|CustomerModel
      */
-    public function getCustomerByUserId(int $userId)
+    public function getCustomerByUserId(int $userId): bool|CustomerModel
     {
         $customer = $this->getCustomers(['userId' => $userId]);
         return reset($customer);

@@ -85,11 +85,11 @@ class Currency extends Mapper
      * Deletes the currency by id.
      *
      * @param int $id
-     * @return Result|int
+     * @return bool
      */
-    public function deleteCurrencyById(int $id)
+    public function deleteCurrencyById(int $id): bool
     {
-        return $this->db()->delete('shop_currencies')
+        return (bool) $this->db()->delete('shop_currencies')
             ->where(['id' => $id])
             ->execute();
     }

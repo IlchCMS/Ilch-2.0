@@ -16,28 +16,28 @@ class Category extends Model
      *
      * @var int|null
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * The pos of the category.
      *
      * @var int
      */
-    private $pos = 0;
+    private int $pos = 0;
 
     /**
      * The title of the category.
      *
      * @var string
      */
-    private $title = '';
+    private string $title = '';
 
     /**
      * Value for read_access.
      *
      * @var string
      */
-    private $read_access = '';
+    private string $read_access = '';
 
     /**
      * Gets the category id.

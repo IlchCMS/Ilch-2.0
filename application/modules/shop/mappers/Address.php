@@ -54,7 +54,7 @@ class Address extends Mapper
      * @param int $id
      * @return false|AddressModel
      */
-    public function getAddressById(int $id)
+    public function getAddressById(int $id): bool|AddressModel
     {
         $order = $this->getAddresses(['id' => $id]);
         return reset($order);

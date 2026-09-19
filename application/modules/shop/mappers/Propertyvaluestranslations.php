@@ -25,7 +25,7 @@ class Propertyvaluestranslations extends Mapper
      * Gets the translations.
      *
      * @param array $where
-     * @return PropertyValueTranslationModel[]|array
+     * @return PropertyValueTranslationModel[]|array|null
      */
     public function getTranslations(array $where = []): ?array
     {
@@ -86,11 +86,11 @@ class Propertyvaluestranslations extends Mapper
      * Deletes the translation by id.
      *
      * @param int $id
-     * @return Result|int
+     * @return bool
      */
-    public function deleteTranslationById(int $id)
+    public function deleteTranslationById(int $id): bool
     {
-        return $this->db()->delete('shop_properties_values_trans')
+        return (bool) $this->db()->delete('shop_properties_values_trans')
             ->where(['id' => $id])
             ->execute();
     }

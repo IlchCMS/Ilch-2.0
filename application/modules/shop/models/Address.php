@@ -16,56 +16,56 @@ class Address extends Model
      *
      * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The customer id.
      *
      * @var int
      */
-    protected $customerID = 0;
+    protected int $customerID = 0;
 
     /**
      * The prename of the address.
      *
      * @var string
      */
-    protected $prename = '';
+    protected string $prename = '';
 
     /**
      * The lastname of the address.
      *
      * @var string
      */
-    protected $lastname = '';
+    protected string $lastname = '';
 
     /**
      * The street of the address.
      *
      * @var string
      */
-    protected $street = '';
+    protected string $street = '';
 
     /**
      * The postcode of the address.
      *
      * @var string
      */
-    protected $postcode = '';
+    protected string $postcode = '';
 
     /**
      * The city of the address.
      *
      * @var string
      */
-    protected $city = '';
+    protected string $city = '';
 
     /**
      * The country of the address.
      *
      * @var string
      */
-    protected $country = '';
+    protected string $country = '';
 
     /**
      * Gets the id of the address.

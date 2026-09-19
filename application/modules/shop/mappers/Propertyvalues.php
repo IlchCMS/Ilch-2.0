@@ -92,11 +92,11 @@ class Propertyvalues extends Mapper
      * Deletes the value by id.
      *
      * @param int $id
-     * @return Result|int
+     * @return bool
      */
-    public function deleteValueById(int $id)
+    public function deleteValueById(int $id): bool
     {
-        return $this->db()->delete('shop_properties_values')
+        return (bool) $this->db()->delete('shop_properties_values')
             ->where(['id' => $id])
             ->execute();
     }
