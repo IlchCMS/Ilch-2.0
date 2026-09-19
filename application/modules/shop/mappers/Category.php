@@ -40,7 +40,7 @@ class Category extends Mapper
             $categoryModel->setId($categoryRow['id']);
             $categoryModel->setPos($categoryRow['pos']);
             $categoryModel->setTitle($categoryRow['title']);
-            $categoryModel->setReadAccess($categoryRow['read_access']);
+            $categoryModel->setReadAccess($categoryRow['read_access'] ?? '');
 
             $categories[] = $categoryModel;
         }

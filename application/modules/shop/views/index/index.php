@@ -1,5 +1,5 @@
 <?php
-/** @var \Modules\Article\Models\Category[] $categories */
+/** @var \Modules\Shop\Models\Category[] $categories */
 $categories = $this->get('categories');
 
 $countAllItems = $this->get('countAllItems');

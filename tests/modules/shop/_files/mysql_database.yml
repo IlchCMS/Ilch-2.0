@@ -1,0 +1,437 @@
+shop_settings:
+  - id: 1
+    shopName: 'ILCH Shop'
+    shopLogo: 'logo.jpg'
+    shopStreet: 'Shoppingallee 12'
+    shopPlz: '12345'
+    shopCity: 'Shophausen'
+    shopTel: '+49 (0) 1234 56789'
+    shopFax: '+49 (0) 1234 98765'
+    shopMail: 'ilch@shop.de'
+    shopWeb: 'www.ilch.de'
+    shopStNr: 'DE1234567890'
+    bankName: 'Bankinstitut Shophausen'
+    bankOwner: 'Max Mustermann'
+    bankIBAN: 'DE12123456780000012345'
+    bankBIC: 'GENODE99ABC'
+    deliveryTextTop: 'Delivery text top'
+    invoiceTextTop: 'Invoice text top'
+    invoiceTextBottom: 'Invoice text bottom'
+    agb: 'AGB content'
+    fixTax: 19
+    fixShippingCosts: '0.00'
+    fixShippingTime: 7
+    allowWillCollect: 0
+    paymentClientID: ''
+    paypalMe: ''
+    paypalMePresetAmount: 1
+    ifSampleData: 1
+
+shop_cats:
+  - id: 1
+    pos: 1
+    title: 'T-Shirts'
+  - id: 2
+    pos: 2
+    title: 'Cappy'
+  - id: 3
+    pos: 3
+    title: 'Taschen'
+
+shop_access:
+  - cat_id: 1
+    group_id: 1
+  - cat_id: 1
+    group_id: 2
+  - cat_id: 1
+    group_id: 3
+  - cat_id: 2
+    group_id: 1
+  - cat_id: 2
+    group_id: 2
+  - cat_id: 2
+    group_id: 3
+  - cat_id: 3
+    group_id: 1
+  - cat_id: 3
+    group_id: 2
+  - cat_id: 3
+    group_id: 3
+
+shop_currencies:
+  - id: 1
+    name: 'EUR (€)'
+    code: 'EUR'
+  - id: 2
+    name: 'USD ($)'
+    code: 'USD'
+  - id: 3
+    name: 'GBP (£)'
+    code: 'GBP'
+  - id: 4
+    name: 'AUD ($)'
+    code: 'AUD'
+  - id: 5
+    name: 'NZD ($)'
+    code: 'NZD'
+  - id: 6
+    name: 'CHF'
+    code: 'CHF'
+
+shop_items:
+  - id: 1
+    code: 'tshirttotenkopf'
+    cat_id: 1
+    name: 'T-Shirt Totenkopf'
+    itemnumber: '0815nr1'
+    stock: 14
+    unitName: 'Stück'
+    cordon: 1
+    cordonText: 'NEU'
+    cordonColor: 'green'
+    price: 25.00
+    tax: 19
+    shippingCosts: 0.00
+    shippingTime: 5
+    image: 'img1.jpg'
+    image1: ''
+    image2: ''
+    image3: ''
+    info: 'Info 1'
+    desc: 'Desc 1'
+    status: 1
+  - id: 2
+    code: 'tshirtturkies'
+    cat_id: 1
+    name: 'T-Shirt Türkies'
+    itemnumber: '0815nr2'
+    stock: 23
+    unitName: 'Stück'
+    cordon: 0
+    cordonText: ''
+    cordonColor: ''
+    price: 15.00
+    tax: 19
+    shippingCosts: 0.00
+    shippingTime: 5
+    image: 'img2.jpg'
+    image1: ''
+    image2: ''
+    image3: ''
+    info: 'Info 2'
+    desc: 'Desc 2'
+    status: 1
+  - id: 3
+    code: 'tshirtbeach'
+    cat_id: 1
+    name: 'T-Shirt Beach'
+    itemnumber: '0815nr3'
+    stock: 17
+    unitName: 'Stück'
+    cordon: 0
+    cordonText: ''
+    cordonColor: ''
+    price: 19.50
+    tax: 19
+    shippingCosts: 0.00
+    shippingTime: 5
+    image: 'img3.jpg'
+    image1: ''
+    image2: ''
+    image3: ''
+    info: 'Info 3'
+    desc: 'Desc 3'
+    status: 1
+  - id: 4
+    code: 'caporange'
+    cat_id: 2
+    name: 'RAW Cap Orange'
+    itemnumber: '0815nr4'
+    stock: 6
+    unitName: 'Stück'
+    cordon: 0
+    cordonText: ''
+    cordonColor: ''
+    price: 24.00
+    tax: 19
+    shippingCosts: 0.00
+    shippingTime: 5
+    image: 'img4.jpg'
+    image1: ''
+    image2: ''
+    image3: ''
+    info: 'Info 4'
+    desc: 'Desc 4'
+    status: 0
+  - id: 5
+    code: 'capblack'
+    cat_id: 2
+    name: 'RAW Cap Black'
+    itemnumber: '0815nr5'
+    stock: 19
+    unitName: 'Stück'
+    cordon: 0
+    cordonText: ''
+    cordonColor: ''
+    price: 25.00
+    tax: 19
+    shippingCosts: 0.00
+    shippingTime: 5
+    image: 'img5.jpg'
+    image1: ''
+    image2: ''
+    image3: ''
+    info: 'Info 5'
+    desc: 'Desc 5'
+    status: 1
+  - id: 6
+    code: 'capblau'
+    cat_id: 2
+    name: 'RAW Cap Blau'
+    itemnumber: '0815nr6'
+    stock: 6
+    unitName: 'Stück'
+    cordon: 0
+    cordonText: ''
+    cordonColor: ''
+    price: 21.00
+    tax: 19
+    shippingCosts: 0.00
+    shippingTime: 5
+    image: 'img6.jpg'
+    image1: ''
+    image2: ''
+    image3: ''
+    info: 'Info 6'
+    desc: 'Desc 6'
+    status: 1
+  - id: 7
+    code: 'sporttasche'
+    cat_id: 3
+    name: 'Sporttasche'
+    itemnumber: '0815nr7'
+    stock: 12
+    unitName: 'Stück'
+    cordon: 1
+    cordonText: 'TOP'
+    cordonColor: 'red'
+    price: 65.90
+    tax: 19
+    shippingCosts: 0.00
+    shippingTime: 5
+    image: 'img7.jpg'
+    image1: ''
+    image2: ''
+    image3: ''
+    info: 'Info 7'
+    desc: 'Desc 7'
+    status: 1
+
+shop_customers:
+  - id: 1
+    userId: 1
+    email: 'max@mustermann.de'
+  - id: 2
+    userId: 2
+    email: 'eva@musterfrau.de'
+  - id: 3
+    userId: 3
+    email: 'bernd@mustermann.de'
+  - id: 4
+    userId: 4
+    email: 'ingrid@musterfrau.de'
+
+shop_addresses:
+  - id: 1
+    customerId: 1
+    prename: 'Max'
+    lastname: 'Mustermann'
+    street: 'Musterstr. 1'
+    postcode: '12345'
+    city: 'Musterstadt'
+    country: 'Deutschland'
+  - id: 2
+    customerId: 2
+    prename: 'Eva'
+    lastname: 'Musterfrau'
+    street: 'Musterstr. 7'
+    postcode: '98765'
+    city: 'Musterhausen'
+    country: 'Deutschland'
+  - id: 3
+    customerId: 3
+    prename: 'Bernd'
+    lastname: 'Mustermann'
+    street: 'Musterstr. 13'
+    postcode: '56789'
+    city: 'Musterdorf'
+    country: 'Deutschland'
+  - id: 4
+    customerId: 4
+    prename: 'Ingrid'
+    lastname: 'Musterfrau'
+    street: 'Musterstr. 7'
+    postcode: '34567'
+    city: 'Musterort'
+    country: 'Deutschland'
+
+shop_orders:
+  - id: 1
+    datetime: '2020-04-22 11:47:27'
+    currencyId: 1
+    customerId: 1
+    invoiceAddressId: 1
+    deliveryAddressId: 1
+    invoicefilename: ''
+    datetimeInvoiceSent: ''
+    willCollect: 0
+    selector: ''
+    confirmCode: ''
+    status: 3
+  - id: 2
+    datetime: '2020-04-25 05:39:12'
+    currencyId: 1
+    customerId: 2
+    invoiceAddressId: 2
+    deliveryAddressId: 2
+    invoicefilename: ''
+    datetimeInvoiceSent: ''
+    willCollect: 0
+    selector: ''
+    confirmCode: ''
+    status: 1
+  - id: 3
+    datetime: '2020-04-25 11:51:36'
+    currencyId: 1
+    customerId: 3
+    invoiceAddressId: 3
+    deliveryAddressId: 3
+    invoicefilename: ''
+    datetimeInvoiceSent: ''
+    willCollect: 0
+    selector: ''
+    confirmCode: ''
+    status: 1
+  - id: 4
+    datetime: '2020-04-26 09:54:38'
+    currencyId: 1
+    customerId: 4
+    invoiceAddressId: 4
+    deliveryAddressId: 4
+    invoicefilename: ''
+    datetimeInvoiceSent: ''
+    willCollect: 0
+    selector: ''
+    confirmCode: ''
+    status: 0
+
+shop_orderdetails:
+  - id: 1
+    orderId: 1
+    itemId: 1
+    price: 25.00
+    quantity: 1
+    tax: 19
+    shippingCosts: 0.00
+  - id: 2
+    orderId: 1
+    itemId: 5
+    price: 25.00
+    quantity: 2
+    tax: 19
+    shippingCosts: 0.00
+  - id: 3
+    orderId: 2
+    itemId: 7
+    price: 65.90
+    quantity: 2
+    tax: 19
+    shippingCosts: 0.00
+  - id: 4
+    orderId: 2
+    itemId: 3
+    price: 19.50
+    quantity: 1
+    tax: 19
+    shippingCosts: 0.00
+  - id: 5
+    orderId: 3
+    itemId: 4
+    price: 24.00
+    quantity: 1
+    tax: 19
+    shippingCosts: 0.00
+  - id: 6
+    orderId: 3
+    itemId: 5
+    price: 25.00
+    quantity: 2
+    tax: 19
+    shippingCosts: 0.00
+  - id: 7
+    orderId: 3
+    itemId: 6
+    price: 21.00
+    quantity: 1
+    tax: 19
+    shippingCosts: 0.00
+  - id: 8
+    orderId: 4
+    itemId: 7
+    price: 65.90
+    quantity: 1
+    tax: 19
+    shippingCosts: 0.00
+
+shop_properties:
+  - id: 1
+    name: 'material'
+    enabled: 1
+  - id: 2
+    name: 'color'
+    enabled: 1
+
+shop_properties_values:
+  - id: 1
+    property_id: 1
+    position: 1
+    value: 'metal'
+  - id: 2
+    property_id: 1
+    position: 2
+    value: 'wood'
+  - id: 3
+    property_id: 2
+    position: 1
+    value: 'blue'
+
+shop_properties_values_trans:
+  - id: 1
+    value_id: 1
+    locale: 'de_DE'
+    text: 'Metall'
+  - id: 2
+    value_id: 2
+    locale: 'de_DE'
+    text: 'Holz'
+  - id: 3
+    value_id: 3
+    locale: 'en_EN'
+    text: 'Blue'
+
+shop_properties_variants:
+  - id: 1
+    item_id: 1
+    item_variant_id: 1
+    property_id: 1
+    value_id: 1
+  - id: 2
+    item_id: 1
+    item_variant_id: 1
+    property_id: 2
+    value_id: 3
+  - id: 3
+    item_id: 2
+    item_variant_id: 2
+    property_id: 1
+    value_id: 2
