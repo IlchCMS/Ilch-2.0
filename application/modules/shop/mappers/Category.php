@@ -68,10 +68,10 @@ class Category extends Mapper
     /**
      * Return the categories that the groups are allowed to see.
      *
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return CategoryModel[]
      */
-    public function getCategoriesByAccess($groupIds): array
+    public function getCategoriesByAccess(array|string $groupIds): array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);

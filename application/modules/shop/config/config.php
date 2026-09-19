@@ -30,7 +30,7 @@ class Config extends Install
             ],
         ],
         'ilchCore' => '2.2.13',
-        'phpVersion' => '8.0'
+        'phpVersion' => '8.1'
     ];
 
     public function install()

@@ -15,7 +15,7 @@ class Settings extends Mapper
     /**
      * Gets the settings.
      *
-     * @return SettingsModel
+     * @return SettingsModel|null
      */
     public function getSettings(): ?SettingsModel
     {

@@ -16,189 +16,189 @@ class Settings extends Model
      *
      * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The shopName of the settings.
      *
      * @var string
      */
-    protected $shopName = '';
+    protected string $shopName = '';
 
     /**
      * The shopLogo of the settings.
      *
      * @var string
      */
-    protected $shopLogo = '';
+    protected string $shopLogo = '';
 
     /**
      * The shopStreet of the settings.
      *
      * @var string
      */
-    protected $shopStreet = '';
+    protected string $shopStreet = '';
 
     /**
      * The shopPlz of the settings.
      *
      * @var string
      */
-    protected $shopPlz = '';
+    protected string $shopPlz = '';
 
     /**
      * The shopCity of the settings.
      *
      * @var string
      */
-    protected $shopCity = '';
+    protected string $shopCity = '';
 
     /**
      * The shopTel of the settings.
      *
      * @var string
      */
-    protected $shopTel = '';
+    protected string $shopTel = '';
 
     /**
      * The shopFax of the settings.
      *
      * @var string
      */
-    protected $shopFax = '';
+    protected string $shopFax = '';
 
     /**
      * The shopMail of the settings.
      *
      * @var string
      */
-    protected $shopMail = '';
+    protected string $shopMail = '';
 
     /**
      * The shopWeb of the settings.
      *
      * @var string
      */
-    protected $shopWeb = '';
+    protected string $shopWeb = '';
 
     /**
      * The shopStNr of the settings.
      *
      * @var string
      */
-    protected $shopStNr = '';
+    protected string $shopStNr = '';
 
     /**
      * The bankName of the settings.
      *
      * @var string
      */
-    protected $bankName = '';
+    protected string $bankName = '';
 
     /**
      * The bankOwner of the settings.
      *
      * @var string
      */
-    protected $bankOwner = '';
+    protected string $bankOwner = '';
 
     /**
      * The bankIBAN of the settings.
      *
      * @var string
      */
-    protected $bankIBAN = '';
+    protected string $bankIBAN = '';
 
     /**
      * The bankBIC of the settings.
      *
      * @var string
      */
-    protected $bankBIC = '';
+    protected string $bankBIC = '';
 
     /**
      * The deliveryTextTop of the settings.
      *
      * @var string
      */
-    protected $deliveryTextTop = '';
+    protected string $deliveryTextTop = '';
 
     /**
      * The invoiceTextTop of the settings.
      *
      * @var string
      */
-    protected $invoiceTextTop = '';
+    protected string $invoiceTextTop = '';
 
     /**
      * The invoiceTextBottom of the settings.
      *
      * @var string
      */
-    protected $invoiceTextBottom = '';
+    protected string $invoiceTextBottom = '';
 
     /**
      * The agb of the settings.
      *
      * @var string
      */
-    protected $agb = '';
+    protected string $agb = '';
 
     /**
      * The fixTax of the settings.
      *
      * @var int
      */
-    protected $fixTax = 0;
+    protected int $fixTax = 0;
 
     /**
      * The fixShippingCosts of the settings.
      *
      * @var string
      */
-    protected $fixShippingCosts = '';
+    protected string $fixShippingCosts = '';
 
     /**
      * The fixShippingTime of the settings.
      *
      * @var int
      */
-    protected $fixShippingTime = 0;
+    protected int $fixShippingTime = 0;
 
     /**
      * Allow will collect or not.
      *
      * @var int
      */
-    protected $allowWillCollect = 0;
+    protected int $allowWillCollect = 0;
 
     /**
      * The paypal client id of the settings.
      *
      * @var string|null
      */
-    protected $clientID;
+    protected ?string $clientID = null;
 
     /**
      * The paypal.me name.
      *
      * @var string|null
      */
-    protected $paypalMe;
+    protected ?string $paypalMe = null;
 
     /**
      * Preset the invoice amount when using PayPal.Me
      *
      * @var bool
      */
-    protected $paypalMePresetAmount = false;
+    protected bool $paypalMePresetAmount = false;
 
     /**
      * The ifSampleData of the settings.
      *
      * @var int
      */
-    protected $ifSampleData = 0;
+    protected int $ifSampleData = 0;
 
     /**
      * Gets the id of the settings.

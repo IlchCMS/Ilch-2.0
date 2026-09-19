@@ -104,7 +104,7 @@ class Orders extends Mapper
      * @param int $id
      * @return false|OrdersModel
      */
-    public function getOrderById(int $id)
+    public function getOrderById(int $id): OrdersModel|bool
     {
         $order = $this->getOrders(['o.id' => $id]);
         return reset($order);
@@ -116,7 +116,7 @@ class Orders extends Mapper
      * @param string $selector
      * @return false|OrdersModel
      */
-    public function getOrderBySelector(string $selector)
+    public function getOrderBySelector(string $selector): OrdersModel|bool
     {
         $order = $this->getOrders(['o.selector' => $selector]);
         return reset($order);

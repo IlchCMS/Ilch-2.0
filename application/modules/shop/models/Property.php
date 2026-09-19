@@ -60,7 +60,7 @@ class Property extends Model
     /**
      * Gets the name of the property.
      *
-     * @return string
+     * @return string|null
      */
     public function getName(): ?string
     {

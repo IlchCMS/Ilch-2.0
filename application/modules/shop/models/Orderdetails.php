@@ -19,49 +19,49 @@ class Orderdetails extends Model
      *
      * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The id of the order.
      *
      * @var int
      */
-    protected $orderId = 0;
+    protected int $orderId = 0;
 
     /**
      * The id of the item.
      *
      * @var int
      */
-    protected $itemId = 0;
+    protected int $itemId = 0;
 
     /**
      * The price of the item.
      *
      * @var float
      */
-    protected $price = 0.0;
+    protected float $price = 0.0;
 
     /**
      * The quantity of the item ordered.
      *
      * @var int
      */
-    protected $quantity = 0;
+    protected int $quantity = 0;
 
     /**
      * The tax on the item.
      *
      * @var int
      */
-    protected $tax = 0;
+    protected int $tax = 0;
 
     /**
      * The shipping costs for this item.
      *
      * @var float
      */
-    protected $shippingCosts = 0.0;
+    protected float $shippingCosts = 0.0;
 
     /**
      * Gets the id of the order.

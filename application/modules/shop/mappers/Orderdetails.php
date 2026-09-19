@@ -69,7 +69,7 @@ class Orderdetails extends Mapper
      * @param int $id
      * @return false|OrderdetailsModel
      */
-    public function getOrderdetailsById(int $id)
+    public function getOrderdetailsById(int $id): OrderdetailsModel|bool
     {
         $order = $this->getOrderdetailsBy(['id' => $id]);
         return reset($order);

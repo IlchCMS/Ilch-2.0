@@ -117,7 +117,7 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
                         </div>
                     </div>
 
-                    <?php if ($shopItem->getCordon() && $shopItem->getCordon() == 1) { ?>
+                    <?php if ($shopItem->getCordon() == 1) { ?>
                         <div class="cordon-wrapper">
                             <div class="cordon <?=$this->escape($shopItem->getCordonColor()) ?>"><?=$this->escape($shopItem->getCordonText()) ?></div>
                         </div>
