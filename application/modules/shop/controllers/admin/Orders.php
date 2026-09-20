@@ -196,7 +196,7 @@ class Orders extends Admin
             $ordersMapper = new OrdersMapper();
             $order = $ordersMapper->getOrderById($id);
 
-            if ($order !== null) {
+            if ($order) {
                 $fullPath = $shopInvoicePath . $order->getInvoiceFilename() . '.pdf';
                 $fd = fopen($fullPath, 'rb');
                 if ($fd) {

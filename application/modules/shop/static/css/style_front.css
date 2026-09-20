@@ -6,7 +6,7 @@ h1 {
     position: relative;
 }
 div#shopAnker {
-    display: hidden;
+    visibility: hidden;
     height: 0 !important;
     position: absolute;
     top: -80px;
@@ -28,7 +28,24 @@ li em {
 
 h1 a.activecart {
     float: right;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
     text-decoration: none;
+}
+
+h1 a.activecart .fa-shopping-cart {
+    position: relative;
+    vertical-align: middle;
+}
+
+/* Keep the badge from affecting the icon height */
+h1 a.activecart .fa-shopping-cart span.badge {
+    position: absolute;
+    top: -0.45em;
+    right: -0.75em;
+    margin: 0;
+    line-height: 1.4;
 }
 h1 a.activecart:hover {
     text-decoration: none;
@@ -155,7 +172,7 @@ h1 a span.badge {
     padding: 10px;
 }
 .cart table th {
-    font-style: bold;
+    font-weight: bold;
 }
 .cart img {
     height: 56px !important;

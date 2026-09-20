@@ -16,7 +16,7 @@ if (!empty($_SESSION['shopping_cart']) && $this->getRequest()->isSecure()) {
                 unset($_SESSION['shopping_cart'][$key]);
                 $status = '<div id="infobox" class="alert alert-danger" role="alert">' . $this->getTrans('theProduct') . ' <b>' . $this->escape($_POST['name']) . '</b> ' . $this->getTrans('removedFromCart') . '</div>';
             }
-            if (empty($_SESSION['shopping_cart'])) {
+            if ($_SESSION['shopping_cart'] === []) {
                 unset($_SESSION['shopping_cart']);
             }
         }
@@ -59,14 +59,22 @@ if (!empty($_SESSION['shopping_cart'])) {
         $arrayShippingCosts = [0];
         $subtotal_price = 0; ?>
         <table>
+            <colgroup>
+                <col style="width: 10%">
+                <col style="width: 7%">
+                <col style="width: 25%">
+                <col style="width: 20%">
+                <col style="width: 18%">
+                <col style="width: 20%">
+            </colgroup>
             <thead>
                 <tr>
-                    <th scope="col" width="10%"><?=$this->getTrans('productImage') ?><br />&nbsp;</th>
-                    <th scope="col" width="7%"></th>
-                    <th scope="col" width="25%"><?=$this->getTrans('productName') ?><br /><small><?=$this->getTrans('itemNumber') ?></small></th>
-                    <th scope="col" width="20%"><?=$this->getTrans('singlePrice') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
-                    <th scope="col" width="18%" class="text-center"><?=$this->getTrans('entries') ?><br />&nbsp;</th>
-                    <th scope="col" width="20%" class="text-end"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
+                    <th scope="col"><?=$this->getTrans('productImage') ?><br />&nbsp;</th>
+                    <th scope="col"></th>
+                    <th scope="col"><?=$this->getTrans('productName') ?><br /><small><?=$this->getTrans('itemNumber') ?></small></th>
+                    <th scope="col"><?=$this->getTrans('singlePrice') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
+                    <th scope="col" class="text-center"><?=$this->getTrans('entries') ?><br />&nbsp;</th>
+                    <th scope="col" class="text-end"><?=$this->getTrans('total') ?><br /><small><?=$this->getTrans('withTax') ?></small></th>
                 </tr>
             </thead>
             <tbody>

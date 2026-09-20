@@ -7,7 +7,6 @@
 
 namespace Modules\Shop\Mappers;
 
-use Ilch\Database\Mysql\Result;
 use Ilch\Mapper;
 use Modules\Shop\Models\Currency as CurrencyModel;
 
