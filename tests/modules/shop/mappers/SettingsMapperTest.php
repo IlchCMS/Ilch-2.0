@@ -134,7 +134,9 @@ class SettingsMapperTest extends DatabaseTestCase
         $model->setShopWeb('www.newshop.de');
         $model->setShopStNr('DE9999999999');
 
-        $this->out->updateSettingShop($model);
+        $result = $this->out->updateSettingShop($model);
+
+        self::assertSame(1, $result);
 
         $settings = $this->out->getSettings();
         self::assertEquals('Updated Shop', $settings->getShopName());
@@ -157,7 +159,9 @@ class SettingsMapperTest extends DatabaseTestCase
         $model = new SettingsModel();
         $model->setShopName('Changed Name');
 
-        $this->out->updateSettingShop($model);
+        $result = $this->out->updateSettingShop($model);
+
+        self::assertSame(1, $result);
 
         $settings = $this->out->getSettings();
         self::assertEquals('Bankinstitut Shophausen', $settings->getBankName());
@@ -175,7 +179,9 @@ class SettingsMapperTest extends DatabaseTestCase
         $model->setBankIBAN('DE0000111122223333');
         $model->setBankBIC('NEWBIC999');
 
-        $this->out->updateSettingBank($model);
+        $result = $this->out->updateSettingBank($model);
+
+        self::assertSame(1, $result);
 
         $settings = $this->out->getSettings();
         self::assertEquals('New Bank', $settings->getBankName());
@@ -192,7 +198,9 @@ class SettingsMapperTest extends DatabaseTestCase
         $model = new SettingsModel();
         $model->setBankName('Changed Bank');
 
-        $this->out->updateSettingBank($model);
+        $result = $this->out->updateSettingBank($model);
+
+        self::assertSame(1, $result);
 
         $settings = $this->out->getSettings();
         self::assertEquals('ILCH Shop', $settings->getShopName());
@@ -212,7 +220,9 @@ class SettingsMapperTest extends DatabaseTestCase
         $model->setInvoiceTextTop('New Invoice Top');
         $model->setInvoiceTextBottom('New Invoice Bottom');
 
-        $this->out->updateSettingDefault($model);
+        $result = $this->out->updateSettingDefault($model);
+
+        self::assertSame(1, $result);
 
         $settings = $this->out->getSettings();
         self::assertEquals(25, $settings->getFixTax());
@@ -231,7 +241,9 @@ class SettingsMapperTest extends DatabaseTestCase
         $model = new SettingsModel();
         $model->setFixTax(25);
 
-        $this->out->updateSettingDefault($model);
+        $result = $this->out->updateSettingDefault($model);
+
+        self::assertSame(1, $result);
 
         $settings = $this->out->getSettings();
         self::assertEquals('ILCH Shop', $settings->getShopName());
@@ -246,7 +258,9 @@ class SettingsMapperTest extends DatabaseTestCase
         $model = new SettingsModel();
         $model->setAGB('Updated AGB text');
 
-        $this->out->updateSettingAGB($model);
+        $result = $this->out->updateSettingAGB($model);
+
+        self::assertSame(1, $result);
 
         $settings = $this->out->getSettings();
         self::assertEquals('Updated AGB text', $settings->getAGB());
@@ -260,7 +274,9 @@ class SettingsMapperTest extends DatabaseTestCase
         $model = new SettingsModel();
         $model->setAGB('New AGB');
 
-        $this->out->updateSettingAGB($model);
+        $result = $this->out->updateSettingAGB($model);
+
+        self::assertSame(1, $result);
 
         $settings = $this->out->getSettings();
         self::assertEquals('ILCH Shop', $settings->getShopName());
@@ -277,7 +293,9 @@ class SettingsMapperTest extends DatabaseTestCase
         $model->setPayPalMe('newpaypal');
         $model->setPaypalMePresetAmount(false);
 
-        $this->out->updateSettingPayment($model);
+        $result = $this->out->updateSettingPayment($model);
+
+        self::assertSame(1, $result);
 
         $settings = $this->out->getSettings();
         self::assertEquals('new-client-id-123', $settings->getClientID());
@@ -293,7 +311,9 @@ class SettingsMapperTest extends DatabaseTestCase
         $model = new SettingsModel();
         $model->setClientID('test-client');
 
-        $this->out->updateSettingPayment($model);
+        $result = $this->out->updateSettingPayment($model);
+
+        self::assertSame(1, $result);
 
         $settings = $this->out->getSettings();
         self::assertEquals('ILCH Shop', $settings->getShopName());
@@ -301,11 +321,33 @@ class SettingsMapperTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that the update methods return null when the settings row does not exist.
+     */
+    public function testUpdateMethodsReturnNullWithoutSettingsRow()
+    {
+        $this->db->delete('shop_settings')
+            ->where(['id' => 1])
+            ->execute();
+
+        $model = new SettingsModel();
+
+        self::assertNull($this->out->updateSettingShop($model));
+        self::assertNull($this->out->updateSettingBank($model));
+        self::assertNull($this->out->updateSettingDefault($model));
+        self::assertNull($this->out->updateSettingAGB($model));
+        self::assertNull($this->out->updateSettingPayment($model));
+        self::assertNull($this->out->keepSampleData());
+    }
+
+    /**
      * Tests that deleteSampleData() sets ifSampleData to 0.
      */
     public function testDeleteSampleDataSetsFlag()
     {
-        $this->out->deleteSampleData();
+        $deleted = $this->out->deleteSampleData();
+
+        self::assertIsInt($deleted);
+        self::assertGreaterThan(0, $deleted);
 
         $settings = $this->out->getSettings();
         self::assertEquals(0, $settings->getIfSampleData());
@@ -323,7 +365,10 @@ class SettingsMapperTest extends DatabaseTestCase
 
         self::assertEquals(3, (int)$countBefore);
 
-        $this->out->deleteSampleData();
+        $deleted = $this->out->deleteSampleData();
+
+        self::assertIsInt($deleted);
+        self::assertGreaterThan(0, $deleted);
 
         $countAfter = $this->db->select('COUNT(*)')
             ->from('shop_cats')
@@ -345,7 +390,10 @@ class SettingsMapperTest extends DatabaseTestCase
 
         self::assertEquals(7, (int)$countBefore);
 
-        $this->out->deleteSampleData();
+        $deleted = $this->out->deleteSampleData();
+
+        self::assertIsInt($deleted);
+        self::assertGreaterThan(0, $deleted);
 
         $countAfter = $this->db->select('COUNT(*)')
             ->from('shop_items')
@@ -367,7 +415,10 @@ class SettingsMapperTest extends DatabaseTestCase
 
         self::assertEquals(4, (int)$countBefore);
 
-        $this->out->deleteSampleData();
+        $deleted = $this->out->deleteSampleData();
+
+        self::assertIsInt($deleted);
+        self::assertGreaterThan(0, $deleted);
 
         $countAfter = $this->db->select('COUNT(*)')
             ->from('shop_customers')
@@ -389,7 +440,10 @@ class SettingsMapperTest extends DatabaseTestCase
 
         self::assertEquals(4, (int)$countBefore);
 
-        $this->out->deleteSampleData();
+        $deleted = $this->out->deleteSampleData();
+
+        self::assertIsInt($deleted);
+        self::assertGreaterThan(0, $deleted);
 
         $countAfter = $this->db->select('COUNT(*)')
             ->from('shop_orders')
@@ -404,7 +458,9 @@ class SettingsMapperTest extends DatabaseTestCase
      */
     public function testKeepSampleData()
     {
-        $this->out->keepSampleData();
+        $result = $this->out->keepSampleData();
+
+        self::assertSame(1, $result);
 
         $settings = $this->out->getSettings();
         self::assertEquals(0, $settings->getIfSampleData());
@@ -423,7 +479,9 @@ class SettingsMapperTest extends DatabaseTestCase
      */
     public function testKeepSampleDataDoesNotDeleteItems()
     {
-        $this->out->keepSampleData();
+        $result = $this->out->keepSampleData();
+
+        self::assertSame(1, $result);
 
         $count = $this->db->select('COUNT(*)')
             ->from('shop_items')

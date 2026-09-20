@@ -387,7 +387,9 @@ class OrdersMapperTest extends DatabaseTestCase
             $details
         );
 
-        $this->out->save($order);
+        $id = $this->out->save($order);
+
+        self::assertSame(1, $id);
 
         $updated = $this->out->getOrderById(1);
 
@@ -411,7 +413,9 @@ class OrdersMapperTest extends DatabaseTestCase
         self::assertEquals(3, $order->getStatus());
 
         $order->setStatus(2);
-        $this->out->updateStatus($order);
+        $updatedId = $this->out->updateStatus($order);
+
+        self::assertSame(1, $updatedId);
 
         $updated = $this->out->getOrderById(1);
 
@@ -422,11 +426,24 @@ class OrdersMapperTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that updateStatus() returns null when no order is updated.
+     */
+    public function testUpdateStatusNoMatch()
+    {
+        $order = new OrderModel();
+        $order
+            ->setId(9999)
+            ->setStatus(2);
+
+        self::assertNull($this->out->updateStatus($order));
+    }
+
+    /**
      * Tests that delete() removes an order.
      */
     public function testDelete()
     {
-        $this->out->delete(1);
+        self::assertTrue($this->out->delete(1));
 
         self::assertFalse($this->out->getOrderById(1));
 
@@ -442,7 +459,7 @@ class OrdersMapperTest extends DatabaseTestCase
      */
     public function testDeleteNotFound()
     {
-        $this->out->delete(9999);
+        self::assertFalse($this->out->delete(9999));
 
         $orders = $this->out->getOrders();
 

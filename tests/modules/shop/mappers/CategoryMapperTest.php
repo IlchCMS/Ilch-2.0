@@ -156,11 +156,21 @@ class CategoryMapperTest extends DatabaseTestCase
      */
     public function testUpdatePositionById()
     {
-        $this->out->updatePositionById(1, 10);
+        $updatedId = $this->out->updatePositionById(1, 10);
+
+        self::assertSame(1, $updatedId);
 
         $category = $this->out->getCategoryById(1);
         self::assertInstanceOf(CategoryModel::class, $category);
         self::assertEquals(10, $category->getPos());
+    }
+
+    /**
+     * Tests that updatePositionById() returns null for a non-existent category id.
+     */
+    public function testUpdatePositionByIdNotFound()
+    {
+        self::assertNull($this->out->updatePositionById(9999, 10));
     }
 
     /**
@@ -185,17 +195,18 @@ class CategoryMapperTest extends DatabaseTestCase
         $model->setTitle('Neue Kategorie');
         $model->setReadAccess('1,2');
 
-        $this->out->save($model);
+        $newId = $this->out->save($model);
 
-        $categories = $this->out->getCategories();
-        self::assertCount(4, $categories);
+        self::assertIsInt($newId);
+        self::assertGreaterThan(3, $newId);
 
-        // The new category should have pos 4 (max existing pos + 1)
-        $new = $categories[3];
-        self::assertGreaterThan(3, $new->getId());
-        self::assertEquals(4, $new->getPos());
-        self::assertEquals('Neue Kategorie', $new->getTitle());
-        self::assertEquals('1,2', $new->getReadAccess());
+        $category = $this->out->getCategoryById($newId);
+        self::assertInstanceOf(CategoryModel::class, $category);
+        self::assertEquals(4, $category->getPos());
+        self::assertEquals('Neue Kategorie', $category->getTitle());
+        self::assertEquals('1,2', $category->getReadAccess());
+
+        self::assertCount(4, $this->out->getCategories());
     }
 
     /**
@@ -211,7 +222,10 @@ class CategoryMapperTest extends DatabaseTestCase
         $model->setTitle('New Entry');
         $model->setReadAccess('1');
 
-        $this->out->save($model);
+        $newId = $this->out->save($model);
+
+        self::assertIsInt($newId);
+        self::assertGreaterThan(3, $newId);
 
         $after = $this->out->getCategories();
         self::assertCount(4, $after);
@@ -232,7 +246,9 @@ class CategoryMapperTest extends DatabaseTestCase
         $model->setTitle('Updated Title');
         $model->setReadAccess('2,3');
 
-        $this->out->save($model);
+        $savedId = $this->out->save($model);
+
+        self::assertSame(1, $savedId);
 
         $category = $this->out->getCategoryById(1);
         self::assertInstanceOf(CategoryModel::class, $category);
@@ -298,8 +314,9 @@ class CategoryMapperTest extends DatabaseTestCase
      */
     public function testDelete()
     {
-        $this->out->delete(1);
+        $deleted = $this->out->delete(1);
 
+        self::assertTrue($deleted);
         self::assertNull($this->out->getCategoryById(1));
 
         // Remaining categories should still be present
@@ -312,7 +329,9 @@ class CategoryMapperTest extends DatabaseTestCase
      */
     public function testDeleteNotFound()
     {
-        $this->out->delete(9999);
+        $deleted = $this->out->delete(9999);
+
+        self::assertFalse($deleted);
 
         // Existing categories should be unaffected
         $categories = $this->out->getCategories();

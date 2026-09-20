@@ -72,19 +72,22 @@ class Propertyvalues extends Mapper
      * Insert or update values.
      *
      * @param PropertyvalueModel $model
+     * @return int ID of the saved value.
      */
-    public function save(PropertyvalueModel $model)
+    public function save(PropertyvalueModel $model): int
     {
         if ($model->getId()) {
             $this->db()->update('shop_properties_values')
                 ->values(['property_id' => $model->getPropertyId(), 'position' => $model->getPosition(), 'value' => $model->getValue()])
                 ->where(['id' => $model->getId()])
                 ->execute();
-        } else {
-            $this->db()->insert('shop_properties_values')
-                ->values(['property_id' => $model->getPropertyId(), 'position' => $model->getPosition(), 'value' => $model->getValue()])
-                ->execute();
+
+            return $model->getId();
         }
+
+        return $this->db()->insert('shop_properties_values')
+            ->values(['property_id' => $model->getPropertyId(), 'position' => $model->getPosition(), 'value' => $model->getValue()])
+            ->execute();
     }
 
     /**

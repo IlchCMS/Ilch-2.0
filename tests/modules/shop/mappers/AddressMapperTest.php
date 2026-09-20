@@ -161,10 +161,12 @@ class AddressMapperTest extends DatabaseTestCase
 
         $newId = $this->out->save($model);
 
+        self::assertIsInt($newId);
         self::assertGreaterThan(4, $newId);
 
         $address = $this->out->getAddressById($newId);
         self::assertInstanceOf(AddressModel::class, $address);
+        self::assertEquals($newId, $address->getId());
         self::assertEquals(1, $address->getCustomerID());
         self::assertEquals('New', $address->getPrename());
         self::assertEquals('Address', $address->getLastname());
@@ -189,7 +191,10 @@ class AddressMapperTest extends DatabaseTestCase
             ->setCity('Updatestadt')
             ->setCountry('Deutschland');
 
-        $this->out->save($model);
+        $newId = $this->out->save($model);
+
+        self::assertIsInt($newId);
+        self::assertEquals(1, $newId);
 
         $address = $this->out->getAddressById(1);
         self::assertInstanceOf(AddressModel::class, $address);
@@ -216,7 +221,10 @@ class AddressMapperTest extends DatabaseTestCase
             ->setCity('Changed City')
             ->setCountry('Changed Country');
 
-        $this->out->save($model);
+        $newId = $this->out->save($model);
+
+        self::assertIsInt($newId);
+        self::assertEquals(1, $newId);
 
         $other = $this->out->getAddressById(2);
         self::assertInstanceOf(AddressModel::class, $other);
@@ -246,7 +254,10 @@ class AddressMapperTest extends DatabaseTestCase
             ->setCity('Teststadt')
             ->setCountry('Deutschland');
 
-        $this->out->save($model);
+        $newId = $this->out->save($model);
+
+        self::assertIsInt($newId);
+        self::assertGreaterThan(4, $newId);
 
         $after = $this->out->getAddresses();
         self::assertCount(5, $after);
@@ -263,8 +274,9 @@ class AddressMapperTest extends DatabaseTestCase
      */
     public function testDelete()
     {
-        $this->out->delete(1);
+        $deleted = $this->out->delete(1);
 
+        self::assertTrue($deleted);
         self::assertFalse($this->out->getAddressById(1));
 
         // Remaining addresses should still be present
@@ -277,7 +289,9 @@ class AddressMapperTest extends DatabaseTestCase
      */
     public function testDeleteNotFound()
     {
-        $this->out->delete(9999);
+        $deleted = $this->out->delete(9999);
+
+        self::assertFalse($deleted);
 
         // Existing addresses should be unaffected
         $addresses = $this->out->getAddresses();

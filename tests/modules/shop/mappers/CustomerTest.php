@@ -160,7 +160,10 @@ class CustomerTest extends DatabaseTestCase
             ->setUserId(100)
             ->setEmail('insert@example.com');
 
-        $this->out->save($model);
+        $newId = $this->out->save($model);
+
+        self::assertIsInt($newId);
+        self::assertGreaterThan(4, $newId);
 
         $after = $this->out->getCustomers();
         self::assertCount(5, $after);
@@ -215,8 +218,9 @@ class CustomerTest extends DatabaseTestCase
      */
     public function testDelete()
     {
-        $this->out->delete(1);
+        $deleted = $this->out->delete(1);
 
+        self::assertTrue($deleted);
         self::assertFalse($this->out->getCustomerById(1));
 
         $customers = $this->out->getCustomers();
@@ -228,7 +232,9 @@ class CustomerTest extends DatabaseTestCase
      */
     public function testDeleteNotFound()
     {
-        $this->out->delete(9999);
+        $deleted = $this->out->delete(9999);
+
+        self::assertFalse($deleted);
 
         $customers = $this->out->getCustomers();
         self::assertCount(4, $customers);

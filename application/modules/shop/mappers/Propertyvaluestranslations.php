@@ -66,19 +66,22 @@ class Propertyvaluestranslations extends Mapper
      * Insert or update translations.
      *
      * @param PropertyValueTranslationModel $model
+     * @return int ID of the saved translation.
      */
-    public function save(PropertyValueTranslationModel $model)
+    public function save(PropertyValueTranslationModel $model): int
     {
         if ($model->getId()) {
             $this->db()->update('shop_properties_values_trans')
                 ->values(['value_id' => $model->getValueId(), 'locale' => $model->getLocale(), 'text' => $model->getText()])
                 ->where(['id' => $model->getId()])
                 ->execute();
-        } else {
-            $this->db()->insert('shop_properties_values_trans')
-                ->values(['value_id' => $model->getValueId(), 'locale' => $model->getLocale(), 'text' => $model->getText()])
-                ->execute();
+
+            return $model->getId();
         }
+
+        return $this->db()->insert('shop_properties_values_trans')
+            ->values(['value_id' => $model->getValueId(), 'locale' => $model->getLocale(), 'text' => $model->getText()])
+            ->execute();
     }
 
     /**

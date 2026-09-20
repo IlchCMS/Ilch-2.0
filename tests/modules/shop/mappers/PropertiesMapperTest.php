@@ -163,7 +163,9 @@ class PropertiesMapperTest extends DatabaseTestCase
         $name = $this->uniqueName('enable-test');
         $id = $this->out->save($this->createPropertyModel(0, $name, true));
 
-        $this->out->updateEnabled($id, false);
+        $updatedId = $this->out->updateEnabled($id, false);
+
+        self::assertSame($id, $updatedId);
 
         $property = $this->out->getPropertyById($id);
 
@@ -171,13 +173,23 @@ class PropertiesMapperTest extends DatabaseTestCase
         self::assertEquals($name, $property->getName());
         self::assertEquals(0, $property->isEnabled());
 
-        $this->out->updateEnabled($id, true);
+        $updatedId = $this->out->updateEnabled($id, true);
+
+        self::assertSame($id, $updatedId);
 
         $property = $this->out->getPropertyById($id);
 
         self::assertInstanceOf(PropertyModel::class, $property);
         self::assertEquals($name, $property->getName());
         self::assertEquals(1, $property->isEnabled());
+    }
+
+    /**
+     * Tests that updateEnabled() returns null when no property is updated.
+     */
+    public function testUpdateEnabledNotFound(): void
+    {
+        self::assertNull($this->out->updateEnabled(9999999, true));
     }
 
     /**
@@ -191,7 +203,7 @@ class PropertiesMapperTest extends DatabaseTestCase
         $idA = $this->out->save($this->createPropertyModel(0, $nameA, true));
         $idZ = $this->out->save($this->createPropertyModel(0, $nameZ, true));
 
-        $this->out->deletePropertyById($idA);
+        self::assertTrue($this->out->deletePropertyById($idA));
 
         self::assertNull($this->out->getPropertyById($idA));
 
@@ -210,7 +222,7 @@ class PropertiesMapperTest extends DatabaseTestCase
         $name = $this->uniqueName('keep');
         $id = $this->out->save($this->createPropertyModel(0, $name, true));
 
-        $this->out->deletePropertyById(9999999);
+        self::assertFalse($this->out->deletePropertyById(9999999));
 
         $property = $this->out->getPropertyById($id);
 

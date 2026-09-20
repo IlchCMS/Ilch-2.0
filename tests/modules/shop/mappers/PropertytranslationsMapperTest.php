@@ -154,7 +154,8 @@ class PropertytranslationsMapperTest extends DatabaseTestCase
             [$propertyId1]
         );
 
-        self::assertEmpty($missingTranslations);
+        self::assertIsArray($missingTranslations);
+        self::assertCount(0, $missingTranslations);
     }
 
     /**
@@ -167,15 +168,20 @@ class PropertytranslationsMapperTest extends DatabaseTestCase
 
         self::assertNull($this->out->getTranslationsByPropertyId($propertyId));
 
-        $this->out->save($this->createTranslationModel($propertyId, $locale, 'Inserted Text'));
+        $translationId = $this->out->save($this->createTranslationModel($propertyId, $locale, 'Inserted Text'));
+
+        self::assertIsInt($translationId);
+        self::assertGreaterThan(0, $translationId);
 
         $translations = $this->out->getTranslationsByPropertyId($propertyId);
 
         self::assertIsArray($translations);
         self::assertCount(1, $translations);
+        self::assertSame([$translationId], array_keys($translations));
 
-        $translation = reset($translations);
+        $translation = $translations[$translationId];
         self::assertInstanceOf(PropertyTranslationModel::class, $translation);
+        self::assertEquals($translationId, $translation->getId());
         self::assertEquals($propertyId, $translation->getPropertyId());
         self::assertEquals($locale, $translation->getLocale());
         self::assertEquals('Inserted Text', $translation->getText());
@@ -189,30 +195,38 @@ class PropertytranslationsMapperTest extends DatabaseTestCase
         $propertyId = $this->createProperty();
         $locale = $this->uniqueLocale('update');
 
-        $this->out->save($this->createTranslationModel($propertyId, $locale, 'Original Text'));
+        $originalId = $this->out->save($this->createTranslationModel($propertyId, $locale, 'Original Text'));
+
+        self::assertIsInt($originalId);
+        self::assertGreaterThan(0, $originalId);
 
         $translations = $this->out->getTranslationsByPropertyId($propertyId);
 
         self::assertIsArray($translations);
         self::assertCount(1, $translations);
+        self::assertSame([$originalId], array_keys($translations));
 
-        $translation = reset($translations);
+        $translation = $translations[$originalId];
         self::assertInstanceOf(PropertyTranslationModel::class, $translation);
 
         $translationId = $translation->getId();
 
-        $this->out->save(
+        $updatedId = $this->out->save(
             $this->createTranslationModel($propertyId, $locale, 'Updated Text', $translationId)
         );
+
+        self::assertIsInt($updatedId);
+        self::assertSame($translationId, $updatedId);
 
         $updatedTranslations = $this->out->getTranslationsByPropertyId($propertyId);
 
         self::assertIsArray($updatedTranslations);
         self::assertCount(1, $updatedTranslations);
+        self::assertSame([$updatedId], array_keys($updatedTranslations));
 
-        $updatedTranslation = reset($updatedTranslations);
+        $updatedTranslation = $updatedTranslations[$updatedId];
         self::assertInstanceOf(PropertyTranslationModel::class, $updatedTranslation);
-        self::assertEquals($translationId, $updatedTranslation->getId());
+        self::assertEquals($updatedId, $updatedTranslation->getId());
         self::assertEquals($propertyId, $updatedTranslation->getPropertyId());
         self::assertEquals($locale, $updatedTranslation->getLocale());
         self::assertEquals('Updated Text', $updatedTranslation->getText());
@@ -239,7 +253,7 @@ class PropertytranslationsMapperTest extends DatabaseTestCase
         $translationA = $this->findTranslationByLocale($translations, $localeA);
         self::assertInstanceOf(PropertyTranslationModel::class, $translationA);
 
-        $this->out->deleteTranslationById($translationA->getId());
+        self::assertTrue($this->out->deleteTranslationById($translationA->getId()));
 
         $remainingTranslations = $this->out->getTranslationsByPropertyId($propertyId);
 
@@ -259,7 +273,7 @@ class PropertytranslationsMapperTest extends DatabaseTestCase
 
         $this->out->save($this->createTranslationModel($propertyId, $locale, 'Kept Text'));
 
-        $this->out->deleteTranslationById(9999999);
+        self::assertFalse($this->out->deleteTranslationById(9999999));
 
         $translations = $this->out->getTranslationsByPropertyId($propertyId);
 

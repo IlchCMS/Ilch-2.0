@@ -126,16 +126,15 @@ class CurrencyTest extends DatabaseTestCase
         $model->setName('SEK (kr)');
         $model->setCode('SEK');
 
-        $this->out->save($model);
+        $newId = $this->out->save($model);
 
-        $currencies = $this->out->getCurrencies(['code' => 'SEK']);
+        self::assertIsInt($newId);
+        self::assertGreaterThan(6, $newId);
 
-        self::assertCount(1, $currencies);
-
-        $new = $currencies[0];
-        self::assertGreaterThan(6, $new->getId());
-        self::assertEquals('SEK (kr)', $new->getName());
-        self::assertEquals('SEK', $new->getCode());
+        $currency = $this->out->getCurrencyById($newId);
+        self::assertInstanceOf(CurrencyModel::class, $currency);
+        self::assertEquals('SEK (kr)', $currency->getName());
+        self::assertEquals('SEK', $currency->getCode());
 
         self::assertCount(7, $this->out->getCurrencies());
     }
@@ -153,7 +152,10 @@ class CurrencyTest extends DatabaseTestCase
         $model->setName('New Currency');
         $model->setCode('NEW');
 
-        $this->out->save($model);
+        $newId = $this->out->save($model);
+
+        self::assertIsInt($newId);
+        self::assertGreaterThan(6, $newId);
 
         $after = $this->out->getCurrencies();
         self::assertCount(7, $after);
@@ -173,7 +175,9 @@ class CurrencyTest extends DatabaseTestCase
         $model->setName('Updated Euro');
         $model->setCode('EU1');
 
-        $this->out->save($model);
+        $savedId = $this->out->save($model);
+
+        self::assertSame(1, $savedId);
 
         $currency = $this->out->getCurrencyById(1);
 
@@ -207,7 +211,9 @@ class CurrencyTest extends DatabaseTestCase
      */
     public function testDeleteCurrencyById()
     {
-        $this->out->deleteCurrencyById(1);
+        $deleted = $this->out->deleteCurrencyById(1);
+
+        self::assertTrue($deleted);
 
         self::assertNull($this->out->getCurrencyById(1));
 
@@ -220,7 +226,9 @@ class CurrencyTest extends DatabaseTestCase
      */
     public function testDeleteCurrencyByIdNotFound()
     {
-        $this->out->deleteCurrencyById(9999);
+        $deleted = $this->out->deleteCurrencyById(9999);
+
+        self::assertFalse($deleted);
 
         $currencies = $this->out->getCurrencies();
         self::assertCount(6, $currencies);

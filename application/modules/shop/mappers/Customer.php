@@ -49,7 +49,7 @@ class Customer extends Mapper
      * @param int $id
      * @return false|CustomerModel
      */
-    public function getCustomerById(int $id)
+    public function getCustomerById(int $id): bool|CustomerModel
     {
         $customer = $this->getCustomers(['id' => $id]);
         return reset($customer);
@@ -71,7 +71,7 @@ class Customer extends Mapper
      * Inserts or updates customer model.
      *
      * @param CustomerModel $customer
-     * @return int
+     * @return int ID of the saved customer.
      */
     public function save(CustomerModel $customer): int
     {
@@ -81,15 +81,17 @@ class Customer extends Mapper
         ];
 
         if ($customer->getId()) {
-            return $this->db()->update('shop_customers')
+            $this->db()->update('shop_customers')
                 ->values($fields)
                 ->where(['id' => $customer->getId()])
                 ->execute();
-        } else {
-            return $this->db()->insert('shop_customers')
-                ->values($fields)
-                ->execute();
+
+            return $customer->getId();
         }
+
+        return $this->db()->insert('shop_customers')
+            ->values($fields)
+            ->execute();
     }
 
     /**

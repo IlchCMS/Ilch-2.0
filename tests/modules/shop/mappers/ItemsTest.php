@@ -298,7 +298,10 @@ class ItemsTest extends DatabaseTestCase
             ->setDesc('')
             ->setStatus(1);
 
-        $this->out->save($model);
+        $newId = $this->out->save($model);
+
+        self::assertIsInt($newId);
+        self::assertGreaterThan(7, $newId);
 
         $after = $this->out->getShopItems();
         self::assertCount(8, $after);
@@ -391,11 +394,21 @@ class ItemsTest extends DatabaseTestCase
      */
     public function testUpdateStock()
     {
-        $this->out->updateStock(1, 100);
+        $updatedId = $this->out->updateStock(1, 100);
+
+        self::assertSame(1, $updatedId);
 
         $item = $this->out->getShopItemById(1);
 
         self::assertEquals(100, $item->getStock());
+    }
+
+    /**
+     * Tests that updateStock() returns null for a non-existent item.
+     */
+    public function testUpdateStockNotFound()
+    {
+        self::assertNull($this->out->updateStock(9999, 100));
     }
 
     /**
@@ -415,7 +428,9 @@ class ItemsTest extends DatabaseTestCase
      */
     public function testAddStock()
     {
-        $this->out->addStock(1, 5);
+        $newStock = $this->out->addStock(1, 5);
+
+        self::assertSame(19, $newStock);
 
         $item = $this->out->getShopItemById(1);
 
@@ -423,15 +438,33 @@ class ItemsTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that addStock() returns null for a non-existent item.
+     */
+    public function testAddStockNotFound()
+    {
+        self::assertNull($this->out->addStock(9999, 5));
+    }
+
+    /**
      * Tests that removeStock() decreases the stock.
      */
     public function testRemoveStock()
     {
-        $this->out->removeStock(1, 4);
+        $newStock = $this->out->removeStock(1, 4);
+
+        self::assertSame(10, $newStock);
 
         $item = $this->out->getShopItemById(1);
 
         self::assertEquals(10, $item->getStock());
+    }
+
+    /**
+     * Tests that removeStock() returns null for a non-existent item.
+     */
+    public function testRemoveStockNotFound()
+    {
+        self::assertNull($this->out->removeStock(9999, 4));
     }
 
     /**
@@ -471,8 +504,9 @@ class ItemsTest extends DatabaseTestCase
      */
     public function testDelete()
     {
-        $this->out->delete(1);
+        $deleted = $this->out->delete(1);
 
+        self::assertTrue($deleted);
         self::assertNull($this->out->getShopItemById(1));
 
         $items = $this->out->getShopItems();
@@ -484,7 +518,9 @@ class ItemsTest extends DatabaseTestCase
      */
     public function testDeleteNotFound()
     {
-        $this->out->delete(9999);
+        $deleted = $this->out->delete(9999);
+
+        self::assertFalse($deleted);
 
         $items = $this->out->getShopItems();
         self::assertCount(7, $items);

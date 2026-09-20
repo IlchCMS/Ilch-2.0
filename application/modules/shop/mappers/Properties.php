@@ -71,21 +71,22 @@ class Properties extends Mapper
      * Insert or update property.
      *
      * @param PropertyModel $model
-     * @return int|null
+     * @return int ID of the saved property.
      */
-    public function save(PropertyModel $model): ?int
+    public function save(PropertyModel $model): int
     {
         if ($model->getId()) {
             $this->db()->update('shop_properties')
                 ->values(['name' => $model->getName(), 'enabled' => $model->isEnabled()])
                 ->where(['id' => $model->getId()])
                 ->execute();
+
             return $model->getId();
-        } else {
-            return $this->db()->insert('shop_properties')
-                ->values(['name' => $model->getName(), 'enabled' => $model->isEnabled()])
-                ->execute();
         }
+
+        return $this->db()->insert('shop_properties')
+            ->values(['name' => $model->getName(), 'enabled' => $model->isEnabled()])
+            ->execute();
     }
 
     /**
@@ -93,14 +94,16 @@ class Properties extends Mapper
      *
      * @param int $id
      * @param bool $enabled
-     * @return void
+     * @return int|null ID of the property if the update affected a row, otherwise null.
      */
-    public function updateEnabled(int $id, bool $enabled)
+    public function updateEnabled(int $id, bool $enabled): ?int
     {
-        $this->db()->update('shop_properties')
+        $affectedRows = (int)$this->db()->update('shop_properties')
             ->values(['enabled' => $enabled])
             ->where(['id' => $id])
             ->execute();
+
+        return $affectedRows > 0 ? $id : null;
     }
 
     /**

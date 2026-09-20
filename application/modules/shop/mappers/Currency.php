@@ -65,19 +65,22 @@ class Currency extends Mapper
      * Insert or update currencies.
      *
      * @param CurrencyModel $model
+     * @return int ID of the saved currency.
      */
-    public function save(CurrencyModel $model)
+    public function save(CurrencyModel $model): int
     {
         if ($model->getId()) {
             $this->db()->update('shop_currencies')
                 ->values(['name' => $model->getName(), 'code' => $model->getCode()])
                 ->where(['id' => $model->getId()])
                 ->execute();
-        } else {
-            $this->db()->insert('shop_currencies')
-                ->values(['name' => $model->getName(), 'code' => $model->getCode()])
-                ->execute();
+
+            return $model->getId();
         }
+
+        return $this->db()->insert('shop_currencies')
+            ->values(['name' => $model->getName(), 'code' => $model->getCode()])
+            ->execute();
     }
 
     /**

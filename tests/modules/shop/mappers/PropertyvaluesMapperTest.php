@@ -120,7 +120,10 @@ class PropertyvaluesMapperTest extends DatabaseTestCase
 
         self::assertNull($this->out->getValuesByPropertyId($propertyId));
 
-        $this->out->save($this->createValueModel($propertyId, 1, $value));
+        $newId = $this->out->save($this->createValueModel($propertyId, 1, $value));
+
+        self::assertIsInt($newId);
+        self::assertGreaterThan(0, $newId);
 
         $values = $this->out->getValuesByPropertyId($propertyId);
 
@@ -129,6 +132,7 @@ class PropertyvaluesMapperTest extends DatabaseTestCase
 
         $valueModel = reset($values);
         self::assertInstanceOf(PropertyvalueModel::class, $valueModel);
+        self::assertEquals($newId, $valueModel->getId());
         self::assertEquals($propertyId, $valueModel->getPropertyId());
         self::assertEquals(1, $valueModel->getPosition());
         self::assertEquals($value, $valueModel->getValue());
@@ -143,7 +147,10 @@ class PropertyvaluesMapperTest extends DatabaseTestCase
         $originalValue = $this->uniqueValue('original');
         $updatedValue = $this->uniqueValue('updated');
 
-        $this->out->save($this->createValueModel($propertyId, 1, $originalValue));
+        $originalId = $this->out->save($this->createValueModel($propertyId, 1, $originalValue));
+
+        self::assertIsInt($originalId);
+        self::assertGreaterThan(0, $originalId);
 
         $values = $this->out->getValuesByPropertyId($propertyId);
 
@@ -155,7 +162,12 @@ class PropertyvaluesMapperTest extends DatabaseTestCase
 
         $valueId = $valueModel->getId();
 
-        $this->out->save($this->createValueModel($propertyId, 5, $updatedValue, $valueId));
+        self::assertEquals($originalId, $valueId);
+
+        $updatedId = $this->out->save($this->createValueModel($propertyId, 5, $updatedValue, $valueId));
+
+        self::assertIsInt($updatedId);
+        self::assertEquals($valueId, $updatedId);
 
         $updatedValues = $this->out->getValuesByPropertyId($propertyId);
 
@@ -191,7 +203,9 @@ class PropertyvaluesMapperTest extends DatabaseTestCase
         $firstValue = reset($values);
         self::assertInstanceOf(PropertyvalueModel::class, $firstValue);
 
-        $this->out->deleteValueById($firstValue->getId());
+        $deleted = $this->out->deleteValueById($firstValue->getId());
+
+        self::assertTrue($deleted);
 
         $remainingValues = $this->out->getValuesByPropertyId($propertyId);
 
@@ -213,7 +227,9 @@ class PropertyvaluesMapperTest extends DatabaseTestCase
 
         $this->out->save($this->createValueModel($propertyId, 1, $value));
 
-        $this->out->deleteValueById(9999999);
+        $deleted = $this->out->deleteValueById(9999999);
+
+        self::assertFalse($deleted);
 
         $values = $this->out->getValuesByPropertyId($propertyId);
 

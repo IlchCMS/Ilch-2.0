@@ -137,7 +137,7 @@ class Orders extends Mapper
      * Inserts or updates order model.
      *
      * @param OrdersModel $order
-     * @return int
+     * @return int ID of the saved order.
      */
     public function save(OrdersModel $order): int
     {
@@ -162,14 +162,16 @@ class Orders extends Mapper
         ];
 
         if ($order->getId()) {
-            $id = $this->db()->update('shop_orders')
+            $id = $order->getId();
+
+            $this->db()->update('shop_orders')
                 ->values($fields)
                 ->where(['id' => $order->getId()])
                 ->execute();
         } else {
             $id = $this->db()->insert('shop_orders')
-            ->values($fields)
-            ->execute();
+                ->values($fields)
+                ->execute();
         }
 
         foreach ($order->getOrderdetails() as $orderdetail) {
@@ -177,6 +179,7 @@ class Orders extends Mapper
         }
 
         $orderdetailsMapper->save($order->getOrderdetails());
+
         return $id;
     }
 
@@ -184,13 +187,16 @@ class Orders extends Mapper
      * Inserts or updates order status.
      *
      * @param OrdersModel $order
+     * @return int|null ID of the order if the status update affected a row, otherwise null.
      */
-    public function updateStatus(OrdersModel $order)
+    public function updateStatus(OrdersModel $order): ?int
     {
-        $this->db()->update('shop_orders')
+        $affectedRows = (int)$this->db()->update('shop_orders')
             ->values(['status' => $order->getStatus()])
             ->where(['id' => $order->getId()])
             ->execute();
+
+        return $affectedRows > 0 ? $order->getId() : null;
     }
 
     /**

@@ -85,21 +85,25 @@ class Category extends Mapper
      *
      * @param int $id
      * @param int $position
+     * @return int|null ID of the category if the update affected a row, otherwise null.
      */
-    public function updatePositionById(int $id, int $position)
+    public function updatePositionById(int $id, int $position): ?int
     {
-        $this->db()->update('shop_cats')
+        $affectedRows = (int)$this->db()->update('shop_cats')
             ->values(['pos' => $position])
             ->where(['id' => $id])
             ->execute();
+
+        return $affectedRows > 0 ? $id : null;
     }
 
     /**
      * Inserts or updates category model.
      *
      * @param CategoryModel $category
+     * @return int ID of the saved category.
      */
-    public function save(CategoryModel $category)
+    public function save(CategoryModel $category): int
     {
         if ($category->getId()) {
             $this->db()->update('shop_cats')
@@ -111,9 +115,9 @@ class Category extends Mapper
             $id = $category->getId();
         } else {
             $maxPos = $this->db()->select('MAX(pos)')
-                      ->from('shop_cats')
-                      ->execute()
-                      ->fetchCell();
+                ->from('shop_cats')
+                ->execute()
+                ->fetchCell();
 
             $id = $this->db()->insert('shop_cats')
                 ->values([
@@ -124,6 +128,8 @@ class Category extends Mapper
         }
 
         $this->saveReadAccess($id, $category->getReadAccess());
+
+        return $id;
     }
 
     /**
