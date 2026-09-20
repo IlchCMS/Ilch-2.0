@@ -96,10 +96,11 @@ class Customer extends Mapper
      * Deletes customer with given id.
      *
      * @param int $id
+     * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('shop_customers')
+        return (bool) $this->db()->delete('shop_customers')
             ->where(['id' => $id])
             ->execute();
     }

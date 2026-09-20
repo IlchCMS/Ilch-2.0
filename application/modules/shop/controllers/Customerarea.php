@@ -15,7 +15,7 @@ use Modules\Shop\Mappers\Items as ItemsMapper;
 
 class Customerarea extends Frontend
 {
-    public function indexAction()
+    public function indexAction(): void
     {
         $ordersMapper = new OrdersMapper();
         $customerMapper = new CustomerMapper();
@@ -43,7 +43,7 @@ class Customerarea extends Frontend
         $this->getView()->set('orders', $orders);
     }
 
-    public function showAction()
+    public function showAction(): void
     {
         $currencyMapper = new CurrencyMapper();
         $ordersMapper = new OrdersMapper();
@@ -86,7 +86,7 @@ class Customerarea extends Frontend
         $this->getView()->set('itemsMapper', $itemsMapper);
     }
 
-    public function downloadAction()
+    public function downloadAction(): void
     {
         if (!$this->getRequest()->isSecure()) {
             return;

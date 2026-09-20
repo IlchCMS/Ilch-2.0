@@ -54,7 +54,7 @@ class Category extends Model
      *
      * @param int $id
      */
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -74,7 +74,7 @@ class Category extends Model
      *
      * @param int $pos
      */
-    public function setPos(int $pos)
+    public function setPos(int $pos): void
     {
         $this->pos = $pos;
     }
@@ -94,7 +94,7 @@ class Category extends Model
      *
      * @param string $title
      */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }

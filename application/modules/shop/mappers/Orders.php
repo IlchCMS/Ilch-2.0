@@ -197,10 +197,11 @@ class Orders extends Mapper
      * Deletes order with given id.
      *
      * @param int $id
+     * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('shop_orders')
+        return (bool) $this->db()->delete('shop_orders')
             ->where(['id' => $id])
             ->execute();
     }

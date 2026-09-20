@@ -15,7 +15,7 @@ use Modules\Shop\Mappers\Settings as SettingsMapper;
 
 class Index extends Admin
 {
-    public function init()
+    public function init(): void
     {
         $items = [
             [
@@ -80,7 +80,7 @@ class Index extends Admin
         );
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $categoryMapper = new CategoryMapper();
         $itemsMapper = new ItemsMapper();
@@ -103,7 +103,7 @@ class Index extends Admin
         $this->getView()->set('settings', $settingsMapper->getSettings());
     }
 
-    public function noteAction()
+    public function noteAction(): void
     {
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])

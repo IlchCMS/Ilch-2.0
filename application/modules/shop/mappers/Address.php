@@ -106,10 +106,11 @@ class Address extends Mapper
      * Deletes address with given id.
      *
      * @param int $id
+     * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('shop_addresses')
+        return (bool) $this->db()->delete('shop_addresses')
             ->where(['id' => $id])
             ->execute();
     }

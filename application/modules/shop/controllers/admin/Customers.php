@@ -15,7 +15,7 @@ use Modules\Shop\Mappers\Orders as OrdersMapper;
 
 class Customers extends Admin
 {
-    public function init()
+    public function init(): void
     {
         $items = [
             [
@@ -80,7 +80,7 @@ class Customers extends Admin
         );
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $customerMapper = new CustomerMapper();
 
@@ -100,7 +100,7 @@ class Customers extends Admin
         $this->getView()->set('customers', $customerMapper->getCustomers());
     }
 
-    public function showAction()
+    public function showAction(): void
     {
         $customerMapper = new CustomerMapper();
         $userMapper = new UserMapper();
@@ -130,7 +130,7 @@ class Customers extends Admin
         $this->getView()->set('orders', $ordersMapper->getOrdersByCustomerId($this->getRequest()->getParam('id')));
     }
 
-    public function deleteAction()
+    public function deleteAction(): void
     {
         if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id') && is_numeric($this->getRequest()->getParam('id'))) {
             $customerMapper = new CustomerMapper();

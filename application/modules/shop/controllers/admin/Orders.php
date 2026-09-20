@@ -19,7 +19,7 @@ use Modules\Shop\Models\Order as OrdersModel;
 
 class Orders extends Admin
 {
-    public function init()
+    public function init(): void
     {
         $items = [
             [
@@ -84,7 +84,7 @@ class Orders extends Admin
         );
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $ordersMapper = new OrdersMapper();
 
@@ -111,7 +111,7 @@ class Orders extends Admin
         $this->getView()->set('ordersMapper', $ordersMapper->getOrders());
     }
 
-    public function treatAction()
+    public function treatAction(): void
     {
         $currencyMapper = new CurrencyMapper();
         $itemsMapper = new ItemsMapper();
@@ -181,7 +181,7 @@ class Orders extends Admin
         }
     }
 
-    public function downloadAction()
+    public function downloadAction(): void
     {
         if (!$this->getRequest()->isSecure()) {
             return;
@@ -225,7 +225,7 @@ class Orders extends Admin
         $this->redirect(['controller' => 'orders', 'action' => 'treat', 'id' => $id]);
     }
 
-    public function sendInvoiceAction()
+    public function sendInvoiceAction(): void
     {
         if (!$this->getRequest()->isSecure()) {
             return;
@@ -299,7 +299,7 @@ class Orders extends Admin
         $this->redirect(['controller' => 'orders', 'action' => 'treat', 'id' => $id]);
     }
 
-    public function delOrderAction()
+    public function delOrderAction(): void
     {
         if ($this->getRequest()->isSecure()) {
             $ordersMapper = new OrdersMapper();

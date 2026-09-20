@@ -24,7 +24,7 @@ use Modules\Shop\Models\Propertyvariant;
 
 class Items extends Admin
 {
-    public function init()
+    public function init(): void
     {
         $items = [
             [
@@ -101,7 +101,7 @@ class Items extends Admin
         );
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $categoryMapper = new CategoryMapper();
         $currencyMapper = new CurrencyMapper();
@@ -143,7 +143,7 @@ class Items extends Admin
         $this->getView()->set('shopItems', $itemsMapper->getShopItems());
     }
 
-    public function treatAction()
+    public function treatAction(): void
     {
         $categoryMapper = new CategoryMapper();
         $currencyMapper = new CurrencyMapper();
@@ -307,7 +307,7 @@ class Items extends Admin
         $this->getView()->set('propertiesValuesTranslations', $propertyValueTranslationAssoc);
     }
 
-    public function delShopAction()
+    public function delShopAction(): void
     {
         if ($this->getRequest()->isSecure() && is_numeric($this->getRequest()->getParam('id'))) {
             $itemsMapper = new ItemsMapper();

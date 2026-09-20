@@ -249,10 +249,11 @@ class Items extends Mapper
      * Deletes item with given id.
      *
      * @param int $id
+     * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('shop_items')
+        return (bool) $this->db()->delete('shop_items')
             ->where(['id' => $id])
             ->execute();
     }

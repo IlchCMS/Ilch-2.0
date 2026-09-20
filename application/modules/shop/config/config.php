@@ -33,14 +33,14 @@ class Config extends Install
         'phpVersion' => '8.1'
     ];
 
-    public function install()
+    public function install(): void
     {
         $this->db()->queryMulti($this->getInstallSql());
         $databaseConfig = new Database($this->db());
         $databaseConfig->set('shop_currency', '1');
     }
 
-    public function uninstall()
+    public function uninstall(): void
     {
         $this->db()->queryMulti('DELETE FROM `[prefix]_config` WHERE `key` = "shop_currency"');
 
@@ -386,7 +386,7 @@ class Config extends Install
 /***   example entries   ***/';
     }
 
-    public function getUpdate(string $installedVersion)
+    public function getUpdate(string $installedVersion): void
     {
         switch ($installedVersion) {
             case '1.0.0':

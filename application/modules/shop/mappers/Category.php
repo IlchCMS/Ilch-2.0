@@ -172,10 +172,11 @@ class Category extends Mapper
      * Deletes category with given id.
      *
      * @param int $id
+     * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('shop_cats')
+        return (bool) $this->db()->delete('shop_cats')
             ->where(['id' => $id])
             ->execute();
     }

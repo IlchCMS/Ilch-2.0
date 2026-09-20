@@ -22,7 +22,7 @@ use Modules\Shop\Models\Propertyvaluetranslation as PropertyvaluetranslationMode
 
 class Properties extends Admin
 {
-    public function init()
+    public function init(): void
     {
         $items = [
             [
@@ -99,7 +99,7 @@ class Properties extends Admin
         );
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $propertiesMapper = new PropertiesMapper();
         $propertyVariantsMapper = new PropertyvariantsMapper();
@@ -130,7 +130,7 @@ class Properties extends Admin
         $this->getView()->set('properties', $propertiesMapper->getProperties());
     }
 
-    public function treatAction()
+    public function treatAction(): void
     {
         $propertiesMapper = new PropertiesMapper();
         $propertyTranslationMapper = new PropertytranslationsMapper();
@@ -278,7 +278,7 @@ class Properties extends Admin
             ->set('propertyValues', []);
     }
 
-    public function deleteAction()
+    public function deleteAction(): void
     {
         if ($this->getRequest()->isSecure()) {
             $propertyVariantsMapper = new PropertyvariantsMapper();
@@ -295,7 +295,7 @@ class Properties extends Admin
         $this->redirect(['action' => 'index']);
     }
 
-    public function updateenabledAction()
+    public function updateenabledAction(): void
     {
         if ($this->getRequest()->isSecure()) {
             if (!$this->getRequest()->getParam('enabled')) {

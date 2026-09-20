@@ -31,7 +31,7 @@ use Ilch\Validation;
 
 class Index extends Frontend
 {
-    public function indexAction()
+    public function indexAction(): void
     {
         $categoryMapper = new CategoryMapper();
         $currencyMapper = new CurrencyMapper();
@@ -129,7 +129,7 @@ class Index extends Frontend
         $this->getView()->set('shopItems', $shopItems);
     }
 
-    public function cartAction()
+    public function cartAction(): void
     {
         $currencyMapper = new CurrencyMapper();
         $itemsMapper = new ItemsMapper();
@@ -149,7 +149,7 @@ class Index extends Frontend
         $this->getView()->set('allowWillCollect', $settingsMapper->getSettings()->getAllowWillCollect());
     }
 
-    public function agbAction()
+    public function agbAction(): void
     {
         $settingsMapper = new SettingsMapper();
 
@@ -164,7 +164,7 @@ class Index extends Frontend
         $this->getView()->set('shopSettings', $settingsMapper->getSettings());
     }
 
-    public function orderAction()
+    public function orderAction(): void
     {
         $addressMapper = new AddressMapper();
         $emailsMapper = new EmailsMapper();
@@ -458,7 +458,7 @@ class Index extends Frontend
         $this->getView()->set('regist_accept', $this->getConfig()->get('regist_accept'));
     }
 
-    public function successAction()
+    public function successAction(): void
     {
         $this->getLayout()->header()->css('static/css/style_front.css');
         $this->getLayout()->getTitle()
@@ -467,7 +467,7 @@ class Index extends Frontend
             ->add($this->getTranslator()->trans('menuShops'), ['action' => 'index']);
     }
 
-    public function showAction()
+    public function showAction(): void
     {
         $categoryMapper = new CategoryMapper();
         $currencyMapper = new CurrencyMapper();

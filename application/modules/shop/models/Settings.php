@@ -215,7 +215,7 @@ class Settings extends Model
      *
      * @param int $id
      */
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -235,7 +235,7 @@ class Settings extends Model
      *
      * @param string $shopName
      */
-    public function setShopName(string $shopName)
+    public function setShopName(string $shopName): void
     {
         $this->shopName = $shopName;
     }
@@ -255,7 +255,7 @@ class Settings extends Model
      *
      * @param string $shopLogo
      */
-    public function setShopLogo(string $shopLogo)
+    public function setShopLogo(string $shopLogo): void
     {
         $this->shopLogo = $shopLogo;
     }
@@ -275,7 +275,7 @@ class Settings extends Model
      *
      * @param string $shopStreet
      */
-    public function setShopStreet(string $shopStreet)
+    public function setShopStreet(string $shopStreet): void
     {
         $this->shopStreet = $shopStreet;
     }
@@ -295,7 +295,7 @@ class Settings extends Model
      *
      * @param string $shopPlz
      */
-    public function setShopPlz(string $shopPlz)
+    public function setShopPlz(string $shopPlz): void
     {
         $this->shopPlz = $shopPlz;
     }
@@ -315,7 +315,7 @@ class Settings extends Model
      *
      * @param string $shopCity
      */
-    public function setShopCity(string $shopCity)
+    public function setShopCity(string $shopCity): void
     {
         $this->shopCity = $shopCity;
     }
@@ -335,7 +335,7 @@ class Settings extends Model
      *
      * @param string $shopTel
      */
-    public function setShopTel(string $shopTel)
+    public function setShopTel(string $shopTel): void
     {
         $this->shopTel = $shopTel;
     }
@@ -355,7 +355,7 @@ class Settings extends Model
      *
      * @param string $shopFax
      */
-    public function setShopFax(string $shopFax)
+    public function setShopFax(string $shopFax): void
     {
         $this->shopFax = $shopFax;
     }
@@ -375,7 +375,7 @@ class Settings extends Model
      *
      * @param string $shopMail
      */
-    public function setShopMail(string $shopMail)
+    public function setShopMail(string $shopMail): void
     {
         $this->shopMail = $shopMail;
     }
@@ -395,7 +395,7 @@ class Settings extends Model
      *
      * @param string $shopWeb
      */
-    public function setShopWeb(string $shopWeb)
+    public function setShopWeb(string $shopWeb): void
     {
         $this->shopWeb = $shopWeb;
     }
@@ -415,7 +415,7 @@ class Settings extends Model
      *
      * @param string $shopStNr
      */
-    public function setShopStNr(string $shopStNr)
+    public function setShopStNr(string $shopStNr): void
     {
         $this->shopStNr = $shopStNr;
     }
@@ -435,7 +435,7 @@ class Settings extends Model
      *
      * @param string $bankName
      */
-    public function setBankName(string $bankName)
+    public function setBankName(string $bankName): void
     {
         $this->bankName = $bankName;
     }
@@ -455,7 +455,7 @@ class Settings extends Model
      *
      * @param string $bankOwner
      */
-    public function setBankOwner(string $bankOwner)
+    public function setBankOwner(string $bankOwner): void
     {
         $this->bankOwner = $bankOwner;
     }
@@ -475,7 +475,7 @@ class Settings extends Model
      *
      * @param string $bankIBAN
      */
-    public function setBankIBAN(string $bankIBAN)
+    public function setBankIBAN(string $bankIBAN): void
     {
         $this->bankIBAN = $bankIBAN;
     }
@@ -495,7 +495,7 @@ class Settings extends Model
      *
      * @param string $bankBIC
      */
-    public function setBankBIC(string $bankBIC)
+    public function setBankBIC(string $bankBIC): void
     {
         $this->bankBIC = $bankBIC;
     }
@@ -515,7 +515,7 @@ class Settings extends Model
      *
      * @param string $deliveryTextTop
      */
-    public function setDeliveryTextTop(string $deliveryTextTop)
+    public function setDeliveryTextTop(string $deliveryTextTop): void
     {
         $this->deliveryTextTop = $deliveryTextTop;
     }
@@ -535,7 +535,7 @@ class Settings extends Model
      *
      * @param string $invoiceTextTop
      */
-    public function setInvoiceTextTop(string $invoiceTextTop)
+    public function setInvoiceTextTop(string $invoiceTextTop): void
     {
         $this->invoiceTextTop = $invoiceTextTop;
     }
@@ -555,7 +555,7 @@ class Settings extends Model
      *
      * @param string $invoiceTextBottom
      */
-    public function setInvoiceTextBottom(string $invoiceTextBottom)
+    public function setInvoiceTextBottom(string $invoiceTextBottom): void
     {
         $this->invoiceTextBottom = $invoiceTextBottom;
     }
@@ -575,7 +575,7 @@ class Settings extends Model
      *
      * @param string $agb
      */
-    public function setAGB(string $agb)
+    public function setAGB(string $agb): void
     {
         $this->agb = $agb;
     }
@@ -595,7 +595,7 @@ class Settings extends Model
      *
      * @param int $fixTax
      */
-    public function setFixTax(int $fixTax)
+    public function setFixTax(int $fixTax): void
     {
         $this->fixTax = $fixTax;
     }
@@ -615,7 +615,7 @@ class Settings extends Model
      *
      * @param string $fixShippingCosts
      */
-    public function setFixShippingCosts(string $fixShippingCosts)
+    public function setFixShippingCosts(string $fixShippingCosts): void
     {
         $this->fixShippingCosts = $fixShippingCosts;
     }
@@ -635,7 +635,7 @@ class Settings extends Model
      *
      * @param int $fixShippingTime
      */
-    public function setFixShippingTime(int $fixShippingTime)
+    public function setFixShippingTime(int $fixShippingTime): void
     {
         $this->fixShippingTime = $fixShippingTime;
     }
@@ -695,7 +695,7 @@ class Settings extends Model
      *
      * @param string $name
      */
-    public function setPayPalMe(string $name)
+    public function setPayPalMe(string $name): void
     {
         $this->paypalMe = $name;
     }
@@ -735,7 +735,7 @@ class Settings extends Model
      *
      * @param int $ifSampleData
      */
-    public function setIfSampleData(int $ifSampleData)
+    public function setIfSampleData(int $ifSampleData): void
     {
         $this->ifSampleData = $ifSampleData;
     }
