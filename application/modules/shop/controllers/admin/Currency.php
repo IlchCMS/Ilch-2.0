@@ -162,8 +162,8 @@ class Currency extends Admin
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
             $post = [
                 'id' => $this->getRequest()->getPost('id'),
-                'name' => trim($this->getRequest()->getPost('name')),
-                'code' => trim($this->getRequest()->getPost('code'))
+                'name' => trim($this->getRequest()->getPost('name'), " \f\n\r\t\v\x00"),
+                'code' => trim($this->getRequest()->getPost('code'), " \f\n\r\t\v\x00")
             ];
 
             $rules = [
@@ -171,7 +171,7 @@ class Currency extends Admin
                 'code' => 'required|size:3'
             ];
 
-            if (!in_array(trim($this->getRequest()->getPost('code')), $currencyCodesPayPal)) {
+            if (!in_array(trim($this->getRequest()->getPost('code'), " \f\n\r\t\v\x00"), $currencyCodesPayPal)) {
                 $this->addMessage($this->getTranslator()->trans('notSupportedForPayPal'), 'warning', true);
             }
 

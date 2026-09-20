@@ -165,7 +165,7 @@ class Cats extends Admin
                 $model->setId($this->getRequest()->getParam('id'));
             }
 
-            $title = trim($this->getRequest()->getPost('title'));
+            $title = trim($this->getRequest()->getPost('title'), " \f\n\r\t\v\x00");
 
             $groups = '';
             if (!empty($this->getRequest()->getPost('groups'))) {
