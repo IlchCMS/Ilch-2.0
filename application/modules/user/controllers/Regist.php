@@ -113,7 +113,7 @@ class Regist extends \Ilch\Controller\Frontend
                     if ($profileField->getType() == 4) {
                         $post[$index] = json_encode($this->getRequest()->getPost($index));
                     } else {
-                        $post[$index] = trim($this->getRequest()->getPost($index));
+                        $post[$index] = trim($this->getRequest()->getPost($index), " \f\n\r\t\v\x00");
                         // Date fields submit Y-m-d (native date field); they are still stored as d.m.Y.
                         if ($profileField->getType() == 6 && validateDate($post[$index], 'Y-m-d')) {
                             $post[$index] = \DateTime::createFromFormat('Y-m-d', $post[$index])->format('d.m.Y');

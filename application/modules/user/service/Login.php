@@ -66,7 +66,7 @@ class Login
             $lines = preg_split('/\r\n|\r|\n/', $blacklistRaw);
 
             foreach ($lines as $line) {
-                $line = trim(strtolower($line));
+                $line = trim(strtolower($line), " \f\n\r\t\v\x00");
                 if ($line !== '') {
                     $blacklist[] = $line;
                 }
