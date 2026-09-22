@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'away',
-        'version' => '1.8.2',
+        'version' => '1.8.3',
         'icon_small' => 'fa-solid fa-calendar-xmark',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',

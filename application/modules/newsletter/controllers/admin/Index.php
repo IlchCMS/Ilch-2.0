@@ -132,8 +132,8 @@ class Index extends Admin
             $newsletterModel = new NewsletterModel();
 
             $post = [
-                'subject' => trim($this->getRequest()->getPost('subject')),
-                'text' => trim($this->getRequest()->getPost('text'))
+                'subject' => trim($this->getRequest()->getPost('subject'), " \f\n\r\t\v\x00"),
+                'text' => trim($this->getRequest()->getPost('text'), " \f\n\r\t\v\x00")
             ];
 
             $validation = Validation::create($post, [

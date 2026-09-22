@@ -34,7 +34,7 @@ class DesignCss
         $textColor = self::sanitizeColor((string)$config->get('shoutbox_designTextColor'));
         $nameColor = self::sanitizeColor((string)$config->get('shoutbox_designNameColor'));
         $fontSize = (int)$config->get('shoutbox_designFontSize');
-        $customCss = trim((string)$config->get('shoutbox_customCss'));
+        $customCss = trim((string)$config->get('shoutbox_customCss'), " \f\n\r\t\v\x00");
 
         $rules = [];
 
@@ -152,7 +152,7 @@ class DesignCss
         // The color input only ever submits #rrggbb, drop a manually added alpha channel.
         $color = substr($color, 0, 7);
 
-        if (!preg_match('/^\d{1,3}$/', trim($opacity))) {
+        if (!preg_match('/^\d{1,3}$/', trim($opacity, " \f\n\r\t\v\x00"))) {
             return $color;
         }
 

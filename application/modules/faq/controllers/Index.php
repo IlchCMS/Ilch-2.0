@@ -30,7 +30,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         if ($this->getRequest()->isPost()) {
-            $searchTerm = trim($this->getRequest()->getPost('search'));
+            $searchTerm = trim($this->getRequest()->getPost('search'), " \f\n\r\t\v\x00");
             $this->getView()->set('searchExecuted', true);
 
             if (!empty($searchTerm)) {

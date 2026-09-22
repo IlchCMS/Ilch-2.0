@@ -131,7 +131,7 @@ class Index extends \Ilch\Controller\Admin
                 }
 
                 foreach ($this->getRequest()->getPost('reply') ?? [] as $reply) {
-                    $reply = trim($reply);
+                    $reply = trim($reply, " \f\n\r\t\v\x00");
                     if (!empty($reply)) {
                         $resultModel = new ResultModel();
                         $resultModel->setPollId($voteModel->getId())

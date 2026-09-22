@@ -14,7 +14,7 @@ class Config extends Install
 {
     public array $config = [
         'key' => 'newsletter',
-        'version' => '1.8.4',
+        'version' => '1.8.5',
         'icon_small' => 'fa-regular fa-newspaper',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',

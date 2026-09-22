@@ -106,7 +106,7 @@ class Cats extends \Ilch\Controller\Admin
         $this->getView()->set('cat', $model);
 
         if ($this->getRequest()->isPost()) {
-            $_POST['title'] = trim($this->getRequest()->getPost('title'));
+            $_POST['title'] = trim($this->getRequest()->getPost('title'), " \f\n\r\t\v\x00");
 
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'title' => 'required|unique:' . $categoryMapper->tablename . ',title,' . $model->getId(),

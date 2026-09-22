@@ -52,11 +52,11 @@ class Index extends \Ilch\Controller\Frontend
 
             if ($validation->isValid()) {
                 $post = [
-                    'reason' => trim($this->getRequest()->getPost('reason')),
-                    'start' => new \Ilch\Date(trim($this->getRequest()->getPost('start'))),
-                    'end' => new \Ilch\Date(trim($this->getRequest()->getPost('end'))),
-                    'text' => trim($this->getRequest()->getPost('text')),
-                    'calendarShow' => trim($this->getRequest()->getPost('calendarShow'))
+                    'reason' => trim($this->getRequest()->getPost('reason'), " \f\n\r\t\v\x00"),
+                    'start' => new \Ilch\Date(trim($this->getRequest()->getPost('start'), " \f\n\r\t\v\x00")),
+                    'end' => new \Ilch\Date(trim($this->getRequest()->getPost('end'), " \f\n\r\t\v\x00")),
+                    'text' => trim($this->getRequest()->getPost('text'), " \f\n\r\t\v\x00"),
+                    'calendarShow' => trim($this->getRequest()->getPost('calendarShow'), " \f\n\r\t\v\x00")
                 ];
 
                 $awayModel = new AwayModel();

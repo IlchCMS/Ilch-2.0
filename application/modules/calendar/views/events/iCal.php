@@ -24,7 +24,7 @@ foreach ($this->get('calendarList') ?? [] as $calendar) {
     $description = str_replace('</p>', "\\n\\n", $description);
     $description = str_replace(['<br />', '<br/>', '<br>'], "\\n", $description);
     $description = str_replace(["\r", "\n"], '', $description);
-    $description = rtrim(trim($description), "\\n\\n");
+    $description = rtrim(trim($description, " \f\n\r\t\v\x00"), "\\n\\n");
 
     $startDate = new \Ilch\Date($calendar->getStart());
     $endDate = $calendar->getEnd() != '1000-01-01 00:00:00'
