@@ -62,7 +62,7 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $_POST['usage'] = trim($this->getRequest()->getPost('usage'));
+            $_POST['usage'] = trim($this->getRequest()->getPost('usage'), " \f\n\r\t\v\x00");
 
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'name' => 'required',

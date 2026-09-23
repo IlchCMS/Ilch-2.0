@@ -105,7 +105,7 @@ class Currency extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
-            $_POST['name'] = trim($this->getRequest()->getPost('name'));
+            $_POST['name'] = trim($this->getRequest()->getPost('name'), " \f\n\r\t\v\x00");
 
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'name' => 'required|unique:' . $currencyMapper->tablename . ',name,' . $currencyModel->getId(),
