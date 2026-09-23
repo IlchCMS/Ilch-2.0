@@ -43,7 +43,10 @@ class Awards extends Mapper
         $select = $this->db()->select();
         $select->fields(['a.id', 'a.date', 'a.rank', 'a.image', 'a.event', 'a.url'])
             ->from(['a' => $this->tablename])
-            ->join(['r' => $this->tablenameRecipients], 'a.id = r.award_id', 'INNER', ['utIds' => 'GROUP_CONCAT(r.ut_id)', 'types' => 'GROUP_CONCAT(r.typ)'])
+            ->join(['r' => $this->tablenameRecipients], 'a.id = r.award_id', 'INNER', [
+                'utIds' => 'GROUP_CONCAT(r.ut_id ORDER BY r.ut_id, r.typ)',
+                'types' => 'GROUP_CONCAT(r.typ ORDER BY r.ut_id, r.typ)',
+            ])
             ->where($where)
             ->group(['a.id'])
             ->order($orderBy);
