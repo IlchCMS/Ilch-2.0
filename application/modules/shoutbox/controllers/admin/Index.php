@@ -69,7 +69,7 @@ class Index extends \Ilch\Controller\Admin
         if ($search === null) {
             $search = $this->getRequest()->getParam('search');
         }
-        $search = trim((string)$search);
+        $search = trim((string)$search, " \f\n\r\t\v\x00");
 
         $pagination->setRowsPerPage($this->getConfig()->get('shoutbox_messagesPerPageAdmincenter') ?: $this->getConfig()->get('defaultPaginationObjects'));
         $pagination->setPage($this->getRequest()->getParam('page'));
@@ -111,14 +111,14 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $post = [
-                'shoutbox_textarea' => trim((string)$this->getRequest()->getPost('shoutbox_textarea')),
+                'shoutbox_textarea' => trim((string)$this->getRequest()->getPost('shoutbox_textarea'), " \f\n\r\t\v\x00"),
             ];
             $validationRules = [
                 'shoutbox_textarea' => 'required',
             ];
 
             if (!$entry->getUid()) {
-                $post['shoutbox_name'] = trim((string)$this->getRequest()->getPost('shoutbox_name'));
+                $post['shoutbox_name'] = trim((string)$this->getRequest()->getPost('shoutbox_name'), " \f\n\r\t\v\x00");
                 $validationRules['shoutbox_name'] = 'required|max:100,string';
             }
 

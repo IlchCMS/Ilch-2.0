@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'linkus',
-        'version' => '1.7.3',
+        'version' => '1.7.4',
         'icon_small' => 'fa-solid fa-link',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',

@@ -164,7 +164,7 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('partner', $model);
 
         if ($this->getRequest()->isPost()) {
-            $banner = trim($this->getRequest()->getPost('banner'));
+            $banner = trim($this->getRequest()->getPost('banner'), " \f\n\r\t\v\x00");
             if (!empty($banner) && strncmp($banner, 'application', 11) === 0) {
                 $banner = BASE_URL . '/' . $banner;
             }

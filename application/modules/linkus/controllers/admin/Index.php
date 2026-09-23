@@ -91,7 +91,7 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             // Add BASE_URL to get a complete URL for validation
-            $banner = trim($this->getRequest()->getPost('banner'));
+            $banner = trim($this->getRequest()->getPost('banner'), " \f\n\r\t\v\x00");
             if (!empty($banner)) {
                 $banner = BASE_URL . '/' . urlencode($banner);
             }

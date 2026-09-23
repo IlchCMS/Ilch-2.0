@@ -70,7 +70,7 @@ class Settings extends \Ilch\Controller\Admin
                 }
 
                 // Prevent breaking out of the style block the custom CSS gets rendered into.
-                $customCss = trim(str_ireplace('</style', '', (string)$this->getRequest()->getPost('customCss')));
+                $customCss = trim(str_ireplace('</style', '', (string)$this->getRequest()->getPost('customCss')), " \f\n\r\t\v\x00");
 
                 $this->getConfig()->set('shoutbox_limit', $this->getRequest()->getPost('limit'))
                     ->set('shoutbox_messagesPerPage', $this->getRequest()->getPost('messagesPerPage'))

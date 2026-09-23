@@ -95,7 +95,7 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $model->setDate(new \Ilch\Date(trim($this->getRequest()->getPost('date'))));
+                $model->setDate(new \Ilch\Date(trim($this->getRequest()->getPost('date'), " \f\n\r\t\v\x00")));
                 $model->setTitle($this->getRequest()->getPost('title'));
                 $model->setType($this->getRequest()->getPost('symbol'));
                 $model->setColor($this->getRequest()->getPost('color'));

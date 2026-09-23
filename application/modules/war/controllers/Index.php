@@ -131,7 +131,7 @@ class Index extends Frontend
                             $model->setWarId($war->getId())
                                 ->setUserId($this->getUser()->getId())
                                 ->setAccept((int)$this->getRequest()->getPost('warAccept'))
-                                ->setComment(trim($this->getRequest()->getPost('warComment')))
+                                ->setComment(trim($this->getRequest()->getPost('warComment'), " \f\n\r\t\v\x00"))
                                 ->setDateCreated($datenow);
                             $acceptMapper->save($model);
 
