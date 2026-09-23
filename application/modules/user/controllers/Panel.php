@@ -99,11 +99,11 @@ class Panel extends BaseController
             ]);
 
             $post = [
-                'email' => trim($this->getRequest()->getPost('email')),
-                'firstname' => trim($this->getRequest()->getPost('first-name')),
-                'lastname' => trim($this->getRequest()->getPost('last-name')),
-                'gender' => trim($this->getRequest()->getPost('gender')),
-                'city' => trim($this->getRequest()->getPost('city'))
+                'email' => trim($this->getRequest()->getPost('email'), " \f\n\r\t\v\x00"),
+                'firstname' => trim($this->getRequest()->getPost('first-name'), " \f\n\r\t\v\x00"),
+                'lastname' => trim($this->getRequest()->getPost('last-name'), " \f\n\r\t\v\x00"),
+                'gender' => trim($this->getRequest()->getPost('gender'), " \f\n\r\t\v\x00"),
+                'city' => trim($this->getRequest()->getPost('city'), " \f\n\r\t\v\x00")
             ];
 
             foreach ($profileFields as $profileField) {
@@ -117,7 +117,7 @@ class Panel extends BaseController
                     if ($profileField->getType() == 4) {
                         $post[$index] = json_encode($this->getRequest()->getPost($index));
                     } else {
-                        $post[$index] = trim($this->getRequest()->getPost($index));
+                        $post[$index] = trim($this->getRequest()->getPost($index), " \f\n\r\t\v\x00");
                         // Date fields submit Y-m-d (native date field); they are still stored as d.m.Y.
                         if ($profileField->getType() == 6 && validateDate($post[$index], 'Y-m-d')) {
                             $post[$index] = \DateTime::createFromFormat('Y-m-d', $post[$index])->format('d.m.Y');
@@ -263,7 +263,7 @@ class Panel extends BaseController
         if ($this->getRequest()->isPost()) {
             $model = new UserModel();
             $model->setId($this->getUser()->getId())
-                ->setSignature(trim($this->getRequest()->getPost('signature')));
+                ->setSignature(trim($this->getRequest()->getPost('signature'), " \f\n\r\t\v\x00"));
             $profilMapper->save($model);
 
             $this->addMessage('saveSuccess');
@@ -454,7 +454,7 @@ class Panel extends BaseController
             if ($this->getUser()->getId() == $user_two) {
                 if ($this->getRequest()->isPost()) {
                     $u_id_fk = $this->getUser()->getId();
-                    $text = trim($this->getRequest()->getPost('text'));
+                    $text = trim($this->getRequest()->getPost('text'), " \f\n\r\t\v\x00");
 
                     $model = new DialogModel();
                     $model->setCId($c_id)

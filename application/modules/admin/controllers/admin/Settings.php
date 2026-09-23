@@ -226,7 +226,7 @@ class Settings extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('maintenance_mode', $this->getRequest()->getPost('maintenanceMode'));
-            $this->getConfig()->set('maintenance_date', new \Ilch\Date(trim($this->getRequest()->getPost('maintenanceDateTime'))));
+            $this->getConfig()->set('maintenance_date', new \Ilch\Date(trim($this->getRequest()->getPost('maintenanceDateTime'), " \f\n\r\t\v\x00")));
             $this->getConfig()->set('maintenance_status', $this->getRequest()->getPost('maintenanceStatus'));
             $this->getConfig()->set('maintenance_text', $this->getRequest()->getPost('maintenanceText'));
 

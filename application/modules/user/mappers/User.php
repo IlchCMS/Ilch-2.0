@@ -439,7 +439,7 @@ class User extends \Ilch\Mapper
      */
     public function getHomepage(string $homepage): string
     {
-        $homepage = trim($homepage);
+        $homepage = trim($homepage, " \f\n\r\t\v\x00");
         if (preg_match('~^https?://~', $homepage) === 0) {
             $homepage = 'http://' . $homepage;
         }

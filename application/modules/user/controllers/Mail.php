@@ -47,7 +47,7 @@ class Mail extends \Ilch\Controller\Frontend
 
             if ($validation->isValid()) {
                 $sender = $userMapper->getUserById($this->getUser()->getId());
-                $message = trim($this->getRequest()->getPost('message'));
+                $message = trim($this->getRequest()->getPost('message'), " \f\n\r\t\v\x00");
                 $date = new \Ilch\Date();
 
                 $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));
