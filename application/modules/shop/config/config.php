@@ -12,9 +12,9 @@ use Ilch\Config\Install;
 
 class Config extends Install
 {
-    public $config = [
+    public array $config = [
         'key' => 'shop',
-        'version' => '1.4.3',
+        'version' => '1.4.4',
         'icon_small' => 'fa-solid fa-cart-shopping',
         'author' => 'blackcoder & LordSchirmer',
         'link' => 'https://ilch.de',
@@ -30,17 +30,17 @@ class Config extends Install
             ],
         ],
         'ilchCore' => '2.2.13',
-        'phpVersion' => '8.0'
+        'phpVersion' => '8.1'
     ];
 
-    public function install()
+    public function install(): void
     {
         $this->db()->queryMulti($this->getInstallSql());
         $databaseConfig = new Database($this->db());
         $databaseConfig->set('shop_currency', '1');
     }
 
-    public function uninstall()
+    public function uninstall(): void
     {
         $this->db()->queryMulti('DELETE FROM `[prefix]_config` WHERE `key` = "shop_currency"');
 
@@ -386,7 +386,7 @@ class Config extends Install
 /***   example entries   ***/';
     }
 
-    public function getUpdate(string $installedVersion)
+    public function getUpdate(string $installedVersion): void
     {
         switch ($installedVersion) {
             case '1.0.0':

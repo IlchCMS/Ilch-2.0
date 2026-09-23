@@ -7,7 +7,6 @@
 
 namespace Modules\Shop\Mappers;
 
-use Ilch\Database\Mysql\Result;
 use Ilch\Mapper;
 use Modules\Shop\Models\Currency as CurrencyModel;
 
@@ -66,30 +65,33 @@ class Currency extends Mapper
      * Insert or update currencies.
      *
      * @param CurrencyModel $model
+     * @return int ID of the saved currency.
      */
-    public function save(CurrencyModel $model)
+    public function save(CurrencyModel $model): int
     {
         if ($model->getId()) {
             $this->db()->update('shop_currencies')
                 ->values(['name' => $model->getName(), 'code' => $model->getCode()])
                 ->where(['id' => $model->getId()])
                 ->execute();
-        } else {
-            $this->db()->insert('shop_currencies')
-                ->values(['name' => $model->getName(), 'code' => $model->getCode()])
-                ->execute();
+
+            return $model->getId();
         }
+
+        return $this->db()->insert('shop_currencies')
+            ->values(['name' => $model->getName(), 'code' => $model->getCode()])
+            ->execute();
     }
 
     /**
      * Deletes the currency by id.
      *
      * @param int $id
-     * @return Result|int
+     * @return bool
      */
-    public function deleteCurrencyById(int $id)
+    public function deleteCurrencyById(int $id): bool
     {
-        return $this->db()->delete('shop_currencies')
+        return (bool) $this->db()->delete('shop_currencies')
             ->where(['id' => $id])
             ->execute();
     }

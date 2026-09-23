@@ -7,7 +7,6 @@
 
 namespace Modules\Shop\Mappers;
 
-use Ilch\Database\Mysql\Result;
 use Ilch\Mapper;
 use Modules\Shop\Models\Propertyvaluetranslation as PropertyValueTranslationModel;
 
@@ -25,7 +24,7 @@ class Propertyvaluestranslations extends Mapper
      * Gets the translations.
      *
      * @param array $where
-     * @return PropertyValueTranslationModel[]|array
+     * @return PropertyValueTranslationModel[]|array|null
      */
     public function getTranslations(array $where = []): ?array
     {
@@ -67,30 +66,33 @@ class Propertyvaluestranslations extends Mapper
      * Insert or update translations.
      *
      * @param PropertyValueTranslationModel $model
+     * @return int ID of the saved translation.
      */
-    public function save(PropertyValueTranslationModel $model)
+    public function save(PropertyValueTranslationModel $model): int
     {
         if ($model->getId()) {
             $this->db()->update('shop_properties_values_trans')
                 ->values(['value_id' => $model->getValueId(), 'locale' => $model->getLocale(), 'text' => $model->getText()])
                 ->where(['id' => $model->getId()])
                 ->execute();
-        } else {
-            $this->db()->insert('shop_properties_values_trans')
-                ->values(['value_id' => $model->getValueId(), 'locale' => $model->getLocale(), 'text' => $model->getText()])
-                ->execute();
+
+            return $model->getId();
         }
+
+        return $this->db()->insert('shop_properties_values_trans')
+            ->values(['value_id' => $model->getValueId(), 'locale' => $model->getLocale(), 'text' => $model->getText()])
+            ->execute();
     }
 
     /**
      * Deletes the translation by id.
      *
      * @param int $id
-     * @return Result|int
+     * @return bool
      */
-    public function deleteTranslationById(int $id)
+    public function deleteTranslationById(int $id): bool
     {
-        return $this->db()->delete('shop_properties_values_trans')
+        return (bool) $this->db()->delete('shop_properties_values_trans')
             ->where(['id' => $id])
             ->execute();
     }

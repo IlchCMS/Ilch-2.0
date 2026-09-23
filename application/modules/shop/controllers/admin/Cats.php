@@ -15,7 +15,7 @@ use Modules\Shop\Mappers\Items as ItemsMapper;
 
 class Cats extends Admin
 {
-    public function init()
+    public function init(): void
     {
         $items = [
             [
@@ -92,7 +92,7 @@ class Cats extends Admin
         );
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $categoryMapper = new CategoryMapper();
         $itemsMapper = new ItemsMapper();
@@ -134,7 +134,7 @@ class Cats extends Admin
         $this->getView()->set('cats', $categoryMapper->getCategories());
     }
 
-    public function treatAction()
+    public function treatAction(): void
     {
         $categoryMapper = new CategoryMapper();
         $groupMapper = new GroupMapper();
@@ -165,7 +165,7 @@ class Cats extends Admin
                 $model->setId($this->getRequest()->getParam('id'));
             }
 
-            $title = trim($this->getRequest()->getPost('title'));
+            $title = trim($this->getRequest()->getPost('title'), " \f\n\r\t\v\x00");
 
             $groups = '';
             if (!empty($this->getRequest()->getPost('groups'))) {
@@ -195,7 +195,7 @@ class Cats extends Admin
         $this->getView()->set('userGroupList', $groupMapper->getGroupList());
     }
 
-    public function delCatAction()
+    public function delCatAction(): void
     {
         $itemsMapper = new ItemsMapper();
 

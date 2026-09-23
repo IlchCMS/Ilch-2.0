@@ -104,7 +104,7 @@ class Orders extends Mapper
      * @param int $id
      * @return false|OrdersModel
      */
-    public function getOrderById(int $id)
+    public function getOrderById(int $id): OrdersModel|bool
     {
         $order = $this->getOrders(['o.id' => $id]);
         return reset($order);
@@ -116,7 +116,7 @@ class Orders extends Mapper
      * @param string $selector
      * @return false|OrdersModel
      */
-    public function getOrderBySelector(string $selector)
+    public function getOrderBySelector(string $selector): OrdersModel|bool
     {
         $order = $this->getOrders(['o.selector' => $selector]);
         return reset($order);
@@ -137,7 +137,7 @@ class Orders extends Mapper
      * Inserts or updates order model.
      *
      * @param OrdersModel $order
-     * @return int
+     * @return int ID of the saved order.
      */
     public function save(OrdersModel $order): int
     {
@@ -162,14 +162,16 @@ class Orders extends Mapper
         ];
 
         if ($order->getId()) {
-            $id = $this->db()->update('shop_orders')
+            $id = $order->getId();
+
+            $this->db()->update('shop_orders')
                 ->values($fields)
                 ->where(['id' => $order->getId()])
                 ->execute();
         } else {
             $id = $this->db()->insert('shop_orders')
-            ->values($fields)
-            ->execute();
+                ->values($fields)
+                ->execute();
         }
 
         foreach ($order->getOrderdetails() as $orderdetail) {
@@ -177,6 +179,7 @@ class Orders extends Mapper
         }
 
         $orderdetailsMapper->save($order->getOrderdetails());
+
         return $id;
     }
 
@@ -184,23 +187,27 @@ class Orders extends Mapper
      * Inserts or updates order status.
      *
      * @param OrdersModel $order
+     * @return int|null ID of the order if the status update affected a row, otherwise null.
      */
-    public function updateStatus(OrdersModel $order)
+    public function updateStatus(OrdersModel $order): ?int
     {
-        $this->db()->update('shop_orders')
+        $affectedRows = (int)$this->db()->update('shop_orders')
             ->values(['status' => $order->getStatus()])
             ->where(['id' => $order->getId()])
             ->execute();
+
+        return $affectedRows > 0 ? $order->getId() : null;
     }
 
     /**
      * Deletes order with given id.
      *
      * @param int $id
+     * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('shop_orders')
+        return (bool) $this->db()->delete('shop_orders')
             ->where(['id' => $id])
             ->execute();
     }

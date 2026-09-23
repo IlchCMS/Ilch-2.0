@@ -16,189 +16,189 @@ class Settings extends Model
      *
      * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The shopName of the settings.
      *
      * @var string
      */
-    protected $shopName = '';
+    protected string $shopName = '';
 
     /**
      * The shopLogo of the settings.
      *
      * @var string
      */
-    protected $shopLogo = '';
+    protected string $shopLogo = '';
 
     /**
      * The shopStreet of the settings.
      *
      * @var string
      */
-    protected $shopStreet = '';
+    protected string $shopStreet = '';
 
     /**
      * The shopPlz of the settings.
      *
      * @var string
      */
-    protected $shopPlz = '';
+    protected string $shopPlz = '';
 
     /**
      * The shopCity of the settings.
      *
      * @var string
      */
-    protected $shopCity = '';
+    protected string $shopCity = '';
 
     /**
      * The shopTel of the settings.
      *
      * @var string
      */
-    protected $shopTel = '';
+    protected string $shopTel = '';
 
     /**
      * The shopFax of the settings.
      *
      * @var string
      */
-    protected $shopFax = '';
+    protected string $shopFax = '';
 
     /**
      * The shopMail of the settings.
      *
      * @var string
      */
-    protected $shopMail = '';
+    protected string $shopMail = '';
 
     /**
      * The shopWeb of the settings.
      *
      * @var string
      */
-    protected $shopWeb = '';
+    protected string $shopWeb = '';
 
     /**
      * The shopStNr of the settings.
      *
      * @var string
      */
-    protected $shopStNr = '';
+    protected string $shopStNr = '';
 
     /**
      * The bankName of the settings.
      *
      * @var string
      */
-    protected $bankName = '';
+    protected string $bankName = '';
 
     /**
      * The bankOwner of the settings.
      *
      * @var string
      */
-    protected $bankOwner = '';
+    protected string $bankOwner = '';
 
     /**
      * The bankIBAN of the settings.
      *
      * @var string
      */
-    protected $bankIBAN = '';
+    protected string $bankIBAN = '';
 
     /**
      * The bankBIC of the settings.
      *
      * @var string
      */
-    protected $bankBIC = '';
+    protected string $bankBIC = '';
 
     /**
      * The deliveryTextTop of the settings.
      *
      * @var string
      */
-    protected $deliveryTextTop = '';
+    protected string $deliveryTextTop = '';
 
     /**
      * The invoiceTextTop of the settings.
      *
      * @var string
      */
-    protected $invoiceTextTop = '';
+    protected string $invoiceTextTop = '';
 
     /**
      * The invoiceTextBottom of the settings.
      *
      * @var string
      */
-    protected $invoiceTextBottom = '';
+    protected string $invoiceTextBottom = '';
 
     /**
      * The agb of the settings.
      *
      * @var string
      */
-    protected $agb = '';
+    protected string $agb = '';
 
     /**
      * The fixTax of the settings.
      *
      * @var int
      */
-    protected $fixTax = 0;
+    protected int $fixTax = 0;
 
     /**
      * The fixShippingCosts of the settings.
      *
      * @var string
      */
-    protected $fixShippingCosts = '';
+    protected string $fixShippingCosts = '';
 
     /**
      * The fixShippingTime of the settings.
      *
      * @var int
      */
-    protected $fixShippingTime = 0;
+    protected int $fixShippingTime = 0;
 
     /**
      * Allow will collect or not.
      *
      * @var int
      */
-    protected $allowWillCollect = 0;
+    protected int $allowWillCollect = 0;
 
     /**
      * The paypal client id of the settings.
      *
      * @var string|null
      */
-    protected $clientID;
+    protected ?string $clientID = null;
 
     /**
      * The paypal.me name.
      *
      * @var string|null
      */
-    protected $paypalMe;
+    protected ?string $paypalMe = null;
 
     /**
      * Preset the invoice amount when using PayPal.Me
      *
      * @var bool
      */
-    protected $paypalMePresetAmount = false;
+    protected bool $paypalMePresetAmount = false;
 
     /**
      * The ifSampleData of the settings.
      *
      * @var int
      */
-    protected $ifSampleData = 0;
+    protected int $ifSampleData = 0;
 
     /**
      * Gets the id of the settings.
@@ -215,7 +215,7 @@ class Settings extends Model
      *
      * @param int $id
      */
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -235,7 +235,7 @@ class Settings extends Model
      *
      * @param string $shopName
      */
-    public function setShopName(string $shopName)
+    public function setShopName(string $shopName): void
     {
         $this->shopName = $shopName;
     }
@@ -255,7 +255,7 @@ class Settings extends Model
      *
      * @param string $shopLogo
      */
-    public function setShopLogo(string $shopLogo)
+    public function setShopLogo(string $shopLogo): void
     {
         $this->shopLogo = $shopLogo;
     }
@@ -275,7 +275,7 @@ class Settings extends Model
      *
      * @param string $shopStreet
      */
-    public function setShopStreet(string $shopStreet)
+    public function setShopStreet(string $shopStreet): void
     {
         $this->shopStreet = $shopStreet;
     }
@@ -295,7 +295,7 @@ class Settings extends Model
      *
      * @param string $shopPlz
      */
-    public function setShopPlz(string $shopPlz)
+    public function setShopPlz(string $shopPlz): void
     {
         $this->shopPlz = $shopPlz;
     }
@@ -315,7 +315,7 @@ class Settings extends Model
      *
      * @param string $shopCity
      */
-    public function setShopCity(string $shopCity)
+    public function setShopCity(string $shopCity): void
     {
         $this->shopCity = $shopCity;
     }
@@ -335,7 +335,7 @@ class Settings extends Model
      *
      * @param string $shopTel
      */
-    public function setShopTel(string $shopTel)
+    public function setShopTel(string $shopTel): void
     {
         $this->shopTel = $shopTel;
     }
@@ -355,7 +355,7 @@ class Settings extends Model
      *
      * @param string $shopFax
      */
-    public function setShopFax(string $shopFax)
+    public function setShopFax(string $shopFax): void
     {
         $this->shopFax = $shopFax;
     }
@@ -375,7 +375,7 @@ class Settings extends Model
      *
      * @param string $shopMail
      */
-    public function setShopMail(string $shopMail)
+    public function setShopMail(string $shopMail): void
     {
         $this->shopMail = $shopMail;
     }
@@ -395,7 +395,7 @@ class Settings extends Model
      *
      * @param string $shopWeb
      */
-    public function setShopWeb(string $shopWeb)
+    public function setShopWeb(string $shopWeb): void
     {
         $this->shopWeb = $shopWeb;
     }
@@ -415,7 +415,7 @@ class Settings extends Model
      *
      * @param string $shopStNr
      */
-    public function setShopStNr(string $shopStNr)
+    public function setShopStNr(string $shopStNr): void
     {
         $this->shopStNr = $shopStNr;
     }
@@ -435,7 +435,7 @@ class Settings extends Model
      *
      * @param string $bankName
      */
-    public function setBankName(string $bankName)
+    public function setBankName(string $bankName): void
     {
         $this->bankName = $bankName;
     }
@@ -455,7 +455,7 @@ class Settings extends Model
      *
      * @param string $bankOwner
      */
-    public function setBankOwner(string $bankOwner)
+    public function setBankOwner(string $bankOwner): void
     {
         $this->bankOwner = $bankOwner;
     }
@@ -475,7 +475,7 @@ class Settings extends Model
      *
      * @param string $bankIBAN
      */
-    public function setBankIBAN(string $bankIBAN)
+    public function setBankIBAN(string $bankIBAN): void
     {
         $this->bankIBAN = $bankIBAN;
     }
@@ -495,7 +495,7 @@ class Settings extends Model
      *
      * @param string $bankBIC
      */
-    public function setBankBIC(string $bankBIC)
+    public function setBankBIC(string $bankBIC): void
     {
         $this->bankBIC = $bankBIC;
     }
@@ -515,7 +515,7 @@ class Settings extends Model
      *
      * @param string $deliveryTextTop
      */
-    public function setDeliveryTextTop(string $deliveryTextTop)
+    public function setDeliveryTextTop(string $deliveryTextTop): void
     {
         $this->deliveryTextTop = $deliveryTextTop;
     }
@@ -535,7 +535,7 @@ class Settings extends Model
      *
      * @param string $invoiceTextTop
      */
-    public function setInvoiceTextTop(string $invoiceTextTop)
+    public function setInvoiceTextTop(string $invoiceTextTop): void
     {
         $this->invoiceTextTop = $invoiceTextTop;
     }
@@ -555,7 +555,7 @@ class Settings extends Model
      *
      * @param string $invoiceTextBottom
      */
-    public function setInvoiceTextBottom(string $invoiceTextBottom)
+    public function setInvoiceTextBottom(string $invoiceTextBottom): void
     {
         $this->invoiceTextBottom = $invoiceTextBottom;
     }
@@ -575,7 +575,7 @@ class Settings extends Model
      *
      * @param string $agb
      */
-    public function setAGB(string $agb)
+    public function setAGB(string $agb): void
     {
         $this->agb = $agb;
     }
@@ -595,7 +595,7 @@ class Settings extends Model
      *
      * @param int $fixTax
      */
-    public function setFixTax(int $fixTax)
+    public function setFixTax(int $fixTax): void
     {
         $this->fixTax = $fixTax;
     }
@@ -615,7 +615,7 @@ class Settings extends Model
      *
      * @param string $fixShippingCosts
      */
-    public function setFixShippingCosts(string $fixShippingCosts)
+    public function setFixShippingCosts(string $fixShippingCosts): void
     {
         $this->fixShippingCosts = $fixShippingCosts;
     }
@@ -635,7 +635,7 @@ class Settings extends Model
      *
      * @param int $fixShippingTime
      */
-    public function setFixShippingTime(int $fixShippingTime)
+    public function setFixShippingTime(int $fixShippingTime): void
     {
         $this->fixShippingTime = $fixShippingTime;
     }
@@ -695,7 +695,7 @@ class Settings extends Model
      *
      * @param string $name
      */
-    public function setPayPalMe(string $name)
+    public function setPayPalMe(string $name): void
     {
         $this->paypalMe = $name;
     }
@@ -735,7 +735,7 @@ class Settings extends Model
      *
      * @param int $ifSampleData
      */
-    public function setIfSampleData(int $ifSampleData)
+    public function setIfSampleData(int $ifSampleData): void
     {
         $this->ifSampleData = $ifSampleData;
     }

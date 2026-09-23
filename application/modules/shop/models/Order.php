@@ -17,98 +17,98 @@ class Order extends Model
      *
      * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The datetime of the order.
      *
      * @var string
      */
-    protected $datetime = '';
+    protected string $datetime = '';
 
     /**
      * The currency id of the order.
      *
      * @var int
      */
-    protected $currencyId = 0;
+    protected int $currencyId = 0;
 
     /**
      * The customer id of the order.
      *
      * @var int
      */
-    protected $customerId = 0;
+    protected int $customerId = 0;
 
     /**
      * The invoice address of the order.
      *
      * @var Address
      */
-    protected $invoiceAddress;
+    protected Address $invoiceAddress;
 
     /**
      * The delivery address of the order.
      *
      * @var Address
      */
-    protected $deliveryAddress;
+    protected Address $deliveryAddress;
 
     /**
      * The email of the order.
      *
      * @var string
      */
-    protected $email = '';
+    protected string $email = '';
 
     /**
      * The array of the order details models.
      *
      * @var Orderdetails[]
      */
-    protected $orderdetails = [];
+    protected array|Orderdetails $orderdetails = [];
 
     /**
      * The filename of the invoice.
      *
      * @var string|null
      */
-    protected $invoicefilename;
+    protected ?string $invoicefilename = null;
 
     /**
      * The datetime when the invoice was sent to the customer.
      *
      * @var string
      */
-    protected $datetimeInvoiceSent = '';
+    protected string $datetimeInvoiceSent = '';
 
     /**
      * Wether the customer collects the order or it needs to be shipped.
      *
      * @var int
      */
-    protected $willCollect = 0;
+    protected int $willCollect = 0;
 
     /**
      * A 18 char long selector.
      *
      * @var string|null
      */
-    protected $selector;
+    protected ?string $selector = null;
 
     /**
      * A 64 char long confirmCode.
      *
      * @var string|null
      */
-    protected $confirmCode;
+    protected ?string $confirmCode = null;
 
     /**
      * The status of the order.
      *
      * @var int|null
      */
-    protected $status;
+    protected ?int $status = null;
 
     public function __construct()
     {
@@ -120,7 +120,7 @@ class Order extends Model
     /**
      * Gets the id of the order.
      *
-     * @return int
+     * @return int|null
      */
     public function getId(): ?int
     {
@@ -322,7 +322,7 @@ class Order extends Model
     /**
      * Gets the datetime when the invoice was sent to the customer.
      *
-     * @return string
+     * @return string|null
      */
     public function getDatetimeInvoiceSent(): ?string
     {

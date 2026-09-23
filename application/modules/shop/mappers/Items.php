@@ -180,13 +180,16 @@ class Items extends Mapper
      *
      * @param int $id
      * @param int $newStock
+     * @return int|null ID of the item if the update affected a row, otherwise null.
      */
-    public function updateStock(int $id, int $newStock)
+    public function updateStock(int $id, int $newStock): ?int
     {
-        $this->db()->update('shop_items')
+        $affectedRows = (int)$this->db()->update('shop_items')
             ->values(['stock' => $newStock])
             ->where(['id' => $id])
             ->execute();
+
+        return $affectedRows > 0 ? $id : null;
     }
 
     /**
@@ -194,9 +197,9 @@ class Items extends Mapper
      *
      * @param int $id
      * @param int $quantity
-     * @return void
+     * @return int|null New stock value, or null if the item was not updated.
      */
-    public function addStock(int $id, int $quantity)
+    public function addStock(int $id, int $quantity): ?int
     {
         $dbStock = $this->db()->select('stock')
             ->from('shop_items')
@@ -204,9 +207,18 @@ class Items extends Mapper
             ->execute()
             ->fetchCell();
 
-        $newStock = $dbStock + $quantity;
+        if ($dbStock === false || $dbStock === null) {
+            return null;
+        }
 
-        $this->updateStock($id, $newStock);
+        $newStock = (int)$dbStock + $quantity;
+        $updatedId = $this->updateStock($id, $newStock);
+
+        if ($updatedId === null) {
+            return null;
+        }
+
+        return $newStock;
     }
 
     /**
@@ -214,9 +226,9 @@ class Items extends Mapper
      *
      * @param int $id
      * @param int $quantity
-     * @return void
+     * @return int|null New stock value, or null if the item was not updated.
      */
-    public function removeStock(int $id, int $quantity)
+    public function removeStock(int $id, int $quantity): ?int
     {
         $dbStock = $this->db()->select('stock')
             ->from('shop_items')
@@ -224,9 +236,18 @@ class Items extends Mapper
             ->execute()
             ->fetchCell();
 
-        $newStock = $dbStock - $quantity;
+        if ($dbStock === false || $dbStock === null) {
+            return null;
+        }
 
-        $this->updateStock($id, $newStock);
+        $newStock = (int)$dbStock - $quantity;
+        $updatedId = $this->updateStock($id, $newStock);
+
+        if ($updatedId === null) {
+            return null;
+        }
+
+        return $newStock;
     }
 
     /**
@@ -249,10 +270,11 @@ class Items extends Mapper
      * Deletes item with given id.
      *
      * @param int $id
+     * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('shop_items')
+        return (bool) $this->db()->delete('shop_items')
             ->where(['id' => $id])
             ->execute();
     }

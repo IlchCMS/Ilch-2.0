@@ -16,21 +16,21 @@ class Customer extends Model
      *
      * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The user id of the customer.
      *
      * @var int
      */
-    protected $userId = 0;
+    protected int $userId = 0;
 
     /**
      * The email of the customer.
      *
      * @var string
      */
-    protected $email = '';
+    protected string $email = '';
 
     /**
      * Gets the id of the customer.

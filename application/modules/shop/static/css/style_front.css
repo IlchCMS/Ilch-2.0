@@ -6,7 +6,7 @@ h1 {
     position: relative;
 }
 div#shopAnker {
-    display: hidden;
+    visibility: hidden;
     height: 0 !important;
     position: absolute;
     top: -80px;
@@ -28,7 +28,24 @@ li em {
 
 h1 a.activecart {
     float: right;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
     text-decoration: none;
+}
+
+h1 a.activecart .fa-shopping-cart {
+    position: relative;
+    vertical-align: middle;
+}
+
+/* Keep the badge from affecting the icon height */
+h1 a.activecart .fa-shopping-cart span.badge {
+    position: absolute;
+    top: -0.45em;
+    right: -0.75em;
+    margin: 0;
+    line-height: 1.4;
 }
 h1 a.activecart:hover {
     text-decoration: none;
@@ -51,8 +68,6 @@ h1 a span.badge {
 .shop-card-index:hover {
     text-decoration: none;
     border: 1px solid #eea236 !important;
-    -webkit-box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
-    -moz-box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
 }
 .card > a > img {
@@ -157,7 +172,7 @@ h1 a span.badge {
     padding: 10px;
 }
 .cart table th {
-    font-style: bold;
+    font-weight: bold;
 }
 .cart img {
     height: 56px !important;
@@ -269,25 +284,19 @@ h1 a span.badge {
     overflow: hidden;
     position: absolute;
     top: -1px;
-    left: 0px;
+    left: 0;
 }
 .cordon-wrapper .cordon {
     font-size: 15px;
     color: #383d41;
     background-color: #e2e3e5;
     text-align: center;
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
     position: relative;
     padding: 5px 0;
     top: 15px;
     left: -30px;
     width: 120px;
-    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.75);
-    -moz-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.75);
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.75);
 }
 .cordon-wrapper .cordon.green {

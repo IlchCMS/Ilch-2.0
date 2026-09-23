@@ -40,7 +40,7 @@ class Category extends Mapper
             $categoryModel->setId($categoryRow['id']);
             $categoryModel->setPos($categoryRow['pos']);
             $categoryModel->setTitle($categoryRow['title']);
-            $categoryModel->setReadAccess($categoryRow['read_access']);
+            $categoryModel->setReadAccess($categoryRow['read_access'] ?? '');
 
             $categories[] = $categoryModel;
         }
@@ -68,10 +68,10 @@ class Category extends Mapper
     /**
      * Return the categories that the groups are allowed to see.
      *
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return CategoryModel[]
      */
-    public function getCategoriesByAccess($groupIds): array
+    public function getCategoriesByAccess(array|string $groupIds): array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -85,21 +85,25 @@ class Category extends Mapper
      *
      * @param int $id
      * @param int $position
+     * @return int|null ID of the category if the update affected a row, otherwise null.
      */
-    public function updatePositionById(int $id, int $position)
+    public function updatePositionById(int $id, int $position): ?int
     {
-        $this->db()->update('shop_cats')
+        $affectedRows = (int)$this->db()->update('shop_cats')
             ->values(['pos' => $position])
             ->where(['id' => $id])
             ->execute();
+
+        return $affectedRows > 0 ? $id : null;
     }
 
     /**
      * Inserts or updates category model.
      *
      * @param CategoryModel $category
+     * @return int ID of the saved category.
      */
-    public function save(CategoryModel $category)
+    public function save(CategoryModel $category): int
     {
         if ($category->getId()) {
             $this->db()->update('shop_cats')
@@ -111,9 +115,9 @@ class Category extends Mapper
             $id = $category->getId();
         } else {
             $maxPos = $this->db()->select('MAX(pos)')
-                      ->from('shop_cats')
-                      ->execute()
-                      ->fetchCell();
+                ->from('shop_cats')
+                ->execute()
+                ->fetchCell();
 
             $id = $this->db()->insert('shop_cats')
                 ->values([
@@ -124,6 +128,8 @@ class Category extends Mapper
         }
 
         $this->saveReadAccess($id, $category->getReadAccess());
+
+        return $id;
     }
 
     /**
@@ -172,10 +178,11 @@ class Category extends Mapper
      * Deletes category with given id.
      *
      * @param int $id
+     * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('shop_cats')
+        return (bool) $this->db()->delete('shop_cats')
             ->where(['id' => $id])
             ->execute();
     }

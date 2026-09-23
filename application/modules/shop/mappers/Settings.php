@@ -15,7 +15,7 @@ class Settings extends Mapper
     /**
      * Gets the settings.
      *
-     * @return SettingsModel
+     * @return SettingsModel|null
      */
     public function getSettings(): ?SettingsModel
     {
@@ -65,10 +65,11 @@ class Settings extends Mapper
      * Update settingShop.
      *
      * @param SettingsModel $settingShop
+     * @return int|null ID of the settings row if the update affected a row, otherwise null.
      */
-    public function updateSettingShop(SettingsModel $settingShop)
+    public function updateSettingShop(SettingsModel $settingShop): ?int
     {
-        $this->db()->update('shop_settings')
+        $affectedRows = (int)$this->db()->update('shop_settings')
             ->values([
                       'shopName' => $settingShop->getShopName(),
                       'shopLogo' => $settingShop->getShopLogo(),
@@ -83,16 +84,19 @@ class Settings extends Mapper
                     ])
             ->where(['id' => '1'])
             ->execute();
+
+        return $affectedRows > 0 ? 1 : null;
     }
 
     /**
      * Update settingBank.
      *
      * @param SettingsModel $settingBank
+     * @return int|null ID of the settings row if the update affected a row, otherwise null.
      */
-    public function updateSettingBank(SettingsModel $settingBank)
+    public function updateSettingBank(SettingsModel $settingBank): ?int
     {
-        $this->db()->update('shop_settings')
+        $affectedRows = (int)$this->db()->update('shop_settings')
             ->values([
                     'bankName' => $settingBank->getBankName(),
                     'bankOwner' => $settingBank->getBankOwner(),
@@ -101,16 +105,19 @@ class Settings extends Mapper
                 ])
             ->where(['id' => '1'])
             ->execute();
+
+        return $affectedRows > 0 ? 1 : null;
     }
 
     /**
      * Update settingDefault.
      *
      * @param SettingsModel $settingDefault
+     * @return int|null ID of the settings row if the update affected a row, otherwise null.
      */
-    public function updateSettingDefault(SettingsModel $settingDefault)
+    public function updateSettingDefault(SettingsModel $settingDefault): ?int
     {
-        $this->db()->update('shop_settings')
+        $affectedRows = (int)$this->db()->update('shop_settings')
             ->values([
                 'fixTax' => $settingDefault->getFixTax(),
                 'fixShippingCosts' => $settingDefault->getFixShippingCosts(),
@@ -121,32 +128,37 @@ class Settings extends Mapper
             ])
             ->where(['id' => '1'])
             ->execute();
+
+        return $affectedRows > 0 ? 1 : null;
     }
 
     /**
      * Update settingAGB.
      *
      * @param SettingsModel $settingAGB
+     * @return int|null ID of the settings row if the update affected a row, otherwise null.
      */
-    public function updateSettingAGB(SettingsModel $settingAGB)
+    public function updateSettingAGB(SettingsModel $settingAGB): ?int
     {
-        $this->db()->update('shop_settings')
+        $affectedRows = (int)$this->db()->update('shop_settings')
             ->values([
                       'agb' => $settingAGB->getAGB()
                     ])
             ->where(['id' => '1'])
             ->execute();
+
+        return $affectedRows > 0 ? 1 : null;
     }
 
     /**
      * Update settings payment.
      *
      * @param SettingsModel $settingPayment
-     * @return void
+     * @return int|null ID of the settings row if the update affected a row, otherwise null.
      */
-    public function updateSettingPayment(SettingsModel $settingPayment)
+    public function updateSettingPayment(SettingsModel $settingPayment): ?int
     {
-        $this->db()->update('shop_settings')
+        $affectedRows = (int)$this->db()->update('shop_settings')
             ->values([
                 'paymentClientID' => $settingPayment->getClientID(),
                 'paypalMe' => $settingPayment->getPayPalMe(),
@@ -154,13 +166,19 @@ class Settings extends Mapper
             ])
             ->where(['id' => '1'])
             ->execute();
+
+        return $affectedRows > 0 ? 1 : null;
     }
 
     /**
      * Delete example data of the shop.
+     *
+     * @return int Number of sample rows deleted.
      */
-    public function deleteSampleData()
+    public function deleteSampleData(): int
     {
+        $affectedRows = 0;
+
         $this->db()->update('shop_settings')
             ->values([
                 'ifSampleData' => '0'
@@ -168,41 +186,47 @@ class Settings extends Mapper
             ->where(['id' => '1'])
             ->execute();
 
-        $this->db()->delete('shop_cats')
+        $affectedRows += (int)$this->db()->delete('shop_cats')
             ->where(['id <=' => 3])
             ->execute();
 
-        $this->db()->delete('shop_access')
+        $affectedRows += (int)$this->db()->delete('shop_access')
             ->where(['cat_id <=' => 3])
             ->execute();
 
-        $this->db()->delete('shop_items')
+        $affectedRows += (int)$this->db()->delete('shop_items')
             ->where(['id <=' => 7])
             ->execute();
 
-        $this->db()->delete('shop_customers')
+        $affectedRows += (int)$this->db()->delete('shop_customers')
             ->where(['id <=' => 4])
             ->execute();
 
-        $this->db()->delete('shop_addresses')
+        $affectedRows += (int)$this->db()->delete('shop_addresses')
             ->where(['id <=' => 4])
             ->execute();
 
-        $this->db()->delete('shop_orders')
+        $affectedRows += (int)$this->db()->delete('shop_orders')
             ->where(['id <=' => 4])
             ->execute();
+
+        return $affectedRows;
     }
 
     /**
      * Keep example data of the shop.
+     *
+     * @return int|null ID of the settings row if the update affected a row, otherwise null.
      */
-    public function keepSampleData()
+    public function keepSampleData(): ?int
     {
-        $this->db()->update('shop_settings')
+        $affectedRows = (int)$this->db()->update('shop_settings')
             ->values([
                 'ifSampleData' => '0'
             ])
             ->where(['id' => '1'])
             ->execute();
+
+        return $affectedRows > 0 ? 1 : null;
     }
 }

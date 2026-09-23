@@ -16,28 +16,28 @@ class Category extends Model
      *
      * @var int|null
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * The pos of the category.
      *
      * @var int
      */
-    private $pos = 0;
+    private int $pos = 0;
 
     /**
      * The title of the category.
      *
      * @var string
      */
-    private $title = '';
+    private string $title = '';
 
     /**
      * Value for read_access.
      *
      * @var string
      */
-    private $read_access = '';
+    private string $read_access = '';
 
     /**
      * Gets the category id.
@@ -54,7 +54,7 @@ class Category extends Model
      *
      * @param int $id
      */
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -74,7 +74,7 @@ class Category extends Model
      *
      * @param int $pos
      */
-    public function setPos(int $pos)
+    public function setPos(int $pos): void
     {
         $this->pos = $pos;
     }
@@ -94,7 +94,7 @@ class Category extends Model
      *
      * @param string $title
      */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }

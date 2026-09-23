@@ -1,5 +1,5 @@
 <?php
-/** @var \Modules\Article\Models\Category[] $categories */
+/** @var \Modules\Shop\Models\Category[] $categories */
 $categories = $this->get('categories');
 
 $countAllItems = $this->get('countAllItems');
@@ -137,7 +137,7 @@ if(!empty($_SESSION['shopping_cart'])) {
     <?php foreach ($shopItems as $shopItem) : ?>
     <div class="col-xs-6 col-md-4">
       <div class="card shop-card-index">
-        <?php if ($shopItem->getCordon() && $shopItem->getCordon() == 1) { ?>
+        <?php if ($shopItem->getCordon() == 1) { ?>
             <div class="cordon-wrapper">
                 <div class="cordon <?=$this->escape($shopItem->getCordonColor()) ?>"><?=$this->escape($shopItem->getCordonText()) ?></div>
             </div>

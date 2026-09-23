@@ -16,14 +16,14 @@ class Currency extends Model
      *
      * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The name of the currency.
      *
      * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * The currency code according to ISO 4217.
@@ -31,7 +31,7 @@ class Currency extends Model
      * @link https://www.six-group.com/en/products-services/financial-information/data-standards.html
      * @var string|null
      */
-    protected $code;
+    protected ?string $code = null;
 
     /**
      * Gets the id of the currency.
@@ -46,7 +46,7 @@ class Currency extends Model
     /**
      * Gets the name of the currency.
      *
-     * @return string
+     * @return string|null
      */
     public function getName(): ?string
     {
@@ -58,7 +58,7 @@ class Currency extends Model
      *
      * @param int $id
      */
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -68,7 +68,7 @@ class Currency extends Model
      *
      * @param string $name
      */
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }

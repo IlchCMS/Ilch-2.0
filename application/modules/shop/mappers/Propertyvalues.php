@@ -7,7 +7,6 @@
 
 namespace Modules\Shop\Mappers;
 
-use Ilch\Database\Mysql\Result;
 use Ilch\Mapper;
 use Modules\Shop\Models\Propertyvalue as PropertyvalueModel;
 
@@ -73,30 +72,33 @@ class Propertyvalues extends Mapper
      * Insert or update values.
      *
      * @param PropertyvalueModel $model
+     * @return int ID of the saved value.
      */
-    public function save(PropertyvalueModel $model)
+    public function save(PropertyvalueModel $model): int
     {
         if ($model->getId()) {
             $this->db()->update('shop_properties_values')
                 ->values(['property_id' => $model->getPropertyId(), 'position' => $model->getPosition(), 'value' => $model->getValue()])
                 ->where(['id' => $model->getId()])
                 ->execute();
-        } else {
-            $this->db()->insert('shop_properties_values')
-                ->values(['property_id' => $model->getPropertyId(), 'position' => $model->getPosition(), 'value' => $model->getValue()])
-                ->execute();
+
+            return $model->getId();
         }
+
+        return $this->db()->insert('shop_properties_values')
+            ->values(['property_id' => $model->getPropertyId(), 'position' => $model->getPosition(), 'value' => $model->getValue()])
+            ->execute();
     }
 
     /**
      * Deletes the value by id.
      *
      * @param int $id
-     * @return Result|int
+     * @return bool
      */
-    public function deleteValueById(int $id)
+    public function deleteValueById(int $id): bool
     {
-        return $this->db()->delete('shop_properties_values')
+        return (bool) $this->db()->delete('shop_properties_values')
             ->where(['id' => $id])
             ->execute();
     }

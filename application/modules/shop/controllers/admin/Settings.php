@@ -15,7 +15,7 @@ use Ilch\Validation;
 
 class Settings extends Admin
 {
-    public function init()
+    public function init(): void
     {
         $items = [
             [
@@ -80,7 +80,7 @@ class Settings extends Admin
         );
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $settingsMapper = new SettingsMapper();
 
@@ -127,7 +127,7 @@ class Settings extends Admin
         $this->getView()->set('settings', $settingsMapper->getSettings());
     }
 
-    public function bankAction()
+    public function bankAction(): void
     {
         $settingsMapper = new SettingsMapper();
 
@@ -164,7 +164,7 @@ class Settings extends Admin
         $this->getView()->set('settings', $settingsMapper->getSettings());
     }
 
-    public function defaultAction()
+    public function defaultAction(): void
     {
         $currencyMapper = new CurrencyMapper();
         $settingsMapper = new SettingsMapper();
@@ -215,7 +215,7 @@ class Settings extends Admin
         $this->getView()->set('shopCurrency', $this->getConfig()->get('shop_currency'));
     }
 
-    public function agbAction()
+    public function agbAction(): void
     {
         $settingsMapper = new SettingsMapper();
 
@@ -246,7 +246,7 @@ class Settings extends Admin
         $this->getView()->set('settings', $settingsMapper->getSettings());
     }
 
-    public function paymentAction()
+    public function paymentAction(): void
     {
         $settingsMapper = new SettingsMapper();
 

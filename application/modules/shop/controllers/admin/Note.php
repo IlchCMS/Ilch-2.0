@@ -11,7 +11,7 @@ use Ilch\Controller\Admin;
 
 class Note extends Admin
 {
-    public function init()
+    public function init(): void
     {
         $items = [
             [
@@ -76,7 +76,7 @@ class Note extends Admin
         );
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])

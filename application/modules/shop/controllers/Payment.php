@@ -15,7 +15,7 @@ use Modules\Shop\Mappers\Items as ItemsMapper;
 
 class Payment extends Frontend
 {
-    public function indexAction()
+    public function indexAction(): void
     {
         $settingsMapper = new SettingsMapper();
         $currencyMapper = new CurrencyMapper();

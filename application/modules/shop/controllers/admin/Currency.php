@@ -15,7 +15,7 @@ use Ilch\Validation;
 
 class Currency extends Admin
 {
-    public function init()
+    public function init(): void
     {
         $items = [
             [
@@ -92,7 +92,7 @@ class Currency extends Admin
         );
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $currencyMapper = new CurrencyMapper();
         $ordersMapper = new OrdersMapper();
@@ -124,7 +124,7 @@ class Currency extends Admin
         $this->getView()->set('currencies', $currencyMapper->getCurrencies());
     }
 
-    public function treatAction()
+    public function treatAction(): void
     {
         // https://developer.paypal.com/reference/currency-codes/
         $currencyCodesPayPal = ['AUD', 'BRL', 'CAD', 'CNY', 'CZK', 'DKK', 'EUR', 'HKD', 'HUF', 'ILS', 'JPY', 'MYR', 'MXN', 'TWD', 'NZD', 'NOK', 'PHP', 'PLN', 'GBP', 'RUB', 'SGD', 'SEK', 'CHF', 'THB', 'USD'];
@@ -162,8 +162,8 @@ class Currency extends Admin
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
             $post = [
                 'id' => $this->getRequest()->getPost('id'),
-                'name' => trim($this->getRequest()->getPost('name')),
-                'code' => trim($this->getRequest()->getPost('code'))
+                'name' => trim($this->getRequest()->getPost('name'), " \f\n\r\t\v\x00"),
+                'code' => trim($this->getRequest()->getPost('code'), " \f\n\r\t\v\x00")
             ];
 
             $rules = [
@@ -171,7 +171,7 @@ class Currency extends Admin
                 'code' => 'required|size:3'
             ];
 
-            if (!in_array(trim($this->getRequest()->getPost('code')), $currencyCodesPayPal)) {
+            if (!in_array(trim($this->getRequest()->getPost('code'), " \f\n\r\t\v\x00"), $currencyCodesPayPal)) {
                 $this->addMessage($this->getTranslator()->trans('notSupportedForPayPal'), 'warning', true);
             }
 
@@ -206,7 +206,7 @@ class Currency extends Admin
         $this->getView()->set('currencyInUse', $currencyInUse);
     }
 
-    public function deleteAction()
+    public function deleteAction(): void
     {
         if ($this->getRequest() && $this->getRequest()->isSecure() && $this->getRequest()->getParam('id') && is_numeric($this->getRequest()->getParam('id'))) {
             $currencyMapper = new CurrencyMapper();

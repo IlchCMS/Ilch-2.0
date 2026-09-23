@@ -52,7 +52,7 @@ class Property extends Model
      *
      * @param int $id
      */
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
@@ -60,7 +60,7 @@ class Property extends Model
     /**
      * Gets the name of the property.
      *
-     * @return string
+     * @return string|null
      */
     public function getName(): ?string
     {
@@ -72,7 +72,7 @@ class Property extends Model
      *
      * @param string $name
      */
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
