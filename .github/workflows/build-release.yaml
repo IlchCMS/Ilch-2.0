@@ -10,52 +10,76 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.3
+          php-version: '8.3'
           tools: composer
-      - name: Get composer cache directory
+
+      - name: Get Composer cache directory
         id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
       - name: Cache dependencies
         uses: actions/cache@v6
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-php${{ matrix.php-versions }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
       - name: Install dependencies
         run: composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction
-      - name: Optimize vendor and static/js. Remove additional optional modules and layouts.
+
+      - name: Optimize release files
         run: php build/optimize_build.php release
+
       - name: Create archive
         run: |
-          git archive --format=zip HEAD > Ilch-2.zip
-          zip -q -d Ilch-2.zip static/js/\* composer.json composer.lock CONTRIBUTING.md README.md
+          # Stage deletions made by optimize_build.php so that the archive
+          # reflects the optimized working tree rather than HEAD.
+          git add -u -- .
+
+          git archive --format=zip "$(git write-tree)" > Ilch-2.zip
+
+          zip -q -d Ilch-2.zip \
+            'static/js/*' \
+            composer.json \
+            composer.lock \
+            CONTRIBUTING.md \
+            README.md
+
           zip -q -r Ilch-2.zip vendor static/js application
+
       - name: Archive artifacts
         uses: actions/upload-artifact@v7
         with:
           name: ilch2-zip
-          path: |
-            Ilch-2.zip
+          path: Ilch-2.zip
 
   create-draft:
+    if: github.ref_type == 'tag'
     runs-on: ubuntu-latest
-    needs: [build]
+    needs:
+      - build
+
     steps:
-      - name: Download a single artifact
+      - name: Download artifact
         uses: actions/download-artifact@v8
         with:
           name: ilch2-zip
+
       - name: Prepare release
         id: prepare-release
         run: |
-          mv Ilch-2.zip Ilch-${{ github.ref_name }}.zip
-          echo "VERSION=${GITHUB_REF_NAME/v/}" >> $GITHUB_OUTPUT
+          mv Ilch-2.zip "Ilch-${{ github.ref_name }}.zip"
+          echo "VERSION=${GITHUB_REF_NAME/v/}" >> "$GITHUB_OUTPUT"
+
       - name: Create release draft
         uses: ncipollo/release-action@v1
         with:
