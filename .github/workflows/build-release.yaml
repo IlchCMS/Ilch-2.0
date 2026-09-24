@@ -43,7 +43,7 @@ jobs:
         run: |
           # Stage deletions made by optimize_build.php so that the archive
           # reflects the optimized working tree rather than HEAD.
-          git add -A
+          git add -u -- .
 
           git archive --format=zip "$(git write-tree)" > Ilch-2.zip
 

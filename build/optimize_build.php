@@ -249,8 +249,8 @@ function optimizeDirectory(string $pathString, array $directories): string
                 $keeps[] = $baseDirPath . str_replace('/', DIRECTORY_SEPARATOR, $keep);
             }
         } elseif (isset($dirOptions['remove'])) {
+            $keeps[] = $baseDirPath;
             foreach ($dirOptions['remove'] as $remove) {
-                $keeps[] = $baseDirPath;
                 $removes[] = $baseDirPath . str_replace('/', DIRECTORY_SEPARATOR, $remove);
             }
         }
