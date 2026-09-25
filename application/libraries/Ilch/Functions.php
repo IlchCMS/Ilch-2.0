@@ -357,17 +357,17 @@ function isEmailOnBlacklist(string $emailAddress): bool
         return false;
     }
 
-    if (empty(trim(\Ilch\Registry::get('config')->get('emailBlacklist')))) {
+    if (empty(trim(\Ilch\Registry::get('config')->get('emailBlacklist'), " \f\n\r\t\v\x00"))) {
         return false;
     }
 
     $emailBlacklist = explode(PHP_EOL, \Ilch\Registry::get('config')->get('emailBlacklist'));
     foreach ($emailBlacklist as $entry) {
-        if (empty(trim($entry))) {
+        if (empty(trim($entry, " \f\n\r\t\v\x00"))) {
             continue;
         }
 
-        if (strpos($emailAddress, trim($entry)) !== false) {
+        if (strpos($emailAddress, trim($entry, " \f\n\r\t\v\x00")) !== false) {
             return true;
         }
     }
@@ -521,6 +521,24 @@ function setcookieIlch(string $name, string $value = '', int $expires = 0, ?arra
     }
 
     return setcookie($name, $value, $params);
+}
+
+/**
+ * Renew the session id while keeping the session data.
+ *
+ * Called whenever the login state of a session changes, e.g. after a successful login.
+ *
+ * @since 2.2.21
+ *
+ * @return bool
+ */
+function regenerateSessionId(): bool
+{
+    if (session_status() !== PHP_SESSION_ACTIVE || headers_sent()) {
+        return false;
+    }
+
+    return session_regenerate_id(true);
 }
 
 /**

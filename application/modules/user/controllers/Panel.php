@@ -302,6 +302,9 @@ class Panel extends BaseController
                     ->setPassword((new PasswordService())->hash($this->getRequest()->getPost('password')));
                 $profilMapper->save($model);
 
+                // Changed credentials, so the session gets a new id.
+                regenerateSessionId();
+
                 $this->redirect()
                     ->withMessage('passwordSuccess')
                     ->to(['action' => 'password']);
