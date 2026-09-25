@@ -229,7 +229,8 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
-            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://www.ilch.de/ilch2_updates/stable/", "ilch", "Germany");';
+            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://www.ilch.de/ilch2_updates/stable/", "ilch", "Germany");
+            INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://updates.nubbys.de/stable/", "RTX2070 (ilch-Team)", "Germany");';
     }
 
     public function getUpdate(string $installedVersion): string
@@ -1353,6 +1354,21 @@ class Config extends \Ilch\Config\Install
 
                 // Update vendor folder to update various dependencies.
                 replaceVendorDirectory();
+                break;
+            case "2.2.20":
+                // Check if the new updateserver was already added. New installations of Ilch 2.2.20 might be missing it.
+                $updateserverExists = $this->db()->select('url')
+                    ->from('admin_updateservers')
+                    ->where(['url' => 'https://updates.nubbys.de/stable/'])
+                    ->execute()
+                    ->fetchCell();
+
+                if (!$updateserverExists) {
+                    // Add new updateserver.
+                    $this->db()->insert('admin_updateservers')
+                        ->values(['url' => 'https://updates.nubbys.de/stable/', 'operator' => 'RTX2070 (ilch-Team)', 'country' => 'Germany'])
+                        ->execute();
+                }
                 break;
         }
 
