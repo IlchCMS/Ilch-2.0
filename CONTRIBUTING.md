@@ -29,6 +29,12 @@
 * Update documentation if the behavior changes.
 * By contributing code, you agree that your contribution is licensed under GPL-3.0.
 
+#### **Language requirements**
+
+* Use English for code comments, documentation, commit messages, issues, and pull requests.
+* Use other languages only for explicitly requested localization work or designated localization files.
+* Keep the default repository content in English.
+
 #### **AI-assisted contributions**
 
 AI assistance is allowed, but it must be disclosed in the pull request using the repository pull request template.
