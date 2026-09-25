@@ -8,6 +8,10 @@
 .partner-box .partnersslider .bx-viewport {
     height: <?=$this->get('boxHeight') ?>px !important;
 }
+.partner-box .partnersslider .partner-item img {
+    max-height: <?=$this->get('boxHeight') ?>px;
+    width: auto;
+}
 </style>
 
 <div class="partner-box">
@@ -64,6 +68,7 @@
 $('.bxslider').bxSlider({
     mode: '<?=$this->get('sliderMode') ?>',
     ticker: true,
+    useCSS: false,
     slideMargin: 10,
     speed: <?=$this->get('sliderSpeed') ?>,
     tickerHover: true

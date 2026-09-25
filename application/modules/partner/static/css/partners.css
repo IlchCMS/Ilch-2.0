@@ -19,3 +19,18 @@
     border: 0 !important;
     box-shadow: none !important;
 }
+.partner-box .bxslider.h-slide {
+    max-width: none !important;
+    white-space: nowrap;
+    font-size: 0;
+}
+.partner-box .bxslider.h-slide > .partner-item {
+    float: none !important;
+    display: inline-block !important;
+    vertical-align: top;
+    font-size: 1rem;
+}
+/* bxSlider sets the slide width to 0 when initialized while hidden (e.g. in a collapsed navbar) */
+.partner-box .bxslider:not(.h-slide) > .partner-item {
+    width: 100% !important;
+}
