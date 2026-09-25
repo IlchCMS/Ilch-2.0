@@ -357,17 +357,17 @@ function isEmailOnBlacklist(string $emailAddress): bool
         return false;
     }
 
-    if (empty(trim(\Ilch\Registry::get('config')->get('emailBlacklist')))) {
+    if (empty(trim(\Ilch\Registry::get('config')->get('emailBlacklist'), " \f\n\r\t\v\x00"))) {
         return false;
     }
 
     $emailBlacklist = explode(PHP_EOL, \Ilch\Registry::get('config')->get('emailBlacklist'));
     foreach ($emailBlacklist as $entry) {
-        if (empty(trim($entry))) {
+        if (empty(trim($entry, " \f\n\r\t\v\x00"))) {
             continue;
         }
 
-        if (strpos($emailAddress, trim($entry)) !== false) {
+        if (strpos($emailAddress, trim($entry, " \f\n\r\t\v\x00")) !== false) {
             return true;
         }
     }

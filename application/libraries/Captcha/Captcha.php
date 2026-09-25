@@ -291,7 +291,7 @@ class Captcha
         if (fseek($fp, $length * $line) == -1) {
             return false;
         }
-        $text = trim(fgets($fp));
+        $text = trim(fgets($fp), " \f\n\r\t\v\x00");
         fclose($fp);
 
         /** Change ramdom volcals */
