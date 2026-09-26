@@ -292,7 +292,7 @@ class Transfer
 
         foreach ($versionsList ?? [] as $version => $details) {
             if (version_compare(preg_replace('/\s+/', '', $version), $this->versionNow, '>')) {
-                $this->newVersion = trim(preg_replace('/\s\s+/', '', $version));
+                $this->newVersion = trim(preg_replace('/\s\s+/', '', $version), " \f\n\r\t\v\x00");
                 $this->checkRequirements($details);
                 return true;
             }
@@ -366,6 +366,8 @@ class Transfer
      */
     public function save(): bool
     {
+        $verified = false;
+
         try {
             $newUpdate = url_get_contents($this->downloadUrl, false, true);
             if (!is_dir($this->zipSavePath)) {
@@ -379,17 +381,24 @@ class Transfer
             $dlHandler = fopen($this->zipSigFile, 'wb');
             fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
-        } finally {
+
             $signature = file_get_contents($this->zipSigFile);
             $pubKeyfile = ROOT_PATH . '/certificate/Certificate.crt';
-            if (!$this->verifyFile($pubKeyfile, $this->zipFile, $signature)) {
-                // Verification failed. Drop the potentially bad files.
-                unlink($this->zipFile);
-                unlink($this->zipSigFile);
-                return false;
+            $verified = $this->verifyFile($pubKeyfile, $this->zipFile, $signature);
+        } finally {
+            if (!$verified) {
+                // Verification failed or the download was interrupted.
+                // Drop the potentially bad / incomplete files.
+                if (is_file($this->zipFile)) {
+                    unlink($this->zipFile);
+                }
+                if (is_file($this->zipSigFile)) {
+                    unlink($this->zipSigFile);
+                }
             }
-            return true;
         }
+
+        return $verified;
     }
 
     /**

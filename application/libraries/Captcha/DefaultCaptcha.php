@@ -96,7 +96,7 @@ class DefaultCaptcha
         $result = false;
         if (isset($_SESSION[$sessionKey])) {
             // The generated captcha text is always lowercase, so compare case-insensitively.
-            $result = (strcasecmp(trim($token), $_SESSION[$sessionKey]) === 0);
+            $result = (strcasecmp(trim($token, " \f\n\r\t\v\x00"), $_SESSION[$sessionKey]) === 0);
             unset($_SESSION[$sessionKey]);
         }
         return $result;
