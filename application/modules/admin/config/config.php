@@ -1369,6 +1369,10 @@ class Config extends \Ilch\Config\Install
                         ->values(['url' => 'https://updates.nubbys.de/stable/', 'operator' => 'RTX2070 (ilch-Team)', 'country' => 'Germany'])
                         ->execute();
                 }
+
+                // Remove Tempus Dominus and Popper.
+                removeDir(ROOT_PATH . '/static/js/popper');
+                removeDir(ROOT_PATH . '/static/js/tempus-dominus');
                 break;
         }
 
