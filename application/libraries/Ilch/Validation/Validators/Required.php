@@ -42,7 +42,7 @@ class Required extends Base
     public function run(): Required
     {
         $value = $this->getValue();
-        $value = is_string($value) ? trim($value) : $value;
+        $value = is_string($value) ? trim($value, " \f\n\r\t\v\x00") : $value;
 
         $this->setIsValid(!($value === null || $value == [] || $value === ''));
 

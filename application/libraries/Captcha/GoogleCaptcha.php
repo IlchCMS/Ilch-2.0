@@ -74,7 +74,6 @@ class GoogleCaptcha
         if (isset($hide)) {
             $this->setHide($hide);
         }
-        return $this;
     }
 
     /**
