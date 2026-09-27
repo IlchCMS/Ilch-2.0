@@ -70,9 +70,9 @@ return [
     'captcha_apikey_info' => 'To enter the following fields, you first need to create an app on %s.',
     'htmlPurifier' => 'HTMLPurifier',
     'htmlPurifierDescription' => '<p>For security reasons, entered code, for example in articles or own boxes/pages, is filtered on output.
-This can cause the output to not work or look different than expected.<br>
-<a href="https://github.com/IlchCMS/Ilch-2.0/wiki/Doku-Benutzer-Inhalt-eigene-Boxen-Seiten">See documentation for further information.</a></p>
-<p><strong>It is not recommended to disable this security measure.</strong></p>',
+                                  This can cause the output to not work or look different than expected.<br>
+                                  <a href="https://github.com/IlchCMS/Ilch-2.0/wiki/Doku-Benutzer-Inhalt-eigene-Boxen-Seiten">See documentation for further information.</a></p>
+                                  <p><strong>It is not recommended to disable this security measure.</strong></p>',
     'htmlPurifierSettings' => 'HTMLPurifier settings',
     'showHtmlPurifierSettings' => 'Show the settings',
     'menuHtmlPurifier' => 'HTMLPurifier settings',
@@ -173,9 +173,9 @@ This can cause the output to not work or look different than expected.<br>
     'menuMaintenance' => 'Maintenance',
     'menuBackup' => 'Database backup',
     'createBackupInfoText' => '<p>Enable the "Add CREATE DATABASE statement" option if the database should be created with the same name on import.
-                                Disable this option if the database should have a different name.</p>
-                                <p>"Add DROP TABLE statements" drops existing tables on import so that they can be created again.</p>
-                                <p>If you later want to use Ilch to import a backup, the "Add DROP TABLE statements" option should be enabled, while the compression should be disabled.</p>',
+                               Disable this option if the database should have a different name.</p>
+                               <p>"Add DROP TABLE statements" drops existing tables on import so that they can be created again.</p>
+                               <p>If you later want to use Ilch to import a backup, the "Add DROP TABLE statements" option should be enabled, while the compression should be disabled.</p>',
     'compress' => 'Compression',
     'compressNone' => 'None',
     'skipComments' => 'Display comments',
@@ -319,8 +319,8 @@ This can cause the output to not work or look different than expected.<br>
     'fileGroup' => 'Group',
     'certificate' => 'Certificate',
     'certificateInfoText' => 'Ilch uses the certificate to verify if the update, module or layout is from the Ilch developers and was not manipulated in the meantime.
-                            The type of the certificate should be RSA, the key size at least 2048-bit and it should be valid.
-                            The fingerprint can be helpful to determine if you have the correct certificate.',
+                              The type of the certificate should be RSA, the key size at least 2048-bit and it should be valid.
+                              The fingerprint can be helpful to determine if you have the correct certificate.',
     'property' => 'Property',
     'value' => 'Value',
     'certificateDateFormat' => 'Y-m-d H:i:s',

@@ -70,9 +70,9 @@ return [
     'captcha_apikey_info' => 'Um die folgenden Felder auszufüllen, müssen Sie zuerst eine App auf %s erstellen.',
     'htmlPurifier' => 'HTMLPurifier',
     'htmlPurifierDescription' => '<p>Aus Sicherheitsgründen wird eingegebener Code z.B. in Artikeln oder selbst erstellten Boxen/Seiten "gefiltert" ausgegeben.
-Dies kann in einigen Fällen dazu führen, dass die Ausgabe nicht mehr funktioniert oder anders aussieht als erwartet.<br>
-<a href="https://github.com/IlchCMS/Ilch-2.0/wiki/Doku-Benutzer-Inhalt-eigene-Boxen-Seiten">Siehe Dokumentation für weitere Informationen.</a></p>
-<p><strong>Es wird nicht empfohlen diese Sicherheitsmaßnahme zu deaktivieren.</strong></p>',
+                                  Dies kann in einigen Fällen dazu führen, dass die Ausgabe nicht mehr funktioniert oder anders aussieht als erwartet.<br>
+                                  <a href="https://github.com/IlchCMS/Ilch-2.0/wiki/Doku-Benutzer-Inhalt-eigene-Boxen-Seiten">Siehe Dokumentation für weitere Informationen.</a></p>
+                                  <p><strong>Es wird nicht empfohlen diese Sicherheitsmaßnahme zu deaktivieren.</strong></p>',
     'htmlPurifierSettings' => 'HTMLPurifier-Einstellungen',
     'showHtmlPurifierSettings' => 'Anzeigen der Einstellungen',
     'menuHtmlPurifier' => 'HTMLPurifier-Einstellungen',
@@ -173,9 +173,9 @@ Dies kann in einigen Fällen dazu führen, dass die Ausgabe nicht mehr funktioni
     'menuMaintenance' => 'Wartungsarbeiten',
     'menuBackup' => 'Datenbank-Backup',
     'createBackupInfoText' => '<p>Die Einstellung "CREATE DATABASE-Befehl hinzufügen" sollte aktiviert sein, wenn beim Import die Datenbank mit gleicher Bezeichnung erstellt werden soll.
-Sie sollte deaktiviert sein, wenn die Datenbank danach eine andere Bezeichnung haben soll.</p>
-<p>"DROP TABLE-Befehle hinzufügen" löscht beim Import bereits vorhandene Tabellen, um diese dann neu zu erstellen.</p>
-<p>Wenn Sie später Ilch zum Importieren eines Backups nutzen möchten, sollte die "DROP TABLE-Befehle hinzufügen"-Option aktiviert werden. Die Komprimierung sollte dagegen deaktiviert werden.</p>',
+                               Sie sollte deaktiviert sein, wenn die Datenbank danach eine andere Bezeichnung haben soll.</p>
+                               <p>"DROP TABLE-Befehle hinzufügen" löscht beim Import bereits vorhandene Tabellen, um diese dann neu zu erstellen.</p>
+                               <p>Wenn Sie später Ilch zum Importieren eines Backups nutzen möchten, sollte die "DROP TABLE-Befehle hinzufügen"-Option aktiviert werden. Die Komprimierung sollte dagegen deaktiviert werden.</p>',
     'compress' => 'Komprimierung',
     'compressNone' => 'keine',
     'skipComments' => 'Kommentare anzeigen',
@@ -319,8 +319,8 @@ Sie sollte deaktiviert sein, wenn die Datenbank danach eine andere Bezeichnung h
     'fileGroup' => 'Gruppe',
     'certificate' => 'Zertifikat',
     'certificateInfoText' => 'Ilch nutzt das Zertifikat um zu prüfen ob ein Update, Modul oder Layout von den Ilch-Entwicklern kommt und nicht
-zwischenzeitlich manipuliert wurde. Der Typ des Zertifikats sollte RSA, die Schlüssellänge mindestens 2048 Bit und das Zertifikat gültig sein.
-Der Fingerabdruck des Zertifikats kann helfen herauszufinden ob man das richtige Zertifikat hat.',
+                              zwischenzeitlich manipuliert wurde. Der Typ des Zertifikats sollte RSA, die Schlüssellänge mindestens 2048 Bit und das Zertifikat gültig sein.
+                              Der Fingerabdruck des Zertifikats kann helfen herauszufinden ob man das richtige Zertifikat hat.',
     'property' => 'Eigenschaft',
     'value' => 'Wert',
     'certificateDateFormat' => 'd.m.Y H:i:s',
@@ -421,9 +421,9 @@ Der Fingerabdruck des Zertifikats kann helfen herauszufinden ob man das richtige
     'noNotificationPermissions' => 'Keine Einträge vorhanden.',
     'limit' => 'Limit',
     'notificationsInfoText' => 'Hier werden alle Module aufgelistet, die eine Benachrichtigung im Admincenter angezeigt haben.<br>
-Den Modulen kann die Erlaubnis Benachrichtigungen im Admincenter anzuzeigen entzogen werden.<br>
-Des Weiteren kann begrenzt werden wie viele Benachrichtigungen ein Modul im Admincenter anzeigen kann.
-Ein Limit von 0 ist gleichbedeutend mit kein Limit.',
+                                Den Modulen kann die Erlaubnis Benachrichtigungen im Admincenter anzuzeigen entzogen werden.<br>
+                                Des Weiteren kann begrenzt werden wie viele Benachrichtigungen ein Modul im Admincenter anzeigen kann.
+                                Ein Limit von 0 ist gleichbedeutend mit kein Limit.',
     'moduleUpdatesAvailable' => 'Modul Update(s) verfügbar (%s)',
 
     'menuEmails' => 'E-Mails',
