@@ -10,7 +10,7 @@ return [
     'banner' => 'Banner',
     'title' => 'Title',
     'htmlForWebsite' => 'HTML-Code (for Websites)',
-    'bbcodeForForum' => 'BB-Code (for Foren)',
+    'bbcodeForForum' => 'BB-Code (for Forums)',
     'noLinkus' => 'No entries available',
     'showHtml' => 'Show HTML-Code?',
     'showBBCode' => 'Show BB-Code?',

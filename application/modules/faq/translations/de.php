@@ -19,7 +19,7 @@ return [
     'entries' => 'Einträge',
     'deleteFailed' => 'Es befinden sich noch Einträge in der Kategorie',
     'missingTitle' => 'Titel muss ausgefüllt werden',
-    'noFaqs' => 'Keine FAQ vorhanden',
+    'noFaqs' => 'Keine FAQs vorhanden',
     'noCategory' => 'Keine Kategorie vorhanden',
     'sortCategoriesAlphabetically' => 'Kategorien alphabetisch sortieren',
     'sortQuestionsAlphabetically' => 'Fragen alphabetisch sortieren',

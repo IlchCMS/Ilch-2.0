@@ -9,10 +9,10 @@ return [
     'privacy' => 'Privacy Policy',
     'show' => 'Show',
     'title' => 'Title',
-    'urlTitle' => 'Source',
+    'urlTitle' => 'URL Title',
     'url' => 'Link',
     'text' => 'Text',
-    'source' => 'Source',
+    'source' => 'Sources',
     'menuPrivacy' => 'Privacy Policy',
     'noPrivacy' => 'No Privacy Policy available',
 ];

@@ -12,7 +12,7 @@ return [
     'validation.errors.same.fieldsDontMatch' => '%s muss mit %s übereinstimmen.',
     'validation.errors.same.fieldsMatch' => '%s darf nicht mit %s übereinstimmen.',
     'validation.errors.captcha.wrongCaptcha' => '%s entspricht nicht der gezeigten Zeichenkombination',
-    'validation.errors.grecaptcha.wrongCaptcha' => '%s ist fehlgeschlagen.',
+    'validation.errors.grecaptcha.wrongCaptcha' => '%s hat fehlgeschlagen.',
     'validation.errors.date.mustBeDate' => '%s ist kein gültiges Datum oder verwendet ein falsches Format (%s).',
     'validation.errors.url.noValidUrl' => '%s muss eine gültige URL sein.',
     'validation.errors.domain.noValidDomain' => '%s muss eine gültige Domain sein.',
@@ -39,7 +39,7 @@ return [
     // general
     'saveSuccess' => 'Erfolgreich gespeichert',
     'deleteSuccess' => 'Erfolgreich gelöscht',
-    'updateSuccess' => 'Erfolgreich geupdatet',
+    'updateSuccess' => 'Erfolgreich aktualisiert',
     'close' => 'Schließen',
     'captcha' => 'Captcha',
     'submit' => 'Eintragen',

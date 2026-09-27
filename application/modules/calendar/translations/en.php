@@ -10,7 +10,7 @@ return [
     'noCalendar' => 'No entries available',
     'title' => 'Title',
     'text' => 'Text',
-    'color' => 'Term Color',
+    'color' => 'Event Color',
     'place' => 'Place',
     'start' => 'Start',
     'end' => 'End',
@@ -21,7 +21,7 @@ return [
     'visibleFor' => 'Visible for',
     'periodEntry' => 'Cycle',
     'noPeriodEntry' => 'no cycle',
-    'repeatUntil' => 'Repeat until the',
+    'repeatUntil' => 'Repeat until',
 
     'calendarMonth' => 'Month',
     'calendarWeek' => 'Week',
@@ -42,7 +42,7 @@ return [
     'periodEvery' => 'Every',
     'weeks' => 'week(s)',
     'months' => 'month(s)',
-    'quarter' => 'quarter',
+    'quarter' => 'quarter(s)',
     'years' => 'year(s)',
 
     'listweek' => 'Weekly List',

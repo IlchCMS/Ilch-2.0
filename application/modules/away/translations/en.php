@@ -8,9 +8,9 @@
 return [
     'menuAway' => 'Away list',
     'adminNotification' => 'Notify administrators of new entries',
-    'userNotification' => 'Notify users',
+    'userNotification' => 'Notify user groups',
     'notifyGroups' => 'Notify these user groups',
-    'menuEntry' => 'Entry',
+    'menuEntry' => 'Add entry',
     'noAway' => 'No entries available',
     'from' => 'From',
     'when' => 'Start- / End date',

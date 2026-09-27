@@ -10,7 +10,7 @@ return [
     'menuMedia' => 'Media',
     'menuActionAddNew' => 'Upload files',
     'import' => 'Import new media',
-    'mediaFromImport' => 'Import new media from upload folder',
+    'mediaFromImport' => 'Import new media from the upload folder',
     'description' => 'Description',
     'size' => 'Size',
     'type' => 'Type',
@@ -19,7 +19,7 @@ return [
     'noMedias' => 'No media',
     'name' => 'Name',
     'date' => 'Date added',
-    'writableMedia' => 'Upload folder is not writeable',
+    'writableMedia' => 'Upload folder is not writable',
     'settings' => 'Settings',
     'allowedVideos' => 'Allowed videos',
     'allowedFiles' => 'Allowed files',
@@ -59,11 +59,11 @@ return [
     'menuActionAddNewCat' => 'New category',
     'newCat' => 'Add new category',
     'noCats' => 'No categories available',
-    'treatCat' => 'Treat category',
+    'treatCat' => 'Edit category',
 
-    'forbiddenExtension' => 'You tried to add an forbidden file extension.',
+    'forbiddenExtension' => 'You tried to add a forbidden file extension.',
     'mediaPerPage' => 'Media per page',
 
     'assignCategory' => 'Assign category',
-    'directoriesAsCategories' => 'Create categories of found directories on import.',
+    'directoriesAsCategories' => 'Create categories for found directories during import.',
 ];

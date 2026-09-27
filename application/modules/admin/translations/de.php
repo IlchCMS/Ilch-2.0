@@ -18,7 +18,7 @@ return [
     'installSuccess' => 'Erfolgreich installiert',
     'treat' => 'Bearbeiten',
     'menuChange' => 'Menü bearbeiten',
-    'menuItemAdd' => 'Menüitem hinzufügen',
+    'menuItemAdd' => 'Menüeintrag hinzufügen',
     'itemTitle' => 'Item-Titel',
     'itemType' => 'Item-Typ',
     'linking' => 'Verlinkung',
@@ -48,12 +48,12 @@ return [
     'signIn' => 'Einloggen',
     'logoutMsg' => 'Sie wurden erfolgreich ausgeloggt.',
     'alreadyLoggedIn' => 'Sie sind bereits eingeloggt.',
-    'loginFailed' => 'Es wurde kein Benutzer mit dieser Benutzername/E-Mail oder Passwort gefunden.',
-    'userNotActivated' => 'Benutzerkonto wurde noch nicht aktiviert.',
+    'loginFailed' => 'Es wurde kein Benutzer mit diesem Benutzernamen/E-Mail oder Passwort gefunden.',
+    'userNotActivated' => 'Das Benutzerkonto wurde noch nicht aktiviert.',
     'logout' => 'Ausloggen',
     'name' => 'Name',
     'version' => 'Version',
-    'noUserEmailGiven' => 'Es wurde kein(e) Benutzername/E-Mail angegeben.',
+    'noUserEmailGiven' => 'Es wurden weder ein Benutzername noch eine E-Mail angegeben.',
     'contentLanguage' => 'Sprache des Inhaltes',
     'domain' => 'Domain',
     'useCurrentDomain' => 'Aktuelle Domain nutzen',
@@ -66,11 +66,11 @@ return [
     'default' => 'Standard',
     'grecaptcha' => 'Google ReCaptcha',
     'captcha_apikey' => 'Websiteschlüssel',
-    'captcha_seckey' => 'Geheimen Schlüssel',
-    'captcha_apikey_info' => 'Um die folgenden Felder auszuf&uuml;llen, musst du zun&auml;chst eine App auf %s erstellen.',
+    'captcha_seckey' => 'Geheimer Schlüssel',
+    'captcha_apikey_info' => 'Um die folgenden Felder auszufüllen, müssen Sie zuerst eine App auf %s erstellen.',
     'htmlPurifier' => 'HTMLPurifier',
-    'htmlPurifierDescription' => '<p>Aus Sicherheitsgründen wird eingegebener Code z.B. in Artikeln oder selbst erstellen Boxen/Seiten "gefiltert" ausgegeben.
-                                  Dies wird in einigen Fällen dazu führen, dass die Ausgabe nicht mehr funktioniert oder anders aussieht als erwartet.<br>
+    'htmlPurifierDescription' => '<p>Aus Sicherheitsgründen wird eingegebener Code z.B. in Artikeln oder selbst erstellten Boxen/Seiten "gefiltert" ausgegeben.
+                                  Dies kann in einigen Fällen dazu führen, dass die Ausgabe nicht mehr funktioniert oder anders aussieht als erwartet.<br>
                                   <a href="https://github.com/IlchCMS/Ilch-2.0/wiki/Doku-Benutzer-Inhalt-eigene-Boxen-Seiten">Siehe Dokumentation für weitere Informationen.</a></p>
                                   <p><strong>Es wird nicht empfohlen diese Sicherheitsmaßnahme zu deaktivieren.</strong></p>',
     'htmlPurifierSettings' => 'HTMLPurifier-Einstellungen',
@@ -101,7 +101,7 @@ return [
     'labelMenu' => 'Menü',
     'ilchCMSVersion' => 'Ilch CMS %s',
     'maintenanceMode' => 'Wartungsmodus',
-    'maintenanceEndDateTime' => 'Ende Datum / Uhrzeit',
+    'maintenanceEndDateTime' => 'Enddatum / Uhrzeit',
     'maintenanceText' => 'Text',
     'maintenanceTime' => 'Verbleibende Zeit bis zum Start',
     'maintenanceStatus' => 'Status',
@@ -172,10 +172,10 @@ return [
     'debugModusSaveError' => 'Der Debug-Modus konnte nicht gespeichert werden. Bitte die Schreibrechte der Datei application/config.php prüfen.',
     'menuMaintenance' => 'Wartungsarbeiten',
     'menuBackup' => 'Datenbank-Backup',
-    'createBackupInfoText' => '<p>"CREATE DATABASE-Befehl hinzufügen" möchte man aktiviert haben, wenn beim Import die Datenbank mit gleicher Bezeichnung erstellt werden soll.
-                               Die Einstellung sollte deaktiviert sein, wenn die Datenbank danach eine andere Bezeichnung haben soll.</p>
+    'createBackupInfoText' => '<p>Die Einstellung "CREATE DATABASE-Befehl hinzufügen" sollte aktiviert sein, wenn beim Import die Datenbank mit gleicher Bezeichnung erstellt werden soll.
+                               Sie sollte deaktiviert sein, wenn die Datenbank danach eine andere Bezeichnung haben soll.</p>
                                <p>"DROP TABLE-Befehle hinzufügen" löscht beim Import bereits vorhandene Tabellen, um diese dann neu zu erstellen.</p>
-                               <p>Wenn Sie später Ilch zum Importieren eines Backups nutzen möchten, sollten Sie die "DROP TABLE-Befehle hinzufügen"-Option für das Backup aktiviert werden. Die Komprimierung dagegen deaktiviert.</p>',
+                               <p>Wenn Sie später Ilch zum Importieren eines Backups nutzen möchten, sollte die "DROP TABLE-Befehle hinzufügen"-Option aktiviert werden. Die Komprimierung sollte dagegen deaktiviert werden.</p>',
     'compress' => 'Komprimierung',
     'compressNone' => 'keine',
     'skipComments' => 'Kommentare anzeigen',
@@ -192,7 +192,7 @@ return [
     'backupRefresh' => 'Verzeichnis durchsuchen',
     'backupRefreshSuccess' => 'Backup-Übersicht wurde erfolgreich aktualisiert.',
     'backupRefreshError' => 'Ein gefundenes Backup konnte nicht umbenannt werden. Prüfen Sie bitte die Zugriffsrechte.',
-    'menuCustomCSS' => 'Benutzerdefinierte CSS',
+    'menuCustomCSS' => 'Benutzerdefiniertes CSS',
     'menuHtaccess' => 'htaccess',
     'modrewriteLinesAdded' => 'Einträge für Mod-Rewrite hinzugefügt.',
     'modrewriteLinesRemoved' => 'Einträge für Mod-Rewrite entfernt.',
@@ -233,7 +233,7 @@ return [
     'author' => 'Autor',
     'searchForUpdates' => 'Nach Updates suchen',
     'updateNow' => 'Jetzt aktualisieren',
-    'versionQueryFailedWith' => 'Versionsabfrage ist mit folgenden Fehler fehlgeschlagen: "%s". Versuchen Sie den Updateserver zu wechseln, sollte dieses Problem nicht temporär sein.',
+    'versionQueryFailedWith' => 'Die Versionsabfrage ist mit folgendem Fehler fehlgeschlagen: "%s". Sollte dieses Problem nicht nur temporär sein, wechseln Sie den Update-Server.',
     'system' => 'System',
     'upToDate' => 'aktuell',
     'notUpToDate' => 'nicht aktuell',
@@ -313,7 +313,7 @@ return [
     'allRightsInfo' => 'Das Prüfen der Rechte aller Dateien nimmt mehrere Sekunden in Anspruch.',
     'checkAllRights' => 'Rechte aller Dateien prüfen',
     'refreshAllRights' => 'Aktualisieren',
-    'allRightsFailure' => 'Es ist ein Fehler aufgetreten. Klicken Sie auf das "Aktualisieren"-Icon um es erneut zu versuchen.',
+    'allRightsFailure' => 'Es ist ein Fehler aufgetreten. Klicken Sie auf das "Aktualisieren"-Icon, um es erneut zu versuchen.',
     'path' => 'Pfad',
     'fileOwner' => 'Eigentümer',
     'fileGroup' => 'Gruppe',
@@ -337,7 +337,7 @@ return [
     'menuKeyboardShortcuts' => 'Tastaturkürzel',
     'hmenuKeyboardShortcuts' => 'Tastaturkürzel',
     'keyboardBackendShortcuts' => 'Backend Tastenkombinationen',
-    'keyboardShortcutsCustumCSS' => 'Benutzerdefinierte CSS Tastenkombinationen',
+    'keyboardShortcutsCustumCSS' => 'Custom CSS Tastenkombinationen',
     'shortcut' => 'Kürzel',
     'shortcutOption' => 'Option',
     'keyAlt' => 'Alt',
@@ -357,7 +357,7 @@ return [
     'shortcutCustumCSSLineLeft' => 'Verschiebt die markierte Zeile nach links',
     'shortcutCustumCSSLineRight' => 'Verschiebt die markierte Zeile nach rechts',
     'shortcutCustumCSSMultiEdit' => 'Markiert mit der Maus mehrere Zeilen zur gleichzeitigen Bearbeitung',
-    'shortcutCustumCSStoggleComment' => 'Zum Auskommentieren von markierten Zeilen oder um die Kommentar wieder zu entfernen',
+    'shortcutCustumCSStoggleComment' => 'Zum Auskommentieren von markierten Zeilen oder um den Kommentar wieder zu entfernen',
 
     'menuLogs' => 'Protokoll',
     'hmenuLogs' => 'Protokoll',
@@ -406,8 +406,8 @@ return [
     'deleteSelectedEntries' => 'Sollen die markierten Einträge wirklich gelöscht werden?',
     'deleteEntry' => 'Soll der Eintrag wirklich gelöscht werden?',
 
-    'noLayoutsAvailable' => 'Entweder es sind keine Layouts verfügbar oder die Liste der Layouts konnte nicht abgefragt werden.',
-    'noModulesAvailable' => 'Entweder es sind keine Module verfügbar oder die Liste der Module konnte nicht abgefragt werden.',
+    'noLayoutsAvailable' => 'Entweder sind keine Layouts verfügbar, oder die Liste der Layouts konnte nicht abgefragt werden.',
+    'noModulesAvailable' => 'Entweder sind keine Module verfügbar, oder die Liste der Module konnte nicht abgefragt werden.',
 
     'noRights' => 'Keine Berechtigung',
 
@@ -436,8 +436,8 @@ return [
     'emailTemplateNotFound' => 'E-Mail-Vorlage nicht gefunden.',
 
     'menuMail' => 'Mail Einstellungen',
-    'smtpModeEnabledDescription' => 'Versende E-Mails über einen SMTP-Server.',
-    'smtpModeDisabledDescription' => 'Versende E-Mails über den lokalen Mailserver. Unnötige SMTP-Einstellungen ausgeblendet.',
+    'smtpModeEnabledDescription' => 'E-Mails werden über einen SMTP-Server versendet.',
+    'smtpModeDisabledDescription' => 'E-Mails werden über den lokalen Mailserver versendet. Unnötige SMTP-Einstellungen ausgeblendet.',
     'smtpMode' => 'SMTP-Mode',
     'smtp_server' => 'SMTP-Server-Adresse',
     'smtp_port' => 'SMTP-Port (optional, default = 25)',
@@ -452,5 +452,5 @@ return [
     'noLayouts' => 'Keine Layouts mit erweiterten Einstellungen gefunden.',
     'layoutNotFoundOrInvalid' => 'Layout nicht gefunden oder ungültig.',
     'orphanedSettings' => 'Es wurden Einstellungen für nicht vorhandene Layouts gefunden. Diese können unten gelöscht werden.',
-    'deleteOrphanedSettings' => 'Lösche verwaiste Einstellungen',
+    'deleteOrphanedSettings' => 'Verwaiste Einstellungen löschen',
 ];

@@ -15,9 +15,9 @@ return [
     'commentModul' => 'Modul',
     'nesting' => 'Reply nesting',
     'acceptReply' => 'Allow replies on comments?',
-    'CommentCommentInfoText' => 'A too deep nesting of comments may result in comments displayed too small.',
+    'CommentCommentInfoText' => 'A too deep nesting of comments may result in comments being displayed too small.',
     'boxCommentsLimit' => 'Number of entries',
     'floodInterval' => 'Flood interval (seconds)',
     'excludeFloodProtection' => 'Exclude from flood interval',
-    'floodError' => 'You cannot make another comment so soon after your last.',
+    'floodError' => 'You cannot make another comment so soon after your last one.',
 ];

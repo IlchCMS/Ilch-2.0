@@ -21,7 +21,7 @@ return [
     'answer' => 'Answer',
     'writeAccess' => 'Write access',
     'missingName' => 'Please enter a name.',
-    'missingMessage' => 'Please enter the message.',
+    'missingMessage' => 'Please enter a message.',
     'missingCaptcha' => 'Please enter the captcha.',
     'reset' => 'Reset to default',
     'floodInterval' => 'Minimum waiting time between posts (seconds, 0 = disabled)',
