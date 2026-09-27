@@ -8,7 +8,7 @@
 return [
     'menuStatistic' => 'Statistik',
     'menuOnline' => 'Online',
-    'menuOnlineStatistic' => 'Online Statistik',
+    'menuOnlineStatistic' => 'Online-Statistik',
     'user' => 'Benutzer',
     'lastHere' => 'Letzte Aktivität',
     'ipAdress' => 'IP-Adresse',
@@ -16,7 +16,7 @@ return [
     'findOnSite' => 'Befindet sich gerade auf',
     'onlineGuests' => 'Gäste',
     'onlineGuest' => 'Gast',
-    'onlineUser' => 'User',
+    'onlineUser' => 'Benutzer',
 
     'author' => 'Autor',
     'totalUsers' => 'Mitglieder',

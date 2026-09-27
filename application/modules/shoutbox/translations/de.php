@@ -22,7 +22,7 @@ return [
     'writeAccess' => 'Schreibrechte',
     'missingName' => 'Bitte einen Namen eingeben.',
     'missingMessage' => 'Bitte eine Nachricht eingeben.',
-    'missingCaptcha' => 'Bitte eine Captcha eingeben.',
+    'missingCaptcha' => 'Bitte das Captcha eingeben.',
     'reset' => 'Zurücksetzen',
     'floodInterval' => 'Mindestwartezeit zwischen Beiträgen (Sekunden, 0 = deaktiviert)',
     'nameReserved' => 'Dieser Name gehört einem registrierten Benutzer. Bitte wähle einen anderen Namen oder melde dich an.',

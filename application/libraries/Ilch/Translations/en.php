@@ -6,24 +6,24 @@
 
 return [
     // validation
-    'errorsOccured' => 'The following errors occured',
-    'validation.errors.required.fieldIsRequired' => '%s was not filled out.',
-    'validation.errors.required.fieldIsNotRequired' => '%s was filled out.',
-    'validation.errors.same.fieldsDontMatch' => '%s must be equal %s.',
+    'errorsOccured' => 'The following errors occurred',
+    'validation.errors.required.fieldIsRequired' => '%s must be filled out.',
+    'validation.errors.required.fieldIsNotRequired' => '%s must not be filled out.',
+    'validation.errors.same.fieldsDontMatch' => '%s must be equal to %s.',
     'validation.errors.same.fieldsMatch' => '%s cannot be equal to %s.',
-    'validation.errors.captcha.wrongCaptcha' => '%s is the wrong character combination.',
+    'validation.errors.captcha.wrongCaptcha' => '%s does not match the displayed character combination.',
     'validation.errors.grecaptcha.wrongCaptcha' => '%s failed.',
-    'validation.errors.date.mustBeDate' => '%s is no valid date or uses a wrong format (%s).',
+    'validation.errors.date.mustBeDate' => '%s is not a valid date or uses a wrong format (%s).',
     'validation.errors.url.noValidUrl' => '%s must be a valid URL.',
     'validation.errors.domain.noValidDomain' => '%s must be a valid domain.',
     'validation.errors.email.noValidEmail' => '%s must be a valid email address.',
     'validation.errors.unique.valueExists' => '%s `%s` is already in use.',
     'validation.errors.unique.valueNotExists' => '%s `%s` does not exist.',
     'validation.errors.numeric.mustBeNumeric' => '%s must be a valid numeric value.',
-    'validation.errors.numeric.dontBeNumeric' => '%s cannot be an numeric value. ',
+    'validation.errors.numeric.dontBeNumeric' => '%s cannot be a numeric value.',
     'validation.errors.integer.mustBeInteger' => '%s must be an integer.',
     'validation.errors.integer.dontBeInteger' => '%s cannot be an integer.',
-    'validation.errors.size.numeric' => '%s must be %s.',
+    'validation.errors.size.numeric' => '%s must be exactly %s.',
     'validation.errors.size.string' => '%s must be %s characters.',
     'validation.errors.size.array' => '%s must contain %s items.',
     'validation.errors.min.numeric' => '%s must be at least %s.',
@@ -37,11 +37,11 @@ return [
     'validation.errors.exists.resourceFound' => '%s was found.',
 
     // general
-    'saveSuccess' => 'Saved successful',
-    'deleteSuccess' => 'Delete successful',
-    'updateSuccess' => 'Update successful',
-    'captcha' => 'Captcha',
+    'saveSuccess' => 'Saved successfully',
+    'deleteSuccess' => 'Deleted successfully',
+    'updateSuccess' => 'Updated successfully',
     'close' => 'Close',
+    'captcha' => 'Captcha',
     'submit' => 'Save',
     'reply' => 'Reply',
     'delete' => 'Delete',
@@ -73,7 +73,7 @@ return [
     'commentDateTime' => 'Date/Time',
     'iLike' => 'I like this',
     'notLike' => 'I dislike this',
-    'loginRequired' => 'You need to be registered to write a comment.',
+    'loginRequired' => 'You need to be logged in to write a comment.',
 
     // month name
     'January' => 'January',
@@ -88,6 +88,20 @@ return [
     'October' => 'October',
     'November' => 'November',
     'December' => 'December',
+
+    // month name abbreviation (according to DIN ISO 8601)
+    'Jan' => 'Jan.',
+    'Feb' => 'Feb.',
+    'Mar' => 'Mar.',
+    'Apr' => 'Apr.',
+    //'May' => 'May',
+    'Jun' => 'Jun.',
+    'Jul' => 'Jul.',
+    'Aug' => 'Aug.',
+    'Sep' => 'Sep.',
+    'Oct' => 'Oct.',
+    'Nov' => 'Nov.',
+    'Dec' => 'Dec.',
 
     // weekday name
     'Monday' => 'Monday',

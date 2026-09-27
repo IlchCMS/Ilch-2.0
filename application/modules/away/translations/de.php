@@ -7,7 +7,7 @@
 
 return [
     'menuAway' => 'Abwesenheitsliste',
-    'adminNotification' => 'Administratoren bei neuen Eintrag benachrichtigen',
+    'adminNotification' => 'Administratoren bei neuen Einträgen benachrichtigen',
     'userNotification' => 'Benutzergruppen benachrichtigen',
     'notifyGroups' => 'Zu benachrichtigende Benutzergruppen',
     'menuEntry' => 'Eintragen',
@@ -30,9 +30,9 @@ return [
     'awayAdminNewEntry' => 'Neuer Eintrag',
     'awayAdminNewEntryMessage' => 'Neuer Eintrag wartet auf Freigabe.',
     'awayNewEntry' => 'Neuer Eintrag',
-    'awayNewEntryMessage' => 'Neuer Eintrag in Abwesenheitsliste.',
-    'awayUserUpdatedEntry' => 'Eintrag wurde durch Benutzer aktualisiert.',
-    'awayUserUpdatedEntryMessage' => 'Eintrag wurde durch Benutzer aktualisiert.',
+    'awayNewEntryMessage' => 'Neuer Eintrag in der Abwesenheitsliste.',
+    'awayUserUpdatedEntry' => 'Eintrag wurde durch einen Benutzer aktualisiert.',
+    'awayUserUpdatedEntryMessage' => 'Eintrag wurde durch einen Benutzer aktualisiert.',
     'awayChangedEntry' => 'Status eines Eintrages geändert',
     'awayChangedEntryMessage' => 'Der Status eines Eintrages in der Abwesenheitsliste hat sich geändert.',
 ];

@@ -9,7 +9,7 @@ return [
     'privacy' => 'Datenschutzerklärung',
     'show' => 'Anzeigen',
     'title' => 'Titel',
-    'urlTitle' => 'Quelle',
+    'urlTitle' => 'URL-Titel',
     'url' => 'Link',
     'text' => 'Text',
     'source' => 'Quellen',
