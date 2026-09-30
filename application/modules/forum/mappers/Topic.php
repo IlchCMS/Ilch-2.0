@@ -40,12 +40,24 @@ class Topic extends Mapper
             return [];
         }
 
-        $sql = $this->db()->select(['*', 'topics.id', 'topics.visits', 'latest_post' => 'MAX(posts.date_created)', 'countPosts' => 'COUNT(posts.id)'])
+        $sql = $this->db()->select([
+            'topics.id',
+            'topics.forum_id',
+            'topics.topic_prefix',
+            'topics.topic_title',
+            'topics.visits',
+            'topics.creator_id',
+            'topics.date_created',
+            'topics.type',
+            'topics.status',
+            'latest_post' => 'MAX(posts.id)',
+            'countPosts' => 'COUNT(posts.id)',
+        ])
             ->from(['topics' => 'forum_topics'])
             ->join(['posts' => 'forum_posts'], 'topics.id = posts.topic_id', 'LEFT')
             ->join(['prefix' => 'forum_prefixes'], 'topics.topic_prefix = prefix.id', 'LEFT', ['prefix.prefix'])
             ->where(['topics.forum_id' => $ids])
-            ->group(['topics.type', 'topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.forum_id', 'topics.status'])
+            ->group(['topics.id', 'topics.forum_id', 'topics.topic_prefix', 'topics.topic_title', 'topics.visits', 'topics.creator_id', 'topics.date_created', 'topics.type', 'topics.status'])
             ->order(['topics.type' => 'DESC', 'latest_post' => 'DESC']);
         if ($pagination !== null) {
             $sql->limit($pagination->getLimit())
@@ -57,10 +69,15 @@ class Topic extends Mapper
         }
 
         $topicRows = $result->fetchRows();
+        if (empty($topicRows)) {
+            return [];
+        }
+
         $userMapper = new UserMapper();
-        $topics = [];
+        $usersById = $userMapper->getUserByIds(array_column($topicRows, 'creator_id'));
         $dummyUser = null;
-        $userCache = [];
+
+        $topics = [];
         foreach ($topicRows as $topicRow) {
             $topicModel = new TopicModel();
             $topicModel->setId($topicRow['id']);
@@ -68,20 +85,13 @@ class Topic extends Mapper
             $topicModel->setForumId($topicRow['forum_id']);
             $topicModel->setType($topicRow['type']);
             $topicModel->setStatus($topicRow['status']);
-            if (\array_key_exists($topicRow['creator_id'], $userCache)) {
-                $topicModel->setAuthor($userCache[$topicRow['creator_id']]);
-            } else {
-                $user = $userMapper->getUserById($topicRow['creator_id']);
-                if ($user) {
-                    $userCache[$topicRow['creator_id']] = $user;
-                    $topicModel->setAuthor($user);
-                } else {
-                    if (!$dummyUser) {
-                        $dummyUser = $userMapper->getDummyUser();
-                    }
-                    $topicModel->setAuthor($dummyUser);
-                }
+
+            $author = $usersById[$topicRow['creator_id']] ?? null;
+            if ($author === null) {
+                $dummyUser = $dummyUser ?? $userMapper->getDummyUser();
+                $author = $dummyUser;
             }
+            $topicModel->setAuthor($author);
 
             $prefixModel = new PrefixModel();
             $prefixModel->setId($topicRow['topic_prefix']);
@@ -255,41 +265,78 @@ class Topic extends Mapper
         if (empty($ids)) {
             return null;
         }
+        $ids = array_values(array_unique(array_map('intval', $ids)));
 
-        $select = $this->db()->select(['postId' => 'MAX(p.id)', 'p.topic_id', 'date_created' => 'MAX(p.date_created)', 'p.user_id', 'p.forum_id'])
-            ->from(['p' => 'forum_posts']);
-        if ($userId) {
-            $select->join(['tr' => 'forum_topics_read'], ['tr.user_id' => $userId, 'tr.topic_id = p.topic_id', 'tr.datetime >= p.date_created'], 'LEFT', ['topic_read' => 'tr.datetime'])
-                ->join(['fr' => 'forum_read'], ['fr.user_id' => $userId, 'fr.forum_id = p.forum_id', 'fr.datetime >= p.date_created'], 'LEFT', ['forum_read' => 'fr.datetime']);
-        }
-
-        $lastPostsRows = $select->where(['p.topic_id' => $ids])
-            ->order(['date_created' => 'DESC'])
-            ->group(['p.topic_id'])
+        // 1. Id of the newest post per topic (loose index scan on topic_id).
+        $lastPostIds = $this->db()->select(['topic_id', 'postId' => 'MAX(id)'])
+            ->from('forum_posts')
+            ->where(['topic_id' => $ids])
+            ->group(['topic_id'])
             ->execute()
-            ->fetchRows();
-        if (empty($lastPostsRows)) {
+            ->fetchList('postId', 'topic_id'); // [topic_id => last post id]
+
+        if (empty($lastPostIds)) {
             return null;
         }
 
+        // 2. Fetch the actual last posts (consistent rows, newest first).
+        $lastPostsRows = $this->db()->select(['id', 'topic_id', 'forum_id', 'user_id', 'date_created'])
+            ->from('forum_posts')
+            ->where(['id' => array_values($lastPostIds)])
+            ->order(['date_created' => 'DESC'])
+            ->execute()
+            ->fetchRows();
+
+        // 3. Read status: one aggregate lookup per table instead of two joins.
+        $topicLastRead = [];
+        $forumLastRead = [];
+        if ($userId) {
+            $topicLastRead = $this->db()->select(['topic_id', 'lastRead' => 'MAX(datetime)'])
+                ->from('forum_topics_read')
+                ->where(['user_id' => $userId, 'topic_id' => $ids])
+                ->group(['topic_id'])
+                ->execute()
+                ->fetchList('lastRead', 'topic_id'); // [topic_id => last read]
+
+            $forumIds = array_values(array_unique(array_map('intval', array_column($lastPostsRows, 'forum_id'))));
+            $forumLastRead = $this->db()->select(['forum_id', 'lastRead' => 'MAX(datetime)'])
+                ->from('forum_read')
+                ->where(['user_id' => $userId, 'forum_id' => $forumIds])
+                ->group(['forum_id'])
+                ->execute()
+                ->fetchList('lastRead', 'forum_id'); // [forum_id => last read]
+        }
+
+        // 4. Build models; all authors fetched in one batch.
+        $userIds = array_values(array_unique(array_map('intval', array_column($lastPostsRows, 'user_id'))));
+        $userMapper = new UserMapper();
+        $usersById = $userMapper->getUserByIds($userIds);
+        $dummyUser = null;
+
         $lastPosts = [];
-        foreach ($lastPostsRows as $lastPostRow) {
-            $postModel = new PostModel();
-            $userMapper = new UserMapper();
-            $postModel->setId($lastPostRow['postId']);
-            $user = $userMapper->getUserById($lastPostRow['user_id']);
-            if ($user) {
-                $postModel->setAutor($user);
-            } else {
-                $postModel->setAutor($userMapper->getDummyUser());
+        foreach ($lastPostsRows as $row) {
+            $uid = (int) $row['user_id'];
+            $author = $usersById[$uid] ?? null;
+            if ($author === null) {
+                $dummyUser = $dummyUser ?? $userMapper->getDummyUser();
+                $author = $dummyUser;
             }
 
-            $postModel->setDateCreated($lastPostRow['date_created']);
-            $postModel->setTopicId($lastPostRow['topic_id']);
+            $postModel = new PostModel();
+            $postModel->setId($row['id']);
+            $postModel->setDateCreated($row['date_created']);
+            $postModel->setTopicId($row['topic_id']);
+            $postModel->setAutor($author);
+
             if ($userId) {
-                // Needs an additional check if datetime is newer than the newest post of the topic as topic_read was always set.
-                $postModel->setRead($lastPostRow['topic_read'] >= $lastPostRow['date_created'] || $lastPostRow['forum_read'] >= $lastPostRow['date_created']);
+                $topicRead = $topicLastRead[$row['topic_id']] ?? null;
+                $forumRead = $forumLastRead[$row['forum_id']] ?? null;
+                $postModel->setRead(
+                    ($topicRead !== null && $topicRead >= $row['date_created'])
+                    || ($forumRead !== null && $forumRead >= $row['date_created'])
+                );
             }
+
             $lastPosts[] = $postModel;
         }
 
