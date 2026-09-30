@@ -7,6 +7,7 @@
 
 namespace Modules\User\Mappers;
 
+use Ilch\Database\Exception;
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
 use Modules\User\Models\User as UserModel;
 use Modules\User\Mappers\Group as GroupMapper;
@@ -78,6 +79,31 @@ class User extends \Ilch\Mapper
         }
 
         return null;
+    }
+
+    /**
+     * Returns an array of users by Ids.
+     *
+     * @param array $ids
+     * @return array
+     * @throws Exception
+     * @since 2.2.21
+     */
+    public function getUserByIds(array $ids): array
+    {
+        $ids = array_unique(array_filter(array_map('intval', $ids)));
+        if (empty($ids)) {
+            return [];
+        }
+
+        $users = $this->getBy(['id' => $ids]);
+
+        $byId = [];
+        foreach ($users as $user) {
+            $byId[$user->getId()] = $user;
+        }
+
+        return $byId;
     }
 
     /**
@@ -181,32 +207,40 @@ class User extends \Ilch\Mapper
             $result = $select->execute();
         }
 
-        if (!empty($select)) {
-            $entryArray = $result->fetchRows();
-            $users = [];
-
-            foreach ($entryArray as $userRow) {
-                $groups = [];
-                $sql = 'SELECT g.*
-                        FROM `[prefix]_groups` AS g
-                        INNER JOIN `[prefix]_users_groups` AS ug ON g.id = ug.group_id
-                        WHERE ug.user_id = ' . $userRow['id'];
-                $groupRows = $this->db()->queryArray($sql);
-                $groupMapper = new Group();
-
-                foreach ($groupRows as $groupRow) {
-                    $groups[$groupRow['id']] = $groupMapper->loadFromArray($groupRow);
-                }
-
-                $user = $this->loadFromArray($userRow);
-                $user->setGroups($groups);
-                $users[] = $user;
-            }
-
-            return $users;
+        $entryArray = $result->fetchRows();
+        if (empty($entryArray)) {
+            return null;
         }
 
-        return null;
+        // One query for the groups of ALL requested users, instead of one per user.
+        $userIds = array_column($entryArray, 'id');
+        $groupRows = $this->db()->select(['uid' => 'ug.user_id', 'g.*'])
+            ->from(['g' => 'groups'])
+            ->join(['ug' => 'users_groups'], 'g.id = ug.group_id')
+            ->where(['ug.user_id' => $userIds])
+            ->execute()
+            ->fetchRows();
+
+        $groupsByUserId = [];
+        foreach ($groupRows as $groupRow) {
+            $groupsByUserId[$groupRow['uid']][] = $groupRow;
+        }
+
+        $groupMapper = new Group();
+        $users = [];
+        foreach ($entryArray as $userRow) {
+            $groups = [];
+            foreach ($groupsByUserId[$userRow['id']] ?? [] as $groupRow) {
+                unset($groupRow['uid']); // keep row shape identical to before
+                $groups[$groupRow['id']] = $groupMapper->loadFromArray($groupRow);
+            }
+
+            $user = $this->loadFromArray($userRow);
+            $user->setGroups($groups);
+            $users[] = $user;
+        }
+
+        return $users;
     }
 
     /**
