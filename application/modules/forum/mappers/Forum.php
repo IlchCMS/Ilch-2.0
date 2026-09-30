@@ -197,9 +197,7 @@ class Forum extends Mapper
             ->join(['ac' => 'forum_accesses'], ['i.id = ac.item_id', 'ac.access_type' => 2, 'ac.group_id' => $groupIds], 'LEFT', ['create_access' => 'ac.group_id'])
             ->join(['pfi' => 'forum_prefixes_items'], ['i.id = pfi.item_id'], 'LEFT')
             ->join(['pf' => 'forum_prefixes'], ['pf.id = pfi.prefix_id'], 'LEFT', ['prefixes' => 'GROUP_CONCAT(DISTINCT pf.id)'])
-            ->join(['t' => 'forum_topics'], 'i.id = t.forum_id', 'LEFT', ['topicCount' => 'COUNT(DISTINCT t.id)'])
-            ->join(['p' => 'forum_posts'], 'i.id = p.forum_id', 'LEFT', ['postCount' => 'COUNT(DISTINCT p.id)'])
-            ->where(['i.parent_id' => $itemIds], 'or')
+            ->where(['i.parent_id' => $itemIds])
             ->group(['i.id'])
             ->order(['i.sort' => 'ASC'])
             ->execute()
@@ -210,31 +208,48 @@ class Forum extends Mapper
         }
 
         $subItemsIds = [];
-        $subItemsRelation = [];
+        $forumIds = [];
         foreach ($itemRows as $itemRow) {
-            // Don't bother trying to get subitems if the item is already a forum and not a category.
             if ($itemRow['type'] != 1) {
                 $subItemsIds[] = $itemRow['id'];
+            } else {
+                $forumIds[] = $itemRow['id'];
             }
         }
 
+        // Pre-aggregated counts — index-only scans, no row explosion.
+        $topicCounts = [];
+        $postCounts = [];
+        if (!empty($forumIds)) {
+            $topicCounts = $this->db()->select(['forum_id', 'cnt' => 'COUNT(*)'])
+                ->from('forum_topics')
+                ->where(['forum_id' => $forumIds])
+                ->group(['forum_id'])
+                ->execute()
+                ->fetchList('cnt', 'forum_id');
+
+            $postCounts = $this->db()->select(['forum_id', 'cnt' => 'COUNT(*)'])
+                ->from('forum_posts')
+                ->where(['forum_id' => $forumIds])
+                ->group(['forum_id'])
+                ->execute()
+                ->fetchList('cnt', 'forum_id');
+        }
+
+        $subItemsRelation = [];
         if (!empty($subItemsIds)) {
             $subItems = $this->getForumItemsByParentIdsUser($subItemsIds, $user);
-
             foreach ($subItems as $subItem) {
                 $subItemsRelation[$subItem->getParentId()][] = $subItem;
             }
         }
 
-        $items = [];
-
-        // Get the last posts only for forum items that are actually forums.
-        $forumItemsForums = array_diff(array_column($itemRows, 'id'), $subItemsIds);
         $lastPosts = null;
-        if (!empty($forumItemsForums)) {
-            $lastPosts = $this->getLastPostsByForumIds($forumItemsForums, $user ? $user->getId() : null);
+        if (!empty($forumIds)) {
+            $lastPosts = $this->getLastPostsByForumIds($forumIds, $user ? $user->getId() : null);
         }
 
+        $items = [];
         foreach ($itemRows as $itemRow) {
             $itemModel = new ForumItem();
             $itemModel->setId($itemRow['id']);
@@ -247,11 +262,11 @@ class Forum extends Mapper
             $itemModel->setReplyAccess($itemRow['reply_access'] ?? '');
             $itemModel->setCreateAccess($itemRow['create_access'] ?? '');
             $itemModel->setSubItems($subItemsRelation[$itemRow['id']] ?? []);
-            $itemModel->setTopics($itemRow['topicCount']);
+            $itemModel->setTopics($topicCounts[$itemRow['id']] ?? 0);
+            $itemModel->setPosts($postCounts[$itemRow['id']] ?? 0);
             if ($itemRow['type'] == 1 && isset($lastPosts[$itemRow['id']])) {
                 $itemModel->setLastPost($lastPosts[$itemRow['id']]);
             }
-            $itemModel->setPosts($itemRow['postCount']);
             $items[] = $itemModel;
         }
 
@@ -519,49 +534,84 @@ class Forum extends Mapper
      */
     public function getLastPostsByForumIds(array $forumId, ?int $userId = null): ?array
     {
-        $select = $this->db()->select(['postId' => 'MAX(p.id)', 'p.topic_id', 'p.user_id', 'date_created' => 'MAX(p.date_created)', 'p.forum_id'])
-            ->from(['p' => 'forum_posts'])
-            ->join(['t' => 'forum_topics'], 't.id = p.topic_id', 'LEFT', ['t.topic_title']);
-
-        if ($userId) {
-            $select->join(['tr' => 'forum_topics_read'], ['tr.user_id' => $userId, 'tr.topic_id = p.topic_id', 'tr.datetime >= p.date_created'], 'LEFT', ['topic_read' => 'tr.datetime'])
-                ->join(['fr' => 'forum_read'], ['fr.user_id' => $userId, 'fr.forum_id = p.forum_id', 'fr.datetime >= p.date_created'], 'LEFT', ['forum_read' => 'fr.datetime']);
-        }
-
-        $lastPostRows = $select->where(['p.forum_id' => $forumId])
-            ->order(['date_created' => 'ASC'])
-            ->group(['p.forum_id', 'p.topic_id'])
-            ->execute()
-            ->fetchRows();
-
-        if (empty($lastPostRows)) {
+        if (empty($forumId)) {
             return null;
         }
 
-        $lastPosts = [];
-        foreach ($lastPostRows as $lastPostRow) {
-            $postModel = new PostModel();
-            $userMapper = new UserMapper();
-            $postModel->setId($lastPostRow['postId']);
-            $user = $userMapper->getUserById($lastPostRow['user_id']);
+        // 1. Latest post id per forum — indexed aggregate, no joins.
+        $lastPostIds = $this->db()->select(['forum_id', 'postId' => 'MAX(id)'])
+            ->from('forum_posts')
+            ->where(['forum_id' => $forumId])
+            ->group(['forum_id'])
+            ->execute()
+            ->fetchList('postId', 'forum_id');
 
+        if (empty($lastPostIds)) {
+            return null;
+        }
+
+        // 2. Fetch exactly those posts + topic title (1:1 join, no multiplication).
+        $lastPosts = $this->db()->select(['p.id', 'p.topic_id', 'p.forum_id', 'p.user_id', 'p.date_created', 't.topic_title'])
+            ->from(['p' => 'forum_posts'])
+            ->join(['t' => 'forum_topics'], 't.id = p.topic_id')
+            ->where(['p.id' => array_values($lastPostIds)])
+            ->execute()
+            ->fetchRows('id');
+
+        if (empty($lastPosts)) {
+            return null;
+        }
+
+        // 3. Read status: aggregate once per topic / per forum, compare in PHP.
+        //    ("some read row with datetime >= post date"  <=>  "MAX(datetime) >= post date")
+        $topicReadTimes = [];
+        $forumReadTimes = [];
+        if ($userId) {
+            $topicReadTimes = $this->db()->select(['topic_id', 'lastRead' => 'MAX(datetime)'])
+                ->from('forum_topics_read')
+                ->where(['user_id' => $userId, 'topic_id' => array_column($lastPosts, 'topic_id')])
+                ->group(['topic_id'])
+                ->execute()
+                ->fetchList('lastRead', 'topic_id');
+
+            $forumReadTimes = $this->db()->select(['forum_id', 'lastRead' => 'MAX(datetime)'])
+                ->from('forum_read')
+                ->where(['user_id' => $userId, 'forum_id' => $forumId])
+                ->group(['forum_id'])
+                ->execute()
+                ->fetchList('lastRead', 'forum_id');
+        }
+
+        // 4. Build models — user lookup now happens once per FORUM, not per topic.
+        $userMapper = new UserMapper();
+        $result = [];
+        foreach ($lastPosts as $post) {
+            $postModel = new PostModel();
+            $postModel->setId($post['id']);
+
+            $user = $userMapper->getUserById($post['user_id']);
             if ($user) {
                 $postModel->setAutor($user);
             } else {
                 $postModel->setAutor($userMapper->getDummyUser());
             }
 
-            $postModel->setDateCreated($lastPostRow['date_created']);
-            $postModel->setTopicId($lastPostRow['topic_id']);
-            $postModel->setTopicTitle($lastPostRow['topic_title']);
+            $postModel->setDateCreated($post['date_created']);
+            $postModel->setTopicId($post['topic_id']);
+            $postModel->setTopicTitle($post['topic_title']);
 
             if ($userId) {
-                $postModel->setRead($lastPostRow['topic_read'] || $lastPostRow['forum_read']);
+                $topicRead = isset($topicReadTimes[$post['topic_id']])
+                    && $topicReadTimes[$post['topic_id']] >= $post['date_created'];
+                $forumRead = isset($forumReadTimes[$post['forum_id']])
+                    && $forumReadTimes[$post['forum_id']] >= $post['date_created'];
+                $postModel->setRead($topicRead || $forumRead);
             }
-            $lastPosts[$lastPostRow['forum_id']] = $postModel;
+
+            $result[$post['forum_id']] = $postModel;
         }
 
-        return $lastPosts;
+        return $result;
     }
 
     /**
@@ -837,7 +887,7 @@ class Forum extends Mapper
             ->andWhere(['tr.datetime IS' => null, 'fr.datetime IS' => null])
             // Only take fr.datetime into consideration if there is not a newer tr.datetime.
             // Previously we just checked if tr.datetime or fr.datetime was smaller than p.date_created. This caused
-            // topics being shown as unread when there was an entry in forum_read that fullfilled the condition. This
+            // topics being shown as unread when there was an entry in forum_read that fulfilled the condition. This
             // was even the case with a newer entry in topics_read, which indicated that the topic was read.
             ->orWhere(['tr.datetime < p.date_created', $select->andX(['tr.datetime <= fr.datetime', 'fr.datetime < p.date_created'])])
             ->group(['i.id'])
