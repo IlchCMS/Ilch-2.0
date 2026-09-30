@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.35.8',
+        'version' => '1.35.9',
         'icon_small' => 'fa-solid fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
@@ -135,6 +135,7 @@ class Config extends \Ilch\Config\Install
                 `access_type` TINYINT(1) NOT NULL,
                 INDEX `FK_[prefix]_forum_items` (`item_id`) USING BTREE,
                 INDEX `FK_[prefix]_groups` (`group_id`) USING BTREE,
+                INDEX `idx_item_type_group` (`item_id`, `access_type`, `group_id`) USING BTREE,
                 CONSTRAINT `FK_[prefix]_forum_items` FOREIGN KEY (`item_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
                 CONSTRAINT `FK_[prefix]_groups` FOREIGN KEY (`group_id`) REFERENCES `[prefix]_groups` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -938,6 +939,11 @@ class Config extends \Ilch\Config\Install
             case "1.35.5":
             case "1.35.6":
             case "1.35.7":
+            case "1.35.8":
+                // Add composite index for the access lookups.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_accesses` ADD INDEX `idx_item_type_group` (`item_id`, `access_type`, `group_id`);');
+
+                // no break
         }
 
         return '"' . $this->config['key'] . '" Update function executed.';
