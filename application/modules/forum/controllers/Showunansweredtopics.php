@@ -8,6 +8,7 @@
 namespace Modules\Forum\Controllers;
 
 use Ilch\Controller\Frontend;
+use Ilch\Pagination;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 
@@ -17,6 +18,7 @@ class Showunansweredtopics extends Frontend
     {
         $forumMapper = new ForumMapper();
         $topicMapper = new TopicMapper();
+        $pagination = new Pagination();
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('forum'))
@@ -28,8 +30,11 @@ class Showunansweredtopics extends Frontend
 
         $isAdmin = $this->getUser() && $this->getUser()->isAdmin();
 
+        $pagination->setRowsPerPage(!$this->getConfig()->get('forum_threadsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_threadsPerPage'));
+        $pagination->setPage($this->getRequest()->getParam('page'));
+
         $forums = $forumMapper->getForumItemsUser($this->getUser());
-        $topics = $topicMapper->getTopicsByForumIds(array_keys($forums ?? []));
+        $topics = $topicMapper->getTopicsByForumIds(array_keys($forums ?? []), $pagination);
 
         $topicIds = [];
         $topicsToShow = [];
@@ -49,8 +54,13 @@ class Showunansweredtopics extends Frontend
             ];
         }
 
+        if (empty($topicsToShow)) {
+            $pagination->setRows(0);
+        }
+
         $this->getView()->set('topics', $topicsToShow);
         $this->getView()->set('DESCPostorder', $this->getConfig()->get('forum_DESCPostorder'));
         $this->getView()->set('postsPerPage', !$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
+        $this->getView()->set('pagination', $pagination);
     }
 }
