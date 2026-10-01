@@ -12,6 +12,8 @@ $topics = $this->get('topics');
 $DESCPostorder = $this->get('DESCPostorder');
 /** @var int $postsPerPage */
 $postsPerPage = $this->get('postsPerPage');
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
@@ -114,4 +116,5 @@ $postsPerPage = $this->get('postsPerPage');
             <?php endforeach; ?>
         </ul>
     </div>
+    <?=$pagination->getHtml($this, ['action' => 'index']) ?>
 </div>
