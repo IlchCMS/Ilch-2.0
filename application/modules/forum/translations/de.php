@@ -53,7 +53,7 @@ return [
     'spam' => 'Der gemeldete Beitrag hat nur zum Ziel, für eine Website oder ein anderes Produkt zu werben.',
     'wrongTopic' => 'Der gemeldete Beitrag betrifft ein anderes Thema.',
     'other' => 'Keine der genannten Kategorien. Bitte weitere Details angeben.',
-    'send' => 'Abschicken',
+    'send' => 'Absenden',
     'wrote' => 'schrieb',
     'subscribe' => 'Abonnieren',
     'unsubscribe' => 'Abonnement löschen',
