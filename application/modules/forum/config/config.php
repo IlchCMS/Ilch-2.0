@@ -111,6 +111,8 @@ class Config extends \Ilch\Config\Install
                 `type` TINYINT(1) NOT NULL,
                 `title` VARCHAR(255) NOT NULL,
                 `description` VARCHAR(255) NOT NULL,
+                `last_post_date` DATETIME NULL DEFAULT NULL,
+                `last_post_id` INT(11) NULL DEFAULT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -150,6 +152,8 @@ class Config extends \Ilch\Config\Install
                 `date_created` DATETIME NOT NULL,
                 `type` TINYINT(1) NOT NULL DEFAULT 0,
                 `status` TINYINT(1) NOT NULL DEFAULT 0,
+                `last_post_date` DATETIME NULL DEFAULT NULL,
+                `last_post_id` INT(11) NULL DEFAULT NULL,
                 PRIMARY KEY (`id`) USING BTREE,
                 INDEX `FK_[prefix]_forum_topics_[prefix]_forum_items` (`forum_id`) USING BTREE,
                 CONSTRAINT `FK_[prefix]_forum_topics_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
@@ -942,6 +946,42 @@ class Config extends \Ilch\Config\Install
             case "1.35.8":
                 // Add composite index for the access lookups.
                 $this->db()->query('ALTER TABLE `[prefix]_forum_accesses` ADD INDEX `idx_item_type_group` (`item_id`, `access_type`, `group_id`);');
+
+                // Add last-post date and ID to topics to avoid a lookup in 'forum_posts' per topic.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_topics` ADD COLUMN `last_post_date` DATETIME NULL DEFAULT NULL, ADD COLUMN `last_post_id` INT(11) NULL DEFAULT NULL');
+
+                // Add last-post date and ID to forum items to avoid aggregating posts per forum on the index page.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_items` ADD COLUMN `last_post_date` DATETIME NULL DEFAULT NULL, ADD COLUMN `last_post_id` INT(11) NULL DEFAULT NULL');
+
+                // Backfill topics: newest post wins; break same-second ties by id.
+                $this->db()->query('UPDATE `[prefix]_forum_topics` t
+                                        SET t.`last_post_date` = (
+                                                SELECT MAX(p.`date_created`)
+                                                FROM `[prefix]_forum_posts` p
+                                                WHERE p.`topic_id` = t.`id`),
+                                            t.`last_post_id` = (
+                                                SELECT p2.`id`
+                                                FROM `[prefix]_forum_posts` p2
+                                                WHERE p2.`topic_id` = t.`id`
+                                                ORDER BY p2.`date_created` DESC, p2.`id` DESC
+                                                LIMIT 1)
+                                        WHERE EXISTS (SELECT 1 FROM `[prefix]_forum_posts` p WHERE p.`topic_id` = t.`id`)');
+
+                // Backfill forums (type = 1) from their topics.
+                // Categories (type = 0) do not show last-post info, so no backfill is needed.
+                $this->db()->query('UPDATE `[prefix]_forum_items` f
+                                        JOIN (
+                                            SELECT t.`forum_id`, MAX(t.`last_post_date`) AS d
+                                            FROM `[prefix]_forum_topics` t
+                                            GROUP BY t.`forum_id`
+                                        ) m ON m.`forum_id` = f.`id` AND f.`type` = 1
+                                        SET f.`last_post_date` = m.`d`');
+
+                // Past moves left stale forum_posts.forum_id values.
+                $this->db()->query('UPDATE [prefix]_forum_posts p
+                                        JOIN [prefix]_forum_topics t ON t.id = p.topic_id
+                                        SET p.forum_id = t.forum_id
+                                        WHERE p.forum_id <> t.forum_id;');
 
                 // no break
         }

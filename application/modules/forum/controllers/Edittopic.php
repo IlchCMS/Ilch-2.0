@@ -45,18 +45,20 @@ class Edittopic extends Frontend
                     $postModel = new PostModel();
 
                     $topics = $this->getRequest()->getPost('topicids');
+                    $targetForumId = (int) $this->getRequest()->getPost('edit');
+
                     foreach ($topics as $topic) {
                         $topicModel->setId($topic)
-                            ->setForumId($this->getRequest()->getPost('edit'));
+                            ->setForumId($targetForumId);
                         $topicMapper->save($topicModel);
 
-                        $posts = $postMapper->getPostsByTopicId($topic);
-                        foreach ($posts as $post) {
-                            $postModel->setId($post->getId())
-                                ->setTopicId($this->getRequest()->getPost('edit'))
-                                ->setForumId($this->getRequest()->getPost('edit'));
-                            $postMapper->saveForEdit($postModel);
-                        }
+                        // Re-point all the topic's posts to the new forum.
+                        // saveForEdit() matches on WHERE topic_id = getTopicId(),
+                        // so getTopicId() must be the (old) topic id — not the target forum.
+                        $postModel->setId($topic)
+                            ->setTopicId($topic)
+                            ->setForumId($targetForumId);
+                        $postMapper->saveForEdit($postModel);
                     }
 
                     $this->redirect()

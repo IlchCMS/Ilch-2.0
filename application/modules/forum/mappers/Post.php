@@ -181,7 +181,7 @@ class Post extends Mapper
                 ->where(['id' => $model->getId()])
                 ->execute();
         } else {
-            $this->db()->insert('forum_posts')
+            $postId = $this->db()->insert('forum_posts')
                 ->values([
                     'text' => $model->getText(),
                     'topic_id' => $model->getTopicId(),
@@ -190,6 +190,14 @@ class Post extends Mapper
                     'date_created' => $model->getDateCreated()
                 ])
                 ->execute();
+
+            $this->db()->update('forum_topics')
+                ->values(['last_post_date' => $model->getDateCreated(), 'last_post_id' => $postId])
+                ->where(['id' => $model->getTopicId()])
+                ->execute();
+
+            // Forum + parent category in one consistent call.
+            $this->refreshLastPostMetaForForum((int) $model->getForumId());
         }
     }
 
@@ -229,11 +237,48 @@ class Post extends Mapper
      * @param int $id
      * @return Result|int
      */
+    /**
+     * Delete post by id.
+     *
+     * @param int $id
+     * @return Result|int
+     */
     public function deleteById(int $id)
     {
-        return $this->db()->delete('forum_posts')
+        // Must be read BEFORE the delete — afterwards the row no longer exists.
+        $postRow = $this->db()->select(['topic_id', 'forum_id'])
+            ->from('forum_posts')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchAssoc();
+
+        $result = $this->db()->delete('forum_posts')
             ->where(['id' => $id])
             ->execute();
+
+        if (!empty($postRow)) {
+            // Re-derive the topic's last post from the remaining posts.
+            $last = $this->db()->select(['id', 'date_created'])
+                ->from('forum_posts')
+                ->where(['topic_id' => $postRow['topic_id']])
+                ->order(['date_created' => 'DESC', 'id' => 'DESC'])
+                ->limit(1)
+                ->execute()
+                ->fetchAssoc(); // empty array => topic is now empty
+
+            $this->db()->update('forum_topics')
+                ->values([
+                    'last_post_date' => $last['date_created'] ?? null,
+                    'last_post_id'   => $last['id'] ?? null,
+                ])
+                ->where(['id' => $postRow['topic_id']])
+                ->execute();
+
+            // Forum + parent category from the topic rows.
+            $this->refreshLastPostMetaForForum((int) $postRow['forum_id']);
+        }
+
+        return $result;
     }
 
     /**
@@ -252,5 +297,58 @@ class Post extends Mapper
             ->fetchAssoc();
 
         return ($row['id'] == $postId);
+    }
+
+    /**
+     * Re-derives forum_items.last_post_date/-id for the given forum and
+     * its parent category from the (denormalized) topic rows.
+     *
+     * @param int $forumId
+     */
+    public function refreshLastPostMetaForForum(int $forumId): void
+    {
+        // Latest topic of the forum. With ORDER BY ... DESC, MySQL sorts
+        // NULL last, so topics with posts win over empty ones; same-second
+        // ties are broken by the post id.
+        $lastTopic = $this->db()->select(['last_post_date', 'last_post_id'])
+            ->from('forum_topics')
+            ->where(['forum_id' => $forumId])
+            ->order(['last_post_date' => 'DESC', 'last_post_id' => 'DESC'])
+            ->limit(1)
+            ->execute()
+            ->fetchAssoc();
+
+        $this->db()->update('forum_items')
+            ->values([
+                'last_post_date' => $lastTopic['last_post_date'] ?? null,
+                'last_post_id'   => $lastTopic['last_post_id'] ?? null,
+            ])
+            ->where(['id' => $forumId])
+            ->execute();
+
+        // Parent category: latest among all of its child forums.
+        $parentId = $this->db()->select('parent_id')
+            ->from('forum_items')
+            ->where(['id' => $forumId])
+            ->execute()
+            ->fetchCell();
+
+        if (!empty($parentId)) {
+            $lastForum = $this->db()->select(['last_post_date', 'last_post_id'])
+                ->from('forum_items')
+                ->where(['parent_id' => $parentId, 'type' => 1])
+                ->order(['last_post_date' => 'DESC', 'last_post_id' => 'DESC'])
+                ->limit(1)
+                ->execute()
+                ->fetchAssoc();
+
+            $this->db()->update('forum_items')
+                ->values([
+                    'last_post_date' => $lastForum['last_post_date'] ?? null,
+                    'last_post_id'   => $lastForum['last_post_id'] ?? null,
+                ])
+                ->where(['id' => $parentId])
+                ->execute();
+        }
     }
 }
