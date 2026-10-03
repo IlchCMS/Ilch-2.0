@@ -167,6 +167,13 @@ class Post extends Mapper
     }
 
     /**
+     * Save the given post.
+     *
+     * Existing posts (with an id) are updated (topic and text only). New
+     * posts are inserted, the new id is set on the model, and the
+     * denormalized last-post meta of the topic, the forum item and its
+     * parent category are refreshed.
+     *
      * @param PostModel $model
      * @return void
      */
@@ -191,13 +198,15 @@ class Post extends Mapper
                 ])
                 ->execute();
 
+            $model->setId($postId);
+
             $this->db()->update('forum_topics')
                 ->values(['last_post_date' => $model->getDateCreated(), 'last_post_id' => $postId])
                 ->where(['id' => $model->getTopicId()])
                 ->execute();
 
             // Forum + parent category in one consistent call.
-            $this->refreshLastPostMetaForForum((int) $model->getForumId());
+            $this->refreshLastPostMetaForForum($model->getForumId());
         }
     }
 
@@ -303,6 +312,10 @@ class Post extends Mapper
      * Re-derives forum_items.last_post_date/-id for the given forum and
      * its parent category from the (denormalized) topic rows.
      *
+     * Updates are skipped when no known value is left, because the target
+     * row already holds NULL in that case - and an UPDATE whose values are
+     * all NULL is rejected by the query builder.
+     *
      * @param int $forumId
      */
     public function refreshLastPostMetaForForum(int $forumId): void
@@ -318,13 +331,19 @@ class Post extends Mapper
             ->execute()
             ->fetchAssoc();
 
-        $this->db()->update('forum_items')
-            ->values([
-                'last_post_date' => $lastTopic['last_post_date'] ?? null,
-                'last_post_id'   => $lastTopic['last_post_id'] ?? null,
-            ])
-            ->where(['id' => $forumId])
-            ->execute();
+        $values = [];
+        if (is_array($lastTopic) && !empty($lastTopic['last_post_date'])) {
+            $values['last_post_date'] = $lastTopic['last_post_date'];
+        }
+        if (is_array($lastTopic) && !empty($lastTopic['last_post_id'])) {
+            $values['last_post_id'] = (int)$lastTopic['last_post_id'];
+        }
+        if ($values !== []) {
+            $this->db()->update('forum_items')
+                ->values($values)
+                ->where(['id' => $forumId])
+                ->execute();
+        }
 
         // Parent category: latest among all of its child forums.
         $parentId = $this->db()->select('parent_id')
@@ -342,13 +361,19 @@ class Post extends Mapper
                 ->execute()
                 ->fetchAssoc();
 
-            $this->db()->update('forum_items')
-                ->values([
-                    'last_post_date' => $lastForum['last_post_date'] ?? null,
-                    'last_post_id'   => $lastForum['last_post_id'] ?? null,
-                ])
-                ->where(['id' => $parentId])
-                ->execute();
+            $values = [];
+            if (is_array($lastForum) && !empty($lastForum['last_post_date'])) {
+                $values['last_post_date'] = $lastForum['last_post_date'];
+            }
+            if (is_array($lastForum) && !empty($lastForum['last_post_id'])) {
+                $values['last_post_id'] = (int)$lastForum['last_post_id'];
+            }
+            if ($values !== []) {
+                $this->db()->update('forum_items')
+                    ->values($values)
+                    ->where(['id' => (int)$parentId])
+                    ->execute();
+            }
         }
     }
 }
