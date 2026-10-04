@@ -21,49 +21,51 @@ class TopicSubscription extends Model
      *
      * @var int
      */
-    protected $id;
+    protected int $id;
 
     /**
      * The topic id.
      *
      * @var int
      */
-    protected $topic_id;
+    protected int $topic_id;
 
     /**
      * The user id.
      *
      * @var int
      */
-    protected $user_id;
+    protected int $user_id;
 
     /**
      * Date of last notification
      *
      * @var string
      */
-    protected $last_notification;
+    protected string $last_notification;
 
     /**
      * Username of the user
      *
      * @var string
      */
-    protected $username;
+    protected string $username;
 
     /**
      * Email address of the user
      *
      * @var string
      */
-    protected $emailAddress;
+    protected string $emailAddress;
 
     /**
-     * Email address of the user
+     * Date of the user's last activity.
      *
-     * @var string
+     * May be null if the user has never been active.
+     *
+     * @var string|null
      */
-    protected $lastActivity;
+    protected ?string $lastActivity;
 
     /**
      * Sets the id.
@@ -196,20 +198,24 @@ class TopicSubscription extends Model
     }
 
     /**
-     * @param string $lastActivity
+     * Sets the user's last activity.
+     *
+     * @param string|null $lastActivity
      * @return TopicSubscription
      */
-    public function setLastActivity(string $lastActivity): TopicSubscription
+    public function setLastActivity(?string $lastActivity): TopicSubscription
     {
         $this->lastActivity = $lastActivity;
         return $this;
     }
 
     /**
-     * @return string
+     * Gets the user's last activity.
+     *
+     * @return string|null
      */
-    public function getLastActivity(): string
+    public function getLastActivity(): ?string
     {
-        return $this->lastActivity;
+        return $this->lastActivity ?? null;
     }
 }
