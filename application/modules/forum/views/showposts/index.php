@@ -163,7 +163,8 @@ $pagination = $this->get('pagination');
                         <?php foreach ($post->getAutor()->getGroups() as $group) : ?>
                             <i class="forum appearance<?=$group->getId() ?>"><?=$this->escape($group->getName()) ?></i><br>
                         <?php endforeach; ?>
-                        <i><?=($post->getAutorAllPost()) ? $this->escape($rankMapper->getRankByPosts($post->getAutorAllPost())->getTitle()) : '' ?></i>
+                        <?php $rank = $rankMapper->getRankByPosts($post->getAutorAllPost()); ?>
+                        <?=($rank) ? '<i>' . $this->escape($rank->getTitle()) . '</i>' : '' ?>
                     </dd>
                     <dd>&nbsp;</dd>
                     <dd><b><?=$this->getTrans('posts') ?>:</b> <?=$post->getAutorAllPost() ?></dd>
