@@ -40,9 +40,9 @@ class TopicSubscription extends Model
     /**
      * Date of last notification
      *
-     * @var string
+     * @var string|null
      */
-    protected string $last_notification;
+    protected ?string $last_notification;
 
     /**
      * Username of the user
@@ -134,10 +134,10 @@ class TopicSubscription extends Model
     /**
      * Sets the date of the last notification.
      *
-     * @param string $last_notification
+     * @param string|null $last_notification
      * @return TopicSubscription
      */
-    public function setLastNotification(string $last_notification): TopicSubscription
+    public function setLastNotification(?string $last_notification): TopicSubscription
     {
         $this->last_notification = $last_notification;
         return $this;
@@ -146,15 +146,15 @@ class TopicSubscription extends Model
     /**
      * Gets the date of the last notification.
      *
-     * @return string
+     * @return string|null
      */
-    public function getLastNotification(): string
+    public function getLastNotification(): ?string
     {
         return $this->last_notification;
     }
 
     /**
-     * Sets the user name.
+     * Sets the username.
      *
      * @param string $username
      * @return TopicSubscription
@@ -166,7 +166,7 @@ class TopicSubscription extends Model
     }
 
     /**
-     * Gets the user name.
+     * Gets the username.
      *
      * @return string
      */
