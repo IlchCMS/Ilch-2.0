@@ -24,20 +24,22 @@ class Dialog extends \Ilch\Mapper
      */
     public function getDialog(int $userid, bool $showHidden = true): ?array
     {
-        $sql = 'SELECT u.id, u.avatar, c.c_id, u.name, c.time, h.c_id AS hidden
-        FROM [prefix]_users_dialog c
-        LEFT JOIN [prefix]_users_dialog_hidden AS h ON h.c_id = c.c_id AND h.user_id = ' . $userid . '
-        LEFT JOIN [prefix]_users AS u ON
-        CASE
-        WHEN c.user_one = ' . $userid . '
-        THEN c.user_two = u.id
-        WHEN c.user_two = ' . $userid . '
-        THEN c.user_one = u.id
-        END
-        WHERE
-        (c.user_one = ' . $userid . ' OR c.user_two = ' . $userid . ')';
-        $sql .= ($showHidden) ? ' AND h.permanent = 0' : ' AND h.c_id IS NULL';
-        $sql .= ' ORDER BY c.time DESC';
+        $sql = 'SELECT u.id, u.avatar, u.name, c.c_id, c.time, h.c_id AS hidden,
+                lr.reply AS last_reply,
+                lr.time AS last_time,
+                (SELECT COUNT(*) FROM [prefix]_users_dialog_reply r
+                 WHERE r.c_id_fk = c.c_id AND r.user_id_fk <> ' . $userid . ' AND r.read = 0) AS unread_count
+            FROM [prefix]_users_dialog c
+            LEFT JOIN [prefix]_users AS u
+                ON u.id = CASE WHEN c.user_one = ' . $userid . ' THEN c.user_two ELSE c.user_one END
+            LEFT JOIN [prefix]_users_dialog_hidden AS h
+                ON h.c_id = c.c_id AND h.user_id = ' . $userid . '
+            LEFT JOIN [prefix]_users_dialog_reply AS lr
+                ON lr.cr_id = (SELECT MAX(r2.cr_id) FROM [prefix]_users_dialog_reply r2 WHERE r2.c_id_fk = c.c_id)
+            WHERE
+            (c.user_one = ' . $userid . ' OR c.user_two = ' . $userid . ')
+            AND ' . ($showHidden ? '(h.c_id IS NULL OR h.permanent = 0)' : 'h.c_id IS NULL') . '
+            ORDER BY c.time DESC';
 
         $dialogsArray = $this->db()->queryArray($sql);
 
@@ -57,21 +59,17 @@ class Dialog extends \Ilch\Mapper
             } else {
                 $dialogModel->setName('No longer exists');
             }
-            $readLastOneDialog = $this->getReadLastOneDialog($dialog['c_id']);
-            $dialogModel->setRead($readLastOneDialog && $readLastOneDialog->getRead());
+
+            $dialogModel->setRead((int) $dialog['unread_count'] === 0);
+
             if (!empty($dialog['avatar']) && file_exists($dialog['avatar'])) {
                 $dialogModel->setAvatar($dialog['avatar']);
             } else {
                 $dialogModel->setAvatar('static/img/noavatar.jpg');
             }
-            $last = $this->getLastOneDialog($dialog['c_id']);
-            if ($last != null) {
-                $dialogModel->setText($last->getText());
-                $dialogModel->setTime($last->getTime());
-            } else {
-                $dialogModel->setText('');
-                $dialogModel->setTime('');
-            }
+
+            $dialogModel->setText((string) ($dialog['last_reply'] ?? ''));
+            $dialogModel->setTime((string) ($dialog['last_time'] ?? ''));
             $dialogModel->setHidden(!empty($dialog['hidden']));
             $dialogs[] = $dialogModel;
         }
@@ -83,37 +81,43 @@ class Dialog extends \Ilch\Mapper
      * Get dialog by dialog id.
      *
      * @param int $cId
+     * @param int $userId id of the user the dialog is requested for (the "other" user is resolved relative to this user)
      * @return DialogModel|null
      * @throws \Ilch\Database\Exception
      */
-    public function getDialogByCId(int $cId): ?DialogModel
+    public function getDialogByCId(int $cId, int $userId): ?DialogModel
     {
-        $sql = 'SELECT u.id, u.avatar, u.name
-        FROM [prefix]_users_dialog c
-        LEFT JOIN [prefix]_users u ON
-        CASE
-        WHEN c.user_two = ' . $cId . '
-        THEN c.user_two = u.id
-        WHEN c.user_one = ' . $cId . '
-        THEN c.user_one = u.id
-        END';
-
-        $dialogRow = $this->db()->queryRow($sql);
+        $dialogRow = $this->db()->select(['user_one', 'user_two'])
+            ->from('users_dialog')
+            ->where(['c_id' => $cId])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($dialogRow)) {
             return null;
         }
 
+        $otherUserId = ($dialogRow['user_one'] == $userId) ? $dialogRow['user_two'] : $dialogRow['user_one'];
+
         $dialogModel = new DialogModel();
-        $dialogModel->setId($dialogRow['id']);
-        if (!empty($dialogRow['name'])) {
-            $dialogModel->setName($dialogRow['name']);
+        $dialogModel->setCId($cId);
+
+        $userRow = $this->db()->select(['id', 'avatar', 'name'])
+            ->from('users')
+            ->where(['id' => $otherUserId])
+            ->execute()
+            ->fetchAssoc();
+
+        if (!empty($userRow)) {
+            $dialogModel->setId($userRow['id']);
+            $dialogModel->setName($userRow['name']);
+            if (!empty($userRow['avatar']) && file_exists($userRow['avatar'])) {
+                $dialogModel->setAvatar($userRow['avatar']);
+            } else {
+                $dialogModel->setAvatar('static/img/noavatar.jpg');
+            }
         } else {
             $dialogModel->setName('No longer exists');
-        }
-        if (file_exists($dialogRow['avatar'])) {
-            $dialogModel->setAvatar($dialogRow['avatar']);
-        } else {
             $dialogModel->setAvatar('static/img/noavatar.jpg');
         }
 
@@ -130,9 +134,9 @@ class Dialog extends \Ilch\Mapper
     {
         $dialog = $this->db()->select(['R.time', 'R.reply'])
             ->from(['R' => 'users_dialog_reply'])
-            ->join(['U' => 'users'], 'R.user_id_fk = U.id')
             ->where(['R.c_id_fk' => $c_id])
             ->order(['R.cr_id' => 'DESC'])
+            ->limit(1)
             ->execute()
             ->fetchAssoc();
 
@@ -141,25 +145,32 @@ class Dialog extends \Ilch\Mapper
         }
 
         $dialogModel = new DialogModel();
-        $dialogModel->setText($dialog['reply']);
-        $dialogModel->setTime($dialog['time']);
+        $dialogModel->setText((string) $dialog['reply']);
+        $dialogModel->setTime((string) $dialog['time']);
 
         return $dialogModel;
     }
 
     /**
-     * Get the last dialog read or not
+     * Get the last unread dialog reply
      *
      * @param int $c_id
-     * @return null|dialogModel
+     * @param int|null $userId if given, only replies of the other user are considered
+     * @return null|DialogModel
      */
-    public function getReadLastOneDialog(int $c_id): ?DialogModel
+    public function getReadLastOneDialog(int $c_id, ?int $userId = null): ?DialogModel
     {
-        $dialog = $this->db()->select(['R.cr_id', 'R.time', 'R.reply', 'R.read', 'R.user_id_fk'])
+        $select = $this->db()->select(['R.cr_id', 'R.time', 'R.reply', 'R.user_id_fk'])
             ->from(['R' => 'users_dialog_reply'])
-            ->join(['U' => 'users'], 'R.user_id_fk = U.id')
-            ->where(['R.c_id_fk' => $c_id, 'R.read =' => 0])
+            ->where(['R.c_id_fk' => $c_id, 'R.read' => 0]);
+
+        if ($userId !== null) {
+            $select->andWhere(['R.user_id_fk !=' => $userId]);
+        }
+
+        $dialog = $select
             ->order(['R.cr_id' => 'DESC'])
+            ->limit(1)
             ->execute()
             ->fetchAssoc();
 
@@ -168,11 +179,11 @@ class Dialog extends \Ilch\Mapper
         }
 
         $dialogModel = new DialogModel();
-        $dialogModel->setText($dialog['reply']);
-        $dialogModel->setTime($dialog['time']);
-        $dialogModel->setCrId($dialog['cr_id']);
-        $dialogModel->setUserOne($dialog['user_id_fk']);
-        $dialogModel->setRead($dialog['read']);
+        $dialogModel->setText((string) $dialog['reply']);
+        $dialogModel->setTime((string) $dialog['time']);
+        $dialogModel->setCrId((int) $dialog['cr_id']);
+        $dialogModel->setUserOne((int) $dialog['user_id_fk']);
+        $dialogModel->setRead(false);
 
         return $dialogModel;
     }
@@ -186,7 +197,7 @@ class Dialog extends \Ilch\Mapper
     public function getCountOfUnreadMessagesByUser(int $user_id): int
     {
         return (int)$this->db()->select('COUNT(*)')
-            ->from(['r' => 'users_dialog_reply', 'u' => 'users_dialog'])
+            ->from(['r' => 'users_dialog_reply'])
             ->join(['u' => 'users_dialog'], 'r.c_id_fk = u.c_id')
             ->where(['u.user_one' => $user_id, 'u.user_two' => $user_id], 'or')
             ->andWhere(['r.user_id_fk !=' => $user_id, 'r.read' => 0])
@@ -219,12 +230,13 @@ class Dialog extends \Ilch\Mapper
 
         foreach ($dialogArray as $dialog) {
             $dialogModel = new DialogModel();
-            $dialogModel->setId($dialog['id']);
-            $dialogModel->setCrId($dialog['cr_id']);
-            $dialogModel->setName($dialog['name']);
-            $dialogModel->setText($dialog['reply']);
-            $dialogModel->setTime($dialog['time']);
-            if (file_exists($dialog['avatar'])) {
+            $dialogModel->setCId($c_id);
+            $dialogModel->setId((int) $dialog['id']);
+            $dialogModel->setCrId((int) $dialog['cr_id']);
+            $dialogModel->setName((string) $dialog['name']);
+            $dialogModel->setText((string) $dialog['reply']);
+            $dialogModel->setTime((string) $dialog['time']);
+            if (!empty($dialog['avatar']) && file_exists($dialog['avatar'])) {
                 $dialogModel->setAvatar($dialog['avatar']);
             } else {
                 $dialogModel->setAvatar('static/img/noavatar.jpg');
@@ -247,6 +259,7 @@ class Dialog extends \Ilch\Mapper
         $messageRow = $this->db()->select(['cr_id'])
             ->from('users_dialog_reply')
             ->where(['cr_id' => $cr_id, 'user_id_fk' => $userId])
+            ->limit(1)
             ->execute()
             ->fetchRow();
 
@@ -265,8 +278,29 @@ class Dialog extends \Ilch\Mapper
      */
     public function deleteMessageOfUser(int $cr_id, int $userId)
     {
+        $cId = $this->db()->select('c_id_fk')
+            ->from('users_dialog_reply')
+            ->where(['cr_id' => $cr_id, 'user_id_fk' => $userId])
+            ->execute()
+            ->fetchCell();
+
         $this->db()->delete('users_dialog_reply', ['cr_id' => $cr_id, 'user_id_fk' => $userId])
             ->execute();
+
+        if ($cId) {
+            $newTime = $this->db()->select('MAX(time)')
+                ->from('users_dialog_reply')
+                ->where(['c_id_fk' => $cId])
+                ->execute()
+                ->fetchCell();
+
+            if (!empty($newTime)) {
+                $this->db()->update('users_dialog')
+                    ->values(['time' => $newTime])
+                    ->where(['c_id' => $cId])
+                    ->execute();
+            }
+        }
     }
 
     /**
@@ -313,6 +347,7 @@ class Dialog extends \Ilch\Mapper
                 ->join(['seconduser' => 'users'], 'd.user_two = seconduser.id', 'LEFT', ['id_user_two' => 'seconduser.id'])
                 ->join(['dhotheruser' => 'users_dialog_hidden'], ['dhotheruser.permanent' => 1, 'dhotheruser.c_id = d.c_id', 'dhotheruser.user_id !=' => $userId], 'LEFT', ['id_other_user_permanent' => 'dhotheruser.user_id'])
                 ->where(['d.c_id' => $c_id])
+                ->limit(1)
                 ->execute()
                 ->fetchAssoc();
 
@@ -350,27 +385,37 @@ class Dialog extends \Ilch\Mapper
             ->execute()
             ->fetchRows();
 
+        $cIds = [];
+
         foreach ($dialogs as $dialog) {
             if (empty($dialog['id_user_one']) && empty($dialog['id_user_two'])) {
                 // Delete dialog if both users are not existing.
-                $this->db()->delete('users_dialog', ['c_id' => $dialog['c_id']])
-                    ->execute();
+                $cIds[] = $dialog['c_id'];
                 continue;
             }
 
             if (($dialog['id_user_one'] == $userId && empty($dialog['id_user_two'])) || ($dialog['id_user_two'] == $userId && empty($dialog['id_user_one']))) {
                 // Delete dialog if other user is not existing.
-                $this->db()->delete('users_dialog', ['c_id' => $dialog['c_id']])
-                    ->execute();
+                $cIds[] = $dialog['c_id'];
                 continue;
             }
 
             if ($dialog['id_other_user_permanent']) {
                 // Delete dialog if other user has already "deleted" it.
-                $this->db()->delete('users_dialog', ['c_id' => $dialog['c_id']])
-                    ->execute();
+                $cIds[] = $dialog['c_id'];
             }
         }
+
+        if (empty($cIds)) {
+            return;
+        }
+
+        $this->db()->delete('users_dialog', ['c_id' => $cIds])
+            ->execute();
+
+        // Get rid of orphaned hidden dialog entries for both users.
+        $this->db()->delete('users_dialog_hidden', ['c_id' => $cIds])
+            ->execute();
     }
 
     /**
@@ -429,36 +474,28 @@ class Dialog extends \Ilch\Mapper
      */
     public function hideDialog(int $c_id, int $userId)
     {
-        $dialogHiddenRow = $this->db()->select('c_id')
-            ->from('users_dialog_hidden')
-            ->where(['c_id' => $c_id, 'user_id' => $userId])
-            ->execute()
-            ->fetchCell();
-
-        if (empty($dialogHiddenRow)) {
-            $this->db()->insert('users_dialog_hidden')
-                ->values(['c_id' => $c_id, 'user_id' => $userId, 'permanent' => 0])
-                ->execute();
-        }
+        $this->db()->query('INSERT IGNORE INTO [prefix]_users_dialog_hidden (c_id, user_id, permanent) VALUES (' . $c_id . ', ' . $userId . ', 0)');
     }
 
     /**
      * Check if user has hidden a dialog.
      *
      * @param int $userId
-     * @param bool|null $includePermanent
+     * @param bool|null $includePermanent null: any hidden dialog, true: only permanent, false: only non permanent
      * @return bool
      * @since $includePermanent since 2.1.43
      */
     public function hasHiddenDialog(int $userId, ?bool $includePermanent = null): bool
     {
-        $dialogHiddenRow = $this->db()->select('user_id')
+        $select = $this->db()->select('user_id')
             ->from('users_dialog_hidden')
-            ->where(['user_id' => $userId, 'permanent' => $includePermanent])
-            ->execute()
-            ->fetchRow();
+            ->where(['user_id' => $userId]);
 
-        return (!empty($dialogHiddenRow));
+        if ($includePermanent !== null) {
+            $select->andWhere(['permanent' => (int) $includePermanent]);
+        }
+
+        return (bool) $select->limit(1)->execute()->fetchCell();
     }
 
     /**
@@ -508,6 +545,7 @@ class Dialog extends \Ilch\Mapper
         $row = $this->db()->select(['user_one', 'user_two'])
             ->from('users_dialog')
             ->where(['c_id' => $c_id])
+            ->limit(1)
             ->execute()
             ->fetchAssoc();
 
@@ -535,7 +573,8 @@ class Dialog extends \Ilch\Mapper
             ->from('users_dialog')
             ->where(['user_one' => $user_one, 'user_two' => $user_two]);
         $select->orWhere($select->andX(['user_one' => $user_two, 'user_two' => $user_one]));
-        $row = $select->execute()
+        $row = $select->limit(1)
+            ->execute()
             ->fetchAssoc();
 
         if (empty($row)) {
@@ -551,16 +590,16 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-    * Get the dialog id
+     * Get the dialog id
      *
-    * @param int $user_one
-    * @return null|DialogModel
-    */
+     * @param int $user_one
+     * @return null|DialogModel
+     */
     public function getDialogId(int $user_one): ?DialogModel
     {
         $row = $this->db()->select(['c_id'])
             ->from('users_dialog')
-            ->where(['user_one' => $user_one])
+            ->where(['user_one' => $user_one, 'user_two' => $user_one], 'or')
             ->order(['c_id' => 'DESC'])
             ->limit(1)
             ->execute()
@@ -583,24 +622,24 @@ class Dialog extends \Ilch\Mapper
      */
     public function save(DialogModel $model)
     {
-        $fields = [
-            'user_id_fk' => $model->getId(),
-            'reply' => $model->getText(),
-            'time' => $model->getTime(),
-            'c_id_fk' => $model->getCId(),
-            'user_one' => $model->getUserOne(),
-            'user_two' => $model->getUserTwo()
-        ];
-
-        if (!empty($fields['user_one']) || !empty($fields['user_two'])) {
+        if (!empty($model->getUserOne()) && !empty($model->getUserTwo())) {
             $this->db()->insert('users_dialog')
-                ->values($fields)
+                ->values([
+                    'user_one' => $model->getUserOne(),
+                    'user_two' => $model->getUserTwo(),
+                    'time' => $model->getTime()
+                ])
                 ->execute();
             return;
         }
 
         $this->db()->insert('users_dialog_reply')
-            ->values($fields)
+            ->values([
+                'user_id_fk' => $model->getId(),
+                'reply' => $model->getText(),
+                'time' => $model->getTime(),
+                'c_id_fk' => $model->getCId()
+            ])
             ->execute();
 
         $this->db()->update('users_dialog')

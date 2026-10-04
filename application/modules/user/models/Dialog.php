@@ -9,88 +9,92 @@ namespace Modules\User\Models;
 
 /**
  * Model for the dialog feature.
+ *
+ * Note: "id" holds the user id (message author / counterpart user depending
+ * on context), NOT the conversation id - that is stored in "c_id".
  */
 class Dialog extends \Ilch\Model
 {
     /**
-     * ID of the dialog
+     * ID of the user (message author / counterpart user, depending on context)
      *
-     * @var int
+     * @var int|null
      */
-    private $id;
+    private ?int $id = null;
 
     /**
-     * C_ID of the dialog
+     * C_ID of the conversation/dialog
      *
-     * @var int
+     * @var int|null
      */
-    private $c_id;
+    private ?int $c_id = null;
 
     /**
-     * CR_ID of the dialog
+     * CR_ID of the conversation reply
      *
-     * @var int
+     * @var int|null
      */
-    private $cr_id;
+    private ?int $cr_id = null;
 
     /**
-     * The TEXT of the dialog
+     * The TEXT of the dialog message
      *
-     * @var string
+     * @var string|null
      */
-    private $text;
+    private ?string $text = null;
 
     /**
      * user_one of the dialog
      *
-     * @var int
+     * @var int|null
      */
-    private $user_one;
+    private ?int $user_one = null;
 
     /**
      * user_two of the dialog
      *
-     * @var int
+     * @var int|null
      */
-    private $user_two;
+    private ?int $user_two = null;
 
     /**
-     * time when the message was sent (TIMESTAMP)
+     * Time when the message was sent (TIMESTAMP)
      *
-     * @var string
+     * @var string|null
      */
-    private $time;
+    private ?string $time = null;
 
     /**
      * Indicates if conversation/dialog is hidden or not.
      *
      * @var bool
      */
-    private $hidden;
+    private bool $hidden = false;
 
     /**
      * Name of the user
      *
-     * @var string
+     * @var string|null
      */
-    private $name;
+    private ?string $name = null;
 
     /**
-     * read status
+     * Read status. True if the conversation is fully read for the viewer,
+     * false if unread messages of the other user exist.
      *
      * @var bool
      */
-    private $read;
+    private bool $read = false;
 
     /**
-     * avatar of the user.
+     * Avatar of the user.
      *
-     * @var string
+     * @var string|null
      */
-    private $avatar;
+    private ?string $avatar = null;
 
     /**
-     * Set the ID of the message
+     * Set the ID of the user
      *
      * @param int|null $id
      * @return $this
@@ -103,7 +107,7 @@ class Dialog extends \Ilch\Model
     }
 
     /**
-     * Get the ID of the message
+     * Get the ID of the user
      *
      * @return int|null
      */
@@ -115,10 +119,10 @@ class Dialog extends \Ilch\Model
     /**
      * Set the CONVERSATION_ID of the dialog
      *
-     * @param int $cid
+     * @param int|null $cid
      * @return $this
      */
-    public function setCId(int $cid): Dialog
+    public function setCId(?int $cid): Dialog
     {
         $this->c_id = $cid;
 
@@ -138,10 +142,10 @@ class Dialog extends \Ilch\Model
     /**
      * Set the CONVERSATION_REPLY_ID of the dialog
      *
-     * @param int $crid
+     * @param int|null $crid
      * @return $this
      */
-    public function setCrId(int $crid): Dialog
+    public function setCrId(?int $crid): Dialog
     {
         $this->cr_id = $crid;
 
@@ -151,20 +155,20 @@ class Dialog extends \Ilch\Model
     /**
      * Get the CONVERSATION_REPLY_ID of the dialog
      *
-     * @return int
+     * @return int|null
      */
-    public function getCrId(): int
+    public function getCrId(): ?int
     {
         return $this->cr_id;
     }
 
     /**
-     * Set the senttime of the dialog
+     * Set the sent time of the dialog
      *
-     * @param string $time
+     * @param string|null $time
      * @return $this
      */
-    public function setTime(string $time): Dialog
+    public function setTime(?string $time): Dialog
     {
         $this->time = $time;
 
@@ -172,11 +176,11 @@ class Dialog extends \Ilch\Model
     }
 
     /**
-     * Get the senttime of the message
+     * Get the sent time of the message
      *
-     * @return string
+     * @return string|null
      */
-    public function getTime(): string
+    public function getTime(): ?string
     {
         return $this->time;
     }
@@ -207,10 +211,10 @@ class Dialog extends \Ilch\Model
     /**
      * Set the USER_ONE of the dialog
      *
-     * @param int $userone
+     * @param int|null $userone
      * @return $this
      */
-    public function setUserOne(int $userone): Dialog
+    public function setUserOne(?int $userone): Dialog
     {
         $this->user_one = $userone;
 
@@ -230,10 +234,10 @@ class Dialog extends \Ilch\Model
     /**
      * Set the USER_TWO of the dialog
      *
-     * @param int $usertwo
+     * @param int|null $usertwo
      * @return $this
      */
-    public function setUserTwo(int $usertwo): Dialog
+    public function setUserTwo(?int $usertwo): Dialog
     {
         $this->user_two = $usertwo;
 
@@ -241,7 +245,7 @@ class Dialog extends \Ilch\Model
     }
 
     /**
-     * Get the USER_ONE of the dialog
+     * Get the USER_TWO of the dialog
      *
      * @return int|null
      */
@@ -253,10 +257,10 @@ class Dialog extends \Ilch\Model
     /**
      * Set the TEXT of the dialog
      *
-     * @param string $text
+     * @param string|null $text
      * @return $this
      */
-    public function setText(string $text): Dialog
+    public function setText(?string $text): Dialog
     {
         $this->text = $text;
 
@@ -276,9 +280,9 @@ class Dialog extends \Ilch\Model
     /**
      * Get the avatar of the user.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAvatar(): string
+    public function getAvatar(): ?string
     {
         return $this->avatar;
     }
@@ -286,10 +290,10 @@ class Dialog extends \Ilch\Model
     /**
      * Set the avatar of the dialog
      *
-     * @param string $avatar
+     * @param string|null $avatar
      * @return $this
      */
-    public function setAvatar(string $avatar): Dialog
+    public function setAvatar(?string $avatar): Dialog
     {
         $this->avatar = $avatar;
 
@@ -299,10 +303,10 @@ class Dialog extends \Ilch\Model
     /**
      * Set the name of the user
      *
-     * @param string $name
-     * @return Dialog
+     * @param string|null $name
+     * @return $this
      */
-    public function setName(string $name): Dialog
+    public function setName(?string $name): Dialog
     {
         $this->name = $name;
 
@@ -312,15 +316,15 @@ class Dialog extends \Ilch\Model
     /**
      * Get the name of the user
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * Set the read
+     * Set the read status
      *
      * @param bool $read
      * @return $this
@@ -333,7 +337,7 @@ class Dialog extends \Ilch\Model
     }
 
     /**
-     * Get the read
+     * Get the read status
      *
      * @return bool
      */
