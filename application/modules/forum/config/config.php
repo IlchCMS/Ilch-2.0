@@ -181,6 +181,7 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`id`) USING BTREE,
                 INDEX `FK_[prefix]_forum_posts_[prefix]_forum_topics` (`topic_id`) USING BTREE,
                 INDEX `FK_[prefix]_forum_posts_[prefix]_forum_items` (`forum_id`) USING BTREE,
+                INDEX `idx_user_id` (`user_id`) USING BTREE,
                 CONSTRAINT `FK_[prefix]_forum_posts_[prefix]_forum_items` FOREIGN KEY (`forum_id`) REFERENCES `[prefix]_forum_items` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE,
                 CONSTRAINT `FK_[prefix]_forum_posts_[prefix]_forum_topics` FOREIGN KEY (`topic_id`) REFERENCES `[prefix]_forum_topics` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
@@ -946,6 +947,9 @@ class Config extends \Ilch\Config\Install
             case "1.35.8":
                 // Add composite index for the access lookups.
                 $this->db()->query('ALTER TABLE `[prefix]_forum_accesses` ADD INDEX `idx_item_type_group` (`item_id`, `access_type`, `group_id`);');
+
+                // Add index to speedup getAllPostsByUserId of the post mapper.
+                $this->db()->query('ALTER TABLE `[prefix]_forum_posts` ADD INDEX `idx_user_id` (`user_id`);');
 
                 // Add last-post date and ID to topics to avoid a lookup in 'forum_posts' per topic.
                 $this->db()->query('ALTER TABLE `[prefix]_forum_topics` ADD COLUMN `last_post_date` DATETIME NULL DEFAULT NULL, ADD COLUMN `last_post_id` INT(11) NULL DEFAULT NULL');

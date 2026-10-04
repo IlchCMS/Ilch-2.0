@@ -59,23 +59,18 @@ class Post extends Mapper
     }
 
     /**
+     * Return count of posts by User id.
+     *
      * @param int $userId
-     * @return int|string
+     * @return int
      */
-    public function getAllPostsByUserId(int $userId)
+    public function getAllPostsByUserId(int $userId): int
     {
-        $this->db()->select('id')
+        return (int) $this->db()->select(['COUNT(*)'])
             ->from('forum_posts')
             ->where(['user_id' => $userId])
             ->execute()
-            ->fetchRows();
-        $topics = $this->db()->getAffectedRows();
-
-        if (empty($topics)) {
-            return '0';
-        }
-
-        return $topics;
+            ->fetchCell();
     }
 
     /**
