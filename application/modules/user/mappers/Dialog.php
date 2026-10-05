@@ -82,7 +82,6 @@ class Dialog extends \Ilch\Mapper
      *
      * @param int $userId the user id of the other participant of the dialog
      * @return DialogModel|null
-     * @throws \Ilch\Database\Exception
      */
     public function getDialogByCId(int $userId): ?DialogModel
     {
@@ -262,7 +261,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $cr_id
      * @param int $userId
      */
-    public function deleteMessageOfUser(int $cr_id, int $userId)
+    public function deleteMessageOfUser(int $cr_id, int $userId): void
     {
         $cId = $this->db()->select('c_id_fk')
             ->from('users_dialog_reply')
@@ -296,7 +295,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $userId id of the user
      * @since 2.1.43
      */
-    private function deleteMessagesOfUserInDialog(int $c_id, int $userId)
+    private function deleteMessagesOfUserInDialog(int $c_id, int $userId): void
     {
         $this->db()->delete('users_dialog_reply', ['c_id_fk' => $c_id, 'user_id_fk' => $userId])
             ->execute();
@@ -309,7 +308,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $userId id of the user
      * @since 2.1.43
      */
-    private function deleteAllMessagesOfUser(int $userId)
+    private function deleteAllMessagesOfUser(int $userId): void
     {
         $this->db()->delete('users_dialog_reply', ['user_id_fk' => $userId])
             ->execute();
@@ -359,7 +358,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $userId
      * @since 2.1.43
      */
-    private function deleteAllDialogsOfUser(int $userId)
+    private function deleteAllDialogsOfUser(int $userId): void
     {
         $dialogs = $this->db()->select()
             ->fields(['d.c_id', 'd.user_one', 'd.user_two'])
@@ -405,7 +404,7 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-     * "Delete" or permantly hide dialog for user.
+     * "Delete" or permanently hide dialog for user.
      *
      * @param int $c_id
      * @param int $userId
@@ -445,7 +444,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $userId
      * @since 2.1.43
      */
-    public function deleteAllOfUser(int $userId)
+    public function deleteAllOfUser(int $userId): void
     {
         $this->deleteAllMessagesOfUser($userId);
         $this->deleteAllDialogsOfUser($userId);
@@ -458,7 +457,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $c_id
      * @param int $userId
      */
-    public function hideDialog(int $c_id, int $userId)
+    public function hideDialog(int $c_id, int $userId): void
     {
         $this->db()->query('INSERT INTO [prefix]_users_dialog_hidden (c_id, user_id, permanent)
             SELECT ' . $c_id . ', ' . $userId . ', 0
@@ -487,6 +486,7 @@ class Dialog extends \Ilch\Mapper
             ->execute()
             ->fetchCell();
     }
+
     /**
      * Unhide a dialog of a user.
      *
@@ -605,13 +605,17 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-     * Inserts or updates dialog entry.
+     * Inserts a new conversation (if user_one AND user_two are set)
+     * or a new reply in an existing conversation.
      *
      * @param DialogModel $model
+     * @return int the c_id of the conversation the saved entry belongs to.
+     *             For a newly created conversation the c_id is set on the model, too.
      */
-    public function save(DialogModel $model)
+    public function save(DialogModel $model): int
     {
         if (!empty($model->getUserOne()) && !empty($model->getUserTwo())) {
+            // New conversation.
             $this->db()->insert('users_dialog')
                 ->values([
                     'user_one' => $model->getUserOne(),
@@ -619,22 +623,31 @@ class Dialog extends \Ilch\Mapper
                     'time' => $model->getTime()
                 ])
                 ->execute();
-            return;
+
+            $cId = (int) $this->db()->getLastInsertId();
+            $model->setCId($cId);
+
+            return $cId;
         }
 
+        // New reply in an existing conversation.
         $this->db()->insert('users_dialog_reply')
             ->values([
                 'user_id_fk' => $model->getId(),
                 'reply' => $model->getText(),
                 'time' => $model->getTime(),
-                'c_id_fk' => $model->getCId()
+                'c_id_fk' => $model->getCId(),
+                'read' => (int) $model->getRead()
             ])
             ->execute();
 
+        // Update the last activity time of the conversation.
         $this->db()->update('users_dialog')
             ->values(['time' => $model->getTime()])
             ->where(['c_id' => $model->getCId()])
             ->execute();
+
+        return (int) $model->getCId();
     }
 
     /**
@@ -643,7 +656,7 @@ class Dialog extends \Ilch\Mapper
      * @param int $c_id dialog id
      * @param int $userId id of the user (messages of the other user are getting marked as read)
      */
-    public function markAllAsRead(int $c_id, int $userId)
+    public function markAllAsRead(int $c_id, int $userId): void
     {
         $this->db()->update('users_dialog_reply')
             ->values(['read' => 1])
