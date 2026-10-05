@@ -1088,7 +1088,6 @@ class Config extends \Ilch\Config\Install
                     $this->db()->query("ALTER TABLE `[prefix]_users_dialog_hidden` DROP PRIMARY KEY;");
                 }
                 break;
-
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
