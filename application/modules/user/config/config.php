@@ -1067,6 +1067,27 @@ class Config extends \Ilch\Config\Install
                     $databaseConfig->set('user_commentsOnProfiles', '1');
                 }
                 break;
+            case "2.2.20":
+                // One-off cleanup: collapse duplicate (c_id, user_id) rows in users_dialog_hidden,
+                // keeping the entry with permanent = 1 if one exists.
+                $this->db()->queryMulti("CREATE TEMPORARY TABLE tmp_udh AS
+                    SELECT c_id, user_id, MAX(permanent) AS permanent
+                    FROM `[prefix]_users_dialog_hidden`
+                    GROUP BY c_id, user_id;
+                    DELETE FROM `[prefix]_users_dialog_hidden`;
+                    INSERT INTO `[prefix]_users_dialog_hidden` (`c_id`, `user_id`, `permanent`)
+                    SELECT c_id, user_id, permanent FROM tmp_udh;
+                    DROP TEMPORARY TABLE tmp_udh;");
+
+                // The mapper no longer relies on the composite primary key, so drop it if it exists.
+                $fileConfig = new \Ilch\Config\File();
+                $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
+                $dbname = $fileConfig->get('dbName');
+
+                if ($this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_users_dialog_hidden' AND constraint_name='PRIMARY');")) {
+                    $this->db()->query("ALTER TABLE `[prefix]_users_dialog_hidden` DROP PRIMARY KEY;");
+                }
+                break;
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
