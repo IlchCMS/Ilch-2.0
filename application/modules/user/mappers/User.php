@@ -190,10 +190,10 @@ class User extends \Ilch\Mapper
      *
      * @param array $where
      * @param null $pagination
-     * @return null|UserModel[]
+     * @return UserModel[]
      * @throws \Ilch\Database\Exception
      */
-    protected function getBy(array $where = [], $pagination = null): ?array
+    protected function getBy(array $where = [], $pagination = null): array
     {
         $select = $this->db()->select('*')
             ->from('users')
@@ -209,7 +209,7 @@ class User extends \Ilch\Mapper
 
         $entryArray = $result->fetchRows();
         if (empty($entryArray)) {
-            return null;
+            return [];
         }
 
         // One query for the groups of ALL requested users, instead of one per user.
@@ -494,14 +494,28 @@ class User extends \Ilch\Mapper
     }
 
     /**
-     * Returns a array of all user model objects.
+     * Get the count of all users.
+     *
+     * @param array $where
+     * @return int
+     * @since 2.2.21
+     */
+    public function getUserCount(array $where = []): int
+    {
+        return (int)$this->db()->select('COUNT(*)', 'users', $where)
+            ->execute()
+            ->fetchCell();
+    }
+
+    /**
+     * Returns an array of all user model objects.
      *
      * @param array $where
      * @param null $pagination
      * @return UserModel[]
      * @throws \Ilch\Database\Exception
      */
-    public function getUserList(array $where = [], $pagination = null): ?array
+    public function getUserList(array $where = [], $pagination = null): array
     {
         return $this->getBy($where, $pagination);
     }
