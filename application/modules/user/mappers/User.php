@@ -508,7 +508,7 @@ class User extends \Ilch\Mapper
     }
 
     /**
-     * Returns a array of all user model objects.
+     * Returns an array of all user model objects.
      *
      * @param array $where
      * @param null $pagination
