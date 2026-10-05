@@ -38,7 +38,7 @@ class Dialog extends \Ilch\Mapper
                 ON lr.cr_id = (SELECT MAX(r2.cr_id) FROM [prefix]_users_dialog_reply r2 WHERE r2.c_id_fk = c.c_id)
             WHERE
             (c.user_one = ' . $userid . ' OR c.user_two = ' . $userid . ')
-            AND ' . ($showHidden ? '(h.c_id IS NULL OR h.permanent = 0)' : 'h.c_id IS NULL') . '
+            AND ' . ($showHidden ? 'h.permanent = 0' : 'h.c_id IS NULL') . '
             ORDER BY c.time DESC';
 
         $dialogsArray = $this->db()->queryArray($sql);
@@ -78,46 +78,32 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
-     * Get dialog by dialog id.
+     * Get the user data shown in the dialog header.
      *
-     * @param int $cId
-     * @param int $userId id of the user the dialog is requested for (the "other" user is resolved relative to this user)
+     * @param int $userId the user id of the other participant of the dialog
      * @return DialogModel|null
      * @throws \Ilch\Database\Exception
      */
-    public function getDialogByCId(int $cId, int $userId): ?DialogModel
+    public function getDialogByCId(int $userId): ?DialogModel
     {
-        $dialogRow = $this->db()->select(['user_one', 'user_two'])
-            ->from('users_dialog')
-            ->where(['c_id' => $cId])
+        $userRow = $this->db()->select(['id', 'avatar', 'name'])
+            ->from('users')
+            ->where(['id' => $userId])
+            ->limit(1)
             ->execute()
             ->fetchAssoc();
 
-        if (empty($dialogRow)) {
+        if (empty($userRow)) {
             return null;
         }
 
-        $otherUserId = ($dialogRow['user_one'] == $userId) ? $dialogRow['user_two'] : $dialogRow['user_one'];
-
         $dialogModel = new DialogModel();
-        $dialogModel->setCId($cId);
+        $dialogModel->setId($userRow['id']);
+        $dialogModel->setName($userRow['name']);
 
-        $userRow = $this->db()->select(['id', 'avatar', 'name'])
-            ->from('users')
-            ->where(['id' => $otherUserId])
-            ->execute()
-            ->fetchAssoc();
-
-        if (!empty($userRow)) {
-            $dialogModel->setId($userRow['id']);
-            $dialogModel->setName($userRow['name']);
-            if (!empty($userRow['avatar']) && file_exists($userRow['avatar'])) {
-                $dialogModel->setAvatar($userRow['avatar']);
-            } else {
-                $dialogModel->setAvatar('static/img/noavatar.jpg');
-            }
+        if (!empty($userRow['avatar']) && file_exists($userRow['avatar'])) {
+            $dialogModel->setAvatar($userRow['avatar']);
         } else {
-            $dialogModel->setName('No longer exists');
             $dialogModel->setAvatar('static/img/noavatar.jpg');
         }
 
@@ -474,32 +460,35 @@ class Dialog extends \Ilch\Mapper
      */
     public function hideDialog(int $c_id, int $userId)
     {
-        $this->db()->query('INSERT IGNORE INTO [prefix]_users_dialog_hidden (c_id, user_id, permanent) VALUES (' . $c_id . ', ' . $userId . ', 0)');
+        $this->db()->query('INSERT INTO [prefix]_users_dialog_hidden (c_id, user_id, permanent)
+            SELECT ' . $c_id . ', ' . $userId . ', 0
+            FROM DUAL
+            WHERE NOT EXISTS (SELECT 1 FROM [prefix]_users_dialog_hidden WHERE c_id = ' . $c_id . ' AND user_id = ' . $userId . ')');
     }
 
     /**
      * Check if user has hidden a dialog.
+     * Permanently hidden ("deleted") dialogs are not counted here, because they
+     * are not shown in the hidden dialog view either.
      *
      * @param int $userId
-     * @param bool|null $includePermanent null: any hidden dialog, true: only permanent, false: only non permanent
+     * @param bool|null $includePermanent true: count permanently hidden dialogs, otherwise: count hidden dialogs
      * @return bool
      * @since $includePermanent since 2.1.43
      */
     public function hasHiddenDialog(int $userId, ?bool $includePermanent = null): bool
     {
-        $select = $this->db()->select('user_id')
+        $permanent = ($includePermanent === true) ? 1 : 0;
+
+        return (bool) $this->db()->select('user_id')
             ->from('users_dialog_hidden')
-            ->where(['user_id' => $userId]);
-
-        if ($includePermanent !== null) {
-            $select->andWhere(['permanent' => (int) $includePermanent]);
-        }
-
-        return (bool) $select->limit(1)->execute()->fetchCell();
+            ->where(['user_id' => $userId, 'permanent' => $permanent])
+            ->limit(1)
+            ->execute()
+            ->fetchCell();
     }
-
     /**
-     * Unhide a dialog of an user.
+     * Unhide a dialog of a user.
      *
      * @param int $c_id
      * @param int $userId
