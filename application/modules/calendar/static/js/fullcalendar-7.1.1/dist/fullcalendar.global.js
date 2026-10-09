@@ -1,5 +1,5 @@
 /*!
-FullCalendar (Vanilla JS) v7.1.0
+FullCalendar (Vanilla JS) v7.1.1
 Docs & License: https://fullcalendar.io
 (c) 2026 Adam Shaw
 */
@@ -2524,7 +2524,7 @@ var FullCalendar = (function (exports) {
       }
   }
 
-  var classNames = {"popoverZ":"fc-1U","isolate":"fc-1q","borderBoxRoot":"fc-pp","notAllowed":"fc-gm","noScrollbars":"fc-xp","noShrink":"fc-J9","calendarScreenRoot":"fc-oi","safeTiles":"fc-TV","calendarPrintRoot":"fc-OY","cursorPointer":"fc-ky","cursorResizeT":"fc-Wq","cursorResizeB":"fc-2H","cursorResizeS":"fc-lP","cursorResizeE":"fc-pu","cursorColResizer":"fc-Mo","hit":"fc-Bx","hitX":"fc-rT","hitY":"fc-1e","hitXSkinny":"fc-7U","selectNone":"fc-N6","invisible":"fc-BW","borderless":"fc-rf","borderlessX":"fc-Nq","borderlessY":"fc-zp","borderlessTop":"fc-1h","borderlessBottom":"fc-cZ","borderlessStart":"fc-G8","borderlessEnd":"fc-MA","flexRow":"fc-Dh","flexCol":"fc-vg","grow":"fc-85","liquid":"fc-91","minHeight0":"fc-Da","liquidX":"fc-1v","printTable":"fc-uR","noPadding":"fc-hF","noPaddingY":"fc-Ds","noMargin":"fc-TA","noMarginY":"fc-rt","noMarginX":"fc-wS","whiteSpaceNoWrap":"fc-mV","whiteSpacePre":"fc-zJ","overflowAnchorNone":"fc-Fk","pointerEventsNone":"fc-Ss","crop":"fc-D6","cropNowrap":"fc-5x","rel":"fc-DP","abs":"fc-P2","start0":"fc-5a","end0":"fc-lb","fill":"fc-0X","fillTop":"fc-9s","fillX":"fc-Gk","fillY":"fc-xh","fillStart":"fc-XV","sticky":"fc-XI","stickyT":"fc-7G","stickyS":"fc-Rw","tableHeaderSticky":"fc-yg","contentBox":"fc-2i","offscreen":"fc-o2","alignCenter":"fc-ih","alignStart":"fc-HJ","alignEnd":"fc-El","footerScrollbarSticky":"fc-nF","footerScrollbar":"fc-Or","breakInsideAvoid":"fc-6w","printCellContentMinHeight":"fc-9C","flowRoot":"fc-GJ","z0":"fc-d0","z1":"fc-Og","z2":"fc-BT","z3":"fc-XO","z4":"fc-e8","z5":"fc-sR","z1000":"fc-W4","z9999":"fc-eV","focusZ2":"fc-4U","internalTimelineSlot":"fc-YC","internalEvent":"fc-M0","internalEventMirror":"fc-N9","internalEventDraggable":"fc-41","internalEventSelected":"fc-vO","internalEventResizable":"fc-i0","internalEventResizer":"fc-Nc","internalEventResizerStart":"fc-hg","internalEventResizerEnd":"fc-dk","internalBgEvent":"fc-aw","internalMoreLink":"fc-kw","internalNavLink":"fc-Zy","internalPopover":"fc-ox","internalView":"fc-Q3","internalScroller":"fc-P4"};
+  var classNames = {"popoverZ":"fc-qQ","isolate":"fc-t2","borderBoxRoot":"fc-7U","notAllowed":"fc-45","noScrollbars":"fc-qB","noShrink":"fc-QF","calendarScreenRoot":"fc-54","safeTiles":"fc-m0","calendarPrintRoot":"fc-o0","cursorPointer":"fc-qN","cursorResizeT":"fc-I9","cursorResizeB":"fc-1v","cursorResizeS":"fc-oD","cursorResizeE":"fc-ux","cursorColResizer":"fc-vJ","hit":"fc-gM","hitX":"fc-dF","hitY":"fc-Vl","hitXSkinny":"fc-WH","selectNone":"fc-Vf","invisible":"fc-8j","borderless":"fc-u8","borderlessX":"fc-dY","borderlessY":"fc-Kx","borderlessTop":"fc-bU","borderlessBottom":"fc-xV","borderlessStart":"fc-D3","borderlessEnd":"fc-2t","flexRow":"fc-rA","flexCol":"fc-mY","grow":"fc-Hp","liquid":"fc-We","minHeight0":"fc-u5","liquidX":"fc-dz","printTable":"fc-H2","noPadding":"fc-5A","noPaddingY":"fc-Ky","noMargin":"fc-L0","noMarginY":"fc-Pc","noMarginX":"fc-VY","whiteSpaceNoWrap":"fc-U3","whiteSpacePre":"fc-mD","overflowAnchorNone":"fc-JD","pointerEventsNone":"fc-aN","crop":"fc-5l","cropNowrap":"fc-G8","rel":"fc-Sf","abs":"fc-p0","start0":"fc-gJ","end0":"fc-Nw","fill":"fc-tp","fillTop":"fc-F0","fillX":"fc-0F","fillY":"fc-7y","fillStart":"fc-VK","sticky":"fc-Xq","stickyT":"fc-Xs","stickyS":"fc-aG","tableHeaderSticky":"fc-x9","contentBox":"fc-sg","offscreen":"fc-6R","alignCenter":"fc-bv","alignStart":"fc-sh","alignEnd":"fc-Vv","footerScrollbarSticky":"fc-WV","footerScrollbar":"fc-B2","breakInsideAvoid":"fc-ve","printCellContentMinHeight":"fc-3f","flowRoot":"fc-rS","z0":"fc-ox","z1":"fc-ga","z2":"fc-K0","z3":"fc-Ar","z4":"fc-Cc","z5":"fc-K9","z1000":"fc-2p","z9999":"fc-rQ","focusZ2":"fc-V7","internalTimelineSlot":"fc-8w","internalEvent":"fc-6c","internalEventMirror":"fc-SS","internalEventDraggable":"fc-Yp","internalEventSelected":"fc-KO","internalEventResizable":"fc-rp","internalEventResizer":"fc-y2","internalEventResizerStart":"fc-c6","internalEventResizerEnd":"fc-Xm","internalBgEvent":"fc-Eu","internalMoreLink":"fc-pL","internalNavLink":"fc-iF","internalPopover":"fc-Ff","internalView":"fc-El","internalScroller":"fc-5f"};
 
   function joinClassNames(...args) {
       return args.filter(Boolean).join(' ');
@@ -9848,12 +9848,14 @@ var FullCalendar = (function (exports) {
           const isDraggable = !props.disableDragging && computeEventRangeDraggable(eventRange, context);
           const isBlock = /row|column/.test(props.display);
           const subcontentRenderProps = {
+              ...props.renderProps, // first, so built-in props take precedence
               event: eventApi,
               isNarrow: props.isNarrow || false,
               isShort: props.isShort || false,
               timeText,
           };
           const renderProps = {
+              ...props.renderProps, // first, so built-in props take precedence
               event: eventApi, // make stable. everything else atomic. FYI, eventRange unfortunately gets reconstructed a lot, but def/instance is stable
               view: context.viewApi,
               timeText: timeText,
@@ -10438,11 +10440,14 @@ var FullCalendar = (function (exports) {
           const eventUi = eventRange.ui;
           const eventApi = this.buildPublicEvent(context, eventRange.def, eventRange.instance);
           const subcontentRenderProps = {
+              ...props.renderProps, // first, so built-in props take precedence
               event: eventApi,
+              timeText: '', // never display time
               isNarrow: props.isNarrow || false,
               isShort: props.isShort || false,
           };
           const renderProps = {
+              ...props.renderProps, // first, so built-in props take precedence
               event: eventApi,
               view: context.viewApi,
               timeText: '', // never display time
@@ -10553,6 +10558,7 @@ var FullCalendar = (function (exports) {
           let textParts = dateEnv.formatToParts(startDate, options.popoverFormat);
           let text = joinDateTimeFormatParts(textParts);
           const dayHeaderRenderProps = {
+              ...props.renderProps, // first, so built-in props take precedence
               ...dateMeta,
               isMajor: false,
               isNarrow: false,
@@ -10565,9 +10571,9 @@ var FullCalendar = (function (exports) {
               get weekdayText() { return findWeekdayText(textParts); },
               get dayNumberText() { return findDayNumberText(textParts); },
               view: viewApi,
-              // TODO: should know about the resource!
           };
           const dayCellRenderProps = {
+              ...props.renderProps, // first, so built-in props take precedence
               ...dateMeta,
               isMajor: false,
               isNarrow: false,
@@ -10714,7 +10720,7 @@ var FullCalendar = (function (exports) {
       render() {
           const { props, context } = this;
           const { options } = context;
-          const renderProps = buildMoreLinkRenderProps(props.num, props.isNarrow, props.isMicro, props.display, context);
+          const renderProps = buildMoreLinkRenderProps(props.num, props.isNarrow, props.isMicro, props.display, props.renderProps, context);
           return (u$1(ContentContainer, { tag: 'div', elRef: props.elRef, className: joinClassNames(generateClassName(props.display === 'row'
                   ? options.rowMoreLinkClass
                   : options.columnMoreLinkClass, renderProps), props.className, props.display === 'row'
@@ -10785,9 +10791,9 @@ var FullCalendar = (function (exports) {
           const moreCnt = props.hiddenSegs.length;
           const range = computeRange(props);
           const popoverId = baseId + 'popover-' + range.start.toISOString();
-          const renderProps = buildMoreLinkRenderProps(moreCnt, props.isNarrow, props.isMicro, props.display, context);
+          const renderProps = buildMoreLinkRenderProps(moreCnt, props.isNarrow, props.isMicro, props.display, props.renderProps, context);
           const hint = formatWithOrdinals(options.moreLinkHint, [moreCnt], renderProps.longText);
-          return (u$1(S, { children: [Boolean(moreCnt) && (u$1(MoreLinkTrigger, { num: moreCnt, display: props.display, isNarrow: props.isNarrow, isMicro: props.isMicro, elRef: this.handleLinkEl, className: props.className, style: props.style, attrs: {
+          return (u$1(S, { children: [Boolean(moreCnt) && (u$1(MoreLinkTrigger, { num: moreCnt, display: props.display, isNarrow: props.isNarrow, isMicro: props.isMicro, renderProps: props.renderProps, elRef: this.handleLinkEl, className: props.className, style: props.style, attrs: {
                           ...props.attrs,
                           ...createAriaClickAttrs(this.handleClick),
                           title: hint,
@@ -10795,19 +10801,20 @@ var FullCalendar = (function (exports) {
                           'aria-haspopup': 'dialog',
                           'aria-expanded': state.isPopoverOpen,
                           'aria-controls': state.isPopoverOpen ? popoverId : undefined,
-                      }, didMount: options.moreLinkDidMount, willUnmount: options.moreLinkWillUnmount })), state.isPopoverOpen && (u$1(MorePopover, { id: popoverId, titleId: popoverId + '-title', startDate: range.start, endDate: range.end, dateProfile: props.dateProfile, todayRange: props.todayRange, dateSpanProps: props.dateSpanProps, alignEl: props.alignElRef ? props.alignElRef.current : this.linkEl, alignParentTop: props.alignParentTop, forceTimed: props.forceTimed, onClose: this.handlePopoverClose, children: props.popoverContent() }))] }));
+                      }, didMount: options.moreLinkDidMount, willUnmount: options.moreLinkWillUnmount })), state.isPopoverOpen && (u$1(MorePopover, { id: popoverId, titleId: popoverId + '-title', startDate: range.start, endDate: range.end, dateProfile: props.dateProfile, todayRange: props.todayRange, dateSpanProps: props.dateSpanProps, renderProps: props.renderProps, alignEl: props.alignElRef ? props.alignElRef.current : this.linkEl, alignParentTop: props.alignParentTop, forceTimed: props.forceTimed, onClose: this.handlePopoverClose, children: props.popoverContent() }))] }));
       }
   }
   function renderMoreLinkText(props) {
       return props.text;
   }
-  function buildMoreLinkRenderProps(num, isNarrow, isMicro, display, context) {
+  function buildMoreLinkRenderProps(num, isNarrow, isMicro, display, extraRenderProps, context) {
       const { viewApi, options, calendarApi } = context;
       const numericText = `+${num}`; // TODO: offer hook or i18n?
       const longText = typeof options.moreLinkText === 'function' // TODO: eventually use formatWithOrdinals
           ? options.moreLinkText.call(calendarApi, num)
           : `${numericText} ${options.moreLinkText}`;
       return {
+          ...extraRenderProps, // first, so built-in props take precedence
           num,
           numericText,
           longText,
@@ -10856,7 +10863,7 @@ var FullCalendar = (function (exports) {
   class DayGridMoreLink extends BaseComponent {
       render() {
           let { props } = this;
-          return (u$1(MoreLinkContainer, { display: 'row', className: joinClassNames(props.className, DAY_GRID_CELL_CONTENT_Z_CLASS), isNarrow: props.isNarrow, isMicro: props.isMicro, dateProfile: props.dateProfile, todayRange: props.todayRange, allDayDate: props.allDayDate, segs: props.segs, hiddenSegs: props.hiddenSegs, alignElRef: props.alignElRef, alignParentTop: props.alignParentTop, dateSpanProps: props.dateSpanProps, popoverContent: () => (u$1(S, { children: props.segs.map((seg) => {
+          return (u$1(MoreLinkContainer, { display: 'row', className: joinClassNames(props.className, DAY_GRID_CELL_CONTENT_Z_CLASS), isNarrow: props.isNarrow, isMicro: props.isMicro, dateProfile: props.dateProfile, todayRange: props.todayRange, allDayDate: props.allDayDate, segs: props.segs, hiddenSegs: props.hiddenSegs, alignElRef: props.alignElRef, alignParentTop: props.alignParentTop, dateSpanProps: props.dateSpanProps, renderProps: props.renderProps, popoverContent: () => (u$1(S, { children: props.segs.map((seg) => {
                       let { eventRange } = seg;
                       let { instanceId } = eventRange.instance;
                       let isDragging = Boolean(props.eventDrag && props.eventDrag.affectedInstances[instanceId]);
@@ -10864,7 +10871,7 @@ var FullCalendar = (function (exports) {
                       let isInvisible = isDragging || isResizing;
                       return (u$1("div", { style: {
                               visibility: isInvisible ? 'hidden' : undefined,
-                          }, children: u$1(StandardEvent, { display: hasListItemDisplay(seg, eventRange) ? 'list-item' : 'row', eventRange: eventRange, isStart: seg.isStart, isEnd: seg.isEnd, isDragging: isDragging, isResizing: isResizing, isMirror: false, isSelected: instanceId === props.eventSelection, defaultTimeFormat: DEFAULT_TABLE_EVENT_TIME_FORMAT, defaultDisplayEventEnd: false, ...getEventRangeMeta(eventRange, props.todayRange) }) }, instanceId));
+                          }, children: u$1(StandardEvent, { display: hasListItemDisplay(seg, eventRange) ? 'list-item' : 'row', eventRange: eventRange, isStart: seg.isStart, isEnd: seg.isEnd, isDragging: isDragging, isResizing: isResizing, isMirror: false, isSelected: instanceId === props.eventSelection, defaultTimeFormat: DEFAULT_TABLE_EVENT_TIME_FORMAT, defaultDisplayEventEnd: false, renderProps: props.renderProps, ...getEventRangeMeta(eventRange, props.todayRange) }) }, instanceId));
                   }) })) }));
       }
   }
@@ -10964,7 +10971,7 @@ var FullCalendar = (function (exports) {
                               , className: generateClassName(options.dayCellTopInnerClass, renderProps) })) }), u$1("div", { className: joinClassNames(!tableMode && classNames.flexCol, !tableMode && (props.fgLiquidHeight ? classNames.liquid : classNames.grow), tableMode && classNames.printCellContentMinHeight), ref: this.handleBodyEl, children: [u$1("div", { className: joinClassNames(classNames.rel, // origin for this cell's foreground event wrappers
                                   generateClassName(options.dayCellInnerClass, renderProps)), style: { minHeight: props.fgHeight }, children: props.fg }), u$1(DayGridMoreLink, { className: classNames.rel, allDayDate: props.date, segs: props.segs, hiddenSegs: props.hiddenSegs, alignElRef: this.rootElRef, alignParentTop: props.showDayNumber
                                       ? '[role=row]'
-                                      : `.${classNames.internalView}`, dateSpanProps: props.dateSpanProps, dateProfile: props.dateProfile, eventSelection: props.eventSelection, eventDrag: props.eventDrag, eventResize: props.eventResize, todayRange: props.todayRange, isNarrow: props.isNarrow, isMicro: props.isMicro })] }), u$1("div", { className: joinClassNames(classNames.rel, // puts it above bg-fills
+                                      : `.${classNames.internalView}`, dateSpanProps: props.dateSpanProps, renderProps: props.renderProps, dateProfile: props.dateProfile, eventSelection: props.eventSelection, eventDrag: props.eventDrag, eventResize: props.eventResize, todayRange: props.todayRange, isNarrow: props.isNarrow, isMicro: props.isMicro })] }), u$1("div", { className: joinClassNames(classNames.rel, // puts it above bg-fills
                           DAY_GRID_CELL_CONTENT_Z_CLASS, generateClassName(options.dayCellBottomClass, renderProps)) })] })) }));
       }
       componentDidMount() {
@@ -12298,7 +12305,9 @@ var FullCalendar = (function (exports) {
       renderEventContent(range, eventRange, interaction) {
           const { props } = this;
           const isListItem = hasListItemDisplay(range, eventRange);
-          return (u$1(StandardEvent, { display: isListItem ? 'list-item' : 'row', eventRange: eventRange, isStart: range.isStart, isEnd: range.isEnd, isDragging: Boolean(interaction.isDragging), isResizing: Boolean(interaction.isResizing), isMirror: Boolean(interaction.isMirror), isSelected: Boolean(interaction.isSelected), isNarrow: props.cellIsNarrow, defaultTimeFormat: DEFAULT_TABLE_EVENT_TIME_FORMAT, defaultDisplayEventEnd: props.cells.length === 1, disableResizing: isListItem, forcedTimeText: props.cellIsMicro ? '' : undefined, ...getEventRangeMeta(eventRange, props.todayRange) }));
+          // the range's starting cell supplies extra render props
+          const cellRenderProps = props.cells[range.start]?.renderProps;
+          return (u$1(StandardEvent, { display: isListItem ? 'list-item' : 'row', eventRange: eventRange, isStart: range.isStart, isEnd: range.isEnd, isDragging: Boolean(interaction.isDragging), isResizing: Boolean(interaction.isResizing), isMirror: Boolean(interaction.isMirror), isSelected: Boolean(interaction.isSelected), isNarrow: props.cellIsNarrow, defaultTimeFormat: DEFAULT_TABLE_EVENT_TIME_FORMAT, defaultDisplayEventEnd: props.cells.length === 1, disableResizing: isListItem, forcedTimeText: props.cellIsMicro ? '' : undefined, renderProps: cellRenderProps, ...getEventRangeMeta(eventRange, props.todayRange) }));
       }
       /** Renders aligned print slots with in-flow event wrappers that can paginate with their bands. */
       renderPrintBandSlots(slots) {
@@ -12336,7 +12345,7 @@ var FullCalendar = (function (exports) {
               fillsByCol[seg.start].push(u$1("div", { className: joinClassNames(classNames.fillY, classNames.start0, zClassName), style: {
                       width: this.computeSpanWidth(seg.start, seg.end),
                   }, children: fillType === 'bg-event' ?
-                      u$1(BgEvent, { eventRange: seg.eventRange, isStart: seg.isStart, isEnd: seg.isEnd, isNarrow: props.cellIsNarrow, isVertical: false, ...getEventRangeMeta(seg.eventRange, todayRange) }) : (renderFill(fillType, context.options)) }, `${fillType}:${buildEventRangeKey(seg.eventRange)}:${seg.start}:${seg.end}`));
+                      u$1(BgEvent, { eventRange: seg.eventRange, isStart: seg.isStart, isEnd: seg.isEnd, isNarrow: props.cellIsNarrow, isVertical: false, renderProps: props.cells[seg.start]?.renderProps, ...getEventRangeMeta(seg.eventRange, todayRange) }) : (renderFill(fillType, context.options)) }, `${fillType}:${buildEventRangeKey(seg.eventRange)}:${seg.start}:${seg.end}`));
           }
       }
       // Sizing
@@ -12628,6 +12637,8 @@ var FullCalendar = (function (exports) {
               this.disconnectMoreLinkHeight?.();
               this.disconnectMoreLinkHeight = undefined;
               if (el) {
+                  // set imperatively. React 19 treats inert as boolean, older React as string
+                  el.inert = true;
                   this.disconnectMoreLinkHeight = watchHeight(el, (height) => {
                       if (this._isUnmounting)
                           return;
@@ -12679,7 +12690,6 @@ var FullCalendar = (function (exports) {
                           // refs
                           heightRef: rowHeightRefMap.createRef(cells[0].key) }, firstCellKey + ':' + cells[0].key))) }), needsMoreLinkProbe && (u$1(MoreLinkTrigger, { num: 1, display: 'row', isNarrow: props.cellIsNarrow, isMicro: props.cellIsMicro, elRef: this.handleMoreLinkEl, className: classNames.offscreen, attrs: {
                           'aria-hidden': true,
-                          inert: '',
                       } }))] }));
       }
       componentDidMount() {
@@ -12697,6 +12707,9 @@ var FullCalendar = (function (exports) {
           const { col, left, right } = computeColFromPosition(positionLeft, elWidth, props.colWidth, colCount, isRtl);
           const { row, top, bottom } = computeRowFromPosition(positionTop, props.cellRows, this.rowHeightRefMap.current);
           const cell = props.cellRows[row][col];
+          if (cell.isInert) {
+              return null;
+          }
           const cellStartDate = cell.date;
           const cellEndDate = addDays(cellStartDate, 1);
           return {
@@ -12781,17 +12794,26 @@ var FullCalendar = (function (exports) {
           /*
           A liquid cell that spans multiple columns can't use the .liquid class, which gives every
           cell an equal share regardless of colSpan. Instead, grow proportionally to the columns
-          covered. Like the body cells, use a zero basis so borders remain within the distributed
-          border-box width.
+          covered, reserving space for the internal column borders swallowed by the span.
+          Include this cell's own start border because flex-basis uses border-box sizing.
           */
           const isSpanning = isLiquid && colSpan > 1;
           const style = tableMode ? undefined : isSpanning ? {
               flexGrow: colSpan,
-              flexBasis: 0,
+              flexBasis: (colSpan - 1) * COL_BORDER_WIDTH + (props.borderStart ? COL_BORDER_WIDTH : 0),
               minWidth: 0,
           } : {
               width: totalColWidth,
           };
+          const CellTag = tableMode ? 'th' : 'div';
+          const baseClassName = joinClassNames(dataConfig.className, classNames.noMargin, classNames.noPadding, !tableMode && classNames.flexCol, classNames.borderlessTop, classNames.borderlessEnd, !props.borderStart && classNames.borderlessStart, !(tableMode && props.borderBottom) && classNames.borderlessBottom, isLiquid && !isSpanning && classNames.liquid);
+          // Structural gaps share cell geometry but never invoke the row's render hooks.
+          if (dataConfig.blank) {
+              return (u$1(CellTag, { role: 'columnheader', "aria-colspan": dataConfig.colSpan, colSpan: tableMode ? colSpan : undefined, ...dataConfig.attrs, className: joinClassNames(baseClassName, generateClassName(dataConfig.blank.classNameGenerator, {
+                      ...dataConfig.renderProps,
+                      isNarrow: props.cellIsNarrow,
+                  })), style: style }));
+          }
           // HACK
           const isDisabled = dataConfig.renderProps.isDisabled;
           const finalRenderProps = renderConfig.dayHeaderFormat
@@ -12839,13 +12861,12 @@ var FullCalendar = (function (exports) {
           const alignClassName = align === 'center' ? classNames.alignCenter :
               align === 'end' ? classNames.alignEnd :
                   classNames.alignStart;
-          const CellTag = tableMode ? 'th' : 'div';
           return (u$1(ContentContainer, { tag: CellTag, attrs: {
                   role: 'columnheader',
                   'aria-colspan': dataConfig.colSpan,
                   colSpan: tableMode ? colSpan : undefined,
                   ...dataConfig.attrs,
-              }, className: joinClassNames(dataConfig.className, classNames.noMargin, classNames.noPadding, !tableMode && classNames.flexCol, classNames.borderlessTop, classNames.borderlessEnd, !props.borderStart && classNames.borderlessStart, !(tableMode && props.borderBottom) && classNames.borderlessBottom, !tableMode && alignClassName, isLiquid && !isSpanning && classNames.liquid, !isSticky && classNames.crop), style: style, renderProps: finalRenderProps, generatorName: renderConfig.generatorName, customGenerator: renderConfig.customGenerator, defaultGenerator: renderText$1, classNameGenerator: 
+              }, className: joinClassNames(baseClassName, !tableMode && alignClassName, !isSticky && classNames.crop), style: style, renderProps: finalRenderProps, generatorName: renderConfig.generatorName, customGenerator: renderConfig.customGenerator, defaultGenerator: renderText$1, classNameGenerator: 
               // don't use custom classNames if disabled
               // TODO: make DRY with DayCellContainer
               isDisabled ? undefined : renderConfig.classNameGenerator, didMount: renderConfig.didMount, willUnmount: renderConfig.willUnmount, children: (InnerContainer) => (u$1("div", { ref: this.handleInnerEl, className: joinClassNames(classNames.flexCol, classNames.noShrink, classNames.whiteSpaceNoWrap, tableMode && alignClassName, isSticky && classNames.sticky), style: {
@@ -13594,6 +13615,8 @@ var FullCalendar = (function (exports) {
               this.disconnectMoreLinkHeight?.();
               this.disconnectMoreLinkHeight = undefined;
               if (el) {
+                  // set imperatively. React 19 treats inert as boolean, older React as string
+                  el.inert = true;
                   this.disconnectMoreLinkHeight = watchHeight(el, (height) => {
                       if (this._isUnmounting)
                           return;
@@ -13620,7 +13643,6 @@ var FullCalendar = (function (exports) {
                       /* BAD: these overwrite the props! caller might want to pass them */
                       rootElRef: this.handleRootEl, heightRef: this.heightRef }), needsMoreLinkProbe && (u$1(MoreLinkTrigger, { num: 1, display: 'row', isNarrow: props.cellIsNarrow, isMicro: props.cellIsMicro, elRef: this.handleMoreLinkEl, className: classNames.offscreen, attrs: {
                           'aria-hidden': true,
-                          inert: '',
                       } }))] }));
       }
       componentDidMount() {
@@ -13635,6 +13657,9 @@ var FullCalendar = (function (exports) {
           const colCount = props.cells.length;
           const { col, left, right } = computeColFromPosition(positionLeft, elWidth, props.colWidth, colCount, isRtl);
           const cell = props.cells[col];
+          if (cell.isInert) {
+              return null;
+          }
           const cellStartDate = cell.date;
           const cellEndDate = addDays(cellStartDate, 1);
           return {
@@ -13965,7 +13990,7 @@ var FullCalendar = (function (exports) {
           return (u$1("div", { className: joinClassNames(classNames.abs, classNames.flexCol, classNames.end0, classNames.z9999), style: {
                   top: props.top,
                   height: props.height,
-              }, children: u$1(MoreLinkContainer, { className: classNames.liquid, display: 'column', allDayDate: null, segs: props.hiddenSegs, hiddenSegs: props.hiddenSegs, dateSpanProps: props.dateSpanProps, dateProfile: props.dateProfile, todayRange: props.todayRange, popoverContent: () => renderPlainFgSegs(props.hiddenSegs, props, /* isMirror = */ false), forceTimed: true, isNarrow: props.isNarrow, isMicro: props.isMicro }) }));
+              }, children: u$1(MoreLinkContainer, { className: classNames.liquid, display: 'column', allDayDate: null, segs: props.hiddenSegs, hiddenSegs: props.hiddenSegs, dateSpanProps: props.dateSpanProps, renderProps: props.renderProps, dateProfile: props.dateProfile, todayRange: props.todayRange, popoverContent: () => renderPlainFgSegs(props.hiddenSegs, props, /* isMirror = */ false), forceTimed: true, isNarrow: props.isNarrow, isMicro: props.isMicro }) }));
       }
   }
 
@@ -14083,7 +14108,7 @@ var FullCalendar = (function (exports) {
                   top: segVertical.start,
                   height: segVertical.size,
                   ...hStyle,
-              }, children: u$1(TimeGridEvent, { eventRange: eventRange, slicedStart: seg.startDate, slicedEnd: seg.endDate, isStart: seg.isStart, isEnd: seg.isEnd, isDragging: isDragging, isResizing: isResizing, isMirror: isMirror, isSelected: isSelected, level: level, isNarrow: props.isNarrow, isShort: segVertical.isShort || false, isLiquid: true, ...getEventRangeMeta(eventRange, props.todayRange, props.nowDate, props.nowMs) }) }, instanceId));
+              }, children: u$1(TimeGridEvent, { eventRange: eventRange, slicedStart: seg.startDate, slicedEnd: seg.endDate, isStart: seg.isStart, isEnd: seg.isEnd, isDragging: isDragging, isResizing: isResizing, isMirror: isMirror, isSelected: isSelected, level: level, isNarrow: props.isNarrow, isShort: segVertical.isShort || false, isLiquid: true, renderProps: props.renderProps, ...getEventRangeMeta(eventRange, props.todayRange, props.nowDate, props.nowMs) }) }, instanceId));
       }
       /*
       A pixel floor is only meaningful against a real slat height, so it stays off
@@ -14101,9 +14126,9 @@ var FullCalendar = (function (exports) {
       has already been applied to the segs it was formed from
       */
       renderHiddenGroups(hiddenGroups) {
-          let { dateSpanProps, dateProfile, todayRange, nowDate, nowMs, eventSelection, eventDrag, eventResize, isNarrow, isMicro } = this.props;
+          let { dateSpanProps, renderProps, dateProfile, todayRange, nowDate, nowMs, eventSelection, eventDrag, eventResize, isNarrow, isMicro } = this.props;
           return (u$1(S, { children: hiddenGroups.map((hiddenGroup) => {
-                  return (u$1(TimeGridMoreLink, { hiddenSegs: hiddenGroup.segs, top: hiddenGroup.start, height: hiddenGroup.end - hiddenGroup.start, isNarrow: isNarrow, isMicro: isMicro, dateSpanProps: dateSpanProps, dateProfile: dateProfile, todayRange: todayRange, nowDate: nowDate, nowMs: nowMs, eventSelection: eventSelection, eventDrag: eventDrag, eventResize: eventResize }, hiddenGroup.key));
+                  return (u$1(TimeGridMoreLink, { hiddenSegs: hiddenGroup.segs, top: hiddenGroup.start, height: hiddenGroup.end - hiddenGroup.start, isNarrow: isNarrow, isMicro: isMicro, dateSpanProps: dateSpanProps, renderProps: renderProps, dateProfile: dateProfile, todayRange: todayRange, nowDate: nowDate, nowMs: nowMs, eventSelection: eventSelection, eventDrag: eventDrag, eventResize: eventResize }, hiddenGroup.key));
               }) }));
       }
       renderFillSegs(segs, fillType) {
@@ -14121,7 +14146,7 @@ var FullCalendar = (function (exports) {
                           // will render on both at the same time
                           marginInlineStart: -1,
                       }, children: fillType === 'bg-event' ?
-                          u$1(BgEvent, { eventRange: eventRange, isStart: seg.isStart, isEnd: seg.isEnd, isNarrow: props.isNarrow, isShort: segVertical.isShort || false, isVertical: true, ...getEventRangeMeta(eventRange, props.todayRange, props.nowDate, props.nowMs) }) :
+                          u$1(BgEvent, { eventRange: eventRange, isStart: seg.isStart, isEnd: seg.isEnd, isNarrow: props.isNarrow, isShort: segVertical.isShort || false, isVertical: true, renderProps: props.renderProps, ...getEventRangeMeta(eventRange, props.todayRange, props.nowDate, props.nowMs) }) :
                           renderFill(fillType, context.options) }, buildEventRangeKey(eventRange)));
               }) }));
       }
@@ -14161,14 +14186,14 @@ var FullCalendar = (function (exports) {
           return computeTimeGridPrintMode(this.props.forPrint, eventPrintLayout) === 'stack';
       }
   }
-  function renderPlainFgSegs(sortedFgSegs, { todayRange, nowDate, nowMs, eventSelection, eventDrag, eventResize }, isMirror) {
+  function renderPlainFgSegs(sortedFgSegs, { todayRange, nowDate, nowMs, eventSelection, eventDrag, eventResize, renderProps }, isMirror) {
       return (u$1(S, { children: sortedFgSegs.map((seg) => {
               let { eventRange } = seg;
               let { instanceId } = eventRange.instance;
               let isDragging = Boolean(eventDrag && eventDrag.affectedInstances[instanceId]);
               let isResizing = Boolean(eventResize && eventResize.affectedInstances[instanceId]);
               let isInvisible = isDragging || isResizing;
-              return (u$1("div", { className: classNames.breakInsideAvoid, style: { visibility: isInvisible ? 'hidden' : undefined }, children: u$1(TimeGridEvent, { eventRange: eventRange, slicedStart: seg.startDate, slicedEnd: seg.endDate, isStart: seg.isStart, isEnd: seg.isEnd, isDragging: isDragging, isResizing: isResizing, isMirror: isMirror, isSelected: instanceId === eventSelection, level: 0, isShort: false, isNarrow: false, disableResizing: true, ...getEventRangeMeta(eventRange, todayRange, nowDate, nowMs) }) }, instanceId));
+              return (u$1("div", { className: classNames.breakInsideAvoid, style: { visibility: isInvisible ? 'hidden' : undefined }, children: u$1(TimeGridEvent, { eventRange: eventRange, slicedStart: seg.startDate, slicedEnd: seg.endDate, isStart: seg.isStart, isEnd: seg.isEnd, isDragging: isDragging, isResizing: isResizing, isMirror: isMirror, isSelected: instanceId === eventSelection, level: 0, isShort: false, isNarrow: false, disableResizing: true, renderProps: renderProps, ...getEventRangeMeta(eventRange, todayRange, nowDate, nowMs) }) }, instanceId));
           }) }));
   }
 
@@ -14205,6 +14230,9 @@ var FullCalendar = (function (exports) {
           const colCount = cells.length;
           const { col, left, right } = computeColFromPosition(positionLeft, elWidth, colWidth, colCount, isRtl);
           const cell = cells[col];
+          if (cell.isInert) {
+              return null;
+          }
           const slatIndex = Math.floor(positionTop / slatHeight);
           const slatTop = slatIndex * slatHeight;
           const partial = (positionTop - slatTop) / slatHeight; // floating point number between 0 and 1
@@ -15439,6 +15467,7 @@ var FullCalendar = (function (exports) {
       TimeGridLayout: TimeGridLayout,
       buildDayCols: buildDayCols,
       buildDayColsFromSeries: buildDayColsFromSeries,
+      computeTimeGridPrintMode: computeTimeGridPrintMode,
       organizeSegsByCol: organizeSegsByCol,
       splitInteractionByCol: splitInteractionByCol,
       DateComponent: DateComponent,
@@ -18810,7 +18839,7 @@ var FullCalendar = (function (exports) {
       return sliceEventStore(props.eventStore, props.eventUiBases, props.dateProfile.activeRange, allDay ? props.nextDayThreshold : null).fg;
   }
 
-  const version = '7.1.0';
+  const version = '7.1.1';
 
   var protectedStyles = /*#__PURE__*/Object.freeze({
   	__proto__: null,
