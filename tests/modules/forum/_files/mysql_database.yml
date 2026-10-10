@@ -11,3 +11,152 @@ forum_ranks:
     id: 3
     title: "Mitglied"
     posts: 50
+
+forum_prefixes:
+  -
+    id: 1
+    prefix: 'Pinned'
+  -
+    id: 2
+    prefix: 'Solved'
+
+forum_groupranking:
+  -
+    id: 1
+    group_id: 1
+    rank: 0
+  -
+    id: 2
+    group_id: 2
+    rank: 2
+  -
+    id: 3
+    group_id: 3
+    rank: 4
+
+users:
+  - id: 1
+    name: 'Alice'
+    email: 'alice@example.com'
+    date_last_activity: '2024-01-15 10:00:00'
+  - id: 2
+    name: 'Bob'
+    email: 'bob@example.com'
+    date_last_activity: '2024-01-16 11:30:00'
+
+groups:
+  - id: 1
+    name: 'Administrator'
+  - id: 2
+    name: 'Moderator'
+  - id: 3
+    name: 'Member'
+  - id: 4
+    name: 'Subscriber'
+
+forum_items:
+  - id: 1
+    sort: 0
+    parent_id: 0
+    type: 0
+    title: 'Meine Kategorie'
+    description: 'Meine erste Kategorie'
+    last_post_date: null
+    last_post_id: null
+  - id: 2
+    sort: 10
+    parent_id: 1
+    type: 1
+    title: 'Mein Forum'
+    description: 'Mein erstes Forum'
+    last_post_date: '2024-01-16 11:00:00'
+    last_post_id: 2
+
+forum_topics:
+  - id: 1
+    forum_id: 2
+    topic_prefix: 0
+    topic_title: 'Willkommen bei Ilch!'
+    visits: 0
+    creator_id: 1
+    date_created: '2024-01-15 10:00:00'
+    type: 0
+    status: 0
+    last_post_date: '2024-01-15 10:00:00'
+    last_post_id: 1
+  - id: 2
+    forum_id: 2
+    topic_prefix: 0
+    topic_title: 'Second topic'
+    visits: 0
+    creator_id: 2
+    date_created: '2024-01-16 11:00:00'
+    type: 0
+    status: 0
+    last_post_date: '2024-01-16 11:00:00'
+    last_post_id: 2
+
+forum_posts:
+  - id: 1
+    topic_id: 1
+    forum_id: 2
+    text: 'Willkommen im Ilch 2 Forum!'
+    user_id: 1
+    date_created: '2024-01-15 10:00:00'
+  - id: 2
+    topic_id: 2
+    forum_id: 2
+    text: 'Second post'
+    user_id: 2
+    date_created: '2024-01-16 11:00:00'
+
+forum_remember:
+  - id: 1
+    date: '2024-01-15 12:00:00'
+    post_id: 1
+    note: 'Remember this post'
+    user_id: 1
+  - id: 2
+    date: '2024-01-16 12:00:00'
+    post_id: 2
+    note: 'Remember that post'
+    user_id: 2
+
+forum_reports:
+  - id: 1
+    date: '2024-01-15 13:00:00'
+    post_id: 1
+    reason: 1
+    details: 'Spam link'
+    user_id: 1
+  - id: 2
+    date: '2024-01-16 13:00:00'
+    post_id: 2
+    reason: 2
+    details: 'Offensive content'
+    user_id: 2
+
+forum_topicsubscription:
+  - id: 1
+    topic_id: 1
+    user_id: 1
+    last_notification: '2024-01-15 12:00:00'
+  - id: 2
+    topic_id: 1
+    user_id: 2
+    last_notification: '2024-01-15 12:30:00'
+  - id: 3
+    topic_id: 2
+    user_id: 1
+    last_notification: '2024-01-16 12:00:00'
+
+forum_read:
+  - user_id: 1
+    forum_id: 2
+    datetime: '2024-01-15 09:00:00'
+
+forum_topics_read:
+  - user_id: 1
+    forum_id: 2
+    topic_id: 1
+    datetime: '2024-01-15 09:30:00'
