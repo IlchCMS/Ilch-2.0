@@ -135,12 +135,9 @@ class Topic extends Mapper
             ->from('forum_topics')
             ->where(['forum_id' => $id])
             ->execute()
-            ->fetchList('id');
-        if (empty($result)) {
-            return [];
-        }
+            ->fetchList();
 
-        return $result;
+        return array_map('intval', $result);
     }
 
     /**
