@@ -266,50 +266,70 @@ class Backup extends \Ilch\Controller\Admin
 
     public function refreshAction()
     {
-        if ($this->getRequest()->isSecure()) {
-            // Look for new backup files that have been uploaded to the backups directory.
-            $backupMapper = new BackupMapper();
-            $backups = $backupMapper->getBackups() ?? [];
-            $directory = ROOT_PATH . '/backups/';
-            $backupsInDirectory = glob($directory . '*.sql*');
-            $newBackupFiles = [];
+        if (!$this->getRequest()->isSecure()) {
+            return;
+        }
 
-            foreach ($backupsInDirectory as $backupInDirectory) {
-                $found = false;
-                foreach ($backups as $backup) {
-                    if (strpos($backupInDirectory, $backup->getName()) !== false) {
-                        $found = true;
-                        break;
-                    }
-                }
+        // Look for new backup files that have been uploaded to the backups directory.
+        $backupMapper = new BackupMapper();
+        $backups = $backupMapper->getBackups() ?? [];
+        $directory = ROOT_PATH . '/backups/';
+        $backupsInDirectory = glob($directory . '*.sql*');
+        $newBackupFiles = [];
 
-                if (!$found) {
-                    $newBackupFiles[] = $backupInDirectory;
-                }
+        // Names in the table are plain file names, so compare basenames exactly.
+        $knownBackups = [];
+        foreach ($backups as $backup) {
+            $knownBackups[$backup->getName()] = true;
+        }
+
+        foreach ($backupsInDirectory as $backupInDirectory) {
+            if (!isset($knownBackups[basename($backupInDirectory)])) {
+                $newBackupFiles[] = $backupInDirectory;
+            }
+        }
+
+        foreach ($newBackupFiles as $newBackupFile) {
+            $backupFileInfo = pathinfo($newBackupFile);
+            $extension = $backupFileInfo['extension'];
+            $baseName = $backupFileInfo['filename'];
+
+            // A .sql.gz file has two extensions; depending on how it was created the
+            // random part sits before ".sql" (createAction) or before ".gz" (refresh).
+            // Normalize so both variants are recognized.
+            if (substr($baseName, -4) === '.sql') {
+                $baseName = substr($baseName, 0, -4);
             }
 
-            foreach ($newBackupFiles as $newBackupFile) {
-                $backupFileInfo = pathinfo($newBackupFile);
-                // Create a filename that is not longer than 255 chars.
-                $newFilename = substr($backupFileInfo['filename'], 0, 254 - 64 - strlen('_.' . $backupFileInfo['extension']));
-                $newFilename = $newFilename . '_' . bin2hex(random_bytes(32)) . '.' . $backupFileInfo['extension'];
-                // Rename the file to add a secure random part to it's filename before adding it to the table of backups.
-                if (rename($newBackupFile, $backupFileInfo['dirname'] . '/' . $newFilename)) {
-                    $backupModel = new BackupModel();
-                    $backupMapper = new BackupMapper();
+            // Only append the random part if the name does not already end with one.
+            // Format: underscore + 64 lowercase hex chars (bin2hex(random_bytes(32))).
+            $hasRandomPart = preg_match('/_[0-9a-f]{64}$/', $baseName) === 1;
 
-                    $backupModel->setName($newFilename);
-                    $backupModel->setDate('0000-00-00');
-                    $backupMapper->save($backupModel);
-                } else {
+            if (!$hasRandomPart) {
+                // Create a filename that is not longer than 255 chars.
+                $prefix = substr($baseName, 0, 254 - 64 - strlen('_.' . $extension));
+                $baseName = $prefix . '_' . bin2hex(random_bytes(32));
+            }
+
+            $newFilename = $baseName . '.' . $extension;
+
+            // If the file already carries a random part, its name is already unique
+            // and it only needs to be registered - no rename required.
+            if ($newFilename !== $backupFileInfo['basename']) {
+                if (!rename($newBackupFile, $backupFileInfo['dirname'] . '/' . $newFilename)) {
                     // Renaming the backup file failed.
                     $this->addMessage('backupRefreshError', 'danger');
                     $this->redirect(['action' => 'index']);
                 }
             }
 
-            $this->addMessage('backupRefreshSuccess');
+            $backupModel = new BackupModel();
+            $backupModel->setName($newFilename);
+            $backupModel->setDate('0000-00-00');
+            $backupMapper->save($backupModel);
         }
+
+        $this->addMessage('backupRefreshSuccess');
 
         $this->redirect(['action' => 'index']);
     }
