@@ -116,23 +116,24 @@ class Logs extends \Ilch\Mapper
      */
     public function saveLog($userId, $info)
     {
-        $date = new IlchDate();
-        $date->modify('-1 minutes');
+        $now = new IlchDate();
+
+        $oneMinuteAgo = new IlchDate();
+        $oneMinuteAgo->modify('-1 minutes');
 
         $count = $this->db()->select('COUNT(*)')
             ->from('logs')
-            ->where(['user_id' => (int)$userId, 'info' => $info, 'date >' => $date->toDb(true)])
+            ->where(['user_id' => (int)$userId, 'info' => $info, 'date >' => $oneMinuteAgo->toDb(true)])
             ->execute()
             ->fetchCell();
 
         if ($count == 0) {
-            $fields = [
-                'user_id' => $userId,
-                'info' => $info
-            ];
-
             $this->db()->insert('logs')
-                ->values($fields)
+                ->values([
+                    'user_id' => $userId,
+                    'info' => $info,
+                    'date' => $now->toDb(true)
+                ])
                 ->execute();
         }
     }
