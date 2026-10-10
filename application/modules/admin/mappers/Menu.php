@@ -40,6 +40,7 @@ class Menu extends Mapper
         $menus = [];
         $menuRows = $this->db()->select(['id','title'])
             ->from('menu')
+            ->order(['id' => 'ASC'])
             ->execute()
             ->fetchRows();
 
@@ -122,6 +123,7 @@ class Menu extends Mapper
      *
      * @param MenuItem $menuItem
      * @return int
+     * @throws \InvalidArgumentException if type or title is missing
      */
     public function saveItem(MenuItem $menuItem): int
     {
@@ -146,6 +148,12 @@ class Menu extends Mapper
             }
         }
 
+        // type and title are NOT NULL without defaults. Failing here gives a clean
+        // error instead of a failing INSERT.
+        if (!isset($fields['type']) || !isset($fields['title'])) {
+            throw new \InvalidArgumentException('MenuItem needs at least type and title.');
+        }
+
         $itemId = (int)$this->db()->select('id', 'menu_items', ['id' => $menuItem->getId()])
             ->execute()
             ->fetchCell();
@@ -167,31 +175,49 @@ class Menu extends Mapper
     /**
      * Get last menu id.
      *
-     * @return false|string|null
+     * @return string|null
      */
     public function getLastMenuId()
     {
-        return $this->db()->select('MAX(id)')
+        $menuId = $this->db()->select('MAX(id)')
             ->from('menu')
             ->execute()
             ->fetchCell();
+
+        // The db layer reports "no value" as false; normalize it to the
+        // documented "no menu exists" return value.
+        if ($menuId === false || $menuId === null) {
+            return null;
+        }
+
+        return $menuId;
     }
 
     /**
      * Get last menu item id.
      *
-     * @return false|string|null
+     * @return string|null
      */
     public function getLastMenuItemId()
     {
-        return $this->db()->select('MAX(id)')
+        $itemId = $this->db()->select('MAX(id)')
             ->from('menu_items')
             ->execute()
             ->fetchCell();
+
+        if ($itemId === false || $itemId === null) {
+            return null;
+        }
+
+        return $itemId;
     }
 
     /**
      * Save one menu.
+     *
+     * Registers the menu if it does not exist yet and returns its id.
+     * An existing menu is left untouched (its title is not updated); the
+     * existing id is returned in that case.
      *
      * @param MenuModel $menu
      * @return int
@@ -212,7 +238,26 @@ class Menu extends Mapper
     }
 
     /**
-     * Delete the given menu item.
+     * Delete the given menu.
+     *
+     * @param int $id
+     */
+    public function delete(int $id)
+    {
+        $this->db()->delete('menu')
+            ->where(['id' => $id])
+            ->execute();
+        // Rows in menu_items get deleted due to a FKC.
+
+        // Reset the AUTO_INCREMENT if this was the last menu. TRUNCATE is not possible
+        // here because menu_items references menu via a foreign key (MySQL error 1701).
+        if (!$this->getMenus()) {
+            $this->db()->query('ALTER TABLE `[prefix]_menu` AUTO_INCREMENT = 1;');
+        }
+    }
+
+    /**
+     * Delete the menu item with the given id.
      *
      * @param MenuItem $menuItem
      */
@@ -224,7 +269,10 @@ class Menu extends Mapper
     }
 
     /**
-     * Delete items for the given modulkey.
+     * Delete items for the given module key.
+     *
+     * If $parentID is given, everything below that parent is deleted and the
+     * $moduleKey is ignored. That is needed for the recursion to wipe a whole subtree.
      *
      * @param string $moduleKey
      * @param int|null $parentID
@@ -254,24 +302,6 @@ class Menu extends Mapper
     }
 
     /**
-     * Delete the given menu.
-     *
-     * @param int $id
-     */
-    public function delete(int $id)
-    {
-        $this->db()->delete('menu')
-            ->where(['id' => $id])
-            ->execute();
-        // Rows in menu_items get deleted due to a FKC.
-
-        // Truncate table if this was the last menu. This will also reset AUTO_INCREMENT.
-        if (!$this->getMenus()) {
-            $this->db()->truncate('menu');
-        }
-    }
-
-    /**
      * Delete all items with a specific menu id.
      *
      * @param int $menuId
@@ -290,6 +320,12 @@ class Menu extends Mapper
      */
     public function deleteItemByBoxId(int $boxId)
     {
+        // box_id defaults to 0 for every non-box item. Deleting with 0 would remove
+        // all of them, so it is never allowed.
+        if ($boxId <= 0) {
+            return;
+        }
+
         $this->db()->delete('menu_items')
             ->where(['box_id' => $boxId])
             ->execute();
@@ -302,6 +338,12 @@ class Menu extends Mapper
      */
     public function deleteItemByPageId(int $pageId)
     {
+        // page_id defaults to 0 for every non-page item. Deleting with 0 would remove
+        // all of them, so it is never allowed.
+        if ($pageId <= 0) {
+            return;
+        }
+
         $this->db()->delete('menu_items')
             ->where(['page_id' => $pageId])
             ->execute();

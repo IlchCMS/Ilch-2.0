@@ -165,7 +165,9 @@ class Config extends \Ilch\Config\Install
                 `box_id` INT(11) NOT NULL,
                 `content` MEDIUMTEXT NOT NULL,
                 `locale` VARCHAR(255) NOT NULL,
-                `title` VARCHAR(255) NOT NULL
+                `title` VARCHAR(255) NOT NULL,
+                INDEX `FK_[prefix]_boxes_content_[prefix]_boxes` (`box_id`) USING BTREE,
+                CONSTRAINT `FK_[prefix]_boxes_content_[prefix]_boxes` FOREIGN KEY (`box_id`) REFERENCES `[prefix]_boxes` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_pages` (
@@ -194,7 +196,8 @@ class Config extends \Ilch\Config\Install
             CREATE TABLE IF NOT EXISTS `[prefix]_logs` (
                 `user_id` VARCHAR(255) NOT NULL,
                 `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                `info` VARCHAR(255) NOT NULL
+                `info` VARCHAR(255) NOT NULL,
+                INDEX `logs_user_info_date` (`user_id`(50), `info`(50), `date`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_admin_layoutadvsettings` (
@@ -1356,6 +1359,40 @@ class Config extends \Ilch\Config\Install
                 replaceVendorDirectory();
                 break;
             case "2.2.20":
+                // Add FKC for the 'box_id' column in the table 'boxes_content' after deleting possibly orphaned rows.
+                $fileConfig = new \Ilch\Config\File();
+                $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
+                $dbname = $fileConfig->get('dbName');
+
+                $existingBoxes = $this->db()->select('id')
+                    ->from('boxes')
+                    ->execute()
+                    ->fetchList();
+
+                $referencedBoxesInContent = $this->db()->select('box_id')
+                    ->from('boxes_content')
+                    ->execute()
+                    ->fetchList();
+
+                $orphanedRows = array_diff($referencedBoxesInContent ?? [], $existingBoxes ?? []);
+                if (count($orphanedRows) > 0) {
+                    $this->db()->delete()
+                        ->from('boxes_content')
+                        ->where(['box_id' => $orphanedRows])
+                        ->execute();
+                }
+
+                if (!$this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_boxes_content' AND constraint_name='FK_[prefix]_boxes_content_[prefix]_boxes');")) {
+                    $this->db()->query('ALTER TABLE `[prefix]_boxes_content` ADD CONSTRAINT `FK_[prefix]_boxes_content_[prefix]_boxes` FOREIGN KEY (`box_id`) REFERENCES `[prefix]_boxes` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE;');
+                }
+
+                // Add index to the logs table to make the dedup check in saveLog() efficient.
+                // Prefix index: full columns would be 2044 bytes in utf8mb4, which exceeds
+                // MySQL 5.5's 767-byte index limit (50 + 50 + timestamp = 404 bytes).
+                if (!$this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.statistics WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_logs' AND index_name='logs_user_info_date');")) {
+                    $this->db()->query('CREATE INDEX `logs_user_info_date` ON `[prefix]_logs` (`user_id`(50), `info`(50), `date`);');
+                }
+
                 // Check if the new updateserver was already added. New installations of Ilch 2.2.20 might be missing it.
                 $updateserverExists = $this->db()->select('url')
                     ->from('admin_updateservers')

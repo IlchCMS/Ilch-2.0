@@ -28,19 +28,21 @@ class Box extends \Ilch\Mapper
     /**
      * Gets the Entries by param.
      *
+     * No GROUP BY on purpose: each (box, locale) content row is returned as its own
+     * row, so same titles in different locales don't collapse into one row.
+     *
      * @param array $where
      * @param array $orderBy
      * @param \Ilch\Pagination|null $pagination
-     * @return array|null
+     * @return array
      */
-    public function getSelfBoxEntriesBy($where = [], $orderBy = ['b.id' => 'DESC'], $pagination = null)
+    public function getSelfBoxEntriesBy($where = [], $orderBy = ['b.id' => 'DESC'], $pagination = null): array
     {
         $select = $this->db()->select()
             ->fields(['b.id', 'b.date_created'])
             ->from(['b' => $this->tablenameSelfBox])
             ->join(['bc' => $this->tablenameSelfBoxContent], 'b.id = bc.box_id', 'LEFT', ['bc.box_id', 'bc.content', 'bc.locale', 'bc.title'])
             ->where($where)
-            ->group(['b.id', 'bc.title'])
             ->order($orderBy);
 
         if ($pagination !== null) {
@@ -54,7 +56,7 @@ class Box extends \Ilch\Mapper
 
         $entryArray = $result->fetchRows();
         if (empty($entryArray)) {
-            return null;
+            return [];
         }
         $entrys = [];
 
@@ -76,7 +78,7 @@ class Box extends \Ilch\Mapper
      * @return array
      * @throws \Ilch\Database\Exception
      */
-    public function getSelfBoxList(string $locale, $orderBy = ['b.id' => 'DESC'])
+    public function getSelfBoxList(string $locale, $orderBy = ['b.id' => 'DESC']): array
     {
         return $this->getSelfBoxEntriesBy(['bc.locale' => $this->db()->escape($locale)], $orderBy);
     }
@@ -105,11 +107,23 @@ class Box extends \Ilch\Mapper
      *
      * @param EntriesModel $box
      * @throws \Ilch\Database\Exception
-     * @return int
+     * @return int The id of the box, or 0 if the box does not exist in the boxes table.
      */
     public function save(EntriesModel $box): int
     {
         if ($box->getId()) {
+            // Make sure the box actually exists in the boxes table, otherwise we
+            // would create an orphaned boxes_content row.
+            $boxExists = $this->db()->select('id')
+                ->from($this->tablenameSelfBox)
+                ->where(['id' => $box->getId()])
+                ->execute()
+                ->fetchCell();
+
+            if (empty($boxExists)) {
+                return 0;
+            }
+
             if ($this->getSelfBoxByIdLocale($box->getId(), $box->getLocale())) {
                 $this->db()->update($this->tablenameSelfBoxContent)
                     ->values(['title' => $box->getTitle(), 'content' => $box->getContent()])
@@ -127,10 +141,12 @@ class Box extends \Ilch\Mapper
                 ->values(['date_created' => $date->toDb()])
                 ->execute();
 
+            $box->setId((int)$boxId);
+
             $this->db()->insert($this->tablenameSelfBoxContent)
                 ->values(['box_id' => $boxId, 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()])
                 ->execute();
-            return $boxId;
+            return (int)$boxId;
         }
     }
 
@@ -138,17 +154,19 @@ class Box extends \Ilch\Mapper
      * Delete box with specific id.
      *
      * @param int $id
-     * @return bool
+     * @return bool True if a box row was deleted.
      */
     public function delete(int $id): bool
     {
-        $this->db()->delete($this->tablenameSelfBox)
+        $deleted = $this->db()->delete($this->tablenameSelfBox)
             ->where(['id' => $id])
             ->execute();
 
-        return $this->db()->delete($this->tablenameSelfBoxContent)
+        $this->db()->delete($this->tablenameSelfBoxContent)
             ->where(['box_id' => $id])
             ->execute();
+
+        return (bool)$deleted;
     }
 
     /**
@@ -167,9 +185,9 @@ class Box extends \Ilch\Mapper
      * @param array $where
      * @param array $orderBy
      * @param \Ilch\Pagination|null $pagination
-     * @return array|null
+     * @return array
      */
-    public function getEntriesBy($where = [], $orderBy = ['key' => 'DESC'], $pagination = null)
+    public function getEntriesBy($where = [], $orderBy = ['key' => 'DESC'], $pagination = null): array
     {
         $select = $this->db()->select()
             ->fields(['key', 'module', 'locale', 'name'])
@@ -188,7 +206,7 @@ class Box extends \Ilch\Mapper
 
         $entryArray = $result->fetchRows();
         if (empty($entryArray)) {
-            return null;
+            return [];
         }
         $entrys = [];
 
@@ -213,8 +231,14 @@ class Box extends \Ilch\Mapper
         if (!is_array($box->getContent())) {
             return false;
         }
-        foreach ($box->getContent() ?? [] as $key => $content) {
+        foreach ($box->getContent() as $key => $content) {
+            if (!is_array($content)) {
+                continue;
+            }
             foreach ($content as $lang => $value) {
+                if (!is_array($value) || !isset($value['name'])) {
+                    continue;
+                }
                 $this->db()->insert($this->tablename)
                     ->values([
                         'key' => $key,
@@ -252,9 +276,9 @@ class Box extends \Ilch\Mapper
      * @return array
      * @throws \Ilch\Database\Exception
      */
-    public function getBoxList(string $locale)
+    public function getBoxList(string $locale): array
     {
-        return $this->getEntriesBy(['locale' => $locale], []);
+        return $this->getEntriesBy(['locale' => $this->db()->escape($locale)], []);
     }
 
     /**
@@ -264,9 +288,9 @@ class Box extends \Ilch\Mapper
      * @param string $locale
      * @return EntriesModel|null
      */
-    public function getBoxByIdLocale(string $key, string $locale)
+    public function getBoxByIdLocale(string $key, string $locale): ?EntriesModel
     {
-        $entrys = $this->getEntriesBy(['key' => $key, 'locale' => $locale], []);
+        $entrys = $this->getEntriesBy(['key' => $key, 'locale' => $this->db()->escape($locale)], []);
 
         if (!empty($entrys)) {
             return reset($entrys);

@@ -41,6 +41,7 @@ class Emails extends \Ilch\Mapper
 
     /**
      * Gets all Emails.
+     *
      * @param string $key
      * @param string $locale
      *
@@ -61,8 +62,10 @@ class Emails extends \Ilch\Mapper
         $emails = [];
         foreach ($array as $entries) {
             $emailsModel = new EmailsModel();
+            $emailsModel->setModuleKey($entries['moduleKey']);
             $emailsModel->setType($entries['type']);
             $emailsModel->setDesc($entries['desc']);
+            $emailsModel->setText($entries['text']);
             $emailsModel->setLocale($entries['locale']);
             $emails[] = $emailsModel;
         }
@@ -72,6 +75,7 @@ class Emails extends \Ilch\Mapper
 
     /**
      * Gets all Emails.
+     *
      * @param string $key
      * @param string $type
      * @param string $locale
@@ -93,8 +97,10 @@ class Emails extends \Ilch\Mapper
         $emails = [];
         foreach ($array as $entries) {
             $emailsModel = new EmailsModel();
+            $emailsModel->setModuleKey($entries['moduleKey']);
             $emailsModel->setType($entries['type']);
             $emailsModel->setDesc($entries['desc']);
+            $emailsModel->setText($entries['text']);
             $emailsModel->setLocale($entries['locale']);
             $emails[] = $emailsModel;
         }
@@ -104,6 +110,7 @@ class Emails extends \Ilch\Mapper
 
     /**
      * Get the Email.
+     *
      * @param string $moduleKey
      * @param string $type
      * @param string $locale
@@ -112,19 +119,13 @@ class Emails extends \Ilch\Mapper
      */
     public function getEmail($moduleKey, $type, $locale)
     {
-        $showEntry = $this->db()->select('*')
+        $result = $this->db()->select('*')
             ->from('emails')
             ->where(['moduleKey' => $moduleKey, 'type' => $type, 'locale' => $locale])
             ->execute()
             ->fetchAssoc();
 
-        if ($showEntry) {
-            $result = $this->db()->select('*')
-                ->from('emails')
-                ->where(['moduleKey' => $moduleKey, 'type' => $type, 'locale' => $locale])
-                ->execute()
-                ->fetchAssoc();
-        } else {
+        if (!$result) {
             $result = $this->db()->select('*')
                 ->from('emails')
                 ->where(['moduleKey' => $moduleKey, 'type' => $type, 'locale' => 'de_DE'])

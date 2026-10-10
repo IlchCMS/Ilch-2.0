@@ -50,6 +50,8 @@ class Backup extends Model
     public function setId(int $id)
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -70,6 +72,8 @@ class Backup extends Model
     public function setName(string $name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -90,5 +94,7 @@ class Backup extends Model
     public function setDate(string $date)
     {
         $this->date = $date;
+
+        return $this;
     }
 }

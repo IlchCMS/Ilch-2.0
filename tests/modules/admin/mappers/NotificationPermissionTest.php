@@ -44,6 +44,45 @@ class NotificationPermissionTest extends DatabaseTestCase
     }
 
     /**
+     * Tests if getPermissions() returns the permissions ordered by module (ASC).
+     *
+     */
+    public function testGetPermissionsOrdered()
+    {
+        $permissions = $this->out->getPermissions();
+
+        self::assertCount(2, $permissions);
+        self::assertInstanceOf(NotificationPermissionModel::class, $permissions[0]);
+        self::assertSame('article', $permissions[0]->getModule());
+        self::assertSame('awards', $permissions[1]->getModule());
+    }
+
+    /**
+     * Tests if getPermissions() returns an empty array if there are no permissions.
+     *
+     */
+    public function testGetPermissionsEmpty()
+    {
+        $this->out->deletePermissionOfModule('article');
+        $this->out->deletePermissionOfModule('awards');
+
+        self::assertEmpty($this->out->getPermissions());
+    }
+
+    /**
+     * Tests if getPermissionOfModule() returns the permission of an existing module.
+     *
+     */
+    public function testGetPermissionOfModule()
+    {
+        $notificationPermissionModel = $this->out->getPermissionOfModule('article');
+        self::assertNotNull($notificationPermissionModel);
+        self::assertSame('article', $notificationPermissionModel->getModule());
+        self::assertEquals(1, $notificationPermissionModel->getGranted());
+        self::assertEquals(5, $notificationPermissionModel->getLimit());
+    }
+
+    /**
      * Tests if getPermissionOfModule() returns null if there is no permission for a module.
      *
      */
@@ -76,6 +115,17 @@ class NotificationPermissionTest extends DatabaseTestCase
         $this->out->updatePermissionGrantedOfModule('article', false);
         $notificationPermissionModel = $this->out->getPermissionOfModule('article');
         self::assertEquals(0, $notificationPermissionModel->getGranted());
+    }
+
+    /**
+     * Tests if updatePermissionGrantedOfModule() successfully updates the granted value to true.
+     *
+     */
+    public function testUpdatePermissionGrantedOfModuleTrue()
+    {
+        $this->out->updatePermissionGrantedOfModule('article', true);
+        $notificationPermissionModel = $this->out->getPermissionOfModule('article');
+        self::assertEquals(1, $notificationPermissionModel->getGranted());
     }
 
     /**
@@ -131,6 +181,24 @@ class NotificationPermissionTest extends DatabaseTestCase
     }
 
     /**
+     * Tests if addPermissionForModule() does not add a duplicate permission if one already exists.
+     *
+     */
+    public function testAddPermissionForModuleDuplicate()
+    {
+        $notificationPermissionModel = new NotificationPermissionModel();
+        $notificationPermissionModel->setModule('guestbook');
+        $notificationPermissionModel->setGranted(1);
+        $notificationPermissionModel->setLimit(5);
+
+        $this->out->addPermissionForModule($notificationPermissionModel);
+        $this->out->addPermissionForModule($notificationPermissionModel);
+
+        self::assertCount(3, $this->out->getPermissions());
+        self::assertSame('guestbook', $this->out->getPermissionOfModule('guestbook')->getModule());
+    }
+
+    /**
      * Tests if deletePermissionOfModule() successfully deletes a permission of a module.
      *
      */
@@ -138,6 +206,16 @@ class NotificationPermissionTest extends DatabaseTestCase
     {
         $this->out->deletePermissionOfModule('article');
         self::assertNull($this->out->getPermissionOfModule('article'));
+    }
+
+    /**
+     * Tests if deletePermissionOfModule() doesn't delete anything if the module was wrong.
+     *
+     */
+    public function testDeletePermissionOfModuleNotExisting()
+    {
+        $this->out->deletePermissionOfModule('xyzmodule');
+        self::assertCount(2, $this->out->getPermissions());
     }
 
     /**

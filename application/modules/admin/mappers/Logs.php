@@ -13,16 +13,23 @@ use Ilch\Date as IlchDate;
 class Logs extends \Ilch\Mapper
 {
     /**
-     * Gets all logs.
+     * Gets all logs, optionally filtered by date prefix (e.g. '2024' or '2024-01').
      *
      * @param string $date
-     * @return LogsModel[]|array
+     * @return LogsModel[]|null
      */
-    public function getLogs($date)
+    public function getLogs($date = '')
     {
-        $entriesArray = $this->db()->select('*')
-            ->from('logs')
-            ->where(['date LIKE' => $date . '%'])
+        $select = $this->db()->select('*')
+            ->from('logs');
+
+        // Only add the date filter if a date was actually given,
+        // so an empty string doesn't silently match everything via LIKE '%'.
+        if ($date !== '') {
+            $select->where(['date LIKE' => $date . '%']);
+        }
+
+        $entriesArray = $select
             ->order(['date' => 'DESC'])
             ->execute()
             ->fetchRows();
@@ -44,9 +51,9 @@ class Logs extends \Ilch\Mapper
     }
 
     /**
-     * Gets all logs date.
+     * Gets all logs dates.
      *
-     * @return LogsModel[]|array
+     * @return LogsModel[]|null
      */
     public function getLogsDate()
     {
@@ -74,7 +81,7 @@ class Logs extends \Ilch\Mapper
      * Get the logs by an optionally provided where-clause.
      *
      * @param array $where
-     * @return array|LogsModel[]
+     * @return LogsModel[]
      */
     public function getLogsBy($where = [])
     {
@@ -109,30 +116,30 @@ class Logs extends \Ilch\Mapper
      */
     public function saveLog($userId, $info)
     {
-        $date = new IlchDate();
-        $date->modify('-1 minutes');
+        $now = new IlchDate();
+
+        $oneMinuteAgo = new IlchDate();
+        $oneMinuteAgo->modify('-1 minutes');
 
         $count = $this->db()->select('COUNT(*)')
             ->from('logs')
-            ->where(['user_id' => (int)$userId, 'info' => $info, 'date >' => $date->toDb(true)])
+            ->where(['user_id' => (int)$userId, 'info' => $info, 'date >' => $oneMinuteAgo->toDb(true)])
             ->execute()
             ->fetchCell();
 
         if ($count == 0) {
-            $fields = [
-                'user_id' => $userId,
-                'info' => $info
-            ];
-
             $this->db()->insert('logs')
-                ->values($fields)
+                ->values([
+                    'user_id' => $userId,
+                    'info' => $info,
+                    'date' => $now->toDb(true)
+                ])
                 ->execute();
         }
     }
 
     /**
      * Clear log.
-     *
      */
     public function clearLog()
     {

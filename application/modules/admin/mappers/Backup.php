@@ -19,10 +19,10 @@ class Backup extends \Ilch\Mapper
     public function getBackups(): ?array
     {
         $array = $this->db()->select('*')
-                ->from('backup')
-                ->order(['id' => 'DESC'])
-                ->execute()
-                ->fetchRows();
+            ->from('backup')
+            ->order(['id' => 'DESC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($array)) {
             return null;
@@ -49,10 +49,10 @@ class Backup extends \Ilch\Mapper
     public function getBackupById(int $id): ?BackupModel
     {
         $result = $this->db()->select('*')
-                ->from('backup')
-                ->where(['id' => $id])
-                ->execute()
-                ->fetchAssoc();
+            ->from('backup')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($result)) {
             return null;
@@ -77,7 +77,7 @@ class Backup extends \Ilch\Mapper
         $result = $this->db()->select('*')
             ->from('backup')
             ->limit(1)
-            ->order(['id' => 'DESC'])
+            ->order(['date' => 'DESC'])
             ->execute()
             ->fetchAssoc();
 
@@ -97,27 +97,33 @@ class Backup extends \Ilch\Mapper
      * Inserts backup model.
      *
      * @param BackupModel $backup
+     * @return int The id of the new backup.
      */
-    public function save(BackupModel $backup)
+    public function save(BackupModel $backup): int
     {
         $fields = [
             'name' => $backup->getName(),
             'date' => $backup->getDate()
         ];
 
-        $this->db()->insert('backup')
+        $backupId = $this->db()->insert('backup')
             ->values($fields)
             ->execute();
+
+        $backup->setId((int)$backupId);
+
+        return (int)$backupId;
     }
 
     /**
      * Deletes backup with the given id.
      *
      * @param int $id
+     * @return bool
      */
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
-        $this->db()->delete('backup')
+        return (bool)$this->db()->delete('backup')
             ->where(['id' => $id])
             ->execute();
     }

@@ -64,8 +64,8 @@ class Infos extends \Ilch\Mapper
      */
     public function saveModulesFolderRights(string $key, array $folders): Infos
     {
-        $moduls = $this->getModulesPHPExtensionsByKey($key);
-        if (!empty($moduls)) {
+        $existing = $this->getModulesFolderRightByKey($key);
+        if (!empty($existing)) {
             $this->db()->delete('modules_folderrights')->where(['key' => $key])->execute();
         }
 
@@ -119,7 +119,7 @@ class Infos extends \Ilch\Mapper
      */
     public function getModulesPHPExtensionsByKey(string $key): ?array
     {
-        return $this->getModulesFolderRights(['key' => $key]);
+        return $this->getModulesPHPExtensions(['key' => $key]);
     }
 
     /**
@@ -133,8 +133,8 @@ class Infos extends \Ilch\Mapper
      */
     public function saveModulesPHPExtensions(string $key, array $extensions): Infos
     {
-        $moduls = $this->getModulesPHPExtensionsByKey($key);
-        if (!empty($moduls)) {
+        $existing = $this->getModulesPHPExtensionsByKey($key);
+        if (!empty($existing)) {
             $this->db()->delete('modules_php_extensions')->where(['key' => $key])->execute();
         }
 
