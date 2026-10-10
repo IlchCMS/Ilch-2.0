@@ -61,6 +61,15 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
     }
 
     /**
+     * Test if getSetting() returns null if the setting does not exist.
+     */
+    public function testGetSettingNotExisting()
+    {
+        self::assertNull($this->out->getSetting('testLayoutKey1', 'notExistingKey'));
+        self::assertNull($this->out->getSetting('notExistingLayoutKey', 'testKey1'));
+    }
+
+    /**
      * Test if getSettings() returns the expected settings.
      */
     public function testGetSettings()
@@ -79,6 +88,14 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
     }
 
     /**
+     * Test if getSettings() returns an empty array if the layout does not exist.
+     */
+    public function testGetSettingsNotExisting()
+    {
+        self::assertEmpty($this->out->getSettings('notExistingLayoutKey'));
+    }
+
+    /**
      * Test if getListOfLayoutKeys() returns the expected layout keys.
      */
     public function testGetListOfLayoutKeys()
@@ -88,6 +105,17 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
         self::assertCount(2, $layoutKeyList);
         self::assertSame('testLayoutKey1', $layoutKeyList[0]);
         self::assertSame('testLayoutKey2', $layoutKeyList[1]);
+    }
+
+    /**
+     * Test if getListOfLayoutKeys() returns an empty array if there are no settings.
+     */
+    public function testGetListOfLayoutKeysEmpty()
+    {
+        $this->out->deleteSettings('testLayoutKey1');
+        $this->out->deleteSettings('testLayoutKey2');
+
+        self::assertEmpty($this->out->getListOfLayoutKeys());
     }
 
     /**
@@ -157,6 +185,75 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
     }
 
     /**
+     * Test if save() updates an existing setting instead of inserting a new one.
+     */
+    public function testSaveUpdatesExisting()
+    {
+        $layoutSettingModel = new LayoutAdvSettingsModel();
+        $layoutSettingModel->setLayoutKey('testLayoutKey1');
+        $layoutSettingModel->setKey('testKey1');
+        $layoutSettingModel->setValue('updatedTestValue1');
+
+        $this->out->save([$layoutSettingModel]);
+
+        $layoutSetting = $this->out->getSetting('testLayoutKey1', 'testKey1');
+        self::assertSame('updatedTestValue1', $layoutSetting->getValue());
+        // No other setting should be added or removed.
+        self::assertCount(2, $this->out->getSettings('testLayoutKey1'));
+    }
+
+    /**
+     * Test if save() updates existing settings and inserts new ones for the same layout.
+     */
+    public function testSaveMixedNewAndExisting()
+    {
+        $layoutSettingModel = new LayoutAdvSettingsModel();
+        $layoutSettingModel->setLayoutKey('testLayoutKey1');
+        $layoutSettingModel->setKey('testKey1');
+        $layoutSettingModel->setValue('updatedTestValue1');
+        $layoutSettingsArray[] = $layoutSettingModel;
+
+        $layoutSettingModel = new LayoutAdvSettingsModel();
+        $layoutSettingModel->setLayoutKey('testLayoutKey1');
+        $layoutSettingModel->setKey('testKeyNew');
+        $layoutSettingModel->setValue('newTestValue');
+        $layoutSettingsArray[] = $layoutSettingModel;
+
+        $this->out->save($layoutSettingsArray);
+
+        self::assertSame('updatedTestValue1', $this->out->getSetting('testLayoutKey1', 'testKey1')->getValue());
+        self::assertSame('newTestValue', $this->out->getSetting('testLayoutKey1', 'testKeyNew')->getValue());
+        self::assertCount(3, $this->out->getSettings('testLayoutKey1'));
+    }
+
+    /**
+     * Test if save() with an unchanged value does not insert a duplicate entry.
+     */
+    public function testSaveUnchangedValueDoesNotDuplicate()
+    {
+        $layoutSettingModel = new LayoutAdvSettingsModel();
+        $layoutSettingModel->setLayoutKey('testLayoutKey1');
+        $layoutSettingModel->setKey('testKey1');
+        $layoutSettingModel->setValue('testValue1');
+
+        $this->out->save([$layoutSettingModel]);
+
+        self::assertSame('testValue1', $this->out->getSetting('testLayoutKey1', 'testKey1')->getValue());
+        self::assertCount(2, $this->out->getSettings('testLayoutKey1'));
+    }
+
+    /**
+     * Test if save() with an empty array does not change anything.
+     */
+    public function testSaveEmptyArray()
+    {
+        $this->out->save([]);
+
+        self::assertCount(2, $this->out->getSettings('testLayoutKey1'));
+        self::assertCount(2, $this->out->getListOfLayoutKeys());
+    }
+
+    /**
      * Test if deleteSetting() successfully deletes a specific setting.
      */
     public function testDeleteSetting()
@@ -172,6 +269,18 @@ class LayoutAdvSettingsTest extends DatabaseTestCase
     {
         $this->out->deleteSettingById(2);
         self::assertEmpty($this->out->getSetting('testLayoutKey1', 'testKey2'));
+    }
+
+    /**
+     * Test if deleteSettingById() doesn't delete anything if the id was wrong.
+     */
+    public function testDeleteSettingByIdNotExisting()
+    {
+        $this->out->deleteSettingById(99);
+
+        self::assertCount(2, $this->out->getSettings('testLayoutKey1'));
+        self::assertCount(2, $this->out->getSettings('testLayoutKey2'));
+        self::assertCount(2, $this->out->getListOfLayoutKeys());
     }
 
     /**

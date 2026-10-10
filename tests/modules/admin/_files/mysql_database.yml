@@ -45,3 +45,242 @@ admin_layoutadvsettings:
     layoutKey: 'testLayoutKey2'
     key: 'testKey4'
     value: 'testValue4'
+
+modules:
+  -
+    key: 'admin'
+    icon_small: ''
+  -
+    key: 'lastwar'
+    icon_small: ''
+
+emails:
+  -
+    moduleKey: 'admin'
+    type: 'installSuccess'
+    desc: 'Installation successful'
+    text: 'Your installation was successful.'
+    locale: 'de_DE'
+  -
+    moduleKey: 'admin'
+    type: 'installSuccess'
+    desc: 'Installation successful'
+    text: 'Your installation was successful.'
+    locale: 'en_EN'
+  -
+    moduleKey: 'admin'
+    type: 'updateAvailable'
+    desc: 'Update available'
+    text: 'A new update is available.'
+    locale: 'de_DE'
+  -
+    moduleKey: 'lastwar'
+    type: 'warStarted'
+    desc: 'War started'
+    text: 'A new war has started.'
+    locale: 'de_DE'
+
+modules_folderrights:
+  -
+    key: 'lastwar'
+    folder: 'uploads'
+  -
+    key: 'lastwar'
+    folder: 'downloads'
+  -
+    key: 'admin'
+    folder: 'backup'
+
+modules_php_extensions:
+  -
+    key: 'lastwar'
+    extension: 'jpg'
+  -
+    key: 'lastwar'
+    extension: 'png'
+
+backup:
+  -
+    id: 1
+    name: 'backup1'
+    date: '2024-01-01 10:00:00'
+  -
+    id: 2
+    name: 'backup2'
+    date: '2024-01-02 11:00:00'
+
+boxes:
+  -
+    id: 1
+    date_created: '2024-01-01 10:00:00'
+  -
+    id: 2
+    date_created: '2024-01-02 11:00:00'
+
+boxes_content:
+  -
+    box_id: 1
+    content: 'content of box 1 (de)'
+    locale: 'de_DE'
+    title: 'title of box 1 (de)'
+  -
+    box_id: 1
+    content: 'content of box 1 (en)'
+    locale: 'en_EN'
+    title: 'title of box 1 (en)'
+  -
+    box_id: 2
+    content: 'content of box 2 (de)'
+    locale: 'de_DE'
+    title: 'title of box 2 (de)'
+
+modules_boxes_content:
+  -
+    key: 'langswitch'
+    module: 'admin'
+    locale: 'de_DE'
+    name: 'Sprachauswahl'
+  -
+    key: 'langswitch'
+    module: 'admin'
+    locale: 'en_EN'
+    name: 'Language selection'
+  -
+    key: 'lastwar'
+    module: 'lastwar'
+    locale: 'de_DE'
+    name: 'Letzter Krieg'
+
+menu:
+  -
+    id: 1
+    title: 'Main Menu'
+  -
+    id: 2
+    title: 'Footer Menu'
+
+menu_items:
+  -
+    id: 1
+    menu_id: 1
+    sort: 1
+    parent_id: 0
+    page_id: 0
+    box_id: 0
+    type: 3
+    title: 'Contact'
+    module_key: 'contact'
+    access: '1,2,3'
+  -
+    id: 2
+    menu_id: 1
+    sort: 2
+    parent_id: 1
+    page_id: 5
+    box_id: 0
+    type: 2
+    title: 'Contact page'
+    access: '1,2,3'
+  -
+    id: 3
+    menu_id: 1
+    sort: 3
+    parent_id: 0
+    page_id: 0
+    box_id: 7
+    box_key: 'langswitch'
+    type: 4
+    title: 'Language selection'
+    access: '1,2,3'
+  -
+    id: 4
+    menu_id: 2
+    sort: 1
+    parent_id: 0
+    page_id: 0
+    box_id: 0
+    type: 1
+    title: 'Impressum'
+    href: '/impressum'
+    target: '_blank'
+    access: '1,2,3'
+  -
+    id: 5
+    menu_id: 1
+    sort: 4
+    parent_id: 2
+    page_id: 6
+    box_id: 0
+    type: 2
+    title: 'Contact sub page'
+    access: '1,2,3'
+
+logs:
+  -
+    user_id: '1'
+    date: '2024-01-01 10:00:00'
+    info: 'Login'
+  -
+    user_id: '2'
+    date: '2024-01-01 11:30:00'
+    info: 'Password changed'
+  -
+    user_id: '1'
+    date: '2024-01-02 09:15:00'
+    info: 'Login'
+
+modules_content:
+  -
+    key: 'admin'
+    locale: 'de_DE'
+    name: 'Administration'
+    description: 'Administration'
+  -
+    key: 'admin'
+    locale: 'en_EN'
+    name: 'Administration'
+    description: 'Administration'
+  -
+    key: 'lastwar'
+    locale: 'de_DE'
+    name: 'Last War'
+    description: 'Last War'
+  -
+    key: 'lastwar'
+    locale: 'en_EN'
+    name: 'Last War'
+    description: 'Last War'
+
+pages:
+  -
+    id: 1
+    date_created: '2024-01-01 10:00:00'
+  -
+    id: 2
+    date_created: '2024-01-02 11:00:00'
+
+pages_content:
+  -
+    page_id: 1
+    content: 'content of page 1 (de)'
+    description: 'description of page 1 (de)'
+    keywords: 'keywords of page 1 (de)'
+    locale: 'de_DE'
+    title: 'Page 1 (de)'
+    perma: 'page1'
+  -
+    page_id: 1
+    content: 'content of page 1 (en)'
+    description: 'description of page 1 (en)'
+    keywords: 'keywords of page 1 (en)'
+    locale: 'en_EN'
+    title: 'Page 1 (en)'
+    perma: 'page1'
+  -
+    page_id: 2
+    content: 'content of page 2 (de)'
+    description: 'description of page 2 (de)'
+    keywords: 'keywords of page 2 (de)'
+    locale: 'de_DE'
+    title: 'Page 2 (de)'
+    perma: 'page2'
