@@ -43,12 +43,12 @@ class Topic extends Mapper
         // Pagination total WITHOUT join / GROUP BY / SQL_CALC_FOUND_ROWS.
         // Each group in the old query was exactly one topic, so COUNT(*) on topics is identical.
         if ($pagination !== null) {
-            $countRow = $this->db()->select('COUNT(*) AS total')
+            $total = $this->db()->select(['total' => 'COUNT(*)'])
                 ->from(['topics' => 'forum_topics'])
                 ->where(['topics.forum_id' => $ids])
                 ->execute()
-                ->fetchRow();
-            $pagination->setRows((int) ($countRow['total'] ?? 0));
+                ->fetchCell();
+            $pagination->setRows((int) $total);
         }
 
         // 1) Only the ordered ids of the current page (index + LIMIT, no join).
@@ -135,7 +135,7 @@ class Topic extends Mapper
             ->from('forum_topics')
             ->where(['forum_id' => $id])
             ->execute()
-            ->fetchArray();
+            ->fetchList('id');
         if (empty($result)) {
             return [];
         }
@@ -200,7 +200,7 @@ class Topic extends Mapper
 
             $prefixModel = new PrefixModel();
             $prefixModel->setId($topicRow['topic_prefix']);
-            $prefixModel->setPrefix($topicRow['prefix']);
+            $prefixModel->setPrefix($topicRow['prefix'] ?? '');
             $topicModel->setTopicPrefix($prefixModel);
             $topicModel->setTopicTitle($topicRow['topic_title']);
             $topicModel->setDateCreated($topicRow['date_created']);
@@ -219,7 +219,7 @@ class Topic extends Mapper
      */
     public function getTopicById(int $id): ?TopicModel
     {
-        $topic = $this->db()->select(['topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.creator_id', 'topics.visits', 'topics.date_created', 'topics.status'])
+        $topic = $this->db()->select(['topics.id', 'topics.topic_prefix', 'topics.topic_title', 'topics.creator_id', 'topics.visits', 'topics.date_created', 'topics.type', 'topics.status'])
             ->from(['topics' => 'forum_topics'])
             ->join(['prefix' => 'forum_prefixes'], 'topics.topic_prefix = prefix.id', 'LEFT', ['prefix.prefix'])
             ->where(['topics.id' => $id])
@@ -240,6 +240,7 @@ class Topic extends Mapper
         $topicModel->setTopicTitle($topic['topic_title']);
         $topicModel->setCreatorId($topic['creator_id']);
         $topicModel->setVisits($topic['visits']);
+        $topicModel->setType($topic['type']);
         $user = $userMapper->getUserById($topic['creator_id']);
         if ($user) {
             $topicModel->setAuthor($user);
@@ -269,14 +270,6 @@ class Topic extends Mapper
         return null;
     }
 
-    /**
-     * Get last posts by topic ids and user id.
-     *
-     * @param array $ids
-     * @param int|null $userId
-     * @return PostModel[]|null
-     * @throws Exception
-     */
     /**
      * Get last posts by topic ids and user id.
      *
@@ -409,10 +402,10 @@ class Topic extends Mapper
     public function updateStatus(int $id)
     {
         $status = (int) $this->db()->select('status')
-                        ->from('forum_topics')
-                        ->where(['id' => $id])
-                        ->execute()
-                        ->fetchCell();
+            ->from('forum_topics')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchCell();
         $this->db()->update('forum_topics')
             ->values(['status' => !$status])
             ->where(['id' => $id])
@@ -506,9 +499,9 @@ class Topic extends Mapper
     {
         if ($model->getVisits()) {
             $this->db()->update('forum_topics')
-                    ->values(['visits' => $model->getVisits()])
-                    ->where(['id' => $model->getId()])
-                    ->execute();
+                ->values(['visits' => $model->getVisits()])
+                ->where(['id' => $model->getId()])
+                ->execute();
         }
     }
 }
