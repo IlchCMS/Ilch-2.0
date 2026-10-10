@@ -25,6 +25,10 @@ class Forum extends Mapper
      */
     public function getForumItemsAdmincenterByParentIds(array $itemIds): array
     {
+        if (empty($itemIds)) {
+            return [];
+        }
+
         $itemRows = $this->db()->select(['i.id', 'i.parent_id', 'i.type', 'i.title', 'i.description'])
             ->from(['i' => 'forum_items'])
             ->join(['aa' => 'forum_accesses'], ['i.id = aa.item_id', 'aa.access_type' => 0], 'LEFT', ['read_access' => 'GROUP_CONCAT(DISTINCT aa.group_id)'])
@@ -91,6 +95,10 @@ class Forum extends Mapper
      */
     public function getForumItemsByParentIdsUser(array $itemIds, ?User $user = null): array
     {
+        if (empty($itemIds)) {
+            return [];
+        }
+
         $groupIds = [3];
         foreach ($user ? $user->getGroups() : [] as $group) {
             $groupIds[] = $group->getId();
@@ -486,7 +494,7 @@ class Forum extends Mapper
             ->execute()
             ->fetchAssoc();
 
-        if (empty($itemRows)) {
+        if (empty($itemRows) || empty($itemRows['id'])) {
             return null;
         }
 
@@ -599,16 +607,21 @@ class Forum extends Mapper
      */
     public function getForumItemsIds(): ?array
     {
-        $itemRows = $this->db()->select(['i.id'])
-            ->from(['i' => 'forum_items'])
+        $itemRows = $this->db()->select('id')
+            ->from('forum_items')
             ->execute()
-            ->fetchList();
+            ->fetchRows();
 
         if (empty($itemRows)) {
             return null;
         }
 
-        return $itemRows;
+        $ids = [];
+        foreach ($itemRows as $itemRow) {
+            $ids[] = (int) $itemRow['id'];
+        }
+
+        return $ids;
     }
 
     /**

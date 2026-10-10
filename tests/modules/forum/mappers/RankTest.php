@@ -161,6 +161,174 @@ class RankTest extends DatabaseTestCase
     }
 
     /**
+     * Tests if getRanks() returns the ranks ordered ascending by posts.
+     */
+    public function testGetRanksOrdered()
+    {
+        $mapper = new RankMapper();
+        $ranks = $mapper->getRanks();
+
+        self::assertCount(3, $ranks);
+        self::assertInstanceOf(RankModel::class, $ranks[0]);
+
+        self::assertEquals(1, $ranks[0]->getId());
+        self::assertSame('Gruenschnabel', $ranks[0]->getTitle());
+        self::assertEquals(0, $ranks[0]->getPosts());
+
+        self::assertEquals(2, $ranks[1]->getId());
+        self::assertSame('Jungspund', $ranks[1]->getTitle());
+        self::assertEquals(25, $ranks[1]->getPosts());
+
+        self::assertEquals(3, $ranks[2]->getId());
+        self::assertSame('Mitglied', $ranks[2]->getTitle());
+        self::assertEquals(50, $ranks[2]->getPosts());
+    }
+
+    /**
+     * Tests if getRanks() returns an empty array when no ranks exist.
+     */
+    public function testGetRanksEmpty()
+    {
+        $mapper = new RankMapper();
+        $mapper->delete(1);
+        $mapper->delete(2);
+        $mapper->delete(3);
+
+        $ranks = $mapper->getRanks();
+
+        self::assertIsArray($ranks);
+        self::assertCount(0, $ranks);
+    }
+
+    /**
+     * Tests if getRankById() returns null for a non-existent id.
+     */
+    public function testGetRankByIdNotFound()
+    {
+        $mapper = new RankMapper();
+
+        self::assertNull($mapper->getRankById(9999));
+    }
+
+    /**
+     * Tests if getRankByPosts() returns the lowest rank for zero posts.
+     */
+    public function testGetRankByPostsZero()
+    {
+        $mapper = new RankMapper();
+        $rank = $mapper->getRankByPosts(0);
+
+        self::assertEquals(1, $rank->getId());
+        self::assertSame('Gruenschnabel', $rank->getTitle());
+        self::assertEquals(0, $rank->getPosts());
+    }
+
+    /**
+     * Tests if getRankByPosts() returns the highest rank when the given posts exceed all ranks.
+     */
+    public function testGetRankByPostsAboveAll()
+    {
+        $mapper = new RankMapper();
+        $rank = $mapper->getRankByPosts(1000);
+
+        self::assertEquals(3, $rank->getId());
+        self::assertSame('Mitglied', $rank->getTitle());
+        self::assertEquals(50, $rank->getPosts());
+    }
+
+    /**
+     * Tests if getRankByPosts() returns null when no rank matches.
+     */
+    public function testGetRankByPostsNotFound()
+    {
+        $mapper = new RankMapper();
+        $mapper->delete(1);
+        $mapper->delete(2);
+        $mapper->delete(3);
+
+        self::assertNull($mapper->getRankByPosts(10));
+    }
+
+    /**
+     * Tests if save() with an explicit zero id performs an insert.
+     */
+    public function testSaveZeroIdInserts()
+    {
+        $mapper = new RankMapper();
+        $model = new RankModel();
+        $model->setId(0);
+        $model->setTitle('Elite');
+        $model->setPosts(100);
+
+        $mapper->save($model);
+
+        $ranks = $mapper->getRanks();
+        self::assertCount(4, $ranks);
+
+        // Ordered ascending by posts, the new rank must be the last one.
+        $new = $ranks[3];
+        self::assertGreaterThan(3, $new->getId());
+        self::assertSame('Elite', $new->getTitle());
+        self::assertEquals(100, $new->getPosts());
+    }
+
+    /**
+     * Tests if save() updating a rank does not affect the other ranks.
+     */
+    public function testSaveEditDoesNotAffectOthers()
+    {
+        $mapper = new RankMapper();
+        $model = new RankModel();
+        $model->setId(2);
+        $model->setTitle('Changed');
+        $model->setPosts(26);
+
+        $mapper->save($model);
+
+        $rank2 = $mapper->getRankById(2);
+        self::assertSame('Changed', $rank2->getTitle());
+        self::assertEquals(26, $rank2->getPosts());
+
+        $rank1 = $mapper->getRankById(1);
+        self::assertSame('Gruenschnabel', $rank1->getTitle());
+        self::assertEquals(0, $rank1->getPosts());
+
+        $rank3 = $mapper->getRankById(3);
+        self::assertSame('Mitglied', $rank3->getTitle());
+        self::assertEquals(50, $rank3->getPosts());
+    }
+
+    /**
+     * Tests if delete() removes the correct rank.
+     */
+    public function testDeleteRemovesCorrectRank()
+    {
+        $mapper = new RankMapper();
+
+        $mapper->delete(2);
+
+        self::assertNull($mapper->getRankById(2));
+
+        $ranks = $mapper->getRanks();
+        self::assertCount(2, $ranks);
+        self::assertEquals(1, $ranks[0]->getId());
+        self::assertEquals(3, $ranks[1]->getId());
+    }
+
+    /**
+     * Tests if delete() on a non-existent id does not throw.
+     */
+    public function testDeleteNotFound()
+    {
+        $mapper = new RankMapper();
+
+        $mapper->delete(9999);
+
+        $ranks = $mapper->getRanks();
+        self::assertCount(3, $ranks);
+    }
+
+    /**
      * Returns database schema sql statements to initialize database
      *
      * @return string
