@@ -20,7 +20,7 @@ class Article extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return ArticleModel[]|array
      */
-    public function getArticles($locale = '', $pagination = null)
+    public function getArticles(string $locale = '', \Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
@@ -58,13 +58,13 @@ class Article extends \Ilch\Mapper
     /**
      * Get articles and taking the group IDs into account.
      *
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param string $locale
      * @param null $pagination
      * @return array|null
      * @since 2.1.44
      */
-    public function getArticlesByAccess($groupIds = '3', string $locale = '', $pagination = null)
+    public function getArticlesByAccess(array|string $groupIds = '3', string $locale = '', $pagination = null): ?array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -106,12 +106,12 @@ class Article extends \Ilch\Mapper
     /**
      * Get articles by cat id.
      *
-     * @param integer $catId
+     * @param int $catId
      * @param string $locale
      * @param \Ilch\Pagination|null $pagination
      * @return ArticleModel[]|array
      */
-    public function getArticlesByCats($catId, $locale = '', $pagination = null)
+    public function getArticlesByCats(int $catId, string $locale = '', \Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
@@ -148,14 +148,14 @@ class Article extends \Ilch\Mapper
     /**
      * Get articles by category id and taking the group IDs into account.
      *
-     * @param integer $catId
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param int $catId
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param string $locale
      * @param null $pagination
      * @return array|null
      * @since 2.1.44
      */
-    public function getArticlesByCatsAccess(int $catId, $groupIds = '3', string $locale = '', $pagination = null)
+    public function getArticlesByCatsAccess(int $catId, array|string $groupIds = '3', string $locale = '', $pagination = null): ?array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -201,7 +201,7 @@ class Article extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return ArticleModel[]|array
      */
-    public function getArticlesByKeyword($keyword, $locale = '', $pagination = null)
+    public function getArticlesByKeyword(string $keyword, string $locale = '', \Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
@@ -239,13 +239,13 @@ class Article extends \Ilch\Mapper
      * Get articles by keyword and taking the group IDs into account.
      *
      * @param string $keyword
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param string $locale
      * @param null $pagination
      * @return array|null
      * @since 2.1.44
      */
-    public function getArticlesByKeywordAccess(string $keyword, $groupIds = '3', string $locale = '', $pagination = null)
+    public function getArticlesByKeywordAccess(string $keyword, array|string $groupIds = '3', string $locale = '', $pagination = null): ?array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -291,7 +291,7 @@ class Article extends \Ilch\Mapper
      * @param string $locale
      * @return ArticleModel[]|array
      */
-    public function getArticlesByDate(\DateTime $date, $pagination = null, $locale = '')
+    public function getArticlesByDate(\DateTime $date, \Ilch\Pagination $pagination = null, string $locale = ''): ?array
     {
         $db = $this->db();
 
@@ -337,13 +337,13 @@ class Article extends \Ilch\Mapper
      * Get articles of the month of the given date and taking the group IDs into account.
      *
      * @param \DateTime $date
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param null $pagination
      * @param string $locale
      * @return array|null
      * @since 2.1.44
      */
-    public function getArticlesByDateAccess(\DateTime $date, $groupIds = '3', $pagination = null, string $locale = '')
+    public function getArticlesByDateAccess(\DateTime $date, array|string $groupIds = '3', $pagination = null, string $locale = ''): ?array
     {
         $db = $this->db();
 
@@ -394,9 +394,8 @@ class Article extends \Ilch\Mapper
      *
      * @param int $catId
      * @return int
-     * @throws \Ilch\Database\Exception
      */
-    public function getCountArticlesByCatId($catId)
+    public function getCountArticlesByCatId(int $catId): int
     {
         return (int)$this->db()->select('COUNT(*)')
             ->from('articles')
@@ -409,11 +408,11 @@ class Article extends \Ilch\Mapper
      * Get articles count by category id and taking the group IDs into account.
      *
      * @param int $catId
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return int
      * @since 2.1.44
      */
-    public function getCountArticlesByCatIdAccess(int $catId, $groupIds = '3'): int
+    public function getCountArticlesByCatIdAccess(int $catId, array|string $groupIds = '3'): int
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -430,11 +429,11 @@ class Article extends \Ilch\Mapper
     /**
      * Get articles count by month and year
      *
-     * @param string $date
+     * @param string|null $date
      * @return int
      * @throws \Ilch\Database\Exception
      */
-    public function getCountArticlesByMonthYear($date = null)
+    public function getCountArticlesByMonthYear(string $date = null): int
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_articles`';
@@ -451,12 +450,12 @@ class Article extends \Ilch\Mapper
      * Get articles count by month and year and taking the group IDs into account.
      *
      * @param string|null $date
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return int
      * @throws \Ilch\Database\Exception
      * @since 2.1.44
      */
-    public function getCountArticlesByMonthYearAccess(?string $date = null, $groupIds = '3'): int
+    public function getCountArticlesByMonthYearAccess(?string $date = null, array|string $groupIds = '3'): int
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -488,7 +487,7 @@ class Article extends \Ilch\Mapper
      * @throws \Ilch\Database\Exception
      * @todo: Remove the group (aggregate) function MAX() workaround, which avoids duplicated entries in the archive-box if possible.
      */
-    public function getArticleDateList($limit = null)
+    public function getArticleDateList(int $limit = null): array
     {
         $sql = 'SELECT MAX(`date_created`) AS `date_created`
                 FROM `[prefix]_articles`
@@ -518,14 +517,14 @@ class Article extends \Ilch\Mapper
     /**
      * Get a list for the archive box and take the group IDs into account.
      *
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param int|null $limit
      * @return array
      * @throws \Ilch\Database\Exception
      * @todo: Remove the group (aggregate) function MAX() workaround, which avoids duplicated entries in the archive-box if possible.
      * @since 2.1.44
      */
-    public function getArticleDateListAccess($groupIds = '3', ?int $limit = null): array
+    public function getArticleDateListAccess(array|string $groupIds = '3', ?int $limit = null): array
     {
         $sql = 'SELECT MAX(`date_created`) AS `date_created`
                 FROM `[prefix]_articles`
@@ -545,7 +544,7 @@ class Article extends \Ilch\Mapper
                 ORDER BY `date_created` DESC';
 
         if ($limit !== null) {
-            $sql .= ' LIMIT ' . (int)$limit;
+            $sql .= ' LIMIT ' . $limit;
         }
 
         $articleArray = $this->db()->queryArray($sql);
@@ -568,10 +567,10 @@ class Article extends \Ilch\Mapper
      * Get article lists for overview.
      *
      * @param string $locale
-     * @param integer $limit
+     * @param int|null $limit
      * @return ArticleModel[]|null
      */
-    public function getArticleList($locale = '', $limit = null)
+    public function getArticleList(string $locale = '', int $limit = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['p.id', 'p.cat_id', 'p.date_created'])
@@ -605,13 +604,13 @@ class Article extends \Ilch\Mapper
     /**
      * Get article list for overview and take the group IDs into account.
      *
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param string $locale
      * @param int|null $limit
      * @return array|null
      * @since 2.1.44
      */
-    public function getArticleListAccess($groupIds = '3', string $locale = '', ?int $limit = null)
+    public function getArticleListAccess(array|string $groupIds = '3', string $locale = '', ?int $limit = null): ?array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -653,7 +652,7 @@ class Article extends \Ilch\Mapper
      * @param string $locale
      * @return ArticleModel|null
      */
-    public function getArticleByIdLocale($id, $locale = '')
+    public function getArticleByIdLocale(int $id, string $locale = ''): ?ArticleModel
     {
         $articleRow = $this->db()->select()
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
@@ -675,11 +674,10 @@ class Article extends \Ilch\Mapper
     /**
      * Get a list of the keywords.
      *
-     * @param int $limit
+     * @param int|null $limit
      * @return ArticleModel[]|array
-     * @throws \Ilch\Database\Exception
      */
-    public function getKeywordsList($limit = null)
+    public function getKeywordsList(int $limit = null): array
     {
         $sql = $this->db()->select('keywords')
             ->from('articles_content');
@@ -711,12 +709,12 @@ class Article extends \Ilch\Mapper
     /**
      * Get a list of the keywords and take the group IDs into account.
      *
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param int|null $limit
      * @return array
      * @since 2.1.44
      */
-    public function getKeywordsListAccess($groupIds = '3', ?int $limit = null): array
+    public function getKeywordsListAccess(array|string $groupIds = '3', ?int $limit = null): array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -760,7 +758,7 @@ class Article extends \Ilch\Mapper
      * @return bool
      * @since 2.1.25
      */
-    public function keywordExists($keyword)
+    public function keywordExists(string $keyword): bool
     {
         $keywordsList = [];
         foreach ($this->getKeywordsList() as $keywords) {
@@ -777,9 +775,8 @@ class Article extends \Ilch\Mapper
      * Returns all article permas.
      *
      * @return array|null
-     * @throws \Ilch\Database\Exception
      */
-    public function getArticlePermas()
+    public function getArticlePermas(): ?array
     {
         $permas = $this->db()->select(['article_id', 'locale', 'perma'])
             ->from('articles_content')
@@ -804,7 +801,7 @@ class Article extends \Ilch\Mapper
      * @return ArticleModel|null
      * @deprecated Use getTopArticles() instead. There can be more than one top article.
      */
-    public function getTopArticle()
+    public function getTopArticle(): ?ArticleModel
     {
         $articleRow = $this->db()->select('*')
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
@@ -829,7 +826,7 @@ class Article extends \Ilch\Mapper
      * @return array|ArticleModel[]
      * @since 2.1.44
      */
-    public function getTopArticles()
+    public function getTopArticles(): array
     {
         $articleRows = $this->db()->select('*')
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
@@ -859,7 +856,7 @@ class Article extends \Ilch\Mapper
      * @param int $id
      * @param int $value
      */
-    public function setTopArticle($id, $value)
+    public function setTopArticle(int $id, int $value): void
     {
         $this->db()->update('articles')
             ->values(['top' => $value])
@@ -872,7 +869,7 @@ class Article extends \Ilch\Mapper
      *
      * @param ArticleModel $article
      */
-    public function saveVisits(ArticleModel $article)
+    public function saveVisits(ArticleModel $article): void
     {
         if ($article->getVisits()) {
             $this->db()->update('articles_content')
@@ -883,12 +880,12 @@ class Article extends \Ilch\Mapper
     }
 
     /**
-     * Inserts or updates a article.
+     * Inserts or updates an article.
      *
      * @param ArticleModel $article
      * @return int $id
      */
-    public function save(ArticleModel $article)
+    public function save(ArticleModel $article): int
     {
         $id = 0;
 
@@ -970,7 +967,7 @@ class Article extends \Ilch\Mapper
      * @throws \Ilch\Database\Exception
      * @since 2.1.44
      */
-    private function saveReadAccess(int $articleId, string $readAccess)
+    private function saveReadAccess(int $articleId, string $readAccess): void
     {
         // Delete possible old entries to later insert the new ones.
         $this->db()->delete('articles_access')
@@ -993,7 +990,7 @@ class Article extends \Ilch\Mapper
             }
 
             $rowCount++;
-            $sqlWithValues .= '(' . (int)$articleId . ',' . (int)$groupId . '),';
+            $sqlWithValues .= '(' . $articleId . ',' . (int)$groupId . '),';
         }
 
         // Insert remaining rows.
@@ -1004,10 +1001,10 @@ class Article extends \Ilch\Mapper
     /**
      * Save article vote/like.
      *
-     * @param integer $id
-     * @param integer $userId
+     * @param int $id
+     * @param int $userId
      */
-    public function saveVotes($id, $userId)
+    public function saveVotes(int $id, int $userId): void
     {
         $votes = $this->getVotes($id);
 
@@ -1020,10 +1017,10 @@ class Article extends \Ilch\Mapper
     /**
      * Get the votes/likes for an article.
      *
-     * @param integer $id
+     * @param int $id
      * @return false|null|string
      */
-    public function getVotes($id)
+    public function getVotes(int $id): bool|string|null
     {
         return $this->db()->select('votes')
             ->from('articles_content')
@@ -1038,7 +1035,7 @@ class Article extends \Ilch\Mapper
      * @param int $id
      * @return int
      */
-    public function delete($id)
+    public function delete(int $id): int
     {
         // Rows in articles_access and articles_content get automatically deleted due to foreign key constraints.
         return $this->db()->delete('articles')
@@ -1052,7 +1049,7 @@ class Article extends \Ilch\Mapper
      * @param int $id
      * @param CommentMapper|null $commentsMapper
      */
-    public function deleteWithComments($id, ?CommentMapper $commentsMapper = null)
+    public function deleteWithComments(int $id, ?CommentMapper $commentsMapper = null): void
     {
         $this->delete($id);
         // An instance of the comments mapper can be passed as argument to this
@@ -1071,7 +1068,7 @@ class Article extends \Ilch\Mapper
      * @return ArticleModel
      * @since 2.1.44
      */
-    private function loadFromArray(array $articleRow)
+    private function loadFromArray(array $articleRow): ArticleModel
     {
         $articleModel = new ArticleModel();
 
