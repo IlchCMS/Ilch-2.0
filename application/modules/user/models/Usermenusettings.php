@@ -47,17 +47,20 @@ class Usermenusettings extends \Ilch\Model
     /**
      * Sets the menu key.
      *
-     * @param int $key
+     * @param string $key
+     * @return Usermenusettings
      */
     public function setKey($key)
     {
         $this->key = (string)$key;
+
+        return $this;
     }
 
     /**
      * Gets the menu key.
      *
-     * @return int
+     * @return string
      */
     public function getKey()
     {
@@ -68,10 +71,13 @@ class Usermenusettings extends \Ilch\Model
      * Sets the menu locale.
      *
      * @param string $locale
+     * @return Usermenusettings
      */
     public function setLocale($locale)
     {
         $this->locale = (string)$locale;
+
+        return $this;
     }
 
     /**
@@ -88,10 +94,13 @@ class Usermenusettings extends \Ilch\Model
      * Sets the menu description.
      *
      * @param string $description
+     * @return Usermenusettings
      */
     public function setDescription($description)
     {
         $this->description = (string)$description;
+
+        return $this;
     }
 
     /**
@@ -108,10 +117,13 @@ class Usermenusettings extends \Ilch\Model
      * Sets the menu name.
      *
      * @param string $name
+     * @return Usermenusettings
      */
     public function setName($name)
     {
         $this->name = (string)$name;
+
+        return $this;
     }
 
     /**
@@ -128,10 +140,13 @@ class Usermenusettings extends \Ilch\Model
      * Sets the menu icon.
      *
      * @param string $icon
+     * @return Usermenusettings
      */
     public function setIcon($icon)
     {
         $this->icon = (string)$icon;
+
+        return $this;
     }
 
     /**

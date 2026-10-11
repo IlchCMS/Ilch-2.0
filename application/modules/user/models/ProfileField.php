@@ -79,7 +79,7 @@ class ProfileField extends Model
      *
      * @var int
      */
-    protected int $position;
+    protected int $position = 0;
 
     /**
      * Returns the id of the profile-field.
@@ -199,7 +199,7 @@ class ProfileField extends Model
     /**
      * Returns the options of the profile-field.
      *
-     * @return string|null
+     * @return string
      * @since 2.1.50
      */
     public function getOptions(): ?string

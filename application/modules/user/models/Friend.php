@@ -82,7 +82,7 @@ class Friend extends \Ilch\Model
      */
     public function setUserId($userId)
     {
-        $this->userId = $userId;
+        $this->userId = (int)$userId;
 
         return $this;
     }
@@ -105,7 +105,7 @@ class Friend extends \Ilch\Model
      */
     public function setFriendUserId($friendUserId)
     {
-        $this->friendUserId = $friendUserId;
+        $this->friendUserId = (int)$friendUserId;
 
         return $this;
     }
@@ -138,7 +138,7 @@ class Friend extends \Ilch\Model
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = (string)$name;
 
         return $this;
     }

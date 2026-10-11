@@ -12,30 +12,30 @@ class ProfileFieldContent extends \Ilch\Model
     /**
      * The field-id of the ProfileFieldContent.
      *
-     * @var int
+     * @var int|null
      */
-    protected int $fieldId;
+    protected ?int $fieldId = null;
 
     /**
      * The user-id of the ProfileFieldContent.
      *
-     * @var int
+     * @var int|null
      */
-    protected int $userId;
+    protected ?int $userId = null;
 
     /**
      * The value of the ProfileFieldContent.
      *
      * @var string
      */
-    protected string $value;
+    protected string $value = '';
 
     /**
      * Returns the field-id of the ProfileFieldContent.
      *
-     * @return int
+     * @return int|null
      */
-    public function getFieldId(): int
+    public function getFieldId(): ?int
     {
         return $this->fieldId;
     }
@@ -56,9 +56,9 @@ class ProfileFieldContent extends \Ilch\Model
     /**
      * Returns the user-id of the ProfileFieldContent.
      *
-     * @return int
+     * @return int|null
      */
-    public function getUserId(): int
+    public function getUserId(): ?int
     {
         return $this->userId;
     }

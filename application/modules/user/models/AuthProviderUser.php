@@ -11,47 +11,57 @@ class AuthProviderUser extends \Ilch\Model
 {
     /**
      * User id
+     *
+     * @var int|null
      */
     protected $user_id;
 
     /**
      * Provider name, e.g. twitter, facebook
+     *
+     * @var string|null
      */
     protected $provider;
 
     /**
      * Identifier of the user at $provider
+     *
+     * @var string|null
      */
     protected $identifier;
 
     /**
      * Account name
+     *
+     * @var string|null
      */
     protected $screen_name;
 
     /**
      * OAuth token
+     *
+     * @var string|null
      */
     protected $oauth_token;
 
     /**
      * OAuth token secret
+     *
+     * @var string|null
      */
     protected $oauth_token_secret;
 
     /**
      * Created at
+     *
+     * @var string|null
      */
     protected $created_at;
-
-    public function __construct()
-    {
-    }
 
     /**
      * Gets the value of user_id.
      *
-     * @return mixed
+     * @return int|null
      */
     public function getUserId()
     {
@@ -75,7 +85,7 @@ class AuthProviderUser extends \Ilch\Model
     /**
      * Gets the value of provider.
      *
-     * @return mixed
+     * @return string|null
      */
     public function getProvider()
     {
@@ -99,7 +109,7 @@ class AuthProviderUser extends \Ilch\Model
     /**
      * Gets the value of identifier.
      *
-     * @return mixed
+     * @return string|null
      */
     public function getIdentifier()
     {
@@ -123,7 +133,7 @@ class AuthProviderUser extends \Ilch\Model
     /**
      * Gets the value of oauth_token.
      *
-     * @return mixed
+     * @return string|null
      */
     public function getOauthToken()
     {
@@ -147,7 +157,7 @@ class AuthProviderUser extends \Ilch\Model
     /**
      * Gets the value of oauth_token_secret.
      *
-     * @return mixed
+     * @return string|null
      */
     public function getOauthTokenSecret()
     {
@@ -171,7 +181,7 @@ class AuthProviderUser extends \Ilch\Model
     /**
      * Gets the Account name.
      *
-     * @return mixed
+     * @return string|null
      */
     public function getScreenName()
     {
@@ -195,7 +205,7 @@ class AuthProviderUser extends \Ilch\Model
     /**
      * Gets the Created at.
      *
-     * @return mixed
+     * @return string|null
      */
     public function getCreatedAt()
     {

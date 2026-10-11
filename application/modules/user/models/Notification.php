@@ -13,42 +13,42 @@ class Notification extends \Ilch\Model
     /**
      * The id of the notification.
      *
-     * @var int
+     * @var int|null
      */
     protected $id;
 
     /**
      * The timestamp of the notification.
      *
-     * @var int
+     * @var string|null
      */
     protected $timestamp;
 
     /**
      * The user id or the recipient associated with the notification.
      *
-     * @var int
+     * @var int|null
      */
     protected $userId;
 
     /**
      * The module for which the notification is for.
      *
-     * @var string
+     * @var string|null
      */
     protected $module;
 
     /**
      * The message of the notification.
      *
-     * @var string
+     * @var string|null
      */
     protected $message;
 
     /**
      * The url of the notification.
      *
-     * @var string
+     * @var string|null
      */
     protected $url;
 
@@ -56,16 +56,16 @@ class Notification extends \Ilch\Model
      * The type of the notification. This can be used to mark a notification as
      * a specific one e.g. "adminModuleUpdatesAvailable"
      *
-     * @var string
+     * @var string|null
      */
     protected $type;
 
     /**
      * Get the id of the notification
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -85,8 +85,9 @@ class Notification extends \Ilch\Model
     /**
      * Get the timestamp of the notification
      *
+     * @return string|null
      */
-    public function getTimestamp(): string
+    public function getTimestamp(): ?string
     {
         return $this->timestamp;
     }
@@ -106,9 +107,9 @@ class Notification extends \Ilch\Model
     /**
      * Get the user id or the recipient associated with the notification.
      *
-     * @return int
+     * @return int|null
      */
-    public function getUserId(): int
+    public function getUserId(): ?int
     {
         return $this->userId;
     }
@@ -128,9 +129,9 @@ class Notification extends \Ilch\Model
     /**
      * Gets the module for which the notification is for.
      *
-     * @return string
+     * @return string|null
      */
-    public function getModule(): string
+    public function getModule(): ?string
     {
         return $this->module;
     }
@@ -150,9 +151,9 @@ class Notification extends \Ilch\Model
     /**
      * Gets the message of the notification.
      *
-     * @return string
+     * @return string|null
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->message;
     }
@@ -172,9 +173,9 @@ class Notification extends \Ilch\Model
     /**
      * Gets the url of the notification.
      *
-     * @return string
+     * @return string|null
      */
-    public function getURL(): string
+    public function getURL(): ?string
     {
         return $this->url;
     }
@@ -194,9 +195,9 @@ class Notification extends \Ilch\Model
     /**
      * Gets the type of the notification.
      *
-     * @return string
+     * @return string|null
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }

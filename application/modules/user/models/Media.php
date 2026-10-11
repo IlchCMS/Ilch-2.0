@@ -134,69 +134,90 @@ class Media extends \Ilch\Model
      * Sets the id of the media.
      *
      * @param int $id
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = (int)$id;
+
+        return $this;
     }
 
     /**
      * Sets the userid of the media.
      *
      * @param int $userid
+     * @return $this
      */
     public function setUserId($userid)
     {
         $this->userid = (int)$userid;
+
+        return $this;
     }
 
     /**
      * Sets the url.
      *
      * @param string $url
+     * @return $this
      */
     public function setUrl($url)
     {
         $this->url = (string)$url;
+
+        return $this;
     }
 
     /**
      * Sets the urlthumb.
      *
      * @param string $urlthumb
+     * @return $this
      */
     public function setUrlThumb($urlthumb)
     {
         $this->urlthumb = (string)$urlthumb;
+
+        return $this;
     }
 
     /**
      * Sets the ending.
      *
      * @param string $ending
+     * @return $this
      */
     public function setEnding($ending)
     {
         $this->ending = (string)$ending;
+
+        return $this;
     }
 
     /**
      * Sets the name.
      *
      * @param string $name
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = (string)$name;
+
+        return $this;
     }
 
     /**
      * Sets the datetime.
      *
      * @param string $datetime
+     * @return $this
      */
     public function setDatetime($datetime)
     {
         $this->datetime = (string)$datetime;
+
+        return $this;
     }
 }

@@ -166,89 +166,116 @@ class GalleryImage extends \Ilch\Model
      * Sets the id of the image.
      *
      * @param int $id
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = (int)$id;
+
+        return $this;
     }
 
     /**
      * Sets the userId of the image.
      *
      * @param string $userId
+     * @return $this
      */
     public function setUserId($userId)
     {
         $this->userId = (int)$userId;
+
+        return $this;
     }
 
     /**
      * Sets the imageId of the image.
      *
      * @param string $imageId
+     * @return $this
      */
     public function setImageId($imageId)
     {
         $this->imageId = (string)$imageId;
+
+        return $this;
     }
 
     /**
      * Sets the thumb of the image.
      *
      * @param string $thumb
+     * @return $this
      */
     public function setImageThumb($thumb)
     {
         $this->thumb = (string)$thumb;
+
+        return $this;
     }
 
     /**
      * Sets the title.
      *
      * @param string $title
+     * @return $this
      */
     public function setImageTitle($title)
     {
         $this->title = (string) $title;
+
+        return $this;
     }
 
     /**
      * Sets the desc.
      *
      * @param string $desc
+     * @return $this
      */
     public function setImageDesc($desc)
     {
         $this->desc = (string) $desc;
+
+        return $this;
     }
 
     /**
      * Sets the cat of the image.
      *
      * @param string $cat
+     * @return $this
      */
     public function setCat($cat)
     {
         $this->cat = (string)$cat;
+
+        return $this;
     }
 
     /**
      * Sets the visits of the image.
      *
      * @param string $visits
+     * @return $this
      */
     public function setVisits($visits)
     {
         $this->visits = (string)$visits;
+
+        return $this;
     }
 
     /**
      * Sets the Url of the image.
      *
      * @param string $url
+     * @return $this
      */
     public function setImageUrl($url)
     {
         $this->url = (string)$url;
+
+        return $this;
     }
 }
