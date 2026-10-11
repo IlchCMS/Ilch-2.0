@@ -12,149 +12,149 @@ class Article extends \Ilch\Model
     /**
      * The id of the article.
      *
-     * @var int
+     * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The catId of the article.
      *
-     * @var string
+     * @var string|null
      */
-    protected $catId;
+    protected ?string $catId = null;
 
     /**
      * The authorId of the article.
      *
-     * @var int
+     * @var int|null
      */
-    protected $authorId;
+    protected ?int $authorId = null;
 
     /**
      * The name of the author.
      *
-     * @var string
+     * @var string|null
      */
-    protected $authorName;
+    protected ?string $authorName = null;
 
     /**
      * The visits of the article.
      *
-     * @var int
+     * @var int|null
      */
-    protected $visits;
+    protected ?int $visits = null;
 
     /**
      * The perma of the article.
      *
-     * @var string
+     * @var string|null
      */
-    protected $perma;
+    protected ?string $perma = null;
 
     /**
      * The title of the article.
      *
-     * @var string
+     * @var string|null
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * The teaser of the article.
      *
-     * @var string
+     * @var string|null
      */
-    protected $teaser;
+    protected ?string $teaser = null;
 
     /**
      * The content of the article.
      *
-     * @var string
+     * @var string|null
      */
-    protected $content;
+    protected ?string $content = null;
 
     /**
      * The description of the article.
      *
-     * @var string
+     * @var string|null
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * The keywords of the article.
      *
-     * @var string
+     * @var string|null
      */
-    protected $keywords;
+    protected ?string $keywords = null;
 
     /**
      * The locale of the article.
      *
-     * @var string
+     * @var string|null
      */
-    protected $locale;
+    protected ?string $locale = null;
 
     /**
      * The datetime when the article got created.
      *
-     * @var string
+     * @var string|null
      */
-    protected $dateCreated;
+    protected ?string $dateCreated = null;
 
     /**
      * True/False top article.
      *
-     * @var boolean
+     * @var bool|null
      */
-    protected $top;
+    protected ?bool $top = null;
 
     /**
      * True/False comments disabled.
      *
-     * @var boolean
+     * @var bool|null
      */
-    protected $commentsDisabled;
+    protected ?bool $commentsDisabled = null;
 
     /**
      * Read access of the article.
      *
-     * @var string
+     * @var string|null
      */
-    protected $readAccess;
+    protected ?string $readAccess = null;
 
     /**
      * The Image of the article.
      *
-     * @var string
+     * @var string|null
      */
-    protected $image;
+    protected ?string $image = null;
 
     /**
      * The Image thumb of the article.
      *
-     * @var string
+     * @var string|null
      */
-    protected $imageThumb;
+    protected ?string $imageThumb = null;
 
     /**
      * The Source of the image.
      *
-     * @var string
+     * @var string|null
      */
-    protected $imageSource;
+    protected ?string $imageSource = null;
 
     /**
      * The votes of this article.
      *
-     * @var string
+     * @var string|null
      */
-    protected $votes;
+    protected ?string $votes = null;
 
     /**
      * Gets the id of the article.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -162,10 +162,10 @@ class Article extends \Ilch\Model
     /**
      * Sets the id of the article.
      *
-     * @param int $id
+     * @param mixed $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(mixed $id): self
     {
         $this->id = (int) $id;
 
@@ -175,9 +175,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the catId of the article.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCatId()
+    public function getCatId(): ?string
     {
         return $this->catId;
     }
@@ -185,10 +185,10 @@ class Article extends \Ilch\Model
     /**
      * Sets the catId of the article.
      *
-     * @param string $catId
+     * @param mixed $catId
      * @return $this
      */
-    public function setCatId($catId)
+    public function setCatId(mixed $catId): self
     {
         $this->catId = (string) $catId;
 
@@ -198,9 +198,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the authorId of the article.
      *
-     * @return int
+     * @return int|null
      */
-    public function getAuthorId()
+    public function getAuthorId(): ?int
     {
         return $this->authorId;
     }
@@ -208,10 +208,10 @@ class Article extends \Ilch\Model
     /**
      * Sets the authorId of the article.
      *
-     * @param int $authorId
+     * @param mixed $authorId
      * @return $this
      */
-    public function setAuthorId($authorId)
+    public function setAuthorId(mixed $authorId): self
     {
         $this->authorId = (int) $authorId;
 
@@ -221,9 +221,9 @@ class Article extends \Ilch\Model
     /**
      * Get the name of the author.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAuthorName()
+    public function getAuthorName(): ?string
     {
         return $this->authorName;
     }
@@ -231,12 +231,12 @@ class Article extends \Ilch\Model
     /**
      * Set the name of the author.
      *
-     * @param $authorName
+     * @param mixed $authorName
      * @return $this
      */
-    public function setAuthorName($authorName)
+    public function setAuthorName(mixed $authorName): self
     {
-        $this->authorName = $authorName;
+        $this->authorName = (string) $authorName;
 
         return $this;
     }
@@ -244,9 +244,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the visits of the article.
      *
-     * @return int
+     * @return int|null
      */
-    public function getVisits()
+    public function getVisits(): ?int
     {
         return $this->visits;
     }
@@ -254,10 +254,10 @@ class Article extends \Ilch\Model
     /**
      * Sets the visits of the article.
      *
-     * @param int $visits
+     * @param mixed $visits
      * @return $this
      */
-    public function setVisits($visits)
+    public function setVisits(mixed $visits): self
     {
         $this->visits = (int) $visits;
 
@@ -267,9 +267,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the perma of the article.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPerma()
+    public function getPerma(): ?string
     {
         return $this->perma;
     }
@@ -277,12 +277,12 @@ class Article extends \Ilch\Model
     /**
      * Sets the perma of the article.
      *
-     * @param int $perma
+     * @param mixed $perma
      * @return $this
      */
-    public function setPerma($perma)
+    public function setPerma(mixed $perma): self
     {
-        $this->perma = $perma;
+        $this->perma = (string) $perma;
 
         return $this;
     }
@@ -290,9 +290,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the article title.
      *
-     * @return string
+     * @return string|null
      */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -300,10 +300,10 @@ class Article extends \Ilch\Model
     /**
      * Sets the article title.
      *
-     * @param string $title
+     * @param mixed $title
      * @return $this
      */
-    public function setTitle($title)
+    public function setTitle(mixed $title): self
     {
         $this->title = (string) $title;
 
@@ -313,9 +313,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the article teaser.
      *
-     * @return string
+     * @return string|null
      */
-    public function getTeaser()
+    public function getTeaser(): ?string
     {
         return $this->teaser;
     }
@@ -323,12 +323,12 @@ class Article extends \Ilch\Model
     /**
      * Sets the article teaser.
      *
-     * @param string $teaser
+     * @param mixed $teaser
      * @return $this
      */
-    public function setTeaser($teaser)
+    public function setTeaser(mixed $teaser): self
     {
-        $this->teaser = (string)$teaser;
+        $this->teaser = (string) $teaser;
 
         return $this;
     }
@@ -336,9 +336,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the content of the article.
      *
-     * @return string
+     * @return string|null
      */
-    public function getContent()
+    public function getContent(): ?string
     {
         return $this->content;
     }
@@ -346,10 +346,10 @@ class Article extends \Ilch\Model
     /**
      * Sets the content of the article.
      *
-     * @param string $content
+     * @param mixed $content
      * @return $this
      */
-    public function setContent($content)
+    public function setContent(mixed $content): self
     {
         $this->content = (string) $content;
 
@@ -359,9 +359,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the description of the article.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -369,12 +369,12 @@ class Article extends \Ilch\Model
     /**
      * Sets the description of the article.
      *
-     * @param string $description
+     * @param mixed $description
      * @return $this
      */
-    public function setDescription($description)
+    public function setDescription(mixed $description): self
     {
-        $this->description = (string)$description;
+        $this->description = (string) $description;
 
         return $this;
     }
@@ -382,9 +382,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the keywords of the article.
      *
-     * @return string
+     * @return string|null
      */
-    public function getKeywords()
+    public function getKeywords(): ?string
     {
         return $this->keywords;
     }
@@ -392,12 +392,12 @@ class Article extends \Ilch\Model
     /**
      * Sets the keywords of the article.
      *
-     * @param string $keywords
+     * @param mixed $keywords
      * @return $this
      */
-    public function setKeywords($keywords)
+    public function setKeywords(mixed $keywords): self
     {
-        $this->keywords = (string)$keywords;
+        $this->keywords = (string) $keywords;
 
         return $this;
     }
@@ -405,9 +405,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the locale of the article.
      *
-     * @return string
+     * @return string|null
      */
-    public function getLocale()
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
@@ -415,12 +415,12 @@ class Article extends \Ilch\Model
     /**
      * Sets the locale of the article.
      *
-     * @param string $locale
+     * @param mixed $locale
      * @return $this
      */
-    public function setLocale($locale)
+    public function setLocale(mixed $locale): self
     {
-        $this->locale = (string)$locale;
+        $this->locale = (string) $locale;
 
         return $this;
     }
@@ -428,9 +428,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the date_created timestamp of the article.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDateCreated()
+    public function getDateCreated(): ?string
     {
         return $this->dateCreated;
     }
@@ -438,12 +438,12 @@ class Article extends \Ilch\Model
     /**
      * Sets the date_created date of the article.
      *
-     * @param string $dateCreated
+     * @param mixed $dateCreated
      * @return $this
      */
-    public function setDateCreated($dateCreated)
+    public function setDateCreated(mixed $dateCreated): self
     {
-        $this->dateCreated = $dateCreated;
+        $this->dateCreated = (string) $dateCreated;
 
         return $this;
     }
@@ -451,9 +451,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the value of top.
      *
-     * @return boolean
+     * @return bool|null
      */
-    public function getTopArticle()
+    public function getTopArticle(): ?bool
     {
         return $this->top;
     }
@@ -461,12 +461,12 @@ class Article extends \Ilch\Model
     /**
      * Sets the value of top.
      *
-     * @param boolean $top
+     * @param mixed $top
      * @return $this
      */
-    public function setTopArticle($top)
+    public function setTopArticle(mixed $top): self
     {
-        $this->top = $top;
+        $this->top = (bool) $top;
 
         return $this;
     }
@@ -474,9 +474,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the value of commentsDisabled.
      *
-     * @return boolean
+     * @return bool|null
      */
-    public function getCommentsDisabled()
+    public function getCommentsDisabled(): ?bool
     {
         return $this->commentsDisabled;
     }
@@ -484,12 +484,12 @@ class Article extends \Ilch\Model
     /**
      * Sets the value of commentsDisabled.
      *
-     * @param boolean $disabled
+     * @param mixed $disabled
      * @return $this
      */
-    public function setCommentsDisabled($disabled)
+    public function setCommentsDisabled(mixed $disabled): self
     {
-        $this->commentsDisabled = $disabled;
+        $this->commentsDisabled = (bool) $disabled;
 
         return $this;
     }
@@ -497,9 +497,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the read access.
      *
-     * @return string
+     * @return string|null
      */
-    public function getReadAccess()
+    public function getReadAccess(): ?string
     {
         return $this->readAccess;
     }
@@ -507,10 +507,10 @@ class Article extends \Ilch\Model
     /**
      * Sets the read access.
      *
-     * @param string $readAccess
+     * @param mixed $readAccess
      * @return $this
      */
-    public function setReadAccess($readAccess)
+    public function setReadAccess(mixed $readAccess): self
     {
         $this->readAccess = (string) $readAccess;
 
@@ -520,9 +520,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the article Image.
      *
-     * @return string
+     * @return string|null
      */
-    public function getImage()
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -530,12 +530,12 @@ class Article extends \Ilch\Model
     /**
      * Sets the Image of the article.
      *
-     * @param string $image
+     * @param mixed $image
      * @return $this
      */
-    public function setImage($image)
+    public function setImage(mixed $image): self
     {
-        $this->image = $image;
+        $this->image = (string) $image;
 
         return $this;
     }
@@ -543,9 +543,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the article Image thumb.
      *
-     * @return string
+     * @return string|null
      */
-    public function getImageThumb()
+    public function getImageThumb(): ?string
     {
         return $this->imageThumb;
     }
@@ -553,12 +553,12 @@ class Article extends \Ilch\Model
     /**
      * Sets the Image thumb of the article.
      *
-     * @param string $imageThumb
+     * @param mixed $imageThumb
      * @return $this
      */
-    public function setImageThumb($imageThumb)
+    public function setImageThumb(mixed $imageThumb): self
     {
-        $this->imageThumb = $imageThumb;
+        $this->imageThumb = (string) $imageThumb;
 
         return $this;
     }
@@ -566,9 +566,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the Image Source.
      *
-     * @return string
+     * @return string|null
      */
-    public function getImageSource()
+    public function getImageSource(): ?string
     {
         return $this->imageSource;
     }
@@ -576,12 +576,12 @@ class Article extends \Ilch\Model
     /**
      * Sets the source of the image.
      *
-     * @param string $imageSource
+     * @param mixed $imageSource
      * @return $this
      */
-    public function setImageSource($imageSource)
+    public function setImageSource(mixed $imageSource): self
     {
-        $this->imageSource = $imageSource;
+        $this->imageSource = (string) $imageSource;
 
         return $this;
     }
@@ -589,9 +589,9 @@ class Article extends \Ilch\Model
     /**
      * Gets the votes of this article.
      *
-     * @return string
+     * @return string|null
      */
-    public function getVotes()
+    public function getVotes(): ?string
     {
         return $this->votes;
     }
@@ -599,12 +599,12 @@ class Article extends \Ilch\Model
     /**
      * Sets the votes of this article.
      *
-     * @param string $votes
+     * @param mixed $votes
      * @return $this
      */
-    public function setVotes($votes)
+    public function setVotes(mixed $votes): self
     {
-        $this->votes = $votes;
+        $this->votes = (string) $votes;
 
         return $this;
     }

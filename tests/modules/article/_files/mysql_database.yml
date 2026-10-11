@@ -86,3 +86,18 @@ articles_content:
     img: ""
     img_source: ""
     votes: ""
+
+media:
+  -
+    id: 1
+    name: "test.jpg"
+    url: ""
+    url_thumb: "test_thumb.jpg"
+    ending: "jpg"
+    datetime: "2021-05-08 08:10:00"
+    cat: 1
+
+media_cats:
+  -
+    id: 1
+    cat_name: "Test"

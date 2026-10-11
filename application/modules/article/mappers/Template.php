@@ -69,7 +69,7 @@ class Template extends \Ilch\Mapper
      * @param int $id
      * @return ArticleModel|null
      */
-    public function getTemplateById(int $id)
+    public function getTemplateById(int $id): ?ArticleModel
     {
         $select = $this->db()->select()
             ->fields(['id', 'author_id', 'description', 'keywords', 'title', 'teaser', 'perma', 'content', 'locale', 'img', 'img_source'])
@@ -91,9 +91,8 @@ class Template extends \Ilch\Mapper
         $articleModel->setLocale($articleRow['locale']);
         $articleModel->setTitle($articleRow['title']);
         $articleModel->setTeaser($articleRow['teaser']);
-        $articleModel->setContent($articleRow['content']);
-        $articleModel->setLocale($articleRow['locale']);
         $articleModel->setPerma($articleRow['perma']);
+        $articleModel->setContent($articleRow['content']);
         $articleModel->setImage($articleRow['img']);
         $articleModel->setImageSource($articleRow['img_source']);
 
@@ -106,7 +105,7 @@ class Template extends \Ilch\Mapper
      * @param ArticleModel $article
      * @return int id
      */
-    public function save($article): int
+    public function save(ArticleModel $article): int
     {
         $exists = $this->db()->select('id')
             ->from('articles_templates')
