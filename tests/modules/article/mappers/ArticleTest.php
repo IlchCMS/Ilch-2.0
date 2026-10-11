@@ -1458,14 +1458,16 @@ class ArticleTest extends DatabaseTestCase
     }
 
     /**
-     * Tests that saveVotes() appends votes without deduplication (documents current behaviour).
+     * Tests that saveVotes() does not add a duplicate vote from the same user,
+     * while still appending votes of other users.
      */
     public function testSaveVotesDuplicate()
     {
         $this->articleMapper->saveVotes(1, 5);
+        $this->articleMapper->saveVotes(1, 6);
         $this->articleMapper->saveVotes(1, 5);
 
-        self::assertSame('5,5,', $this->articleMapper->getVotes(1));
+        self::assertSame('5,6,', $this->articleMapper->getVotes(1));
     }
 
     /**

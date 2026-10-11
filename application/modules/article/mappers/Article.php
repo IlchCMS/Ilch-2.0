@@ -117,9 +117,10 @@ class Article extends \Ilch\Mapper
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
             ->from(['p' => 'articles'])
             ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
-            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
-            ->where(['p.cat_id LIKE' => '%' . $catId . '%', 'pc.locale' => $this->db()->escape($locale)])
+            // Exact match: LIKE '%1%' would also match cats 11, 21, 101.
+            ->where(['p.cat_id' => $catId, 'pc.locale' => $this->db()->escape($locale)])
             ->group(['p.id'])
             ->order(['id' => 'DESC']);
 
@@ -165,9 +166,10 @@ class Article extends \Ilch\Mapper
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
             ->from(['p' => 'articles'])
             ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
-            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
-            ->where(['ra.group_id' => $groupIds, 'p.cat_id LIKE' => '%' . $catId . '%', 'pc.locale' => $this->db()->escape($locale)])
+            // Exact match: LIKE '%1%' would also match cats 11, 21, 101.
+            ->where(['ra.group_id' => $groupIds, 'p.cat_id' => $catId, 'pc.locale' => $this->db()->escape($locale)])
             ->group(['p.id'])
             ->order(['id' => 'DESC']);
 
@@ -207,7 +209,7 @@ class Article extends \Ilch\Mapper
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
             ->from(['p' => 'articles'])
             ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
-            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
             ->where(['pc.keywords LIKE' => '%' . $keyword . '%', 'pc.locale' => $this->db()->escape($locale)])
             ->group(['p.id'])
@@ -255,7 +257,7 @@ class Article extends \Ilch\Mapper
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
             ->from(['p' => 'articles'])
             ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
-            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
             ->where(['ra.group_id' => $groupIds, 'pc.keywords LIKE' => '%' . $keyword . '%', 'pc.locale' => $this->db()->escape($locale)])
             ->group(['p.id'])
@@ -305,7 +307,7 @@ class Article extends \Ilch\Mapper
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
             ->from(['p' => 'articles'])
             ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
-            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
             ->where(['p.date_created >=' => $dateFrom, 'p.date_created <' => $dateTo, 'pc.locale' => $this->db()->escape($locale)])
             ->group(['p.id'])
@@ -361,7 +363,7 @@ class Article extends \Ilch\Mapper
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
             ->from(['p' => 'articles'])
             ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
-            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
             ->where(['ra.group_id' => $groupIds, 'p.date_created >=' => $dateFrom, 'p.date_created <' => $dateTo, 'pc.locale' => $this->db()->escape($locale)])
             ->group(['p.id'])
@@ -397,9 +399,10 @@ class Article extends \Ilch\Mapper
      */
     public function getCountArticlesByCatId(int $catId): int
     {
+        // Exact match: LIKE '%1%' would also match cats 11, 21, 101.
         return (int)$this->db()->select('COUNT(*)')
             ->from('articles')
-            ->where(['cat_id LIKE' => '%' . $catId . '%'])
+            ->where(['cat_id' => $catId])
             ->execute()
             ->fetchCell();
     }
@@ -418,10 +421,11 @@ class Article extends \Ilch\Mapper
             $groupIds = explode(',', $groupIds);
         }
 
+        // Exact match: LIKE '%1%' would also match cats 11, 21, 101.
         return (int)$this->db()->select('COUNT(DISTINCT(id))')
             ->from('articles')
             ->join(['articles_access'], 'id = article_id', 'LEFT')
-            ->where(['group_id' => $groupIds, 'cat_id LIKE' => '%' . $catId . '%'])
+            ->where(['group_id' => $groupIds, 'cat_id' => $catId])
             ->execute()
             ->fetchCell();
     }
@@ -576,11 +580,11 @@ class Article extends \Ilch\Mapper
             ->fields(['p.id', 'p.cat_id', 'p.date_created'])
             ->from(['p' => 'articles'])
             ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
-            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['m' => 'media'], 'pc.img = m.url', 'LEFT', ['m.url_thumb', 'm.url'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
             ->where(['pc.locale' => $this->db()->escape($locale)])
-            ->group(['p.id', 'p.cat_id', 'p.date_created', 'pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes', 'm.url_thumb', 'm.url'])
+            ->group(['p.id', 'p.cat_id', 'p.date_created', 'pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes', 'm.url_thumb', 'm.url'])
             ->order(['date_created' => 'DESC']);
 
         if ($limit !== null) {
@@ -620,11 +624,11 @@ class Article extends \Ilch\Mapper
             ->fields(['p.id', 'p.cat_id', 'p.date_created'])
             ->from(['p' => 'articles'])
             ->join(['ra' => 'articles_access'], 'p.id = ra.article_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
-            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes'])
             ->join(['m' => 'media'], 'pc.img = m.url', 'LEFT', ['m.url_thumb', 'm.url'])
             ->join(['u' => 'users'], 'pc.author_id = u.id', 'LEFT', ['u.name'])
             ->where(['ra.group_id' => $groupIds, 'pc.locale' => $this->db()->escape($locale)])
-            ->group(['p.id', 'p.cat_id', 'p.date_created', 'pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes', 'm.url_thumb', 'm.url'])
+            ->group(['p.id', 'p.cat_id', 'p.date_created', 'pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'pc.votes', 'm.url_thumb', 'm.url'])
             ->order(['date_created' => 'DESC']);
 
         if ($limit !== null) {
@@ -760,15 +764,17 @@ class Article extends \Ilch\Mapper
      */
     public function keywordExists(string $keyword): bool
     {
-        $keywordsList = [];
-        foreach ($this->getKeywordsList() as $keywords) {
-            $keywordsList[] = $keywords->getKeywords();
+        foreach ($this->getKeywordsList() as $articleModel) {
+            // Normalize: split on ',' and trim, so articles that store
+            // their keywords without spaces ('a,b') also match correctly.
+            foreach (explode(',', (string)$articleModel->getKeywords()) as $articleKeyword) {
+                if (trim($articleKeyword) === $keyword) {
+                    return true;
+                }
+            }
         }
 
-        $keywordsListString = implode(', ', $keywordsList);
-        $keywordsListArray = explode(', ', $keywordsListString);
-
-        return \in_array($keyword, $keywordsListArray);
+        return false;
     }
 
     /**
@@ -888,17 +894,32 @@ class Article extends \Ilch\Mapper
     public function save(ArticleModel $article): int
     {
         $id = 0;
+        $db = $this->db();
 
         if ($article->getId()) {
             // Existing article
             if ($this->getArticleByIdLocale($article->getId(), $article->getLocale())) {
                 // Update existing article with specific id and locale
-                $this->db()->update('articles')
-                    ->values(['cat_id' => $article->getCatId(), 'date_created' => $article->getDateCreated(), 'commentsDisabled' => (int)$article->getCommentsDisabled()])
+                $articleValues = [
+                    'cat_id' => $article->getCatId(),
+                    'commentsDisabled' => (int)$article->getCommentsDisabled()
+                ];
+
+                // Only update date_created when the caller actually provided
+                // a value. The column is NOT NULL, so writing the model
+                // default (null) here would either fail (strict SQL mode)
+                // or silently overwrite the existing timestamp with
+                // 0000-00-00 00:00:00.
+                if (!empty($article->getDateCreated())) {
+                    $articleValues['date_created'] = $article->getDateCreated();
+                }
+
+                $db->update('articles')
+                    ->values($articleValues)
                     ->where(['id' => $article->getId()])
                     ->execute();
 
-                $this->db()->update('articles_content')
+                $db->update('articles_content')
                     ->values(['title' => $article->getTitle(),
                         'teaser' => $article->getTeaser(),
                         'description' => $article->getDescription(),
@@ -912,7 +933,7 @@ class Article extends \Ilch\Mapper
                     ->execute();
             } else {
                 // Insert content with a new locale for an existing article
-                $this->db()->insert('articles_content')
+                $db->insert('articles_content')
                     ->values(['article_id' => $article->getId(),
                         'author_id' => $article->getAuthorId(),
                         'description' => $article->getDescription(),
@@ -931,11 +952,18 @@ class Article extends \Ilch\Mapper
             $id = $article->getId();
         } else {
             // Insert new article
-            $articleId = $this->db()->insert('articles')
-                ->values(['cat_id' => $article->getCatId(), 'date_created' => $article->getDateCreated(), 'commentsDisabled' => (int)$article->getCommentsDisabled()])
+            // date_created is NOT NULL, so fall back to the current time
+            // when the caller did not provide a date.
+            $dateCreated = $article->getDateCreated();
+            if (empty($dateCreated)) {
+                $dateCreated = (new \DateTime())->format($db::FORMAT_DATETIME);
+            }
+
+            $articleId = $db->insert('articles')
+                ->values(['cat_id' => $article->getCatId(), 'date_created' => $dateCreated, 'commentsDisabled' => (int)$article->getCommentsDisabled()])
                 ->execute();
 
-            $this->db()->insert('articles_content')
+            $db->insert('articles_content')
                 ->values(['article_id' => $articleId,
                     'author_id' => $article->getAuthorId(),
                     'description' => $article->getDescription(),
@@ -974,10 +1002,17 @@ class Article extends \Ilch\Mapper
             ->where(['article_id' => $articleId])
             ->execute();
 
+        // Filter out empty entries so an empty $readAccess leaves no rows
+        // instead of inserting a bogus group_id 0 row.
+        $groupIds = array_filter(explode(',', $readAccess));
+
+        if (empty($groupIds)) {
+            return;
+        }
+
         $sql = 'INSERT INTO [prefix]_articles_access (article_id, group_id) VALUES';
         $sqlWithValues = $sql;
         $rowCount = 0;
-        $groupIds = explode(',', $readAccess);
 
         foreach ($groupIds as $groupId) {
             // There is a limit of 1000 rows per insert, but according to some benchmarks found online
@@ -1007,6 +1042,16 @@ class Article extends \Ilch\Mapper
     public function saveVotes(int $id, int $userId): void
     {
         $votes = $this->getVotes($id);
+        if ($votes === null || $votes === false) {
+            $votes = '';
+        }
+
+        // Skip the vote if this user already voted for this article.
+        foreach (explode(',', $votes) as $existingUserId) {
+            if ((int)$existingUserId === $userId) {
+                return;
+            }
+        }
 
         $this->db()->update('articles_content')
             ->values(['votes' => $votes . $userId . ','])
