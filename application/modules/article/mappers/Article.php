@@ -653,11 +653,15 @@ class Article extends \Ilch\Mapper
      * Returns article model found by the key.
      *
      * @param int $id
-     * @param string $locale
+     * @param string|null $locale
      * @return ArticleModel|null
      */
-    public function getArticleByIdLocale(int $id, string $locale = ''): ?ArticleModel
+    public function getArticleByIdLocale(int $id, ?string $locale = null): ?ArticleModel
     {
+        // No locale given (e.g. "locale" missing from the request) means the
+        // default/main locale, which is stored as an empty string in the DB.
+        $locale = $locale ?? '';
+
         $articleRow = $this->db()->select()
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
             ->from(['p' => 'articles'])
