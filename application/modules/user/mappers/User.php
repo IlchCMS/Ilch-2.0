@@ -355,8 +355,9 @@ class User extends \Ilch\Mapper
         if (isset($userRow['locked'])) {
             $user->setLocked($userRow['locked']);
         }
+
         if (isset($userRow['selectsdelete'])) {
-            $user->setSelectsDelete($userRow['selectsdelete']);
+            $user->setSelectsDelete(new IlchDate($userRow['selectsdelete']));
         }
 
         return $user;
@@ -572,11 +573,11 @@ class User extends \Ilch\Mapper
     /**
      * Selects a specific user or user with the specified ID to delete.
      *
-     * @param  int|UserModel $userId
-     * @param  string $deletedate
+     * @param int|UserModel $userId
+     * @param string $deletedate
      * @return int affected rows
      */
-    public function selectsdelete($userId, $deletedate = '1000-01-01 00:00:00'): int
+    public function selectsdelete(int|UserModel $userId, string $deletedate = '1000-01-01 00:00:00'): int
     {
         if ($userId instanceof UserModel) {
             $userId = $userId->getId();
@@ -618,10 +619,10 @@ class User extends \Ilch\Mapper
     /**
      * Deletes a given user or a user with the given id.
      *
-     * @param  int|UserModel $userId
+     * @param int|UserModel $userId
      * @return bool True of success, otherwise false.
      */
-    public function delete($userId): bool
+    public function delete(int|UserModel $userId): bool
     {
         if ($userId instanceof UserModel) {
             $userId = $userId->getId();

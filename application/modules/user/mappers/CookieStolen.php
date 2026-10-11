@@ -10,7 +10,7 @@ namespace Modules\User\Mappers;
 class CookieStolen extends \Ilch\Mapper
 {
     /**
-     * Check if database contains a cookieStolen-message for an user.
+     * Checks whether the database contains a cookie stolen entry for the given user.
      *
      * @param int $userid
      * @return bool
@@ -25,10 +25,12 @@ class CookieStolen extends \Ilch\Mapper
     }
 
     /**
-     * Add cookieStolen-message for an user.
+     * Adds a cookie stolen entry for the given user.
+     *
+     * Does nothing if an entry for that user already exists.
      *
      * @param int $userid
-     * @return int
+     * @return int 0 if an entry already exists, number of inserted rows otherwise
      */
     public function addCookieStolen($userid)
     {
@@ -42,10 +44,10 @@ class CookieStolen extends \Ilch\Mapper
     }
 
     /**
-     * Delete the cookieStolen-message of an user.
+     * Deletes the cookie stolen entry of the given user from the database.
      *
      * @param int $userid
-     * @return \Ilch\Database\Mysql\Result|int
+     * @return int Number of deleted rows
      */
     public function deleteCookieStolen($userid)
     {

@@ -25,14 +25,14 @@ class User extends \Ilch\Model
      *
      * @var string
      */
-    protected string $name;
+    protected string $name = '';
 
     /**
      * The email address of the user.
      *
      * @var string
      */
-    protected string $email;
+    protected string $email = '';
 
     /**
      * The firstname of the user.
@@ -53,7 +53,7 @@ class User extends \Ilch\Model
      *
      * @var int
      */
-    protected int $gender;
+    protected int $gender = 0;
 
     /**
      * The city of the user.
@@ -88,14 +88,14 @@ class User extends \Ilch\Model
      *
      * @var string
      */
-    protected string $password;
+    protected string $password = '';
 
     /**
      * The locale of the user.
      *
      * @var string
      */
-    protected string $locale;
+    protected string $locale = '';
 
     /**
      * The opt_mail of the user.
@@ -129,51 +129,51 @@ class User extends \Ilch\Model
     /**
      * The \Ilch\Date of when the user got created.
      *
-     * @var Date
+     * @var Date|null
      */
-    protected Date $dateCreated;
+    protected ?Date $dateCreated = null;
 
     /**
      * The \Ilch\Date of when the user got confirmed.
      *
-     * @var Date
+     * @var Date|null
      */
-    protected Date $dateConfirmed;
+    protected ?Date $dateConfirmed = null;
 
     /**
      * LastActivity timestamp of the user.
      *
-     * @var Date
+     * @var Date|null
      */
-    protected Date $dateLastActivity;
+    protected ?Date $dateLastActivity = null;
 
     /**
      * Confirmed of the user.
      *
      * @var int
      */
-    protected int $confirmed;
+    protected int $confirmed = 0;
 
     /**
      * Confirmed Code of the user.
      *
      * @var string
      */
-    protected string $confirmedCode;
+    protected string $confirmedCode = '';
 
     /**
      * selector of the user.
      *
      * @var string
      */
-    protected string $selector;
+    protected string $selector = '';
 
     /**
      * date at which the confirmCode expires.
      *
-     * @var Date
+     * @var Date|null
      */
-    protected Date $expires;
+    protected ?Date $expires = null;
 
     /**
      * The associated user group object.
@@ -192,9 +192,9 @@ class User extends \Ilch\Model
     /**
      * Selects Delete timestamp of the user.
      *
-     * @var Date
+     * @var Date|null
      */
-    protected Date $selectsdelete;
+    protected ?Date $selectsdelete = null;
 
     /**
      * Returns the id of the user.
@@ -477,9 +477,9 @@ class User extends \Ilch\Model
     /**
      * Get date at which the confirm code expires.
      *
-     * @return Date
+     * @return Date|null
      */
-    public function getExpires(): Date
+    public function getExpires(): ?Date
     {
         return $this->expires;
     }
@@ -487,10 +487,10 @@ class User extends \Ilch\Model
     /**
      * Set date at which the confirm code expires.
      *
-     * @param $expires
+     * @param Date|null $expires
      * @return User
      */
-    public function setExpires($expires): User
+    public function setExpires(?Date $expires): User
     {
         $this->expires = $expires;
 
@@ -553,9 +553,9 @@ class User extends \Ilch\Model
     /**
      * Returns the date_created \Ilch\Date of the user.
      *
-     * @return Date
+     * @return Date|null
      */
-    public function getDateCreated(): Date
+    public function getDateCreated(): ?Date
     {
         return $this->dateCreated;
     }
@@ -576,9 +576,9 @@ class User extends \Ilch\Model
     /**
      * Returns the date_confirmed timestamp of the user.
      *
-     * @return Date
+     * @return Date|null
      */
-    public function getDateConfirmed(): Date
+    public function getDateConfirmed(): ?Date
     {
         return $this->dateConfirmed;
     }
@@ -599,15 +599,15 @@ class User extends \Ilch\Model
     /**
      * Returns the date_LastActivity timestamp of the user.
      *
-     * @return Date
+     * @return Date|null
      */
-    public function getDateLastActivity(): Date
+    public function getDateLastActivity(): ?Date
     {
         return $this->dateLastActivity;
     }
 
     /**
-     * Saves the date_LastActivity timestamp of the user.
+     * Saves the date_LastActivity \Ilch\Date of the user.
      *
      * @param Date $dateLastActivity
      * @return User
@@ -810,9 +810,9 @@ class User extends \Ilch\Model
     /**
      * Returns the selectsdelete \Ilch\Date of the user.
      *
-     * @return Date
+     * @return Date|null
      */
-    public function getSelectsDelete(): Date
+    public function getSelectsDelete(): ?Date
     {
         return $this->selectsdelete;
     }
@@ -852,7 +852,7 @@ class User extends \Ilch\Model
      * @return bool            True if access granted, false otherwise.
      *
      * @todo Remove from user model and create acl class
-     * @todo refactor -> kein Abhängigkeiten zu anderen Klassen, die keine Models sind
+     * @todo refactor -> no dependencies on other classes that are not Models
      */
     public function hasAccess(string $key, bool $isInAdmin = true): bool
     {

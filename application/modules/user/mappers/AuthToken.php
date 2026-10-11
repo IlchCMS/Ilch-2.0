@@ -12,7 +12,8 @@ use Modules\User\Models\AuthToken as AuthTokenModel;
 class AuthToken extends \Ilch\Mapper
 {
     /**
-     * Returns the row of the user.
+     * Returns the auth token model for the given selector or null if no token
+     * with that selector exists.
      *
      * @param string $selector
      * @return AuthTokenModel|null
@@ -37,10 +38,10 @@ class AuthToken extends \Ilch\Mapper
     }
 
     /**
-     * Adds a new authToken to the database.
+     * Adds a new auth token to the database.
      *
      * @param AuthTokenModel $authToken
-     * @return int
+     * @return int Insert id of the new auth token row
      */
     public function addAuthToken($authToken)
     {
@@ -51,10 +52,10 @@ class AuthToken extends \Ilch\Mapper
     }
 
     /**
-     * Updates the authToken in the database.
+     * Updates the auth token in the database.
      *
-     * @param string Modules\User\Models\AuthToken
-     * @return \Ilch\Database\Mysql\Result|int number of changed rows
+     * @param AuthTokenModel $authToken
+     * @return int Number of changed rows
      */
     public function updateAuthToken($authToken)
     {
@@ -66,10 +67,10 @@ class AuthToken extends \Ilch\Mapper
     }
 
     /**
-     * Delete the authToken in the database.
+     * Deletes the auth token with the given selector from the database.
      *
      * @param string $selector
-     * @return \Ilch\Database\Mysql\Result|int number of deleted rows
+     * @return int Number of deleted rows
      */
     public function deleteAuthToken($selector)
     {
@@ -80,10 +81,10 @@ class AuthToken extends \Ilch\Mapper
     }
 
     /**
-     * Delete all authToken of a user in the database.
+     * Deletes all auth tokens of a user from the database.
      *
      * @param int $userid
-     * @return \Ilch\Database\Mysql\Result|int number of deleted rows
+     * @return int Number of deleted rows
      */
     public function deleteAllAuthTokenOfUser($userid)
     {
@@ -94,9 +95,9 @@ class AuthToken extends \Ilch\Mapper
     }
 
     /**
-     * Delete all expired authTokens in the database.
+     * Deletes all expired auth tokens from the database.
      *
-     * @return \Ilch\Database\Mysql\Result|int number of deleted rows
+     * @return int Number of deleted rows
      */
     public function deleteExpiredAuthTokens()
     {
