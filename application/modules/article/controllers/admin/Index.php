@@ -210,7 +210,7 @@ class Index extends \Ilch\Controller\Admin
                     ->to(['action' => 'index']);
             }
 
-            $groups = explode(',', $article->getReadAccess());
+            $groups = explode(',', $article->getReadAccess() ?? '');
         } else {
             $groups = [1,2,3];
         }
