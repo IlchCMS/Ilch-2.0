@@ -142,11 +142,7 @@ class Menu extends \Ilch\Controller\Admin
                     $sort = 0;
 
                     foreach ($sortArray as $id => $parent) {
-                        $menuItem = new MenuItem();
-                        $menuItem->setId($id);
-                        $menuItem->setSort($sort);
-                        $menuItem->setParentId($parent);
-                        $menuMapper->saveItem($menuItem);
+                        $menuMapper->setSortAndParentId((int)$id, $sort, (int)$parent);
                         $sort += 10;
                     }
                 }

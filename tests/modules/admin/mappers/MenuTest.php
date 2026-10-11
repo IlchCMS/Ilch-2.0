@@ -258,6 +258,70 @@ class MenuTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that setSortAndParentId() updates the parent id of an existing item without touching the other fields.
+     */
+    public function testSetSortAndParentId()
+    {
+        // Item 3 is a root item (parent_id 0) of menu 1.
+        $this->out->setSortAndParentId(3, 50, 1);
+
+        $items = $this->out->getMenuItems(1);
+        self::assertCount(4, $items);
+
+        $updated = null;
+        foreach ($items as $candidate) {
+            if ($candidate->getId() === 3) {
+                $updated = $candidate;
+            }
+        }
+
+        self::assertNotNull($updated);
+        self::assertEquals(1, $updated->getParentId());
+
+        // Only sort and parent_id are written, all other fields remain unchanged.
+        self::assertEquals('Language selection', $updated->getTitle());
+        self::assertEquals(4, $updated->getType());
+        self::assertEquals(7, $updated->getBoxId());
+        self::assertEquals('1,2,3', $updated->getAccess());
+
+        // Items of the other menu are untouched.
+        self::assertCount(1, $this->out->getMenuItems(2));
+    }
+
+    /**
+     * Tests that setSortAndParentId() changes the order of items returned by getMenuItems().
+     */
+    public function testSetSortAndParentIdChangesOrder()
+    {
+        // Item 3 has sort 3 (third of four items), move it to the top.
+        $this->out->setSortAndParentId(3, 0, 0);
+
+        $items = $this->out->getMenuItems(1);
+
+        self::assertCount(4, $items);
+        self::assertEquals(3, $items[0]->getId());
+        self::assertEquals(1, $items[1]->getId());
+        self::assertEquals(2, $items[2]->getId());
+        self::assertEquals(5, $items[3]->getId());
+    }
+
+    /**
+     * Tests that setSortAndParentId() on a non-existent id does not throw and changes nothing.
+     */
+    public function testSetSortAndParentIdNotFound()
+    {
+        $this->out->setSortAndParentId(999, 0, 0);
+
+        // The default order is untouched.
+        $items = $this->out->getMenuItems(1);
+        self::assertCount(4, $items);
+        self::assertEquals(1, $items[0]->getId());
+        self::assertEquals(2, $items[1]->getId());
+        self::assertEquals(3, $items[2]->getId());
+        self::assertEquals(5, $items[3]->getId());
+    }
+
+    /**
      * Tests that getLastMenuId() returns the highest menu id.
      */
     public function testGetLastMenuId()

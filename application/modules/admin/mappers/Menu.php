@@ -174,6 +174,22 @@ class Menu extends Mapper
     }
 
     /**
+     * Sets the sort order and parent id of an existing menu item.
+     *
+     * @param int $itemId
+     * @param int $sort
+     * @param int $parentId
+     * @since 2.2.21
+     */
+    public function setSortAndParentId(int $itemId, int $sort, int $parentId): void
+    {
+        $this->db()->update('menu_items')
+            ->values(['sort' => $sort, 'parent_id' => $parentId])
+            ->where(['id' => $itemId])
+            ->execute();
+    }
+
+    /**
      * Gets the last menu id.
      *
      * @return string|null
