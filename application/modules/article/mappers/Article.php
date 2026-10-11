@@ -20,7 +20,7 @@ class Article extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return ArticleModel[]|array
      */
-    public function getArticles(string $locale = '', \Ilch\Pagination $pagination = null): ?array
+    public function getArticles(string $locale = '', ?\Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
@@ -111,7 +111,7 @@ class Article extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return ArticleModel[]|array
      */
-    public function getArticlesByCats(int $catId, string $locale = '', \Ilch\Pagination $pagination = null): ?array
+    public function getArticlesByCats(int $catId, string $locale = '', ?\Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
@@ -201,7 +201,7 @@ class Article extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return ArticleModel[]|array
      */
-    public function getArticlesByKeyword(string $keyword, string $locale = '', \Ilch\Pagination $pagination = null): ?array
+    public function getArticlesByKeyword(string $keyword, string $locale = '', ?\Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'p.commentsDisabled'])
@@ -291,7 +291,7 @@ class Article extends \Ilch\Mapper
      * @param string $locale
      * @return ArticleModel[]|array
      */
-    public function getArticlesByDate(\DateTime $date, \Ilch\Pagination $pagination = null, string $locale = ''): ?array
+    public function getArticlesByDate(\DateTime $date, ?\Ilch\Pagination $pagination = null, string $locale = ''): ?array
     {
         $db = $this->db();
 
@@ -433,7 +433,7 @@ class Article extends \Ilch\Mapper
      * @return int
      * @throws \Ilch\Database\Exception
      */
-    public function getCountArticlesByMonthYear(string $date = null): int
+    public function getCountArticlesByMonthYear(?string $date = null): int
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_articles`';
@@ -487,7 +487,7 @@ class Article extends \Ilch\Mapper
      * @throws \Ilch\Database\Exception
      * @todo: Remove the group (aggregate) function MAX() workaround, which avoids duplicated entries in the archive-box if possible.
      */
-    public function getArticleDateList(int $limit = null): array
+    public function getArticleDateList(?int $limit = null): array
     {
         $sql = 'SELECT MAX(`date_created`) AS `date_created`
                 FROM `[prefix]_articles`
@@ -570,7 +570,7 @@ class Article extends \Ilch\Mapper
      * @param int|null $limit
      * @return ArticleModel[]|null
      */
-    public function getArticleList(string $locale = '', int $limit = null): ?array
+    public function getArticleList(string $locale = '', ?int $limit = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['p.id', 'p.cat_id', 'p.date_created'])
@@ -677,7 +677,7 @@ class Article extends \Ilch\Mapper
      * @param int|null $limit
      * @return ArticleModel[]|array
      */
-    public function getKeywordsList(int $limit = null): array
+    public function getKeywordsList(?int $limit = null): array
     {
         $sql = $this->db()->select('keywords')
             ->from('articles_content');
