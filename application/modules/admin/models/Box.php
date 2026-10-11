@@ -11,59 +11,43 @@ class Box extends \Ilch\Model
 {
     /**
      * The id of the box.
-     *
-     * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The key of the box.
-     *
-     * @var string
      */
-    protected $key = '';
+    protected string $key = '';
 
     /**
      * The module of the box.
-     *
-     * @var string
      */
-    protected $module = '';
+    protected string $module = '';
 
     /**
      * The name of the box.
-     *
-     * @var string
      */
-    protected $name = '';
+    protected string $name = '';
 
     /**
      * The title of the box.
-     *
-     * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * The content of the box.
-     *
-     * @var array|string
      */
-    protected $content = null;
+    protected array|string|null $content = null;
 
     /**
      * The locale of the box.
-     *
-     * @var string
      */
-    protected $locale = '';
+    protected string $locale = '';
 
     /**
      * The datetime when the box got created.
-     *
-     * @var string
      */
-    protected $dateCreated = '';
+    protected string $dateCreated = '';
 
     /**
      * Sets Model by Array.
@@ -71,7 +55,7 @@ class Box extends \Ilch\Model
      * @param array $entries
      * @return $this
      */
-    public function setByArray($entries): Box
+    public function setByArray(array $entries): Box
     {
         if (isset($entries['box_id'])) {
             $this->setId($entries['box_id']);
@@ -219,9 +203,9 @@ class Box extends \Ilch\Model
     /**
      * Gets the content of the box.
      *
-     * @return array|string
+     * @return array|string|null
      */
-    public function getContent()
+    public function getContent(): array|string|null
     {
         return $this->content;
     }
@@ -229,10 +213,10 @@ class Box extends \Ilch\Model
     /**
      * Sets the content of the box.
      *
-     * @param array|string $content
+     * @param array|string|null $content
      * @return $this
      */
-    public function setContent($content): Box
+    public function setContent(array|string|null $content): Box
     {
         $this->content = $content;
 
@@ -291,8 +275,12 @@ class Box extends \Ilch\Model
      * @param string $langKey
      * @param string|array $content
      */
-    public function addContent(string $langKey, $content)
+    public function addContent(string $langKey, string|array $content): void
     {
+        if (!is_array($this->content)) {
+            $this->content = [];
+        }
+
         $this->content[$langKey] = $content;
     }
 
@@ -302,7 +290,7 @@ class Box extends \Ilch\Model
      * @param bool $withId
      * @return array
      */
-    public function getArray(bool $withId = true)
+    public function getArray(bool $withId = true): array
     {
         return array_merge(
             ($withId && $this->getId() ? ['box_id' => $this->getId()] : []),

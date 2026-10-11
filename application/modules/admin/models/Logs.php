@@ -7,35 +7,33 @@
 
 namespace Modules\Admin\Models;
 
+use DateTime;
+
 class Logs extends \Ilch\Model
 {
     /**
      * The user id of the log.
-     *
-     * @var int
      */
-    protected $userId;
+    protected ?int $userId = null;
 
     /**
-     * The datetime of the log.
-     *
-     * @var DateTime
+     * The date of the log.
+     * Mappers store the database value, i.e. a datetime string,
+     * but a DateTime object may be passed as well.
      */
-    protected $date;
+    protected DateTime|string|null $date = null;
 
     /**
      * The info of the log.
-     *
-     * @var string
      */
-    protected $info;
+    protected ?string $info = null;
 
     /**
      * Gets the user id of the log.
      *
-     * @return int
+     * @return int|null
      */
-    public function getUserId()
+    public function getUserId(): ?int
     {
         return $this->userId;
     }
@@ -43,29 +41,29 @@ class Logs extends \Ilch\Model
     /**
      * Sets the user id of the log.
      *
-     * @param int $userId
+     * @param int|float|string $userId
      */
-    public function setUserId($userId)
+    public function setUserId(int|float|string $userId): void
     {
         $this->userId = (int) $userId;
     }
 
     /**
-     * Gets the date timestamp of the log.
+     * Gets the date of the log.
      *
-     * @return DateTime
+     * @return DateTime|string|null
      */
-    public function getDate()
+    public function getDate(): DateTime|string|null
     {
         return $this->date;
     }
 
     /**
-     * Sets the date timestamp of the log.
+     * Sets the date of the log.
      *
-     * @param DateTime $date
+     * @param DateTime|string $date
      */
-    public function setDate($date)
+    public function setDate(DateTime|string $date): void
     {
         $this->date = $date;
     }
@@ -73,9 +71,9 @@ class Logs extends \Ilch\Model
     /**
      * Gets the info of the log.
      *
-     * @return string
+     * @return string|null
      */
-    public function getInfo()
+    public function getInfo(): ?string
     {
         return $this->info;
     }
@@ -85,8 +83,8 @@ class Logs extends \Ilch\Model
      *
      * @param string $info
      */
-    public function setInfo($info)
+    public function setInfo(string $info): void
     {
-        $this->info = (string) $info;
+        $this->info = $info;
     }
 }

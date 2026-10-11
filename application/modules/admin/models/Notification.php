@@ -11,53 +11,42 @@ class Notification extends \Ilch\Model
 {
     /**
      * The id of the notification.
-     *
-     * @var int
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The timestamp of the notification.
-     *
-     * @var int
+     * Stored as given (int, e.g. from time(), or string, e.g. from the database).
      */
-    protected $timestamp;
+    protected int|string|null $timestamp = null;
 
     /**
      * The module for which the notification is for.
-     *
-     * @var string
      */
-    protected $module;
+    protected ?string $module = null;
 
     /**
      * The message of the notification.
-     *
-     * @var string
      */
-    protected $message;
+    protected ?string $message = null;
 
     /**
      * The url of the notification.
-     *
-     * @var string
      */
-    protected $url;
+    protected ?string $url = null;
 
     /**
      * The type of the notification. This can be used to mark a notification as
      * a specific one e.g. "adminModuleUpdatesAvailable"
-     *
-     * @var string
      */
-    protected $type;
+    protected ?string $type = null;
 
     /**
      * Get the id of the notification
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -65,9 +54,9 @@ class Notification extends \Ilch\Model
     /**
      * Set the id of the notification
      *
-     * @param int $id
+     * @param int|float|string $id
      */
-    public function setId($id)
+    public function setId(int|float|string $id): void
     {
         $this->id = (int) $id;
     }
@@ -75,8 +64,9 @@ class Notification extends \Ilch\Model
     /**
      * Get the timestamp of the notification
      *
+     * @return int|string|null
      */
-    public function getTimestamp()
+    public function getTimestamp(): int|string|null
     {
         return $this->timestamp;
     }
@@ -84,9 +74,9 @@ class Notification extends \Ilch\Model
     /**
      * Set the timestamp of the notification
      *
-     * @param string $timestamp
+     * @param int|string $timestamp
      */
-    public function setTimestamp($timestamp)
+    public function setTimestamp(int|string $timestamp): void
     {
         $this->timestamp = $timestamp;
     }
@@ -94,9 +84,9 @@ class Notification extends \Ilch\Model
     /**
      * Gets the module for which the notification is for.
      *
-     * @return string
+     * @return string|null
      */
-    public function getModule()
+    public function getModule(): ?string
     {
         return $this->module;
     }
@@ -106,7 +96,7 @@ class Notification extends \Ilch\Model
      *
      * @param string $module
      */
-    public function setModule($module)
+    public function setModule(string $module): void
     {
         $this->module = $module;
     }
@@ -114,9 +104,9 @@ class Notification extends \Ilch\Model
     /**
      * Gets the message of the notification.
      *
-     * @return string
+     * @return string|null
      */
-    public function getMessage()
+    public function getMessage(): ?string
     {
         return $this->message;
     }
@@ -126,7 +116,7 @@ class Notification extends \Ilch\Model
      *
      * @param string $message
      */
-    public function setMessage($message)
+    public function setMessage(string $message): void
     {
         $this->message = $message;
     }
@@ -134,9 +124,9 @@ class Notification extends \Ilch\Model
     /**
      * Gets the url of the notification.
      *
-     * @return string
+     * @return string|null
      */
-    public function getURL()
+    public function getURL(): ?string
     {
         return $this->url;
     }
@@ -146,7 +136,7 @@ class Notification extends \Ilch\Model
      *
      * @param string $url
      */
-    public function setURL($url)
+    public function setURL(string $url): void
     {
         $this->url = $url;
     }
@@ -154,9 +144,9 @@ class Notification extends \Ilch\Model
     /**
      * Gets the type of the notification.
      *
-     * @return string
+     * @return string|null
      */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -166,7 +156,7 @@ class Notification extends \Ilch\Model
      *
      * @param string $type
      */
-    public function setType($type)
+    public function setType(string $type): void
     {
         $this->type = $type;
     }

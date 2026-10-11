@@ -11,38 +11,30 @@ class Updateserver extends \Ilch\Model
 {
     /**
      * The id of the updateserver.
-     *
-     * @var int
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The url of the updateserver.
-     *
-     * @var string
      */
-    protected $url;
+    protected ?string $url = null;
 
     /**
      * The operator of the updateserver.
-     *
-     * @var string
      */
-    protected $operator;
+    protected ?string $operator = null;
 
     /**
      * The country in which the updateserver is located.
-     *
-     * @var string
      */
-    protected $country;
+    protected ?string $country = null;
 
     /**
      * Get the id of the updateserver.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -50,9 +42,9 @@ class Updateserver extends \Ilch\Model
     /**
      * Set the id of the updateserver.
      *
-     * @param int $id
+     * @param int|float|string $id
      */
-    public function setId($id)
+    public function setId(int|float|string $id): void
     {
         $this->id = (int) $id;
     }
@@ -60,9 +52,9 @@ class Updateserver extends \Ilch\Model
     /**
      * Gets the url of the updateserver.
      *
-     * @return string
+     * @return string|null
      */
-    public function getURL()
+    public function getURL(): ?string
     {
         return $this->url;
     }
@@ -72,7 +64,7 @@ class Updateserver extends \Ilch\Model
      *
      * @param string $url
      */
-    public function setURL($url)
+    public function setURL(string $url): void
     {
         $this->url = $url;
     }
@@ -80,9 +72,9 @@ class Updateserver extends \Ilch\Model
     /**
      * Gets the operator of the updateserver.
      *
-     * @return string
+     * @return string|null
      */
-    public function getOperator()
+    public function getOperator(): ?string
     {
         return $this->operator;
     }
@@ -92,7 +84,7 @@ class Updateserver extends \Ilch\Model
      *
      * @param string $operator
      */
-    public function setOperator($operator)
+    public function setOperator(string $operator): void
     {
         $this->operator = $operator;
     }
@@ -100,9 +92,9 @@ class Updateserver extends \Ilch\Model
     /**
      * Gets the country in which the updateserver is located.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCountry()
+    public function getCountry(): ?string
     {
         return $this->country;
     }
@@ -112,7 +104,7 @@ class Updateserver extends \Ilch\Model
      *
      * @param string $country
      */
-    public function setCountry($country)
+    public function setCountry(string $country): void
     {
         $this->country = $country;
     }

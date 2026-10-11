@@ -11,45 +11,35 @@ class Emails extends \Ilch\Model
 {
     /**
      * The module key of the emails.
-     *
-     * @var string
      */
-    protected $moduleKey;
+    protected ?string $moduleKey = null;
 
     /**
      * The type of the emails.
-     *
-     * @var string
      */
-    protected $type;
+    protected ?string $type = null;
 
     /**
      * The desc of the emails.
-     *
-     * @var string
      */
-    protected $desc;
+    protected ?string $desc = null;
 
     /**
      * The text of the emails.
-     *
-     * @var string
      */
-    protected $text;
+    protected ?string $text = null;
 
     /**
      * The locale of the emails.
-     *
-     * @var string
      */
-    protected $locale;
+    protected ?string $locale = null;
 
     /**
      * Gets the module key of the emails.
      *
-     * @return string
+     * @return string|null
      */
-    public function getModuleKey()
+    public function getModuleKey(): ?string
     {
         return $this->moduleKey;
     }
@@ -57,12 +47,12 @@ class Emails extends \Ilch\Model
     /**
      * Sets the module key of the emails.
      *
-     * @param int $moduleKey
+     * @param string $moduleKey
      * @return $this
      */
-    public function setModuleKey($moduleKey)
+    public function setModuleKey(string $moduleKey): Emails
     {
-        $this->moduleKey = (string)$moduleKey;
+        $this->moduleKey = $moduleKey;
 
         return $this;
     }
@@ -70,9 +60,9 @@ class Emails extends \Ilch\Model
     /**
      * Gets the type of the emails.
      *
-     * @return string
+     * @return string|null
      */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -83,19 +73,19 @@ class Emails extends \Ilch\Model
      * @param string $type
      * @return $this
      */
-    public function setType($type)
+    public function setType(string $type): Emails
     {
-        $this->type = (string)$type;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
      * Gets the desc of the emails.
-     **
-     * @return string
+     *
+     * @return string|null
      */
-    public function getDesc()
+    public function getDesc(): ?string
     {
         return $this->desc;
     }
@@ -106,19 +96,19 @@ class Emails extends \Ilch\Model
      * @param string $desc
      * @return $this
      */
-    public function setDesc($desc)
+    public function setDesc(string $desc): Emails
     {
-        $this->desc = (string)$desc;
+        $this->desc = $desc;
 
         return $this;
     }
 
     /**
      * Gets the text of the emails.
-     **
-     * @return string
+     *
+     * @return string|null
      */
-    public function getText()
+    public function getText(): ?string
     {
         return $this->text;
     }
@@ -129,19 +119,19 @@ class Emails extends \Ilch\Model
      * @param string $text
      * @return $this
      */
-    public function setText($text)
+    public function setText(string $text): Emails
     {
-        $this->text = (string)$text;
+        $this->text = $text;
 
         return $this;
     }
 
     /**
      * Gets the locale of the emails.
-     **
-     * @return string
+     *
+     * @return string|null
      */
-    public function getLocale()
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
@@ -152,9 +142,9 @@ class Emails extends \Ilch\Model
      * @param string $locale
      * @return $this
      */
-    public function setLocale($locale)
+    public function setLocale(string $locale): Emails
     {
-        $this->locale = (string)$locale;
+        $this->locale = $locale;
 
         return $this;
     }

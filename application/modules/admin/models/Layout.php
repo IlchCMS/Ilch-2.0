@@ -11,81 +11,60 @@ class Layout extends \Ilch\Model
 {
     /**
      * Key of the layout.
-     *
-     * @var string
      */
-    protected $key;
+    protected ?string $key = null;
 
     /**
      * Name of the layout.
-     *
-     * @var string
      */
-    protected $name;
+    protected ?string $name = null;
 
     /**
      * Version of the layout.
-     *
-     * @var string
      */
-    protected $version;
+    protected ?string $version = null;
 
     /**
      * Author of the layout.
-     *
-     * @var string
      */
-    protected $author;
+    protected ?string $author = null;
 
     /**
      * Link of the layout.
-     *
-     * @var string
      */
-    protected $link;
+    protected ?string $link = null;
 
     /**
      * Ilch official label of the layout.
-     *
-     * @var bool
      */
-    protected $official;
+    protected ?bool $official = null;
 
     /**
      * Description of the layout.
-     *
-     * @var string
      */
-    protected $desc;
+    protected ?string $desc = null;
 
     /**
      * Module of the layout.
-     *
-     * @var string
      */
-    protected $modulekey;
+    protected ?string $modulekey = null;
 
     /**
      * Settings of the layout.
-     *
-     * @var array
      */
-    protected $settings;
-
+    protected ?array $settings = null;
 
     /**
      * The required ilch version if needed.
-     *
-     * @var string
      */
-    protected $ilchCore;
+    protected ?string $ilchCore = null;
 
     /**
      * Gets the key.
      *
-     * @return string
+     * @return string|null
      */
-    public function getKey()
+    public function getKey(): ?string
     {
         return $this->key;
     }
@@ -95,17 +74,17 @@ class Layout extends \Ilch\Model
      *
      * @param string $key
      */
-    public function setKey($key)
+    public function setKey(string $key): void
     {
-        $this->key = (string)$key;
+        $this->key = $key;
     }
 
     /**
      * Gets the name.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -115,17 +94,17 @@ class Layout extends \Ilch\Model
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
-        $this->name = (string)$name;
+        $this->name = $name;
     }
 
     /**
      * Gets the version.
      *
-     * @return string
+     * @return string|null
      */
-    public function getVersion()
+    public function getVersion(): ?string
     {
         return $this->version;
     }
@@ -135,17 +114,17 @@ class Layout extends \Ilch\Model
      *
      * @param string $version
      */
-    public function setVersion($version)
+    public function setVersion(string $version): void
     {
-        $this->version = (string)$version;
+        $this->version = $version;
     }
 
     /**
      * Gets the author.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAuthor()
+    public function getAuthor(): ?string
     {
         return $this->author;
     }
@@ -155,17 +134,17 @@ class Layout extends \Ilch\Model
      *
      * @param string $author
      */
-    public function setAuthor($author)
+    public function setAuthor(string $author): void
     {
-        $this->author = (string)$author;
+        $this->author = $author;
     }
 
     /**
      * Gets the link.
      *
-     * @return string
+     * @return string|null
      */
-    public function getLink()
+    public function getLink(): ?string
     {
         return $this->link;
     }
@@ -175,17 +154,17 @@ class Layout extends \Ilch\Model
      *
      * @param string $link
      */
-    public function setLink($link)
+    public function setLink(string $link): void
     {
-        $this->link = (string)$link;
+        $this->link = $link;
     }
 
     /**
      * Gets the official flag.
      *
-     * @return bool
+     * @return bool|null
      */
-    public function getOfficial()
+    public function getOfficial(): ?bool
     {
         return $this->official;
     }
@@ -195,37 +174,37 @@ class Layout extends \Ilch\Model
      *
      * @param bool $official
      */
-    public function setOfficial($official)
+    public function setOfficial(bool $official): void
     {
-        $this->official = (bool)$official;
+        $this->official = $official;
     }
 
     /**
      * Gets the desc.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDesc()
+    public function getDesc(): ?string
     {
         return $this->desc;
     }
 
     /**
-     * Sets the author.
+     * Sets the desc.
      *
      * @param string $desc
      */
-    public function setDesc($desc)
+    public function setDesc(string $desc): void
     {
-        $this->desc = (string)$desc;
+        $this->desc = $desc;
     }
 
     /**
      * Gets the modulekey.
      *
-     * @return string
+     * @return string|null
      */
-    public function getModulekey()
+    public function getModulekey(): ?string
     {
         return $this->modulekey;
     }
@@ -235,17 +214,17 @@ class Layout extends \Ilch\Model
      *
      * @param string $modulekey
      */
-    public function setModulekey($modulekey)
+    public function setModulekey(string $modulekey): void
     {
-        $this->modulekey = (string)$modulekey;
+        $this->modulekey = $modulekey;
     }
 
     /**
      * Get the settings.
      *
-     * @return array
+     * @return array|null
      */
-    public function getSettings()
+    public function getSettings(): ?array
     {
         return $this->settings;
     }
@@ -254,20 +233,21 @@ class Layout extends \Ilch\Model
      * Set the settings.
      *
      * @param array $settings
-     * @return Layout
+     * @return $this
      */
-    public function setSettings($settings)
+    public function setSettings(array $settings): Layout
     {
         $this->settings = $settings;
+
         return $this;
     }
 
     /**
      * Get the required ilch version if needed.
      *
-     * @return string
+     * @return string|null
      */
-    public function getIlchCore()
+    public function getIlchCore(): ?string
     {
         return $this->ilchCore;
     }
@@ -276,11 +256,12 @@ class Layout extends \Ilch\Model
      * Set the required ilch version if needed.
      *
      * @param string $ilchCore
-     * @return Layout
+     * @return $this
      */
-    public function setIlchCore($ilchCore)
+    public function setIlchCore(string $ilchCore): Layout
     {
         $this->ilchCore = $ilchCore;
+
         return $this;
     }
 }

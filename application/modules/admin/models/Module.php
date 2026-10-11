@@ -12,9 +12,9 @@ class Module extends \Ilch\Model
     /**
      * Language Content of the module.
      *
-     * @var string|array
+     * @var array
      */
-    protected $content = [];
+    protected array $content = [];
 
     /**
      * Key of the module.
@@ -311,7 +311,7 @@ class Module extends \Ilch\Model
      * @param string|array $content
      * @return $this
      */
-    public function addContent(string $langKey, $content): Module
+    public function addContent(string $langKey, string|array $content): Module
     {
         $this->content[$langKey] = $content;
         return $this;
@@ -320,9 +320,10 @@ class Module extends \Ilch\Model
     /**
      * Gets content for given language.
      *
-     * @return string|null|array
+     * @param string $langKey
+     * @return string|array|null
      */
-    public function getContentForLocale($langKey)
+    public function getContentForLocale(string $langKey): string|array|null
     {
         if (!isset($this->content[$langKey])) {
             return null;
@@ -334,9 +335,9 @@ class Module extends \Ilch\Model
     /**
      * Gets all content.
      *
-     * @return array|string
+     * @return array
      */
-    public function getContent()
+    public function getContent(): array
     {
         return $this->content;
     }
@@ -530,7 +531,6 @@ class Module extends \Ilch\Model
         $this->depends = $depends;
         return $this;
     }
-
 
     /**
      * Gets the dependencies.
