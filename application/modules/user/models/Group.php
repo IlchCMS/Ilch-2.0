@@ -14,14 +14,14 @@ class Group extends \Ilch\Mapper
      *
      * @var int
      */
-    private $id = 0;
+    private int $id = 0;
 
     /**
      * The name of the user group.
      *
      * @var string
      */
-    private $name = '';
+    private string $name = '';
 
     /**
      * Set this Model by Array

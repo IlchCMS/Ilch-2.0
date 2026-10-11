@@ -15,35 +15,35 @@ class NotificationPermission extends \Ilch\Model
      *
      * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The user id for which the permission is for.
      *
      * @var int|null
      */
-    protected $userId;
+    protected ?int $userId = null;
 
     /**
      * The module for which the notification is for.
      *
      * @var string|null
      */
-    protected $module;
+    protected ?string $module = null;
 
     /**
      * The type of the notification.
      *
      * @var string|null
      */
-    protected $type;
+    protected ?string $type = null;
 
     /**
      * The module is (not) allowed to issue notifications.
      *
      * @var bool|null
      */
-    protected $granted;
+    protected ?bool $granted = null;
 
     /**
      * Get the ID of the notification permission.

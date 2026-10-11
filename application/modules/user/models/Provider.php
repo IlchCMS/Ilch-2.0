@@ -68,7 +68,7 @@ class Provider extends \Ilch\Model
      *
      * @param array $params
      */
-    public function __construct($params = [])
+    public function __construct(array $params = [])
     {
         //
     }

@@ -199,7 +199,7 @@ class ProfileField extends Model
     /**
      * Returns the options of the profile-field.
      *
-     * @return string
+     * @return string|null
      * @since 2.1.50
      */
     public function getOptions(): ?string

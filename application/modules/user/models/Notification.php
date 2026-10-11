@@ -15,42 +15,42 @@ class Notification extends \Ilch\Model
      *
      * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The timestamp of the notification.
      *
      * @var string|null
      */
-    protected $timestamp;
+    protected ?string $timestamp = null;
 
     /**
      * The user id or the recipient associated with the notification.
      *
      * @var int|null
      */
-    protected $userId;
+    protected ?int $userId = null;
 
     /**
      * The module for which the notification is for.
      *
      * @var string|null
      */
-    protected $module;
+    protected ?string $module = null;
 
     /**
      * The message of the notification.
      *
      * @var string|null
      */
-    protected $message;
+    protected ?string $message = null;
 
     /**
      * The url of the notification.
      *
      * @var string|null
      */
-    protected $url;
+    protected ?string $url = null;
 
     /**
      * The type of the notification. This can be used to mark a notification as
@@ -58,7 +58,7 @@ class Notification extends \Ilch\Model
      *
      * @var string|null
      */
-    protected $type;
+    protected ?string $type = null;
 
     /**
      * Get the id of the notification

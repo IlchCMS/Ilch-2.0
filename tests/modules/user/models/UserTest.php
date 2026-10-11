@@ -7,7 +7,7 @@
 
 namespace Modules\User\Models;
 
-use Ilch\Request;
+use Ilch\Date;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
 use Modules\User\Config\Config as UserConfig;
@@ -21,13 +21,6 @@ use Modules\Article\Config\Config as ArticleConfig;
  */
 class UserTest extends DatabaseTestCase
 {
-    /**
-     * The object to test with.
-     *
-     * @var Request
-     */
-    protected Request $request;
-
     protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
@@ -64,7 +57,254 @@ class UserTest extends DatabaseTestCase
     {
         $user = new User();
         $user->setEmail('email');
-        self::assertEquals('email', $user->getEmail(), 'The email was not saved or returned correctly.');
+        self::assertEquals('email', $user->getEmail(), 'The email address was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the password can be set and returned again.
+     */
+    public function testSetGetPassword()
+    {
+        $user = new User();
+        $user->setPassword('password');
+        self::assertEquals('password', $user->getPassword(), 'The password was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the locale can be set and returned again.
+     */
+    public function testSetGetLocale()
+    {
+        $user = new User();
+        $user->setLocale('de_DE');
+        self::assertEquals('de_DE', $user->getLocale(), 'The locale was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the opt_mail value can be set and returned again.
+     */
+    public function testSetGetOptMail()
+    {
+        $user = new User();
+        $user->setOptMail(0);
+        self::assertEquals(0, $user->getOptMail(), 'The opt_mail value was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the opt_comments value can be set and returned again.
+     */
+    public function testSetGetOptComments()
+    {
+        $user = new User();
+        $user->setOptComments(1);
+        self::assertEquals(1, $user->getOptComments(), 'The opt_comments value was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the admin_comments value can be set and returned again.
+     */
+    public function testSetGetAdminComments()
+    {
+        $user = new User();
+        $user->setAdminComments(0);
+        self::assertEquals(0, $user->getAdminComments(), 'The admin_comments value was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the opt_gallery value can be set and returned again.
+     */
+    public function testSetGetOptGallery()
+    {
+        $user = new User();
+        $user->setOptGallery(1);
+        self::assertEquals(1, $user->getOptGallery(), 'The opt_gallery value was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the confirmed value can be set and returned again.
+     */
+    public function testSetGetConfirmed()
+    {
+        $user = new User();
+        $user->setConfirmed(0);
+        self::assertEquals(0, $user->getConfirmed(), 'The confirmed value was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the confirmed code can be set and returned again.
+     */
+    public function testSetGetConfirmedCode()
+    {
+        $user = new User();
+        $user->setConfirmedCode('123456');
+        self::assertEquals('123456', $user->getConfirmedCode(), 'The confirmed code was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the selector can be set and returned again.
+     */
+    public function testSetGetSelector()
+    {
+        $user = new User();
+        $user->setSelector('selector');
+        self::assertEquals('selector', $user->getSelector(), 'The selector was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the expires date can be set and returned again.
+     */
+    public function testSetGetExpires()
+    {
+        $user = new User();
+        $date = new Date();
+        $user->setExpires($date);
+        self::assertEquals($date, $user->getExpires(), 'The expires date was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the date created can be set and returned again.
+     */
+    public function testSetGetDateCreated()
+    {
+        $user = new User();
+        $date = new Date();
+        $user->setDateCreated($date);
+        self::assertEquals($date, $user->getDateCreated(), 'The date created was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the date confirmed can be set and returned again.
+     */
+    public function testSetGetDateConfirmed()
+    {
+        $user = new User();
+        $date = new Date();
+        $user->setDateConfirmed($date);
+        self::assertEquals($date, $user->getDateConfirmed(), 'The date confirmed was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the date last activity can be set and returned again.
+     */
+    public function testSetGetDateLastActivity()
+    {
+        $user = new User();
+        $date = new Date();
+        $user->setDateLastActivity($date);
+        self::assertEquals($date, $user->getDateLastActivity(), 'The date last activity was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the firstname can be set and returned again.
+     */
+    public function testSetGetFirstName()
+    {
+        $user = new User();
+        $user->setFirstName('Max');
+        self::assertEquals('Max', $user->getFirstName(), 'The firstname was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the lastname can be set and returned again.
+     */
+    public function testSetGetLastName()
+    {
+        $user = new User();
+        $user->setLastName('Mustermann');
+        self::assertEquals('Mustermann', $user->getLastName(), 'The lastname was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the gender can be set and returned again.
+     */
+    public function testSetGetGender()
+    {
+        $user = new User();
+        $user->setGender(1);
+        self::assertEquals(1, $user->getGender(), 'The gender was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the avatar can be set and returned again.
+     */
+    public function testSetGetAvatar()
+    {
+        $user = new User();
+        $user->setAvatar('avatar.png');
+        self::assertEquals('avatar.png', $user->getAvatar(), 'The avatar was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the signature can be set and returned again.
+     */
+    public function testSetGetSignature()
+    {
+        $user = new User();
+        $user->setSignature('signature');
+        self::assertEquals('signature', $user->getSignature(), 'The signature was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the city can be set and returned again.
+     */
+    public function testSetGetCity()
+    {
+        $user = new User();
+        $user->setCity('Berlin');
+        self::assertEquals('Berlin', $user->getCity(), 'The city was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the birthday can be set and returned again.
+     */
+    public function testSetGetBirthday()
+    {
+        $user = new User();
+        $user->setBirthday('1990-01-01');
+        self::assertEquals('1990-01-01', $user->getBirthday(), 'The birthday was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the birthday 0000-00-00 is returned as an empty string.
+     */
+    public function testGetBirthdayZeroDate()
+    {
+        $user = new User();
+        $user->setBirthday('0000-00-00');
+        self::assertSame('', $user->getBirthday(), 'The birthday "0000-00-00" was not returned as an empty string.');
+    }
+
+    /**
+     * Tests if the locked value can be set and returned again.
+     */
+    public function testSetGetLocked()
+    {
+        $user = new User();
+        $user->setLocked(1);
+        self::assertEquals(1, $user->getLocked(), 'The locked value was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the selectsdelete date can be set and returned again.
+     */
+    public function testSetGetSelectsDelete()
+    {
+        $user = new User();
+        $date = new Date();
+        $user->setSelectsDelete($date);
+        self::assertEquals($date, $user->getSelectsDelete(), 'The selectsdelete date was not saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the default values are set correctly.
+     */
+    public function testDefaultValues()
+    {
+        $user = new User();
+
+        self::assertNull($user->getId(), 'The default id is not null.');
+        self::assertEquals(0, $user->getLocked(), 'The default locked value is not 0.');
+        self::assertEquals([], $user->getGroups(), 'The default groups are not an empty array.');
     }
 
     /**
@@ -115,6 +355,38 @@ class UserTest extends DatabaseTestCase
     }
 
     /**
+     * Tests if adding an already existing group does not duplicate it.
+     */
+    public function testAddGroupIgnoresDuplicates()
+    {
+        $group1 = new Group();
+        $group1->setId(1);
+        $group1->setName('Admin');
+        $user = new User();
+        $user->addGroup($group1);
+        $user->addGroup($group1);
+
+        self::assertCount(1, $user->getGroups(), 'The same group was added twice.');
+    }
+
+    /**
+     * Tests if the setters are chainable and return the user.
+     */
+    public function testSettersReturnSelf()
+    {
+        $user = new User();
+
+        self::assertSame($user, $user->setId(1), 'setId() does not return the user.');
+        self::assertSame($user, $user->setName('username'), 'setName() does not return the user.');
+        self::assertSame($user, $user->setEmail('email@example.com'), 'setEmail() does not return the user.');
+        self::assertSame($user, $user->setPassword('password'), 'setPassword() does not return the user.');
+        self::assertSame($user, $user->setLocale('de_DE'), 'setLocale() does not return the user.');
+        self::assertSame($user, $user->setConfirmed(1), 'setConfirmed() does not return the user.');
+        self::assertSame($user, $user->setGroups([]), 'setGroups() does not return the user.');
+        self::assertSame($user, $user->addGroup(new Group()), 'addGroup() does not return the user.');
+    }
+
+    /**
      * Tests if user has the given groups.
      */
     public function testHasGroup()
@@ -140,6 +412,49 @@ class UserTest extends DatabaseTestCase
 
         $user->setGroups([]);
         self::assertFalse($user->hasGroup(2), 'The user has the group with id "2".');
+    }
+
+    /**
+     * Tests if a user with the administrator group is an admin.
+     */
+    public function testIsAdmin()
+    {
+        $user = new User();
+
+        $group = new Group();
+        $group->setId(1);
+        $group->setName('Administrator');
+
+        $user->addGroup($group);
+
+        self::assertTrue($user->isAdmin(), 'A user with group id "1" is not an admin.');
+    }
+
+    /**
+     * Tests if a user without the administrator group is not an admin.
+     */
+    public function testIsNotAdmin()
+    {
+        $user = new User();
+
+        $group = new Group();
+        $group->setId(2);
+        $group->setName('User');
+
+        $user->addGroup($group);
+
+        self::assertFalse($user->isAdmin(), 'A user without group id "1" is an admin.');
+    }
+
+    /**
+     * Tests if a user without any groups has no access.
+     */
+    public function testHasAccessWithoutGroups()
+    {
+        $user = new User();
+        $user->setId(999);
+
+        self::assertFalse($user->hasAccess('module_user'), 'A user without groups has access to the user module.');
     }
 
     /**

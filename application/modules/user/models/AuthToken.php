@@ -9,20 +9,20 @@ namespace Modules\User\Models;
 
 class AuthToken extends \Ilch\Model
 {
-    protected $selector;
+    protected ?string $selector = null;
 
-    protected $token;
+    protected ?string $token = null;
 
-    protected $userid;
+    protected ?int $userid = null;
 
-    protected $expires;
+    protected ?string $expires = null;
 
     /**
      * Returns the selector of the user.
      *
-     * @return string
+     * @return string|null
      */
-    public function getSelector()
+    public function getSelector(): ?string
     {
         return $this->selector;
     }
@@ -35,7 +35,7 @@ class AuthToken extends \Ilch\Model
      * @param string $selector
      * @return AuthToken
      */
-    public function setSelector($selector)
+    public function setSelector(string $selector): static
     {
         $this->selector = $selector;
 
@@ -46,9 +46,9 @@ class AuthToken extends \Ilch\Model
      * Returns the token of the user.
      * SHA256 hash of the authenticator.
      *
-     * @return string
+     * @return string|null
      */
-    public function getToken()
+    public function getToken(): ?string
     {
         return $this->token;
     }
@@ -61,7 +61,7 @@ class AuthToken extends \Ilch\Model
      * @param string $token
      * @return AuthToken
      */
-    public function setToken($token)
+    public function setToken(string $token): static
     {
         $this->token = $token;
 
@@ -71,9 +71,9 @@ class AuthToken extends \Ilch\Model
     /**
      * Returns the id of the user.
      *
-     * @return int
+     * @return int|null
      */
-    public function getUserid()
+    public function getUserid(): ?int
     {
         return $this->userid;
     }
@@ -84,9 +84,9 @@ class AuthToken extends \Ilch\Model
      * @param int $userid
      * @return AuthToken
      */
-    public function setUserid($userid)
+    public function setUserid(int $userid): static
     {
-        $this->userid = (int)$userid;
+        $this->userid = $userid;
 
         return $this;
     }
@@ -94,9 +94,9 @@ class AuthToken extends \Ilch\Model
     /**
      * Returns the date at which point of time the token expires.
      *
-     * @return string
+     * @return string|null
      */
-    public function getExpires()
+    public function getExpires(): ?string
     {
         return $this->expires;
     }
@@ -107,7 +107,7 @@ class AuthToken extends \Ilch\Model
      * @param string $expires
      * @return AuthToken
      */
-    public function setExpires($expires)
+    public function setExpires(string $expires): static
     {
         $this->expires = $expires;
 

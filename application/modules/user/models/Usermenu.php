@@ -12,30 +12,30 @@ class Usermenu extends \Ilch\Model
     /**
      * Id of the menu.
      *
-     * @var int
+     * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * Key of the menu.
      *
-     * @var string
+     * @var string|null
      */
-    protected $key;
+    protected ?string $key = null;
 
     /**
      * Icon of the menu.
      *
-     * @var string
+     * @var string|null
      */
-    protected $icon;
+    protected ?string $icon = null;
 
     /**
      * Position of the menu.
      *
-     * @var int
+     * @var int|null
      */
-    protected $position;
+    protected ?int $position = null;
 
     /**
      * Sets the menu id.
@@ -43,9 +43,9 @@ class Usermenu extends \Ilch\Model
      * @param int $id
      * @return Usermenu
      */
-    public function setId($id)
+    public function setId(int $id): static
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -53,9 +53,9 @@ class Usermenu extends \Ilch\Model
     /**
      * Gets the menu id.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -66,9 +66,9 @@ class Usermenu extends \Ilch\Model
      * @param string $key
      * @return Usermenu
      */
-    public function setKey($key)
+    public function setKey(string $key): static
     {
-        $this->key = (string)$key;
+        $this->key = $key;
 
         return $this;
     }
@@ -76,9 +76,9 @@ class Usermenu extends \Ilch\Model
     /**
      * Gets the menu key.
      *
-     * @return string
+     * @return string|null
      */
-    public function getKey()
+    public function getKey(): ?string
     {
         return $this->key;
     }
@@ -89,9 +89,9 @@ class Usermenu extends \Ilch\Model
      * @param string $icon
      * @return Usermenu
      */
-    public function setIcon($icon)
+    public function setIcon(string $icon): static
     {
-        $this->icon = (string)$icon;
+        $this->icon = $icon;
 
         return $this;
     }
@@ -99,9 +99,9 @@ class Usermenu extends \Ilch\Model
     /**
      * Gets the menu icon.
      *
-     * @return string
+     * @return string|null
      */
-    public function getIcon()
+    public function getIcon(): ?string
     {
         return $this->icon;
     }
@@ -112,9 +112,9 @@ class Usermenu extends \Ilch\Model
      * @param int $position
      * @return Usermenu
      */
-    public function setPosition($position)
+    public function setPosition(int $position): static
     {
-        $this->position = (int)$position;
+        $this->position = $position;
 
         return $this;
     }
@@ -122,9 +122,9 @@ class Usermenu extends \Ilch\Model
     /**
      * Gets the menu position.
      *
-     * @return int
+     * @return int|null
      */
-    public function getPosition()
+    public function getPosition(): ?int
     {
         return $this->position;
     }
