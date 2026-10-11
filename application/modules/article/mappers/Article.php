@@ -768,7 +768,7 @@ class Article extends \Ilch\Mapper
             // Normalize: split on ',' and trim, so articles that store
             // their keywords without spaces ('a,b') also match correctly.
             foreach (explode(',', (string)$articleModel->getKeywords()) as $articleKeyword) {
-                if (trim($articleKeyword) === $keyword) {
+                if (trim($articleKeyword, " \f\n\r\t\v\x00") === $keyword) {
                     return true;
                 }
             }
