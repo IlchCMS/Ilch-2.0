@@ -11,10 +11,14 @@ Check the most relevant option.
 - [ ] Breaking change
 - [ ] Documentation or non-code change
 
-## Manual verification
-GitHub Actions will run unit tests and static analysis. Describe any additional manual checks you performed.
+## Testing & verification
+GitHub Actions will run unit tests and static analysis.
 
-- [ ] No automated tests needed
+- [ ] Added new unit tests
+- [ ] No new tests needed — covered by existing tests (link or name the test)
+- [ ] No tests needed for this change (e.g., documentation)
+
+Describe any additional manual checks you performed:
 
 If this is a UI change, list the browsers you tested in:
 
