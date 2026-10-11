@@ -20,13 +20,13 @@ class Notifications extends \Ilch\Mapper
      * @param int $id
      * @return NotificationModel|null
      */
-    public function getNotificationById($id)
+    public function getNotificationById(int $id): ?NotificationModel
     {
         $result = $this->db()->select('*')
-                ->from('admin_notifications')
-                ->where(['id' => $id])
-                ->execute()
-                ->fetchAssoc();
+            ->from('admin_notifications')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($result)) {
             return null;
@@ -44,12 +44,12 @@ class Notifications extends \Ilch\Mapper
     }
 
     /**
-     * Get notifications by specified condition
+     * Gets the notifications by the specified condition.
      *
      * @param array $where
-     * @return array
+     * @return NotificationModel[]
      */
-    public function getNotificationsBy($where = [])
+    public function getNotificationsBy(array $where = []): array
     {
         $array = $this->db()->select('*')
             ->from('admin_notifications')
@@ -77,44 +77,44 @@ class Notifications extends \Ilch\Mapper
     }
 
     /**
-     * Get all notifications.
+     * Gets all notifications.
      *
-     * @return NotificationModel[]|[]
+     * @return NotificationModel[]
      */
-    public function getNotifications()
+    public function getNotifications(): array
     {
         return $this->getNotificationsBy();
     }
 
     /**
-     * Get notifications by module.
+     * Gets the notifications by module.
      *
      * @param string $module
-     * @return NotificationModel[]|[]
+     * @return NotificationModel[]
      */
-    public function getNotificationsByModule($module)
+    public function getNotificationsByModule(string $module): array
     {
         return $this->getNotificationsBy(['module' => $module]);
     }
 
     /**
-     * Get notifications by type.
+     * Gets the notifications by type.
      *
-     * @param $type
-     * @return array
+     * @param string $type
+     * @return NotificationModel[]
      */
-    public function getNotificationsByType($type)
+    public function getNotificationsByType(string $type): array
     {
         return $this->getNotificationsBy(['type' => $type]);
     }
 
     /**
-     * Check if notification is valid.
+     * Checks whether the notification is valid.
      *
      * @param NotificationModel $notification
-     * @return bool true|false
+     * @return bool
      */
-    public function isValidNotification(NotificationModel $notification)
+    public function isValidNotification(NotificationModel $notification): bool
     {
         $fields = [
             'module' => $notification->getModule(),
@@ -132,12 +132,12 @@ class Notifications extends \Ilch\Mapper
     }
 
     /**
-     * Add a notification.
+     * Adds a notification.
      *
      * @param NotificationModel $notification
      * @return int
      */
-    public function addNotification(NotificationModel $notification)
+    public function addNotification(NotificationModel $notification): int
     {
         if (!$this->isValidNotification($notification)) {
             return 0;
@@ -180,12 +180,12 @@ class Notifications extends \Ilch\Mapper
     }
 
     /**
-     * Update a notification (module, message, url, type).
+     * Updates a notification (module, message, url, type).
      *
      * @param NotificationModel $notification
      * @return int
      */
-    public function updateNotificationById(NotificationModel $notification)
+    public function updateNotificationById(NotificationModel $notification): int
     {
         if (!$this->isValidNotification($notification)) {
             return 0;
@@ -205,11 +205,11 @@ class Notifications extends \Ilch\Mapper
     }
 
     /**
-     * Delete a notification by id.
+     * Deletes a notification by id.
      *
      * @param int $id
      */
-    public function deleteNotificationById($id)
+    public function deleteNotificationById(int $id): void
     {
         $this->db()->delete('admin_notifications')
             ->where(['id' => $id])
@@ -217,11 +217,11 @@ class Notifications extends \Ilch\Mapper
     }
 
     /**
-     * Delete notifications by module.
+     * Deletes the notifications by module.
      *
      * @param string $module
      */
-    public function deleteNotificationsByModule($module)
+    public function deleteNotificationsByModule(string $module): void
     {
         $this->db()->delete('admin_notifications')
             ->where(['module' => $module])
@@ -229,11 +229,11 @@ class Notifications extends \Ilch\Mapper
     }
 
     /**
-     * Delete notifications by type.
+     * Deletes the notifications by type.
      *
      * @param string $type
      */
-    public function deleteNotificationsByType($type)
+    public function deleteNotificationsByType(string $type): void
     {
         $this->db()->delete('admin_notifications')
             ->where(['type' => $type])
@@ -241,10 +241,9 @@ class Notifications extends \Ilch\Mapper
     }
 
     /**
-     * Delete all notifications by truncating the table.
-     *
+     * Deletes all notifications by truncating the table.
      */
-    public function deleteAllNotifications()
+    public function deleteAllNotifications(): void
     {
         $this->db()->truncate('[prefix]_admin_notifications');
     }

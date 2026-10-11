@@ -12,7 +12,7 @@ use Modules\Admin\Models\Infos as InfosModel;
 class Infos extends \Ilch\Mapper
 {
     /**
-     * Gets all modules folder rights.
+     * Gets all module folder rights.
      *
      * @param array $where
      * @return InfosModel[]|null
@@ -40,9 +40,8 @@ class Infos extends \Ilch\Mapper
         return $module;
     }
 
-
     /**
-     * Get modules folder rights by given key.
+     * Gets the module folder rights for the given key.
      *
      * @param string $key
      * @return InfosModel[]|null
@@ -54,12 +53,12 @@ class Infos extends \Ilch\Mapper
     }
 
     /**
-     * save modules folder rights by given key.
+     * Saves the module folder rights for the given key.
      * This can be entered with an entry in the module configuration file with 'folderRights'.
      *
      * @param string $key
      * @param array $folders
-     * @return $this
+     * @return Infos
      * @since 2.2.8
      */
     public function saveModulesFolderRights(string $key, array $folders): Infos
@@ -81,7 +80,7 @@ class Infos extends \Ilch\Mapper
     }
 
     /**
-     * Gets all modules php extensions.
+     * Gets all module PHP extensions.
      *
      * @param array $where
      * @return InfosModel[]|null
@@ -109,9 +108,8 @@ class Infos extends \Ilch\Mapper
         return $module;
     }
 
-
     /**
-     * Get modules php extensions by given key.
+     * Gets the module PHP extensions for the given key.
      *
      * @param string $key
      * @return InfosModel[]|null
@@ -123,12 +121,12 @@ class Infos extends \Ilch\Mapper
     }
 
     /**
-     * save modules php extensions by given key.
+     * Saves the module PHP extensions for the given key.
      * This can be entered with an entry in the module configuration file with 'phpExtensions'.
      *
      * @param string $key
      * @param array $extensions
-     * @return $this
+     * @return Infos
      * @since 2.2.8
      */
     public function saveModulesPHPExtensions(string $key, array $extensions): Infos

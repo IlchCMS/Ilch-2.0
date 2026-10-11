@@ -17,7 +17,7 @@ use Modules\Admin\Models\LayoutAdvSettings as LayoutAdvSettingsModel;
 class LayoutAdvSettings extends \Ilch\Mapper
 {
     /**
-     * Get specific setting of a layout.
+     * Gets a specific setting of a layout.
      *
      * @param string $layoutKey
      * @param string $key
@@ -43,7 +43,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
     }
 
     /**
-     * Get all settings of a layout.
+     * Gets all settings of a layout.
      *
      * @param string $layoutKey
      * @return LayoutAdvSettingsModel[]
@@ -73,7 +73,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
     }
 
     /**
-     * Get list of existing layout keys.
+     * Gets a list of the existing layout keys.
      *
      * @return string[]
      */
@@ -91,11 +91,11 @@ class LayoutAdvSettings extends \Ilch\Mapper
     }
 
     /**
-     * Save settings.
+     * Saves the given settings.
      *
      * @param LayoutAdvSettingsModel[] $models
      */
-    public function save(array $models)
+    public function save(array $models): void
     {
         if (!empty($models)) {
             if ($this->hasSettings($models[0]->getLayoutKey())) {
@@ -115,10 +115,10 @@ class LayoutAdvSettings extends \Ilch\Mapper
     }
 
     /**
-     * Update an existing setting.
+     * Updates an existing setting.
      *
      * @param LayoutAdvSettingsModel $model
-     * @return int affected rows
+     * @return int The number of affected rows.
      */
     private function updateSetting(LayoutAdvSettingsModel $model): int
     {
@@ -132,7 +132,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
             ->execute();
         if ($affectedRows === 0) {
             // If the value was unchanged then affected rows will be 0, even though it was existing.
-            // Therefore check if the specific setting exists in this case.
+            // Therefore, check if the specific setting exists in this case.
             return (int)$this->db()->select('COUNT(*)')
                 ->from('admin_layoutadvsettings')
                 ->where(['layoutKey' => $model->getLayoutKey(), 'key' => $model->getKey()])
@@ -144,11 +144,11 @@ class LayoutAdvSettings extends \Ilch\Mapper
     }
 
     /**
-     * Insert a new setting.
+     * Inserts a new setting.
      *
      * @param LayoutAdvSettingsModel $model
      */
-    private function insertSetting(LayoutAdvSettingsModel $model)
+    private function insertSetting(LayoutAdvSettingsModel $model): void
     {
         $this->db()->insert('admin_layoutadvsettings')
             ->values([
@@ -160,7 +160,7 @@ class LayoutAdvSettings extends \Ilch\Mapper
     }
 
     /**
-     * Check if there are settings for a specific layout.
+     * Checks whether there are settings for a specific layout.
      *
      * @param string $layoutKey
      * @return bool
@@ -175,43 +175,43 @@ class LayoutAdvSettings extends \Ilch\Mapper
     }
 
     /**
-     * Delete specific setting of a layout.
+     * Deletes a specific setting of a layout.
      *
      * @param string $layoutKey
      * @param string $key
      */
-    public function deleteSetting(string $layoutKey, string $key)
+    public function deleteSetting(string $layoutKey, string $key): void
     {
         $this->deleteBy(['layoutKey' => $layoutKey, 'key' => $key]);
     }
 
     /**
-     * Delete setting by it's id.
+     * Deletes a setting by its id.
      *
      * @param int $id
      */
-    public function deleteSettingById(int $id)
+    public function deleteSettingById(int $id): void
     {
         $this->deleteBy(['id' => $id]);
     }
 
     /**
-     * Delete all settings of a layout.
+     * Deletes all settings of a layout.
      * Call this when the layout gets deleted.
      *
      * @param string $layoutKey
      */
-    public function deleteSettings(string $layoutKey)
+    public function deleteSettings(string $layoutKey): void
     {
         $this->deleteBy(['layoutKey' => $layoutKey]);
     }
 
     /**
-     * Delete setting/settings by specified where clause.
+     * Deletes setting(s) by the specified where clause.
      *
      * @param array $where
      */
-    private function deleteBy(array $where)
+    private function deleteBy(array $where): void
     {
         $this->db()->delete('admin_layoutadvsettings')
             ->where($where)

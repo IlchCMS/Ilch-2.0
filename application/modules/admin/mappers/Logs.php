@@ -18,7 +18,7 @@ class Logs extends \Ilch\Mapper
      * @param string $date
      * @return LogsModel[]|null
      */
-    public function getLogs($date = '')
+    public function getLogs(string $date = ''): ?array
     {
         $select = $this->db()->select('*')
             ->from('logs');
@@ -51,11 +51,11 @@ class Logs extends \Ilch\Mapper
     }
 
     /**
-     * Gets all logs dates.
+     * Gets all log dates.
      *
      * @return LogsModel[]|null
      */
-    public function getLogsDate()
+    public function getLogsDate(): ?array
     {
         $sql = 'SELECT DATE(`date`) AS `date_full`, MONTH(`date`) AS `date_month`, DAY(`date`) AS `date_day`
                 FROM `[prefix]_logs`
@@ -78,12 +78,12 @@ class Logs extends \Ilch\Mapper
     }
 
     /**
-     * Get the logs by an optionally provided where-clause.
+     * Gets the logs by the optionally provided where clause.
      *
      * @param array $where
      * @return LogsModel[]
      */
-    public function getLogsBy($where = [])
+    public function getLogsBy(array $where = []): array
     {
         $entriesArray = $this->db()->select('*')
             ->from('logs')
@@ -109,12 +109,14 @@ class Logs extends \Ilch\Mapper
     }
 
     /**
-     * Insert log.
+     * Inserts a log.
+     *
+     * Skipped if the same log for the same user was already written less than a minute ago.
      *
      * @param int $userId
      * @param string $info
      */
-    public function saveLog($userId, $info)
+    public function saveLog(int $userId, string $info): void
     {
         $now = new IlchDate();
 
@@ -123,7 +125,7 @@ class Logs extends \Ilch\Mapper
 
         $count = $this->db()->select('COUNT(*)')
             ->from('logs')
-            ->where(['user_id' => (int)$userId, 'info' => $info, 'date >' => $oneMinuteAgo->toDb(true)])
+            ->where(['user_id' => $userId, 'info' => $info, 'date >' => $oneMinuteAgo->toDb(true)])
             ->execute()
             ->fetchCell();
 
@@ -139,9 +141,9 @@ class Logs extends \Ilch\Mapper
     }
 
     /**
-     * Clear log.
+     * Clears all logs.
      */
-    public function clearLog()
+    public function clearLog(): void
     {
         $this->db()->truncate('[prefix]_logs');
     }

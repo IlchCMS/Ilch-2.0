@@ -13,11 +13,11 @@ use Modules\Admin\Models\Page as EntriesModel;
 
 class Page extends \Ilch\Mapper
 {
-    public $tablename = 'pages';
-    public $tablenameContent = 'pages_content';
+    public string $tablename = 'pages';
+    public string $tablenameContent = 'pages_content';
 
     /**
-     * returns if the module is installed.
+     * Returns whether the module is installed.
      *
      * @return bool
      */
@@ -27,12 +27,12 @@ class Page extends \Ilch\Mapper
     }
 
     /**
-     * Gets the Entries by param.
+     * Gets the entries by param.
      *
      * @param array $where
      * @param array $orderBy
      * @param Pagination|null $pagination
-     * @return array|null
+     * @return EntriesModel[]|null
      */
     public function getEntriesBy(array $where = [], array $orderBy = ['p.id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
@@ -70,11 +70,11 @@ class Page extends \Ilch\Mapper
     }
 
     /**
-     * Get page lists for overview.
+     * Gets the page lists for overview.
      *
      * @param string $locale
      * @param array $orderBy
-     * @return array
+     * @return EntriesModel[]|null
      */
     public function getPageList(string $locale = '', array $orderBy = ['p.id' => 'DESC']): ?array
     {
@@ -82,7 +82,7 @@ class Page extends \Ilch\Mapper
     }
 
     /**
-     * Returns page model found by the key.
+     * Returns the page model found by the id and locale.
      *
      * @param int $id
      * @param string $locale
@@ -100,7 +100,7 @@ class Page extends \Ilch\Mapper
     }
 
     /**
-     * Returns all page permas.
+     * Returns all page permalinks.
      *
      * @return array|null
      */
@@ -184,7 +184,7 @@ class Page extends \Ilch\Mapper
     }
 
     /**
-     * Delete box with specific id.
+     * Deletes a page with the given id.
      *
      * @param int $id
      * @return bool
