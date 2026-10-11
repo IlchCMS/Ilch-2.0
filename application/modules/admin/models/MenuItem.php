@@ -9,30 +9,30 @@ namespace Modules\Admin\Models;
 
 class MenuItem extends \Ilch\Model
 {
-    const TYPE_MENU = 0;
-    const TYPE_LINK = 1;
-    const TYPE_PAGE_LINK = 2;
-    const TYPE_MODULE_LINK = 3;
-    const TYPE_BOX = 4;
+    public const TYPE_MENU = 0;
+    public const TYPE_LINK = 1;
+    public const TYPE_PAGE_LINK = 2;
+    public const TYPE_MODULE_LINK = 3;
+    public const TYPE_BOX = 4;
 
     /**
      * Id of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
     /**
      * Sort of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $sort;
 
     /**
      * Type of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $type;
 
@@ -46,14 +46,14 @@ class MenuItem extends \Ilch\Model
     /**
      * Siteid of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $siteId;
 
     /**
      * Boxid of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $boxId;
 
@@ -67,14 +67,14 @@ class MenuItem extends \Ilch\Model
     /**
      * MenuId of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $menuId;
 
     /**
      * ParentId of the item.
      *
-     * @var integer
+     * @var int
      */
     protected $parentId;
 
@@ -109,7 +109,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Gets the id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -119,7 +119,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {
@@ -129,7 +129,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Gets the sort.
      *
-     * @return integer
+     * @return int
      */
     public function getSort()
     {
@@ -139,7 +139,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the sort.
      *
-     * @param integer $sort
+     * @param int $sort
      */
     public function setSort($sort)
     {
@@ -149,7 +149,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Gets the type.
      *
-     * @return integer
+     * @return int
      */
     public function getType()
     {
@@ -159,7 +159,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the type.
      *
-     * @param integer $type
+     * @param int $type
      */
     public function setType($type)
     {
@@ -169,7 +169,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Gets the siteid.
      *
-     * @return integer
+     * @return int
      */
     public function getSiteId()
     {
@@ -179,7 +179,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the siteid.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setSiteId($id)
     {
@@ -189,7 +189,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Gets the boxid.
      *
-     * @return integer
+     * @return int
      */
     public function getBoxId()
     {
@@ -199,7 +199,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the boxid.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setBoxId($id)
     {
@@ -249,7 +249,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Gets the menu id.
      *
-     * @return integer
+     * @return int
      */
     public function getMenuId()
     {
@@ -259,7 +259,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the menu id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setMenuId($id)
     {
@@ -269,7 +269,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Gets the parent id.
      *
-     * @return integer
+     * @return int
      */
     public function getParentId()
     {
@@ -279,7 +279,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the parent id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setParentId($id)
     {
@@ -349,7 +349,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Checks if the item is any link
      *
-     * @return boolean
+     * @return bool
      */
     public function isLink()
     {
@@ -359,7 +359,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Checks if the item is a module link
      *
-     * @return boolean
+     * @return bool
      */
     public function isModuleLink()
     {
@@ -369,7 +369,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Checks if the item is a page link
      *
-     * @return boolean
+     * @return bool
      */
     public function isPageLink()
     {
@@ -379,7 +379,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Checks if the item is a box
      *
-     * @return boolean
+     * @return bool
      */
     public function isBox()
     {
@@ -389,7 +389,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Checks if the item is a menu
      *
-     * @return boolean
+     * @return bool
      */
     public function isMenu()
     {

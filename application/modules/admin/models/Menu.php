@@ -12,7 +12,7 @@ class Menu extends \Ilch\Model
     /**
      * Id of the menu.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -26,7 +26,7 @@ class Menu extends \Ilch\Model
     /**
      * Sets the menu id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {
@@ -36,7 +36,7 @@ class Menu extends \Ilch\Model
     /**
      * Gets the menu id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
