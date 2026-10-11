@@ -12,16 +12,16 @@ use Modules\Admin\Models\Updateserver as UpdateserverModel;
 class Updateservers extends \Ilch\Mapper
 {
     /**
-     * Get all updateservers.
+     * Gets all update servers.
      *
-     * @return UpdateserverModel[]|[]
+     * @return UpdateserverModel[]
      */
-    public function getUpdateservers()
+    public function getUpdateservers(): array
     {
         $array = $this->db()->select('*')
-                ->from('admin_updateservers')
-                ->execute()
-                ->fetchRows();
+            ->from('admin_updateservers')
+            ->execute()
+            ->fetchRows();
 
         if (empty($array)) {
             return [];

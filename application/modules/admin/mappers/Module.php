@@ -2,6 +2,7 @@
 
 /**
  * @copyright Ilch 2
+ * @package ilch
  */
 
 namespace Modules\Admin\Mappers;
@@ -11,12 +12,12 @@ use Modules\Admin\Mappers\Menu as MenuMapper;
 
 class Module extends \Ilch\Mapper
 {
-    protected $cache = [];
+    protected array $cache = [];
 
     /**
      * Gets all modules.
      *
-     * @return array|ModuleModel[]
+     * @return ModuleModel[]
      */
     public function getModules(): array
     {
@@ -50,9 +51,9 @@ class Module extends \Ilch\Mapper
     }
 
     /**
-     * Gets all modules.
+     * Gets the keys of all locally available modules.
      *
-     * @return array
+     * @return string[]
      * @since 2.2.8
      */
     public function getLocalModules(): array
@@ -75,7 +76,7 @@ class Module extends \Ilch\Mapper
     /**
      * Gets all not installed modules.
      *
-     * @return ModuleModel[]|[]
+     * @return ModuleModel[]
      */
     public function getModulesNotInstalled(): array
     {
@@ -113,7 +114,7 @@ class Module extends \Ilch\Mapper
     }
 
     /**
-     * Gets modules with given key and locale.
+     * Gets the module with the given key and locale.
      *
      * @param string $key
      * @param string $locale
@@ -138,7 +139,7 @@ class Module extends \Ilch\Mapper
     }
 
     /**
-     * Get module with given key.
+     * Gets the module with the given key.
      *
      * @param string $key
      * @param bool $force True: Skip cache and get new result.
@@ -169,9 +170,9 @@ class Module extends \Ilch\Mapper
     }
 
     /**
-     * Gets an array of keys of the installed modules.
+     * Gets the keys of the installed modules.
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getKeysInstalledModules(): array
     {
@@ -188,7 +189,7 @@ class Module extends \Ilch\Mapper
     }
 
     /**
-     * Get the version numbers of the modules.
+     * Gets the version numbers of the modules.
      *
      * @return array
      */
@@ -214,13 +215,12 @@ class Module extends \Ilch\Mapper
     }
 
     /**
-     * Update the version of a module in the database.
+     * Updates the version of a module in the database.
      *
      * @param string $key
      * @param string $version
-     *
      */
-    public function updateVersion(string $key, string $version)
+    public function updateVersion(string $key, string $version): void
     {
         $this->db()->update('modules')
             ->values(['version' => $version])
@@ -229,7 +229,7 @@ class Module extends \Ilch\Mapper
     }
 
     /**
-     * Inserts a module model in the database.
+     * Inserts or updates a module model in the database.
      *
      * @param ModuleModel $module
      * @return bool
@@ -283,11 +283,11 @@ class Module extends \Ilch\Mapper
     }
 
     /**
-     * Deletes a given module with the given key.
+     * Deletes the module with the given key.
      *
      * @param string $key
      */
-    public function delete(string $key)
+    public function delete(string $key): void
     {
         $menuMapper = new MenuMapper();
         $menuMapper->deleteItemsByModuleKey($key);

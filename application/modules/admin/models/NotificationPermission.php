@@ -11,31 +11,26 @@ class NotificationPermission extends \Ilch\Model
 {
     /**
      * The module for which the notification is for.
-     *
-     * @var string
      */
-    protected $module;
+    protected ?string $module = null;
 
     /**
      * The module is (not) allowed to issue notifications.
-     *
-     * @var int
+     * Stored as int (1/0), as in the original implementation.
      */
-    protected $granted;
+    protected ?int $granted = null;
 
     /**
      * The number of messages the module is allowed to issue.
-     *
-     * @var int
      */
-    protected $limit;
+    protected ?int $limit = null;
 
     /**
      * Gets the module for which the notification is for.
      *
-     * @return string
+     * @return string|null
      */
-    public function getModule()
+    public function getModule(): ?string
     {
         return $this->module;
     }
@@ -45,7 +40,7 @@ class NotificationPermission extends \Ilch\Model
      *
      * @param string $module
      */
-    public function setModule($module)
+    public function setModule(string $module): void
     {
         $this->module = $module;
     }
@@ -53,9 +48,9 @@ class NotificationPermission extends \Ilch\Model
     /**
      * Get if the module is (not) allowed to issue notifications.
      *
-     * @return bool
+     * @return int|null
      */
-    public function getGranted()
+    public function getGranted(): ?int
     {
         return $this->granted;
     }
@@ -63,9 +58,9 @@ class NotificationPermission extends \Ilch\Model
     /**
      * Set if the module is (not) allowed to issue notifications.
      *
-     * @param bool $granted
+     * @param bool|int|float|string $granted
      */
-    public function setGranted($granted)
+    public function setGranted(bool|int|float|string $granted): void
     {
         $this->granted = (int) $granted;
     }
@@ -73,9 +68,9 @@ class NotificationPermission extends \Ilch\Model
     /**
      * Get the number of messages the module is allowed to issue.
      *
-     * @return int
+     * @return int|null
      */
-    public function getLimit()
+    public function getLimit(): ?int
     {
         return $this->limit;
     }
@@ -83,9 +78,9 @@ class NotificationPermission extends \Ilch\Model
     /**
      * Set the number of messages the module is allowed to issue.
      *
-     * @param int $limit
+     * @param int|float|string $limit
      */
-    public function setLimit($limit)
+    public function setLimit(int|float|string $limit): void
     {
         $this->limit = (int) $limit;
     }

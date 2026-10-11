@@ -12,22 +12,22 @@ class LayoutAdvSettings extends \Ilch\Model
     /**
      * @var int
      */
-    private $id = 0;
+    private int $id = 0;
 
     /**
      * @var string
      */
-    private $layoutKey = '';
+    private string $layoutKey = '';
 
     /**
      * @var string
      */
-    private $key = '';
+    private string $key = '';
 
     /**
      * @var string
      */
-    private $value = '';
+    private string $value = '';
 
     /**
      * Get the id.
@@ -43,7 +43,7 @@ class LayoutAdvSettings extends \Ilch\Model
      * Set the id.
      *
      * @param int $id
-     * @return LayoutAdvSettings
+     * @return $this
      */
     public function setId(int $id): LayoutAdvSettings
     {
@@ -65,7 +65,7 @@ class LayoutAdvSettings extends \Ilch\Model
      * Set the layout key.
      *
      * @param string $layoutKey
-     * @return LayoutAdvSettings
+     * @return $this
      */
     public function setLayoutKey(string $layoutKey): LayoutAdvSettings
     {
@@ -87,7 +87,7 @@ class LayoutAdvSettings extends \Ilch\Model
      * Set the key.
      *
      * @param string $key
-     * @return LayoutAdvSettings
+     * @return $this
      */
     public function setKey(string $key): LayoutAdvSettings
     {
@@ -109,7 +109,7 @@ class LayoutAdvSettings extends \Ilch\Model
      * Set the value.
      *
      * @param string $value
-     * @return LayoutAdvSettings
+     * @return $this
      */
     public function setValue(string $value): LayoutAdvSettings
     {

@@ -11,59 +11,43 @@ class Page extends \Ilch\Model
 {
     /**
      * The id of the page.
-     *
-     * @var int
      */
-    protected $id = 0;
+    protected int $id = 0;
 
     /**
      * The perma of the page.
-     *
-     * @var string
      */
-    protected $perma = '';
+    protected string $perma = '';
 
     /**
      * The title of the page.
-     *
-     * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * The content of the page.
-     *
-     * @var string
      */
-    protected $content = '';
+    protected string $content = '';
 
     /**
      * The description of the page.
-     *
-     * @var string
      */
-    protected $description = '';
+    protected string $description = '';
 
     /**
      * The keywords of the page.
-     *
-     * @var string
      */
-    protected $keywords = '';
+    protected string $keywords = '';
 
     /**
      * The locale of the page.
-     *
-     * @var string
      */
-    protected $locale = '';
+    protected string $locale = '';
 
     /**
      * The datetime when the page got created.
-     *
-     * @var string
      */
-    protected $dateCreated = '';
+    protected string $dateCreated = '';
 
     /**
      * Sets Model by Array.
@@ -71,7 +55,7 @@ class Page extends \Ilch\Model
      * @param array $entries
      * @return $this
      */
-    public function setByArray($entries): Page
+    public function setByArray(array $entries): Page
     {
         if (isset($entries['page_id'])) {
             $this->setId($entries['page_id']);
@@ -291,7 +275,7 @@ class Page extends \Ilch\Model
      * @param bool $withId
      * @return array
      */
-    public function getArray(bool $withId = true)
+    public function getArray(bool $withId = true): array
     {
         return array_merge(
             ($withId ? ['page_id' => $this->getId()] : []),

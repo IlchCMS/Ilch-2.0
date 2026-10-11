@@ -19,7 +19,7 @@ class Menu extends Mapper
      * @param int $position
      * @return false|string|null
      */
-    public function getMenuIdForPosition(int $position)
+    public function getMenuIdForPosition(int $position): false|string|null
     {
         return $this->db()->select(['id'])
             ->from('menu')
@@ -80,9 +80,10 @@ class Menu extends Mapper
     }
 
     /**
-     * Gets all menu items by menu id.
+     * Gets all menu items for the given menu id.
+     *
      * @param int $menuId
-     * @return array|[]
+     * @return MenuItem[]
      */
     public function getMenuItems(int $menuId): array
     {
@@ -119,7 +120,7 @@ class Menu extends Mapper
     }
 
     /**
-     * Save one menu item.
+     * Saves one menu item.
      *
      * @param MenuItem $menuItem
      * @return int
@@ -173,11 +174,11 @@ class Menu extends Mapper
     }
 
     /**
-     * Get last menu id.
+     * Gets the last menu id.
      *
      * @return string|null
      */
-    public function getLastMenuId()
+    public function getLastMenuId(): ?string
     {
         $menuId = $this->db()->select('MAX(id)')
             ->from('menu')
@@ -194,11 +195,11 @@ class Menu extends Mapper
     }
 
     /**
-     * Get last menu item id.
+     * Gets the last menu item id.
      *
      * @return string|null
      */
-    public function getLastMenuItemId()
+    public function getLastMenuItemId(): ?string
     {
         $itemId = $this->db()->select('MAX(id)')
             ->from('menu_items')
@@ -213,7 +214,7 @@ class Menu extends Mapper
     }
 
     /**
-     * Save one menu.
+     * Saves one menu.
      *
      * Registers the menu if it does not exist yet and returns its id.
      * An existing menu is left untouched (its title is not updated); the
@@ -238,11 +239,11 @@ class Menu extends Mapper
     }
 
     /**
-     * Delete the given menu.
+     * Deletes the given menu.
      *
      * @param int $id
      */
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $this->db()->delete('menu')
             ->where(['id' => $id])
@@ -257,11 +258,11 @@ class Menu extends Mapper
     }
 
     /**
-     * Delete the menu item with the given id.
+     * Deletes the menu item with the given id.
      *
      * @param MenuItem $menuItem
      */
-    public function deleteItem(MenuItem $menuItem)
+    public function deleteItem(MenuItem $menuItem): void
     {
         $this->db()->delete('menu_items')
             ->where(['id' => $menuItem->getId()])
@@ -269,7 +270,7 @@ class Menu extends Mapper
     }
 
     /**
-     * Delete items for the given module key.
+     * Deletes items for the given module key.
      *
      * If $parentID is given, everything below that parent is deleted and the
      * $moduleKey is ignored. That is needed for the recursion to wipe a whole subtree.
@@ -277,7 +278,7 @@ class Menu extends Mapper
      * @param string $moduleKey
      * @param int|null $parentID
      */
-    public function deleteItemsByModuleKey(string $moduleKey, ?int $parentID = null)
+    public function deleteItemsByModuleKey(string $moduleKey, ?int $parentID = null): void
     {
         if ($parentID === null) {
             $itemRows = $this->db()->select('*')
@@ -302,11 +303,11 @@ class Menu extends Mapper
     }
 
     /**
-     * Delete all items with a specific menu id.
+     * Deletes all items with the specific menu id.
      *
      * @param int $menuId
      */
-    public function deleteItemsByMenuId(int $menuId)
+    public function deleteItemsByMenuId(int $menuId): void
     {
         $this->db()->delete('menu_items')
             ->where(['menu_id' => $menuId])
@@ -314,11 +315,11 @@ class Menu extends Mapper
     }
 
     /**
-     * Delete menu item by the box id.
+     * Deletes the menu item by the box id.
      *
      * @param int $boxId
      */
-    public function deleteItemByBoxId(int $boxId)
+    public function deleteItemByBoxId(int $boxId): void
     {
         // box_id defaults to 0 for every non-box item. Deleting with 0 would remove
         // all of them, so it is never allowed.
@@ -332,11 +333,11 @@ class Menu extends Mapper
     }
 
     /**
-     * Delete menu item by the page id.
+     * Deletes the menu item by the page id.
      *
      * @param int $pageId
      */
-    public function deleteItemByPageId(int $pageId)
+    public function deleteItemByPageId(int $pageId): void
     {
         // page_id defaults to 0 for every non-page item. Deleting with 0 would remove
         // all of them, so it is never allowed.

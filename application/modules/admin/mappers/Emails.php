@@ -12,11 +12,11 @@ use Modules\Admin\Models\Emails as EmailsModel;
 class Emails extends \Ilch\Mapper
 {
     /**
-     * Gets all Modules with emails.
+     * Gets all modules with emails.
      *
-     * @return EmailsModel[]|array
+     * @return EmailsModel[]|null
      */
-    public function getEmailsModule()
+    public function getEmailsModule(): ?array
     {
         $array = $this->db()->select('moduleKey')
             ->from('emails')
@@ -40,14 +40,13 @@ class Emails extends \Ilch\Mapper
     }
 
     /**
-     * Gets all Emails.
+     * Gets all emails for the given module key and locale.
      *
      * @param string $key
      * @param string $locale
-     *
-     * @return EmailsModel[]|array
+     * @return EmailsModel[]|null
      */
-    public function getEmailsByKey($key, $locale)
+    public function getEmailsByKey(string $key, string $locale): ?array
     {
         $array = $this->db()->select('*')
             ->from('emails')
@@ -74,15 +73,14 @@ class Emails extends \Ilch\Mapper
     }
 
     /**
-     * Gets all Emails.
+     * Gets all emails for the given module key, type and locale.
      *
      * @param string $key
      * @param string $type
      * @param string $locale
-     *
-     * @return EmailsModel[]|array
+     * @return EmailsModel[]|null
      */
-    public function getEmailsByKeyTypeLocale($key, $type, $locale)
+    public function getEmailsByKeyTypeLocale(string $key, string $type, string $locale): ?array
     {
         $array = $this->db()->select('*')
             ->from('emails')
@@ -109,15 +107,15 @@ class Emails extends \Ilch\Mapper
     }
 
     /**
-     * Get the Email.
+     * Gets the email for the given module key, type and locale.
+     * Falls back to the "de_DE" locale if no row exists for the given locale.
      *
      * @param string $moduleKey
      * @param string $type
      * @param string $locale
-     *
      * @return EmailsModel|null
      */
-    public function getEmail($moduleKey, $type, $locale)
+    public function getEmail(string $moduleKey, string $type, string $locale): ?EmailsModel
     {
         $result = $this->db()->select('*')
             ->from('emails')
@@ -148,11 +146,11 @@ class Emails extends \Ilch\Mapper
     }
 
     /**
-     * Inserts or Update the Email.
+     * Inserts or updates the email.
      *
      * @param EmailsModel $email
      */
-    public function save(EmailsModel $email)
+    public function save(EmailsModel $email): void
     {
         $fields = [
             'moduleKey' => $email->getModuleKey(),

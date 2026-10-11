@@ -9,109 +9,89 @@ namespace Modules\Admin\Models;
 
 class MenuItem extends \Ilch\Model
 {
-    const TYPE_MENU = 0;
-    const TYPE_LINK = 1;
-    const TYPE_PAGE_LINK = 2;
-    const TYPE_MODULE_LINK = 3;
-    const TYPE_BOX = 4;
+    public const TYPE_MENU = 0;
+    public const TYPE_LINK = 1;
+    public const TYPE_PAGE_LINK = 2;
+    public const TYPE_MODULE_LINK = 3;
+    public const TYPE_BOX = 4;
 
     /**
      * Id of the item.
-     *
-     * @var integer
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * Sort of the item.
-     *
-     * @var integer
      */
-    protected $sort;
+    protected ?int $sort = null;
 
     /**
      * Type of the item.
-     *
-     * @var integer
      */
-    protected $type;
+    protected ?int $type = null;
 
     /**
      * Key of the item.
-     *
-     * @var string
      */
-    protected $moduleKey;
+    protected ?string $moduleKey = null;
 
     /**
      * Siteid of the item.
-     *
-     * @var integer
      */
-    protected $siteId;
+    protected ?int $siteId = null;
 
     /**
      * Boxid of the item.
-     *
-     * @var integer
      */
-    protected $boxId;
+    protected ?int $boxId = null;
 
     /**
-     * Boxid of the item.
-     *
-     * @var string
+     * Boxkey of the item.
      */
-    protected $boxKey;
+    protected ?string $boxKey = null;
 
     /**
      * MenuId of the item.
-     *
-     * @var integer
      */
-    protected $menuId;
+    protected ?int $menuId = null;
 
     /**
      * ParentId of the item.
-     *
-     * @var integer
      */
-    protected $parentId;
+    protected ?int $parentId = null;
 
     /**
      * Title of the item.
-     *
-     * @var string
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * Href of the item.
-     *
-     * @var string
      */
-    protected $href;
+    protected ?string $href = null;
 
     /**
      * target of the item (a link).
      *
-     * @var string
+     * Untenionally untyped: the value is stored without casting, null stays null
+     * (legacy behavior, documented by the model tests).
      */
-    protected $target;
+    protected mixed $target = null;
 
     /**
      * Access of the item.
      *
-     * @var string
+     * Untenionally untyped: the value is stored without casting, null stays null
+     * (legacy behavior, documented by the model tests).
      */
-    protected $access;
+    protected mixed $access = null;
 
     /**
      * Gets the id.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -119,9 +99,9 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the id.
      *
-     * @param integer $id
+     * @param int|float|string $id
      */
-    public function setId($id)
+    public function setId(int|float|string $id): void
     {
         $this->id = (int) $id;
     }
@@ -129,9 +109,9 @@ class MenuItem extends \Ilch\Model
     /**
      * Gets the sort.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getSort()
+    public function getSort(): ?int
     {
         return $this->sort;
     }
@@ -139,19 +119,19 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the sort.
      *
-     * @param integer $sort
+     * @param int|float|string $sort
      */
-    public function setSort($sort)
+    public function setSort(int|float|string $sort): void
     {
-        $this->sort = (int)$sort;
+        $this->sort = (int) $sort;
     }
 
     /**
      * Gets the type.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getType()
+    public function getType(): ?int
     {
         return $this->type;
     }
@@ -159,19 +139,19 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the type.
      *
-     * @param integer $type
+     * @param int|float|string $type
      */
-    public function setType($type)
+    public function setType(int|float|string $type): void
     {
-        $this->type = (int)$type;
+        $this->type = (int) $type;
     }
 
     /**
      * Gets the siteid.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getSiteId()
+    public function getSiteId(): ?int
     {
         return $this->siteId;
     }
@@ -179,19 +159,19 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the siteid.
      *
-     * @param integer $id
+     * @param int|float|string $id
      */
-    public function setSiteId($id)
+    public function setSiteId(int|float|string $id): void
     {
-        $this->siteId = (int)$id;
+        $this->siteId = (int) $id;
     }
 
     /**
      * Gets the boxid.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getBoxId()
+    public function getBoxId(): ?int
     {
         return $this->boxId;
     }
@@ -199,39 +179,41 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the boxid.
      *
-     * @param integer $id
+     * @param int|float|string $id
      */
-    public function setBoxId($id)
+    public function setBoxId(int|float|string $id): void
     {
-        $this->boxId = (int)$id;
+        $this->boxId = (int) $id;
     }
 
     /**
-     * Gets the box id.
+     * Gets the box key.
      *
-     * @return string
+     * @return string|null
      */
-    public function getBoxKey()
+    public function getBoxKey(): ?string
     {
         return $this->boxKey;
     }
 
     /**
-     * Sets the box id.
+     * Sets the box key.
      *
-     * @param string $key
+     * Accepts null (the database column is nullable); null is cast to an empty string.
+     *
+     * @param string|null $key
      */
-    public function setBoxKey($key)
+    public function setBoxKey(?string $key): void
     {
-        $this->boxKey = (string)$key;
+        $this->boxKey = (string) $key;
     }
 
     /**
      * Gets the module key.
      *
-     * @return string
+     * @return string|null
      */
-    public function getModuleKey()
+    public function getModuleKey(): ?string
     {
         return $this->moduleKey;
     }
@@ -239,19 +221,21 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the module key.
      *
-     * @param string $key
+     * Accepts null (the database column is nullable); null is cast to an empty string.
+     *
+     * @param string|null $key
      */
-    public function setModuleKey($key)
+    public function setModuleKey(?string $key): void
     {
-        $this->moduleKey = (string)$key;
+        $this->moduleKey = (string) $key;
     }
 
     /**
      * Gets the menu id.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getMenuId()
+    public function getMenuId(): ?int
     {
         return $this->menuId;
     }
@@ -259,9 +243,9 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the menu id.
      *
-     * @param integer $id
+     * @param int|float|string $id
      */
-    public function setMenuId($id)
+    public function setMenuId(int|float|string $id): void
     {
         $this->menuId = (int) $id;
     }
@@ -269,9 +253,9 @@ class MenuItem extends \Ilch\Model
     /**
      * Gets the parent id.
      *
-     * @return integer
+     * @return int|null
      */
-    public function getParentId()
+    public function getParentId(): ?int
     {
         return $this->parentId;
     }
@@ -279,9 +263,9 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the parent id.
      *
-     * @param integer $id
+     * @param int|float|string $id
      */
-    public function setParentId($id)
+    public function setParentId(int|float|string $id): void
     {
         $this->parentId = (int) $id;
     }
@@ -289,9 +273,9 @@ class MenuItem extends \Ilch\Model
     /**
      * Gets the title.
      *
-     * @return string
+     * @return string|null
      */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -301,17 +285,17 @@ class MenuItem extends \Ilch\Model
      *
      * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
-        $this->title = (string) $title;
+        $this->title = $title;
     }
 
     /**
      * Gets the href.
      *
-     * @return string
+     * @return string|null
      */
-    public function getHref()
+    public function getHref(): ?string
     {
         return $this->href;
     }
@@ -319,9 +303,11 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the href.
      *
-     * @param string $href
+     * Accepts null (the database column is nullable); null is cast to an empty string.
+     *
+     * @param string|null $href
      */
-    public function setHref($href)
+    public function setHref(?string $href): void
     {
         $this->href = (string) $href;
     }
@@ -329,9 +315,9 @@ class MenuItem extends \Ilch\Model
     /**
      * Get the target of a link.
      *
-     * @return string
+     * @return mixed
      */
-    public function getTarget()
+    public function getTarget(): mixed
     {
         return $this->target;
     }
@@ -339,9 +325,11 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the target of a link.
      *
-     * @param string $target
+     * The value is stored without casting, null stays null.
+     *
+     * @param mixed $target
      */
-    public function setTarget($target)
+    public function setTarget(mixed $target): void
     {
         $this->target = $target;
     }
@@ -349,9 +337,9 @@ class MenuItem extends \Ilch\Model
     /**
      * Checks if the item is any link
      *
-     * @return boolean
+     * @return bool
      */
-    public function isLink()
+    public function isLink(): bool
     {
         return in_array($this->getType(), [self::TYPE_LINK, self::TYPE_PAGE_LINK, self::TYPE_MODULE_LINK]);
     }
@@ -359,9 +347,9 @@ class MenuItem extends \Ilch\Model
     /**
      * Checks if the item is a module link
      *
-     * @return boolean
+     * @return bool
      */
-    public function isModuleLink()
+    public function isModuleLink(): bool
     {
         return $this->getType() === self::TYPE_MODULE_LINK;
     }
@@ -369,9 +357,9 @@ class MenuItem extends \Ilch\Model
     /**
      * Checks if the item is a page link
      *
-     * @return boolean
+     * @return bool
      */
-    public function isPageLink()
+    public function isPageLink(): bool
     {
         return $this->getType() === self::TYPE_PAGE_LINK;
     }
@@ -379,9 +367,9 @@ class MenuItem extends \Ilch\Model
     /**
      * Checks if the item is a box
      *
-     * @return boolean
+     * @return bool
      */
-    public function isBox()
+    public function isBox(): bool
     {
         return $this->getType() === self::TYPE_BOX;
     }
@@ -389,9 +377,9 @@ class MenuItem extends \Ilch\Model
     /**
      * Checks if the item is a menu
      *
-     * @return boolean
+     * @return bool
      */
-    public function isMenu()
+    public function isMenu(): bool
     {
         return $this->getType() === self::TYPE_MENU;
     }
@@ -399,9 +387,9 @@ class MenuItem extends \Ilch\Model
     /**
      * Gets the access id.
      *
-     * @return string
+     * @return mixed
      */
-    public function getAccess()
+    public function getAccess(): mixed
     {
         return $this->access;
     }
@@ -409,9 +397,11 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the access id.
      *
-     * @param $access
+     * The value is stored without casting, null stays null.
+     *
+     * @param mixed $access
      */
-    public function setAccess($access)
+    public function setAccess(mixed $access): void
     {
         $this->access = $access;
     }

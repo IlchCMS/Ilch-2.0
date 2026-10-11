@@ -432,11 +432,6 @@ class MenuTest extends DatabaseTestCase
 
     /**
      * Tests that delete() on the last menu also resets the auto increment of the menu table.
-     *
-     * NOTE: This test currently fails. Menu::delete() truncates the `menu` table when no menu
-     * remains, but `menu_items` references `menu` via a foreign key constraint, so MySQL rejects
-     * the TRUNCATE (error 1701). The test documents the intended behavior and should pass once
-     * the truncate in Menu::delete() is fixed.
      */
     public function testDeleteLastMenu()
     {

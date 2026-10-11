@@ -67,7 +67,7 @@ class Backup extends \Ilch\Mapper
     }
 
     /**
-     * Get the newest backup.
+     * Gets the newest backup.
      *
      * @return BackupModel|null
      * @since 2.1.51
@@ -94,7 +94,7 @@ class Backup extends \Ilch\Mapper
     }
 
     /**
-     * Inserts backup model.
+     * Inserts a backup model.
      *
      * @param BackupModel $backup
      * @return int The id of the new backup.
@@ -110,13 +110,13 @@ class Backup extends \Ilch\Mapper
             ->values($fields)
             ->execute();
 
-        $backup->setId((int)$backupId);
+        $backup->setId($backupId);
 
-        return (int)$backupId;
+        return $backupId;
     }
 
     /**
-     * Deletes backup with the given id.
+     * Deletes a backup with the given id.
      *
      * @param int $id
      * @return bool

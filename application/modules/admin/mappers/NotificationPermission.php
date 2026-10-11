@@ -12,17 +12,17 @@ use Modules\Admin\Models\NotificationPermission as NotificationPermissionModel;
 class NotificationPermission extends \Ilch\Mapper
 {
     /**
-     * Get all notification permissions.
+     * Gets all notification permissions.
      *
-     * @return NotificationPermissionModel[]|[]
+     * @return NotificationPermissionModel[]
      */
-    public function getPermissions()
+    public function getPermissions(): array
     {
         $array = $this->db()->select('*')
-                ->from('admin_notifications_permission')
-                ->order(['module' => 'ASC'])
-                ->execute()
-                ->fetchRows();
+            ->from('admin_notifications_permission')
+            ->order(['module' => 'ASC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($array)) {
             return [];
@@ -41,18 +41,18 @@ class NotificationPermission extends \Ilch\Mapper
     }
 
     /**
-     * Get notification permission of module.
+     * Gets the notification permission of a module.
      *
      * @param string $module
      * @return NotificationPermissionModel|null
      */
-    public function getPermissionOfModule($module)
+    public function getPermissionOfModule(string $module): ?NotificationPermissionModel
     {
         $result = $this->db()->select('*')
-                ->from('admin_notifications_permission')
-                ->where(['module' => $module])
-                ->execute()
-                ->fetchAssoc();
+            ->from('admin_notifications_permission')
+            ->where(['module' => $module])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($result)) {
             return null;
@@ -67,12 +67,12 @@ class NotificationPermission extends \Ilch\Mapper
     }
 
     /**
-     * Update notification permission of module.
+     * Updates the notification permission of a module.
      *
      * @param NotificationPermissionModel $permission
      * @return int
      */
-    public function updatePermissionOfModule(NotificationPermissionModel $permission)
+    public function updatePermissionOfModule(NotificationPermissionModel $permission): int
     {
         $fields = [
             'module' => $permission->getModule(),
@@ -87,13 +87,13 @@ class NotificationPermission extends \Ilch\Mapper
     }
 
     /**
-     * Update permission granted of module.
+     * Updates the granted permission of a module.
      *
      * @param string $module
      * @param bool $granted
      * @return int
      */
-    public function updatePermissionGrantedOfModule($module, $granted)
+    public function updatePermissionGrantedOfModule(string $module, bool $granted): int
     {
         return $this->db()->update()->table('admin_notifications_permission')
             ->values(['granted' => $granted])
@@ -102,13 +102,13 @@ class NotificationPermission extends \Ilch\Mapper
     }
 
     /**
-     * Update message limit of module.
+     * Updates the message limit of a module.
      *
      * @param string $module
      * @param int $limit
      * @return int
      */
-    public function updateLimitOfModule($module, $limit)
+    public function updateLimitOfModule(string $module, int $limit): int
     {
         return $this->db()->update()->table('admin_notifications_permission')
             ->values(['limit' => $limit])
@@ -117,11 +117,11 @@ class NotificationPermission extends \Ilch\Mapper
     }
 
     /**
-     * Add notification permission for module.
+     * Adds a notification permission for a module.
      *
      * @param NotificationPermissionModel $permission
      */
-    public function addPermissionForModule(NotificationPermissionModel $permission)
+    public function addPermissionForModule(NotificationPermissionModel $permission): void
     {
         $fields = [
             'module' => $permission->getModule(),
@@ -141,11 +141,11 @@ class NotificationPermission extends \Ilch\Mapper
     }
 
     /**
-     * Delete notification permission of module.
+     * Deletes the notification permission of a module.
      *
      * @param string $module
      */
-    public function deletePermissionOfModule($module)
+    public function deletePermissionOfModule(string $module): void
     {
         $this->db()->delete('admin_notifications_permission')
             ->where(['module' => $module])
