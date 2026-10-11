@@ -7,28 +7,28 @@
 
 namespace Modules\Article\Models;
 
-class Category extends \Ilch\Mapper
+class Category extends \Ilch\Model
 {
     /**
      * The id of the category.
      *
-     * @var int
+     * @var int|null
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * The name of the category.
      *
-     * @var string
+     * @var string|null
      */
-    private $name;
+    private ?string $name = null;
 
     /**
-     * Returns the user category id.
+     * Returns the category id.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -36,10 +36,10 @@ class Category extends \Ilch\Mapper
     /**
      * Sets the category id.
      *
-     * @param int $id
+     * @param mixed $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(mixed $id): self
     {
         $this->id = (int) $id;
 
@@ -49,19 +49,20 @@ class Category extends \Ilch\Mapper
     /**
      * Returns the category name.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
+
     /**
      * Sets the category name.
      *
-     * @param string $name
+     * @param mixed $name
      * @return $this
      */
-    public function setName($name)
+    public function setName(mixed $name): self
     {
         $this->name = (string) $name;
 

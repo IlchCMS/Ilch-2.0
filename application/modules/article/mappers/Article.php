@@ -464,18 +464,19 @@ class Article extends \Ilch\Mapper
 
         $sql = 'SELECT COUNT(DISTINCT(id))
                 FROM `[prefix]_articles`
-                LEFT JOIN `[prefix]_articles_access` ON `id` = `article_id`';
+                LEFT JOIN `[prefix]_articles_access` ON `id` = `article_id`
+                WHERE `group_id` IN (';
 
-        if ($date != null) {
-            $sql .= ' WHERE YEAR(date_created) = YEAR("' . $this->db()->escape($date)
-                . '") AND MONTH(date_created) = MONTH("' . $this->db()->escape($date) . '")';
-        }
-
-        $sql .= ' AND `group_id` IN (';
         foreach ($groupIds as $groupId) {
             $sql .= (int)$groupId . ',';
         }
         $sql = rtrim($sql, ',') . ') ';
+
+        if ($date != null) {
+            $sql .= ' AND YEAR(date_created) = YEAR("' . $this->db()->escape($date)
+                . '") AND MONTH(date_created) = MONTH("' . $this->db()->escape($date) . '")';
+        }
+
         return (int)$this->db()->queryCell($sql);
     }
 
@@ -1140,6 +1141,10 @@ class Article extends \Ilch\Mapper
 
         if (isset($articleRow['img'])) {
             $articleModel->setImage($articleRow['img']);
+        }
+
+        if (isset($articleRow['url_thumb'])) {
+            $articleModel->setImageThumb($articleRow['url_thumb']);
         }
 
         if (isset($articleRow['img_source'])) {

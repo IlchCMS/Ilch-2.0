@@ -91,9 +91,8 @@ class Template extends \Ilch\Mapper
         $articleModel->setLocale($articleRow['locale']);
         $articleModel->setTitle($articleRow['title']);
         $articleModel->setTeaser($articleRow['teaser']);
-        $articleModel->setContent($articleRow['content']);
-        $articleModel->setLocale($articleRow['locale']);
         $articleModel->setPerma($articleRow['perma']);
+        $articleModel->setContent($articleRow['content']);
         $articleModel->setImage($articleRow['img']);
         $articleModel->setImageSource($articleRow['img_source']);
 
