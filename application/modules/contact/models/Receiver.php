@@ -12,30 +12,30 @@ class Receiver extends \Ilch\Model
     /**
      * The id of the receiver.
      *
-     * @var int
+     * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The name of the receiver.
      *
-     * @var string
+     * @var string|null
      */
-    protected $name;
+    protected ?string $name = null;
 
     /**
      * The email of the receiver.
      *
-     * @var string
+     * @var string|null
      */
-    protected $email;
+    protected ?string $email = null;
 
     /**
      * Gets the id of the receiver.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -44,11 +44,11 @@ class Receiver extends \Ilch\Model
      * Sets the id of the receiver.
      *
      * @param int $id
-     * @return this
+     * @return Receiver
      */
-    public function setId($id)
+    public function setId(int $id): Receiver
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -56,9 +56,9 @@ class Receiver extends \Ilch\Model
     /**
      * Gets the name of the receiver.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -67,11 +67,11 @@ class Receiver extends \Ilch\Model
      * Sets the name of the receiver.
      *
      * @param string $name
-     * @return this
+     * @return Receiver
      */
-    public function setName($name)
+    public function setName(string $name): Receiver
     {
-        $this->name = (string)$name;
+        $this->name = $name;
 
         return $this;
     }
@@ -79,9 +79,9 @@ class Receiver extends \Ilch\Model
     /**
      * Gets the email of the receiver.
      *
-     * @return string
+     * @return string|null
      */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -90,11 +90,11 @@ class Receiver extends \Ilch\Model
      * Sets the email of the receiver.
      *
      * @param string $email
-     * @return this
+     * @return Receiver
      */
-    public function setEmail($email)
+    public function setEmail(string $email): Receiver
     {
-        $this->email = (string)$email;
+        $this->email = $email;
 
         return $this;
     }

@@ -21,7 +21,7 @@ class Receiver extends \Ilch\Mapper
      *
      * @return ReceiverModel[]|null
      */
-    public function getReceivers()
+    public function getReceivers(): ?array
     {
         $sql = 'SELECT *
                 FROM `[prefix]_contact_receivers`';
@@ -46,10 +46,10 @@ class Receiver extends \Ilch\Mapper
     /**
      * Gets receiver.
      *
-     * @param integer $id
+     * @param int $id
      * @return ReceiverModel|null
      */
-    public function getReceiverById($id)
+    public function getReceiverById(int $id): ?ReceiverModel
     {
         $sql = 'SELECT *
                 FROM [prefix]_contact_receivers
@@ -73,7 +73,7 @@ class Receiver extends \Ilch\Mapper
      *
      * @param ReceiverModel $receiver
      */
-    public function save(ReceiverModel $receiver)
+    public function save(ReceiverModel $receiver): void
     {
         if ($receiver->getId()) {
             $this->db()->update('contact_receivers')
@@ -90,9 +90,9 @@ class Receiver extends \Ilch\Mapper
     /**
      * Deletes receiver with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
-    public function delete($id)
+    public function delete(int $id): void
     {
         $this->db()->delete('contact_receivers')
             ->where(['id' => $id])
