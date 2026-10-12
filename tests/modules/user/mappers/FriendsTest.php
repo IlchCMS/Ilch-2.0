@@ -114,6 +114,24 @@ class FriendsTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that hasOpenFriendRequest() only detects open requests (approved = 2).
+     */
+    public function testHasOpenFriendRequest()
+    {
+        // User 1 sent an open request to user 3 (row: user_id = 1, friend_user_id = 3).
+        self::assertTrue($this->out->hasOpenFriendRequest(1, 3));
+
+        // The approved relation 1 -> 2 is not an open request.
+        self::assertFalse($this->out->hasOpenFriendRequest(1, 2));
+
+        // No request from user 2 to user 3.
+        self::assertFalse($this->out->hasOpenFriendRequest(2, 3));
+
+        // No self-requests.
+        self::assertFalse($this->out->hasOpenFriendRequest(1, 1));
+    }
+
+    /**
      * Tests that getOpenFriendRequests() returns an empty array when there are no open requests.
      */
     public function testGetOpenFriendRequestsNone()
@@ -188,6 +206,17 @@ class FriendsTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that addFriend() does not create a self-relation.
+     */
+    public function testAddFriendDoesNotAddSelf()
+    {
+        $this->out->addFriend(1, 1);
+
+        self::assertFalse($this->out->hasFriend(1, 1));
+        self::assertCount(1, $this->out->getFriendsByUserId(1));
+    }
+
+    /**
      * Tests that approveFriendRequest() approves only the requested direction.
      */
     public function testApproveFriendRequest()
@@ -204,6 +233,18 @@ class FriendsTest extends DatabaseTestCase
         self::assertCount(1, $this->out->getFriendsByUserId(3));
 
         self::assertCount(0, $this->out->getOpenFriendRequests(3));
+    }
+
+    /**
+     * Tests that approveFriendRequest() with swapped arguments updates nothing.
+     */
+    public function testApproveFriendRequestSwappedArguments()
+    {
+        // Would match user_id = 3, friend_user_id = 1, which does not exist.
+        $this->out->approveFriendRequest(1, 3);
+
+        self::assertCount(1, $this->out->getFriendsByUserId(1));
+        self::assertCount(1, $this->out->getOpenFriendRequests(3));
     }
 
     /**
