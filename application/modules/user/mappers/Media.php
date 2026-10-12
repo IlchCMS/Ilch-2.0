@@ -12,31 +12,41 @@ use Modules\User\Models\Media as MediaModel;
 class Media extends \Ilch\Mapper
 {
     /**
-     * Gets the Media Lists by ending.
+     * Gets the media list by ending.
      *
      * @param int $userId
-     * @param string|null $ending
+     * @param string|null $ending Space-separated list of endings (e.g. "jpg jpeg png"). Returns null when null or empty.
      * @param \Ilch\Pagination|null $pagination
-     * @return MediaModel[]|array
+     * @return MediaModel[]|null
      * @throws \Ilch\Database\Exception
      */
     public function getMediaListByEnding(int $userId, ?string $ending = null, ?\Ilch\Pagination $pagination = null): ?array
     {
-        if ($pagination) {
+        $endings = array_values(array_filter(explode(' ', trim((string) $ending))));
+
+        if (empty($endings)) {
+            return null;
+        }
+
+        $escapedEndings = implode(',', $this->db()->escapeArray($endings, true));
+        $where = 'user_id = ' . (int) $userId . ' AND ending IN (' . $escapedEndings . ')';
+
+        if ($pagination !== null) {
             $sqlCountOfRows = 'SELECT COUNT(*)
                 FROM `[prefix]_users_media`
-                WHERE user_id = ' . $userId . ' AND ending IN (' . implode(',', $this->db()->escapeArray(explode(' ', $ending), true)) . ')';
+                WHERE ' . $where;
 
-            $pagination->setRows($this->db()->querycell($sqlCountOfRows));
+            $pagination->setRows($this->db()->queryCell($sqlCountOfRows));
         }
 
         $sql = 'SELECT *
                 FROM `[prefix]_users_media`
-                WHERE user_id = ' . $userId . ' AND ending IN ('
-                    . implode(',', $this->db()->escapeArray(explode(' ', $ending), true))
-                    . ')
-                ORDER by id DESC
-                LIMIT ' . implode(',', $pagination->getLimit());
+                WHERE ' . $where . '
+                ORDER by id DESC';
+
+        if ($pagination !== null) {
+            $sql .= ' LIMIT ' . implode(',', $pagination->getLimit());
+        }
 
         $mediaArray = $this->db()->queryArray($sql);
 
@@ -61,16 +71,21 @@ class Media extends \Ilch\Mapper
     }
 
     /**
-     * Gets the Media List Scroll.
+     * Gets the media list scroll.
      *
      * @param int|null $lastId
-     * @return MediaModel[]|array
+     * @return MediaModel[]|null
      */
     public function getMediaListScroll(?int $lastId = null): ?array
     {
-        $mediaRows = $this->db()->select('*')
-            ->from('users_media')
-            ->where(['id <' => (int)$lastId])
+        $query = $this->db()->select('*')
+            ->from('users_media');
+
+        if ($lastId !== null) {
+            $query->where(['id <' => (int) $lastId]);
+        }
+
+        $mediaRows = $query
             ->order(['id' => 'DESC'])
             ->limit(40)
             ->execute()
@@ -97,13 +112,13 @@ class Media extends \Ilch\Mapper
     }
 
     /**
-     * Inserts Media
+     * Inserts media and writes the new auto-increment id back to the model.
      *
      * @param MediaModel $model
      */
     public function save(MediaModel $model): void
     {
-        $this->db()->insert('users_media')
+        $lastInsertId = $this->db()->insert('users_media')
             ->values([
                 'user_id' => $model->getUserId(),
                 'name' => $model->getName(),
@@ -113,6 +128,8 @@ class Media extends \Ilch\Mapper
                 'datetime' => $model->getDatetime(),
             ])
             ->execute();
+
+        $model->setId((int) $lastInsertId);
     }
 
     /**
@@ -127,6 +144,10 @@ class Media extends \Ilch\Mapper
             ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
+
+        if ($mediaRow === null) {
+            return;
+        }
 
         if (file_exists($mediaRow['url'])) {
             unlink($mediaRow['url']);

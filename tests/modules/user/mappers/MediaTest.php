@@ -92,13 +92,20 @@ class MediaTest extends DatabaseTestCase
     }
 
     /**
-     * Tests that getMediaListByEnding() without pagination throws (known issue).
+     * Tests that getMediaListByEnding() works without pagination.
      */
     public function testGetMediaListByEndingWithoutPagination()
     {
-        $this->expectException(\Error::class);
+        $media = $this->out->getMediaListByEnding(1, 'jpg png mp4', null);
 
-        $this->out->getMediaListByEnding(1, 'jpg', null);
+        self::assertNotNull($media);
+        self::assertCount(3, $media);
+
+        $ids = [];
+        foreach ($media as $entry) {
+            $ids[] = $entry->getId();
+        }
+        self::assertSame([3, 2, 1], $ids);
     }
 
     /**
@@ -203,11 +210,20 @@ class MediaTest extends DatabaseTestCase
     }
 
     /**
-     * Tests that getMediaListScroll() without a last id returns null (known issue).
+     * Tests that getMediaListScroll() without a last id returns the first page.
      */
     public function testGetMediaListScrollWithoutLastId()
     {
-        self::assertNull($this->out->getMediaListScroll());
+        $media = $this->out->getMediaListScroll();
+
+        self::assertNotNull($media);
+        self::assertCount(4, $media);
+
+        $ids = [];
+        foreach ($media as $entry) {
+            $ids[] = $entry->getId();
+        }
+        self::assertSame([4, 3, 2, 1], $ids);
     }
 
     /**
