@@ -54,10 +54,12 @@ class GalleryTest extends DatabaseTestCase
         self::assertEquals(1, $items[0]->getType());
         self::assertEquals('Album 1', $items[0]->getTitle());
         self::assertEquals('First album', $items[0]->getDesc());
+        self::assertEquals(1, $items[0]->getSort());
         self::assertEquals(0, $items[0]->getParentId());
 
         self::assertEquals(2, $items[1]->getId());
         self::assertEquals('Album 2', $items[1]->getTitle());
+        self::assertEquals(2, $items[1]->getSort());
     }
 
     /**
@@ -72,6 +74,7 @@ class GalleryTest extends DatabaseTestCase
         self::assertEquals(3, $items[0]->getId());
         self::assertEquals('Photo 1', $items[0]->getTitle());
         self::assertEquals(1, $items[0]->getParentId());
+        self::assertEquals(3, $items[0]->getSort());
     }
 
     /**
@@ -159,6 +162,7 @@ class GalleryTest extends DatabaseTestCase
         self::assertEquals(1, $item->getType());
         self::assertEquals('Album 3', $item->getTitle());
         self::assertEquals('Third album', $item->getDesc());
+        self::assertEquals(4, $item->getSort());
         self::assertEquals(0, $item->getParentId());
     }
 
@@ -246,6 +250,7 @@ class GalleryTest extends DatabaseTestCase
         self::assertEquals('New Album', $after[3]->getTitle());
         self::assertEquals('New album description', $after[3]->getDesc());
         self::assertEquals(0, $after[3]->getParentId());
+        self::assertEquals(10, $after[3]->getSort());
 
         // Items of the other user must be untouched.
         self::assertCount(2, $this->out->getGalleryItems(2));
@@ -272,6 +277,7 @@ class GalleryTest extends DatabaseTestCase
         self::assertEquals(1, $item->getType());
         self::assertEquals(0, $item->getParentId());
         self::assertEquals(1, $item->getUserId());
+        self::assertEquals(1, $item->getSort());
     }
 
     /**
@@ -313,6 +319,7 @@ class GalleryTest extends DatabaseTestCase
         self::assertEquals('Renamed Album 3', $item->getTitle());
         self::assertEquals('Renamed description', $item->getDesc());
         self::assertEquals(2, $item->getType());
+        self::assertEquals(6, $item->getSort());
 
         // With sort 6 the item now comes after item 5 (sort 5).
         $items = $this->out->getGalleryItems(2);
@@ -379,10 +386,8 @@ class GalleryTest extends DatabaseTestCase
 
     /**
      * Tests that saveItem() inserts an item without a description.
-     *
-     * NOTE: see "Issues found" below. On a strict-mode MySQL this test is
-     * expected to fail because the mapper drops null fields while the
-     * `description` column is NOT NULL without a default value.
+     * The mapper falls back to an empty string, so the insert succeeds even on
+     * strict-mode MySQL where `description` is NOT NULL without a default.
      */
     public function testSaveItemInsertWithoutDescription()
     {
@@ -400,6 +405,34 @@ class GalleryTest extends DatabaseTestCase
         self::assertNotNull($item);
         self::assertEquals('No Description', $item->getTitle());
         self::assertEquals('', $item->getDesc());
+    }
+
+    /**
+     * Tests that saveItem() rejects a new item without a title.
+     */
+    public function testSaveItemInsertRequiresTitle()
+    {
+        $model = new GalleryItemModel();
+        $model->setUserId(1)
+            ->setType(1)
+            ->setSort(40);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->out->saveItem($model);
+    }
+
+    /**
+     * Tests that saveItem() rejects a new item without a type.
+     */
+    public function testSaveItemInsertRequiresType()
+    {
+        $model = new GalleryItemModel();
+        $model->setUserId(1)
+            ->setTitle('Missing Type')
+            ->setSort(41);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->out->saveItem($model);
     }
 
     /**
