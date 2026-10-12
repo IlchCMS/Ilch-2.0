@@ -18,7 +18,7 @@ class AuthToken extends \Ilch\Mapper
      * @param string $selector
      * @return AuthTokenModel|null
      */
-    public function getAuthToken($selector)
+    public function getAuthToken(string $selector): ?AuthTokenModel
     {
         $select = $this->db()->select('*');
         $result = $select->from('auth_tokens')
@@ -43,7 +43,7 @@ class AuthToken extends \Ilch\Mapper
      * @param AuthTokenModel $authToken
      * @return int Insert id of the new auth token row
      */
-    public function addAuthToken($authToken)
+    public function addAuthToken(AuthTokenModel $authToken): int
     {
         $insert = $this->db()->insert();
         return $insert->into('auth_tokens')
@@ -57,7 +57,7 @@ class AuthToken extends \Ilch\Mapper
      * @param AuthTokenModel $authToken
      * @return int Number of changed rows
      */
-    public function updateAuthToken($authToken)
+    public function updateAuthToken(AuthTokenModel $authToken): int
     {
         $update = $this->db()->update();
         return $update->table('auth_tokens')
@@ -72,7 +72,7 @@ class AuthToken extends \Ilch\Mapper
      * @param string $selector
      * @return int Number of deleted rows
      */
-    public function deleteAuthToken($selector)
+    public function deleteAuthToken(string $selector): int
     {
         $delete = $this->db()->delete();
         return $delete->from('auth_tokens')
@@ -86,7 +86,7 @@ class AuthToken extends \Ilch\Mapper
      * @param int $userid
      * @return int Number of deleted rows
      */
-    public function deleteAllAuthTokenOfUser($userid)
+    public function deleteAllAuthTokenOfUser(int $userid): int
     {
         $delete = $this->db()->delete();
         return $delete->from('auth_tokens')
@@ -99,7 +99,7 @@ class AuthToken extends \Ilch\Mapper
      *
      * @return int Number of deleted rows
      */
-    public function deleteExpiredAuthTokens()
+    public function deleteExpiredAuthTokens(): int
     {
         $delete = $this->db()->delete();
         return $delete->from('auth_tokens')

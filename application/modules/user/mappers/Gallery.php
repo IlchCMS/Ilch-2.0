@@ -14,7 +14,7 @@ class Gallery extends \Ilch\Mapper
     /**
      * Gets all gallery items by parent item id.
      */
-    public function getGalleryItemsByParent($userId, $itemId)
+    public function getGalleryItemsByParent($userId, $itemId): ?array
     {
         $items = [];
         $itemRows = $this->db()->select('*')
@@ -45,7 +45,7 @@ class Gallery extends \Ilch\Mapper
     /**
      * Gets all gallery items by type.
      */
-    public function getGalleryCatItem($type)
+    public function getGalleryCatItem($type): ?array
     {
         $items = [];
         $itemRows = $this->db()->select('*')
@@ -73,7 +73,7 @@ class Gallery extends \Ilch\Mapper
         return $items;
     }
 
-    public function getGalleryById($id)
+    public function getGalleryById($id): ?GalleryItem
     {
         $itemRows = $this->db()->select('*')
                 ->from('users_gallery_items')
@@ -103,7 +103,7 @@ class Gallery extends \Ilch\Mapper
      * @param int $userId
      * @return null|GalleryItem[];
      */
-    public function getGalleryItems($userId)
+    public function getGalleryItems(int $userId): ?array
     {
         $items = [];
         $itemRows = $this->db()->select('*')
@@ -131,7 +131,7 @@ class Gallery extends \Ilch\Mapper
         return $items;
     }
 
-    public function getCountGalleryByUser($id)
+    public function getCountGalleryByUser($id): int|string|null
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_users_gallery_items`
@@ -146,7 +146,7 @@ class Gallery extends \Ilch\Mapper
      * @param  GalleryItem $galleryItem
      * @return int
      */
-    public function saveItem(GalleryItem $galleryItem)
+    public function saveItem(GalleryItem $galleryItem): int
     {
         $fields = [
             'user_id' => $galleryItem->getUserId(),
@@ -186,9 +186,9 @@ class Gallery extends \Ilch\Mapper
     /**
      * Delete the given gallery item.
      *
-     * @param  GalleryItem $galleryItem
+     * @param GalleryItem $galleryItem
      */
-    public function deleteItem($galleryItem)
+    public function deleteItem(GalleryItem $galleryItem): void
     {
         $this->db()->delete('users_gallery_items')
             ->where(['id' => $galleryItem->getId()])

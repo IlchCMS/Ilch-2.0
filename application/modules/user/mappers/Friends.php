@@ -18,7 +18,7 @@ class Friends extends \Ilch\Mapper
      * @return array|FriendModel[]
      * @since 2.1.20
      */
-    public function getFriendsByUserId($userId)
+    public function getFriendsByUserId(int $userId): array
     {
         $friendsRows = $this->db()->select()
             ->fields(['f.id', 'f.user_id', 'f.friend_user_id', 'f.approved'])
@@ -53,7 +53,7 @@ class Friends extends \Ilch\Mapper
      * @return array|FriendModel[]
      * @since 2.1.20
      */
-    public function getOpenFriendRequests($userId)
+    public function getOpenFriendRequests(int $userId): array
     {
         $friendsRows = $this->db()->select()
             ->fields(['f.id', 'f.user_id', 'f.friend_user_id', 'f.approved'])
@@ -88,7 +88,7 @@ class Friends extends \Ilch\Mapper
      * @param int $approved
      * @since 2.1.20
      */
-    public function addFriend($userId, $friendUserId, $approved = 2)
+    public function addFriend(int $userId, int $friendUserId, int $approved = 2): void
     {
         if ($this->hasFriend($userId, $friendUserId)) {
             return;
@@ -113,7 +113,7 @@ class Friends extends \Ilch\Mapper
      * @return bool
      * @since 2.1.20
      */
-    public function hasFriend($userId, $friendUserId)
+    public function hasFriend(int $userId, int $friendUserId): bool
     {
         return (bool) $this->db()->select('COUNT(*)')
             ->from('user_friends')
@@ -129,7 +129,7 @@ class Friends extends \Ilch\Mapper
      * @param int $friendUserId id of the friend.
      * @since 2.1.20
      */
-    public function approveFriendRequest($userId, $friendUserId)
+    public function approveFriendRequest(int $userId, int $friendUserId): void
     {
         $this->db()->update('user_friends')
             ->values(['approved' => 1])
@@ -143,7 +143,7 @@ class Friends extends \Ilch\Mapper
      * @param int $id
      * @since 2.1.20
      */
-    public function deleteFriendById($id)
+    public function deleteFriendById(int $id): void
     {
         $this->deleteFriend(['id' => $id]);
     }
@@ -155,7 +155,7 @@ class Friends extends \Ilch\Mapper
      * @param int $friendUserId id of friend
      * @since 2.1.20
      */
-    public function deleteFriendOfUser($userId, $friendUserId)
+    public function deleteFriendOfUser(int $userId, int $friendUserId): void
     {
         $this->deleteFriend(['user_id' => $userId, 'friend_user_id' => $friendUserId]);
     }
@@ -166,7 +166,7 @@ class Friends extends \Ilch\Mapper
      * @param int $friendUserId
      * @since 2.1.20
      */
-    public function deleteFriendByFriendUserId($friendUserId)
+    public function deleteFriendByFriendUserId(int $friendUserId): void
     {
         $this->deleteFriend(['friend_user_id' => $friendUserId]);
     }
@@ -177,7 +177,7 @@ class Friends extends \Ilch\Mapper
      * @param int $userId
      * @since 2.1.20
      */
-    public function deleteFriendsByUserId($userId)
+    public function deleteFriendsByUserId(int $userId): void
     {
         $this->deleteFriend(['user_id' => $userId]);
     }
@@ -188,7 +188,7 @@ class Friends extends \Ilch\Mapper
      * @param array $where
      * @since 2.1.20
      */
-    private function deleteFriend($where = [])
+    private function deleteFriend(array $where = []): void
     {
         $this->db()->delete('user_friends')
             ->where($where)

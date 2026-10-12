@@ -85,7 +85,7 @@ class ProfileFields extends \Ilch\Mapper
      * @param int $position
      *
      */
-    public function updatePositionById(int $id, int $position)
+    public function updatePositionById(int $id, int $position): void
     {
         $this->db()->update('profile_fields')
             ->values(['position' => $position])
@@ -147,7 +147,7 @@ class ProfileFields extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function update(int $id)
+    public function update(int $id): void
     {
         $show = (int) $this->db()->select('show')
             ->from('profile_fields')

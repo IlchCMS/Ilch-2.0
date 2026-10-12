@@ -15,12 +15,12 @@ class Media extends \Ilch\Mapper
      * Gets the Media Lists by ending.
      *
      * @param int $userId
-     * @param string $ending
+     * @param string|null $ending
      * @param \Ilch\Pagination|null $pagination
      * @return MediaModel[]|array
      * @throws \Ilch\Database\Exception
      */
-    public function getMediaListByEnding($userId, $ending = null, $pagination = null)
+    public function getMediaListByEnding(int $userId, string $ending = null, \Ilch\Pagination $pagination = null): ?array
     {
         if ($pagination) {
             $sqlCountOfRows = 'SELECT COUNT(*)
@@ -63,10 +63,10 @@ class Media extends \Ilch\Mapper
     /**
      * Gets the Media List Scroll.
      *
-     * @param int $lastId
+     * @param int|null $lastId
      * @return MediaModel[]|array
      */
-    public function getMediaListScroll($lastId = null)
+    public function getMediaListScroll(int $lastId = null): ?array
     {
         $mediaRows = $this->db()->select('*')
             ->from('users_media')
@@ -101,7 +101,7 @@ class Media extends \Ilch\Mapper
      *
      * @param MediaModel $model
      */
-    public function save(MediaModel $model)
+    public function save(MediaModel $model): void
     {
         $this->db()->insert('users_media')
             ->values([
@@ -120,7 +120,7 @@ class Media extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function delMediaById($id)
+    public function delMediaById(int $id): void
     {
         $mediaRow = $this->db()->select('*')
             ->from('users_media')

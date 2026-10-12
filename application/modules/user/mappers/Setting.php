@@ -17,7 +17,7 @@ class Setting extends \Ilch\Mapper
      * @param bool $addFormat
      * @return int|float|string
      */
-    public function getNicebytes($bytes, $format = null, bool $addFormat = true): int|float|string
+    public function getNicebytes($bytes, string $format = null, bool $addFormat = true): int|float|string
     {
         if ($format === null) {
             $format = $bytes < 1000000 ? 'KB' : 'MB';

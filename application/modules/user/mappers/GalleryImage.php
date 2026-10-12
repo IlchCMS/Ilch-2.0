@@ -17,7 +17,7 @@ class GalleryImage extends \Ilch\Mapper
      * @param int $id
      * @return GalleryImageModel|null
      */
-    public function getImageById($id)
+    public function getImageById(int $id): ?GalleryImageModel
     {
         $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'users_gallery_imgs'])
@@ -47,7 +47,7 @@ class GalleryImage extends \Ilch\Mapper
      * @param int $id
      * @return GalleryImageModel|null
      */
-    public function getLastImageByGalleryId($id)
+    public function getLastImageByGalleryId(int $id): ?GalleryImageModel
     {
         $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'users_gallery_imgs'])
@@ -78,7 +78,7 @@ class GalleryImage extends \Ilch\Mapper
      * @param int $id
      * @return false|string|null
      */
-    public function getCountImageById($id)
+    public function getCountImageById(int $id): bool|string|null
     {
         return $this->db()->select('COUNT(*)', 'users_gallery_imgs')
             ->where(['cat' => $id])
@@ -91,7 +91,7 @@ class GalleryImage extends \Ilch\Mapper
      *
      * @param GalleryImageModel $model
      */
-    public function save(GalleryImageModel $model)
+    public function save(GalleryImageModel $model): void
     {
         if ($model->getId()) {
             $this->db()->update('users_gallery_imgs')
@@ -109,10 +109,10 @@ class GalleryImage extends \Ilch\Mapper
      * Get images by gallery id.
      *
      * @param int $id
-     * @param null|\Ilch\Pagination $pagination
+     * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getImageByGalleryId($id, $pagination = null)
+    public function getImageByGalleryId(int $id, \Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'users_gallery_imgs'])
@@ -159,7 +159,7 @@ class GalleryImage extends \Ilch\Mapper
      * @param int $id
      * @return \Ilch\Database\Mysql\Result|int
      */
-    public function deleteById($id)
+    public function deleteById(int $id): \Ilch\Database\Mysql\Result|int
     {
         return $this->db()->delete('users_gallery_imgs')
             ->where(['id' => $id])
@@ -171,7 +171,7 @@ class GalleryImage extends \Ilch\Mapper
      *
      * @param GalleryImageModel $model
      */
-    public function saveVisits(GalleryImageModel $model)
+    public function saveVisits(GalleryImageModel $model): void
     {
         if ($model->getVisits()) {
             $this->db()->update('users_gallery_imgs')
@@ -186,7 +186,7 @@ class GalleryImage extends \Ilch\Mapper
      *
      * @param GalleryImageModel $model
      */
-    public function saveImageTreat(GalleryImageModel $model)
+    public function saveImageTreat(GalleryImageModel $model): void
     {
         $this->db()->update('users_gallery_imgs')
             ->values(['image_title' => $model->getImageTitle(), 'image_description' => $model->getImageDesc()])

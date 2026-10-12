@@ -22,7 +22,7 @@ class Notifications extends \Ilch\Mapper
      * @param int $id
      * @return NotificationModel|null
      */
-    public function getNotificationById(int $id)
+    public function getNotificationById(int $id): ?NotificationModel
     {
         $result = $this->db()->select('*')
             ->from('users_notifications')

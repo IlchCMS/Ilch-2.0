@@ -14,11 +14,11 @@ use Modules\User\Models\AuthProviderModule;
 
 class AuthProvider extends \Ilch\Mapper
 {
-    protected $default_table = 'users_auth_providers';
+    protected string $default_table = 'users_auth_providers';
 
-    public function getProviders($active = true)
+    public function getProviders($active = true): array
     {
-        $providers = array();
+        $providers = [];
 
         $result = $this->db()->select()
             ->fields(['p.key', 'p.name', 'p.icon', 'p.module'])
@@ -50,7 +50,7 @@ class AuthProvider extends \Ilch\Mapper
         return $providers;
     }
 
-    public function getProvider($key)
+    public function getProvider($key): ?object
     {
         $result = $this->db()->select()
             ->fields(['key', 'name', 'icon', 'module'])
@@ -61,9 +61,9 @@ class AuthProvider extends \Ilch\Mapper
         return $result->fetchObject(Provider::class, []);
     }
 
-    public function getProviderModulesByProvider($provider)
+    public function getProviderModulesByProvider($provider): array
     {
-        $providers = array();
+        $providers = [];
 
         $result = $this->db()->select()
             ->fields(['pm.provider', 'pm.module', 'pm.auth_controller', 'pm.auth_action', 'pm.unlink_controller', 'pm.unlink_action'])
@@ -84,7 +84,7 @@ class AuthProvider extends \Ilch\Mapper
         return $providers;
     }
 
-    public function updateModule($provider, $module)
+    public function updateModule($provider, $module): bool
     {
         $result = $this->db()->update(
             'auth_providers',
@@ -95,7 +95,7 @@ class AuthProvider extends \Ilch\Mapper
         return $result === 1;
     }
 
-    public function providerAccountIsLinked($provider, $identifier)
+    public function providerAccountIsLinked($provider, $identifier): bool
     {
         $result = $this->db()->select()
             ->from($this->default_table)
@@ -106,7 +106,7 @@ class AuthProvider extends \Ilch\Mapper
         return $result->getNumRows() > 0;
     }
 
-    public function hasProviderLinked($provider, $user_id)
+    public function hasProviderLinked($provider, $user_id): bool
     {
         $result = $this->db()->select()
             ->from($this->default_table)
@@ -119,7 +119,7 @@ class AuthProvider extends \Ilch\Mapper
         return $result->getNumRows() > 0;
     }
 
-    public function linkProviderWithUser(AuthProviderUser $user)
+    public function linkProviderWithUser(AuthProviderUser $user): bool
     {
         try {
             $this->db()->insert($this->default_table)
@@ -140,7 +140,7 @@ class AuthProvider extends \Ilch\Mapper
         return true;
     }
 
-    public function getUserIdByProvider($provider, $identifier)
+    public function getUserIdByProvider($provider, $identifier): bool|string|null
     {
         return $this->db()->select()
             ->fields('user_id')
@@ -154,7 +154,7 @@ class AuthProvider extends \Ilch\Mapper
             ->fetchCell('user_id');
     }
 
-    public function getLinkedProviderDetails($provider, $user_id)
+    public function getLinkedProviderDetails($provider, $user_id): ?object
     {
         return $this->db()->select()
             ->fields(['user_id', 'provider', 'screen_name', 'identifier', 'oauth_token', 'oauth_token_secret', 'created_at'])
@@ -168,7 +168,7 @@ class AuthProvider extends \Ilch\Mapper
             ->fetchObject(AuthProviderUser::class, []);
     }
 
-    public function unlinkUser($provider, $user_id)
+    public function unlinkUser($provider, $user_id): Result|int
     {
         return $this->db()->delete()
             ->from($this->default_table)
@@ -187,7 +187,7 @@ class AuthProvider extends \Ilch\Mapper
      * @param $user_id
      * @return Result|int
      */
-    public function deleteUser($user_id)
+    public function deleteUser($user_id): Result|int
     {
         return $this->db()->delete()
             ->from($this->default_table)
@@ -195,7 +195,7 @@ class AuthProvider extends \Ilch\Mapper
             ->execute();
     }
 
-    public function authProvidersModuleExistsForProvider($provider, $module)
+    public function authProvidersModuleExistsForProvider($provider, $module): bool
     {
         if (empty($module)) {
             return true;
@@ -209,7 +209,7 @@ class AuthProvider extends \Ilch\Mapper
         return $result->getNumRows() > 0;
     }
 
-    public function deleteProvider($key)
+    public function deleteProvider($key): bool
     {
         $provider = $this->db()->delete('auth_providers', ['key' => $key])->execute();
         $this->db()->delete('users_auth_providers', ['provider' => $key])->execute();
