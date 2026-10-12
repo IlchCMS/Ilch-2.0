@@ -1,3 +1,23 @@
+away:
+  -
+    id: 1
+    user_id: 1
+    reason: 'Vacation'
+    start: '2025-03-01'
+    end: '2025-03-15'
+    text: 'On holiday'
+    status: 2
+    show: 1
+  -
+    id: 2
+    user_id: 2
+    reason: 'Sick leave'
+    start: '2025-04-01'
+    end: '2025-04-02'
+    text: 'Out sick'
+    status: 1
+    show: 0
+
 away_groups:
   -
     group_id: 1
