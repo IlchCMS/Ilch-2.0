@@ -7,6 +7,7 @@
 
 namespace Modules\User\Mappers;
 
+use Modules\Admin\Config\Config as AdminConfig;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
 use Modules\User\Config\Config as ModuleConfig;
@@ -61,6 +62,7 @@ class GalleryImageTest extends DatabaseTestCase
         $image = $this->out->getImageById(4);
 
         self::assertNotNull($image);
+        self::assertEquals(4, $image->getId());
         self::assertEquals('Dangling image', $image->getImageTitle());
         self::assertEquals('References a media entry that does not exist', $image->getImageDesc());
         self::assertEquals(2, $image->getCat());
@@ -73,15 +75,15 @@ class GalleryImageTest extends DatabaseTestCase
     }
 
     /**
-     * Documents that getImageById() does not set the id of the underlying row,
-     * even though "imgid" (g.id) is selected.
+     * Tests that getImageById() sets the id of the underlying row (g.id),
+     * so callers can identify, edit and delete it.
      */
-    public function testGetImageByIdDoesNotSetId()
+    public function testGetImageByIdSetsId()
     {
         $image = $this->out->getImageById(1);
 
         self::assertNotNull($image);
-        self::assertNull($image->getId());
+        self::assertEquals(1, $image->getId());
     }
 
     /**
@@ -92,10 +94,12 @@ class GalleryImageTest extends DatabaseTestCase
         $image = $this->out->getLastImageByGalleryId(1);
 
         self::assertNotNull($image);
+        self::assertEquals(2, $image->getId());
         self::assertEquals(2, $image->getImageId());
         self::assertEquals('Image 2', $image->getImageTitle());
         self::assertEquals('Description 2', $image->getImageDesc());
         self::assertEquals('https://www.ilch.de/thumb_media2.jpg', $image->getImageThumb());
+        self::assertEquals(1, $image->getCat());
         self::assertEquals(5, $image->getVisits());
     }
 
@@ -116,8 +120,10 @@ class GalleryImageTest extends DatabaseTestCase
         $image = $this->out->getLastImageByGalleryId(2);
 
         self::assertNotNull($image);
+        self::assertEquals(4, $image->getId());
         self::assertEquals('Dangling image', $image->getImageTitle());
         self::assertEquals(99, $image->getImageId());
+        self::assertEquals(2, $image->getCat());
         self::assertEquals(null, $image->getImageThumb());
     }
 
@@ -165,10 +171,8 @@ class GalleryImageTest extends DatabaseTestCase
     }
 
     /**
-     * Documents the inconsistency for images with a missing media entry:
-     * getImageByGalleryId() maps $entry['id'] (the media id, m.id) into
-     * setImageId(), which is null here, while getImageById() returns the
-     * actual g.image_id (99) for the same row.
+     * Tests that getImageByGalleryId() returns the actual g.image_id for images
+     * with a missing media entry, consistently with getImageById().
      * See testGetImageByIdWithMissingMedia() for comparison.
      */
     public function testGetImageByGalleryIdWithMissingMedia()
@@ -181,7 +185,7 @@ class GalleryImageTest extends DatabaseTestCase
         // Ordered by id DESC: the dangling image (id 4) comes first.
         self::assertEquals(4, $images[0]->getId());
         self::assertEquals('Dangling image', $images[0]->getImageTitle());
-        self::assertEquals(null, $images[0]->getImageId());
+        self::assertEquals(99, $images[0]->getImageId());
         self::assertEquals(null, $images[0]->getImageUrl());
 
         self::assertEquals(3, $images[1]->getId());
@@ -338,10 +342,10 @@ class GalleryImageTest extends DatabaseTestCase
     }
 
     /**
-     * Documents that saveVisits() with a visits value of 0 is ignored, so the
-     * visit count can never be reset to 0.
+     * Tests that saveVisits() stores a visits value of 0, so the visit count
+     * can be reset.
      */
-    public function testSaveVisitsZeroIsIgnored()
+    public function testSaveVisitsZeroIsStored()
     {
         $model = new GalleryImageModel();
         $model->setImageId('1')
@@ -351,7 +355,7 @@ class GalleryImageTest extends DatabaseTestCase
 
         $image = $this->out->getImageById(1);
         self::assertNotNull($image);
-        self::assertEquals(10, $image->getVisits());
+        self::assertEquals(0, $image->getVisits());
     }
 
     /**
@@ -417,39 +421,15 @@ class GalleryImageTest extends DatabaseTestCase
     }
 
     /**
-     * Returns database schema SQL statements to initialize database.
-     *
-     * The user modules install SQL depends on two core tables created by the
-     * admin module ([prefix]_modules and [prefix]_emails). They are created
-     * here (IF NOT EXISTS) so that the schema stays self-contained when the
-     * test bootstrap does not provide them already.
+     * Returns database schema sql statements to initialize database.
      *
      * @return string
      */
     protected static function getSchemaSQLQueries(): string
     {
         $config = new ModuleConfig();
+        $configAdmin = new AdminConfig();
 
-        $coreTables = 'CREATE TABLE IF NOT EXISTS `[prefix]_modules` (
-                `key` VARCHAR(191) NOT NULL,
-                `system` TINYINT(1) NOT NULL DEFAULT 0,
-                `layout` TINYINT(1) NOT NULL DEFAULT 0,
-                `hide_menu` TINYINT(1) NOT NULL DEFAULT 0,
-                `author` VARCHAR(255) NULL DEFAULT NULL,
-                `version` VARCHAR(255) NULL DEFAULT NULL,
-                `link` VARCHAR(255) NULL DEFAULT NULL,
-                `icon_small` VARCHAR(255) NOT NULL,
-                UNIQUE KEY `key` (`key`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-            CREATE TABLE IF NOT EXISTS `[prefix]_emails` (
-                `moduleKey` VARCHAR(255) NOT NULL,
-                `type` VARCHAR(255) NOT NULL,
-                `desc` VARCHAR(255) NOT NULL,
-                `text` TEXT NOT NULL,
-                `locale` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;';
-
-        return $coreTables . $config->getInstallSql();
+        return $configAdmin->getInstallSql() . $config->getInstallSql();
     }
 }

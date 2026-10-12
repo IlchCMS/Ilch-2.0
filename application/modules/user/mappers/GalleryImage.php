@@ -31,6 +31,7 @@ class GalleryImage extends \Ilch\Mapper
         }
 
         $entryModel = new GalleryImageModel();
+        $entryModel->setId($imageRow['imgid']);
         $entryModel->setImageId($imageRow['image_id']);
         $entryModel->setImageUrl($imageRow['url']);
         $entryModel->setImageTitle($imageRow['image_title']);
@@ -63,10 +64,12 @@ class GalleryImage extends \Ilch\Mapper
         }
 
         $entryModel = new GalleryImageModel();
+        $entryModel->setId($imageRow['imgid']);
         $entryModel->setImageId($imageRow['image_id']);
         $entryModel->setImageThumb($imageRow['url_thumb']);
         $entryModel->setImageTitle($imageRow['image_title']);
         $entryModel->setImageDesc($imageRow['image_description']);
+        $entryModel->setCat($imageRow['cat']);
         $entryModel->setVisits($imageRow['visits']);
 
         return $entryModel;
@@ -88,6 +91,10 @@ class GalleryImage extends \Ilch\Mapper
 
     /**
      * Inserts or updates Image entry.
+     *
+     * Note: the update branch is a silent no-op for unknown ids, and the insert
+     * branch does not persist image_title/image_description (column defaults
+     * apply; use saveImageTreat() for those).
      *
      * @param GalleryImageModel $model
      */
@@ -142,7 +149,7 @@ class GalleryImage extends \Ilch\Mapper
             $galleryImageModel->setImageUrl($entry['url']);
             $galleryImageModel->setImageThumb($entry['url_thumb']);
             $galleryImageModel->setId($entry['imgid']);
-            $galleryImageModel->setImageId($entry['id']);
+            $galleryImageModel->setImageId($entry['image_id']);
             $galleryImageModel->setImageTitle($entry['image_title']);
             $galleryImageModel->setImageDesc($entry['image_description']);
             $galleryImageModel->setVisits($entry['visits']);
@@ -169,16 +176,18 @@ class GalleryImage extends \Ilch\Mapper
     /**
      * Updates visits.
      *
+     * Note: the update is done by image_id (the media entry), so all gallery
+     * images referencing the same media entry receive the new visit count.
+     * A value of 0 is stored as well, so the counter can be reset.
+     *
      * @param GalleryImageModel $model
      */
     public function saveVisits(GalleryImageModel $model): void
     {
-        if ($model->getVisits()) {
-            $this->db()->update('users_gallery_imgs')
-                ->values(['visits' => $model->getVisits()])
-                ->where(['image_id' => $model->getImageId()])
-                ->execute();
-        }
+        $this->db()->update('users_gallery_imgs')
+            ->values(['visits' => $model->getVisits()])
+            ->where(['image_id' => $model->getImageId()])
+            ->execute();
     }
 
     /**
