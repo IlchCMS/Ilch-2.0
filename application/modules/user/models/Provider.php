@@ -11,62 +11,64 @@ class Provider extends \Ilch\Model
 {
     /**
      * Unique key
-     * @var string
+     * @var string|null
      */
-    protected $key;
+    protected ?string $key = null;
 
     /**
      * Human readable name
-     * @var string
+     * @var string|null
      */
-    protected $name;
+    protected ?string $name = null;
 
     /**
      * Font-awesome icon
-     * @var string
+     * @var string|null
      */
-    protected $icon;
+    protected ?string $icon = null;
 
     /**
      * Module providing the auth functionality of this provider
-     * @var string
-    */
-    protected $module;
+     * @var string|null
+     */
+    protected ?string $module = null;
 
     /**
      * Controller that performs the authentication
-     * @var string
+     * @var string|null
      */
-    protected $auth_controller;
+    protected ?string $auth_controller = null;
 
     /**
      * Action that performs the authentication
-     * @var string
+     * @var string|null
      */
-    protected $auth_action;
+    protected ?string $auth_action = null;
 
     /**
      * Controller that performs the unlink
-     * @var string
+     * @var string|null
      */
-    protected $unlink_controller;
+    protected ?string $unlink_controller = null;
 
     /**
      * Action that performs the unlink
-     * @var string
+     * @var string|null
      */
-    protected $unlink_action;
+    protected ?string $unlink_action = null;
 
     /**
      * The localised module name.
-     * @var string
+     * @var string|null
      */
-    protected $module_name;
+    protected ?string $module_name = null;
 
     /**
      * Constructor
+     *
+     * @param array $params
      */
-    public function __construct($params = [])
+    public function __construct(array $params = [])
     {
         //
     }
@@ -74,9 +76,9 @@ class Provider extends \Ilch\Model
     /**
      * Gets the Unique key.
      *
-     * @return string
+     * @return string|null
      */
-    public function getKey(): string
+    public function getKey(): ?string
     {
         return $this->key;
     }
@@ -84,11 +86,11 @@ class Provider extends \Ilch\Model
     /**
      * Sets the Unique key.
      *
-     * @param mixed $key the key
+     * @param string|null $key the key
      *
-     * @return self
+     * @return Provider
      */
-    protected function setKey($key): Provider
+    public function setKey(?string $key): Provider
     {
         $this->key = $key;
 
@@ -98,9 +100,9 @@ class Provider extends \Ilch\Model
     /**
      * Gets the Human readable name.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -108,11 +110,11 @@ class Provider extends \Ilch\Model
     /**
      * Sets the Human readable name.
      *
-     * @param string $name the name
+     * @param string|null $name the name
      *
-     * @return self
+     * @return Provider
      */
-    protected function setName(string $name): Provider
+    public function setName(?string $name): Provider
     {
         $this->name = $name;
 
@@ -122,9 +124,9 @@ class Provider extends \Ilch\Model
     /**
      * Gets the Font-awesome icon.
      *
-     * @return string
+     * @return string|null
      */
-    public function getIcon(): string
+    public function getIcon(): ?string
     {
         return $this->icon;
     }
@@ -132,11 +134,11 @@ class Provider extends \Ilch\Model
     /**
      * Sets the Font-awesome icon.
      *
-     * @param string $icon the icon
+     * @param string|null $icon the icon
      *
-     * @return self
+     * @return Provider
      */
-    protected function setIcon(string $icon): Provider
+    public function setIcon(?string $icon): Provider
     {
         $this->icon = $icon;
 
@@ -156,11 +158,11 @@ class Provider extends \Ilch\Model
     /**
      * Sets the Module providing the auth functionality of this provider.
      *
-     * @param string $module the module
+     * @param string|null $module the module
      *
-     * @return self
+     * @return Provider
      */
-    protected function setModule(string $module): Provider
+    public function setModule(?string $module): Provider
     {
         $this->module = $module;
 
@@ -180,11 +182,11 @@ class Provider extends \Ilch\Model
     /**
      * Sets the value of auth_controller.
      *
-     * @param string $auth_controller the auth controller
+     * @param string|null $auth_controller the auth controller
      *
-     * @return self
+     * @return Provider
      */
-    protected function setAuthController(string $auth_controller): Provider
+    public function setAuthController(?string $auth_controller): Provider
     {
         $this->auth_controller = $auth_controller;
 
@@ -204,11 +206,11 @@ class Provider extends \Ilch\Model
     /**
      * Sets the value of auth_action.
      *
-     * @param string $auth_action the auth action
+     * @param string|null $auth_action the auth action
      *
-     * @return self
+     * @return Provider
      */
-    protected function setAuthAction(string $auth_action): Provider
+    public function setAuthAction(?string $auth_action): Provider
     {
         $this->auth_action = $auth_action;
 
@@ -228,11 +230,11 @@ class Provider extends \Ilch\Model
     /**
      * Sets the value of unlink_controller.
      *
-     * @param string $unlink_controller the unlink controller
+     * @param string|null $unlink_controller the unlink controller
      *
-     * @return self
+     * @return Provider
      */
-    protected function setUnlinkController(string $unlink_controller): Provider
+    public function setUnlinkController(?string $unlink_controller): Provider
     {
         $this->unlink_controller = $unlink_controller;
 
@@ -252,11 +254,11 @@ class Provider extends \Ilch\Model
     /**
      * Sets the value of unlink_action.
      *
-     * @param string $unlink_action the unlink action
+     * @param string|null $unlink_action the unlink action
      *
-     * @return self
+     * @return Provider
      */
-    protected function setUnlinkAction(string $unlink_action): Provider
+    public function setUnlinkAction(?string $unlink_action): Provider
     {
         $this->unlink_action = $unlink_action;
 
@@ -276,12 +278,13 @@ class Provider extends \Ilch\Model
     /**
      * Set the localised module name.
      *
-     * @param string $module_name
+     * @param string|null $module_name
      * @return Provider
      */
-    protected function setModuleName(string $module_name): Provider
+    public function setModuleName(?string $module_name): Provider
     {
         $this->module_name = $module_name;
+
         return $this;
     }
 }

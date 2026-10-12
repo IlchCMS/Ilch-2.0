@@ -25,14 +25,14 @@ class User extends \Ilch\Model
      *
      * @var string
      */
-    protected $name;
+    protected string $name = '';
 
     /**
      * The email address of the user.
      *
      * @var string
      */
-    protected $email;
+    protected string $email = '';
 
     /**
      * The firstname of the user.
@@ -53,7 +53,7 @@ class User extends \Ilch\Model
      *
      * @var int
      */
-    protected $gender;
+    protected int $gender = 0;
 
     /**
      * The city of the user.
@@ -63,11 +63,11 @@ class User extends \Ilch\Model
     protected ?string $city = null;
 
     /**
-     * The \Ilch\Date of when the user got created.
+     * The birthday of the user.
      *
-     * @var Date
+     * @var string|null
      */
-    protected $birthday;
+    protected ?string $birthday = null;
 
     /**
      * The avatar of the user.
@@ -88,14 +88,14 @@ class User extends \Ilch\Model
      *
      * @var string
      */
-    protected $password;
+    protected string $password = '';
 
     /**
      * The locale of the user.
      *
      * @var string
      */
-    protected $locale;
+    protected string $locale = '';
 
     /**
      * The opt_mail of the user.
@@ -129,58 +129,58 @@ class User extends \Ilch\Model
     /**
      * The \Ilch\Date of when the user got created.
      *
-     * @var Date
+     * @var Date|null
      */
-    protected $dateCreated;
+    protected ?Date $dateCreated = null;
 
     /**
      * The \Ilch\Date of when the user got confirmed.
      *
-     * @var Date
+     * @var Date|null
      */
-    protected $dateConfirmed;
+    protected ?Date $dateConfirmed = null;
 
     /**
      * LastActivity timestamp of the user.
      *
-     * @var Date
+     * @var Date|null
      */
-    protected $dateLastActivity;
+    protected ?Date $dateLastActivity = null;
 
     /**
      * Confirmed of the user.
      *
      * @var int
      */
-    protected $confirmed;
+    protected int $confirmed = 0;
 
     /**
      * Confirmed Code of the user.
      *
      * @var string
      */
-    protected $confirmedCode;
+    protected string $confirmedCode = '';
 
     /**
      * selector of the user.
      *
      * @var string
      */
-    protected $selector;
+    protected string $selector = '';
 
     /**
      * date at which the confirmCode expires.
      *
-     * @var Date
+     * @var Date|null
      */
-    protected $expires;
+    protected ?Date $expires = null;
 
     /**
      * The associated user group object.
      *
      * @var Group[]
      */
-    protected $groups = [];
+    protected array $groups = [];
 
     /**
      * Indicates if user is locked.
@@ -192,14 +192,14 @@ class User extends \Ilch\Model
     /**
      * Selects Delete timestamp of the user.
      *
-     * @var Date
+     * @var Date|null
      */
-    protected $selectsdelete;
+    protected ?Date $selectsdelete = null;
 
     /**
      * Returns the id of the user.
      *
-     * @return int
+     * @return int|null
      */
     public function getId(): ?int
     {
@@ -224,7 +224,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -247,7 +247,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -270,7 +270,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -410,7 +410,7 @@ class User extends \Ilch\Model
      *
      * @return int
      */
-    public function getConfirmed()
+    public function getConfirmed(): int
     {
         return $this->confirmed;
     }
@@ -433,7 +433,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getConfirmedCode()
+    public function getConfirmedCode(): string
     {
         return $this->confirmedCode;
     }
@@ -456,7 +456,7 @@ class User extends \Ilch\Model
      *
      * @return string
      */
-    public function getSelector()
+    public function getSelector(): string
     {
         return $this->selector;
     }
@@ -477,9 +477,9 @@ class User extends \Ilch\Model
     /**
      * Get date at which the confirm code expires.
      *
-     * @return Date
+     * @return Date|null
      */
-    public function getExpires()
+    public function getExpires(): ?Date
     {
         return $this->expires;
     }
@@ -487,10 +487,10 @@ class User extends \Ilch\Model
     /**
      * Set date at which the confirm code expires.
      *
-     * @param $expires
+     * @param Date|null $expires
      * @return User
      */
-    public function setExpires($expires): User
+    public function setExpires(?Date $expires): User
     {
         $this->expires = $expires;
 
@@ -553,9 +553,9 @@ class User extends \Ilch\Model
     /**
      * Returns the date_created \Ilch\Date of the user.
      *
-     * @return Date
+     * @return Date|null
      */
-    public function getDateCreated()
+    public function getDateCreated(): ?Date
     {
         return $this->dateCreated;
     }
@@ -566,7 +566,7 @@ class User extends \Ilch\Model
      * @param Date $dateCreated
      * @return User
      */
-    public function setDateCreated($dateCreated): User
+    public function setDateCreated(Date $dateCreated): User
     {
         $this->dateCreated = $dateCreated;
 
@@ -576,9 +576,9 @@ class User extends \Ilch\Model
     /**
      * Returns the date_confirmed timestamp of the user.
      *
-     * @return Date
+     * @return Date|null
      */
-    public function getDateConfirmed()
+    public function getDateConfirmed(): ?Date
     {
         return $this->dateConfirmed;
     }
@@ -589,7 +589,7 @@ class User extends \Ilch\Model
      * @param Date $dateConfirmed
      * @return User
      */
-    public function setDateConfirmed($dateConfirmed): User
+    public function setDateConfirmed(Date $dateConfirmed): User
     {
         $this->dateConfirmed = $dateConfirmed;
 
@@ -599,20 +599,20 @@ class User extends \Ilch\Model
     /**
      * Returns the date_LastActivity timestamp of the user.
      *
-     * @return Date
+     * @return Date|null
      */
-    public function getDateLastActivity()
+    public function getDateLastActivity(): ?Date
     {
         return $this->dateLastActivity;
     }
 
     /**
-     * Saves the date_LastActivity timestamp of the user.
+     * Saves the date_LastActivity \Ilch\Date of the user.
      *
      * @param Date $dateLastActivity
      * @return User
      */
-    public function setDateLastActivity($dateLastActivity): User
+    public function setDateLastActivity(Date $dateLastActivity): User
     {
         $this->dateLastActivity = $dateLastActivity;
 
@@ -670,7 +670,7 @@ class User extends \Ilch\Model
      *
      * @return int
      */
-    public function getGender()
+    public function getGender(): int
     {
         return $this->gender;
     }
@@ -758,25 +758,26 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Returns the date_created \Ilch\Date of the user.
+     * Returns the birthday of the user.
      *
-     * @return Date
+     * @return string
      */
-    public function getBirthday()
+    public function getBirthday(): string
     {
-        if ($this->birthday == '0000-00-00') {
+        if ($this->birthday === null || $this->birthday === '0000-00-00') {
             return '';
         }
+
         return $this->birthday;
     }
 
     /**
-     * Saves the date_created \Ilch\Date of the user.
+     * Saves the birthday of the user.
      *
-     * @param Date $birthday
+     * @param string $birthday
      * @return User
      */
-    public function setBirthday($birthday): User
+    public function setBirthday(string $birthday): User
     {
         $this->birthday = $birthday;
 
@@ -809,9 +810,9 @@ class User extends \Ilch\Model
     /**
      * Returns the selectsdelete \Ilch\Date of the user.
      *
-     * @return Date
+     * @return Date|null
      */
-    public function getSelectsDelete()
+    public function getSelectsDelete(): ?Date
     {
         return $this->selectsdelete;
     }
@@ -822,7 +823,7 @@ class User extends \Ilch\Model
      * @param Date $selectsdelete
      * @return User
      */
-    public function setSelectsDelete($selectsdelete): User
+    public function setSelectsDelete(Date $selectsdelete): User
     {
         $this->selectsdelete = $selectsdelete;
         return $this;
@@ -851,7 +852,7 @@ class User extends \Ilch\Model
      * @return bool            True if access granted, false otherwise.
      *
      * @todo Remove from user model and create acl class
-     * @todo refactor -> kein Abhängigkeiten zu anderen Klassen, die keine Models sind
+     * @todo refactor -> no dependencies on other classes that are not Models
      */
     public function hasAccess(string $key, bool $isInAdmin = true): bool
     {

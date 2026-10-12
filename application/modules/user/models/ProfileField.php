@@ -79,7 +79,7 @@ class ProfileField extends Model
      *
      * @var int
      */
-    protected int $position;
+    protected int $position = 0;
 
     /**
      * Returns the id of the profile-field.

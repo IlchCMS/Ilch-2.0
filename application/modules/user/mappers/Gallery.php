@@ -14,15 +14,15 @@ class Gallery extends \Ilch\Mapper
     /**
      * Gets all gallery items by parent item id.
      */
-    public function getGalleryItemsByParent($userId, $itemId)
+    public function getGalleryItemsByParent($userId, $itemId): ?array
     {
         $items = [];
         $itemRows = $this->db()->select('*')
-                ->from('users_gallery_items')
-                ->where(['user_id' => $userId, 'parent_id' => $itemId])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
+            ->from('users_gallery_items')
+            ->where(['user_id' => $userId, 'parent_id' => $itemId])
+            ->order(['sort' => 'ASC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($itemRows)) {
             return null;
@@ -34,6 +34,7 @@ class Gallery extends \Ilch\Mapper
             $itemModel->setType($itemRow['type']);
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
+            $itemModel->setSort($itemRow['sort']);
             $itemModel->setParentId($itemId);
             $itemModel->setUserId($userId);
             $items[] = $itemModel;
@@ -45,15 +46,15 @@ class Gallery extends \Ilch\Mapper
     /**
      * Gets all gallery items by type.
      */
-    public function getGalleryCatItem($type)
+    public function getGalleryCatItem($type): ?array
     {
         $items = [];
         $itemRows = $this->db()->select('*')
-                ->from('users_gallery_items')
-                ->where(['type' => $type])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
+            ->from('users_gallery_items')
+            ->where(['type' => $type])
+            ->order(['sort' => 'ASC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($itemRows)) {
             return null;
@@ -66,6 +67,7 @@ class Gallery extends \Ilch\Mapper
             $itemModel->setType($itemRow['type']);
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
+            $itemModel->setSort($itemRow['sort']);
             $itemModel->setParentId($itemRow['parent_id']);
             $items[] = $itemModel;
         }
@@ -73,14 +75,14 @@ class Gallery extends \Ilch\Mapper
         return $items;
     }
 
-    public function getGalleryById($id)
+    public function getGalleryById($id): ?GalleryItem
     {
         $itemRows = $this->db()->select('*')
-                ->from('users_gallery_items')
-                ->where(['id' => $id])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchAssoc();
+            ->from('users_gallery_items')
+            ->where(['id' => $id])
+            ->order(['sort' => 'ASC'])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($itemRows)) {
             return null;
@@ -92,6 +94,7 @@ class Gallery extends \Ilch\Mapper
         $itemModel->setType($itemRows['type']);
         $itemModel->setTitle($itemRows['title']);
         $itemModel->setDesc($itemRows['description']);
+        $itemModel->setSort($itemRows['sort']);
         $itemModel->setParentId($itemRows['parent_id']);
 
         return $itemModel;
@@ -103,15 +106,15 @@ class Gallery extends \Ilch\Mapper
      * @param int $userId
      * @return null|GalleryItem[];
      */
-    public function getGalleryItems($userId)
+    public function getGalleryItems(int $userId): ?array
     {
         $items = [];
         $itemRows = $this->db()->select('*')
-                ->from('users_gallery_items')
-                ->where(['user_id' => $userId])
-                ->order(['sort' => 'ASC'])
-                ->execute()
-                ->fetchRows();
+            ->from('users_gallery_items')
+            ->where(['user_id' => $userId])
+            ->order(['sort' => 'ASC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($itemRows)) {
             return null;
@@ -124,6 +127,7 @@ class Gallery extends \Ilch\Mapper
             $itemModel->setType($itemRow['type']);
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setDesc($itemRow['description']);
+            $itemModel->setSort($itemRow['sort']);
             $itemModel->setParentId($itemRow['parent_id']);
             $items[] = $itemModel;
         }
@@ -131,13 +135,16 @@ class Gallery extends \Ilch\Mapper
         return $items;
     }
 
-    public function getCountGalleryByUser($id)
+    /**
+     * Gets the number of root gallery items (parent_id = 0) of a user.
+     */
+    public function getCountGalleryByUser(int $userId): int
     {
-        $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_users_gallery_items`
-                WHERE `user_id` = ' . $id . ' AND `parent_id` = 0';
-
-        return $this->db()->queryCell($sql);
+        return (int)$this->db()->select('COUNT(*)')
+            ->from('users_gallery_items')
+            ->where(['user_id' => $userId, 'parent_id' => 0])
+            ->execute()
+            ->fetchCell();
     }
 
     /**
@@ -145,8 +152,9 @@ class Gallery extends \Ilch\Mapper
      *
      * @param  GalleryItem $galleryItem
      * @return int
+     * @throws \InvalidArgumentException if a new item is missing a required field
      */
-    public function saveItem(GalleryItem $galleryItem)
+    public function saveItem(GalleryItem $galleryItem): int
     {
         $fields = [
             'user_id' => $galleryItem->getUserId(),
@@ -157,12 +165,6 @@ class Gallery extends \Ilch\Mapper
             'description' => $galleryItem->getDesc()
         ];
 
-        foreach ($fields as $key => $value) {
-            if ($value === null) {
-                unset($fields[$key]);
-            }
-        }
-
         $itemId = (int)$this->db()->select('id')
             ->from('users_gallery_items')
             ->where(['id' => $galleryItem->getId()])
@@ -170,11 +172,34 @@ class Gallery extends \Ilch\Mapper
             ->fetchCell();
 
         if ($itemId) {
-            $this->db()->update('users_gallery_items')
-                ->values($fields)
-                ->where(['id' => $itemId])
-                ->execute();
+            // Only update the fields that were actually set,
+            // the rest keeps its old database values.
+            $updateFields = array_filter($fields, function ($value) {
+                return $value !== null;
+            });
+
+            if ($updateFields !== []) {
+                $this->db()->update('users_gallery_items')
+                    ->values($updateFields)
+                    ->where(['id' => $itemId])
+                    ->execute();
+            }
         } else {
+            // `user_id`, `title` and `type` are NOT NULL columns without a
+            // default value, so a new item must provide them.
+            foreach (['user_id', 'title', 'type'] as $requiredField) {
+                if ($fields[$requiredField] === null) {
+                    throw new \InvalidArgumentException(
+                        'Cannot insert a gallery item without its "' . $requiredField . '".'
+                    );
+                }
+            }
+
+            // Supply safe values for the remaining columns on insert.
+            $fields['description'] = $fields['description'] ?? '';
+            $fields['sort'] = $fields['sort'] ?? 0;
+            $fields['parent_id'] = $fields['parent_id'] ?? 0;
+
             $itemId = $this->db()->insert('users_gallery_items')
                 ->values($fields)
                 ->execute();
@@ -186,9 +211,9 @@ class Gallery extends \Ilch\Mapper
     /**
      * Delete the given gallery item.
      *
-     * @param  GalleryItem $galleryItem
+     * @param GalleryItem $galleryItem
      */
-    public function deleteItem($galleryItem)
+    public function deleteItem(GalleryItem $galleryItem): void
     {
         $this->db()->delete('users_gallery_items')
             ->where(['id' => $galleryItem->getId()])

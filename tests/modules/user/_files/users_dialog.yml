@@ -1,0 +1,104 @@
+users:
+  -
+    id: 1
+    name: "Testuser1"
+    password: "hash"
+    email: "testuser1@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+  -
+    id: 2
+    name: "Testuser2"
+    password: "hash"
+    email: "testuser2@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+  -
+    id: 3
+    name: "Testuser3"
+    password: "hash"
+    email: "testuser3@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+  -
+    id: 4
+    name: "Testuser4"
+    password: "hash"
+    email: "testuser4@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+
+users_dialog:
+  -
+    c_id: 1
+    user_one: 1
+    user_two: 2
+    time: "2014-01-01 13:00:00"
+  -
+    c_id: 2
+    user_one: 1
+    user_two: 3
+    time: "2014-01-02 13:00:00"
+  -
+    c_id: 3
+    user_one: 2
+    user_two: 3
+    time: "2014-01-03 13:00:00"
+
+users_dialog_reply:
+  -
+    cr_id: 1
+    reply: "Hello from user 1"
+    user_id_fk: 1
+    c_id_fk: 1
+    time: "2014-01-01 12:00:00"
+    read: 0
+  -
+    cr_id: 2
+    reply: "Hello from user 2"
+    user_id_fk: 2
+    c_id_fk: 1
+    time: "2014-01-01 13:00:00"
+    read: 0
+  -
+    cr_id: 3
+    reply: "Hi from user 1"
+    user_id_fk: 1
+    c_id_fk: 2
+    time: "2014-01-02 12:00:00"
+    read: 1
+  -
+    cr_id: 4
+    reply: "Hi from user 3"
+    user_id_fk: 3
+    c_id_fk: 2
+    time: "2014-01-02 13:00:00"
+    read: 0
+  -
+    cr_id: 5
+    reply: "Pong from user 2"
+    user_id_fk: 2
+    c_id_fk: 3
+    time: "2014-01-03 12:00:00"
+    read: 1
+  -
+    cr_id: 6
+    reply: "Pong from user 3"
+    user_id_fk: 3
+    c_id_fk: 3
+    time: "2014-01-03 13:00:00"
+    read: 0
+
+users_dialog_hidden:
+  -
+    c_id: 2
+    user_id: 1
+    permanent: 0

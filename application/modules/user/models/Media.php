@@ -12,59 +12,58 @@ class Media extends \Ilch\Model
     /**
      * The id of the media.
      *
-     * @var int
+     * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The userid of the media.
      *
-     * @var int
+     * @var int|null
      */
-    protected $userid;
+    protected ?int $userid = null;
 
     /**
      * The url of the media.
      *
-     * @var string
+     * @var string|null
      */
-    protected $url;
+    protected ?string $url = null;
 
     /**
      * The urlthumb of the media.
      *
-     * @var string
+     * @var string|null
      */
-    protected $urlthumb;
+    protected ?string $urlthumb = null;
 
     /**
      * The ending of the media.
      *
-     * @var string
+     * @var string|null
      */
-    protected $ending;
+    protected ?string $ending = null;
 
     /**
      * The name of the media.
      *
-     * @var string
+     * @var string|null
      */
-    protected $name;
+    protected ?string $name = null;
 
     /**
      * The datetime of the media.
      *
-     * @var string
+     * @var string|null
      */
-    protected $datetime;
+    protected ?string $datetime = null;
 
     /**
      * Gets the id of the media.
      *
-     * @return int
+     * @return int|null
      */
-
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -72,10 +71,9 @@ class Media extends \Ilch\Model
     /**
      * Gets the userid of the media.
      *
-     * @return int
+     * @return int|null
      */
-
-    public function getUserId()
+    public function getUserId(): ?int
     {
         return $this->userid;
     }
@@ -83,9 +81,9 @@ class Media extends \Ilch\Model
     /**
      * Gets url of the media.
      *
-     * @return string
+     * @return string|null
      */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -93,9 +91,9 @@ class Media extends \Ilch\Model
     /**
      * Gets urlthumb of the media.
      *
-     * @return string
+     * @return string|null
      */
-    public function getUrlThumb()
+    public function getUrlThumb(): ?string
     {
         return $this->urlthumb;
     }
@@ -103,9 +101,9 @@ class Media extends \Ilch\Model
     /**
      * Gets ending of the media.
      *
-     * @return string
+     * @return string|null
      */
-    public function getEnding()
+    public function getEnding(): ?string
     {
         return $this->ending;
     }
@@ -113,9 +111,9 @@ class Media extends \Ilch\Model
     /**
      * Gets name of the media.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -123,9 +121,9 @@ class Media extends \Ilch\Model
     /**
      * Gets datetime of the media.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDatetime()
+    public function getDatetime(): ?string
     {
         return $this->datetime;
     }
@@ -134,69 +132,90 @@ class Media extends \Ilch\Model
      * Sets the id of the media.
      *
      * @param int $id
+     * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): static
     {
-        $this->id = (int)$id;
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
      * Sets the userid of the media.
      *
      * @param int $userid
+     * @return $this
      */
-    public function setUserId($userid)
+    public function setUserId(int $userid): static
     {
-        $this->userid = (int)$userid;
+        $this->userid = $userid;
+
+        return $this;
     }
 
     /**
      * Sets the url.
      *
      * @param string $url
+     * @return $this
      */
-    public function setUrl($url)
+    public function setUrl(string $url): static
     {
-        $this->url = (string)$url;
+        $this->url = $url;
+
+        return $this;
     }
 
     /**
      * Sets the urlthumb.
      *
      * @param string $urlthumb
+     * @return $this
      */
-    public function setUrlThumb($urlthumb)
+    public function setUrlThumb(string $urlthumb): static
     {
-        $this->urlthumb = (string)$urlthumb;
+        $this->urlthumb = $urlthumb;
+
+        return $this;
     }
 
     /**
      * Sets the ending.
      *
      * @param string $ending
+     * @return $this
      */
-    public function setEnding($ending)
+    public function setEnding(string $ending): static
     {
-        $this->ending = (string)$ending;
+        $this->ending = $ending;
+
+        return $this;
     }
 
     /**
      * Sets the name.
      *
      * @param string $name
+     * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): static
     {
-        $this->name = (string)$name;
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
      * Sets the datetime.
      *
      * @param string $datetime
+     * @return $this
      */
-    public function setDatetime($datetime)
+    public function setDatetime(string $datetime): static
     {
-        $this->datetime = (string)$datetime;
+        $this->datetime = $datetime;
+
+        return $this;
     }
 }

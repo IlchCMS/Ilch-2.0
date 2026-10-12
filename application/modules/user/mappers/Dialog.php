@@ -336,6 +336,10 @@ class Dialog extends \Ilch\Mapper
                 ->execute()
                 ->fetchAssoc();
 
+            if (empty($dialog)) {
+                return 0;
+            }
+
             if (($dialog['id_user_one'] == $userId && empty($dialog['id_user_two'])) || ($dialog['id_user_two'] == $userId && empty($dialog['id_user_one']))) {
                 // Delete dialog if other user is not existing.
                 return $this->db()->delete('users_dialog', ['c_id' => $c_id])

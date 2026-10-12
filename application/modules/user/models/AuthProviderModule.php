@@ -10,57 +10,53 @@ namespace Modules\User\Models;
 class AuthProviderModule extends \Ilch\Model
 {
     /**
-     * @var string
+     * @var string|null
      */
-    protected $name;
+    protected ?string $name = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $provider;
+    protected ?string $provider = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $module;
+    protected ?string $module = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $auth_controller;
+    protected ?string $auth_controller = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $auth_action;
+    protected ?string $auth_action = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $unlink_controller;
+    protected ?string $unlink_controller = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $unlink_action;
-
-    public function __construct()
-    {
-    }
+    protected ?string $unlink_action = null;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      * @return AuthProviderModule
      */
-    public function setName(string $name): AuthProviderModule
+    public function setName(?string $name): AuthProviderModule
     {
         $this->name = $name;
         return $this;
@@ -69,9 +65,9 @@ class AuthProviderModule extends \Ilch\Model
     /**
      * Gets the value of provider.
      *
-     * @return string
+     * @return string|null
      */
-    public function getProvider(): string
+    public function getProvider(): ?string
     {
         return $this->provider;
     }
@@ -79,11 +75,11 @@ class AuthProviderModule extends \Ilch\Model
     /**
      * Sets the value of provider.
      *
-     * @param string $provider the provider
+     * @param string|null $provider the provider
      *
-     * @return self
+     * @return AuthProviderModule
      */
-    public function setProvider(string $provider): AuthProviderModule
+    public function setProvider(?string $provider): AuthProviderModule
     {
         $this->provider = $provider;
 
@@ -93,9 +89,9 @@ class AuthProviderModule extends \Ilch\Model
     /**
      * Gets the value of module.
      *
-     * @return string
+     * @return string|null
      */
-    public function getModule(): string
+    public function getModule(): ?string
     {
         return $this->module;
     }
@@ -103,11 +99,11 @@ class AuthProviderModule extends \Ilch\Model
     /**
      * Sets the value of module.
      *
-     * @param mixed $module the module
+     * @param string|null $module the module
      *
-     * @return self
+     * @return AuthProviderModule
      */
-    public function setModule($module): AuthProviderModule
+    public function setModule(?string $module): AuthProviderModule
     {
         $this->module = $module;
 
@@ -117,9 +113,9 @@ class AuthProviderModule extends \Ilch\Model
     /**
      * Gets the value of auth_controller.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAuthController(): string
+    public function getAuthController(): ?string
     {
         return $this->auth_controller;
     }
@@ -127,11 +123,11 @@ class AuthProviderModule extends \Ilch\Model
     /**
      * Sets the value of auth_controller.
      *
-     * @param string $auth_controller the auth controller
+     * @param string|null $auth_controller the auth controller
      *
-     * @return self
+     * @return AuthProviderModule
      */
-    public function setAuthController(string $auth_controller): AuthProviderModule
+    public function setAuthController(?string $auth_controller): AuthProviderModule
     {
         $this->auth_controller = $auth_controller;
 
@@ -141,9 +137,9 @@ class AuthProviderModule extends \Ilch\Model
     /**
      * Gets the value of auth_action.
      *
-     * @return string
+     * @return string|null
      */
-    public function getAuthAction(): string
+    public function getAuthAction(): ?string
     {
         return $this->auth_action;
     }
@@ -151,11 +147,11 @@ class AuthProviderModule extends \Ilch\Model
     /**
      * Sets the value of auth_action.
      *
-     * @param string $auth_action the auth action
+     * @param string|null $auth_action the auth action
      *
-     * @return self
+     * @return AuthProviderModule
      */
-    public function setAuthAction(string $auth_action): AuthProviderModule
+    public function setAuthAction(?string $auth_action): AuthProviderModule
     {
         $this->auth_action = $auth_action;
 
@@ -165,9 +161,9 @@ class AuthProviderModule extends \Ilch\Model
     /**
      * Gets the value of unlink_controller.
      *
-     * @return string
+     * @return string|null
      */
-    public function getUnlinkController(): string
+    public function getUnlinkController(): ?string
     {
         return $this->unlink_controller;
     }
@@ -175,11 +171,11 @@ class AuthProviderModule extends \Ilch\Model
     /**
      * Sets the value of unlink_controller.
      *
-     * @param string $unlink_controller the unlink controller
+     * @param string|null $unlink_controller the unlink controller
      *
-     * @return self
+     * @return AuthProviderModule
      */
-    public function setUnlinkController(string $unlink_controller): AuthProviderModule
+    public function setUnlinkController(?string $unlink_controller): AuthProviderModule
     {
         $this->unlink_controller = $unlink_controller;
 
@@ -189,9 +185,9 @@ class AuthProviderModule extends \Ilch\Model
     /**
      * Gets the value of unlink_action.
      *
-     * @return string
+     * @return string|null
      */
-    public function getUnlinkAction(): string
+    public function getUnlinkAction(): ?string
     {
         return $this->unlink_action;
     }
@@ -199,11 +195,11 @@ class AuthProviderModule extends \Ilch\Model
     /**
      * Sets the value of unlink_action.
      *
-     * @param string $unlink_action the unlink action
+     * @param string|null $unlink_action the unlink action
      *
-     * @return self
+     * @return AuthProviderModule
      */
-    public function setUnlinkAction(string $unlink_action): AuthProviderModule
+    public function setUnlinkAction(?string $unlink_action): AuthProviderModule
     {
         $this->unlink_action = $unlink_action;
 

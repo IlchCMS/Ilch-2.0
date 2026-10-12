@@ -1,0 +1,43 @@
+user_menu:
+  -
+    id: 1
+    key: "user/panel/index"
+    icon: "fa-solid fa-house"
+    position: 1
+  -
+    id: 2
+    key: "user/panel/dialog"
+    icon: "fa-solid fa-envelope"
+    position: 2
+  -
+    id: 3
+    key: "user/panel/gallery"
+    icon: "fa-regular fa-image"
+    position: 3
+  -
+    id: 4
+    key: "user/panel/friends"
+    icon: "fa-solid fa-users"
+    position: 4
+  -
+    id: 5
+    key: "user/panel/settings"
+    icon: "fa-solid fa-gears"
+    position: 5
+
+user_menu_settings_links:
+  -
+    key: "opt_mail"
+    locale: "en_EN"
+    name: "Receive e-mail notifications"
+    description: "Receive an e-mail when something happens"
+  -
+    key: "opt_comments"
+    locale: "en_EN"
+    name: "Comment notifications"
+    description: "Receive notifications for comments on your profile"
+  -
+    key: "opt_mail"
+    locale: "de_DE"
+    name: "E-Mail-Benachrichtigungen empfangen"
+    description: "E-Mail erhalten, wenn etwas passiert"

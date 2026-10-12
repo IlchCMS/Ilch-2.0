@@ -31,7 +31,8 @@ class AuthTokenTest extends DatabaseTestCase
     }
 
     /**
-     * Tests if an auth token model is returned with that selector and the expected content.
+     * Tests that an auth token model is returned for an existing selector
+     * with the expected content.
      */
     public function testGetAuthToken()
     {
@@ -39,13 +40,14 @@ class AuthTokenTest extends DatabaseTestCase
 
         $authToken = $mapper->getAuthToken('selector');
         self::assertInstanceOf(AuthTokenModel::class, $authToken);
+        self::assertEquals('selector', $authToken->getSelector());
         self::assertEquals('token', $authToken->getToken());
         self::assertEquals(1, $authToken->getUserid());
         self::assertEquals('2014-01-01 12:12:12', $authToken->getExpires());
     }
 
     /**
-     * Tests if null is returned in case there is no auth token with that selector.
+     * Tests that null is returned in case there is no auth token with that selector.
      */
     public function testGetAuthTokenNotExisting()
     {
@@ -56,7 +58,8 @@ class AuthTokenTest extends DatabaseTestCase
     }
 
     /**
-     * Tests if an adding an auth token works and that it is returned with that selector and the expected content.
+     * Tests that adding an auth token works and that it can be retrieved
+     * with that selector and the expected content.
      */
     public function testAddAuthToken()
     {
@@ -68,16 +71,18 @@ class AuthTokenTest extends DatabaseTestCase
         $model->setUserid(3);
         $model->setExpires('2014-01-02 10:10:10');
 
-        self::assertEquals(3, $mapper->AddAuthToken($model));
+        // The fixture contains 2 auth tokens (ids 1-2), so the new row gets id 3.
+        self::assertEquals(3, $mapper->addAuthToken($model));
         $authToken = $mapper->getAuthToken('selector3');
         self::assertInstanceOf(AuthTokenModel::class, $authToken);
+        self::assertEquals('selector3', $authToken->getSelector());
         self::assertEquals('token3', $authToken->getToken());
         self::assertEquals(3, $authToken->getUserid());
         self::assertEquals('2014-01-02 10:10:10', $authToken->getExpires());
     }
 
     /**
-     * Tests if updating an auth token works.
+     * Tests that updating an auth token works.
      */
     public function testUpdateAuthToken()
     {
@@ -98,7 +103,29 @@ class AuthTokenTest extends DatabaseTestCase
     }
 
     /**
-     * Tests if trying to update a non-existing auth token returns the expected value.
+     * Tests that updating an auth token does not affect the other auth tokens.
+     */
+    public function testUpdateAuthTokenDoesNotAffectOthers()
+    {
+        $mapper = new AuthTokenMapper();
+        $model = new AuthTokenModel();
+
+        $model->setSelector('selector');
+        $model->setToken('tokenUpdated');
+        $model->setUserid(4);
+        $model->setExpires('2014-01-02 10:10:10');
+
+        self::assertEquals(1, $mapper->updateAuthToken($model));
+
+        $other = $mapper->getAuthToken('selector2');
+        self::assertInstanceOf(AuthTokenModel::class, $other);
+        self::assertEquals('token', $other->getToken());
+        self::assertEquals(2, $other->getUserid());
+        self::assertEquals('2014-01-01 12:12:12', $other->getExpires());
+    }
+
+    /**
+     * Tests that trying to update a non-existing auth token returns the expected value.
      */
     public function testUpdateAuthTokenNotExisting()
     {
@@ -121,6 +148,7 @@ class AuthTokenTest extends DatabaseTestCase
         $mapper = new AuthTokenMapper();
 
         self::assertEquals(1, $mapper->deleteAuthToken('selector2'));
+        self::assertNull($mapper->getAuthToken('selector2'));
     }
 
     /**
@@ -141,10 +169,11 @@ class AuthTokenTest extends DatabaseTestCase
         $mapper = new AuthTokenMapper();
 
         self::assertEquals(1, $mapper->deleteAllAuthTokenOfUser(1));
+        self::assertNull($mapper->getAuthToken('selector'));
     }
 
     /**
-     * Tests deleting auth tokens with a non-existing userid.
+     * Tests deleting auth tokens of a non-existing user.
      */
     public function testDeleteAllAuthTokenOfUserNonExisting()
     {
@@ -161,6 +190,44 @@ class AuthTokenTest extends DatabaseTestCase
         $mapper = new AuthTokenMapper();
 
         self::assertEquals(2, $mapper->deleteExpiredAuthTokens());
+    }
+
+    /**
+     * Tests that only expired auth tokens are deleted and a not yet expired
+     * auth token is kept.
+     */
+    public function testDeleteExpiredAuthTokensKeepsNotExpired()
+    {
+        $mapper = new AuthTokenMapper();
+        $model = new AuthTokenModel();
+
+        // Add an auth token that is not yet expired.
+        $model->setSelector('selector4');
+        $model->setToken('token4');
+        $model->setUserid(3);
+        $model->setExpires('2099-01-01 00:00:00');
+
+        // The fixture contains 2 auth tokens (ids 1-2), so the new row gets id 3.
+        self::assertEquals(3, $mapper->addAuthToken($model));
+
+        // The new token is retrievable right after the insert.
+        self::assertInstanceOf(AuthTokenModel::class, $mapper->getAuthToken('selector4'));
+
+        // Only the two expired (2014) tokens are deleted ...
+        self::assertEquals(2, $mapper->deleteExpiredAuthTokens());
+        self::assertNull($mapper->getAuthToken('selector'));
+        self::assertNull($mapper->getAuthToken('selector2'));
+
+        // ... but the not yet expired one is still present.
+        $remaining = $mapper->getAuthToken('selector4');
+        self::assertInstanceOf(AuthTokenModel::class, $remaining);
+        self::assertEquals('token4', $remaining->getToken());
+        self::assertEquals(3, $remaining->getUserid());
+        self::assertEquals('2099-01-01 00:00:00', $remaining->getExpires());
+
+        // Exactly one token (the not yet expired one) remains in the table.
+        $rows = $this->db->select('*')->from('auth_tokens')->execute()->fetchList();
+        self::assertCount(1, $rows);
     }
 
     /**

@@ -10,245 +10,278 @@ namespace Modules\User\Models;
 class GalleryImage extends \Ilch\Model
 {
     /**
-     * The id of the image.
+     * The id of the gallery image row (users_gallery_imgs.id).
      *
-     * @var int
+     * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
-     * The userId of the image.
+     * The id of the user who owns the gallery image.
      *
-     * @var int
+     * @var int|null
      */
-    protected $userId;
+    protected ?int $userId = null;
 
     /**
-     * The imageId of the image.
+     * The id of the referenced media entry (users_media.id).
+     * Is null when the media entry no longer exists.
      *
-     * @var string
+     * @var string|null
      */
-    protected $imageId;
+    protected ?string $imageId = null;
 
     /**
-     * The thumb of the image.
+     * The url of the referenced media file.
+     * Is null when the media entry no longer exists.
      *
-     * @var string
+     * @var string|null
      */
-    protected $thumb;
+    protected ?string $imageUrl = null;
 
     /**
-     * Title of the image.
+     * The url of the thumbnail of the referenced media file.
+     * Is null when the media entry no longer exists.
      *
-     * @var string
+     * @var string|null
      */
-    protected $title;
+    protected ?string $imageThumb = null;
 
     /**
-     * Description of the image.
+     * The title of the gallery image.
      *
-     * @var string
+     * @var string|null
      */
-    protected $desc;
+    protected ?string $imageTitle = null;
 
     /**
-     * The cat of the image.
+     * The description of the gallery image.
      *
-     * @var string
+     * @var string|null
      */
-    protected $cat;
+    protected ?string $imageDesc = null;
 
     /**
-     * The visits of the image.
+     * The category (gallery album) the image belongs to.
      *
-     * @var string
+     * @var string|null
      */
-    protected $visits;
+    protected ?string $cat = null;
 
     /**
-     * The imageUrl of the image.
+     * The number of visits of the gallery image.
      *
-     * @var string
+     * @var string|null
      */
-    protected $url;
+    protected ?string $visits = null;
 
     /**
-     * Gets the id of the image.
+     * Get the id of the gallery image row (users_gallery_imgs.id).
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * Gets the userId of the image.
+     * Set the id of the gallery image row.
      *
-     * @return int
+     * @param int $id
+     * @return $this
      */
-    public function getUserId()
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the id of the user who owns the gallery image.
+     *
+     * @return int|null
+     */
+    public function getUserId(): ?int
     {
         return $this->userId;
     }
 
     /**
-     * Gets the imageId of the image.
+     * Set the id of the user who owns the gallery image.
      *
-     * @return string
+     * @param int $userId
+     * @return $this
      */
-    public function getImageId()
+    public function setUserId(int $userId): static
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get the id of the referenced media entry (users_media.id).
+     * Is null when the media entry no longer exists.
+     *
+     * @return string|null
+     */
+    public function getImageId(): ?string
     {
         return $this->imageId;
     }
 
     /**
-     * Gets the imageThumb of the image.
+     * Set the id of the referenced media entry.
      *
-     * @return string
+     * @param string|null $imageId
+     * @return $this
      */
-    public function getImageThumb()
+    public function setImageId(?string $imageId): static
     {
-        return $this->thumb;
+        $this->imageId = $imageId;
+
+        return $this;
     }
 
     /**
-     * Gets the image title.
+     * Get the url of the referenced media file.
+     * Is null when the media entry no longer exists.
      *
-     * @return string
+     * @return string|null
      */
-    public function getImageTitle()
+    public function getImageUrl(): ?string
     {
-        return $this->title;
+        return $this->imageUrl;
     }
 
     /**
-     * Gets the image desc.
+     * Set the url of the referenced media file.
      *
-     * @return string
+     * @param string|null $url
+     * @return $this
      */
-    public function getImageDesc()
+    public function setImageUrl(?string $url): static
     {
-        return $this->desc;
+        $this->imageUrl = $url;
+
+        return $this;
     }
 
     /**
-     * Gets the cat of the image.
+     * Get the url of the thumbnail of the referenced media file.
+     * Is null when the media entry no longer exists.
      *
-     * @return string
+     * @return string|null
      */
-    public function getCat()
+    public function getImageThumb(): ?string
+    {
+        return $this->imageThumb;
+    }
+
+    /**
+     * Set the url of the thumbnail of the referenced media file.
+     *
+     * @param string|null $thumb
+     * @return $this
+     */
+    public function setImageThumb(?string $thumb): static
+    {
+        $this->imageThumb = $thumb;
+
+        return $this;
+    }
+
+    /**
+     * Get the title of the gallery image.
+     *
+     * @return string|null
+     */
+    public function getImageTitle(): ?string
+    {
+        return $this->imageTitle;
+    }
+
+    /**
+     * Set the title of the gallery image.
+     *
+     * @param string $title
+     * @return $this
+     */
+    public function setImageTitle(string $title): static
+    {
+        $this->imageTitle = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get the description of the gallery image.
+     *
+     * @return string|null
+     */
+    public function getImageDesc(): ?string
+    {
+        return $this->imageDesc;
+    }
+
+    /**
+     * Set the description of the gallery image.
+     *
+     * @param string $desc
+     * @return $this
+     */
+    public function setImageDesc(string $desc): static
+    {
+        $this->imageDesc = $desc;
+
+        return $this;
+    }
+
+    /**
+     * Get the category (gallery album) the image belongs to.
+     *
+     * @return string|null
+     */
+    public function getCat(): ?string
     {
         return $this->cat;
     }
 
     /**
-     * Gets the visits of the image.
+     * Set the category (gallery album) the image belongs to.
      *
-     * @return string
+     * @param string $cat
+     * @return $this
      */
-    public function getVisits()
+    public function setCat(string $cat): static
+    {
+        $this->cat = $cat;
+
+        return $this;
+    }
+
+    /**
+     * Get the number of visits of the gallery image.
+     *
+     * @return string|null
+     */
+    public function getVisits(): ?string
     {
         return $this->visits;
     }
 
     /**
-     * Gets the ImageUrl of the image.
-     *
-     * @return string
-     */
-    public function getImageUrl()
-    {
-        return $this->url;
-    }
-
-    /**
-     * Sets the id of the image.
-     *
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = (int)$id;
-    }
-
-    /**
-     * Sets the userId of the image.
-     *
-     * @param string $userId
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = (int)$userId;
-    }
-
-    /**
-     * Sets the imageId of the image.
-     *
-     * @param string $imageId
-     */
-    public function setImageId($imageId)
-    {
-        $this->imageId = (string)$imageId;
-    }
-
-    /**
-     * Sets the thumb of the image.
-     *
-     * @param string $thumb
-     */
-    public function setImageThumb($thumb)
-    {
-        $this->thumb = (string)$thumb;
-    }
-
-    /**
-     * Sets the title.
-     *
-     * @param string $title
-     */
-    public function setImageTitle($title)
-    {
-        $this->title = (string) $title;
-    }
-
-    /**
-     * Sets the desc.
-     *
-     * @param string $desc
-     */
-    public function setImageDesc($desc)
-    {
-        $this->desc = (string) $desc;
-    }
-
-    /**
-     * Sets the cat of the image.
-     *
-     * @param string $cat
-     */
-    public function setCat($cat)
-    {
-        $this->cat = (string)$cat;
-    }
-
-    /**
-     * Sets the visits of the image.
+     * Set the number of visits of the gallery image.
      *
      * @param string $visits
+     * @return $this
      */
-    public function setVisits($visits)
+    public function setVisits(string $visits): static
     {
-        $this->visits = (string)$visits;
-    }
+        $this->visits = $visits;
 
-    /**
-     * Sets the Url of the image.
-     *
-     * @param string $url
-     */
-    public function setImageUrl($url)
-    {
-        $this->url = (string)$url;
+        return $this;
     }
 }

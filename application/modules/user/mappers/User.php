@@ -151,8 +151,21 @@ class User extends \Ilch\Mapper
      * @return array
      * @since 2.2.7
      */
+    /**
+     * Get users (not all fields) by group ids. The users have to be in at least one of the groups.
+     *
+     * @param int[] $groupIds array of group ids.
+     * @param int   $confirmed
+     * @param $pagination
+     * @return array
+     * @since 2.2.7
+     */
     public function getUserListByGroupIds(array $groupIds, int $confirmed = 0, $pagination = null): array
     {
+        if (empty($groupIds)) {
+            return [];
+        }
+
         $select = $this->db()->select()
             ->fields(['u.id', 'u.name', 'u.opt_mail', 'u.date_created', 'u.date_last_activity', 'u.confirmed'])
             ->from(['u' => 'users'])
@@ -160,28 +173,22 @@ class User extends \Ilch\Mapper
             ->where(['group_id' => $groupIds], 'or')
             ->andWhere(['confirmed' => $confirmed])
             ->group(['u.id']);
+
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
                 ->useFoundRows();
-            $result = $select->execute();
-            $pagination->setRows($result->getFoundRows());
-        } else {
-            $result = $select->execute();
         }
 
-        if (!empty($select)) {
-            $entryArray = $result->fetchRows();
-            $users = [];
+        $result = $select->execute();
 
-            foreach ($entryArray as $userRow) {
-                $user = $this->loadFromArray($userRow);
-                $users[] = $user;
-            }
+        $pagination?->setRows($result->getFoundRows());
 
-            return $users;
+        $users = [];
+        foreach ($result->fetchRows() as $userRow) {
+            $users[] = $this->loadFromArray($userRow);
         }
 
-        return [];
+        return $users;
     }
 
     /**
@@ -355,8 +362,9 @@ class User extends \Ilch\Mapper
         if (isset($userRow['locked'])) {
             $user->setLocked($userRow['locked']);
         }
+
         if (isset($userRow['selectsdelete'])) {
-            $user->setSelectsDelete($userRow['selectsdelete']);
+            $user->setSelectsDelete(new IlchDate($userRow['selectsdelete']));
         }
 
         return $user;
@@ -541,7 +549,7 @@ class User extends \Ilch\Mapper
      * @param int $userId
      * @param int $groupId
      */
-    public function addUserToGroup(int $userId, int $groupId)
+    public function addUserToGroup(int $userId, int $groupId): void
     {
         $groupMapper = new GroupMapper();
 
@@ -558,7 +566,7 @@ class User extends \Ilch\Mapper
      * @param int $userId
      * @param int $groupId
      */
-    public function deleteUserToGroup(int $userId, int $groupId)
+    public function deleteUserToGroup(int $userId, int $groupId): void
     {
         $groupMapper = new GroupMapper();
 
@@ -572,11 +580,11 @@ class User extends \Ilch\Mapper
     /**
      * Selects a specific user or user with the specified ID to delete.
      *
-     * @param  int|UserModel $userId
-     * @param  string $deletedate
+     * @param int|UserModel $userId
+     * @param string $deletedate
      * @return int affected rows
      */
-    public function selectsdelete($userId, $deletedate = '1000-01-01 00:00:00'): int
+    public function selectsdelete(int|UserModel $userId, string $deletedate = '1000-01-01 00:00:00'): int
     {
         if ($userId instanceof UserModel) {
             $userId = $userId->getId();
@@ -618,10 +626,10 @@ class User extends \Ilch\Mapper
     /**
      * Deletes a given user or a user with the given id.
      *
-     * @param  int|UserModel $userId
+     * @param int|UserModel $userId
      * @return bool True of success, otherwise false.
      */
-    public function delete($userId): bool
+    public function delete(int|UserModel $userId): bool
     {
         if ($userId instanceof UserModel) {
             $userId = $userId->getId();

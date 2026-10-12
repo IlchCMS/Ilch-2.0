@@ -120,7 +120,7 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
      *
      * @param ProfileFieldTranslationModel $profileFieldTranslation
      */
-    public function save(ProfileFieldTranslationModel $profileFieldTranslation)
+    public function save(ProfileFieldTranslationModel $profileFieldTranslation): void
     {
         $fields = [];
         $fieldId = $profileFieldTranslation->getFieldId();

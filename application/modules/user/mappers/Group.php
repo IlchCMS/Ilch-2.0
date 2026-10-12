@@ -184,11 +184,11 @@ class Group extends \Ilch\Mapper
     /**
      * Deletes a given group or a user with the given id.
      *
-     * @param  int|GroupModel $groupId
+     * @param int|GroupModel $groupId
      *
      * @return bool True of success, otherwise false.
      */
-    public function delete($groupId): bool
+    public function delete(int|GroupModel $groupId): bool
     {
         if ($groupId instanceof GroupModel) {
             $groupId = $groupId->getId();
@@ -255,10 +255,10 @@ class Group extends \Ilch\Mapper
      * Returns the access list from the database.
      *
      * @param string $type
-     * @param string|int $id
+     * @param int|string $id
      * @return null|array
      */
-    public function getAccessAccessList(string $type, $id): ?array
+    public function getAccessAccessList(string $type, int|string $id): ?array
     {
         if (!in_array($type, ['module', 'page', 'article', 'box'])) {
             return null;
@@ -298,12 +298,12 @@ class Group extends \Ilch\Mapper
      * Saves or updates an access data entry to the db.
      *
      * @param int $groupId
-     * @param  string|int  $value
+     * @param int|string $value
      * @param  int    $accessLevel
      * @param string $type
      * @return bool
      */
-    public function saveAccessData(int $groupId, $value, int $accessLevel, string $type): bool
+    public function saveAccessData(int $groupId, int|string $value, int $accessLevel, string $type): bool
     {
         $rec = [
             'group_id' => $groupId,
@@ -328,11 +328,13 @@ class Group extends \Ilch\Mapper
                 ->values($fields)
                 ->where($rec)
                 ->execute();
-        } else {
-            return $this->db()->insert('groups_access')
-                ->values($fields)
-                ->execute();
         }
+
+        $this->db()->insert('groups_access')
+            ->values($fields)
+            ->execute();
+
+        return true;
     }
 
     /**
@@ -365,19 +367,19 @@ class Group extends \Ilch\Mapper
         }
         $where = ['ga.group_id' => $readAccess];
 
-        if (strpos($key, 'module_') !== false) {
+        if (str_contains($key, 'module_')) {
             $moduleKey = substr($key, 7);
             $select->join(['m' => 'modules'], 'ga.module_key = m.key', 'INNER');
             $where['m.key'] = $this->db()->escape($moduleKey);
-        } elseif (strpos($key, 'page_') !== false) {
+        } elseif (str_contains($key, 'page_')) {
             $pageId = (int)substr($key, 5);
             $select->join(['p' => 'pages'], 'ga.page_id = p.id', 'INNER');
             $where['p.id'] = $pageId;
-        } elseif (strpos($key, 'article_') !== false) {
+        } elseif (str_contains($key, 'article_')) {
             $articleId = (int)substr($key, 8);
             $select->join(['a' => 'articles'], 'ga.article_id = a.id', 'INNER');
             $where['a.id'] = $articleId;
-        } elseif (strpos($key, 'box_') !== false) {
+        } elseif (str_contains($key, 'box_')) {
             $boxId = (int)substr($key, 4);
             $select->join(['b' => 'boxes'], 'ga.box_id = b.id', 'INNER');
             $where['b.id'] = $boxId;

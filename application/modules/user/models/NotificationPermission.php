@@ -13,50 +13,50 @@ class NotificationPermission extends \Ilch\Model
     /**
      * The id of the permission.
      *
-     * @var int
+     * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * The user id for which the permission is for.
      *
-     * @var int
+     * @var int|null
      */
-    protected $userId;
+    protected ?int $userId = null;
 
     /**
      * The module for which the notification is for.
      *
-     * @var string
+     * @var string|null
      */
-    protected $module;
+    protected ?string $module = null;
 
     /**
      * The type of the notification.
      *
-     * @var string
+     * @var string|null
      */
-    protected $type;
+    protected ?string $type = null;
 
     /**
      * The module is (not) allowed to issue notifications.
      *
-     * @var int
+     * @var bool|null
      */
-    protected $granted;
+    protected ?bool $granted = null;
 
     /**
-     * Get the ID of the notification permisson.
+     * Get the ID of the notification permission.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * Set the ID of the notification permisson.
+     * Set the ID of the notification permission.
      *
      * @param int $id
      * @return NotificationPermission
@@ -68,9 +68,9 @@ class NotificationPermission extends \Ilch\Model
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getUserId(): int
+    public function getUserId(): ?int
     {
         return $this->userId;
     }
@@ -88,9 +88,9 @@ class NotificationPermission extends \Ilch\Model
     /**
      * Gets the module for which the notification is for.
      *
-     * @return string
+     * @return string|null
      */
-    public function getModule(): string
+    public function getModule(): ?string
     {
         return $this->module;
     }
@@ -110,9 +110,9 @@ class NotificationPermission extends \Ilch\Model
     /**
      * Gets the type of the notification permission.
      *
-     * @return string
+     * @return string|null
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }

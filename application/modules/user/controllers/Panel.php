@@ -688,28 +688,45 @@ class Panel extends BaseController
 
     public function sendFriendRequestAction()
     {
-        $id = $this->getRequest()->getParam('id');
+        $userId = $this->getUser()->getId();
+        $id = filter_var($this->getRequest()->getParam('id'), FILTER_VALIDATE_INT);
 
-        if ($this->getRequest()->isSecure()) {
+        if (
+            $this->getRequest()->isSecure()
+            && $id !== false
+            && $id !== $userId
+            && (new UserMapper())->userWithIdExists($id)
+        ) {
             $friendsMapper = new FriendsMapper();
-
-            $friendsMapper->addFriend($this->getUser()->getId(), $id);
+            $friendsMapper->addFriend($userId, $id);
             $this->addMessage('sendFriendRequestSuccess');
-        } else {
-            $this->addMessage('sendFriendRequestFail', 'warning');
+            $this->redirect(['controller' => 'profil', 'action' => 'index', 'user' => $id]);
         }
 
-        $this->redirect(['controller' => 'profil', 'action' => 'index', 'user' => $id]);
+        $this->addMessage('sendFriendRequestFail', 'warning');
+        $this->redirect(['controller' => 'panel', 'action' => 'index']);
     }
 
     public function approveFriendRequestAction()
     {
-        if ($this->getRequest()->isSecure()) {
+        $userId = $this->getUser()->getId();
+        $id = filter_var($this->getRequest()->getParam('id'), FILTER_VALIDATE_INT);
+
+        if ($this->getRequest()->isSecure() && $id !== false) {
             $friendsMapper = new FriendsMapper();
 
-            $friendsMapper->approveFriendRequest($this->getUser()->getId(), $this->getRequest()->getParam('id'));
-            $friendsMapper->addFriend($this->getUser()->getId(), $this->getRequest()->getParam('id'), 1);
-            $this->addMessage('approveFriendRequestSuccess');
+            // Only approve if the given user actually sent an open request to the
+            // current user. Without this check, addFriend() below would create an
+            // approved relation out of thin air.
+            if ($friendsMapper->hasOpenFriendRequest($id, $userId)) {
+                // Flips the request row (user_id = $id, friend_user_id = $userId) to approved.
+                $friendsMapper->approveFriendRequest($userId, $id);
+                // Creates the reciprocal relation (user_id = $userId, friend_user_id = $id).
+                $friendsMapper->addFriend($userId, $id, 1);
+                $this->addMessage('approveFriendRequestSuccess');
+            } else {
+                $this->addMessage('approveFriendRequestFail', 'warning');
+            }
         } else {
             $this->addMessage('approveFriendRequestFail', 'warning');
         }
@@ -719,18 +736,22 @@ class Panel extends BaseController
 
     public function removeFriendAction()
     {
-        $id = $this->getRequest()->getParam('id');
+        $userId = $this->getUser()->getId();
+        $id = filter_var($this->getRequest()->getParam('id'), FILTER_VALIDATE_INT);
 
-        if ($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure() && $id !== false && $id !== $userId) {
             $friendsMapper = new FriendsMapper();
 
-            $friendsMapper->deleteFriendByFriendUserId($id);
-            $friendsMapper->deleteFriendOfUser($id, $this->getUser()->getId());
+            // Remove the relation in the current user's direction only ($userId -> $id).
+            // The reciprocal row ($id -> $userId) is kept on purpose: unfriending is
+            // one-sided, and that row is removed automatically when the user account
+            // is deleted (foreign keys with ON DELETE CASCADE).
+            $friendsMapper->deleteFriendOfUser($userId, $id);
             $this->addMessage('removeFriendSuccess');
             $this->redirect(['controller' => 'panel', 'action' => 'index']);
         } else {
             $this->addMessage('removeFriendFail', 'warning');
-            $this->redirect(['controller' => 'profil', 'action' => 'index', 'user' => $id]);
+            $this->redirect(['controller' => 'panel', 'action' => 'index']);
         }
     }
 

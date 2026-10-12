@@ -18,7 +18,7 @@ class NotificationPermission extends \Ilch\Mapper
      * @param int $id
      * @return NotificationPermissionModel|null
      */
-    public function getPermissionById(int $id)
+    public function getPermissionById(int $id): ?NotificationPermissionModel
     {
         $row = $this->db()->select('*')
             ->from('users_notifications_permission')

@@ -12,44 +12,44 @@ class Friend extends \Ilch\Model
     /**
      * Id of the friend.
      *
-     * @var int
+     * @var int|null
      */
-    protected $id;
+    protected ?int $id = null;
 
     /**
      * User Id.
      *
-     * @var int
+     * @var int|null
      */
-    protected $userId;
+    protected ?int $userId = null;
 
     /**
      * User Id of the friend.
      *
-     * @var int
+     * @var int|null
      */
-    protected $friendUserId;
+    protected ?int $friendUserId = null;
 
     /**
      * Name of the friend.
      *
-     * @var string
+     * @var string|null
      */
-    protected $name;
+    protected ?string $name = null;
 
     /**
      * Avatar of the friend.
      *
-     * @var string
+     * @var string|null
      */
-    protected $avatar;
+    protected ?string $avatar = null;
 
     /**
      * Friend request still open or already accepted.
      *
-     * @var int
+     * @var int|null
      */
-    protected $approved;
+    protected ?int $approved = null;
 
     /**
      * Sets the friend id.
@@ -57,9 +57,9 @@ class Friend extends \Ilch\Model
      * @param int $id
      * @return $this
      */
-    public function setId($id)
+    public function setId(int $id): static
     {
-        $this->id = (int)$id;
+        $this->id = $id;
 
         return $this;
     }
@@ -67,9 +67,9 @@ class Friend extends \Ilch\Model
     /**
      * Gets the friend id.
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -80,7 +80,7 @@ class Friend extends \Ilch\Model
      * @param int $userId
      * @return $this
      */
-    public function setUserId($userId)
+    public function setUserId(int $userId): static
     {
         $this->userId = $userId;
 
@@ -90,9 +90,9 @@ class Friend extends \Ilch\Model
     /**
      * Gets the user id.
      *
-     * @return int
+     * @return int|null
      */
-    public function getUserId()
+    public function getUserId(): ?int
     {
         return $this->userId;
     }
@@ -103,7 +103,7 @@ class Friend extends \Ilch\Model
      * @param int $friendUserId
      * @return $this
      */
-    public function setFriendUserId($friendUserId)
+    public function setFriendUserId(int $friendUserId): static
     {
         $this->friendUserId = $friendUserId;
 
@@ -113,9 +113,9 @@ class Friend extends \Ilch\Model
     /**
      * Gets the user id of the friend.
      *
-     * @return int
+     * @return int|null
      */
-    public function getFriendUserId()
+    public function getFriendUserId(): ?int
     {
         return $this->friendUserId;
     }
@@ -123,9 +123,9 @@ class Friend extends \Ilch\Model
     /**
      * Get name of the friend.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -136,7 +136,7 @@ class Friend extends \Ilch\Model
      * @param string $name
      * @return $this
      */
-    public function setName($name)
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -146,9 +146,9 @@ class Friend extends \Ilch\Model
     /**
      * Get avatar of friend.
      *
-     * @return mixed
+     * @return string|null
      */
-    public function getAvatar()
+    public function getAvatar(): ?string
     {
         return $this->avatar;
     }
@@ -159,7 +159,7 @@ class Friend extends \Ilch\Model
      * @param mixed $avatar
      * @return $this
      */
-    public function setAvatar($avatar)
+    public function setAvatar(mixed $avatar): static
     {
         $this->avatar = $avatar;
 
@@ -167,9 +167,9 @@ class Friend extends \Ilch\Model
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
-    public function getApproved()
+    public function getApproved(): ?int
     {
         return $this->approved;
     }
@@ -178,7 +178,7 @@ class Friend extends \Ilch\Model
      * @param mixed $approved
      * @return $this
      */
-    public function setApproved($approved)
+    public function setApproved(mixed $approved): static
     {
         $this->approved = $approved;
 

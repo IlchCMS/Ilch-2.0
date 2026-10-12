@@ -106,7 +106,7 @@ class ProfileFieldsContent extends \Ilch\Mapper
      *
      * @param ProfileFieldContentModel $profileFieldContent
      */
-    public function save(ProfileFieldContentModel $profileFieldContent)
+    public function save(ProfileFieldContentModel $profileFieldContent): void
     {
         $fields = [];
         $userId = $profileFieldContent->getUserId();

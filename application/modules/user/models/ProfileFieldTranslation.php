@@ -14,9 +14,9 @@ class ProfileFieldTranslation extends Model
     /**
      * The field-id of the ProfileFieldTranslation.
      *
-     * @var int
+     * @var int|null
      */
-    protected int $fieldId;
+    protected ?int $fieldId = null;
 
     /**
      * The locale of the ProfileFieldTranslation.
@@ -35,9 +35,9 @@ class ProfileFieldTranslation extends Model
     /**
      * Returns the field-id of the ProfileFieldTranslation.
      *
-     * @return int
+     * @return int|null
      */
-    public function getFieldId(): int
+    public function getFieldId(): ?int
     {
         return $this->fieldId;
     }

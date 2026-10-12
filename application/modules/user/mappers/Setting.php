@@ -13,11 +13,11 @@ class Setting extends \Ilch\Mapper
      * Gets the Size.
      *
      * @param $bytes
-     * @param null $format
+     * @param string|null $format
      * @param bool $addFormat
-     * @return float|string
+     * @return int|float|string
      */
-    public function getNicebytes($bytes, $format = null, $addFormat = true)
+    public function getNicebytes($bytes, ?string $format = null, bool $addFormat = true): int|float|string
     {
         if ($format === null) {
             $format = $bytes < 1000000 ? 'KB' : 'MB';
@@ -44,7 +44,7 @@ class Setting extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function delAvatarById($id)
+    public function delAvatarById(int $id): void
     {
         $avatar = $this->db()->select('avatar')
             ->from('users')
@@ -52,7 +52,11 @@ class Setting extends \Ilch\Mapper
             ->execute()
             ->fetchCell('avatar');
 
-        if (!strpos($avatar, 'static/img/noavatar.jpg') && file_exists($avatar)) {
+        if (
+            is_string($avatar)
+            && !str_contains($avatar, 'static/img/noavatar.jpg')
+            && file_exists($avatar)
+        ) {
             unlink($avatar);
         }
 

@@ -97,7 +97,7 @@ class Dialog extends \Ilch\Model
      * Set the ID of the user
      *
      * @param int|null $id
-     * @return $this
+     * @return Dialog
      */
     public function setId(?int $id): Dialog
     {
@@ -120,7 +120,7 @@ class Dialog extends \Ilch\Model
      * Set the CONVERSATION_ID of the dialog
      *
      * @param int|null $cid
-     * @return $this
+     * @return Dialog
      */
     public function setCId(?int $cid): Dialog
     {
@@ -143,7 +143,7 @@ class Dialog extends \Ilch\Model
      * Set the CONVERSATION_REPLY_ID of the dialog
      *
      * @param int|null $crid
-     * @return $this
+     * @return Dialog
      */
     public function setCrId(?int $crid): Dialog
     {
@@ -166,7 +166,7 @@ class Dialog extends \Ilch\Model
      * Set the sent time of the dialog
      *
      * @param string|null $time
-     * @return $this
+     * @return Dialog
      */
     public function setTime(?string $time): Dialog
     {
@@ -199,7 +199,7 @@ class Dialog extends \Ilch\Model
      * Set the value of hidden. True for hidden, false for not.
      *
      * @param bool $hidden
-     * @return $this
+     * @return Dialog
      */
     public function setHidden(bool $hidden): Dialog
     {
@@ -212,7 +212,7 @@ class Dialog extends \Ilch\Model
      * Set the USER_ONE of the dialog
      *
      * @param int|null $userone
-     * @return $this
+     * @return Dialog
      */
     public function setUserOne(?int $userone): Dialog
     {
@@ -235,7 +235,7 @@ class Dialog extends \Ilch\Model
      * Set the USER_TWO of the dialog
      *
      * @param int|null $usertwo
-     * @return $this
+     * @return Dialog
      */
     public function setUserTwo(?int $usertwo): Dialog
     {
@@ -258,7 +258,7 @@ class Dialog extends \Ilch\Model
      * Set the TEXT of the dialog
      *
      * @param string|null $text
-     * @return $this
+     * @return Dialog
      */
     public function setText(?string $text): Dialog
     {
@@ -291,7 +291,7 @@ class Dialog extends \Ilch\Model
      * Set the avatar of the dialog
      *
      * @param string|null $avatar
-     * @return $this
+     * @return Dialog
      */
     public function setAvatar(?string $avatar): Dialog
     {
@@ -304,7 +304,7 @@ class Dialog extends \Ilch\Model
      * Set the name of the user
      *
      * @param string|null $name
-     * @return $this
+     * @return Dialog
      */
     public function setName(?string $name): Dialog
     {
@@ -327,7 +327,7 @@ class Dialog extends \Ilch\Model
      * Set the read status
      *
      * @param bool $read
-     * @return $this
+     * @return Dialog
      */
     public function setRead(bool $read): Dialog
     {

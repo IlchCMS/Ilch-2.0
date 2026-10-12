@@ -11,49 +11,59 @@ class AuthProviderUser extends \Ilch\Model
 {
     /**
      * User id
+     *
+     * @var int|null
      */
-    protected $user_id;
+    protected ?int $user_id = null;
 
     /**
      * Provider name, e.g. twitter, facebook
+     *
+     * @var string|null
      */
-    protected $provider;
+    protected ?string $provider = null;
 
     /**
      * Identifier of the user at $provider
+     *
+     * @var string|null
      */
-    protected $identifier;
+    protected ?string $identifier = null;
 
     /**
      * Account name
+     *
+     * @var string|null
      */
-    protected $screen_name;
+    protected ?string $screen_name = null;
 
     /**
      * OAuth token
+     *
+     * @var string|null
      */
-    protected $oauth_token;
+    protected ?string $oauth_token = null;
 
     /**
      * OAuth token secret
+     *
+     * @var string|null
      */
-    protected $oauth_token_secret;
+    protected ?string $oauth_token_secret = null;
 
     /**
      * Created at
+     *
+     * @var string|null
      */
-    protected $created_at;
-
-    public function __construct()
-    {
-    }
+    protected ?string $created_at = null;
 
     /**
      * Gets the value of user_id.
      *
-     * @return mixed
+     * @return int|null
      */
-    public function getUserId()
+    public function getUserId(): ?int
     {
         return $this->user_id;
     }
@@ -65,7 +75,7 @@ class AuthProviderUser extends \Ilch\Model
      *
      * @return self
      */
-    public function setUserId($user_id)
+    public function setUserId(mixed $user_id): static
     {
         $this->user_id = $user_id;
 
@@ -75,9 +85,9 @@ class AuthProviderUser extends \Ilch\Model
     /**
      * Gets the value of provider.
      *
-     * @return mixed
+     * @return string|null
      */
-    public function getProvider()
+    public function getProvider(): ?string
     {
         return $this->provider;
     }
@@ -89,7 +99,7 @@ class AuthProviderUser extends \Ilch\Model
      *
      * @return self
      */
-    public function setProvider($provider)
+    public function setProvider(mixed $provider): static
     {
         $this->provider = $provider;
 
@@ -99,9 +109,9 @@ class AuthProviderUser extends \Ilch\Model
     /**
      * Gets the value of identifier.
      *
-     * @return mixed
+     * @return string|null
      */
-    public function getIdentifier()
+    public function getIdentifier(): ?string
     {
         return $this->identifier;
     }
@@ -113,7 +123,7 @@ class AuthProviderUser extends \Ilch\Model
      *
      * @return self
      */
-    public function setIdentifier($identifier)
+    public function setIdentifier(mixed $identifier): static
     {
         $this->identifier = $identifier;
 
@@ -123,9 +133,9 @@ class AuthProviderUser extends \Ilch\Model
     /**
      * Gets the value of oauth_token.
      *
-     * @return mixed
+     * @return string|null
      */
-    public function getOauthToken()
+    public function getOauthToken(): ?string
     {
         return $this->oauth_token;
     }
@@ -137,7 +147,7 @@ class AuthProviderUser extends \Ilch\Model
      *
      * @return self
      */
-    public function setOauthToken($oauth_token)
+    public function setOauthToken(mixed $oauth_token): static
     {
         $this->oauth_token = $oauth_token;
 
@@ -147,9 +157,9 @@ class AuthProviderUser extends \Ilch\Model
     /**
      * Gets the value of oauth_token_secret.
      *
-     * @return mixed
+     * @return string|null
      */
-    public function getOauthTokenSecret()
+    public function getOauthTokenSecret(): ?string
     {
         return $this->oauth_token_secret;
     }
@@ -161,7 +171,7 @@ class AuthProviderUser extends \Ilch\Model
      *
      * @return self
      */
-    public function setOauthTokenSecret($oauth_token_secret)
+    public function setOauthTokenSecret(mixed $oauth_token_secret): static
     {
         $this->oauth_token_secret = $oauth_token_secret;
 
@@ -171,9 +181,9 @@ class AuthProviderUser extends \Ilch\Model
     /**
      * Gets the Account name.
      *
-     * @return mixed
+     * @return string|null
      */
-    public function getScreenName()
+    public function getScreenName(): ?string
     {
         return $this->screen_name;
     }
@@ -185,7 +195,7 @@ class AuthProviderUser extends \Ilch\Model
      *
      * @return self
      */
-    public function setScreenName($screen_name)
+    public function setScreenName(mixed $screen_name): static
     {
         $this->screen_name = $screen_name;
 
@@ -195,9 +205,9 @@ class AuthProviderUser extends \Ilch\Model
     /**
      * Gets the Created at.
      *
-     * @return mixed
+     * @return string|null
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?string
     {
         return $this->created_at;
     }
@@ -209,7 +219,7 @@ class AuthProviderUser extends \Ilch\Model
      *
      * @return self
      */
-    public function setCreatedAt($created_at)
+    public function setCreatedAt(mixed $created_at): static
     {
         $this->created_at = $created_at;
 

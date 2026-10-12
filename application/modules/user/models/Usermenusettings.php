@@ -12,54 +12,57 @@ class Usermenusettings extends \Ilch\Model
     /**
      * Key of the menu.
      *
-     * @var string
+     * @var string|null
      */
-    protected $key;
+    protected ?string $key = null;
 
     /**
      * Locale of the menu.
      *
-     * @var string
+     * @var string|null
      */
-    protected $locale;
+    protected ?string $locale = null;
 
     /**
      * Description of the menu.
      *
-     * @var string
+     * @var string|null
      */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * Name of the menu.
      *
-     * @var string
+     * @var string|null
      */
-    protected $name;
+    protected ?string $name = null;
 
     /**
      * Icon of the menu.
      *
-     * @var string
+     * @var string|null
      */
-    protected $icon;
+    protected ?string $icon = null;
 
     /**
      * Sets the menu key.
      *
-     * @param int $key
+     * @param string $key
+     * @return Usermenusettings
      */
-    public function setKey($key)
+    public function setKey(string $key): static
     {
-        $this->key = (string)$key;
+        $this->key = $key;
+
+        return $this;
     }
 
     /**
      * Gets the menu key.
      *
-     * @return int
+     * @return string|null
      */
-    public function getKey()
+    public function getKey(): ?string
     {
         return $this->key;
     }
@@ -68,18 +71,21 @@ class Usermenusettings extends \Ilch\Model
      * Sets the menu locale.
      *
      * @param string $locale
+     * @return Usermenusettings
      */
-    public function setLocale($locale)
+    public function setLocale(string $locale): static
     {
-        $this->locale = (string)$locale;
+        $this->locale = $locale;
+
+        return $this;
     }
 
     /**
      * Gets the menu locale.
      *
-     * @return string
+     * @return string|null
      */
-    public function getLocale()
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
@@ -88,18 +94,21 @@ class Usermenusettings extends \Ilch\Model
      * Sets the menu description.
      *
      * @param string $description
+     * @return Usermenusettings
      */
-    public function setDescription($description)
+    public function setDescription(string $description): static
     {
-        $this->description = (string)$description;
+        $this->description = $description;
+
+        return $this;
     }
 
     /**
      * Gets the menu description.
      *
-     * @return string
+     * @return string|null
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -108,18 +117,21 @@ class Usermenusettings extends \Ilch\Model
      * Sets the menu name.
      *
      * @param string $name
+     * @return Usermenusettings
      */
-    public function setName($name)
+    public function setName(string $name): static
     {
-        $this->name = (string)$name;
+        $this->name = $name;
+
+        return $this;
     }
 
     /**
      * Gets the menu name.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -128,18 +140,21 @@ class Usermenusettings extends \Ilch\Model
      * Sets the menu icon.
      *
      * @param string $icon
+     * @return Usermenusettings
      */
-    public function setIcon($icon)
+    public function setIcon(string $icon): static
     {
-        $this->icon = (string)$icon;
+        $this->icon = $icon;
+
+        return $this;
     }
 
     /**
      * Gets the menu icon.
      *
-     * @return string
+     * @return string|null
      */
-    public function getIcon()
+    public function getIcon(): ?string
     {
         return $this->icon;
     }

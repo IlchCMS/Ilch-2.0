@@ -1,0 +1,63 @@
+users:
+  -
+    id: 1
+    name: "Testuser1"
+    password: "hash"
+    email: "testuser1@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+  -
+    id: 2
+    name: "Testuser2"
+    password: "hash"
+    email: "testuser2@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+
+users_media:
+  -
+    id: 1
+    user_id: 1
+    name: "media1"
+    url: "media1.jpg"
+    url_thumb: "thumb_media1.jpg"
+    ending: "jpg"
+    datetime: "2014-01-01 12:12:12"
+  -
+    id: 2
+    user_id: 1
+    name: "media2"
+    url: "media2.png"
+    url_thumb: "thumb_media2.png"
+    ending: "png"
+    datetime: "2014-01-01 12:12:12"
+  -
+    id: 3
+    user_id: 1
+    name: "media3"
+    url: "media3.mp4"
+    url_thumb: "thumb_media3.mp4"
+    ending: "mp4"
+    datetime: "2014-01-01 12:12:12"
+  -
+    id: 4
+    user_id: 2
+    name: "media4"
+    url: "media4.jpg"
+    url_thumb: "thumb_media4.jpg"
+    ending: "jpg"
+    datetime: "2014-01-01 12:12:12"
+
+users_gallery_imgs:
+  -
+    id: 1
+    user_id: 1
+    image_id: "2"
+    image_title: "Image 2"
+    image_description: "Description 2"
+    cat: 1
+    visits: 5
