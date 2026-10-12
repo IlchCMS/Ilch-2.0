@@ -9,17 +9,75 @@ namespace Modules\User\Models;
 
 class GalleryImage extends \Ilch\Model
 {
+    /**
+     * The id of the gallery image row (users_gallery_imgs.id).
+     *
+     * @var int|null
+     */
     protected ?int $id = null;
-    protected ?int $userId = null;
-    protected ?string $imageId = null;
-    protected ?string $imageUrl = null;
-    protected ?string $imageThumb = null;
-    protected string $imageTitle = '';
-    protected string $imageDesc = '';
-    protected int $cat = 0;
-    protected int $visits = 0;
 
     /**
+     * The id of the user who owns the gallery image.
+     *
+     * @var int|null
+     */
+    protected ?int $userId = null;
+
+    /**
+     * The id of the referenced media entry (users_media.id).
+     * Is null when the media entry no longer exists.
+     *
+     * @var string|null
+     */
+    protected ?string $imageId = null;
+
+    /**
+     * The url of the referenced media file.
+     * Is null when the media entry no longer exists.
+     *
+     * @var string|null
+     */
+    protected ?string $imageUrl = null;
+
+    /**
+     * The url of the thumbnail of the referenced media file.
+     * Is null when the media entry no longer exists.
+     *
+     * @var string|null
+     */
+    protected ?string $imageThumb = null;
+
+    /**
+     * The title of the gallery image.
+     *
+     * @var string|null
+     */
+    protected ?string $imageTitle = null;
+
+    /**
+     * The description of the gallery image.
+     *
+     * @var string|null
+     */
+    protected ?string $imageDesc = null;
+
+    /**
+     * The category (gallery album) the image belongs to.
+     *
+     * @var string|null
+     */
+    protected ?string $cat = null;
+
+    /**
+     * The number of visits of the gallery image.
+     *
+     * @var string|null
+     */
+    protected ?string $visits = null;
+
+    /**
+     * Get the id of the gallery image row (users_gallery_imgs.id).
+     *
      * @return int|null
      */
     public function getId(): ?int
@@ -28,6 +86,8 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
+     * Set the id of the gallery image row.
+     *
      * @param int $id
      * @return $this
      */
@@ -39,6 +99,8 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
+     * Get the id of the user who owns the gallery image.
+     *
      * @return int|null
      */
     public function getUserId(): ?int
@@ -47,6 +109,8 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
+     * Set the id of the user who owns the gallery image.
+     *
      * @param int $userId
      * @return $this
      */
@@ -58,6 +122,9 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
+     * Get the id of the referenced media entry (users_media.id).
+     * Is null when the media entry no longer exists.
+     *
      * @return string|null
      */
     public function getImageId(): ?string
@@ -66,6 +133,8 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
+     * Set the id of the referenced media entry.
+     *
      * @param string|null $imageId
      * @return $this
      */
@@ -77,25 +146,9 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
-     * @return string|null
-     */
-    public function getImageThumb(): ?string
-    {
-        return $this->imageThumb;
-    }
-
-    /**
-     * @param string|null $thumb
-     * @return $this
-     */
-    public function setImageThumb(?string $thumb): static
-    {
-        $this->imageThumb = $thumb;
-
-        return $this;
-    }
-
-    /**
+     * Get the url of the referenced media file.
+     * Is null when the media entry no longer exists.
+     *
      * @return string|null
      */
     public function getImageUrl(): ?string
@@ -104,6 +157,8 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
+     * Set the url of the referenced media file.
+     *
      * @param string|null $url
      * @return $this
      */
@@ -115,14 +170,42 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
-     * @return string
+     * Get the url of the thumbnail of the referenced media file.
+     * Is null when the media entry no longer exists.
+     *
+     * @return string|null
      */
-    public function getImageTitle(): string
+    public function getImageThumb(): ?string
+    {
+        return $this->imageThumb;
+    }
+
+    /**
+     * Set the url of the thumbnail of the referenced media file.
+     *
+     * @param string|null $thumb
+     * @return $this
+     */
+    public function setImageThumb(?string $thumb): static
+    {
+        $this->imageThumb = $thumb;
+
+        return $this;
+    }
+
+    /**
+     * Get the title of the gallery image.
+     *
+     * @return string|null
+     */
+    public function getImageTitle(): ?string
     {
         return $this->imageTitle;
     }
 
     /**
+     * Set the title of the gallery image.
+     *
      * @param string $title
      * @return $this
      */
@@ -134,14 +217,18 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
-     * @return string
+     * Get the description of the gallery image.
+     *
+     * @return string|null
      */
-    public function getImageDesc(): string
+    public function getImageDesc(): ?string
     {
         return $this->imageDesc;
     }
 
     /**
+     * Set the description of the gallery image.
+     *
      * @param string $desc
      * @return $this
      */
@@ -153,18 +240,22 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
-     * @return int
+     * Get the category (gallery album) the image belongs to.
+     *
+     * @return string|null
      */
-    public function getCat(): int
+    public function getCat(): ?string
     {
         return $this->cat;
     }
 
     /**
-     * @param int $cat
+     * Set the category (gallery album) the image belongs to.
+     *
+     * @param string $cat
      * @return $this
      */
-    public function setCat(int $cat): static
+    public function setCat(string $cat): static
     {
         $this->cat = $cat;
 
@@ -172,18 +263,22 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
-     * @return int
+     * Get the number of visits of the gallery image.
+     *
+     * @return string|null
      */
-    public function getVisits(): int
+    public function getVisits(): ?string
     {
         return $this->visits;
     }
 
     /**
-     * @param int $visits
+     * Set the number of visits of the gallery image.
+     *
+     * @param string $visits
      * @return $this
      */
-    public function setVisits(int $visits): static
+    public function setVisits(string $visits): static
     {
         $this->visits = $visits;
 
