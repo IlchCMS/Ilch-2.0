@@ -181,9 +181,7 @@ class User extends \Ilch\Mapper
 
         $result = $select->execute();
 
-        if ($pagination !== null) {
-            $pagination->setRows($result->getFoundRows());
-        }
+        $pagination?->setRows($result->getFoundRows());
 
         $users = [];
         foreach ($result->fetchRows() as $userRow) {

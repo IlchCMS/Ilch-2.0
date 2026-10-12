@@ -174,12 +174,9 @@ class Gallery extends \Ilch\Mapper
         if ($itemId) {
             // Only update the fields that were actually set,
             // the rest keeps its old database values.
-            $updateFields = [];
-            foreach ($fields as $key => $value) {
-                if ($value !== null) {
-                    $updateFields[$key] = $value;
-                }
-            }
+            $updateFields = array_filter($fields, function ($value) {
+                return $value !== null;
+            });
 
             if ($updateFields !== []) {
                 $this->db()->update('users_gallery_items')

@@ -239,13 +239,13 @@ class GalleryTest extends DatabaseTestCase
             ->setSort(10);
 
         $itemId = $this->out->saveItem($model);
-        self::assertGreaterThan(5, (int)$itemId);
+        self::assertGreaterThan(5, $itemId);
 
         $after = $this->out->getGalleryItems(1);
         self::assertCount(4, $after);
 
         // The new item has the highest sort value and must be the last one.
-        self::assertEquals((int)$itemId, $after[3]->getId());
+        self::assertEquals($itemId, $after[3]->getId());
         self::assertEquals(1, $after[3]->getUserId());
         self::assertEquals('New Album', $after[3]->getTitle());
         self::assertEquals('New album description', $after[3]->getDesc());
@@ -266,7 +266,7 @@ class GalleryTest extends DatabaseTestCase
             ->setTitle('Updated Album 1');
 
         $itemId = $this->out->saveItem($model);
-        self::assertEquals(1, (int)$itemId);
+        self::assertEquals(1, $itemId);
 
         $item = $this->out->getGalleryById(1);
         self::assertNotNull($item);
@@ -375,9 +375,9 @@ class GalleryTest extends DatabaseTestCase
             ->setSort(7);
 
         $itemId = $this->out->saveItem($model);
-        self::assertGreaterThan(5, (int)$itemId);
+        self::assertGreaterThan(5, $itemId);
 
-        $item = $this->out->getGalleryById((int)$itemId);
+        $item = $this->out->getGalleryById($itemId);
         self::assertNotNull($item);
         self::assertEquals('No Id Set', $item->getTitle());
         self::assertEquals(2, $item->getUserId());
@@ -401,7 +401,7 @@ class GalleryTest extends DatabaseTestCase
 
         $itemId = $this->out->saveItem($model);
 
-        $item = $this->out->getGalleryById((int)$itemId);
+        $item = $this->out->getGalleryById($itemId);
         self::assertNotNull($item);
         self::assertEquals('No Description', $item->getTitle());
         self::assertEquals('', $item->getDesc());

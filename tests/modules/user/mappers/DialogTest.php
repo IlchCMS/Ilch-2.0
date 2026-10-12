@@ -36,7 +36,7 @@ class DialogTest extends DatabaseTestCase
     public function testGetDialogReturnsNullWithoutDialogs()
     {
         self::assertNull($this->out->getDialog(4, false));
-        self::assertNull($this->out->getDialog(4, true));
+        self::assertNull($this->out->getDialog(4));
     }
 
     /**
@@ -76,7 +76,7 @@ class DialogTest extends DatabaseTestCase
      */
     public function testGetDialogWithHidden()
     {
-        $dialogs = $this->out->getDialog(1, true);
+        $dialogs = $this->out->getDialog(1);
 
         self::assertNotNull($dialogs);
 
@@ -438,7 +438,7 @@ class DialogTest extends DatabaseTestCase
         // Neither the normal view nor the hidden view shows dialog 1 for user 1
         // (a permanently hidden dialog is not counted in the hidden view either).
         self::assertNull($this->out->getDialog(1, false));
-        $dialogs = $this->out->getDialog(1, true);
+        $dialogs = $this->out->getDialog(1);
         self::assertNotNull($dialogs);
         self::assertCount(1, $dialogs);
         self::assertEquals(2, $dialogs[0]->getCId());

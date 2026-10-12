@@ -96,7 +96,7 @@ class MediaTest extends DatabaseTestCase
      */
     public function testGetMediaListByEndingWithoutPagination()
     {
-        $media = $this->out->getMediaListByEnding(1, 'jpg png mp4', null);
+        $media = $this->out->getMediaListByEnding(1, 'jpg png mp4');
 
         self::assertNotNull($media);
         self::assertCount(3, $media);

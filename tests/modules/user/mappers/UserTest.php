@@ -224,7 +224,7 @@ class UserTest extends DatabaseTestCase
      */
     public function testGetUserListByGroupIdsUnconfirmed()
     {
-        $users = $this->out->getUserListByGroupIds([1, 2, 3], 0);
+        $users = $this->out->getUserListByGroupIds([1, 2, 3]);
 
         self::assertIsArray($users);
         self::assertCount(0, $users);
@@ -656,7 +656,7 @@ class UserTest extends DatabaseTestCase
      */
     public function testDeleteselectsdeleteDoesNothingWhenNothingIsDue()
     {
-        self::assertTrue($this->out->deleteselectsdelete(5));
+        self::assertTrue($this->out->deleteselectsdelete());
 
         self::assertEquals(4, $this->out->getUserCount());
     }
@@ -668,7 +668,7 @@ class UserTest extends DatabaseTestCase
     {
         $this->out->selectsdelete(4, '2030-01-01 00:00:00');
 
-        self::assertTrue($this->out->deleteselectsdelete(5));
+        self::assertTrue($this->out->deleteselectsdelete());
         self::assertTrue($this->out->userWithIdExists(4));
     }
 

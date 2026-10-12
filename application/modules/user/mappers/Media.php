@@ -22,14 +22,14 @@ class Media extends \Ilch\Mapper
      */
     public function getMediaListByEnding(int $userId, ?string $ending = null, ?\Ilch\Pagination $pagination = null): ?array
     {
-        $endings = array_values(array_filter(explode(' ', trim((string) $ending))));
+        $endings = array_values(array_filter(explode(' ', trim((string) $ending, " \f\n\r\t\v\x00"))));
 
         if (empty($endings)) {
             return null;
         }
 
         $escapedEndings = implode(',', $this->db()->escapeArray($endings, true));
-        $where = 'user_id = ' . (int) $userId . ' AND ending IN (' . $escapedEndings . ')';
+        $where = 'user_id = ' . $userId . ' AND ending IN (' . $escapedEndings . ')';
 
         if ($pagination !== null) {
             $sqlCountOfRows = 'SELECT COUNT(*)
@@ -82,7 +82,7 @@ class Media extends \Ilch\Mapper
             ->from('users_media');
 
         if ($lastId !== null) {
-            $query->where(['id <' => (int) $lastId]);
+            $query->where(['id <' => $lastId]);
         }
 
         $mediaRows = $query
@@ -129,7 +129,7 @@ class Media extends \Ilch\Mapper
             ])
             ->execute();
 
-        $model->setId((int) $lastInsertId);
+        $model->setId($lastInsertId);
     }
 
     /**

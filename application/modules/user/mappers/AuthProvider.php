@@ -194,7 +194,7 @@ class AuthProvider extends \Ilch\Mapper
      * @param int $user_id
      * @return int Number of affected rows
      */
-    public function unlinkUser($provider, $user_id): int
+    public function unlinkUser(string $provider, int $user_id): int
     {
         return $this->db()->delete()
             ->from($this->default_table)
@@ -213,7 +213,7 @@ class AuthProvider extends \Ilch\Mapper
      * @param int $user_id
      * @return int Number of affected rows
      */
-    public function deleteUser($user_id): int
+    public function deleteUser(int $user_id): int
     {
         return $this->db()->delete()
             ->from($this->default_table)
