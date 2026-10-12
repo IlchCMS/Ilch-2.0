@@ -20,7 +20,7 @@ class Media extends \Ilch\Mapper
      * @return MediaModel[]|array
      * @throws \Ilch\Database\Exception
      */
-    public function getMediaListByEnding(int $userId, string $ending = null, \Ilch\Pagination $pagination = null): ?array
+    public function getMediaListByEnding(int $userId, ?string $ending = null, ?\Ilch\Pagination $pagination = null): ?array
     {
         if ($pagination) {
             $sqlCountOfRows = 'SELECT COUNT(*)
@@ -66,7 +66,7 @@ class Media extends \Ilch\Mapper
      * @param int|null $lastId
      * @return MediaModel[]|array
      */
-    public function getMediaListScroll(int $lastId = null): ?array
+    public function getMediaListScroll(?int $lastId = null): ?array
     {
         $mediaRows = $this->db()->select('*')
             ->from('users_media')

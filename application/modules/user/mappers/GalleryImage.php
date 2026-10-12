@@ -112,7 +112,7 @@ class GalleryImage extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getImageByGalleryId(int $id, \Ilch\Pagination $pagination = null): ?array
+    public function getImageByGalleryId(int $id, ?\Ilch\Pagination $pagination = null): ?array
     {
         $select = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'users_gallery_imgs'])
