@@ -7,7 +7,6 @@
 
 namespace Modules\User\Mappers;
 
-use Ilch\Database\Mysql\Result;
 use Modules\User\Models\AuthProviderUser;
 use Modules\User\Models\Provider;
 use Modules\User\Models\AuthProviderModule;
@@ -86,6 +85,18 @@ class AuthProvider extends \Ilch\Mapper
 
     public function updateModule($provider, $module): bool
     {
+        $providerData = $this->getProvider($provider);
+
+        if ($providerData === null) {
+            return false;
+        }
+
+        // MySQL reports 0 affected rows when a column is set to its current
+        // value, so an unchanged value still counts as a successful update.
+        if ($providerData->getModule() === $module) {
+            return true;
+        }
+
         $result = $this->db()->update(
             'auth_providers',
             ['module' => $module],
@@ -121,21 +132,30 @@ class AuthProvider extends \Ilch\Mapper
 
     public function linkProviderWithUser(AuthProviderUser $user): bool
     {
-        try {
-            $this->db()->insert($this->default_table)
-                ->values([
-                    'user_id' => $user->getUserId(),
-                    'provider' => $user->getProvider(),
-                    'identifier' => $user->getIdentifier(),
-                    'oauth_token' => $user->getOauthToken(),
-                    'oauth_token_secret' => $user->getOauthTokenSecret(),
-                    'screen_name' => $user->getScreenName(),
-                    'created_at' => (new \Ilch\Date('NOW'))->toDb(true),
-                ])
-                ->execute();
-        } catch (\Exception $e) {
+        $userId = $user->getUserId();
+        $provider = $user->getProvider();
+        $identifier = $user->getIdentifier();
+
+        // Reject duplicates up front instead of swallowing every exception,
+        // so that unexpected database errors are not hidden.
+        if (
+            $this->hasProviderLinked($provider, $userId)
+            || $this->providerAccountIsLinked($provider, $identifier)
+        ) {
             return false;
         }
+
+        $this->db()->insert($this->default_table)
+            ->values([
+                'user_id' => $userId,
+                'provider' => $provider,
+                'identifier' => $identifier,
+                'oauth_token' => $user->getOauthToken(),
+                'oauth_token_secret' => $user->getOauthTokenSecret(),
+                'screen_name' => $user->getScreenName(),
+                'created_at' => (new \Ilch\Date('NOW'))->toDb(true),
+            ])
+            ->execute();
 
         return true;
     }
@@ -149,6 +169,7 @@ class AuthProvider extends \Ilch\Mapper
                 'identifier' => $identifier,
                 'provider' => $provider
             ])
+            ->order(['user_id' => 'ASC'])
             ->limit(1)
             ->execute()
             ->fetchCell('user_id');
@@ -168,7 +189,12 @@ class AuthProvider extends \Ilch\Mapper
             ->fetchObject(AuthProviderUser::class, []);
     }
 
-    public function unlinkUser($provider, $user_id): Result|int
+    /**
+     * @param string $provider
+     * @param int $user_id
+     * @return int Number of affected rows
+     */
+    public function unlinkUser($provider, $user_id): int
     {
         return $this->db()->delete()
             ->from($this->default_table)
@@ -184,10 +210,10 @@ class AuthProvider extends \Ilch\Mapper
      * Call this function if the user for example gets deleted and therefore
      * the links to the auth providers of that deleted user are of no use anymore.
      *
-     * @param $user_id
-     * @return Result|int
+     * @param int $user_id
+     * @return int Number of affected rows
      */
-    public function deleteUser($user_id): Result|int
+    public function deleteUser($user_id): int
     {
         return $this->db()->delete()
             ->from($this->default_table)

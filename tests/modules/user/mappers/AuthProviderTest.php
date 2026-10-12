@@ -168,6 +168,18 @@ class AuthProviderTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that updateModule() returns true when the provider already has the given module
+     * (MySQL reports 0 affected rows for no-op updates).
+     */
+    public function testUpdateModuleSameValue()
+    {
+        self::assertTrue($this->out->updateModule('facebook', 'login'));
+
+        $provider = $this->out->getProvider('facebook');
+        self::assertEquals('login', $provider->getModule());
+    }
+
+    /**
      * Tests that updateModule() returns false for a non-existent provider.
      */
     public function testUpdateModuleNotFound()
@@ -237,6 +249,24 @@ class AuthProviderTest extends DatabaseTestCase
 
         // The original link must be untouched.
         self::assertEquals('fb-1234', $this->out->getLinkedProviderDetails('facebook', 1)->getIdentifier());
+    }
+
+    /**
+     * Tests that linkProviderWithUser() refuses to link an identifier that is already
+     * linked to a different user, keeping the original link intact.
+     */
+    public function testLinkProviderWithUserIdentifierTakenByOtherUser()
+    {
+        $user = new AuthProviderUser();
+        $user->setUserId(2)
+            ->setProvider('facebook')
+            ->setIdentifier('fb-1234');
+
+        self::assertFalse($this->out->linkProviderWithUser($user));
+
+        // The original link must still resolve to user 1.
+        self::assertEquals(1, $this->out->getUserIdByProvider('facebook', 'fb-1234'));
+        self::assertFalse($this->out->hasProviderLinked('facebook', 2));
     }
 
     /**

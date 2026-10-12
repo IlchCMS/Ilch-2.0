@@ -315,6 +315,7 @@ class Config extends \Ilch\Config\Install
                 `oauth_token_secret` VARCHAR(255) DEFAULT NULL,
                 `created_at` VARCHAR(45) DEFAULT NULL,
                 PRIMARY KEY (`user_id`, `provider`) USING BTREE,
+                UNIQUE KEY `uniq_provider_identifier` (`provider`, `identifier`) USING BTREE,
                 CONSTRAINT `FK_[prefix]_users_auth_providers_[prefix]_users` FOREIGN KEY (`user_id`) REFERENCES `[prefix]_users` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1086,6 +1087,23 @@ class Config extends \Ilch\Config\Install
 
                 if ($this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_users_dialog_hidden' AND constraint_name='PRIMARY');")) {
                     $this->db()->query("ALTER TABLE `[prefix]_users_dialog_hidden` DROP PRIMARY KEY;");
+                }
+
+                // Enforce that one external account (provider + identifier) can only be
+                // linked to one user. Remove potential duplicates first, keeping the
+                // link with the lowest user_id.
+                $this->db()->query('DELETE uap FROM `[prefix]_users_auth_providers` uap
+                    INNER JOIN `[prefix]_users_auth_providers` uap2
+                        ON uap.provider = uap2.provider
+                        AND uap.identifier = uap2.identifier
+                        AND uap.user_id > uap2.user_id;');
+
+                $fileConfig = new \Ilch\Config\File();
+                $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
+                $dbname = $fileConfig->get('dbName');
+
+                if (!$this->db()->queryCell("SELECT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_schema='" . $dbname . "' AND table_name='[prefix]_users_auth_providers' AND constraint_name='uniq_provider_identifier');")) {
+                    $this->db()->query('ALTER TABLE `[prefix]_users_auth_providers` ADD UNIQUE KEY `uniq_provider_identifier` (`provider`, `identifier`) USING BTREE;');
                 }
                 break;
         }

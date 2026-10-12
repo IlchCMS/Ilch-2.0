@@ -691,10 +691,12 @@ class Panel extends BaseController
         $userId = $this->getUser()->getId();
         $id = filter_var($this->getRequest()->getParam('id'), FILTER_VALIDATE_INT);
 
-        if ($this->getRequest()->isSecure()
+        if (
+            $this->getRequest()->isSecure()
             && $id !== false
             && $id !== $userId
-            && (new UserMapper())->userWithIdExists($id)) {
+            && (new UserMapper())->userWithIdExists($id)
+        ) {
             $friendsMapper = new FriendsMapper();
             $friendsMapper->addFriend($userId, $id);
             $this->addMessage('sendFriendRequestSuccess');
