@@ -1,0 +1,79 @@
+users:
+  -
+    id: 1
+    name: "Testuser1"
+    password: "hash"
+    email: "testuser1@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+  -
+    id: 2
+    name: "Testuser2"
+    password: "hash"
+    email: "testuser2@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+
+users_media:
+  -
+    id: 1
+    user_id: 1
+    name: "media1"
+    url: "https://www.ilch.de/media1.jpg"
+    url_thumb: "https://www.ilch.de/thumb_media1.jpg"
+    ending: "jpg"
+    datetime: "2014-01-01 12:12:12"
+  -
+    id: 2
+    user_id: 1
+    name: "media2"
+    url: "https://www.ilch.de/media2.jpg"
+    url_thumb: "https://www.ilch.de/thumb_media2.jpg"
+    ending: "jpg"
+    datetime: "2014-01-01 12:12:12"
+  -
+    id: 3
+    user_id: 2
+    name: "media3"
+    url: "https://www.ilch.de/media3.jpg"
+    url_thumb: "https://www.ilch.de/thumb_media3.jpg"
+    ending: "jpg"
+    datetime: "2014-01-01 12:12:12"
+
+users_gallery_imgs:
+  -
+    id: 1
+    user_id: 1
+    image_id: "1"
+    image_title: "Image 1"
+    image_description: "Description 1"
+    cat: 1
+    visits: 10
+  -
+    id: 2
+    user_id: 1
+    image_id: "2"
+    image_title: "Image 2"
+    image_description: "Description 2"
+    cat: 1
+    visits: 5
+  -
+    id: 3
+    user_id: 2
+    image_id: "3"
+    image_title: "Image 3"
+    image_description: "Description 3"
+    cat: 2
+    visits: 0
+  -
+    id: 4
+    user_id: 2
+    image_id: "99"
+    image_title: "Dangling image"
+    image_description: "References a media entry that does not exist"
+    cat: 2
+    visits: 3

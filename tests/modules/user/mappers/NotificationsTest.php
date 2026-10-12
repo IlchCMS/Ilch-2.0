@@ -7,6 +7,9 @@
 
 namespace Modules\User\Mappers;
 
+use Ilch\Registry;
+use Ilch\Translator;
+use InvalidArgumentException;
 use Modules\Admin\Config\Config as AdminConfig;
 use Modules\User\Config\Config as ModuleConfig;
 use Modules\User\Models\Notification as NotificationModel;
@@ -29,6 +32,10 @@ class NotificationsTest extends DatabaseTestCase
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
         $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/database_users_notifications.yml');
+
+        if (Registry::get('translator') === null) {
+            Registry::set('translator', new Translator());
+        }
     }
 
     /**
@@ -48,6 +55,16 @@ class NotificationsTest extends DatabaseTestCase
         self::assertEquals('test', $notification->getMessage());
         self::assertEquals('https://www.ilch.de', $notification->getURL());
         self::assertEquals('forumTest', $notification->getType());
+    }
+
+    /**
+     * Tests that getting a notification with a non-existent id returns null.
+     */
+    public function testGetNotificationByIdNotFound()
+    {
+        $mapper = new NotificationsMapper();
+
+        self::assertNull($mapper->getNotificationById(9999));
     }
 
     /**
@@ -122,7 +139,7 @@ class NotificationsTest extends DatabaseTestCase
     public function testGetNotificationsByModule()
     {
         $mapper = new NotificationsMapper();
-        $notifications = $mapper->getNotificationsByModule('forum', '1');
+        $notifications = $mapper->getNotificationsByModule('forum', 1);
 
         self::assertNotNull($notifications);
         self::assertCount(3, $notifications);
@@ -158,7 +175,7 @@ class NotificationsTest extends DatabaseTestCase
     public function testGetNotificationsByType()
     {
         $mapper = new NotificationsMapper();
-        $notifications = $mapper->getNotificationsByType('forumTest', '1');
+        $notifications = $mapper->getNotificationsByType('forumTest', 1);
 
         self::assertNotNull($notifications);
         self::assertCount(2, $notifications);
@@ -202,6 +219,42 @@ class NotificationsTest extends DatabaseTestCase
     }
 
     /**
+     * Tests if the validation function returns false for an invalid url.
+     */
+    public function testIsValidNotificationInvalidUrl()
+    {
+        $_SERVER['HTTP_HOST'] = 'www.ilch.de';
+
+        $mapper = new NotificationsMapper();
+        $notificationModel = new NotificationModel();
+
+        $notificationModel->setModule('forum');
+        $notificationModel->setMessage('test');
+        $notificationModel->setURL('not a url');
+        $notificationModel->setType('forumTest');
+
+        self::assertFalse($mapper->isValidNotification($notificationModel));
+    }
+
+    /**
+     * Tests if the validation function returns false for a missing message.
+     */
+    public function testIsValidNotificationMissingMessage()
+    {
+        $_SERVER['HTTP_HOST'] = 'www.ilch.de';
+
+        $mapper = new NotificationsMapper();
+        $notificationModel = new NotificationModel();
+
+        $notificationModel->setModule('forum');
+        $notificationModel->setMessage('');
+        $notificationModel->setURL('https://www.ilch.de');
+        $notificationModel->setType('forumTest');
+
+        self::assertFalse($mapper->isValidNotification($notificationModel));
+    }
+
+    /**
      * Tests adding a notification.
      */
     public function testAddNotification()
@@ -226,6 +279,43 @@ class NotificationsTest extends DatabaseTestCase
         self::assertEquals('test', $notification->getMessage());
         self::assertEquals('https://www.ilch.de', $notification->getURL());
         self::assertEquals('forumTest', $notification->getType());
+    }
+
+    /**
+     * Tests that adding an invalid notification returns 0 and inserts nothing.
+     */
+    public function testAddNotificationInvalid()
+    {
+        $mapper = new NotificationsMapper();
+        $notificationModel = new NotificationModel();
+
+        $notificationModel->setUserId(1);
+        $notificationModel->setModule('forum');
+        $notificationModel->setMessage('test');
+        $notificationModel->setURL('not a url');
+        $notificationModel->setType('forumTest');
+
+        self::assertSame(0, $mapper->addNotification($notificationModel));
+        self::assertCount(3, $mapper->getNotifications(1));
+    }
+
+    /**
+     * Tests that adding a notification of a type the user explicitly has no
+     * permission for returns 0 and inserts nothing.
+     */
+    public function testAddNotificationPermissionNotGranted()
+    {
+        $mapper = new NotificationsMapper();
+        $notificationModel = new NotificationModel();
+
+        $notificationModel->setUserId(1);
+        $notificationModel->setModule('forum');
+        $notificationModel->setMessage('blocked');
+        $notificationModel->setURL('https://www.ilch.de');
+        $notificationModel->setType('forumTest2');
+
+        self::assertSame(0, $mapper->addNotification($notificationModel));
+        self::assertCount(3, $mapper->getNotifications(1));
     }
 
     /**
@@ -280,6 +370,45 @@ class NotificationsTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that adding multiple notifications throws an exception if one
+     * of them is invalid.
+     */
+    public function testAddNotificationsInvalidNotification()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $mapper = new NotificationsMapper();
+        $notificationModel = new NotificationModel();
+
+        $notificationModel->setUserId(1);
+        $notificationModel->setModule('forum');
+        $notificationModel->setMessage('test');
+        $notificationModel->setURL('not a url');
+        $notificationModel->setType('forumTest');
+
+        $mapper->addNotifications([$notificationModel]);
+    }
+
+    /**
+     * Tests that adding multiple notifications returns 0 when all of them are
+     * blocked by an existing not granted permission.
+     */
+    public function testAddNotificationsAllBlocked()
+    {
+        $mapper = new NotificationsMapper();
+        $notificationModel = new NotificationModel();
+
+        $notificationModel->setUserId(1);
+        $notificationModel->setModule('forum');
+        $notificationModel->setMessage('blocked');
+        $notificationModel->setURL('https://www.ilch.de');
+        $notificationModel->setType('forumTest2');
+
+        self::assertSame(0, $mapper->addNotifications([$notificationModel]));
+        self::assertCount(3, $mapper->getNotifications(1));
+    }
+
+    /**
      * Tests updating by notification.
      */
     public function testUpdateNotificationById()
@@ -306,6 +435,30 @@ class NotificationsTest extends DatabaseTestCase
         self::assertEquals('test', $notification->getMessage());
         self::assertEquals('https://www.ilch.de', $notification->getURL());
         self::assertEquals('forumTest', $notification->getType());
+    }
+
+    /**
+     * Tests that updating a notification with invalid data returns 0 and
+     * leaves the notification untouched.
+     */
+    public function testUpdateNotificationByIdInvalid()
+    {
+        $mapper = new NotificationsMapper();
+        $notificationModel = new NotificationModel();
+
+        $notificationModel->setId(3);
+        $notificationModel->setUserId(1);
+        $notificationModel->setModule('forum');
+        $notificationModel->setMessage('test3');
+        $notificationModel->setURL('not a url');
+        $notificationModel->setType('forumTest');
+
+        self::assertSame(0, $mapper->updateNotificationById($notificationModel));
+
+        $notification = $mapper->getNotificationById(3);
+        self::assertNotNull($notification);
+        self::assertEquals('test3', $notification->getMessage());
+        self::assertEquals('https://www.ilch.de', $notification->getURL());
     }
 
     /**

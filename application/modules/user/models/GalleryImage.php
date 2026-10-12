@@ -9,72 +9,17 @@ namespace Modules\User\Models;
 
 class GalleryImage extends \Ilch\Model
 {
-    /**
-     * The id of the image.
-     *
-     * @var int|null
-     */
     protected ?int $id = null;
-
-    /**
-     * The userId of the image.
-     *
-     * @var int|null
-     */
     protected ?int $userId = null;
-
-    /**
-     * The imageId of the image.
-     *
-     * @var string|null
-     */
     protected ?string $imageId = null;
+    protected ?string $imageUrl = null;
+    protected ?string $imageThumb = null;
+    protected string $imageTitle = '';
+    protected string $imageDesc = '';
+    protected int $cat = 0;
+    protected int $visits = 0;
 
     /**
-     * The thumb of the image.
-     *
-     * @var string|null
-     */
-    protected ?string $thumb = null;
-
-    /**
-     * Title of the image.
-     *
-     * @var string|null
-     */
-    protected ?string $title = null;
-
-    /**
-     * Description of the image.
-     *
-     * @var string|null
-     */
-    protected ?string $desc = null;
-
-    /**
-     * The cat of the image.
-     *
-     * @var string|null
-     */
-    protected ?string $cat = null;
-
-    /**
-     * The visits of the image.
-     *
-     * @var string|null
-     */
-    protected ?string $visits = null;
-
-    /**
-     * The imageUrl of the image.
-     *
-     * @var string|null
-     */
-    protected ?string $url = null;
-
-    /**
-     * Gets the id of the image.
-     *
      * @return int|null
      */
     public function getId(): ?int
@@ -83,88 +28,6 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
-     * Gets the userId of the image.
-     *
-     * @return int|null
-     */
-    public function getUserId(): ?int
-    {
-        return $this->userId;
-    }
-
-    /**
-     * Gets the imageId of the image.
-     *
-     * @return string|null
-     */
-    public function getImageId(): ?string
-    {
-        return $this->imageId;
-    }
-
-    /**
-     * Gets the imageThumb of the image.
-     *
-     * @return string|null
-     */
-    public function getImageThumb(): ?string
-    {
-        return $this->thumb;
-    }
-
-    /**
-     * Gets the image title.
-     *
-     * @return string|null
-     */
-    public function getImageTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    /**
-     * Gets the image desc.
-     *
-     * @return string|null
-     */
-    public function getImageDesc(): ?string
-    {
-        return $this->desc;
-    }
-
-    /**
-     * Gets the cat of the image.
-     *
-     * @return string|null
-     */
-    public function getCat(): ?string
-    {
-        return $this->cat;
-    }
-
-    /**
-     * Gets the visits of the image.
-     *
-     * @return string|null
-     */
-    public function getVisits(): ?string
-    {
-        return $this->visits;
-    }
-
-    /**
-     * Gets the ImageUrl of the image.
-     *
-     * @return string|null
-     */
-    public function getImageUrl(): ?string
-    {
-        return $this->url;
-    }
-
-    /**
-     * Sets the id of the image.
-     *
      * @param int $id
      * @return $this
      */
@@ -176,25 +39,37 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
-     * Sets the userId of the image.
-     *
-     * @param string $userId
+     * @return int|null
+     */
+    public function getUserId(): ?int
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param int $userId
      * @return $this
      */
-    public function setUserId(string $userId): static
+    public function setUserId(int $userId): static
     {
-        $this->userId = (int)$userId;
+        $this->userId = $userId;
 
         return $this;
     }
 
     /**
-     * Sets the imageId of the image.
-     *
-     * @param string $imageId
+     * @return string|null
+     */
+    public function getImageId(): ?string
+    {
+        return $this->imageId;
+    }
+
+    /**
+     * @param string|null $imageId
      * @return $this
      */
-    public function setImageId(string $imageId): static
+    public function setImageId(?string $imageId): static
     {
         $this->imageId = $imageId;
 
@@ -202,51 +77,94 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
-     * Sets the thumb of the image.
-     *
-     * @param string $thumb
+     * @return string|null
+     */
+    public function getImageThumb(): ?string
+    {
+        return $this->imageThumb;
+    }
+
+    /**
+     * @param string|null $thumb
      * @return $this
      */
-    public function setImageThumb(string $thumb): static
+    public function setImageThumb(?string $thumb): static
     {
-        $this->thumb = $thumb;
+        $this->imageThumb = $thumb;
 
         return $this;
     }
 
     /**
-     * Sets the title.
-     *
+     * @return string|null
+     */
+    public function getImageUrl(): ?string
+    {
+        return $this->imageUrl;
+    }
+
+    /**
+     * @param string|null $url
+     * @return $this
+     */
+    public function setImageUrl(?string $url): static
+    {
+        $this->imageUrl = $url;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageTitle(): string
+    {
+        return $this->imageTitle;
+    }
+
+    /**
      * @param string $title
      * @return $this
      */
     public function setImageTitle(string $title): static
     {
-        $this->title = $title;
+        $this->imageTitle = $title;
 
         return $this;
     }
 
     /**
-     * Sets the desc.
-     *
+     * @return string
+     */
+    public function getImageDesc(): string
+    {
+        return $this->imageDesc;
+    }
+
+    /**
      * @param string $desc
      * @return $this
      */
     public function setImageDesc(string $desc): static
     {
-        $this->desc = $desc;
+        $this->imageDesc = $desc;
 
         return $this;
     }
 
     /**
-     * Sets the cat of the image.
-     *
-     * @param string $cat
+     * @return int
+     */
+    public function getCat(): int
+    {
+        return $this->cat;
+    }
+
+    /**
+     * @param int $cat
      * @return $this
      */
-    public function setCat(string $cat): static
+    public function setCat(int $cat): static
     {
         $this->cat = $cat;
 
@@ -254,27 +172,20 @@ class GalleryImage extends \Ilch\Model
     }
 
     /**
-     * Sets the visits of the image.
-     *
-     * @param string $visits
-     * @return $this
+     * @return int
      */
-    public function setVisits(string $visits): static
+    public function getVisits(): int
     {
-        $this->visits = $visits;
-
-        return $this;
+        return $this->visits;
     }
 
     /**
-     * Sets the Url of the image.
-     *
-     * @param string $url
+     * @param int $visits
      * @return $this
      */
-    public function setImageUrl(string $url): static
+    public function setVisits(int $visits): static
     {
-        $this->url = $url;
+        $this->visits = $visits;
 
         return $this;
     }

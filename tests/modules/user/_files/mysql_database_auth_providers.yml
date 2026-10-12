@@ -1,0 +1,119 @@
+users:
+  -
+    id: 1
+    name: "Testuser1"
+    password: "hash"
+    email: "testuser1@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+  -
+    id: 2
+    name: "Testuser2"
+    password: "hash"
+    email: "testuser2@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+  -
+    id: 3
+    name: "Testuser3"
+    password: "hash"
+    email: "testuser3@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+  -
+    id: 4
+    name: "Testuser4"
+    password: "hash"
+    email: "testuser4@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+
+modules:
+  -
+    key: "login"
+    system: 0
+    layout: 0
+    hide_menu: 0
+    author: "test"
+    version: "1.0.0"
+    link: "https://ilch.de"
+    icon_small: "fa-list"
+
+auth_providers:
+  -
+    key: "facebook"
+    name: "Facebook"
+    icon: "fa-brands fa-facebook"
+    module: "login"
+  -
+    key: "google"
+    name: "Google"
+    icon: "fa-brands fa-google"
+    module: "login"
+  -
+    key: "discord"
+    name: "Discord"
+    icon: "fa-brands fa-discord"
+    module: ""
+
+auth_providers_modules:
+  -
+    module: "login"
+    provider: "facebook"
+    auth_controller: "auth"
+    auth_action: "facebook"
+    unlink_controller: "settings"
+    unlink_action: "unlinkFacebook"
+  -
+    module: "login"
+    provider: "google"
+    auth_controller: "auth"
+    auth_action: "google"
+    unlink_controller: "settings"
+    unlink_action: "unlinkGoogle"
+
+modules_content:
+  -
+    key: "login"
+    locale: "en_EN"
+    name: "Login"
+    description: ""
+  -
+    key: "login"
+    locale: "de_DE"
+    name: "Anmelden"
+    description: ""
+
+users_auth_providers:
+  -
+    user_id: 1
+    provider: "facebook"
+    identifier: "fb-1234"
+    screen_name: "Testuser1"
+    oauth_token: "token1"
+    oauth_token_secret: "secret1"
+    created_at: "2020-02-01 15:00:00"
+  -
+    user_id: 2
+    provider: "google"
+    identifier: "gg-5678"
+    screen_name: "Testuser2"
+    oauth_token: "token2"
+    oauth_token_secret: "secret2"
+    created_at: "2020-02-01 15:00:00"
+  -
+    user_id: 4
+    provider: "discord"
+    identifier: "dc-7777"
+    screen_name: "Testuser4"
+    oauth_token: "token3"
+    oauth_token_secret: "secret3"
+    created_at: "2020-02-01 15:00:00"

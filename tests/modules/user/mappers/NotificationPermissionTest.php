@@ -47,6 +47,16 @@ class NotificationPermissionTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that getting a permission with a non-existent id returns null.
+     */
+    public function testGetPermissionByIdNotFound()
+    {
+        $mapper = new NotificationPermissionMapper();
+
+        self::assertNull($mapper->getPermissionById(9999));
+    }
+
+    /**
      * Tests getting all permissions.
      */
     public function testGetPermissions()
@@ -77,7 +87,7 @@ class NotificationPermissionTest extends DatabaseTestCase
     }
 
     /**
-     * Tests getting all permissions.
+     * Tests getting the permissions of a user.
      */
     public function testGetPermissionsByUserId()
     {
@@ -143,7 +153,7 @@ class NotificationPermissionTest extends DatabaseTestCase
     }
 
     /**
-     * Test trying to get permissions for a non-existing module.
+     * Tests trying to get permissions for a non-existing module.
      */
     public function testGetPermissionsOfModuleNoResult()
     {
@@ -165,6 +175,17 @@ class NotificationPermissionTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that updating permissions of a non-existing module affects no rows.
+     */
+    public function testUpdatePermissionGrantedOfModuleNoResult()
+    {
+        $mapper = new NotificationPermissionMapper();
+        $affectedRows = $mapper->updatePermissionGrantedOfModule('NotExistingModule', 1, 1);
+
+        self::assertEquals(0, $affectedRows);
+    }
+
+    /**
      * Tests updating permissions of a module with a specific type and for a specific user.
      */
     public function testUpdatePermissionGrantedOfModuleType()
@@ -173,6 +194,17 @@ class NotificationPermissionTest extends DatabaseTestCase
         $affectedRows = $mapper->updatePermissionGrantedOfModuleType('forum', 'forumTest', 1, 0);
 
         self::assertEquals(1, $affectedRows);
+    }
+
+    /**
+     * Tests that updating permissions of a non-existing type affects no rows.
+     */
+    public function testUpdatePermissionGrantedOfModuleTypeNoResult()
+    {
+        $mapper = new NotificationPermissionMapper();
+        $affectedRows = $mapper->updatePermissionGrantedOfModuleType('forum', 'NotExistingType', 1, 1);
+
+        self::assertEquals(0, $affectedRows);
     }
 
     /**
@@ -207,6 +239,39 @@ class NotificationPermissionTest extends DatabaseTestCase
         self::assertEquals('forum', $permission->getModule());
         self::assertEquals('forumTest3', $permission->getType());
         self::assertEquals(1, $permission->getGranted());
+    }
+
+    /**
+     * Tests that adding a permission that is already granted does not insert a new row.
+     */
+    public function testAddPermissionForModuleAlreadyGranted()
+    {
+        $mapper = new NotificationPermissionMapper();
+        $permissionModel = new NotificationPermissionModel();
+        $permissionModel->setModule('forum');
+        $permissionModel->setUserId(1);
+        $permissionModel->setType('forumTest');
+        $permissionModel->setGranted(1);
+
+        self::assertNull($mapper->addPermissionForModule($permissionModel));
+        self::assertCount(3, $mapper->getPermissions());
+    }
+
+    /**
+     * Tests that adding a permission which is explicitly not granted for that
+     * type does not insert a new row.
+     */
+    public function testAddPermissionForModuleNotGrantedForType()
+    {
+        $mapper = new NotificationPermissionMapper();
+        $permissionModel = new NotificationPermissionModel();
+        $permissionModel->setModule('forum');
+        $permissionModel->setUserId(1);
+        $permissionModel->setType('forumTest2');
+        $permissionModel->setGranted(1);
+
+        self::assertNull($mapper->addPermissionForModule($permissionModel));
+        self::assertCount(3, $mapper->getPermissions());
     }
 
     /**
@@ -250,6 +315,26 @@ class NotificationPermissionTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that adding only already existing permissions inserts nothing.
+     */
+    public function testAddPermissionsAllAlreadyExist()
+    {
+        $mapper = new NotificationPermissionMapper();
+        $permissionModels = [];
+
+        foreach (['forumTest', 'forumTest2'] as $type) {
+            $permissionModel = new NotificationPermissionModel();
+            $permissionModel->setUserId(1);
+            $permissionModel->setModule('forum');
+            $permissionModel->setType($type);
+            $permissionModels[] = $permissionModel;
+        }
+
+        self::assertSame(0, $mapper->addPermissions($permissionModels));
+        self::assertCount(3, $mapper->getPermissions());
+    }
+
+    /**
      * Tests deleting of permissions for a module.
      */
     public function testDeletePermissionOfModule()
@@ -276,7 +361,7 @@ class NotificationPermissionTest extends DatabaseTestCase
     {
         $mapper = new NotificationPermissionMapper();
 
-        // Three IDs, but only two permissions get deleted, because the third one has a userid of 2.
+        // Three IDs, but only two permissions get deleted, because the third one (id 3) belongs to user 2.
         self::assertEquals(2, $mapper->deletePermissionsById([1,2,3], 1));
     }
 
@@ -287,8 +372,8 @@ class NotificationPermissionTest extends DatabaseTestCase
     {
         $mapper = new NotificationPermissionMapper();
 
-        // Deletes only one permission even if there are two other rows for that module,
-        // because one row has a value of 0 for granted.
+        // Only the other permission of user 1 in module "forum" (id 2) gets deleted.
+        // Row 3 belongs to user 2 and stays untouched.
         self::assertEquals(1, $mapper->deleteOtherPermissionsOfModule(1));
     }
 

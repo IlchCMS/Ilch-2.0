@@ -328,11 +328,13 @@ class Group extends \Ilch\Mapper
                 ->values($fields)
                 ->where($rec)
                 ->execute();
-        } else {
-            return $this->db()->insert('groups_access')
-                ->values($fields)
-                ->execute();
         }
+
+        $this->db()->insert('groups_access')
+            ->values($fields)
+            ->execute();
+
+        return true;
     }
 
     /**

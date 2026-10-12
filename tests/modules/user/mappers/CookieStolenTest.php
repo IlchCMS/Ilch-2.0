@@ -30,34 +30,50 @@ class CookieStolenTest extends DatabaseTestCase
     }
 
     /**
-     * Tests containsCookieStolen(). Should return 1.
+     * Tests containsCookieStolen() for an existing entry. Should return true.
      */
     public function testContainsCookieStolen()
     {
         $mapper = new CookieStolenMapper();
 
-        self::assertEquals(1, $mapper->containsCookieStolen(1));
+        self::assertTrue($mapper->containsCookieStolen(1));
     }
 
     /**
-     * Tests containsCookieStolen(). Should return 0.
+     * Tests containsCookieStolen() for a non-existing entry. Should return false.
      */
     public function testContainsCookieStolenNotExisting()
     {
         $mapper = new CookieStolenMapper();
 
-        self::assertEquals(0, $mapper->containsCookieStolen(0));
+        self::assertFalse($mapper->containsCookieStolen(0));
     }
 
     /**
-     * Tests adding a cookie stolen entry.
+     * Tests adding a cookie stolen entry for a user without an existing entry.
      */
     public function testAddCookieStolen()
     {
         $mapper = new CookieStolenMapper();
 
-        $mapper->addCookieStolen(2);
-        self::assertEquals(1, $mapper->containsCookieStolen(2));
+        // The fixture contains 1 cookie stolen row (id 1), so the new row gets id 2.
+        self::assertEquals(2, $mapper->addCookieStolen(2));
+        self::assertTrue($mapper->containsCookieStolen(2));
+    }
+
+    /**
+     * Tests that adding a cookie stolen entry for a user with an existing
+     * entry does not insert a duplicate.
+     */
+    public function testAddCookieStolenExisting()
+    {
+        $mapper = new CookieStolenMapper();
+
+        self::assertEquals(0, $mapper->addCookieStolen(1));
+
+        // Only one row for the user should exist, so exactly one row can be deleted.
+        self::assertTrue($mapper->containsCookieStolen(1));
+        self::assertEquals(1, $mapper->deleteCookieStolen(1));
     }
 
     /**
@@ -68,10 +84,11 @@ class CookieStolenTest extends DatabaseTestCase
         $mapper = new CookieStolenMapper();
 
         self::assertEquals(1, $mapper->deleteCookieStolen(1));
+        self::assertFalse($mapper->containsCookieStolen(1));
     }
 
     /**
-     * Tests deleting a cookie stolen when there is no entry for that user.
+     * Tests deleting a cookie stolen entry when there is no entry for that user.
      */
     public function testDeleteCookieStolenNotExisting()
     {
