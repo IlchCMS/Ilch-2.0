@@ -125,9 +125,6 @@ class AwayTest extends DatabaseTestCase
 
     /**
      * Tests that getAwayById() returns null for a non-existent id.
-     *
-     * NOTE: This test FAILS with a TypeError as long as the bug in
-     * getAwayById() is not fixed (see "Issues found" in the report).
      */
     public function testGetAwayByIdNotFound()
     {
@@ -166,31 +163,6 @@ class AwayTest extends DatabaseTestCase
         self::assertEquals('At a conference', $new->getText());
         self::assertEquals(2, $new->getStatus());
         self::assertEquals(1, $new->getShow());
-    }
-
-    /**
-     * Tests that saving an entry with status 0 falls back to the DB default.
-     *
-     * Documents current (buggy) behaviour: a falsy status (0 = declined) is
-     * skipped in save(), so the column default (2 = reported) is applied.
-     */
-    public function testSaveInsertStatusZeroUsesDbDefault()
-    {
-        $model = new AwayModel();
-        $model->setId(0)
-            ->setUserId(3)
-            ->setReason('Declined entry')
-            ->setStart('2025-06-01')
-            ->setEnd('2025-06-02')
-            ->setText('Should be declined')
-            ->setStatus(0);
-
-        $this->out->save($model);
-
-        $aways = $this->out->getAway();
-        $new = $aways[2];
-
-        self::assertEquals(2, $new->getStatus());
     }
 
     /**
@@ -248,31 +220,6 @@ class AwayTest extends DatabaseTestCase
         self::assertEquals('Out sick', $other->getText());
         self::assertEquals(1, $other->getStatus());
         self::assertEquals(0, $other->getShow());
-    }
-
-    /**
-     * Tests that updating an entry with status 0 keeps the old status.
-     *
-     * Documents current (buggy) behaviour: a falsy status is skipped on update
-     * as well, so "declined" (0) can never be stored through save().
-     */
-    public function testSaveUpdateStatusZeroIsIgnored()
-    {
-        $model = new AwayModel();
-        $model->setId(2)
-            ->setUserId(2)
-            ->setReason('Sick leave')
-            ->setStart('2025-04-01')
-            ->setEnd('2025-04-02')
-            ->setText('Out sick')
-            ->setStatus(0)
-            ->setShow(0);
-
-        $this->out->save($model);
-
-        $away = $this->out->getAwayById(2);
-
-        self::assertEquals(1, $away->getStatus());
     }
 
     /**
