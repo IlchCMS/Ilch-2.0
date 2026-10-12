@@ -112,6 +112,10 @@ class ProfileFields extends \Ilch\Mapper
             $fields['addition'] = $profileField->getAddition();
             $fields['options'] = $profileField->getOptions();
             $fields['show'] = $profileField->getShow();
+            // The 'hidden' column is intentionally not persisted here: it marks fields
+            // that are locked in the admin UI (no edit or delete controls) and are not
+            // offered on the registration form. It is managed outside the normal save
+            // flow, so an existing value is preserved on update.
             $fields['registration'] = $profileField->getRegistration();
             $fields['position'] = $profileField->getPosition();
         }

@@ -52,9 +52,11 @@ class Setting extends \Ilch\Mapper
             ->execute()
             ->fetchCell('avatar');
 
-        if (is_string($avatar)
+        if (
+            is_string($avatar)
             && !str_contains($avatar, 'static/img/noavatar.jpg')
-            && file_exists($avatar)) {
+            && file_exists($avatar)
+        ) {
             unlink($avatar);
         }
 
