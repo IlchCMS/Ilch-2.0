@@ -59,7 +59,11 @@ class Away extends \Ilch\Mapper
     {
         $away = $this->getAway(['id' => $id]);
 
-        return reset($away);
+        if (empty($away)) {
+            return null;
+        }
+
+        return $away[0];
     }
 
     public function existsTable($table): bool
@@ -72,7 +76,7 @@ class Away extends \Ilch\Mapper
      *
      * @param AwayModel $away
      */
-    public function save(AwayModel $away)
+    public function save(AwayModel $away): void
     {
         $fields = [
             'user_id' => $away->getUserId(),
@@ -144,13 +148,13 @@ class Away extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function update(int $id)
+    public function update(int $id): void
     {
         $show = (int) $this->db()->select('status')
-                        ->from('away')
-                        ->where(['id' => $id])
-                        ->execute()
-                        ->fetchCell();
+            ->from('away')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchCell();
 
         if ($show == 1) {
             $this->db()->update('away')
@@ -170,7 +174,7 @@ class Away extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function delete(int $id)
+    public function delete(int $id): void
     {
         $this->db()->delete('away')
             ->where(['id' => $id])
