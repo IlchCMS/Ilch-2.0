@@ -56,6 +56,13 @@ class Accept extends Model
     /**
      * Sets Model by Array.
      *
+     * Missing keys and NULL values (for example the accept columns of a
+     * LEFT JOIN row for a user without an accept entry) are skipped, so the
+     * current defaults (0 / '') are kept. Such a row therefore yields a
+     * model with id 0, warId 0, accept 0 and empty comment/dateCreated —
+     * i.e. "no accept entry" and "accept = 0" are indistinguishable on
+     * purpose and both mean "has not answered".
+     *
      * @param array $entries
      * @return $this
      */

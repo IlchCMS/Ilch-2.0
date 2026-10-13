@@ -54,16 +54,16 @@ class Games extends Mapper
         if (empty($entryArray)) {
             return null;
         }
-        $entrys = [];
+        $entryModels = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new EntriesModel();
 
             $entryModel->setByArray($entries);
 
-            $entrys[] = $entryModel;
+            $entryModels[] = $entryModel;
         }
-        return $entrys;
+        return $entryModels;
     }
 
     /**
@@ -74,7 +74,8 @@ class Games extends Mapper
      */
     public function getGamesByWarId(int $id): ?array
     {
-        return $this->getEntriesBy(['war_id' => $id], ['war_id' => 'DESC']);
+        // Secondary key on the primary key keeps the order deterministic.
+        return $this->getEntriesBy(['war_id' => $id], ['war_id' => 'DESC', 'id' => 'ASC']);
     }
 
     /**
@@ -85,7 +86,7 @@ class Games extends Mapper
      */
     public function getGamesByWhere(array $where = []): ?array
     {
-        return $this->getEntriesBy($where, ['war_id' => 'DESC']);
+        return $this->getEntriesBy($where, ['war_id' => 'DESC', 'id' => 'ASC']);
     }
 
     /**
@@ -131,7 +132,7 @@ class Games extends Mapper
     }
 
     /**
-     * Get Export Json.
+     * Get Export JSON.
      *
      * @param int $options
      * @return string
@@ -139,15 +140,15 @@ class Games extends Mapper
     public function getJson(int $options = 0): string
     {
         $entryArray = $this->getEntriesBy();
-        $entrys = [];
+        $entries = [];
 
         if ($entryArray) {
             foreach ($entryArray as $entryModel) {
-                $entrys[] = $entryModel->getArray(false);
+                $entries[] = $entryModel->getArray(false);
             }
         }
 
-        return json_encode($entrys, $options);
+        return json_encode($entries, $options);
     }
 
     /**

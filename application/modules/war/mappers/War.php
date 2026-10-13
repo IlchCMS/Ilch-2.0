@@ -40,7 +40,7 @@ class War extends Mapper
      * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC'], ?Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC', 'w.id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
         $groupMapper = new GroupMapper();
         $enemyMapper = new EnemyMapper();
@@ -95,7 +95,8 @@ class War extends Mapper
      */
     public function getWars(array $where = [], ?Pagination $pagination = null): ?array
     {
-        return $this->getEntriesBy($where, ['w.time' => 'ASC'], $pagination);
+        // Secondary key on w.id keeps the order deterministic for wars sharing a timestamp.
+        return $this->getEntriesBy($where, ['w.time' => 'ASC', 'w.id' => 'ASC'], $pagination);
     }
 
     /**
@@ -174,7 +175,7 @@ class War extends Mapper
      */
     public function getWarsByWhere(array $where = [], ?Pagination $pagination = null): ?array
     {
-        return $this->getEntriesBy($where, ['w.time' => 'DESC'], $pagination);
+        return $this->getEntriesBy($where, ['w.time' => 'DESC', 'w.id' => 'DESC'], $pagination);
     }
 
     /**
@@ -218,11 +219,6 @@ class War extends Mapper
             $readAccess = explode(',', $readAccess);
         }
 
-        // Delete possible old entries to later insert the new ones.
-        $this->db()->delete($this->tablenameAccess)
-            ->where(['war_id' => $warId])
-            ->execute();
-
         $groupIds = [];
         if (!empty($readAccess)) {
             if (!in_array('all', $readAccess)) {
@@ -233,9 +229,32 @@ class War extends Mapper
             $groupIds[] = '1';
         }
 
+        // Normalize the wanted group ids to a stable, unique list of ints.
+        $groupIds = array_values(array_unique(array_map(static fn ($groupId): int => (int) $groupId, $groupIds)));
+        sort($groupIds);
+
+        // Skip the delete/insert round-trip when the stored rows already match.
+        $existingIds = $this->db()->select(['group_id'])
+            ->from($this->tablenameAccess)
+            ->where(['war_id' => $warId])
+            ->execute()
+            ->fetchList() ?: [];
+
+        $existingIds = array_values(array_unique(array_map(static fn ($groupId): int => (int) $groupId, $existingIds)));
+        sort($existingIds);
+
+        if ($existingIds === $groupIds) {
+            return;
+        }
+
+        // Delete possible old entries to later insert the new ones.
+        $this->db()->delete($this->tablenameAccess)
+            ->where(['war_id' => $warId])
+            ->execute();
+
         $preparedRows = [];
         foreach ($groupIds as $groupId) {
-            $preparedRows[] = [$warId, (int)$groupId];
+            $preparedRows[] = [$warId, $groupId];
         }
 
         if (count($preparedRows)) {
@@ -279,7 +298,8 @@ class War extends Mapper
      */
     public function getWarListByStatus(?int $status = null, ?Pagination $pagination = null): ?array
     {
-        return $this->getEntriesBy(($status ? ['status' => $status] : []), ['w.time' => 'DESC'], $pagination);
+        // $status !== null so that status 0 remains a valid filter.
+        return $this->getEntriesBy($status !== null ? ['status' => $status] : [], ['w.time' => 'DESC', 'w.id' => 'DESC'], $pagination);
     }
 
     /**
@@ -296,7 +316,7 @@ class War extends Mapper
             $readAccess = explode(',', $readAccess);
         }
 
-        return $this->getEntriesBy(array_merge(['ra.group_id' => $readAccess], ($groupId ? ['w.group' => $groupId] : [])), ['w.time' => 'DESC'], $pagination);
+        return $this->getEntriesBy(array_merge(['ra.group_id' => $readAccess], ($groupId ? ['w.group' => $groupId] : [])), ['w.time' => 'DESC', 'w.id' => 'DESC'], $pagination);
     }
 
     /**
@@ -320,7 +340,12 @@ class War extends Mapper
             $pagination->setRowsPerPage($limit);
         }
 
-        return $this->getEntriesBy(($status ? ['status' => $this->db()->escape($status), 'ra.group_id' => $groupIds] : ['ra.group_id' => $groupIds]), ['w.time' => $order], $pagination);
+        // $status !== null so that status 0 remains a valid filter.
+        return $this->getEntriesBy(
+        $status !== null ? ['status' => $this->db()->escape($status), 'ra.group_id' => $groupIds] : ['ra.group_id' => $groupIds],
+            ['w.time' => $order, 'w.id' => $order],
+            $pagination
+        );
     }
 
     /**
@@ -453,6 +478,10 @@ class War extends Mapper
     public function updateStatus(EntriesModel|int $id, int $status = -1): bool
     {
         if ($status !== -1) {
+            // Only 0 and 1 are valid status values; reject anything else.
+            if ($status < 0 || $status > 1) {
+                return false;
+            }
             $statusNow = $status;
         } else {
             if ($id instanceof EntriesModel) {
@@ -491,6 +520,10 @@ class War extends Mapper
     public function updateShow(EntriesModel|int $id, int $show = -1): bool
     {
         if ($show !== -1) {
+            // Only 0, 1 and 2 are valid show values; reject anything else.
+            if ($show < 0 || $show > 2) {
+                return false;
+            }
             $showNow = $show;
         } else {
             if ($id instanceof EntriesModel) {

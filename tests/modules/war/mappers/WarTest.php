@@ -302,8 +302,9 @@ class WarTest extends DatabaseTestCase
     }
 
     /**
-     * Tests that getWarListByStatus() returns null if no war has the status.
-     * Note: status 0 is falsy and therefore acts as "no filter".
+     * Tests that getWarListByStatus() filters by an explicit status, 0 included.
+     * Status 0 is a valid filter value; passing null would skip the filter.
+     * Returns null if no war has the given status.
      */
     public function testGetWarListByStatus()
     {

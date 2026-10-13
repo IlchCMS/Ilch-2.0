@@ -195,7 +195,7 @@ class AcceptTest extends DatabaseTestCase
         self::assertIsArray($entries);
         self::assertCount(2, $entries);
 
-        // The query has no ORDER BY, so match by user id instead of position.
+        // Rows are ordered by user_id ASC, but matching by user id is more explicit.
         $byUserId = [];
         foreach ($entries as $entry) {
             $byUserId[$entry->getUserId()] = $entry;
@@ -224,13 +224,11 @@ class AcceptTest extends DatabaseTestCase
     }
 
     /**
-     * ISSUE: members without an accept entry for the war are currently excluded.
+     * Tests that getAcceptListByGroupId() includes members without an accept entry.
      *
-     * Group 1 contains only user 1. There is no accept entry for war 2, so a
-     * proper LEFT JOIN should still return user 1. The mapper puts `a.war_id`
-     * into the WHERE clause, which turns the LEFT JOIN into an INNER JOIN.
-     * This test is expected to FAIL until the war_id condition is moved into
-     * the JOIN condition.
+     * Group 1 contains only user 1 and there is no accept entry for war 2.
+     * The war_id filter is part of the LEFT JOIN condition, so user 1 is
+     * still returned.
      *
      * Note: the Accept model uses non-nullable int defaults (0) and an
      * isset()-based setByArray(), so a missing accept row maps to the model
