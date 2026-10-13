@@ -47,20 +47,6 @@ class Enemy extends Model
     protected string $enemyImage = '';
 
     /**
-     * The Enemy ImageThumb.
-     *
-     * @var string
-     */
-    protected string $enemyImageThumb = '';
-
-    /**
-     * The Enemy Land.
-     *
-     * @var string
-     */
-    protected string $enemyLand = '';
-
-    /**
      * The Enemy Contact Name.
      *
      * @var string
@@ -218,52 +204,6 @@ class Enemy extends Model
     public function setEnemyImage(string $enemyImage): Enemy
     {
         $this->enemyImage = $enemyImage;
-
-        return $this;
-    }
-
-    /**
-     * Gets the enemy ImageThumb.
-     *
-     * @return string
-     */
-    public function getEnemyImageThumb(): string
-    {
-        return $this->enemyImageThumb;
-    }
-
-    /**
-     * Sets the enemy ImageThumb.
-     *
-     * @param string $enemyImageThumb
-     * @return $this
-     */
-    public function setEnemyImageThumb(string $enemyImageThumb): Enemy
-    {
-        $this->enemyImageThumb = $enemyImageThumb;
-
-        return $this;
-    }
-
-    /**
-     * Gets the enemy Land.
-     *
-     * @return string
-     */
-    public function getEnemyLand(): string
-    {
-        return $this->enemyLand;
-    }
-
-    /**
-     * Sets the enemy Land.
-     *
-     * @param string $enemyLand
-     * @return $this
-     */
-    public function setEnemyLand(string $enemyLand): Enemy
-    {
-        $this->enemyLand = $enemyLand;
 
         return $this;
     }

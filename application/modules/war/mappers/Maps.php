@@ -34,7 +34,7 @@ class Maps extends Mapper
      * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['a.id' => 'DESC'], ?Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['*'])
@@ -55,16 +55,16 @@ class Maps extends Mapper
         if (empty($entryArray)) {
             return null;
         }
-        $entrys = [];
+        $entryModels = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new EntriesModel();
 
             $entryModel->setByArray($entries);
 
-            $entrys[] = $entryModel;
+            $entryModels[] = $entryModel;
         }
-        return $entrys;
+        return $entryModels;
     }
 
     /**
@@ -96,16 +96,16 @@ class Maps extends Mapper
      * @param int|EntriesModel $id
      * @return null|EntriesModel
      */
-    public function getEntryById(int $id): ?EntriesModel
+    public function getEntryById(int|EntriesModel $id): ?EntriesModel
     {
         if ($id instanceof EntriesModel) {
             $id = $id->getId();
         }
 
-        $entrys = $this->getEntriesBy(['id' => (int)$id], []);
+        $entries = $this->getEntriesBy(['id' => (int)$id], []);
 
-        if (!empty($entrys)) {
-            return reset($entrys);
+        if (!empty($entries)) {
+            return reset($entries);
         }
 
         return null;
@@ -142,7 +142,7 @@ class Maps extends Mapper
      * @param int|EntriesModel $id
      * @return bool
      */
-    public function delete($id): bool
+    public function delete(int|EntriesModel $id): bool
     {
         if ($id instanceof EntriesModel) {
             $id = $id->getId();
@@ -154,7 +154,7 @@ class Maps extends Mapper
     }
 
     /**
-     * Get Export Json.
+     * Get Export JSON.
      *
      * @param int $options
      * @return string
@@ -162,14 +162,14 @@ class Maps extends Mapper
     public function getJson(int $options = 0): string
     {
         $entryArray = $this->getEntriesBy();
-        $entrys = [];
+        $entries = [];
 
         if ($entryArray) {
             foreach ($entryArray as $entryModel) {
-                $entrys[] = $entryModel->getArray(false);
+                $entries[] = $entryModel->getArray(false);
             }
         }
 
-        return json_encode($entrys, $options);
+        return json_encode($entries, $options);
     }
 }

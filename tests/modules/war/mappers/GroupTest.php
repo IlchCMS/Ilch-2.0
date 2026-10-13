@@ -119,6 +119,107 @@ class GroupTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that checkDB() returns true if the table exists.
+     */
+    public function testCheckDB()
+    {
+        self::assertTrue($this->mapper->checkDB());
+    }
+
+    /**
+     * Tests that getGroupById() returns null for a non-existent id.
+     */
+    public function testGetGroupByIdNotFound()
+    {
+        self::assertNull($this->mapper->getGroupById(9999));
+    }
+
+    /**
+     * Tests that getGroupById() accepts a model instance.
+     */
+    public function testGetGroupByIdWithModel()
+    {
+        $model = new EntriesModel();
+        $model->setId(1);
+
+        $entry = $this->mapper->getGroupById($model);
+
+        self::assertNotNull($entry);
+        self::assertEquals(1, $entry->getId());
+        self::assertSame('Testgruppe1', $entry->getGroupName());
+    }
+
+    /**
+     * Tests that getGroups() filters with a where clause.
+     */
+    public function testGetGroupByWhere()
+    {
+        $entries = $this->mapper->getGroups(['g.tag' => 'ILCH2-TG1']);
+
+        self::assertCount(1, $entries);
+        self::assertEquals(1, $entries[0]->getId());
+        self::assertSame('Testgruppe1', $entries[0]->getGroupName());
+    }
+
+    /**
+     * Tests that getGroupList() returns all groups.
+     */
+    public function testGetGroupList()
+    {
+        $entries = $this->mapper->getGroupList();
+
+        self::assertCount(2, $entries);
+    }
+
+    /**
+     * Tests that delete() accepts a model instance.
+     */
+    public function testDeleteWarGroupWithModel()
+    {
+        $model = new EntriesModel();
+        $model->setId(1);
+
+        self::assertSame(true, $this->mapper->delete($model));
+
+        self::assertNull($this->mapper->getGroupById(1));
+    }
+
+    /**
+     * Tests that delete() on a non-existent id does not throw.
+     */
+    public function testDeleteWarGroupNotFound()
+    {
+        $this->mapper->delete(9999);
+
+        self::assertCount(2, $this->mapper->getGroups());
+    }
+
+    /**
+     * Tests that getJson() returns a JSON encoded array of all groups.
+     */
+    public function testGetJson()
+    {
+        $json = $this->mapper->getJson();
+
+        self::assertIsString($json);
+
+        $entries = json_decode($json, true);
+        self::assertIsArray($entries);
+        self::assertCount(2, $entries);
+    }
+
+    /**
+     * Tests that getJson() returns an empty JSON array when no groups exist.
+     */
+    public function testGetJsonEmpty()
+    {
+        $this->mapper->delete(1);
+        $this->mapper->delete(2);
+
+        self::assertSame('[]', $this->mapper->getJson());
+    }
+
+    /**
      * Returns database schema sql statements to initialize database
      *
      * @return string

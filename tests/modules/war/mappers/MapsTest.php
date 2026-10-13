@@ -94,6 +94,108 @@ class MapsTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that checkDB() returns true if the table exists.
+     */
+    public function testCheckDB()
+    {
+        self::assertTrue($this->mapper->checkDB());
+    }
+
+    /**
+     * Tests that getList() returns all maps ordered by id ASC.
+     */
+    public function testGetList()
+    {
+        $entries = $this->mapper->getList();
+
+        self::assertCount(2, $entries);
+        self::assertEquals(1, $entries[0]->getId());
+        self::assertEquals(2, $entries[1]->getId());
+    }
+
+    /**
+     * Tests that getEntriesBy() filters with a where clause.
+     */
+    public function testGetEntriesByWhere()
+    {
+        $entries = $this->mapper->getEntriesBy(['id' => 2]);
+
+        self::assertCount(1, $entries);
+        self::assertSame('Map2', $entries[0]->getName());
+    }
+
+    /**
+     * Tests that getEntryById() returns null for a non-existent id.
+     */
+    public function testGetEntryByIdNotFound()
+    {
+        self::assertNull($this->mapper->getEntryById(9999));
+    }
+
+    /**
+     * Tests that getEntryById() accepts a model instance.
+     */
+    public function testGetEntryByIdWithModel()
+    {
+        $model = new EntriesModel();
+        $model->setId(1);
+
+        $entry = $this->mapper->getEntryById($model);
+
+        self::assertNotNull($entry);
+        self::assertEquals(1, $entry->getId());
+        self::assertSame('Map1', $entry->getName());
+    }
+
+    /**
+     * Tests that delete() accepts a model instance.
+     */
+    public function testDeleteWarMapsWithModel()
+    {
+        $model = new EntriesModel();
+        $model->setId(1);
+
+        self::assertSame(true, $this->mapper->delete($model));
+
+        self::assertNull($this->mapper->getEntryById(1));
+    }
+
+    /**
+     * Tests that delete() on a non-existent id does not throw.
+     */
+    public function testDeleteWarMapsNotFound()
+    {
+        $this->mapper->delete(9999);
+
+        self::assertCount(2, $this->mapper->getEntries());
+    }
+
+    /**
+     * Tests that getJson() returns a JSON encoded array of all maps.
+     */
+    public function testGetJson()
+    {
+        $json = $this->mapper->getJson();
+
+        self::assertIsString($json);
+
+        $entries = json_decode($json, true);
+        self::assertIsArray($entries);
+        self::assertCount(2, $entries);
+    }
+
+    /**
+     * Tests that getJson() returns an empty JSON array when no maps exist.
+     */
+    public function testGetJsonEmpty()
+    {
+        $this->mapper->delete(1);
+        $this->mapper->delete(2);
+
+        self::assertSame('[]', $this->mapper->getJson());
+    }
+
+    /**
      * Returns database schema sql statements to initialize database
      *
      * @return string

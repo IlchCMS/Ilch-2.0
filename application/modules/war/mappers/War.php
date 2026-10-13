@@ -40,7 +40,7 @@ class War extends Mapper
      * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC'], ?Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['g.id' => 'DESC', 'w.id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
         $groupMapper = new GroupMapper();
         $enemyMapper = new EnemyMapper();
@@ -74,17 +74,18 @@ class War extends Mapper
         if (empty($entryArray)) {
             return null;
         }
-        $entrys = [];
+        $entryModels = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new EntriesModel();
 
             $entryModel->setByArray($entries);
 
-            $entrys[] = $entryModel;
+            $entryModels[] = $entryModel;
         }
-        return $entrys;
+        return $entryModels;
     }
+
     /**
      * Gets the Wars.
      *
@@ -94,7 +95,8 @@ class War extends Mapper
      */
     public function getWars(array $where = [], ?Pagination $pagination = null): ?array
     {
-        return $this->getEntriesBy($where, ['w.time' => 'ASC'], $pagination);
+        // Secondary key on w.id keeps the order deterministic for wars sharing a timestamp.
+        return $this->getEntriesBy($where, ['w.time' => 'ASC', 'w.id' => 'ASC'], $pagination);
     }
 
     /**
@@ -115,7 +117,7 @@ class War extends Mapper
      * @param int|EntriesModel $id
      * @return EntriesModel|null
      */
-    public function getWarById($id): ?EntriesModel
+    public function getWarById(EntriesModel|int $id): ?EntriesModel
     {
         if ($id instanceof EntriesModel) {
             $id = $id->getId();
@@ -131,14 +133,14 @@ class War extends Mapper
     }
 
     /**
-     * Get wars for json (for example the calendar)
+     * Get wars for JSON (for example the calendar)
      *
-     * @param Date|string $start
-     * @param Date|string $end
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param string|Date|null $start
+     * @param string|Date|null $end
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return array|null
      */
-    public function getWarsForJson($start, $end, $groupIds = '3'): ?array
+    public function getWarsForJson(string|Date|null $start, string|Date|null $end, array|string $groupIds = '3'): ?array
     {
         if (is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -173,7 +175,7 @@ class War extends Mapper
      */
     public function getWarsByWhere(array $where = [], ?Pagination $pagination = null): ?array
     {
-        return $this->getEntriesBy($where, ['w.time' => 'DESC'], $pagination);
+        return $this->getEntriesBy($where, ['w.time' => 'DESC', 'w.id' => 'DESC'], $pagination);
     }
 
     /**
@@ -207,20 +209,15 @@ class War extends Mapper
      * Update the entries for which user groups are allowed to read a War.
      *
      * @param int $warId
-     * @param string|array $readAccess example: "1,2,3"
+     * @param array|string $readAccess example: "1,2,3"
      * @param bool $addAdmin
      * @since 1.15.0
      */
-    public function saveReadAccess(int $warId, $readAccess, bool $addAdmin = true)
+    public function saveReadAccess(int $warId, array|string $readAccess, bool $addAdmin = true): void
     {
         if (\is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
         }
-
-        // Delete possible old entries to later insert the new ones.
-        $this->db()->delete($this->tablenameAccess)
-            ->where(['war_id' => $warId])
-            ->execute();
 
         $groupIds = [];
         if (!empty($readAccess)) {
@@ -232,9 +229,32 @@ class War extends Mapper
             $groupIds[] = '1';
         }
 
+        // Normalize the wanted group ids to a stable, unique list of ints.
+        $groupIds = array_values(array_unique(array_map(static fn ($groupId): int => (int) $groupId, $groupIds)));
+        sort($groupIds);
+
+        // Skip the delete/insert round-trip when the stored rows already match.
+        $existingIds = $this->db()->select(['group_id'])
+            ->from($this->tablenameAccess)
+            ->where(['war_id' => $warId])
+            ->execute()
+            ->fetchList() ?: [];
+
+        $existingIds = array_values(array_unique(array_map(static fn ($groupId): int => (int) $groupId, $existingIds)));
+        sort($existingIds);
+
+        if ($existingIds === $groupIds) {
+            return;
+        }
+
+        // Delete possible old entries to later insert the new ones.
+        $this->db()->delete($this->tablenameAccess)
+            ->where(['war_id' => $warId])
+            ->execute();
+
         $preparedRows = [];
         foreach ($groupIds as $groupId) {
-            $preparedRows[] = [$warId, (int)$groupId];
+            $preparedRows[] = [$warId, $groupId];
         }
 
         if (count($preparedRows)) {
@@ -255,7 +275,7 @@ class War extends Mapper
      * @param int|EntriesModel $id
      * @return bool
      */
-    public function delete($id): bool
+    public function delete(EntriesModel|int $id): bool
     {
         if ($id instanceof EntriesModel) {
             $id = $id->getId();
@@ -278,24 +298,25 @@ class War extends Mapper
      */
     public function getWarListByStatus(?int $status = null, ?Pagination $pagination = null): ?array
     {
-        return $this->getEntriesBy(($status ? ['status' => $status] : []), ['w.time' => 'DESC'], $pagination);
+        // $status !== null so that status 0 remains a valid filter.
+        return $this->getEntriesBy($status !== null ? ['status' => $status] : [], ['w.time' => 'DESC', 'w.id' => 'DESC'], $pagination);
     }
 
     /**
      * Get a list of wars.
      *
      * @param null|Pagination $pagination
-     * @param string|array $readAccess A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $readAccess A string like '1,2,3' or an array like [1,2,3]
      * @param int|null $groupId
      * @return array|null
      */
-    public function getWarList(?Pagination $pagination = null, $readAccess = '3', ?int $groupId = null): ?array
+    public function getWarList(?Pagination $pagination = null, array|string $readAccess = '3', ?int $groupId = null): ?array
     {
         if (is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
         }
 
-        return $this->getEntriesBy(array_merge(['ra.group_id' => $readAccess], ($groupId ? ['w.group' => $groupId] : [])), ['w.time' => 'DESC'], $pagination);
+        return $this->getEntriesBy(array_merge(['ra.group_id' => $readAccess], ($groupId ? ['w.group' => $groupId] : [])), ['w.time' => 'DESC', 'w.id' => 'DESC'], $pagination);
     }
 
     /**
@@ -303,11 +324,11 @@ class War extends Mapper
      *
      * @param int|null $status
      * @param int|null $limit
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param string $order
      * @return array|null
      */
-    public function getWarListByStatusAndLimt(?int $status = null, ?int $limit = null, $groupIds = '3', string $order = 'ASC'): ?array
+    public function getWarListByStatusAndLimit(?int $status = null, ?int $limit = null, array|string $groupIds = '3', string $order = 'ASC'): ?array
     {
         if (is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -319,7 +340,12 @@ class War extends Mapper
             $pagination->setRowsPerPage($limit);
         }
 
-        return $this->getEntriesBy(($status ? ['status' => $this->db()->escape($status), 'ra.group_id' => $groupIds] : ['ra.group_id' => $groupIds]), ['w.time' => $order], $pagination);
+        // $status !== null so that status 0 remains a valid filter.
+        return $this->getEntriesBy(
+            $status !== null ? ['status' => $this->db()->escape($status), 'ra.group_id' => $groupIds] : ['ra.group_id' => $groupIds],
+            ['w.time' => $order, 'w.id' => $order],
+            $pagination
+        );
     }
 
     /**
@@ -391,14 +417,11 @@ class War extends Mapper
     /**
      * Returns the Countdown
      *
-     * @param Date|string $date
+     * @param string|Date $date
      * @return string
      */
-    public function countdown($date): string
+    public function countdown(string|Date $date): string
     {
-        $datenow = new Date();
-        $datenow = $datenow->format(null, true);
-
         if (!$date instanceof Date) {
             $date = new Date($date);
         }
@@ -407,7 +430,7 @@ class War extends Mapper
         $the_countdown_date = $date->getTimestamp();
 
         // get current unix timestamp
-        $today = strtotime($datenow);
+        $today = time();
 
         $difference = $the_countdown_date - $today;
         if ($difference < 0) {
@@ -452,19 +475,23 @@ class War extends Mapper
      * @param int $status
      * @return bool
      */
-    public function updateStatus($id, int $status = -1): bool
+    public function updateStatus(EntriesModel|int $id, int $status = -1): bool
     {
         if ($status !== -1) {
+            // Only 0 and 1 are valid status values; reject anything else.
+            if ($status < 0 || $status > 1) {
+                return false;
+            }
             $statusNow = $status;
         } else {
             if ($id instanceof EntriesModel) {
                 $status = $id->getWarStatus();
             } else {
                 $status = (int) $this->db()->select('status')
-                                ->from($this->tablename)
-                                ->where(['id' => (int)$id])
-                                ->execute()
-                                ->fetchCell();
+                    ->from($this->tablename)
+                    ->where(['id' => (int)$id])
+                    ->execute()
+                    ->fetchCell();
             }
 
             if ($status === 1) {
@@ -490,19 +517,23 @@ class War extends Mapper
      * @param int $show
      * @return bool
      */
-    public function updateShow($id, int $show = -1): bool
+    public function updateShow(EntriesModel|int $id, int $show = -1): bool
     {
         if ($show !== -1) {
+            // Only 0, 1 and 2 are valid show values; reject anything else.
+            if ($show < 0 || $show > 2) {
+                return false;
+            }
             $showNow = $show;
         } else {
             if ($id instanceof EntriesModel) {
                 $show = $id->getShow();
             } else {
                 $show = (int) $this->db()->select('show')
-                                ->from($this->tablename)
-                                ->where(['id' => (int)$id])
-                                ->execute()
-                                ->fetchCell();
+                    ->from($this->tablename)
+                    ->where(['id' => (int)$id])
+                    ->execute()
+                    ->fetchCell();
             }
 
             if ($show === 1) {

@@ -115,12 +115,20 @@ class War extends Model
      * @var int
      */
     protected int $show = 0;
+
     /**
      * The readaccess of the training.
      *
      * @var string
      */
     protected string $readAccess = '';
+
+    /**
+     * The read access all flag (1 = readable by every group).
+     *
+     * @var int
+     */
+    protected int $readAccessAll = 0;
 
     /**
      * The last Accept Time.
@@ -183,11 +191,16 @@ class War extends Model
             $this->setLastAcceptTime($entries['lastaccepttime']);
         }
         if (isset($entries['read_access_all'])) {
-            if ($entries['read_access_all']) {
+            $readAccessAll = (int) $entries['read_access_all'];
+            $this->setReadAccessAll($readAccessAll);
+
+            // Expose the "readable by every group" flag as "all", unless the
+            // row already carries a concrete list of groups (e.g. the
+            // GROUP_CONCAT from the war_access join).
+            if ($readAccessAll === 1 && empty($entries['read_access'] ?? null)) {
                 $this->setReadAccess('all');
             }
         }
-
         if (isset($entries['war_groups'])) {
             $this->setWarGroupTag($entries['war_groups']);
         }
@@ -542,6 +555,7 @@ class War extends Model
 
         return $this;
     }
+
     /**
      * Gets the read access of the war.
      *
@@ -551,6 +565,7 @@ class War extends Model
     {
         return $this->readAccess;
     }
+
     /**
      * Sets the read access of the war.
      *
@@ -560,6 +575,29 @@ class War extends Model
     public function setReadAccess(string $readAccess): War
     {
         $this->readAccess = $readAccess;
+
+        return $this;
+    }
+
+    /**
+     * Gets the read access all flag.
+     *
+     * @return int
+     */
+    public function getReadAccessAll(): int
+    {
+        return $this->readAccessAll;
+    }
+
+    /**
+     * Sets the read access all flag.
+     *
+     * @param int $readAccessAll
+     * @return $this
+     */
+    public function setReadAccessAll(int $readAccessAll): War
+    {
+        $this->readAccessAll = $readAccessAll;
 
         return $this;
     }
@@ -611,7 +649,7 @@ class War extends Model
                 'status'            => $this->getWarStatus(),
                 'show'              => $this->getShow(),
                 'lastaccepttime'    => $this->getLastAcceptTime(),
-                'read_access_all'    => ($this->getReadAccess() === 'all' ? 1 : 0)
+                'read_access_all'   => ($this->getReadAccess() === 'all' ? 1 : $this->getReadAccessAll())
             ]
         );
     }
