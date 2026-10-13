@@ -82,7 +82,7 @@ class Events extends \Ilch\Mapper
      * @param int|EntryModel $id
      * @return null|EntryModel
      */
-    public function getEntryById(int $id): ?EntryModel
+    public function getEntryById(EntryModel|int $id): ?EntryModel
     {
         if ($id instanceof EntryModel) {
             $id = $id->getId();
@@ -123,10 +123,10 @@ class Events extends \Ilch\Mapper
     }
 
     /**
-     * @param EntryModel|int $id
+     * @param int|EntryModel $id
      * @return bool
      */
-    public function delete($id): bool
+    public function delete(EntryModel|int $id): bool
     {
         if ($id instanceof EntryModel) {
             $id = $id->getId();
