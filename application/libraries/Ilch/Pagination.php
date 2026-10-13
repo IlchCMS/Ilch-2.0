@@ -102,7 +102,7 @@ class Pagination
 
         if ($this->page > 1) {
             $urlArray['page'] = $this->page - 1;
-            $html .= '<li "page-item active"><a href="' . $view->getUrl($urlArray) . '" class="page-link">&laquo;</a></li>';
+            $html .= '<li class="page-item active"><a href="' . $view->getUrl($urlArray) . '" class="page-link">&laquo;</a></li>';
         }
 
         if ($start > 1) {

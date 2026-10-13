@@ -45,7 +45,7 @@ class Calendar extends \Ilch\Mapper
         $select = $this->db()->select();
         $select->fields(['c.id', 'c.uid', 'c.title', 'c.place', 'c.start', 'c.end', 'c.text', 'c.color', 'c.period_type', 'c.period_day', 'c.repeat_until', 'c.read_access_all'])
             ->from(['c' => $this->tablename])
-            ->join(['ra' => 'calendar_access'], 'c.id = ra.calendar_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id)'])
+            ->join(['ra' => 'calendar_access'], 'c.id = ra.calendar_id', 'LEFT', ['read_access' => 'GROUP_CONCAT(ra.group_id ORDER BY ra.group_id)'])
             ->where(array_merge($where, ($read_access ? [$select->orX(['ra.group_id' => $read_access, 'c.read_access_all' => '1'])] : [])))
             ->order($orderBy)
             ->group(['c.id']);
@@ -89,10 +89,10 @@ class Calendar extends \Ilch\Mapper
     /**
      * Gets calendar.
      *
-     * @param EntryModel|int $id
+     * @param int|EntryModel $id
      * @return EntryModel|null
      */
-    public function getCalendarById($id): ?EntryModel
+    public function getCalendarById(EntryModel|int $id): ?EntryModel
     {
         if ($id instanceof EntryModel) {
             $id = $id->getId();
@@ -110,12 +110,12 @@ class Calendar extends \Ilch\Mapper
     /**
      * Gets the Calendar entries by start and end.
      *
-     * @param Date|string $start
-     * @param Date|string $end
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param string|Date|null $start
+     * @param string|Date|null $end
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return EntryModel[]|null
      */
-    public function getEntriesForJson($start, $end, $groupIds = '3'): ?array
+    public function getEntriesForJson(string|Date|null $start, string|Date|null $end, array|string $groupIds = '3'): ?array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -130,7 +130,7 @@ class Calendar extends \Ilch\Mapper
             }
             $select = $this->db()->select();
 
-            return $this->getEntriesBy(
+            $entries = $this->getEntriesBy(
                 [
                     $select->orX(
                         [
@@ -149,6 +149,33 @@ class Calendar extends \Ilch\Mapper
                 ],
                 ['c.start' => 'ASC']
             );
+
+            if ($entries === null) {
+                return null;
+            }
+
+            // The query above only checks the event's own start/end, not the end of the
+            // recurrence series (repeat_until). Recurring events whose series already
+            // ended before the requested range are dropped here, so callers no longer
+            // have to rely on capping via repeat().
+            $rangeStart = $start->format('Y-m-d') . ' 00:00:00';
+            $entries = array_values(array_filter($entries, static function (EntryModel $entry) use ($rangeStart): bool {
+                if ($entry->getPeriodType() === '') {
+                    return true;
+                }
+                $repeatUntil = $entry->getRepeatUntil();
+                if ($repeatUntil === '' || $repeatUntil === '0000-00-00 00:00:00') {
+                    // Rows without a repeat_until value (legacy data) count as open-ended.
+                    return true;
+                }
+                return $repeatUntil >= $rangeStart;
+            }));
+
+            if (empty($entries)) {
+                return null;
+            }
+
+            return $entries;
         } else {
             return null;
         }
@@ -185,14 +212,25 @@ class Calendar extends \Ilch\Mapper
      * Update the entries for which user groups are allowed to read a Calendar.
      *
      * @param int $calendarId
-     * @param string|array $readAccess example: "1,2,3"
+     * @param array|string $readAccess example: "1,2,3"
      * @param bool $addAdmin
      * @since 1.7.0
      */
-    public function saveReadAccess(int $calendarId, $readAccess, bool $addAdmin = true)
+    public function saveReadAccess(int $calendarId, array|string $readAccess, bool $addAdmin = true): array
     {
         if (\is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
+        }
+
+        // Normalize the group ids: trim whitespace, drop empty entries (explode(',', '')
+        // yields ['']) and remove duplicates. Without this, an empty $readAccess would
+        // create a row with group_id 0, violating the foreign key to the groups table.
+        $normalizedGroupIds = [];
+        foreach ((array)$readAccess as $groupId) {
+            $groupId = trim((string)$groupId, " \f\n\r\t\v\x00");
+            if ($groupId !== '' && !in_array($groupId, $normalizedGroupIds, true)) {
+                $normalizedGroupIds[] = $groupId;
+            }
         }
 
         // Delete possible old entries to later insert the new ones.
@@ -201,10 +239,8 @@ class Calendar extends \Ilch\Mapper
             ->execute();
 
         $groupIds = [];
-        if (!empty($readAccess)) {
-            if (!in_array('all', $readAccess)) {
-                $groupIds = $readAccess;
-            }
+        if (!empty($normalizedGroupIds) && !in_array('all', $normalizedGroupIds)) {
+            $groupIds = $normalizedGroupIds;
         }
         if ($addAdmin && !in_array('1', $groupIds)) {
             $groupIds[] = '1';
@@ -230,10 +266,10 @@ class Calendar extends \Ilch\Mapper
     }
 
     /**
-     * @param EntryModel|int $id
+     * @param int|EntryModel $id
      * @return bool
      */
-    public function delete($id): bool
+    public function delete(EntryModel|int $id): bool
     {
         if ($id instanceof EntryModel) {
             $id = $id->getId();
@@ -253,9 +289,21 @@ class Calendar extends \Ilch\Mapper
      * @param Date $untilDate
      * @param int $factor
      * @return array
+     * @throws \InvalidArgumentException
      */
     public function repeat(string $type, Date $startdate, Date $enddate, Date $untilDate, int $factor = 1): array
     {
+        // Guard against unknown period types (e.g. stale values from the database) and
+        // out-of-range factors. Otherwise the switch below would not advance
+        // $startdateRecurrence and the while loop would run forever.
+        $supportedTypes = ['monthly', 'daily', 'weekly', 'quarterly', 'yearly', 'days'];
+        if (!\in_array($type, $supportedTypes, true)) {
+            throw new \InvalidArgumentException('Unsupported period type: "' . $type . '"');
+        }
+        if ($factor < 1 || ($type === 'days' && $factor > 7)) {
+            throw new \InvalidArgumentException('Invalid period day: ' . $factor);
+        }
+
         $recurrences = [];
         $startdateRecurrence = clone $startdate;
         $enddateRecurrence = clone $enddate;
