@@ -227,7 +227,7 @@ class Calendar extends \Ilch\Mapper
         // create a row with group_id 0, violating the foreign key to the groups table.
         $normalizedGroupIds = [];
         foreach ((array)$readAccess as $groupId) {
-            $groupId = trim((string)$groupId);
+            $groupId = trim((string)$groupId, " \f\n\r\t\v\x00");
             if ($groupId !== '' && !in_array($groupId, $normalizedGroupIds, true)) {
                 $normalizedGroupIds[] = $groupId;
             }
