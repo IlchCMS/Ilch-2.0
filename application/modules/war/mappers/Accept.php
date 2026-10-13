@@ -142,7 +142,7 @@ class Accept extends Mapper
      * @param int|EntriesModel $id
      * @return bool
      */
-    public function delete($id): bool
+    public function delete(EntriesModel|int $id): bool
     {
         if ($id instanceof EntriesModel) {
             $id = $id->getId();

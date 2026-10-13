@@ -191,9 +191,16 @@ class War extends Model
             $this->setLastAcceptTime($entries['lastaccepttime']);
         }
         if (isset($entries['read_access_all'])) {
-            $this->setReadAccessAll((int) $entries['read_access_all']);
-        }
+            $readAccessAll = (int) $entries['read_access_all'];
+            $this->setReadAccessAll($readAccessAll);
 
+            // Expose the "readable by every group" flag as "all", unless the
+            // row already carries a concrete list of groups (e.g. the
+            // GROUP_CONCAT from the war_access join).
+            if ($readAccessAll === 1 && empty($entries['read_access'] ?? null)) {
+                $this->setReadAccess('all');
+            }
+        }
         if (isset($entries['war_groups'])) {
             $this->setWarGroupTag($entries['war_groups']);
         }

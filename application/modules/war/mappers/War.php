@@ -116,7 +116,7 @@ class War extends Mapper
      * @param int|EntriesModel $id
      * @return EntriesModel|null
      */
-    public function getWarById($id): ?EntriesModel
+    public function getWarById(EntriesModel|int $id): ?EntriesModel
     {
         if ($id instanceof EntriesModel) {
             $id = $id->getId();
@@ -132,14 +132,14 @@ class War extends Mapper
     }
 
     /**
-     * Get wars for json (for example the calendar)
+     * Get wars for JSON (for example the calendar)
      *
-     * @param Date|string $start
-     * @param Date|string $end
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param string|Date|null $start
+     * @param string|Date|null $end
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return array|null
      */
-    public function getWarsForJson($start, $end, $groupIds = '3'): ?array
+    public function getWarsForJson(string|Date|null $start, string|Date|null $end, array|string $groupIds = '3'): ?array
     {
         if (is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -208,11 +208,11 @@ class War extends Mapper
      * Update the entries for which user groups are allowed to read a War.
      *
      * @param int $warId
-     * @param string|array $readAccess example: "1,2,3"
+     * @param array|string $readAccess example: "1,2,3"
      * @param bool $addAdmin
      * @since 1.15.0
      */
-    public function saveReadAccess(int $warId, $readAccess, bool $addAdmin = true)
+    public function saveReadAccess(int $warId, array|string $readAccess, bool $addAdmin = true): void
     {
         if (\is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
@@ -256,7 +256,7 @@ class War extends Mapper
      * @param int|EntriesModel $id
      * @return bool
      */
-    public function delete($id): bool
+    public function delete(EntriesModel|int $id): bool
     {
         if ($id instanceof EntriesModel) {
             $id = $id->getId();
@@ -286,11 +286,11 @@ class War extends Mapper
      * Get a list of wars.
      *
      * @param null|Pagination $pagination
-     * @param string|array $readAccess A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $readAccess A string like '1,2,3' or an array like [1,2,3]
      * @param int|null $groupId
      * @return array|null
      */
-    public function getWarList(?Pagination $pagination = null, $readAccess = '3', ?int $groupId = null): ?array
+    public function getWarList(?Pagination $pagination = null, array|string $readAccess = '3', ?int $groupId = null): ?array
     {
         if (is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
@@ -304,11 +304,11 @@ class War extends Mapper
      *
      * @param int|null $status
      * @param int|null $limit
-     * @param string|array $groupIds A string like '1,2,3' or an array like [1,2,3]
+     * @param array|string $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @param string $order
      * @return array|null
      */
-    public function getWarListByStatusAndLimt(?int $status = null, ?int $limit = null, $groupIds = '3', string $order = 'ASC'): ?array
+    public function getWarListByStatusAndLimt(?int $status = null, ?int $limit = null, array|string $groupIds = '3', string $order = 'ASC'): ?array
     {
         if (is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -392,10 +392,10 @@ class War extends Mapper
     /**
      * Returns the Countdown
      *
-     * @param Date|string $date
+     * @param string|Date $date
      * @return string
      */
-    public function countdown($date): string
+    public function countdown(string|Date $date): string
     {
         if (!$date instanceof Date) {
             $date = new Date($date);
@@ -450,7 +450,7 @@ class War extends Mapper
      * @param int $status
      * @return bool
      */
-    public function updateStatus($id, int $status = -1): bool
+    public function updateStatus(EntriesModel|int $id, int $status = -1): bool
     {
         if ($status !== -1) {
             $statusNow = $status;
@@ -488,7 +488,7 @@ class War extends Mapper
      * @param int $show
      * @return bool
      */
-    public function updateShow($id, int $show = -1): bool
+    public function updateShow(EntriesModel|int $id, int $show = -1): bool
     {
         if ($show !== -1) {
             $showNow = $show;
