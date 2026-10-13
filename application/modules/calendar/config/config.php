@@ -271,7 +271,7 @@ class Config extends \Ilch\Config\Install
                 removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar-7.0.0/');
                 // no break
             case "1.11.8":
-                // Remove old version of fullcalendar as this version comes with version 7.1.1.
+                // Remove old version of fullcalendar as this version comes with version 7.1.2.
                 removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar-7.1.0/');
                 // no break
         }
