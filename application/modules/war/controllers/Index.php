@@ -138,7 +138,6 @@ class Index extends Frontend
                             $this->redirect()
                                 ->withMessage('saveSuccess')
                                 ->to(['action' => 'show', 'id' => $war->getId()]);
-                            $this->redirect(['action' => 'show', 'id' => $war->getId()]);
                         }
                         $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
                         $this->redirect()

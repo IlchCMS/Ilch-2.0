@@ -40,13 +40,6 @@ class Group extends Model
     protected string $groupImage = '';
 
     /**
-     * The Group ImageThumb.
-     *
-     * @var string
-     */
-    protected string $groupImageThumb = '';
-
-    /**
      * The Group Member.
      *
      * @var string
@@ -178,29 +171,6 @@ class Group extends Model
     public function setGroupImage(string $groupImage): Group
     {
         $this->groupImage = $groupImage;
-
-        return $this;
-    }
-
-    /**
-     * Gets the group ImageThumb.
-     *
-     * @return string
-     */
-    public function getGroupImageThumb(): string
-    {
-        return $this->groupImageThumb;
-    }
-
-    /**
-     * Sets the group ImageThumb.
-     *
-     * @param string $groupImageThumb
-     * @return $this
-     */
-    public function setGroupImageThumb(string $groupImageThumb): Group
-    {
-        $this->groupImageThumb = $groupImageThumb;
 
         return $this;
     }

@@ -12,9 +12,9 @@ use Ilch\Model;
 class GameIcon extends Model
 {
     /**
-     * @var int|null
+     * @var int
      */
-    protected ?int $id = null;
+    protected int $id = 0;
     /**
      * @var string
      */
@@ -44,18 +44,18 @@ class GameIcon extends Model
     }
 
     /**
-     * @return int|null
+     * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @param int|null $id
+     * @param int $id
      * @return $this
      */
-    public function setId(?int $id): GameIcon
+    public function setId(int $id): GameIcon
     {
         $this->id = $id;
 

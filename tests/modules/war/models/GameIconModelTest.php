@@ -46,15 +46,14 @@ class GameIconModelTest extends TestCase
     }
 
     /**
-     * Tests that setId(null) stores null (nullable id).
+     * Tests that setId(0) stores zero (falsy but valid).
      */
-    public function testSetIdNull()
+    public function testSetIdZero()
     {
         $model = new GameIconModel();
-        $model->setId(7);
-        $model->setId(null);
+        $model->setId(0);
 
-        self::assertNull($model->getId());
+        self::assertSame(0, $model->getId());
     }
 
     /**
@@ -131,13 +130,13 @@ class GameIconModelTest extends TestCase
     }
 
     /**
-     * Tests that default values are null for id and empty string for title/icon.
+     * Tests that default values are 0 for id and empty string for title/icon.
      */
     public function testDefaultValues()
     {
         $model = new GameIconModel();
 
-        self::assertNull($model->getId());
+        self::assertSame(0, $model->getId());
         self::assertSame('', $model->getTitle());
         self::assertSame('', $model->getIcon());
     }
@@ -181,7 +180,7 @@ class GameIconModelTest extends TestCase
     {
         $model = (new GameIconModel())->setByArray(['title' => 'Doom']);
 
-        self::assertNull($model->getId());
+        self::assertSame(0, $model->getId());
         self::assertSame('Doom', $model->getTitle());
         self::assertSame('', $model->getIcon());
     }
@@ -233,15 +232,15 @@ class GameIconModelTest extends TestCase
     }
 
     /**
-     * Documents current behavior: a fresh model's getArray() contains a null id.
+     * Documents current behavior: a fresh model's getArray() contains a zero id.
      */
-    public function testGetArrayFreshModelContainsNullId()
+    public function testGetArrayFreshModelContainsZeroId()
     {
         $model = new GameIconModel();
 
         self::assertSame(
             [
-                'id' => null,
+                'id' => 0,
                 'title' => '',
                 'icon' => '',
             ],

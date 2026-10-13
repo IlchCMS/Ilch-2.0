@@ -113,28 +113,6 @@ class EnemyModelTest extends TestCase
     }
 
     /**
-     * Tests that setEnemyImageThumb() sets and returns the image thumb.
-     */
-    public function testSetEnemyImageThumb()
-    {
-        $model = new EnemyModel();
-        $model->setEnemyImageThumb('deadmice_thumb.png');
-
-        self::assertSame('deadmice_thumb.png', $model->getEnemyImageThumb());
-    }
-
-    /**
-     * Tests that setEnemyLand() sets and returns the land.
-     */
-    public function testSetEnemyLand()
-    {
-        $model = new EnemyModel();
-        $model->setEnemyLand('Germany');
-
-        self::assertSame('Germany', $model->getEnemyLand());
-    }
-
-    /**
      * Tests that setEnemyContactName() sets and returns the contact name.
      */
     public function testSetEnemyContactName()
@@ -180,8 +158,6 @@ class EnemyModelTest extends TestCase
         self::assertSame($model, $model->setEnemyTag('TST'));
         self::assertSame($model, $model->setEnemyHomepage('https://test.example'));
         self::assertSame($model, $model->setEnemyImage('test.png'));
-        self::assertSame($model, $model->setEnemyImageThumb('test_thumb.png'));
-        self::assertSame($model, $model->setEnemyLand('Testland'));
         self::assertSame($model, $model->setEnemyContactName('Contact Person'));
         self::assertSame($model, $model->setEnemyContactEmail('contact@example.com'));
     }
@@ -221,8 +197,6 @@ class EnemyModelTest extends TestCase
         self::assertSame('', $model->getEnemyTag());
         self::assertSame('', $model->getEnemyHomepage());
         self::assertSame('', $model->getEnemyImage());
-        self::assertSame('', $model->getEnemyImageThumb());
-        self::assertSame('', $model->getEnemyLand());
         self::assertSame('', $model->getEnemyContactName());
         self::assertSame('', $model->getEnemyContactEmail());
     }
@@ -281,15 +255,14 @@ class EnemyModelTest extends TestCase
     }
 
     /**
-     * Tests that setByArray() ignores unknown keys (including image_thumb and land).
+     * Tests that setByArray() ignores unknown keys.
      */
     public function testSetByArrayIgnoresUnknownKeys()
     {
-        $model = (new EnemyModel())->setByArray(['id' => 9, 'image_thumb' => 'thumb.png', 'land' => 'Germany']);
+        $model = (new EnemyModel())->setByArray(['id' => 9, 'foo' => 'bar']);
 
         self::assertSame(9, $model->getId());
-        self::assertSame('', $model->getEnemyImageThumb());
-        self::assertSame('', $model->getEnemyLand());
+        self::assertSame('', $model->getEnemyName());
     }
 
     /**
@@ -344,21 +317,6 @@ class EnemyModelTest extends TestCase
             ],
             $model->getArray(false)
         );
-    }
-
-    /**
-     * Documents current behavior: image_thumb and land are not part of getArray().
-     */
-    public function testGetArrayExcludesImageThumbAndLand()
-    {
-        $model = new EnemyModel();
-        $model->setEnemyImageThumb('thumb.png')->setEnemyLand('Germany');
-
-        self::assertSame('thumb.png', $model->getEnemyImageThumb());
-        self::assertSame('Germany', $model->getEnemyLand());
-
-        self::assertArrayNotHasKey('image_thumb', $model->getArray());
-        self::assertArrayNotHasKey('land', $model->getArray());
     }
 
     /**

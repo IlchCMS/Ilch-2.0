@@ -102,17 +102,6 @@ class GroupModelTest extends TestCase
     }
 
     /**
-     * Tests that setGroupImageThumb() sets and returns the image thumb.
-     */
-    public function testSetGroupImageThumb()
-    {
-        $model = new GroupModel();
-        $model->setGroupImageThumb('friendlyfire_thumb.png');
-
-        self::assertSame('friendlyfire_thumb.png', $model->getGroupImageThumb());
-    }
-
-    /**
      * Tests that setGroupMember() sets and returns the member count.
      */
     public function testSetGroupMember()
@@ -157,7 +146,6 @@ class GroupModelTest extends TestCase
         self::assertSame($model, $model->setGroupName('Test'));
         self::assertSame($model, $model->setGroupTag('TST'));
         self::assertSame($model, $model->setGroupImage('test.png'));
-        self::assertSame($model, $model->setGroupImageThumb('test_thumb.png'));
         self::assertSame($model, $model->setGroupMember('5'));
         self::assertSame($model, $model->setGroupDesc('Test group'));
     }
@@ -194,7 +182,6 @@ class GroupModelTest extends TestCase
         self::assertSame('', $model->getGroupName());
         self::assertSame('', $model->getGroupTag());
         self::assertSame('', $model->getGroupImage());
-        self::assertSame('', $model->getGroupImageThumb());
         self::assertSame('', $model->getGroupMember());
         self::assertSame('', $model->getGroupDesc());
     }
@@ -263,14 +250,14 @@ class GroupModelTest extends TestCase
     }
 
     /**
-     * Tests that setByArray() ignores unknown keys (including image_thumb).
+     * Tests that setByArray() ignores unknown keys.
      */
     public function testSetByArrayIgnoresUnknownKeys()
     {
-        $model = (new GroupModel())->setByArray(['id' => 9, 'image_thumb' => 'thumb.png']);
+        $model = (new GroupModel())->setByArray(['id' => 9, 'foo' => 'bar']);
 
         self::assertSame(9, $model->getId());
-        self::assertSame('', $model->getGroupImageThumb());
+        self::assertSame('', $model->getGroupName());
     }
 
     /**
@@ -321,19 +308,6 @@ class GroupModelTest extends TestCase
             ],
             $model->getArray(false)
         );
-    }
-
-    /**
-     * Documents current behavior: image_thumb is not part of getArray().
-     */
-    public function testGetArrayExcludesImageThumb()
-    {
-        $model = new GroupModel();
-        $model->setGroupImageThumb('thumb.png');
-
-        self::assertSame('thumb.png', $model->getGroupImageThumb());
-
-        self::assertArrayNotHasKey('image_thumb', $model->getArray());
     }
 
     /**

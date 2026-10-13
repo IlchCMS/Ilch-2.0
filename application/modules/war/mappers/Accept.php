@@ -119,6 +119,13 @@ class Accept extends Mapper
      */
     public function save(EntriesModel $model): int
     {
+        // date_created is DATETIME NOT NULL; always persist a valid datetime,
+        // even if the caller never set it (would otherwise be '' and fail
+        // under MySQL strict mode / store 0000-00-00).
+        if ($model->getDateCreated() === '') {
+            $model->setDateCreated(date('Y-m-d H:i:s'));
+        }
+
         $fields = $model->getArray();
 
         if ($model->getId()) {

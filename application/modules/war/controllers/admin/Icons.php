@@ -145,7 +145,7 @@ class Icons extends Admin
                     $iconFilename = 'icon_' . str_replace('.', '', uniqid('', true));
                     move_uploaded_file($_FILES['icon']['tmp_name'], ROOT_PATH . '/application/modules/war/static/img/' . $iconFilename . '.png');
 
-                    $gameIconModel->setId($this->getRequest()->getParam('id') ?? null)
+                    $gameIconModel->setId((int) $this->getRequest()->getParam('id'))
                         ->setTitle($this->getRequest()->getPost('gameName'))
                         ->setIcon($iconFilename);
                     $gameIconsMapper->save($gameIconModel);

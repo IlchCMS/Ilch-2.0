@@ -202,7 +202,7 @@ class Index extends Admin
                             [
                                 'map' => (int)$maps[$i],
                                 'groupPoints' => (int)$groupPoints[$i],
-                                'enemyPoints' => (int)$groupPoints[$i]
+                                'enemyPoints' => (int)$enemyPoints[$i]
                             ],
                             [
                                 'map' => 'required|numeric|integer|min:1|exists:' . $mapsMapper->tablename,
