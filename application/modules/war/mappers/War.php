@@ -342,7 +342,7 @@ class War extends Mapper
 
         // $status !== null so that status 0 remains a valid filter.
         return $this->getEntriesBy(
-        $status !== null ? ['status' => $this->db()->escape($status), 'ra.group_id' => $groupIds] : ['ra.group_id' => $groupIds],
+            $status !== null ? ['status' => $this->db()->escape($status), 'ra.group_id' => $groupIds] : ['ra.group_id' => $groupIds],
             ['w.time' => $order, 'w.id' => $order],
             $pagination
         );
