@@ -34,7 +34,7 @@ class Maps extends Mapper
      * @param Pagination|null $pagination
      * @return array|null
      */
-    public function getEntriesBy(array $where = [], array $orderBy = ['a.id' => 'DESC'], ?Pagination $pagination = null): ?array
+    public function getEntriesBy(array $where = [], array $orderBy = ['id' => 'DESC'], ?Pagination $pagination = null): ?array
     {
         $select = $this->db()->select()
             ->fields(['*'])
@@ -96,16 +96,16 @@ class Maps extends Mapper
      * @param int|EntriesModel $id
      * @return null|EntriesModel
      */
-    public function getEntryById(int $id): ?EntriesModel
+    public function getEntryById(int|EntriesModel $id): ?EntriesModel
     {
         if ($id instanceof EntriesModel) {
             $id = $id->getId();
         }
 
-        $entrys = $this->getEntriesBy(['id' => (int)$id], []);
+        $entries = $this->getEntriesBy(['id' => (int)$id], []);
 
-        if (!empty($entrys)) {
-            return reset($entrys);
+        if (!empty($entries)) {
+            return reset($entries);
         }
 
         return null;

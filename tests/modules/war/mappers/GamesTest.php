@@ -135,6 +135,99 @@ class GamesTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that checkDB() returns true if the table exists.
+     */
+    public function testCheckDB()
+    {
+        self::assertTrue($this->mapper->checkDB());
+    }
+
+    /**
+     * Tests that getGamesByWarId() returns the games of the given war.
+     */
+    public function testGetGamesByWarId()
+    {
+        $entries = $this->mapper->getGamesByWarId(4);
+        self::assertCount(2, $entries);
+
+        $entries = $this->mapper->getGamesByWarId(1);
+        self::assertCount(1, $entries);
+        self::assertEquals(1, $entries[0]->getId());
+
+        self::assertNull($this->mapper->getGamesByWarId(9999));
+    }
+
+    /**
+     * Tests that getGamesByWhere() filters with a where clause.
+     */
+    public function testGetGamesByWhereWarId()
+    {
+        $entries = $this->mapper->getGamesByWhere(['war_id' => 4]);
+
+        self::assertCount(2, $entries);
+    }
+
+    /**
+     * Tests that delete() accepts a model instance.
+     */
+    public function testDeleteWarGamesWithModel()
+    {
+        $model = new EntriesModel();
+        $model->setId(2);
+
+        self::assertSame(true, $this->mapper->delete($model));
+
+        self::assertNull($this->mapper->getEntriesBy(['id' => 2]));
+    }
+
+    /**
+     * Tests that deleteById() removes the game.
+     */
+    public function testDeleteWarGamesById()
+    {
+        self::assertSame(true, $this->mapper->deleteById(2));
+
+        self::assertNull($this->mapper->getEntriesBy(['id' => 2]));
+        self::assertCount(4, $this->mapper->getGamesByWhere());
+    }
+
+    /**
+     * Tests that delete() on a non-existent id does not throw.
+     */
+    public function testDeleteWarGamesNotFound()
+    {
+        $this->mapper->delete(9999);
+
+        self::assertCount(5, $this->mapper->getGamesByWhere());
+    }
+
+    /**
+     * Tests that getJson() returns a JSON encoded array of all games.
+     */
+    public function testGetJson()
+    {
+        $json = $this->mapper->getJson();
+
+        self::assertIsString($json);
+
+        $entries = json_decode($json, true);
+        self::assertIsArray($entries);
+        self::assertCount(5, $entries);
+    }
+
+    /**
+     * Tests that getJson() returns an empty JSON array when no games exist.
+     */
+    public function testGetJsonEmpty()
+    {
+        foreach ([1, 2, 3, 4, 5] as $id) {
+            $this->mapper->delete($id);
+        }
+
+        self::assertSame('[]', $this->mapper->getJson());
+    }
+
+    /**
      * Returns database schema sql statements to initialize database
      *
      * @return string

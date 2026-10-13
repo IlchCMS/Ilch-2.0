@@ -115,12 +115,20 @@ class War extends Model
      * @var int
      */
     protected int $show = 0;
+
     /**
      * The readaccess of the training.
      *
      * @var string
      */
     protected string $readAccess = '';
+
+    /**
+     * The read access all flag (1 = readable by every group).
+     *
+     * @var int
+     */
+    protected int $readAccessAll = 0;
 
     /**
      * The last Accept Time.
@@ -183,9 +191,7 @@ class War extends Model
             $this->setLastAcceptTime($entries['lastaccepttime']);
         }
         if (isset($entries['read_access_all'])) {
-            if ($entries['read_access_all']) {
-                $this->setReadAccess('all');
-            }
+            $this->setReadAccessAll((int) $entries['read_access_all']);
         }
 
         if (isset($entries['war_groups'])) {
@@ -542,6 +548,7 @@ class War extends Model
 
         return $this;
     }
+
     /**
      * Gets the read access of the war.
      *
@@ -551,6 +558,7 @@ class War extends Model
     {
         return $this->readAccess;
     }
+
     /**
      * Sets the read access of the war.
      *
@@ -560,6 +568,29 @@ class War extends Model
     public function setReadAccess(string $readAccess): War
     {
         $this->readAccess = $readAccess;
+
+        return $this;
+    }
+
+    /**
+     * Gets the read access all flag.
+     *
+     * @return int
+     */
+    public function getReadAccessAll(): int
+    {
+        return $this->readAccessAll;
+    }
+
+    /**
+     * Sets the read access all flag.
+     *
+     * @param int $readAccessAll
+     * @return $this
+     */
+    public function setReadAccessAll(int $readAccessAll): War
+    {
+        $this->readAccessAll = $readAccessAll;
 
         return $this;
     }
@@ -611,7 +642,7 @@ class War extends Model
                 'status'            => $this->getWarStatus(),
                 'show'              => $this->getShow(),
                 'lastaccepttime'    => $this->getLastAcceptTime(),
-                'read_access_all'    => ($this->getReadAccess() === 'all' ? 1 : 0)
+                'read_access_all'   => ($this->getReadAccess() === 'all' ? 1 : $this->getReadAccessAll())
             ]
         );
     }

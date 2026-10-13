@@ -85,6 +85,7 @@ class War extends Mapper
         }
         return $entrys;
     }
+
     /**
      * Gets the Wars.
      *
@@ -396,9 +397,6 @@ class War extends Mapper
      */
     public function countdown($date): string
     {
-        $datenow = new Date();
-        $datenow = $datenow->format(null, true);
-
         if (!$date instanceof Date) {
             $date = new Date($date);
         }
@@ -407,7 +405,7 @@ class War extends Mapper
         $the_countdown_date = $date->getTimestamp();
 
         // get current unix timestamp
-        $today = strtotime($datenow);
+        $today = time();
 
         $difference = $the_countdown_date - $today;
         if ($difference < 0) {
@@ -461,10 +459,10 @@ class War extends Mapper
                 $status = $id->getWarStatus();
             } else {
                 $status = (int) $this->db()->select('status')
-                                ->from($this->tablename)
-                                ->where(['id' => (int)$id])
-                                ->execute()
-                                ->fetchCell();
+                    ->from($this->tablename)
+                    ->where(['id' => (int)$id])
+                    ->execute()
+                    ->fetchCell();
             }
 
             if ($status === 1) {
@@ -499,10 +497,10 @@ class War extends Mapper
                 $show = $id->getShow();
             } else {
                 $show = (int) $this->db()->select('show')
-                                ->from($this->tablename)
-                                ->where(['id' => (int)$id])
-                                ->execute()
-                                ->fetchCell();
+                    ->from($this->tablename)
+                    ->where(['id' => (int)$id])
+                    ->execute()
+                    ->fetchCell();
             }
 
             if ($show === 1) {
