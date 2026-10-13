@@ -37,6 +37,6 @@ class Nextwar extends Box
 
         $this->getView()->set('warMapper', $warMapper)
             ->set('gameIconMap', $gameIconMapper->getGameIconMap())
-            ->set('wars', $warMapper->getWarListByStatusAndLimt(1, $config->get('war_boxNextWarLimit'), $readAccess));
+            ->set('wars', $warMapper->getWarListByStatusAndLimit(1, $config->get('war_boxNextWarLimit'), $readAccess));
     }
 }

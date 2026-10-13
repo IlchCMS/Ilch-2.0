@@ -74,16 +74,16 @@ class War extends Mapper
         if (empty($entryArray)) {
             return null;
         }
-        $entrys = [];
+        $entryModels = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new EntriesModel();
 
             $entryModel->setByArray($entries);
 
-            $entrys[] = $entryModel;
+            $entryModels[] = $entryModel;
         }
-        return $entrys;
+        return $entryModels;
     }
 
     /**
@@ -328,7 +328,7 @@ class War extends Mapper
      * @param string $order
      * @return array|null
      */
-    public function getWarListByStatusAndLimt(?int $status = null, ?int $limit = null, array|string $groupIds = '3', string $order = 'ASC'): ?array
+    public function getWarListByStatusAndLimit(?int $status = null, ?int $limit = null, array|string $groupIds = '3', string $order = 'ASC'): ?array
     {
         if (is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);

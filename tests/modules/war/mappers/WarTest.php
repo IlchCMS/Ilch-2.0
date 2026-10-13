@@ -344,7 +344,7 @@ class WarTest extends DatabaseTestCase
      */
     public function testGetWarListByStatusAndLimit()
     {
-        $entries = $this->mapper->getWarListByStatusAndLimt(null, 2, '1,2,3', 'ASC');
+        $entries = $this->mapper->getWarListByStatusAndLimit(null, 2, '1,2,3', 'ASC');
 
         self::assertCount(2, $entries);
     }

@@ -55,16 +55,16 @@ class Maps extends Mapper
         if (empty($entryArray)) {
             return null;
         }
-        $entrys = [];
+        $entryModels = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new EntriesModel();
 
             $entryModel->setByArray($entries);
 
-            $entrys[] = $entryModel;
+            $entryModels[] = $entryModel;
         }
-        return $entrys;
+        return $entryModels;
     }
 
     /**
@@ -154,7 +154,7 @@ class Maps extends Mapper
     }
 
     /**
-     * Get Export Json.
+     * Get Export JSON.
      *
      * @param int $options
      * @return string
@@ -162,14 +162,14 @@ class Maps extends Mapper
     public function getJson(int $options = 0): string
     {
         $entryArray = $this->getEntriesBy();
-        $entrys = [];
+        $entries = [];
 
         if ($entryArray) {
             foreach ($entryArray as $entryModel) {
-                $entrys[] = $entryModel->getArray(false);
+                $entries[] = $entryModel->getArray(false);
             }
         }
 
-        return json_encode($entrys, $options);
+        return json_encode($entries, $options);
     }
 }

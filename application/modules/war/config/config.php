@@ -13,7 +13,7 @@ use Modules\Comment\Mappers\Comment as CommentMapper;
 
 class Config extends Install
 {
-    public $config = [
+    public array $config = [
         'key' => 'war',
         'version' => '1.16.8',
         'icon_small' => 'fa-solid fa-shield',

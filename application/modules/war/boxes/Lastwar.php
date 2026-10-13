@@ -40,6 +40,6 @@ class Lastwar extends Box
         $this->getView()->set('warMapper', $warMapper)
             ->set('gamesMapper', $gamesMapper)
             ->set('gameIconMap', $gameIconMapper->getGameIconMap())
-            ->set('wars', $warMapper->getWarListByStatusAndLimt(2, $config->get('war_boxLastWarLimit'), $readAccess, 'DESC'));
+            ->set('wars', $warMapper->getWarListByStatusAndLimit(2, $config->get('war_boxLastWarLimit'), $readAccess, 'DESC'));
     }
 }
