@@ -160,8 +160,9 @@ class Result extends \Ilch\Mapper
      * Deletes result with given poll id.
      *
      * @param int $pollId
+     * @return bool
      */
-    public function delete(int $pollId)
+    public function delete(int $pollId): bool
     {
         $ipMapper = new Ip();
 
@@ -169,7 +170,7 @@ class Result extends \Ilch\Mapper
             ->where(['poll_id' => $pollId])
             ->execute();
 
-        $this->db()->delete($ipMapper->tablename)
+        return $this->db()->delete($ipMapper->tablename)
             ->where(['poll_id' => $pollId])
             ->execute();
     }
