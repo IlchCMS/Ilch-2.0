@@ -20,6 +20,8 @@ use Modules\Training\Models\Training as EntriesModel;
  */
 class TrainingTest extends DatabaseTestCase
 {
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected PhpunitDataset $phpunitDataset;
     /** @var TrainingMapper $mapper */
     private Training $mapper;
@@ -28,7 +30,7 @@ class TrainingTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
 
         $this->mapper = new TrainingMapper();
 

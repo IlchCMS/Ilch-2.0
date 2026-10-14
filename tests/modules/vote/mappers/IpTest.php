@@ -23,6 +23,8 @@ use Modules\Vote\Models\Ip as EntriesModel;
 class IpTest extends DatabaseTestCase
 {
     /** @var PhpunitDataset */
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected PhpunitDataset $phpunitDataset;
     /** @var IpMapper */
     private Ip $mapper;
@@ -36,7 +38,7 @@ class IpTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
 
         $this->mapper = new IpMapper();
 

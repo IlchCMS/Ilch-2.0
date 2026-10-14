@@ -25,6 +25,8 @@ use Modules\Vote\Models\Vote as EntriesModel;
 class VoteTest extends DatabaseTestCase
 {
     /** @var PhpunitDataset */
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected PhpunitDataset $phpunitDataset;
     /** @var VoteMapper */
     private Vote $mapper;
@@ -38,7 +40,7 @@ class VoteTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
 
         $this->mapper = new VoteMapper();
 

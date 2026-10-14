@@ -20,13 +20,15 @@ use PHPUnit\Ilch\PhpunitDataset;
  */
 class CookieStolenTest extends DatabaseTestCase
 {
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
     }
 
     /**

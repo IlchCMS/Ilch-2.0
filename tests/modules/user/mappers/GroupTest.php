@@ -26,13 +26,15 @@ class GroupTest extends DatabaseTestCase
      * @var GroupMapper
      */
     protected GroupMapper $groupMapper;
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/database_groups.yml'];
+
     protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/database_groups.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
         $this->groupMapper = new GroupMapper();
     }
 

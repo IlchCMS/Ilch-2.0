@@ -25,13 +25,15 @@ use Modules\User\Mappers\Notifications as NotificationsMapper;
  */
 class NotificationsTest extends DatabaseTestCase
 {
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/database_users_notifications.yml'];
+
     protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/database_users_notifications.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
 
         if (Registry::get('translator') === null) {
             Registry::set('translator', new Translator());

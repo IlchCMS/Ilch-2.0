@@ -22,6 +22,8 @@ use Modules\Calendar\Models\Events as EntriesModel;
  */
 class EventsTest extends DatabaseTestCase
 {
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected PhpunitDataset $phpunitDataset;
     private Events $mapper;
 
@@ -29,7 +31,7 @@ class EventsTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
 
         $this->mapper = new EventsMapper();
     }

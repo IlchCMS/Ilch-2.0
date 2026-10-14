@@ -20,6 +20,8 @@ use Modules\Teams\Models\Teams as EntriesModel;
  */
 class TeamsTest extends DatabaseTestCase
 {
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected PhpunitDataset $phpunitDataset;
     private Teams $mapper;
 
@@ -27,7 +29,7 @@ class TeamsTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
 
         $this->mapper = new TeamsMapper();
     }

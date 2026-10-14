@@ -21,13 +21,15 @@ use Modules\User\Mappers\NotificationPermission as NotificationPermissionMapper;
  */
 class NotificationPermissionTest extends DatabaseTestCase
 {
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/database_users_notifications.yml'];
+
     protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/database_users_notifications.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
     }
 
     /**

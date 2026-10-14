@@ -19,12 +19,15 @@ use PHPUnit\Ilch\PhpunitDataset;
  */
 class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
 {
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected $phpunitDataset;
+
     public function setUp(): void
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
     }
 
     protected static function getSchemaSQLQueries(): string

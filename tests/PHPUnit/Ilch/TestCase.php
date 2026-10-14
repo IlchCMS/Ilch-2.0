@@ -18,9 +18,14 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      *
      * @var array
      */
-    protected $configData = [];
+    protected array $configData = [];
 
-    protected $tearDownCallbacks = [];
+    /**
+     * Callbacks that are executed exactly once when tearDown() runs.
+     *
+     * @var array<callable>
+     */
+    protected array $tearDownCallbacks = [];
 
     /**
      * Filling the config object with individual testcase data.
@@ -52,7 +57,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      *
      * @param callable $callback
      */
-    protected function addTearDownCallback(callable $callback)
+    protected function addTearDownCallback(callable $callback): void
     {
         $this->tearDownCallbacks[] = $callback;
     }
