@@ -666,6 +666,20 @@ class StatisticTest extends DatabaseTestCase
         ];
 
         $this->out->saveVisit($row);
+
+        // saveVisit() writes the stats row's `date` with PHP's clock
+        // (\Ilch\Date::format(..., true) => UTC) but dedups by comparing it
+        // with the DB server's CURDATE(). Whenever PHP and the server sit on
+        // different calendar days (timezone offset, test executing inside the
+        // offset window), the second call's "same day" lookup misses the row
+        // inserted by the first call and inserts a duplicate. Pin the stored
+        // date to the server's current day so the test's same-day premise
+        // holds deterministically.
+        $this->db->query(
+            'UPDATE `[prefix]_visits_stats` SET `date` = CURDATE() '
+            . 'WHERE `session_id` = \'repeat_guest\''
+        );
+
         $this->out->saveVisit($row);
 
         // Should only have one row in visits_stats for this session today
