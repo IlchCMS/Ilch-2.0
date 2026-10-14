@@ -9,10 +9,18 @@ namespace PHPUnit\Ilch;
 /**
  * Per-class bookkeeping of the tables test methods wrote to.
  *
- * The tracker is reset in setUpBeforeClass() (once before provisioning and
- * once after the schema SQL ran) and read by
- * DatabaseTestCase::restoreWrittenTables() at the start of every test
- * method.
+ * The set accumulates over the whole class; restoreWrittenTables() is
+ * idempotent, so restoring the union of all tables written so far before
+ * every test method is correct.
+ *
+ * DatabaseTestCase resets the tracker around every provisioning so that
+ * provisioning writes never count as test writes: in setUpBeforeClass()
+ * before provisioning, after the schema SQL and after the one-time fixture
+ * rebuild (PROVISION_ON_SETUP_BEFORE_CLASS mode), and in setUp() after the
+ * per-test schema provisioning (PROVISION_ON_SETUP mode).
+ *
+ * The tracker is read by DatabaseTestCase::restoreWrittenTables() at the
+ * start of every test method.
  *
  * InnoDB does not roll back auto-increment counters together with the
  * per-test transaction, and on MySQL 8.4+ the live counter can neither be
@@ -33,6 +41,9 @@ final class WriteTracker
      */
     private static array $written = [];
 
+    /**
+     * Forgets every table recorded so far.
+     */
     public static function reset(): void
     {
         self::$written = [];

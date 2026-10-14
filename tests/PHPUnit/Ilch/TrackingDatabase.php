@@ -33,6 +33,12 @@ class TrackingDatabase extends Mysql
      */
     private $realInstance;
 
+    /**
+     * Wraps the given Mysql instance, sharing its live connection without
+     * opening a second one.
+     *
+     * @param Mysql $real the Mysql instance to wrap
+     */
     public function __construct(Mysql $real)
     {
         $this->realInstance = $real;
@@ -52,6 +58,14 @@ class TrackingDatabase extends Mysql
         }
     }
 
+    /**
+     * Intentionally empty - must not close the shared connection here.
+     *
+     * The wrapped instance is kept alive by $realInstance and therefore
+     * destroyed after this tracker; its destructor closes the shared mysqli
+     * connection exactly once. Closing it a second time would throw
+     * "mysqli object is already closed" on PHP 8.
+     */
     public function __destruct()
     {
         // Must NOT close the shared connection here: this tracker and the
@@ -63,6 +77,13 @@ class TrackingDatabase extends Mysql
         // the connection exactly once.
     }
 
+    /**
+     * Returns a new insert builder and records the target table as written.
+     *
+     * @param string|null $into table to insert into (with or without prefix)
+     * @param array|null $values optional column => value map to insert
+     * @return Mysql\Insert
+     */
     public function insert($into = null, $values = null): Mysql\Insert
     {
         WriteTracker::recordTable($this->normalizeTable($into));
@@ -70,6 +91,14 @@ class TrackingDatabase extends Mysql
         return parent::insert($into, $values);
     }
 
+    /**
+     * Returns a new update builder and records the target table as written.
+     *
+     * @param string|null $table table to update (with or without prefix)
+     * @param array|null $values optional column => value map to set
+     * @param array|null $where optional where condition
+     * @return Mysql\Update
+     */
     public function update($table = null, $values = null, $where = null): Mysql\Update
     {
         WriteTracker::recordTable($this->normalizeTable($table));
@@ -77,6 +106,13 @@ class TrackingDatabase extends Mysql
         return parent::update($table, $values, $where);
     }
 
+    /**
+     * Returns a new delete builder and records the target table as written.
+     *
+     * @param string|null $from table to delete rows from (with or without prefix)
+     * @param array|null $where optional where condition
+     * @return Mysql\Delete
+     */
     public function delete($from = null, $where = null): Mysql\Delete
     {
         WriteTracker::recordTable($this->normalizeTable($from));
@@ -84,6 +120,13 @@ class TrackingDatabase extends Mysql
         return parent::delete($from, $where);
     }
 
+    /**
+     * Runs a single SQL statement and records the target table when the
+     * statement is an INSERT, UPDATE or DELETE.
+     *
+     * @param string $sql
+     * @return mixed
+     */
     public function query(string $sql)
     {
         $this->recordWriteSql($sql);
@@ -91,6 +134,13 @@ class TrackingDatabase extends Mysql
         return parent::query($sql);
     }
 
+    /**
+     * Runs several semicolon separated SQL statements and records the target
+     * table of every INSERT, UPDATE or DELETE among them.
+     *
+     * @param string $sql semicolon separated SQL statements
+     * @return bool
+     */
     public function queryMulti(string $sql): bool
     {
         foreach (explode(';', $sql) as $statement) {

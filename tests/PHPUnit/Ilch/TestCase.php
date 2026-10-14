@@ -20,6 +20,11 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected $configData = [];
 
+    /**
+     * Callbacks that are executed exactly once when tearDown() runs.
+     *
+     * @var array<callable>
+     */
     protected $tearDownCallbacks = [];
 
     /**
