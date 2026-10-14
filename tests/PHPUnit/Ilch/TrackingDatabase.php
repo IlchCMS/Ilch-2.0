@@ -6,6 +6,7 @@
 
 namespace PHPUnit\Ilch;
 
+use Ilch\Database\Exception;
 use Ilch\Database\Mysql;
 
 /**
@@ -125,9 +126,10 @@ class TrackingDatabase extends Mysql
      * statement is an INSERT, UPDATE or DELETE.
      *
      * @param string $sql
-     * @return mixed
+     * @return \mysqli_result|bool
+     * @throws Exception
      */
-    public function query(string $sql)
+    public function query(string $sql): \mysqli_result|bool
     {
         $this->recordWriteSql($sql);
 

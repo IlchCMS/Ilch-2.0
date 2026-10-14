@@ -21,7 +21,7 @@ class PhpunitDataset
     /**
      * @var MySQL
      */
-    private $db;
+    private MySQL $db;
 
     /**
      * Binds the dataset loader to a database instance.
@@ -38,7 +38,7 @@ class PhpunitDataset
      *
      * @param array $fullpaths full paths to yml files to load.
      */
-    public function loadFromFiles(array $fullpaths)
+    public function loadFromFiles(array $fullpaths): void
     {
         foreach ($fullpaths as $fullpath) {
             $this->loadFromFile($fullpath);
@@ -54,7 +54,7 @@ class PhpunitDataset
      *
      * @param string $fullpath full path to yml file to load.
      */
-    public function loadFromFile(string $fullpath)
+    public function loadFromFile(string $fullpath): void
     {
         if (!file_exists($fullpath)) {
             throw new \InvalidArgumentException('File not found: ' . $fullpath);
@@ -78,7 +78,7 @@ class PhpunitDataset
      * @param string $content contents of yaml file to load.
      * @throws \Symfony\Component\Yaml\Exception\ParseException
      */
-    public function loadFromString(string $content)
+    public function loadFromString(string $content): void
     {
         $parsedYaml = Yaml::parse($content);
 
@@ -96,7 +96,7 @@ class PhpunitDataset
      *
      * @param array $tables
      */
-    public function sendToDatabase(array $tables)
+    public function sendToDatabase(array $tables): void
     {
         foreach ($tables as $table => $rows) {
             $tableNotEmpty = (bool) $this->db->select('*')

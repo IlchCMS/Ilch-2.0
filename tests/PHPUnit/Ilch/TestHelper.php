@@ -25,7 +25,7 @@ class TestHelper
      *
      * @param array $configData
      */
-    public static function setConfigInRegistry(array $configData)
+    public static function setConfigInRegistry(array $configData): void
     {
         $configFile = CONFIG_PATH . '/config.php';
 
