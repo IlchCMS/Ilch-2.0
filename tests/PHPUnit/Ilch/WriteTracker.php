@@ -20,7 +20,10 @@ namespace PHPUnit\Ilch;
  * per-test schema provisioning (PROVISION_ON_SETUP mode).
  *
  * The tracker is read by DatabaseTestCase::restoreWrittenTables() at the
- * start of every test method.
+ * start of every test method. When
+ * DatabaseTestCase::$restoreAllAutoIncrementTables is enabled, that method
+ * instead recreates every auto-increment table and this set no longer drives
+ * the candidate list - recording and resetting still happen unchanged.
  *
  * InnoDB does not roll back auto-increment counters together with the
  * per-test transaction, and on MySQL 8.4+ the live counter can neither be

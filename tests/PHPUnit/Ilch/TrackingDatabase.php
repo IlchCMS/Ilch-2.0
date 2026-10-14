@@ -11,7 +11,7 @@ use Ilch\Database\Mysql;
 
 /**
  * Drop-in replacement for Ilch\Database\Mysql that records which tables
- * received INSERT/UPDATE/DELETE statements.
+ * received INSERT/REPLACE/UPDATE/DELETE statements.
  *
  * The instance wraps an existing Mysql instance: it copies all of its
  * properties (most importantly the mysqli connection) and shares the very
@@ -123,7 +123,7 @@ class TrackingDatabase extends Mysql
 
     /**
      * Runs a single SQL statement and records the target table when the
-     * statement is an INSERT, UPDATE or DELETE.
+     * statement is an INSERT, REPLACE, UPDATE or DELETE.
      *
      * @param string $sql
      * @return \mysqli_result|bool
@@ -138,7 +138,7 @@ class TrackingDatabase extends Mysql
 
     /**
      * Runs several semicolon separated SQL statements and records the target
-     * table of every INSERT, UPDATE or DELETE among them.
+     * table of every INSERT, REPLACE, UPDATE or DELETE among them.
      *
      * @param string $sql semicolon separated SQL statements
      * @return bool
@@ -153,13 +153,18 @@ class TrackingDatabase extends Mysql
     }
 
     /**
-     * Records the target table of INSERT/UPDATE/DELETE statements.
+     * Records the target table of INSERT/REPLACE/UPDATE/DELETE statements.
+     *
+     * Leading SQL comments are stripped first so a commented statement is
+     * still detected. Over-matching is harmless (recording a table that was
+     * never written only costs an idempotent recreation); only under-
+     * matching is dangerous, so the pattern is deliberately broad.
      *
      * @param string $sql
      */
     private function recordWriteSql(string $sql): void
     {
-        $sql = trim($sql, " \f\n\r\t\v\x00");
+        $sql = $this->stripLeadingComments($sql);
 
         if ($sql === '') {
             return;
@@ -167,13 +172,32 @@ class TrackingDatabase extends Mysql
 
         if (
             preg_match(
-                '/^(?:INSERT(?:\s+IGNORE)?\s+INTO|UPDATE|DELETE\s+FROM)\s+`?([A-Za-z0-9_\[\]]+)`?/i',
+                '/^(?:INSERT(?:\s+IGNORE)?\s+INTO\s+|REPLACE(?:\s+IGNORE)?\s+INTO\s+|REPLACE\s+|UPDATE\s+|DELETE\s+FROM\s+)`?([A-Za-z0-9_\[\]]+)`?/i',
                 $sql,
                 $matches
             )
         ) {
             WriteTracker::recordTable($this->normalizeTable($matches[1]));
         }
+    }
+
+    /**
+     * Removes leading SQL comments (block comments and # / -- line
+     * comments) and the whitespace between them, so detection works on
+     * commented statements. Only affects detection - the SQL handed to the
+     * parent is always the original string.
+     *
+     * @param string $sql
+     * @return string
+     */
+    private function stripLeadingComments(string $sql): string
+    {
+        do {
+            $previous = $sql;
+            $sql = (string) preg_replace('/^\s*(?:\/\*.*?\*\/|\#[^\n]*$|--[^\n]*$)/ms', '', $sql);
+        } while ($sql !== $previous);
+
+        return $sql;
     }
 
     /**

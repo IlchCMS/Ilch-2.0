@@ -32,6 +32,11 @@ use Ilch\Database\Mysql;
  * state the old full per-test schema drop/recreate produced - on every
  * MySQL/MariaDB version - without recreating the whole schema.
  *
+ * By default ($restoreAllAutoIncrementTables) the restoration covers every
+ * auto-increment table with a captured definition, not only the tables the
+ * WriteTracker recorded writes for - a safety net for raw-SQL writes the
+ * detector could not attribute.
+ *
  * Limitation: only tables whose definition was captured at provisioning
  * (fixture tables and auto-increment tables) can be fully restored. If a
  * test drops some other table - e.g. a plain table without an
@@ -92,6 +97,20 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      * @var bool
      */
     protected static bool $isolateTestsInTransaction = true;
+
+    /**
+     * Safety net: before every test method, recreate every auto-increment
+     * table with a captured definition - not just the tables the
+     * WriteTracker is known to have written to.
+     *
+     * This closes the gap of raw-SQL writes the detector could not
+     * attribute. It costs one DROP/CREATE(+ seed rows) per auto-increment
+     * table per test, still far cheaper than the old full schema
+     * recreation per test.
+     *
+     * @var bool
+     */
+    protected static bool $restoreAllAutoIncrementTables = true;
 
     /**
      * YAML fixture files that are loaded before every test method.
@@ -385,6 +404,11 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      * to (or that the fixtures of this class cover) back to its exact
      * post-provisioning state.
      *
+     * When $restoreAllAutoIncrementTables is enabled, the candidate list is
+     * every auto-increment table with a captured definition (plus the
+     * fixture tables), not only the ones the WriteTracker recorded - a
+     * safety net for raw-SQL writes the detector could not attribute.
+     *
      * Tables a previous test dropped (e.g. by an uninstall test) are
      * recreated, not skipped: the DROP is DDL and implicitly committed, so
      * the rollback in tearDown() can never bring the table back.
@@ -393,7 +417,19 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      */
     protected static function restoreWrittenTables(Mysql $db): void
     {
-        $candidates = array_keys(array_merge(WriteTracker::written(), static::$fixtureTables));
+        if (static::$restoreAllAutoIncrementTables) {
+            // Safety net: every auto-increment table with a captured
+            // definition, regardless of what the WriteTracker saw.
+            $candidates = array_keys(array_merge(
+                static::$autoIncrementTables,
+                static::$fixtureTables
+            ));
+        } else {
+            $candidates = array_keys(array_merge(
+                WriteTracker::written(),
+                static::$fixtureTables
+            ));
+        }
 
         if ($candidates === []) {
             return;
