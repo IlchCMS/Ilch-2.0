@@ -107,7 +107,7 @@ class TrackingDatabase extends Mysql
      */
     private function recordWriteSql(string $sql): void
     {
-        $sql = trim($sql);
+        $sql = trim($sql, " \f\n\r\t\v\x00");
 
         if ($sql === '') {
             return;
