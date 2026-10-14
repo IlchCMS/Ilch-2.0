@@ -22,7 +22,7 @@ use PHPUnit\Ilch\PhpunitDataset;
  */
 class CategoryTest extends DatabaseTestCase
 {
-    protected static array $fixtureFiles = [__DIR__ . '/../_files/categories_table.yml'];
+    protected static $fixtureFiles = [__DIR__ . '/../_files/categories_table.yml'];
 
     protected PhpunitDataset $phpunitDataset;
     private Category $categoryMapper;

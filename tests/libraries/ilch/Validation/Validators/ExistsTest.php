@@ -18,7 +18,7 @@ use stdClass;
  */
 class ExistsTest extends DatabaseTestCase
 {
-    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
 
     protected $phpunitDataset;
 

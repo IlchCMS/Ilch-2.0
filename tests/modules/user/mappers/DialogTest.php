@@ -20,7 +20,7 @@ class DialogTest extends DatabaseTestCase
      * @var DialogMapper
      */
     protected DialogMapper $out;
-    protected static array $fixtureFiles = [__DIR__ . '/../_files/users_dialog.yml'];
+    protected static $fixtureFiles = [__DIR__ . '/../_files/users_dialog.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

@@ -22,7 +22,7 @@ use Modules\Calendar\Models\Events as EntriesModel;
  */
 class EventsTest extends DatabaseTestCase
 {
-    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
 
     protected PhpunitDataset $phpunitDataset;
     private Events $mapper;

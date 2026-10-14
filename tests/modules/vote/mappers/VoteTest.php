@@ -25,7 +25,7 @@ use Modules\Vote\Models\Vote as EntriesModel;
 class VoteTest extends DatabaseTestCase
 {
     /** @var PhpunitDataset */
-    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
 
     protected PhpunitDataset $phpunitDataset;
     /** @var VoteMapper */

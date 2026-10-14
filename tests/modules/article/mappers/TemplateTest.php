@@ -23,7 +23,7 @@ use PHPUnit\Ilch\PhpunitDataset;
  */
 class TemplateTest extends DatabaseTestCase
 {
-    protected static array $fixtureFiles = [__DIR__ . '/../_files/templates_table.yml'];
+    protected static $fixtureFiles = [__DIR__ . '/../_files/templates_table.yml'];
 
     protected PhpunitDataset $phpunitDataset;
     private Template $templateMapper;

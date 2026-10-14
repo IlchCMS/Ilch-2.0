@@ -26,7 +26,7 @@ class GroupTest extends DatabaseTestCase
      * @var GroupMapper
      */
     protected GroupMapper $groupMapper;
-    protected static array $fixtureFiles = [__DIR__ . '/../_files/database_groups.yml'];
+    protected static $fixtureFiles = [__DIR__ . '/../_files/database_groups.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

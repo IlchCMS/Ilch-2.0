@@ -21,7 +21,7 @@ class UsermenuTest extends DatabaseTestCase
      * @var UsermenuMapper
      */
     protected UsermenuMapper $out;
-    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database_user_menu.yml'];
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database_user_menu.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

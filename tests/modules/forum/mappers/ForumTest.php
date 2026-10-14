@@ -24,7 +24,7 @@ class ForumTest extends DatabaseTestCase
      * @var ForumMapper
      */
     protected Forum $out;
-    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

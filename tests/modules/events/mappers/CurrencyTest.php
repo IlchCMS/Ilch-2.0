@@ -20,7 +20,7 @@ class CurrencyTest extends DatabaseTestCase
      * @var CurrencyMapper
      */
     protected CurrencyMapper $out;
-    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

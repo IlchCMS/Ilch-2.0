@@ -16,7 +16,7 @@ use Modules\Shop\Models\Property as PropertyModel;
 class PropertiesMapperTest extends DatabaseTestCase
 {
     protected PropertiesMapper $out;
-    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

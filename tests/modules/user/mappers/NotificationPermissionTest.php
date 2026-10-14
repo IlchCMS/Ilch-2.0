@@ -21,7 +21,7 @@ use Modules\User\Mappers\NotificationPermission as NotificationPermissionMapper;
  */
 class NotificationPermissionTest extends DatabaseTestCase
 {
-    protected static array $fixtureFiles = [__DIR__ . '/../_files/database_users_notifications.yml'];
+    protected static $fixtureFiles = [__DIR__ . '/../_files/database_users_notifications.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

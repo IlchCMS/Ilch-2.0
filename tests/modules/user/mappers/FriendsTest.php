@@ -20,7 +20,7 @@ class FriendsTest extends DatabaseTestCase
      * @var FriendsMapper
      */
     protected Friends $out;
-    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database_user_friends.yml'];
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database_user_friends.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

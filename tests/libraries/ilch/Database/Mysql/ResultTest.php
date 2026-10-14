@@ -15,7 +15,7 @@ use Modules\Admin\Config\Config as AdminConfig;
 
 class ResultTest extends DatabaseTestCase
 {
-    protected static int $fillDbOnSetUp = self::PROVISION_ON_SETUP_BEFORE_CLASS;
+    protected static $fillDbOnSetUp = self::PROVISION_ON_SETUP_BEFORE_CLASS;
 
     protected $phpunitDataset;
 

@@ -19,7 +19,7 @@ use PHPUnit\Ilch\PhpunitDataset;
  */
 class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
 {
-    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
 
     protected $phpunitDataset;
 
