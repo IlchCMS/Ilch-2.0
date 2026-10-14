@@ -14,6 +14,11 @@ use Symfony\Component\Yaml\Yaml;
  *
  * Plain helper class - it is NOT a PHPUnit test case.
  *
+ * It is also the single place where fixture files are validated and
+ * parsed: DatabaseTestCase::setUpBeforeClass() reuses parseFile() for its
+ * one-time fixture rebuild, so a broken fixture fails with the same error
+ * at both entry points.
+ *
  * @package ilch_phpunit
  */
 class PhpunitDataset
@@ -56,6 +61,33 @@ class PhpunitDataset
      */
     public function loadFromFile(string $fullpath): void
     {
+        $this->sendToDatabase(self::parseFile($fullpath));
+    }
+
+    /**
+     * Load information from a string (yaml).
+     *
+     * @param string $content contents of yaml file to load.
+     * @throws \Symfony\Component\Yaml\Exception\ParseException
+     */
+    public function loadFromString(string $content): void
+    {
+        $this->sendToDatabase(self::parseYaml($content));
+    }
+
+    /**
+     * Reads and parses a YAML fixture file into a table map (table => rows).
+     *
+     * The single place where fixture files are validated and parsed -
+     * shared by loadFromFiles() and DatabaseTestCase::setUpBeforeClass()
+     * so a missing, unreadable or malformed fixture fails fast with the
+     * same error at both entry points.
+     *
+     * @param string $fullpath full path to yml file to load.
+     * @return array table => rows
+     */
+    public static function parseFile(string $fullpath): array
+    {
         if (!file_exists($fullpath)) {
             throw new \InvalidArgumentException('File not found: ' . $fullpath);
         }
@@ -69,16 +101,17 @@ class PhpunitDataset
             throw new \InvalidArgumentException('Cannot handle files with extension: ' . $extension);
         }
 
-        $this->loadFromString((string) file_get_contents($fullpath));
+        return self::parseYaml((string) file_get_contents($fullpath));
     }
 
     /**
-     * Load information from a string (yaml).
+     * Parses YAML content and validates that the root is a table map.
      *
      * @param string $content contents of yaml file to load.
+     * @return array table => rows
      * @throws \Symfony\Component\Yaml\Exception\ParseException
      */
-    public function loadFromString(string $content): void
+    private static function parseYaml(string $content): array
     {
         $parsedYaml = Yaml::parse($content);
 
@@ -88,7 +121,7 @@ class PhpunitDataset
             );
         }
 
-        $this->sendToDatabase($parsedYaml);
+        return $parsedYaml;
     }
 
     /**

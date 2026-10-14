@@ -9,7 +9,6 @@ namespace PHPUnit\Ilch;
 use Ilch\Registry;
 use Ilch\Database\Factory;
 use Ilch\Database\Mysql;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Base class for database test cases for Ilch.
@@ -220,12 +219,15 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
             // it is part of the provisioned state.
             WriteTracker::reset();
 
-            // Collect the fixture tables and their rows.
+            // Collect the fixture tables and their rows. Validation and
+            // parsing live in PhpunitDataset::parseFile() - shared with the
+            // per-test fixture loading, so a broken fixture fails fast here
+            // instead of in the first test's setUp().
             $fixtureData = [];
             foreach (static::$fixtureFiles as $fixtureFile) {
-                $parsed = Yaml::parse((string) file_get_contents($fixtureFile));
+                $parsed = PhpunitDataset::parseFile($fixtureFile);
 
-                foreach ((array) $parsed as $table => $rows) {
+                foreach ($parsed as $table => $rows) {
                     static::$fixtureTables[$table] = true;
 
                     // A later file overrides an earlier one, exactly like the

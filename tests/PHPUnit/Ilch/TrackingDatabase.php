@@ -32,7 +32,7 @@ class TrackingDatabase extends Mysql
      *
      * @var Mysql
      */
-    private $realInstance;
+    private Mysql $realInstance;
 
     /**
      * Wraps the given Mysql instance, sharing its live connection without
