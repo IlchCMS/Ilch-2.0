@@ -32,21 +32,16 @@ use Ilch\Database\Mysql;
  * state the old full per-test schema drop/recreate produced - on every
  * MySQL/MariaDB version - without recreating the whole schema.
  *
- * By default the restoration covers only the tables the WriteTracker
- * recorded. After a test method ran a statement the tracker could not
- * attribute (DDL such as CREATE/DROP/ALTER/TRUNCATE, a stored procedure
- * call, an unrecognized statement), the next restoration automatically
- * covers every auto-increment table with a captured definition instead -
- * such a statement either implicitly committed the transaction or may have
- * written data that was never recorded. $restoreAllAutoIncrementTables
- * enables that widened restoration unconditionally.
+ * By default ($restoreAllAutoIncrementTables) the restoration covers every
+ * auto-increment table with a captured definition, not only the tables the
+ * WriteTracker recorded writes for - a safety net for raw-SQL writes the
+ * detector could not attribute.
  *
  * Limitation: only tables whose definition was captured at provisioning
  * (fixture tables and auto-increment tables) can be fully restored. If a
  * test drops some other table - e.g. a plain table without an
  * auto-increment column - it stays dropped for the remaining tests of the
- * class. Code under test must run through the TrackingDatabase instance:
- * statements executed on the raw mysqli handle bypass the tracker entirely.
+ * class.
  *
  * @package ilch_phpunit
  */
@@ -104,15 +99,14 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
     protected static bool $isolateTestsInTransaction = true;
 
     /**
-     * Always-on safety net: before every test method, recreate every
-     * auto-increment table with a captured definition, regardless of what
-     * the WriteTracker saw.
+     * Safety net: before every test method, recreate every auto-increment
+     * table with a captured definition - not just the tables the
+     * WriteTracker is known to have written to.
      *
-     * Off by default: restoreWrittenTables() already widens to every
-     * auto-increment table automatically after a test method that ran a
-     * statement the tracker could not attribute (DDL, stored procedure
-     * calls, unrecognized statements). Enable this only for a class that
-     * uses raw SQL so much that you want the net unconditionally.
+     * This closes the gap of raw-SQL writes the detector could not
+     * attribute. It costs one DROP/CREATE(+ seed rows) per auto-increment
+     * table per test, still far cheaper than the old full schema
+     * recreation per test.
      *
      * @var bool
      */
@@ -410,11 +404,10 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      * to (or that the fixtures of this class cover) back to its exact
      * post-provisioning state.
      *
-     * When $restoreAllAutoIncrementTables is enabled - or the previous test
-     * method ran a statement the WriteTracker could not attribute (DDL, a
-     * stored procedure call, an unrecognized statement) - every
-     * auto-increment table with a captured definition is part of the
-     * candidate list instead of only the tracked ones.
+     * When $restoreAllAutoIncrementTables is enabled, the candidate list is
+     * every auto-increment table with a captured definition (plus the
+     * fixture tables), not only the ones the WriteTracker recorded - a
+     * safety net for raw-SQL writes the detector could not attribute.
      *
      * Tables a previous test dropped (e.g. by an uninstall test) are
      * recreated, not skipped: the DROP is DDL and implicitly committed, so
@@ -424,24 +417,17 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      */
     protected static function restoreWrittenTables(Mysql $db): void
     {
-        // Decide first, then clear: the dirty flag must reflect exactly the
-        // statements of the test method that just finished.
-        $restoreAll = static::$restoreAllAutoIncrementTables || WriteTracker::isDirty();
-        WriteTracker::clearDirty();
-
-        $candidates = array_keys(array_merge(
-            WriteTracker::written(),
-            static::$fixtureTables
-        ));
-
-        if ($restoreAll) {
-            // Safety net: the always-on flag is set, or the previous test
-            // method ran a statement the tracker could not attribute -
-            // rollback/restore guarantees no longer hold for unrecorded
-            // tables, so every auto-increment table is restored.
-            $candidates = array_unique(array_merge(
-                $candidates,
-                array_keys(static::$autoIncrementTables)
+        if (static::$restoreAllAutoIncrementTables) {
+            // Safety net: every auto-increment table with a captured
+            // definition, regardless of what the WriteTracker saw.
+            $candidates = array_keys(array_merge(
+                static::$autoIncrementTables,
+                static::$fixtureTables
+            ));
+        } else {
+            $candidates = array_keys(array_merge(
+                WriteTracker::written(),
+                static::$fixtureTables
             ));
         }
 
@@ -484,11 +470,6 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
         }
 
         $db->query('SET FOREIGN_KEY_CHECKS = 1;');
-
-        // The restore itself runs DROP/CREATE, which the tracker records as
-        // unattributable - wipe those marks so they do not re-trigger the
-        // safety net for the following test method.
-        WriteTracker::clearDirty();
     }
 
     /**
