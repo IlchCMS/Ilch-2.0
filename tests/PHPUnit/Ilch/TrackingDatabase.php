@@ -18,6 +18,11 @@ use Ilch\Database\Mysql;
  * same database session. Queries are executed exactly as before; only the
  * written tables are additionally recorded in the WriteTracker.
  *
+ * Beyond recording, it also flags every statement it cannot classify as a
+ * tracked write or a known safe read (DDL, stored procedure calls, ...) in
+ * the WriteTracker, so DatabaseTestCase can widen the following restore to
+ * every auto-increment table.
+ *
  * Table names are recorded without the table prefix, matching the names the
  * query builders (and the YAML fixtures) use.
  *
@@ -25,6 +30,33 @@ use Ilch\Database\Mysql;
  */
 class TrackingDatabase extends Mysql
 {
+    /**
+     * First keywords of statements that never write data and never commit
+     * the open transaction: reads and transaction/session control.
+     *
+     * Anything not listed here (and not a tracked write) marks the tracker
+     * dirty - deliberately over-triggering: a missed trigger costs id drift,
+     * an unnecessary one costs a single extra restore.
+     *
+     * @var array<string, bool>
+     */
+    private const SAFE_FIRST_KEYWORDS = [
+        'SELECT' => true,
+        'SHOW' => true,
+        'START' => true,
+        'BEGIN' => true,
+        'COMMIT' => true,
+        'ROLLBACK' => true,
+        'SET' => true,
+        'USE' => true,
+        'DESCRIBE' => true,
+        'DESC' => true,
+        'EXPLAIN' => true,
+        'KILL' => true,
+        'FLUSH' => true,
+        'CHECK' => true,
+    ];
+
     /**
      * Keeps the wrapped instance alive. Otherwise its destructor would run
      * as soon as the Registry holds this tracker and would close the shared
@@ -122,8 +154,9 @@ class TrackingDatabase extends Mysql
     }
 
     /**
-     * Runs a single SQL statement and records the target table when the
-     * statement is an INSERT, REPLACE, UPDATE or DELETE.
+     * Runs a single SQL statement, records the target table for
+     * INSERT/REPLACE/UPDATE/DELETE statements and marks unclassifiable
+     * statements dirty (see recordWriteSql()).
      *
      * @param string $sql
      * @return \mysqli_result|bool
@@ -137,8 +170,8 @@ class TrackingDatabase extends Mysql
     }
 
     /**
-     * Runs several semicolon separated SQL statements and records the target
-     * table of every INSERT, REPLACE, UPDATE or DELETE among them.
+     * Runs several semicolon separated SQL statements and classifies every
+     * one of them as described in recordWriteSql().
      *
      * @param string $sql semicolon separated SQL statements
      * @return bool
@@ -155,10 +188,12 @@ class TrackingDatabase extends Mysql
     /**
      * Records the target table of INSERT/REPLACE/UPDATE/DELETE statements.
      *
-     * Leading SQL comments are stripped first so a commented statement is
-     * still detected. Over-matching is harmless (recording a table that was
-     * never written only costs an idempotent recreation); only under-
-     * matching is dangerous, so the pattern is deliberately broad.
+     * Every statement that is neither a tracked write nor a known safe read
+     * marks the tracker dirty: DDL (CREATE/DROP/ALTER/TRUNCATE/...), stored
+     * procedure calls, exotic write shapes and anything unrecognized either
+     * implicitly commit the per-test transaction or may have written data
+     * that was never recorded. The next restore then covers every
+     * auto-increment table, not only the tracked ones.
      *
      * @param string $sql
      */
@@ -178,6 +213,15 @@ class TrackingDatabase extends Mysql
             )
         ) {
             WriteTracker::recordTable($this->normalizeTable($matches[1]));
+
+            return;
+        }
+
+        if (
+            !preg_match('/^([A-Za-z]+)(?:\s|$)/', $sql, $matches)
+            || !isset(self::SAFE_FIRST_KEYWORDS[strtoupper($matches[1])])
+        ) {
+            WriteTracker::markDirty();
         }
     }
 
