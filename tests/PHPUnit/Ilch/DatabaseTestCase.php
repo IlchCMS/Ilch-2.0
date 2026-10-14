@@ -53,19 +53,19 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      *
      * @var array
      */
-    protected static $configData = [];
+    protected static array $configData = [];
 
     /**
      * Files used for creating the database schema
      *
      * @var array
      */
-    protected static $dbSchemaFiles = [__DIR__ . '/_files/db_schema.sql'];
+    protected static array $dbSchemaFiles = [__DIR__ . '/_files/db_schema.sql'];
 
     /**
      * @var bool
      */
-    protected static $dropTablesOnProvision = true;
+    protected static bool $dropTablesOnProvision = true;
 
     /**
      * When the db is provisioned.
@@ -77,7 +77,7 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      *
      * @var int
      */
-    protected static $fillDbOnSetUp = self::PROVISION_ON_SETUP_BEFORE_CLASS;
+    protected static int $fillDbOnSetUp = self::PROVISION_ON_SETUP_BEFORE_CLASS;
 
     /**
      * Whether every test method is wrapped in its own transaction that is
@@ -92,7 +92,7 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      *
      * @var bool
      */
-    protected static $isolateTestsInTransaction = true;
+    protected static bool $isolateTestsInTransaction = true;
 
     /**
      * YAML fixture files that are loaded before every test method.
@@ -115,7 +115,7 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      *
      * @var array
      */
-    protected static $fixtureFiles = [];
+    protected static array $fixtureFiles = [];
 
     /**
      * Tables covered by the fixtures of this class (keys of the YAML files),
@@ -123,7 +123,7 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      *
      * @var array<string, bool>
      */
-    protected static $fixtureTables = [];
+    protected static array $fixtureTables = [];
 
     /**
      * All tables of the schema that have an auto-increment column, without
@@ -131,7 +131,7 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      *
      * @var array<string, bool>
      */
-    protected static $autoIncrementTables = [];
+    protected static array $autoIncrementTables = [];
 
     /**
      * "SHOW CREATE TABLE" definitions, captured right after provisioning, of
@@ -146,7 +146,7 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      *
      * @var array<string, string>
      */
-    protected static $tableDefinitions = [];
+    protected static array $tableDefinitions = [];
 
     /**
      * Committed base rows (state right after provisioning) of every
@@ -154,14 +154,14 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      *
      * @var array<string, array>
      */
-    protected static $seedRows = [];
+    protected static array $seedRows = [];
 
     /**
      * The db instance to test with.
      *
      * @var Mysql
      */
-    protected $db;
+    protected mixed $db;
 
     /**
      * Runs once per test class.

@@ -21,7 +21,7 @@ class PrefixesTest extends DatabaseTestCase
      * @var PrefixesMapper
      */
     protected Prefixes $out;
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

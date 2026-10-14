@@ -21,7 +21,7 @@ class MediaTest extends DatabaseTestCase
      * @var MediaMapper
      */
     protected MediaMapper $out;
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database_users_media.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database_users_media.yml'];
 
     protected PhpunitDataset $phpunitDataset;
     protected Pagination $pagination;

@@ -20,7 +20,7 @@ class GalleryTest extends DatabaseTestCase
      * @var GalleryMapper
      */
     protected Gallery $out;
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database_users_gallery.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database_users_gallery.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

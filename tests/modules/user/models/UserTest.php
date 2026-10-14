@@ -21,7 +21,7 @@ use Modules\Article\Config\Config as ArticleConfig;
  */
 class UserTest extends DatabaseTestCase
 {
-    protected static $fixtureFiles = [__DIR__ . '/../../../libraries/ilch/_files/mysql_accesses.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../../../libraries/ilch/_files/mysql_accesses.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

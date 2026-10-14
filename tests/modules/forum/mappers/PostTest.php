@@ -22,7 +22,7 @@ class PostTest extends DatabaseTestCase
      * @var PostMapper
      */
     protected Post $out;
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

@@ -20,7 +20,7 @@ use Modules\War\Models\Games as EntriesModel;
  */
 class GamesTest extends DatabaseTestCase
 {
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
 
     protected PhpunitDataset $phpunitDataset;
     private Games $mapper;

@@ -22,7 +22,7 @@ class DateTest extends TestCase
      *
      * @var array
      */
-    protected $configData = [
+    protected array $configData = [
         'timezone' => 'Europe/Berlin'
     ];
 

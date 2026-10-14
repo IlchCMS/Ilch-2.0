@@ -16,7 +16,7 @@ use Modules\User\Models\ProfileFieldContent as ProfileFieldContentModel;
 class ProfileFieldsContentTest extends DatabaseTestCase
 {
     protected ProfileFieldsContent $out;
-    protected static $fixtureFiles = [__DIR__ . '/../_files/database_profile_fields.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/database_profile_fields.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

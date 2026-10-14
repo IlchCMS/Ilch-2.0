@@ -16,7 +16,7 @@ use Modules\User\Models\ProfileField as ProfileFieldModel;
 class ProfileFieldsTest extends DatabaseTestCase
 {
     protected ProfileFields $out;
-    protected static $fixtureFiles = [__DIR__ . '/../_files/database_profile_fields.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/database_profile_fields.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

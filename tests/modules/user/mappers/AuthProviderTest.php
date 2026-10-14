@@ -24,7 +24,7 @@ class AuthProviderTest extends DatabaseTestCase
      * @var AuthProviderMapper
      */
     protected AuthProvider $out;
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database_auth_providers.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database_auth_providers.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

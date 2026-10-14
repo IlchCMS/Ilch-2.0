@@ -25,7 +25,7 @@ use Modules\User\Mappers\Notifications as NotificationsMapper;
  */
 class NotificationsTest extends DatabaseTestCase
 {
-    protected static $fixtureFiles = [__DIR__ . '/../_files/database_users_notifications.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/database_users_notifications.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 
