@@ -109,10 +109,23 @@ class Ip extends \Ilch\Mapper
     /**
      * Inserts Ip model.
      *
+     * If an entry for the same poll id and ip already exists, only its user_id
+     * is updated instead of inserting a duplicate row. Together with the
+     * unique index on (poll_id, ip) this prevents duplicate vote registrations.
+     *
      * @param IpModel $vote
      */
-    public function saveIP(IpModel $vote)
+    public function saveIP(IpModel $vote): void
     {
+        if ($this->getIP($vote->getPollId(), $vote->getIP()) !== null) {
+            $this->db()->update($this->tablename)
+                ->values(['user_id' => $vote->getUserId()])
+                ->where(['poll_id' => $vote->getPollId(), 'ip' => $vote->getIP()])
+                ->execute();
+
+            return;
+        }
+
         $fields = $vote->getArray();
 
         $this->db()->insert($this->tablename)
