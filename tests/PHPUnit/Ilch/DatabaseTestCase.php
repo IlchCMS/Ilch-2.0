@@ -419,9 +419,14 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      * Table names (without prefix) of every table in the database that has
      * an auto-increment column.
      *
-     * Only the names are needed here - they are stable on every version.
-     * (Reading the counter values themselves is exactly what does not work
-     * reliably on MySQL 8.4+.)
+     * Detection is based on the structural information_schema.COLUMNS.EXTRA
+     * flag ("auto_increment"), which is stable on every MySQL/MariaDB
+     * version. The previous check against
+     * information_schema.TABLES.AUTO_INCREMENT IS NOT NULL is not usable:
+     * on MySQL 8.4+ that column is NULL (or lags) for freshly created
+     * tables, so empty auto-increment tables were silently missed here and
+     * their counters were never reset between tests - ids then drifted
+     * test over test.
      *
      * @param Mysql $db
      * @return array
@@ -430,8 +435,8 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
     {
         $prefix = $db->getPrefix();
         $names = $db->queryList(
-            'SELECT TABLE_NAME FROM information_schema.TABLES '
-            . 'WHERE TABLE_SCHEMA = DATABASE() AND AUTO_INCREMENT IS NOT NULL'
+            "SELECT TABLE_NAME FROM information_schema.COLUMNS "
+            . "WHERE TABLE_SCHEMA = DATABASE() AND EXTRA LIKE '%auto_increment%'"
         );
 
         $tables = [];
