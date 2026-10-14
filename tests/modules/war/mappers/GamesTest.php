@@ -20,6 +20,8 @@ use Modules\War\Models\Games as EntriesModel;
  */
 class GamesTest extends DatabaseTestCase
 {
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected PhpunitDataset $phpunitDataset;
     private Games $mapper;
 
@@ -27,7 +29,7 @@ class GamesTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
 
         $this->mapper = new GamesMapper();
     }

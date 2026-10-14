@@ -22,6 +22,8 @@ use PHPUnit\Ilch\PhpunitDataset;
  */
 class CategoryTest extends DatabaseTestCase
 {
+    protected static $fixtureFiles = [__DIR__ . '/../_files/categories_table.yml'];
+
     protected PhpunitDataset $phpunitDataset;
     private Category $categoryMapper;
 
@@ -29,7 +31,7 @@ class CategoryTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/categories_table.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
 
         $this->categoryMapper = new CategoryMapper();
     }

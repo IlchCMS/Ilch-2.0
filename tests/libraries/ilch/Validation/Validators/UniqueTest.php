@@ -18,13 +18,15 @@ use stdClass;
  */
 class UniqueTest extends DatabaseTestCase
 {
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected $phpunitDataset;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
     }
 
     /**

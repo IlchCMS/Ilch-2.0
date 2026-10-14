@@ -23,6 +23,8 @@ use PHPUnit\Ilch\PhpunitDataset;
  */
 class TemplateTest extends DatabaseTestCase
 {
+    protected static $fixtureFiles = [__DIR__ . '/../_files/templates_table.yml'];
+
     protected PhpunitDataset $phpunitDataset;
     private Template $templateMapper;
 
@@ -30,7 +32,7 @@ class TemplateTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/templates_table.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
 
         $this->templateMapper = new TemplateMapper();
     }

@@ -26,6 +26,8 @@ class GroupTest extends DatabaseTestCase
      * @var GroupMapper
      */
     protected GroupMapper $groupMapper;
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void

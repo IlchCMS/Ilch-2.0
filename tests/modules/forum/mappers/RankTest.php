@@ -7,6 +7,8 @@
 
 namespace Modules\Forum\Mappers;
 
+use Modules\Admin\Config\Config as AdminConfig;
+use Modules\User\Config\Config as UserConfig;
 use PHPUnit\Ilch\DatabaseTestCase;
 use Modules\Forum\Mappers\Rank as RankMapper;
 use Modules\Forum\Models\Rank as RankModel;
@@ -20,13 +22,15 @@ use PHPUnit\Ilch\PhpunitDataset;
  */
 class RankTest extends DatabaseTestCase
 {
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
     }
 
     /**
@@ -329,54 +333,16 @@ class RankTest extends DatabaseTestCase
     }
 
     /**
-     * Returns database schema sql statements to initialize database
+     * Returns database schema SQL statements to initialize database.
      *
      * @return string
      */
     protected static function getSchemaSQLQueries(): string
     {
-        $installSql = 'CREATE TABLE IF NOT EXISTS `[prefix]_emails` (
-                `moduleKey` VARCHAR(255) NOT NULL,
-                `type` VARCHAR(255) NOT NULL,
-                `desc` VARCHAR(255) NOT NULL,
-                `text` TEXT NOT NULL,
-                `locale` VARCHAR(255) NOT NULL
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-            CREATE TABLE IF NOT EXISTS `[prefix]_groups` (
-                            `id` INT(11) NOT NULL AUTO_INCREMENT,
-                            `name` VARCHAR(255) NOT NULL,
-                            PRIMARY KEY (`id`)
-                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=2;
-
-            CREATE TABLE IF NOT EXISTS `[prefix]_users` (
-                `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `name` VARCHAR(255) NOT NULL,
-                `password` VARCHAR(255) NOT NULL,
-                `email` VARCHAR(255) NOT NULL,
-                `first_name` VARCHAR(255) NOT NULL DEFAULT "",
-                `last_name` VARCHAR(255) NOT NULL DEFAULT "",
-                `gender` TINYINT(1) NOT NULL DEFAULT 0,
-                `city` VARCHAR(255) NOT NULL DEFAULT "",
-                `birthday` DATE NULL DEFAULT NULL,
-                `avatar` VARCHAR(255) NOT NULL DEFAULT "",
-                `signature` VARCHAR(255) NOT NULL DEFAULT "",
-                `locale` VARCHAR(255) NOT NULL DEFAULT "",
-                `opt_mail` TINYINT(1) DEFAULT 1,
-                `opt_gallery` TINYINT(1) DEFAULT 1,
-                `date_created` DATETIME NOT NULL,
-                `date_confirmed` DATETIME NULL DEFAULT NULL,
-                `date_last_activity` DATETIME NULL DEFAULT NULL,
-                `confirmed` TINYINT(1) DEFAULT 1,
-                `confirmed_code` VARCHAR(255) NULL DEFAULT NULL,
-                `selector` char(18),
-                `expires` DATETIME,
-                `locked` TINYINT(1) NOT NULL DEFAULT 0,
-                `selectsdelete` DATETIME,
-                PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
-
         $config = new ModuleConfig();
-        return $installSql . $config->getInstallSql();
+        $userConfig = new UserConfig();
+        $adminConfig = new AdminConfig();
+
+        return $adminConfig->getInstallSql() . $userConfig->getInstallSql() . $config->getInstallSql();
     }
 }

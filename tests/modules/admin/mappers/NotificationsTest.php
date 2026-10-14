@@ -28,6 +28,8 @@ class NotificationsTest extends DatabaseTestCase
      */
     protected Notifications $out;
 
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected PhpunitDataset $phpunitDataset;
 
     /**
@@ -37,7 +39,7 @@ class NotificationsTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
         $this->out = new NotificationsMapper();
 
         // Validation (used by isValidNotification()) gets the translator from the

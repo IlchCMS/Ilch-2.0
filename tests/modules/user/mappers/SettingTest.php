@@ -16,6 +16,8 @@ use Modules\User\Mappers\Setting as SettingMapper;
 class SettingTest extends DatabaseTestCase
 {
     protected SettingMapper $out;
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected PhpunitDataset $phpunitDataset;
     protected array $workDirs = [];
 

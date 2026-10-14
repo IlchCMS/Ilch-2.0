@@ -25,6 +25,8 @@ use Modules\User\Mappers\Notifications as NotificationsMapper;
  */
 class NotificationsTest extends DatabaseTestCase
 {
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void

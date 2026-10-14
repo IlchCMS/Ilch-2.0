@@ -17,29 +17,32 @@ use Ilch\Config\File as Config;
 class TestHelper
 {
     /**
-     * The config variable which will be set for the tests.
+     * Creates a config object from the config file, applies the given
+     * test-specific overrides and injects it into the registry.
      *
-     * @static Static so we can dont have to connect for every test again.
-     * @var Config
-     */
-    private static $config = null;
-
-    /**
-     * Filling the config object with individual testcase data and injecting it into the registry.
+     * The object is rebuilt on every call, so overrides from one test class
+     * never leak into another and the registry never receives a null config.
+     *
      * @param array $configData
      */
     public static function setConfigInRegistry(array $configData)
     {
-        if ((static::$config === null) && !Registry::has('config') && file_exists(CONFIG_PATH . '/config.php')) {
-            static::$config = new Config();
-            static::$config->loadConfigFromFile(CONFIG_PATH . '/config.php');
+        $configFile = CONFIG_PATH . '/config.php';
 
-            foreach ($configData as $configKey => $configValue) {
-                static::$config->set($configKey, $configValue);
-            }
+        if (!file_exists($configFile)) {
+            // Nothing to load. Leave the registry untouched;
+            // DatabaseTestCase::setUpBeforeClass() reports a missing config.
+            return;
+        }
+
+        $config = new Config();
+        $config->loadConfigFromFile($configFile);
+
+        foreach ($configData as $configKey => $configValue) {
+            $config->set($configKey, $configValue);
         }
 
         Registry::remove('config');
-        Registry::set('config', self::$config);
+        Registry::set('config', $config);
     }
 }

@@ -18,13 +18,15 @@ use Modules\Shop\Models\Orderdetails as OrderdetailsModel;
 class OrdersMapperTest extends DatabaseTestCase
 {
     protected OrdersMapper $out;
+    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+
     protected PhpunitDataset $phpunitDataset;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
         $this->out = new OrdersMapper();
     }
 
