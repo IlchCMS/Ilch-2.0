@@ -89,9 +89,9 @@ class Vote extends \Ilch\Mapper
      *
      * @param array $where
      * @param string|array|null $readAccess A string like '1,2,3' or an array like [1,2,3]
-     * @return VoteModel[]|array
+     * @return array|null
      */
-    public function getVotes(array $where = [], $readAccess = '3'): ?array
+    public function getVotes(array $where = [], string|array|null $readAccess = '3'): ?array
     {
         if (\is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
@@ -108,10 +108,10 @@ class Vote extends \Ilch\Mapper
      */
     public function getVoteById(int $id): ?VoteModel
     {
-        $entrys = $this->getEntriesBy(['p.id' => $id]);
+        $entry = $this->getEntriesBy(['p.id' => $id]);
 
-        if (!empty($entrys)) {
-            return reset($entrys);
+        if (!empty($entry)) {
+            return reset($entry);
         }
 
         return null;
@@ -192,12 +192,12 @@ class Vote extends \Ilch\Mapper
      * Update the entries for which user groups are allowed to read a Vote.
      *
      * @param int $voteId
-     * @param string|array $readAccess example: "1,2,3"
+     * @param array|string $readAccess example: "1,2,3"
      * @param bool $addAdmin
      * @return array
      * @since 1.12.0
      */
-    public function saveReadAccess(int $voteId, $readAccess, bool $addAdmin = true)
+    public function saveReadAccess(int $voteId, array|string $readAccess, bool $addAdmin = true): array|string
     {
         if (\is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);

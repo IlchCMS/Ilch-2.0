@@ -281,9 +281,7 @@ class Vote extends \Ilch\Model
     {
         $userId = null;
 
-        if ($user) {
-            $userId = $user->getId();
-        }
+        $userId = $user?->getId();
 
         $ipMapper = new IpMapper();
 

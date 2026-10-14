@@ -13,8 +13,6 @@ use Modules\Vote\Config\Config as ModuleConfig;
 use Modules\User\Config\Config as UserConfig;
 use Modules\Admin\Config\Config as AdminConfig;
 use Modules\User\Models\User;
-use Modules\Vote\Mappers\Ip as IpMapper;
-use Modules\Vote\Mappers\Result as ResultMapper;
 use Modules\Vote\Mappers\Vote as VoteMapper;
 use Modules\Vote\Models\Ip as IpModel;
 use Modules\Vote\Models\Vote as EntriesModel;

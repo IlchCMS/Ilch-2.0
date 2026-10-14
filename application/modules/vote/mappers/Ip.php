@@ -111,7 +111,7 @@ class Ip extends \Ilch\Mapper
      *
      * @param IpModel $vote
      */
-    public function saveIP(IpModel $vote)
+    public function saveIP(IpModel $vote): void
     {
         $fields = $vote->getArray();
 

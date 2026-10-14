@@ -132,7 +132,7 @@ class Result extends \Ilch\Mapper
      *
      * @param ResultModel $result
      */
-    public function saveResult(ResultModel $result)
+    public function saveResult(ResultModel $result): void
     {
         $fields = $result->getArray();
 
@@ -147,7 +147,7 @@ class Result extends \Ilch\Mapper
      *
      * @param ResultModel $result
      */
-    public function saveReply(ResultModel $result)
+    public function saveReply(ResultModel $result): void
     {
         $fields = $result->getArray();
 

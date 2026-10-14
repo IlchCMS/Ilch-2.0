@@ -12,7 +12,6 @@ use PHPUnit\Ilch\PhpunitDataset;
 use Modules\Vote\Config\Config as ModuleConfig;
 use Modules\User\Config\Config as UserConfig;
 use Modules\Admin\Config\Config as AdminConfig;
-use Modules\Vote\Mappers\Ip as IpMapper;
 use Modules\Vote\Mappers\Result as ResultMapper;
 use Modules\Vote\Models\Result as EntriesModel;
 
