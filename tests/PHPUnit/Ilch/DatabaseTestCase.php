@@ -110,7 +110,7 @@ abstract class DatabaseTestCase extends \PHPUnit\Framework\TestCase
      *
      * @var bool
      */
-    protected static bool $restoreAllAutoIncrementTables = true;
+    protected static bool $restoreAllAutoIncrementTables = false;
 
     /**
      * YAML fixture files that are loaded before every test method.
