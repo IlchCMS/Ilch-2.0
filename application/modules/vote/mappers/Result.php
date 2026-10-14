@@ -18,6 +18,27 @@ class Result extends \Ilch\Mapper
     public string $tablename = 'poll_res';
 
     /**
+     * Mapper for the poll_ip table.
+     *
+     * It is injected instead of being instantiated inside the methods, so
+     * the table name is only defined in the Ip mapper.
+     *
+     * @var Ip
+     * @since 1.14.3
+     */
+    private Ip $ipMapper;
+
+    /**
+     * @param Ip|null $ipMapper
+     * @since 1.14.3
+     */
+    public function __construct(?Ip $ipMapper = null)
+    {
+        parent::__construct();
+        $this->ipMapper = $ipMapper ?? new Ip();
+    }
+
+    /**
      * returns if the module is installed.
      *
      * @return bool
@@ -110,21 +131,26 @@ class Result extends \Ilch\Mapper
     }
 
     /**
+     * Resets the results of the given vote and removes its IP entries.
+     *
+     * Returns the result of the poll_res UPDATE (not of the poll_ip DELETE),
+     * so the return value reflects the actual reset.
+     *
      * @param int $pollId
      * @return bool
      */
     public function resetResult(int $pollId): bool
     {
-        $ipMapper = new Ip();
-
-        $this->db()->update($this->tablename)
+        $update = $this->db()->update($this->tablename)
             ->values(['result' => 0])
             ->where(['poll_id' => $pollId])
             ->execute();
 
-        return $this->db()->delete($ipMapper->tablename)
+        $this->db()->delete($this->ipMapper->tablename)
             ->where(['poll_id' => $pollId])
             ->execute();
+
+        return $update;
     }
 
     /**
@@ -157,21 +183,23 @@ class Result extends \Ilch\Mapper
     }
 
     /**
-     * Deletes result with given poll id.
+     * Deletes result with given poll id and the related IP entries.
+     *
+     * Returns the result of the poll_res DELETE.
      *
      * @param int $pollId
      * @return bool
      */
     public function delete(int $pollId): bool
     {
-        $ipMapper = new Ip();
-
-        $this->db()->delete($this->tablename)
+        $delete = $this->db()->delete($this->tablename)
             ->where(['poll_id' => $pollId])
             ->execute();
 
-        return $this->db()->delete($ipMapper->tablename)
+        $this->db()->delete($this->ipMapper->tablename)
             ->where(['poll_id' => $pollId])
             ->execute();
+
+        return $delete;
     }
 }

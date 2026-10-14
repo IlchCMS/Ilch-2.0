@@ -62,7 +62,10 @@ class IpTest extends DatabaseTestCase
      */
     public function testGetVoteIp()
     {
-        $entries = $this->mapper->getEntriesBy();
+        // Use an explicit order: without ORDER BY the row order depends on the
+        // access path the optimizer picks (table scan in insertion order vs.
+        // index scan on the unique (poll_id, ip) index), which is not stable.
+        $entries = $this->mapper->getEntriesBy([], ['poll_id' => 'ASC', 'ip' => 'ASC']);
 
         self::assertCount(4, $entries);
 
@@ -76,6 +79,12 @@ class IpTest extends DatabaseTestCase
         $i++;
         $entry = $entries[$i];
         self::assertEquals(2, $entry->getPollId());
+        self::assertEquals('192.168.10.100', $entry->getIP());
+        self::assertEquals(0, $entry->getUserId());
+
+        $i++;
+        $entry = $entries[$i];
+        self::assertEquals(2, $entry->getPollId());
         self::assertEquals('192.168.10.101', $entry->getIP());
         self::assertEquals(1, $entry->getUserId());
 
@@ -83,12 +92,6 @@ class IpTest extends DatabaseTestCase
         $entry = $entries[$i];
         self::assertEquals(2, $entry->getPollId());
         self::assertEquals('192.168.10.102', $entry->getIP());
-        self::assertEquals(0, $entry->getUserId());
-
-        $i++;
-        $entry = $entries[$i];
-        self::assertEquals(2, $entry->getPollId());
-        self::assertEquals('192.168.10.100', $entry->getIP());
         self::assertEquals(0, $entry->getUserId());
     }
 

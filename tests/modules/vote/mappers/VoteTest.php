@@ -179,6 +179,9 @@ class VoteTest extends DatabaseTestCase
         self::assertEquals('1,2,3', $entry->getReadAccess());
         self::assertEquals($model->getStatus(), $entry->getStatus());
 
+        // Set the id returned by the first save(), so the second save() call
+        // updates the existing row instead of inserting a new one.
+        $model->setId($id);
         $model->setReadAccess('all');
         $id = $this->mapper->save($model);
 
@@ -191,6 +194,9 @@ class VoteTest extends DatabaseTestCase
         self::assertEquals($model->getMultipleReply(), $entry->getMultipleReply());
         self::assertEquals('all', $entry->getReadAccess());
         self::assertEquals($model->getStatus(), $entry->getStatus());
+
+        // No additional row was created by the update.
+        self::assertCount(6, $this->mapper->getEntriesBy());
     }
 
     /**
@@ -457,7 +463,7 @@ class VoteTest extends DatabaseTestCase
 
         self::assertNull($this->mapper->getVoteById(1));
 
-        // Related rows are removed (via FK ON DELETE CASCADE)
+        // Related rows are removed (explicitly by the mapper, previously via FK ON DELETE CASCADE)
         $resultMapper = new Result();
         self::assertNull($resultMapper->getVoteRes(1));
 
