@@ -31,7 +31,7 @@ class TrackingDatabase extends Mysql
      *
      * @var Mysql
      */
-    private Mysql $realInstance;
+    private $realInstance;
 
     public function __construct(Mysql $real)
     {
