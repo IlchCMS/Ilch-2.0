@@ -38,8 +38,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.2.13',
-        'phpVersion' => '7.4'
+        'ilchCore' => '2.2.21',
+        'phpVersion' => '8.1'
     ];
 
     public function install()
@@ -90,6 +90,7 @@ class Config extends \Ilch\Config\Install
                 `ip` VARCHAR(255) NOT NULL,
                 `user_id` INT(11) NOT NULL,
                 INDEX `FK_[prefix]_poll_ip_[prefix]_poll` (`poll_id`) USING BTREE,
+                UNIQUE KEY `UNQ_[prefix]_poll_ip` (`poll_id`, `ip`) USING BTREE,
                 CONSTRAINT `FK_[prefix]_poll_ip_[prefix]_poll` FOREIGN KEY (`poll_id`) REFERENCES `[prefix]_poll` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;";
     }
@@ -226,6 +227,37 @@ class Config extends \Ilch\Config\Install
             case '1.12.1':
             case '1.13.0':
             case '1.14.1':
+            case '1.14.2':
+                // Remove duplicate poll_id/ip combinations before adding the unique index,
+                // because older installations may contain them (no constraint prevented them).
+                $ipRows = $this->db()->select(['poll_id', 'ip'])
+                    ->from('poll_ip')
+                    ->execute()
+                    ->fetchRows();
+
+                $ipCounts = [];
+                foreach ($ipRows as $ipRow) {
+                    $ipKey = $ipRow['poll_id'] . '|' . $ipRow['ip'];
+                    $ipCounts[$ipKey] = ($ipCounts[$ipKey] ?? 0) + 1;
+                }
+
+                foreach ($ipCounts as $ipKey => $ipCount) {
+                    if ($ipCount <= 1) {
+                        continue;
+                    }
+
+                    [$ipPollId, $ipAddress] = explode('|', $ipKey);
+                    for ($i = 0; $i < $ipCount - 1; $i++) {
+                        $this->db()->query(sprintf(
+                            'DELETE FROM `[prefix]_poll_ip` WHERE `poll_id` = %d AND `ip` = \'%s\' LIMIT 1',
+                            (int) $ipPollId,
+                            str_replace("'", "''", $ipAddress)
+                        ));
+                    }
+                }
+
+                // Prevent duplicate poll_id/ip combinations in the database itself.
+                $this->db()->query('ALTER TABLE `[prefix]_poll_ip` ADD UNIQUE KEY `UNQ_[prefix]_poll_ip` (`poll_id`, `ip`) USING BTREE;');
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

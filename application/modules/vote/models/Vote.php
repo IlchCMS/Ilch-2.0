@@ -86,8 +86,12 @@ class Vote extends \Ilch\Model
         if (isset($entries['groups'])) {
             $this->setGroups($entries['groups']);
         }
-        if (isset($entries['read_access'])) {
-            $this->setReadAccess($entries['read_access']);
+        // A vote without any poll_access row produces a NULL read_access from
+        // the LEFT JOIN/GROUP_CONCAT of the Vote mapper. Treat that as "no
+        // read access" ('') instead of silently falling back to the default
+        // value.
+        if (array_key_exists('read_access', $entries)) {
+            $this->setReadAccess($entries['read_access'] ?? '');
         }
         if (isset($entries['read_access_all'])) {
             if ($entries['read_access_all']) {
@@ -269,28 +273,51 @@ class Vote extends \Ilch\Model
     }
 
     /**
-     * Check if user is allowed to vote
+     * Check if user is allowed to vote.
+     *
+     * The vote is allowed if the client IP (and, if given, the user) has not
+     * voted on this vote yet, the vote is not locked and either the vote's
+     * groups value is 'all' or one of the given group ids matches one of the
+     * vote's groups (loose comparison).
      *
      * @param string $clientIP
      * @param User|null $user
-     * @param $groupIds
+     * @param array $groupIds The group ids of the user, e.g. [3]
      * @return bool
      * @since 1.14.0
      */
-    public function canVote(string $clientIP, ?User $user, $groupIds): bool
+    public function canVote(string $clientIP, ?User $user, $groupIds = []): bool
     {
-        $userId = null;
-
-        if ($user) {
-            $userId = $user->getId();
-        }
+        $userId = $user?->getId();
 
         $ipMapper = new IpMapper();
 
         $ip = $ipMapper->getIP($this->getId(), $clientIP);
         $votedUser = $ipMapper->getVotedUser($this->getId(), $userId);
 
-        return !($ip || $votedUser || $this->getStatus() != 0 || !is_in_array(explode(',', $this->getGroups()), array_merge($groupIds, ($this->getGroups() == 'all' ? ['all'] : []))));
+        if ($ip !== null || $votedUser !== null || $this->getStatus()) {
+            return false;
+        }
+
+        if ($this->getGroups() === 'all') {
+            return true;
+        }
+
+        if (\is_string($groupIds)) {
+            $groupIds = explode(',', $groupIds);
+        }
+        if (!\is_array($groupIds)) {
+            $groupIds = [];
+        }
+
+        $pollGroups = explode(',', $this->getGroups());
+        foreach ($pollGroups as $pollGroup) {
+            if (in_array($pollGroup, $groupIds)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

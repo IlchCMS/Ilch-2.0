@@ -88,10 +88,13 @@ class Vote extends \Ilch\Mapper
      * Gets the Vote.
      *
      * @param array $where
-     * @param string|array|null $readAccess A string like '1,2,3' or an array like [1,2,3]
-     * @return VoteModel[]|array
+     * @param string|array|null $readAccess A string like '1,2,3' or an array like [1,2,3].
+     *     Pass null to skip the read access filter and return every vote.
+     *     This is intended for the admin overview (see
+     *     Modules\Vote\Controllers\Admin\Index).
+     * @return array|null
      */
-    public function getVotes(array $where = [], $readAccess = '3'): ?array
+    public function getVotes(array $where = [], string|array|null $readAccess = '3'): ?array
     {
         if (\is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
@@ -108,10 +111,10 @@ class Vote extends \Ilch\Mapper
      */
     public function getVoteById(int $id): ?VoteModel
     {
-        $entrys = $this->getEntriesBy(['p.id' => $id]);
+        $entry = $this->getEntriesBy(['p.id' => $id]);
 
-        if (!empty($entrys)) {
-            return reset($entrys);
+        if (!empty($entry)) {
+            return reset($entry);
         }
 
         return null;
@@ -119,6 +122,9 @@ class Vote extends \Ilch\Mapper
 
     /**
      * Updates vote status with given id.
+     *
+     * Returns false when no vote with the given id exists instead of
+     * executing an UPDATE that would match zero rows.
      *
      * @param int $id
      * @param int $status
@@ -129,17 +135,17 @@ class Vote extends \Ilch\Mapper
         if ($status !== -1) {
             $statusNow = $status;
         } else {
-            $status = (int) $this->db()->select('status')
+            $statusRow = $this->db()->select('status')
                 ->from($this->tablename)
                 ->where(['id' => $id])
                 ->execute()
-                ->fetchCell();
+                ->fetchAssoc();
 
-            if ($status === 1) {
-                $statusNow = 0;
-            } else {
-                $statusNow = 1;
+            if (empty($statusRow)) {
+                return false;
             }
+
+            $statusNow = ((int) $statusRow['status'] === 1) ? 0 : 1;
         }
 
         return $this->db()->update($this->tablename)
@@ -192,12 +198,12 @@ class Vote extends \Ilch\Mapper
      * Update the entries for which user groups are allowed to read a Vote.
      *
      * @param int $voteId
-     * @param string|array $readAccess example: "1,2,3"
+     * @param array|string $readAccess example: "1,2,3"
      * @param bool $addAdmin
      * @return array
      * @since 1.12.0
      */
-    public function saveReadAccess(int $voteId, $readAccess, bool $addAdmin = true)
+    public function saveReadAccess(int $voteId, array|string $readAccess, bool $addAdmin = true): array|string
     {
         if (\is_string($readAccess)) {
             $readAccess = explode(',', $readAccess);
@@ -220,7 +226,7 @@ class Vote extends \Ilch\Mapper
 
         $preparedRows = [];
         foreach ($groupIds as $groupId) {
-            $preparedRows[] = [$voteId, (int)$groupId];
+            $preparedRows[] = [$voteId, (int) $groupId];
         }
 
         if (count($preparedRows)) {
@@ -240,11 +246,22 @@ class Vote extends \Ilch\Mapper
     /**
      * Deletes Vote with given id.
      *
+     * The related poll_access, poll_res and poll_ip rows are deleted
+     * explicitly as well, so no orphans are left behind even if the
+     * ON DELETE CASCADE constraints are disabled or not present.
+     *
      * @param int $id
      * @return bool
      */
     public function delete(int $id): bool
     {
+        $this->db()->delete($this->tablenameReadAcces)
+            ->where(['poll_id' => $id])
+            ->execute();
+
+        // Removes the poll_res and poll_ip rows of the vote.
+        (new Result())->delete($id);
+
         return $this->db()->delete($this->tablename)
             ->where(['id' => $id])
             ->execute();
