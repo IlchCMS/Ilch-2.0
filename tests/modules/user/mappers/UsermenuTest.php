@@ -21,7 +21,7 @@ class UsermenuTest extends DatabaseTestCase
      * @var UsermenuMapper
      */
     protected UsermenuMapper $out;
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database_user_menu.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 
@@ -29,7 +29,7 @@ class UsermenuTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database_user_menu.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
         $this->out = new UsermenuMapper();
     }
 

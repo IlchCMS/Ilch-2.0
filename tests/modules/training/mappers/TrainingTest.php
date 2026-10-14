@@ -20,7 +20,7 @@ use Modules\Training\Models\Training as EntriesModel;
  */
 class TrainingTest extends DatabaseTestCase
 {
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
 
     protected PhpunitDataset $phpunitDataset;
     /** @var TrainingMapper $mapper */

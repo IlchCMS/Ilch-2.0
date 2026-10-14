@@ -21,7 +21,7 @@ use Modules\Article\Config\Config as ArticleConfig;
  */
 class UserTest extends DatabaseTestCase
 {
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../../../libraries/ilch/_files/mysql_accesses.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 
@@ -29,7 +29,7 @@ class UserTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../../../libraries/ilch/_files/mysql_accesses.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
     }
 
     /**

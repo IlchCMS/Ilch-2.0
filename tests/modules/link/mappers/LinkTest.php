@@ -21,7 +21,7 @@ class LinkTest extends DatabaseTestCase
      * @var LinkMapper
      */
     protected Link $out;
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

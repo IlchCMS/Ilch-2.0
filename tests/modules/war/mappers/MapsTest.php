@@ -20,7 +20,7 @@ use Modules\War\Models\Maps as EntriesModel;
  */
 class MapsTest extends DatabaseTestCase
 {
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
 
     protected PhpunitDataset $phpunitDataset;
     private Maps $mapper;

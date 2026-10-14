@@ -19,7 +19,7 @@ use Modules\Article\Config\Config as ArticleConfig;
 
 class GetMenuTest extends DatabaseTestCase
 {
-    protected static $fillDbOnSetUp = self::PROVISION_ON_SETUP_BEFORE_CLASS;
+    protected static int $fillDbOnSetUp = self::PROVISION_ON_SETUP_BEFORE_CLASS;
 
     protected $phpunitDataset;
 

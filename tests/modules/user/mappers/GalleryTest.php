@@ -20,7 +20,7 @@ class GalleryTest extends DatabaseTestCase
      * @var GalleryMapper
      */
     protected Gallery $out;
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database_users_gallery.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 
@@ -28,7 +28,7 @@ class GalleryTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database_users_gallery.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
         $this->out = new GalleryMapper();
     }
 

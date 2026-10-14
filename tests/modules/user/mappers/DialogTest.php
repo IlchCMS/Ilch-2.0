@@ -20,7 +20,7 @@ class DialogTest extends DatabaseTestCase
      * @var DialogMapper
      */
     protected DialogMapper $out;
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/users_dialog.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 
@@ -28,7 +28,7 @@ class DialogTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/users_dialog.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
         $this->out = new DialogMapper();
     }
 

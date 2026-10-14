@@ -21,7 +21,7 @@ class MediaTest extends DatabaseTestCase
      * @var MediaMapper
      */
     protected MediaMapper $out;
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database_users_media.yml'];
 
     protected PhpunitDataset $phpunitDataset;
     protected Pagination $pagination;
@@ -30,7 +30,7 @@ class MediaTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database_users_media.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
         $this->out = new MediaMapper();
         $this->pagination = new Pagination();
     }

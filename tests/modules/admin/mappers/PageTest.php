@@ -17,7 +17,7 @@ use Modules\Admin\Models\Page as PageModel;
 class PageTest extends DatabaseTestCase
 {
     protected PageMapper $out;
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 

@@ -24,7 +24,7 @@ class AuthProviderTest extends DatabaseTestCase
      * @var AuthProviderMapper
      */
     protected AuthProvider $out;
-    protected static $fixtureFiles = [__DIR__ . '/../_files/mysql_database.yml'];
+    protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database_auth_providers.yml'];
 
     protected PhpunitDataset $phpunitDataset;
 
@@ -32,7 +32,7 @@ class AuthProviderTest extends DatabaseTestCase
     {
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
-        $this->phpunitDataset->loadFromFile(__DIR__ . '/../_files/mysql_database_auth_providers.yml');
+        $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
         $this->out = new AuthProviderMapper();
 
         if (Registry::get('translator') === null) {
