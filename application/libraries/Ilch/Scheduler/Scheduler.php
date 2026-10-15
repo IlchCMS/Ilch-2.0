@@ -4,6 +4,7 @@ namespace Ilch\Scheduler;
 
 use Ilch\Database\Mysql;
 use Ilch\Registry;
+use Modules\Admin\Mappers\Logs as LogsMapper;
 
 /**
  * Visitor-triggered scheduler service for Ilch 2.0.
@@ -83,8 +84,11 @@ use Ilch\Registry;
  *              and must NOT be relied on inside handlers.
  * Safety:      runDue() absorbs every \Throwable (including a missing table during
  *              fresh install, the upgrade request itself, or an opcache transition)
- *              and never breaks the page. Failures are logged via \error_log() and
- *              stored in last_error (control characters stripped, 255 chars max).
+ *              and never breaks the page. Failures are written to the admin logs
+ *              table (admin center > Infos > Logs, user id 1 as system identity,
+ *              deduplicated per minute by the Logs mapper), with \error_log() as
+ *              fallback if that write fails. The error is also stored per task in
+ *              last_error (truncated to 255 chars).
  */
 final class Scheduler
 {
@@ -102,6 +106,12 @@ final class Scheduler
 
     /** Raw-SQL table name; the database layer replaces the [prefix] token. */
     private const TABLE = '[prefix]_scheduler_tasks';
+
+    /**
+     * The logs table has no system user; the scheduler writes with the admin
+     * user id (1) as the system identity.
+     */
+    private const LOG_USER_ID = 1;
 
     /** @var array<string, callable> Registered handlers (handler name => callable). */
     private static array $handlers = [];
@@ -393,7 +403,7 @@ final class Scheduler
             $error = null;
             if (!self::hasHandler($task->handler())) {
                 $error = 'Unknown handler: ' . $task->handler();
-                \error_log(sprintf('Ilch Scheduler: task "%s" has unknown handler "%s".', $task->name(), $task->handler()));
+                $this->logMessage(sprintf('Task "%s" has unknown handler "%s".', $task->name(), $task->handler()));
             } else {
                 $startedAt = hrtime(true);
                 try {
@@ -404,7 +414,7 @@ final class Scheduler
                 $elapsedMs = (hrtime(true) - $startedAt) / 1000000;
                 if ($elapsedMs > (float)self::BUDGET_MS) {
                     // The handler runs to completion; the overrun is only noted.
-                    \error_log(sprintf('Ilch Scheduler: task "%s" took %d ms (budget %d ms).', $task->name(), (int)$elapsedMs, self::BUDGET_MS));
+                    $this->logMessage(sprintf('Task "%s" took %d ms (budget %d ms).', $task->name(), (int)$elapsedMs, self::BUDGET_MS));
                 }
             }
 
@@ -428,7 +438,7 @@ final class Scheduler
             } else {
                 $failures = $task->failures() + 1;
                 $backoff  = min(self::RETRY_BASE_SECONDS * (1 << min($failures - 1, 20)), self::RETRY_MAX_SECONDS);
-                \error_log(sprintf('Ilch Scheduler: task "%s" failed: %s', $task->name(), $error));
+                $this->logMessage(sprintf('Task "%s" failed: %s', $task->name(), $error));
                 $this->db->query(
                     'UPDATE ' . self::TABLE . '
                      SET lease_owner = NULL,
@@ -443,7 +453,7 @@ final class Scheduler
             }
         } catch (\Throwable $e) {
             // Absorb everything: a scheduler problem must never break the page.
-            \error_log('Ilch Scheduler: runDue failed: ' . $e->getMessage());
+            $this->logMessage('runDue failed: ' . $e->getMessage());
         }
     }
 
@@ -609,5 +619,26 @@ final class Scheduler
             return mb_substr($error, 0, 255);
         }
         return substr($error, 0, 255);
+    }
+
+    /**
+     * Write a message to the admin logs table (admin center > Infos > Logs).
+     *
+     * Core library depending on an admin-module mapper: accepted because the admin
+     * module is a system module that is always installed, and the logs table is
+     * created by its install SQL (same timing as the scheduler table). If the
+     * write fails (e.g. the database is down), the message still goes to
+     * \error_log().
+     */
+    private function logMessage(string $message): void
+    {
+        // The info column is VARCHAR(255) and saveLog() does not truncate.
+        $message = $this->sanitizeError('Scheduler: ' . $message);
+
+        try {
+            (new LogsMapper())->saveLog(self::LOG_USER_ID, $message);
+        } catch (\Throwable $e) {
+            \error_log('Ilch Scheduler: ' . $message);
+        }
     }
 }
