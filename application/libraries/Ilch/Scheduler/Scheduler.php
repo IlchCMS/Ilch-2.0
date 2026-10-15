@@ -560,7 +560,7 @@ final class Scheduler
 
     private function validateIdentifier($value, string $what): string
     {
-        $value = trim((string)$value);
+        $value = trim((string)$value, " \f\n\r\t\v\x00");
         if ($value === '' || !preg_match('/^[A-Za-z0-9._\-]{1,191}$/', $value)) {
             throw new \InvalidArgumentException($what . ' must be 1-191 characters and may only contain letters, digits, ".", "_" and "-".');
         }
