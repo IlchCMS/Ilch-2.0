@@ -93,7 +93,7 @@ class Page
         $this->fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
 
         if (($this->fileConfig->get('dbUser')) !== null) {
-            // Cms is installed
+            // CMS is installed
             // Note: debug mode (PHP error display) is determined centrally in index.php
             // from the "debugModus" config key, so no error_reporting handling is needed here.
             $dbFactory = new Database\Factory();
@@ -102,6 +102,20 @@ class Page
             $databaseConfig->loadConfigFromDatabase();
             Registry::set('db', $db);
             Registry::set('config', $databaseConfig);
+
+            // Visitor-triggered scheduler: registered once per request under the
+            // 'scheduler' key. runDue() starts at most one due task (budget- and
+            // lease-guarded internally) and absorbs all errors on its own; the
+            // outer guard only protects construction.
+            $scheduler = new \Ilch\Scheduler\Scheduler($db);
+            Registry::set('scheduler', $scheduler);
+
+            try {
+                $scheduler->runDue();
+            } catch (\Throwable $e) {
+                \error_log('Ilch Scheduler: runDue failed: ' . $e->getMessage());
+            }
+
             $this->plugin->addPluginData('db', $db);
             $this->plugin->addPluginData('config', $databaseConfig);
             $this->plugin->addPluginData('translator', $this->translator);
