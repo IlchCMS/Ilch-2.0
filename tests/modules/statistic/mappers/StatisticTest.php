@@ -665,24 +665,14 @@ class StatisticTest extends DatabaseTestCase
             'referer'       => 'https://repeat.com',
         ];
 
+        // No pinning needed: saveVisit() writes the row and dedups against the
+        // same clock (site-local date via \Ilch\Date), so the same-day premise
+        // holds deterministically on any host/CI timezone combination.
         $this->out->saveVisit($row);
-
-        // saveVisit() writes the stats row's `date` with PHP's clock
-        // (\Ilch\Date::format(..., true) => UTC) but dedups by comparing it
-        // with the DB server's CURDATE(). Whenever PHP and the server sit on
-        // different calendar days (timezone offset, test executing inside the
-        // offset window), the second call's "same day" lookup misses the row
-        // inserted by the first call and inserts a duplicate. Pin the stored
-        // date to the server's current day so the test's same-day premise
-        // holds deterministically.
-        $this->db->query(
-            'UPDATE `[prefix]_visits_stats` SET `date` = CURDATE() '
-            . 'WHERE `session_id` = \'repeat_guest\''
-        );
 
         $this->out->saveVisit($row);
 
-        // Should only have one row in visits_stats for this session today
+        // Should only have one row in visits_stats for this session
         $count = $this->db->select('COUNT(*)')
             ->from('visits_stats')
             ->where(['session_id' => 'repeat_guest'])
@@ -690,6 +680,20 @@ class StatisticTest extends DatabaseTestCase
             ->fetchCell();
 
         self::assertEquals(1, $count);
+
+        // Writer contract: the stored date is the site-local "today", so this
+        // assertion fails if the module ever regresses to writing from the
+        // DB server's clock (NOW()/CURDATE()).
+        $storedDate = $this->db->select('date')
+            ->from('visits_stats')
+            ->where(['session_id' => 'repeat_guest'])
+            ->execute()
+            ->fetchCell();
+
+        self::assertStringStartsWith(
+            (new \Ilch\Date())->format('Y-m-d', true),
+            $storedDate
+        );
     }
 
     /**

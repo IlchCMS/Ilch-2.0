@@ -90,7 +90,7 @@ class Statistic extends \Ilch\Mapper
                 FROM `[prefix]_visits_stats`
                 INNER JOIN `[prefix]_users` ON user_id = `[prefix]_users`.id
                 WHERE YEAR(`date`) = YEAR("' . $dateString . '") AND MONTH(`date`) = MONTH("' . $dateString
-                . '") AND DAY(`date`) = DAY("' . $dateString . '") AND `user_id` > 0
+            . '") AND DAY(`date`) = DAY("' . $dateString . '") AND `user_id` > 0
                 GROUP BY `user_id`';
 
         $rows = $this->db()->queryArray($sql);
@@ -197,7 +197,10 @@ class Statistic extends \Ilch\Mapper
             $date = $year . '-' . $month . '-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '")';
         } else {
-            $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE())';
+            // "Today" in the site-local timezone (same clock saveVisit() writes with),
+            // not the DB server's CURDATE().
+            $date = (new \Ilch\Date())->format('Y-m-d', true);
+            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '")';
         }
         $sql .= ' GROUP BY YEAR(`date`), MONTH(`date`), DATE(`date`)
                 ORDER BY `date_full` DESC';
@@ -231,7 +234,10 @@ class Statistic extends \Ilch\Mapper
             $date = $year . '-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '")';
         } else {
-            $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE())';
+            // "This year" in the site-local timezone (same clock saveVisit() writes with),
+            // not the DB server's CURDATE().
+            $date = (new \Ilch\Date())->format('Y-m-d', true);
+            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '")';
         }
         $sql .= ' GROUP BY YEAR(`date`), MONTH(`date`)
                 ORDER BY `date_month` DESC';
@@ -535,7 +541,10 @@ class Statistic extends \Ilch\Mapper
             $date = $year . '-' . $month . '-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '")';
         } else {
-            $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE())';
+            // "This month" in the site-local timezone (same clock saveVisit() writes with),
+            // not the DB server's CURDATE().
+            $date = (new \Ilch\Date())->format('Y-m-d', true);
+            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '")';
         }
 
         return $this->db()->queryCell($sql);
@@ -546,9 +555,12 @@ class Statistic extends \Ilch\Mapper
      */
     public function getVisitsYearCount(): int
     {
+        // "This year" in the site-local timezone (same clock saveVisit() writes with),
+        // not the DB server's CURDATE().
+        $date = (new \Ilch\Date())->format('Y-m-d', true);
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_visits_stats`
-                WHERE YEAR(`date`) = YEAR(CURDATE())';
+                WHERE YEAR(`date`) = YEAR("' . $date . '")';
 
         return $this->db()->queryCell($sql);
     }
@@ -649,9 +661,9 @@ class Statistic extends \Ilch\Mapper
                     '=Windows 98=' => '98',
 
                     '=Windows Phone OS 7=' => 'Phone 7.x',
-                    '=Windows Phone 8=' => 'Phone 8.0',
-                    '=Windows Phone 8.1=' => 'Phone 8.1',
-                    '=Windows Phone 10=' => '10 Mobile',
+                    '=Windows Phone OS 8=' => 'Phone 8.0',
+                    '=Windows Phone OS 8.1=' => 'Phone 8.1',
+                    '=Windows Phone OS 10=' => 'Phone 10 Mobile',
 
                     '=Mac OS X 14|Mac OS X 14=' => '14',
                     '=Mac OS X 13|Mac OS X 13=' => '13',
@@ -724,22 +736,22 @@ class Statistic extends \Ilch\Mapper
                 if (preg_match('=Opera[/ ]([0-9\.]+)=', $useragent)) {
                     return 'Opera';
                 }
-                if (preg_match('=OPR\/([0-9\.]*)=', $useragent)) {
+                if (preg_match('=OPR\/([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
                     return 'Opera';
                 }
-                if (preg_match('=Edge/([0-9\.]*)=', $useragent)) {
+                if (preg_match('=Edge/([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
                     return 'Edge';
                 }
-                if (preg_match('=Edg/([0-9\.]*)=', $useragent)) {
+                if (preg_match('=Edg/([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
                     return 'Edge';
                 }
-                if (preg_match('=Vivaldi\/([0-9\.]*)=', $useragent)) {
+                if (preg_match('=Vivaldi\/([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
                     return 'Vivaldi';
                 }
-                if (preg_match('=SamsungBrowser\/([0-9\.]*)=', $useragent)) {
+                if (preg_match('=SamsungBrowser\/([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
                     return 'Samsung Browser';
                 }
-                if (preg_match('=Chrome/([0-9\.]*)=', $useragent)) {
+                if (preg_match('=Chrome/([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
                     return 'Chrome';
                 }
                 if (str_contains($useragent, 'Safari/')) {
@@ -767,35 +779,35 @@ class Statistic extends \Ilch\Mapper
             if (preg_match('=Opera[/ ]([0-9\.]+)=', $useragent, $browser)) {
                 return $browser[1];
             }
-            if (preg_match('=OPR\/([0-9\.]*)=', $useragent, $browser)) {
+            if (preg_match('=OPR\/([0-9]{1,2})\.[0-9]{1,2}=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
                 }
                 return $browser[1];
             }
-            if (preg_match('=Edge/([0-9\.]*)=', $useragent, $browser)) {
+            if (preg_match('=Edge/([0-9]{1,2})\.[0-9]{1,2}=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
                 }
                 return $browser[1];
             }
-            if (preg_match('=Edg/([0-9\.]*)=', $useragent, $browser)) {
+            if (preg_match('=Edg/([0-9]{1,2})\.[0-9]{1,2}=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
                 }
                 return $browser[1];
             }
-            if (preg_match('=Vivaldi\/([0-9\.]*)=', $useragent, $browser)) {
+            if (preg_match('=Vivaldi\/([0-9]{1,2})\.[0-9]{1,2}=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
                 }
                 return $browser[1];
             }
-            if (preg_match('=Chrome/([0-9\.]*)=', $useragent, $browser)) {
+            if (preg_match('=Chrome/([0-9]{1,2})\.[0-9]{1,2}=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
@@ -859,6 +871,11 @@ class Statistic extends \Ilch\Mapper
 
         $this->cleanUpOnline();
 
+        // The dedup must use the same time base the row is written with:
+        // the site-local "today" via \Ilch\Date (as used by the insert below),
+        // not the DB server's CURDATE().
+        $today = $date->format('Y-m-d', true);
+
         $sql = 'SELECT id
                 FROM `[prefix]_visits_stats`';
 
@@ -866,11 +883,11 @@ class Statistic extends \Ilch\Mapper
         if ($row['user_id']) {
             // Try to identify by session_id first as it should not change while the user is using the site.
             // If the user returns later (possible new session and re-authenticated with the remember me cookie) try to use the user id.
-            $sql .= ' WHERE (`session_id` = "' . $row['session_id'] . '" OR `user_id` = "' . $row['user_id'] . '") AND YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE()) AND DAY(`date`) = DAY(CURDATE())
+            $sql .= ' WHERE (`session_id` = "' . $row['session_id'] . '" OR `user_id` = "' . $row['user_id'] . '") AND YEAR(`date`) = YEAR("' . $today . '") AND MONTH(`date`) = MONTH("' . $today . '") AND DAY(`date`) = DAY("' . $today . '")
                       ORDER BY `id` DESC LIMIT 1';
         } else {
             // Session id might still be the same. If this returns no result then (in case of guests) fall-back to ip-address to avoid counting every visit with dropped session id.
-            $sql .= ' WHERE (`session_id` = "' . $row['session_id'] . '" OR (`ip_address` = "' . $row['ip'] . '" AND `user_id` = 0)) AND YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE()) AND DAY(`date`) = DAY(CURDATE())
+            $sql .= ' WHERE (`session_id` = "' . $row['session_id'] . '" OR (`ip_address` = "' . $row['ip'] . '" AND `user_id` = 0)) AND YEAR(`date`) = YEAR("' . $today . '") AND MONTH(`date`) = MONTH("' . $today . '") AND DAY(`date`) = DAY("' . $today . '")
                       ORDER BY `id` DESC LIMIT 1';
         }
 
