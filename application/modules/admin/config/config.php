@@ -232,6 +232,30 @@ class Config extends \Ilch\Config\Install
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
+            CREATE TABLE IF NOT EXISTS `[prefix]_scheduler_tasks` (
+                `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `name` VARCHAR(191) NOT NULL,
+                `handler` VARCHAR(191) NOT NULL,
+                `type` VARCHAR(32) NOT NULL DEFAULT \'interval\',
+                `interval_seconds` INT(11) UNSIGNED NULL DEFAULT NULL,
+                `daily_time` TIME NULL DEFAULT NULL,
+                `timezone` VARCHAR(64) NULL DEFAULT NULL,
+                `payload` TEXT NULL DEFAULT NULL,
+                `enabled` TINYINT(1) NOT NULL DEFAULT 1,
+                `next_run` DATETIME NOT NULL,
+                `last_started` DATETIME NULL DEFAULT NULL,
+                `last_finished` DATETIME NULL DEFAULT NULL,
+                `last_status` VARCHAR(16) NULL DEFAULT NULL,
+                `last_error` VARCHAR(255) NULL DEFAULT NULL,
+                `failures` INT(11) UNSIGNED NOT NULL DEFAULT 0,
+                `lease_owner` VARCHAR(64) NULL DEFAULT NULL,
+                `lease_expires` DATETIME NULL DEFAULT NULL,
+                `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (`id`),
+                UNIQUE KEY `name` (`name`),
+                KEY `idx_due` (`enabled`, `next_run`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
             INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://www.ilch.de/ilch2_updates/stable/", "ilch", "Germany");
             INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://updates.nubbys.de/stable/", "RTX2070 (ilch-Team)", "Germany");';
     }
@@ -1406,6 +1430,31 @@ class Config extends \Ilch\Config\Install
                         ->values(['url' => 'https://updates.nubbys.de/stable/', 'operator' => 'RTX2070 (ilch-Team)', 'country' => 'Germany'])
                         ->execute();
                 }
+
+                // Add visitor-triggered scheduler task table.
+                $this->db()->queryMulti('CREATE TABLE IF NOT EXISTS `[prefix]_scheduler_tasks` (
+                    `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                    `name` VARCHAR(191) NOT NULL,
+                    `handler` VARCHAR(191) NOT NULL,
+                    `type` VARCHAR(32) NOT NULL DEFAULT \'interval\',
+                    `interval_seconds` INT(11) UNSIGNED NULL DEFAULT NULL,
+                    `daily_time` TIME NULL DEFAULT NULL,
+                    `timezone` VARCHAR(64) NULL DEFAULT NULL,
+                    `payload` TEXT NULL DEFAULT NULL,
+                    `enabled` TINYINT(1) NOT NULL DEFAULT 1,
+                    `next_run` DATETIME NOT NULL,
+                    `last_started` DATETIME NULL DEFAULT NULL,
+                    `last_finished` DATETIME NULL DEFAULT NULL,
+                    `last_status` VARCHAR(16) NULL DEFAULT NULL,
+                    `last_error` VARCHAR(255) NULL DEFAULT NULL,
+                    `failures` INT(11) UNSIGNED NOT NULL DEFAULT 0,
+                    `lease_owner` VARCHAR(64) NULL DEFAULT NULL,
+                    `lease_expires` DATETIME NULL DEFAULT NULL,
+                    `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    PRIMARY KEY (`id`),
+                    UNIQUE KEY `name` (`name`),
+                    KEY `idx_due` (`enabled`, `next_run`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
                 // Remove Tempus Dominus and Popper.
                 removeDir(ROOT_PATH . '/static/js/popper');
