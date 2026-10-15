@@ -68,23 +68,20 @@ class Config extends \Ilch\Config\Install
             ->set('page_title_moduledata_order', '0')
             ->set('showbreadcrumb', '1');
 
-        $this->createAuthTokenCleanupTask();
+        $this->createScheduledTasks();
     }
 
     /**
-     * Register the auth-token cleanup task (idempotent).
+     * Declare and create this module's scheduler tasks (idempotent).
      *
-     * Only called where the scheduler table is guaranteed to exist: after the
-     * install SQL in install() and in the 2.2.20 update step directly after
-     * the table is created there. The getTask() guard prevents duplicates.
+     * @return void
+     * @since 2.2.21
      */
-    private function createAuthTokenCleanupTask(): void
+    public function createScheduledTasks(): void
     {
         $scheduler = new \Ilch\Scheduler\Scheduler($this->db());
-        if ($scheduler->getTask('admin.authTokens.cleanup') !== null) {
-            return;
-        }
-        $scheduler->createTask([
+
+        $scheduler->ensureTask([
             'name'       => 'admin.authTokens.cleanup',
             'handler'    => 'admin.authTokens.cleanup',
             'type'       => \Ilch\Scheduler\Scheduler::TYPE_DAILY,
@@ -1479,8 +1476,8 @@ class Config extends \Ilch\Config\Install
                     KEY `idx_due` (`enabled`, `next_run`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;');
 
-                // Register the auth-token cleanup task now that the table exists.
-                $this->createAuthTokenCleanupTask();
+                // Create this module's scheduler tasks now that the table exists.
+                $this->createScheduledTasks();
 
                 // Remove Tempus Dominus and Popper.
                 removeDir(ROOT_PATH . '/static/js/popper');

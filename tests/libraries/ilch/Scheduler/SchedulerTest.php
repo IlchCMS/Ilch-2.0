@@ -582,6 +582,123 @@ class SchedulerTest extends DatabaseTestCase
     }
 
     // -----------------------------------------------------------------
+    // ensureTask()
+    // -----------------------------------------------------------------
+
+    /**
+     * Tests that ensureTask() creates the task when no task with the name exists yet.
+     */
+    public function testEnsureTaskCreatesTaskWhenItDoesNotExist(): void
+    {
+        $id = $this->out->ensureTask([
+            'name'             => 'ensured.interval',
+            'handler'          => 'ensured.interval',
+            'interval_seconds' => 900,
+            'payload'          => ['b' => 2],
+        ]);
+
+        self::assertIsInt($id);
+        self::assertGreaterThan(0, $id);
+
+        $task = $this->out->getTask('ensured.interval');
+        self::assertInstanceOf(Task::class, $task);
+        self::assertSame($id, $task->id());
+        self::assertSame('ensured.interval', $task->name());
+        self::assertSame('ensured.interval', $task->handler());
+        self::assertSame(Scheduler::TYPE_INTERVAL, $task->type());
+        self::assertSame(900, $task->intervalSeconds());
+        self::assertSame(['b' => 2], $task->payload());
+        self::assertTrue($task->enabled());
+        self::assertSame(0, $task->failures());
+        $this->assertUtcWithinSeconds(time() + 900, $task->nextRun());
+    }
+
+    /**
+     * Tests that ensureTask() returns the id of an existing task and leaves the
+     * row untouched, even when the data describes a different schedule.
+     */
+    public function testEnsureTaskReturnsExistingTaskIdWithoutChanges(): void
+    {
+        $existing = $this->out->getTask('fixture.interval.due');
+        self::assertNotNull($existing);
+
+        // The data below conflicts with the existing row on every schedule
+        // field; none of it may be applied.
+        $id = $this->out->ensureTask([
+            'name'             => 'fixture.interval.due',
+            'handler'          => 'fixture.other.handler',
+            'interval_seconds' => 999,
+            'payload'          => ['other' => true],
+        ]);
+
+        self::assertSame($existing->id(), $id);
+
+        $task = $this->out->getTask('fixture.interval.due');
+        self::assertSame('fixture.interval.due', $task->handler());
+        self::assertSame(3600, $task->intervalSeconds());
+        self::assertSame(['step' => 2], $task->payload());
+        self::assertSame('2020-01-01 00:00:00', $task->nextRun()->format('Y-m-d H:i:s'));
+
+        // No second row was created.
+        self::assertCount(4, $this->out->getAllTasks());
+    }
+
+    /**
+     * Tests that calling ensureTask() repeatedly creates exactly one task and
+     * always returns the same id.
+     */
+    public function testEnsureTaskIsIdempotentOnRepeatedCalls(): void
+    {
+        $this->db->query('DELETE FROM [prefix]_scheduler_tasks');
+
+        $data = [
+            'name'             => 'ensured.once',
+            'handler'          => 'ensured.once',
+            'interval_seconds' => 120,
+        ];
+
+        $first  = $this->out->ensureTask($data);
+        $second = $this->out->ensureTask($data);
+
+        self::assertIsInt($first);
+        self::assertSame($first, $second);
+
+        $task = $this->out->getTask('ensured.once');
+        self::assertSame($first, $task->id());
+        self::assertCount(1, $this->out->getAllTasks());
+    }
+
+    /**
+     * Tests that ensureTask() throws for a missing name (no task to look up,
+     * so the createTask() validation runs).
+     */
+    public function testEnsureTaskWithoutName(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->out->ensureTask(['handler' => 'x.y', 'interval_seconds' => 60]);
+    }
+
+    /**
+     * Tests that ensureTask() rejects invalid data for a not-yet-existing task
+     * and creates nothing.
+     */
+    public function testEnsureTaskWithInvalidDataCreatesNothing(): void
+    {
+        try {
+            $this->out->ensureTask([
+                'name'             => 'ensured.invalid',
+                'handler'          => 'ensured.invalid',
+                'interval_seconds' => 0,
+            ]);
+            self::fail('Expected \InvalidArgumentException was not thrown.');
+        } catch (\InvalidArgumentException $e) {
+            self::assertNotEmpty($e->getMessage());
+        }
+
+        self::assertNull($this->out->getTask('ensured.invalid'));
+    }
+
+    // -----------------------------------------------------------------
     // updateTask()
     // -----------------------------------------------------------------
 

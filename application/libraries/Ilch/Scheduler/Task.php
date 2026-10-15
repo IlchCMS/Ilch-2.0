@@ -13,6 +13,8 @@ namespace Ilch\Scheduler;
  * Datetime columns are UTC: parsed as \DateTimeImmutable in UTC on read, to be
  * written back as UTC 'Y-m-d H:i:s' strings. `dailyTime` is intentionally a raw
  * H:i:s string: it is a schedule parameter, not a point in time.
+ *
+ * @since 2.2.21
  */
 final class Task
 {

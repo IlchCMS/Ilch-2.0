@@ -7,7 +7,7 @@ use Ilch\Registry;
 use Modules\Admin\Mappers\Logs as LogsMapper;
 
 /**
- * Visitor-triggered scheduler service for Ilch 2.0.
+ * Visitor-triggered scheduler
  *
  * Runs at most one due task per visitor request (front end, admin, AJAX and CMS
  * pages). It is registered once per request in Page::loadCms() and stored in the
@@ -97,6 +97,8 @@ use Modules\Admin\Mappers\Logs as LogsMapper;
  *              deduplicated per minute by the Logs mapper), with \error_log() as
  *              fallback if that write fails. The error is also stored per task in
  *              last_error (truncated to 255 chars).
+ *
+ * @since 2.2.21
  */
 final class Scheduler
 {
@@ -336,6 +338,23 @@ final class Scheduler
         }
         $sql = 'UPDATE ' . self::TABLE . ' SET ' . implode(', ', $sqlParts) . ' WHERE name = ' . $this->escape($name);
         $this->db->query($sql);
+    }
+
+    /**
+     * Idempotent counterpart of createTask(): returns the id of the existing
+     * task when a task with this name already exists, otherwise creates it.
+     *
+     * @param array<string, mixed> $data Same keys as createTask().
+     * @return int The task id (existing or newly created).
+     * @throws \InvalidArgumentException on invalid data
+     */
+    public function ensureTask(array $data): int
+    {
+        $existing = $this->getTask((string)($data['name'] ?? ''));
+        if ($existing !== null) {
+            return $existing->id();
+        }
+        return $this->createTask($data);
     }
 
     /**
