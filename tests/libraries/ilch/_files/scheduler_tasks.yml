@@ -1,0 +1,40 @@
+scheduler_tasks:
+  - id: 1
+    name: 'fixture.interval.due'
+    handler: 'fixture.interval.due'
+    type: 'interval'
+    interval_seconds: 3600
+    enabled: 1
+    payload: '{"step":2}'
+    next_run: '2020-01-01 00:00:00'
+    created: '2020-01-01 00:00:00'
+  - id: 2
+    name: 'fixture.interval.notdue'
+    handler: 'fixture.interval.notdue'
+    type: 'interval'
+    interval_seconds: 86400
+    enabled: 1
+    next_run: '2099-01-01 00:00:00'
+    created: '2020-01-01 00:00:00'
+  - id: 3
+    name: 'fixture.daily'
+    handler: 'fixture.daily'
+    type: 'daily'
+    daily_time: '03:00:00'
+    timezone: 'Europe/Berlin'
+    enabled: 1
+    next_run: '2099-06-01 02:00:00'
+    created: '2020-01-01 00:00:00'
+  - id: 4
+    name: 'fixture.disabled'
+    handler: 'fixture.disabled'
+    type: 'interval'
+    interval_seconds: 60
+    enabled: 0
+    next_run: '2020-01-01 00:00:00'
+    created: '2020-01-01 00:00:00'
+
+config:
+  - key: 'timezone'
+    value: 'Europe/Berlin'
+    autoload: 1

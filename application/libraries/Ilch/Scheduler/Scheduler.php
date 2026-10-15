@@ -116,8 +116,12 @@ final class Scheduler
     /** @var array<string, callable> Registered handlers (handler name => callable). */
     private static array $handlers = [];
 
+    /** @var Mysql Database connection used for all raw SQL access. */
     private Mysql $db;
 
+    /**
+     * @param Mysql $db Database connection (raw-SQL layer with [prefix] handling).
+     */
     public function __construct(Mysql $db)
     {
         $this->db = $db;
@@ -129,12 +133,22 @@ final class Scheduler
      * Modules normally do this in application/modules/<moduleKey>/scheduler.php
      * (lazy-included only when due); plugins or core bootstrap code may register
      * handlers directly (core tasks use the 'core.' prefix).
+     *
+     * @param string $name Unique handler name; registering it again overwrites the previous handler.
+     * @param callable $handler
+     * @return void
      */
     public static function registerHandler(string $name, callable $handler): void
     {
         self::$handlers[$name] = $handler;
     }
 
+    /**
+     * Whether a handler is currently registered under $name.
+     *
+     * @param string $name
+     * @return bool
+     */
     public static function hasHandler(string $name): bool
     {
         return isset(self::$handlers[$name]);
@@ -219,7 +233,9 @@ final class Scheduler
      * used on purpose: the builder update() skips NULL values, but e.g. resetting
      * timezone must write an explicit NULL.
      *
+     * @param string $name
      * @param array<string, mixed> $data
+     * @return void
      * @throws \InvalidArgumentException if the task does not exist or the resulting
      *                                  schedule would be invalid
      */
@@ -318,12 +334,21 @@ final class Scheduler
      *
      * Idempotent on purpose: a missing task (e.g. a failed install, or uninstall
      * after the task was never created) must never break module uninstall().
+     *
+     * @param string $name
+     * @return void
      */
     public function deleteTask(string $name): void
     {
         $this->db->query('DELETE FROM ' . self::TABLE . ' WHERE name = ' . $this->escape((string)$name));
     }
 
+    /**
+     * Fetch one task by its unique name.
+     *
+     * @param string $name
+     * @return Task|null
+     */
     public function getTask(string $name): ?Task
     {
         $rows = $this->db->queryArray('SELECT * FROM ' . self::TABLE . ' WHERE name = ' . $this->escape((string)$name) . ' LIMIT 1');
@@ -352,6 +377,8 @@ final class Scheduler
      * Safe to call once per request from Page::loadCms(). Every failure — including
      * a missing table (fresh install, the upgrade request itself, opcache
      * transition) — is absorbed and logged; the page is never affected.
+     *
+     * @return void
      */
     public function runDue(): void
     {
@@ -460,6 +487,8 @@ final class Scheduler
     /**
      * Milliseconds of the request budget still available (0.0 when exhausted).
      * Handlers that process many rows should stop early when this gets low.
+     *
+     * @return float
      */
     public function timeLeftMs(): float
     {
@@ -479,6 +508,9 @@ final class Scheduler
      * registered yet. Only called for due tasks, so modules without a due task
      * cost nothing. The module key must be a plain lowercase identifier; the
      * include path is therefore fully validated (no traversal possible).
+     *
+     * @param string $handler
+     * @return void
      */
     private function ensureHandlerLoaded(string $handler): void
     {
@@ -505,6 +537,9 @@ final class Scheduler
      * Interval: anchored to the claim time (last_started ≈ now); a delayed task
      * therefore re-runs once per request until caught up.
      * Daily:    the next occurrence of daily_time in the task's timezone (UTC-stored).
+     *
+     * @param Task $task
+     * @return string UTC 'Y-m-d H:i:s'
      */
     private function computeNextRun(Task $task): string
     {
@@ -517,6 +552,10 @@ final class Scheduler
     /**
      * Next occurrence of $dailyTime (H:i:s) in $timezone, strictly after now,
      * returned as a UTC 'Y-m-d H:i:s' string.
+     *
+     * @param string|null $dailyTime
+     * @param string|null $timezone
+     * @return string
      */
     private function nextDailyOccurrence(?string $dailyTime, ?string $timezone): string
     {
@@ -536,6 +575,8 @@ final class Scheduler
 
     /**
      * Daily tasks without an explicit timezone follow the site-wide default.
+     *
+     * @return string IANA time zone name.
      */
     private function defaultTimezone(): string
     {
@@ -552,12 +593,23 @@ final class Scheduler
     /**
      * 'Y-m-d H:i:s' in UTC ($db layer's default timezone, set in index.php),
      * optionally offset by whole seconds.
+     *
+     * @param int $offsetSeconds
+     * @return string
      */
     private function utcNowSql(int $offsetSeconds = 0): string
     {
         return date('Y-m-d H:i:s', time() + $offsetSeconds);
     }
 
+    /**
+     * Validate an identifier (name or handler): 1-191 chars of [A-Za-z0-9._-].
+     *
+     * @param mixed $value
+     * @param string $what Human-readable field name used in the error message.
+     * @return string
+     * @throws \InvalidArgumentException
+     */
     private function validateIdentifier($value, string $what): string
     {
         $value = trim((string)$value, " \f\n\r\t\v\x00");
@@ -567,6 +619,13 @@ final class Scheduler
         return $value;
     }
 
+    /**
+     * Validate an IANA time zone; an empty value falls back to the site default.
+     *
+     * @param string|null $timezone
+     * @return string
+     * @throws \InvalidArgumentException if the zone is not a valid IANA zone.
+     */
     private function validateTimezone(?string $timezone): string
     {
         $timezone = ($timezone !== null && $timezone !== '') ? $timezone : $this->defaultTimezone();
@@ -581,6 +640,10 @@ final class Scheduler
     /**
      * Accepts null, an array or a JSON string; always returns the canonical
      * JSON string to store, or null.
+     *
+     * @param array|string|null $payload
+     * @return string|null
+     * @throws \InvalidArgumentException if $payload is not null, an array or valid JSON.
      */
     private function normalizePayload($payload): ?string
     {
@@ -603,6 +666,9 @@ final class Scheduler
     /**
      * Escape a value for embedding in raw SQL; the database layer's
      * escape($value, true) returns a ready-to-embed, quoted string literal.
+     *
+     * @param string $value
+     * @return string
      */
     private function escape(string $value): string
     {
@@ -611,6 +677,9 @@ final class Scheduler
 
     /**
      * last_error must fit VARCHAR(255) and stay one line.
+     *
+     * @param string $error
+     * @return string
      */
     private function sanitizeError(string $error): string
     {
@@ -629,6 +698,9 @@ final class Scheduler
      * created by its install SQL (same timing as the scheduler table). If the
      * write fails (e.g. the database is down), the message still goes to
      * \error_log().
+     *
+     * @param string $message
+     * @return void
      */
     private function logMessage(string $message): void
     {
