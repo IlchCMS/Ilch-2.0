@@ -16,9 +16,9 @@ use Modules\Admin\Mappers\Logs as LogsMapper;
  *
  * Tasks live in the single table [prefix]_scheduler_tasks (created by the admin
  * module's install/update SQL). Handlers are PHP callables registered under a
- * unique name (convention: <moduleKey>.<taskKey>). A module usually registers its
- * handlers in application/modules/<moduleKey>/scheduler.php, which is lazy-included
- * only when one of that module's tasks is due.
+ * unique name (convention: <moduleKey>.<taskKey>). A module provides one
+ * self-registering handler file per task in application/modules/<moduleKey>/scheduler/;
+ * the folder is lazy-included only when one of that module's tasks is due.
  *
  * ---------------------------------------------------------------------------
  * Usage
@@ -39,18 +39,26 @@ use Modules\Admin\Mappers\Logs as LogsMapper;
  *         ]);
  *     }
  *
- * Module handler file (application/modules/comments/scheduler.php):
+ * Module handler file (application/modules/comments/scheduler/Cleanup.php):
  *
  *     <?php
+ *     namespace Modules\Comments\scheduler;
+ *
  *     use Ilch\Scheduler\Scheduler;
  *
- *     Scheduler::registerHandler('comments.cleanup', function (?array $payload, Scheduler $scheduler): void {
- *         $maxAgeDays = (int)($payload['max_age_days'] ?? 30);
- *         // ... work in small steps ...
- *         if ($scheduler->timeLeftMs() < 100) {
- *             return; // leave the rest for the next due run
+ *     final class Cleanup
+ *     {
+ *         public static function handle(?array $payload, Scheduler $scheduler): void
+ *         {
+ *             $maxAgeDays = (int)($payload['max_age_days'] ?? 30);
+ *             // ... work in small steps ...
+ *             if ($scheduler->timeLeftMs() < 100) {
+ *                 return; // leave the rest for the next due run
+ *             }
  *         }
- *     });
+ *     }
+ *
+ *     Scheduler::registerHandler('comments.cleanup', [Cleanup::class, 'handle']);
  *
  * Module uninstall:
  *
@@ -130,9 +138,10 @@ final class Scheduler
     /**
      * Register a handler under a unique name (convention: <moduleKey>.<taskKey>).
      *
-     * Modules normally do this in application/modules/<moduleKey>/scheduler.php
-     * (lazy-included only when due); plugins or core bootstrap code may register
-     * handlers directly (core tasks use the 'core.' prefix).
+     * Modules normally do this in a self-registering file inside
+     * application/modules/<moduleKey>/scheduler/ (lazy-included only when due);
+     * plugins or core bootstrap code may register handlers directly (core tasks
+     * use the 'core.' prefix).
      *
      * @param string $name Unique handler name; registering it again overwrites the previous handler.
      * @param callable $handler
@@ -504,10 +513,12 @@ final class Scheduler
     // -----------------------------------------------------------------
 
     /**
-     * Lazy-include the owning module's scheduler.php if the handler is not
-     * registered yet. Only called for due tasks, so modules without a due task
-     * cost nothing. The module key must be a plain lowercase identifier; the
-     * include path is therefore fully validated (no traversal possible).
+     * Lazy-include the owning module's handler files (in its scheduler/
+     * folder) if the handler is not registered yet. Only called for due
+     * tasks, so modules without a due task cost nothing. The module key must
+     * be a plain lowercase identifier; the include path is therefore fully
+     * validated (no traversal possible). Each file in the folder is expected
+     * to register its own handler(s) when included.
      *
      * @param string $handler
      * @return void
@@ -525,9 +536,11 @@ final class Scheduler
         if (!preg_match('/^[a-z0-9_]+$/', $moduleKey)) {
             return;
         }
-        $file = APPLICATION_PATH . '/modules/' . $moduleKey . '/scheduler.php';
-        if (is_file($file)) {
-            require_once $file;
+        $dir = APPLICATION_PATH . '/modules/' . $moduleKey . '/scheduler';
+        if (is_dir($dir)) {
+            foreach (glob($dir . '/*.php') ?: [] as $file) {
+                require_once $file;
+            }
         }
     }
 

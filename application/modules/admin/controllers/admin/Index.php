@@ -35,9 +35,6 @@ class Index extends \Ilch\Controller\Admin
             $this->redirect(['action' => 'index']);
         }
 
-        // Delete all expired authTokens of the remember-me-feature
-        $authTokenMapper = new \Modules\User\Mappers\AuthToken();
-        $authTokenMapper->deleteExpiredAuthTokens();
         // Check if Ilch is up-to-date
         $update = new \Ilch\Transfer();
         $update->setTransferUrl($this->getConfig()->get('updateserver') . 'updates.json');
