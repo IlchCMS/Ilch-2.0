@@ -9,6 +9,7 @@ users:
     confirmed: 1
     confirmed_code: "123"
     selector: "selector1"
+    expires: "2014-01-01 12:12:12"
   -
     id: 2
     name: "Testuser2"

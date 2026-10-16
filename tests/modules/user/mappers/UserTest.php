@@ -201,6 +201,36 @@ class UserTest extends DatabaseTestCase
         self::assertEquals(1, $users[0]->getConfirmed());
     }
 
+    public function testGetUserBySelectorWithExpires()
+    {
+        $user = $this->out->getUserBySelector('selector1');
+
+        self::assertNotNull($user);
+        self::assertEquals(
+            (new IlchDate('2014-01-01 12:12:12'))->getTimestamp(),
+            $user->getExpires()->getTimestamp()
+        );
+    }
+
+    public function testSaveWithExpiresRoundTrip()
+    {
+        $user = new UserModel();
+        $user->setName('ExpiresUser')
+            ->setPassword('hash')
+            ->setEmail('expires@host.de')
+            ->setDateCreated(new IlchDate('2020-01-01 10:00:00'))
+            ->setExpires(new IlchDate('2020-01-02 10:00:00'));
+
+        $userId = $this->out->save($user);
+
+        $reloaded = $this->out->getUserById($userId);
+        self::assertNotNull($reloaded);
+        self::assertEquals(
+            (new IlchDate('2020-01-02 10:00:00'))->getTimestamp(),
+            $reloaded->getExpires()->getTimestamp()
+        );
+    }
+
     /**
      * Tests that getUserListByGroupIds() returns the users of at least one of the groups.
      */
@@ -653,8 +683,6 @@ class UserTest extends DatabaseTestCase
 
     /**
      * Tests that selectsdelete() marks a user by id for deletion.
-     * The value is read directly from the database because loadFromArray()
-     * passes the raw string to setSelectsDelete(), which expects an Ilch\Date.
      */
     public function testSelectsdelete()
     {
@@ -662,13 +690,12 @@ class UserTest extends DatabaseTestCase
 
         self::assertEquals(1, $affected);
 
-        $selectsDelete = $this->db->select('selectsdelete')
-            ->from('users')
-            ->where(['id' => 1])
-            ->execute()
-            ->fetchCell();
-
-        self::assertEquals('2020-05-05 00:00:00', $selectsDelete);
+        $reloaded = $this->out->getUserById(1);
+        self::assertNotNull($reloaded);
+        self::assertEquals(
+            (new IlchDate('2020-05-05 00:00:00'))->getTimestamp(),
+            $reloaded->getSelectsDelete()->getTimestamp()
+        );
     }
 
     /**

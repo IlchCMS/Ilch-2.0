@@ -356,7 +356,7 @@ class User extends \Ilch\Mapper
         }
 
         if (isset($userRow['expires'])) {
-            $user->setExpires($userRow['expires']);
+            $user->setExpires(new IlchDate($userRow['expires']));
         }
 
         if (isset($userRow['locked'])) {
@@ -417,16 +417,16 @@ class User extends \Ilch\Mapper
             $fields['selector'] = $user->getSelector();
         }
 
-        if (isset($userRow['expires'])) {
-            $user->setExpires(new IlchDate($userRow['expires']));
+        if ($user->getExpires() !== null) {
+            $fields['expires'] = $user->getExpires();
         }
 
         if ($user->getLocked() !== null) {
             $fields['locked'] = $user->getLocked();
         }
 
-        if (isset($userRow['selectsdelete'])) {
-            $user->setSelectsDelete(new IlchDate($userRow['selectsdelete']));
+        if ($user->getSelectsDelete() !== null) {
+            $fields['selectsdelete'] = $user->getSelectsDelete();
         }
 
         $fields['first_name'] = $user->getFirstName();
