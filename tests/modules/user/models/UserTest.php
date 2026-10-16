@@ -310,6 +310,55 @@ class UserTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that the default values of the user model match the default values
+     * of the users table (see getInstallSql() of Modules\User\Config\config.php).
+     *
+     * During installation the first user is created without explicitly setting
+     * "confirmed". If the model default differs from the database default, the
+     * stored value is silently wrong - e.g. the first user would not be
+     * confirmed and could not log in.
+     */
+    public function testDefaultValuesMatchDatabaseSchema()
+    {
+        $user = new User();
+
+        // `confirmed` TINYINT(1) DEFAULT 1
+        self::assertEquals(
+            1,
+            $user->getConfirmed(),
+            'The default "confirmed" value of the user model is not 1 like in the users table. A user created without explicitly setting "confirmed" (e.g. the first user during installation) would not be confirmed and could not log in.'
+        );
+        // `locked` TINYINT(1) NOT NULL DEFAULT 0
+        self::assertEquals(
+            0,
+            $user->getLocked(),
+            'The default "locked" value of the user model is not 0 like in the users table.'
+        );
+        // `gender` TINYINT(1) NOT NULL DEFAULT 0
+        self::assertEquals(
+            0,
+            $user->getGender(),
+            'The default "gender" value of the user model is not 0 like in the users table.'
+        );
+    }
+
+    /**
+     * Tests that the install SQL keeps the default value 1 for the "confirmed"
+     * column of the users table, so that a user created without explicitly
+     * setting "confirmed" (e.g. the first user during installation) is confirmed.
+     */
+    public function testInstallSqlKeepsConfirmedDefault()
+    {
+        $config = new UserConfig();
+
+        self::assertStringContainsString(
+            '`confirmed` TINYINT(1) DEFAULT 1',
+            $config->getInstallSql(),
+            'The default value of the "confirmed" column of the users table is not 1 anymore.'
+        );
+    }
+
+    /**
      * Tests if the user groups can be set and returned again.
      */
     public function testSetGetGroups()
