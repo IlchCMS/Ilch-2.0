@@ -485,6 +485,55 @@ class UserTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that saving a user without explicitly setting "confirmed" - like
+     * the first user during installation - stores the database default value
+     * 1 in the users table, so that the user is confirmed and can log in.
+     *
+     * This catches a mismatch between the model default and the database
+     * default for the "confirmed" column (and other flag columns like
+     * "locked") that the installation relies on.
+     */
+    public function testSaveWithoutExplicitConfirmed()
+    {
+        $user = new UserModel();
+        $user->setName('InstallUser')
+            ->setPassword('hash')
+            ->setEmail('installuser@host.de')
+            ->setLocale('de_DE')
+            ->setDateCreated(new IlchDate('2020-01-01 10:00:00'))
+            ->setDateConfirmed(new IlchDate('2020-01-01 10:00:00'));
+
+        $userId = $this->out->save($user);
+
+        self::assertIsInt($userId);
+        self::assertGreaterThan(0, $userId);
+
+        $confirmed = $this->db->select('confirmed')
+            ->from('users')
+            ->where(['id' => $userId])
+            ->execute()
+            ->fetchCell();
+
+        self::assertEquals(
+            1,
+            $confirmed,
+            'The "confirmed" value stored in the database is not 1. A user created without explicitly setting "confirmed" (e.g. the first user during installation) would not be confirmed and could not log in.'
+        );
+
+        $locked = $this->db->select('locked')
+            ->from('users')
+            ->where(['id' => $userId])
+            ->execute()
+            ->fetchCell();
+
+        self::assertEquals(0, $locked, 'The "locked" value stored in the database is not 0.');
+
+        $newUser = $this->out->getUserById($userId);
+        self::assertNotNull($newUser);
+        self::assertEquals(1, $newUser->getConfirmed(), 'The reloaded user is not confirmed.');
+    }
+
+    /**
      * Tests that getHomepage() prepends http:// to plain domains.
      */
     public function testGetHomepageAddsProtocol()
