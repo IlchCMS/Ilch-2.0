@@ -152,7 +152,7 @@ class User extends \Ilch\Model
      *
      * @var int
      */
-    protected int $confirmed = 0;
+    protected int $confirmed = 1;
 
     /**
      * Confirmed Code of the user.

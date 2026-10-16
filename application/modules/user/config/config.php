@@ -79,8 +79,7 @@ class Config extends \Ilch\Config\Install
             ->addGroup($groupMapper->getGroupById(2))
             ->setLocale($this->getTranslator()->getLocale())
             ->setDateConfirmed($dateCreated)
-            ->setDateCreated($dateCreated)
-            ->setConfirmed(1);
+            ->setDateCreated($dateCreated);
         $userMapper->save($userModel);
     }
 
