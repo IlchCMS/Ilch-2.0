@@ -100,31 +100,32 @@ class User extends \Ilch\Model
     /**
      * The opt_mail of the user.
      *
-     * @var int|null
+     * @var int
      */
-    protected ?int $opt_mail = null;
+    protected int $opt_mail = 1;
 
     /**
      * The opt_comments of the user.
      * Whether the user allows comments on the profile or not.
      *
-     * @var int|null
+     * @var int
      */
-    protected ?int $opt_comments = null;
+    protected int $opt_comments = 1;
 
     /**
      * The admin_comments of the user.
      * Whether the admin allows comments on the profile of this user or not.
-     * @var int|null
+     *
+     * @var int
      */
-    protected ?int $admin_comments = null;
+    protected int $admin_comments = 1;
 
     /**
      * The opt_gallery of the user.
      *
-     * @var int|null
+     * @var int
      */
-    protected ?int $opt_gallery = null;
+    protected int $opt_gallery = 1;
 
     /**
      * The \Ilch\Date of when the user got created.
@@ -314,9 +315,9 @@ class User extends \Ilch\Model
     /**
      * Returns the opt_mail of the user.
      *
-     * @return int|null
+     * @return int
      */
-    public function getOptMail(): ?int
+    public function getOptMail(): int
     {
         return $this->opt_mail;
     }
@@ -338,9 +339,9 @@ class User extends \Ilch\Model
      * Returns the opt_comments of the user.
      * Whether the user allows comments on the profile or not.
      *
-     * @return int|null
+     * @return int
      */
-    public function getOptComments(): ?int
+    public function getOptComments(): int
     {
         return $this->opt_comments;
     }
@@ -362,9 +363,9 @@ class User extends \Ilch\Model
      * Get admin_comments of the user.
      * Whether the admin allows comments on the profile of this user or not.
      *
-     * @return int|null
+     * @return int
      */
-    public function getAdminComments(): ?int
+    public function getAdminComments(): int
     {
         return $this->admin_comments;
     }
@@ -385,9 +386,9 @@ class User extends \Ilch\Model
     /**
      * Returns the opt_gallery of the user.
      *
-     * @return int|null
+     * @return int
      */
-    public function getOptGallery(): ?int
+    public function getOptGallery(): int
     {
         return $this->opt_gallery;
     }

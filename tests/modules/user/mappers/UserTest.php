@@ -201,6 +201,9 @@ class UserTest extends DatabaseTestCase
         self::assertEquals(1, $users[0]->getConfirmed());
     }
 
+    /**
+     * Tests that getUserBySelector() returns the correct user including the expires date.
+     */
     public function testGetUserBySelectorWithExpires()
     {
         $user = $this->out->getUserBySelector('selector1');
@@ -212,6 +215,9 @@ class UserTest extends DatabaseTestCase
         );
     }
 
+    /**
+     * Tests that save() persists the expires date of a new user, which is returned unchanged when the user is reloaded.
+     */
     public function testSaveWithExpiresRoundTrip()
     {
         $user = new UserModel();
