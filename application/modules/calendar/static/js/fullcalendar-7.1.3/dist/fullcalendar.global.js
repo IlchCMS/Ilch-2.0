@@ -1,5 +1,5 @@
 /*!
-FullCalendar (Vanilla JS) v7.1.2
+FullCalendar (Vanilla JS) v7.1.3
 Docs & License: https://fullcalendar.io
 (c) 2026 Adam Shaw
 */
@@ -2524,7 +2524,7 @@ var FullCalendar = (function (exports) {
       }
   }
 
-  var classNames = {"popoverZ":"fc-pC","isolate":"fc-6P","borderBoxRoot":"fc-Bx","notAllowed":"fc-mk","noScrollbars":"fc-a7","noShrink":"fc-HQ","calendarScreenRoot":"fc-1P","safeTiles":"fc-0W","calendarPrintRoot":"fc-r9","cursorPointer":"fc-7z","cursorResizeT":"fc-zZ","cursorResizeB":"fc-lP","cursorResizeS":"fc-i1","cursorResizeE":"fc-Vx","cursorColResizer":"fc-d1","hit":"fc-MT","hitX":"fc-DF","hitY":"fc-8g","hitXSkinny":"fc-h2","selectNone":"fc-qy","invisible":"fc-bD","borderless":"fc-2H","borderlessX":"fc-dp","borderlessY":"fc-jZ","borderlessTop":"fc-Ii","borderlessBottom":"fc-n6","borderlessStart":"fc-et","borderlessEnd":"fc-D4","flexRow":"fc-Pr","flexCol":"fc-HN","grow":"fc-fJ","liquid":"fc-Sd","minHeight0":"fc-th","liquidX":"fc-b9","printTable":"fc-rA","noPadding":"fc-Kg","noPaddingY":"fc-xd","noMargin":"fc-yn","noMarginY":"fc-Wv","noMarginX":"fc-MH","whiteSpaceNoWrap":"fc-md","whiteSpacePre":"fc-j4","overflowAnchorNone":"fc-1z","pointerEventsNone":"fc-gx","crop":"fc-BD","cropNowrap":"fc-C8","rel":"fc-Fk","abs":"fc-C3","start0":"fc-VV","end0":"fc-v1","fill":"fc-03","fillTop":"fc-FO","fillX":"fc-E2","fillY":"fc-4C","fillStart":"fc-LK","sticky":"fc-Pk","stickyT":"fc-Ja","stickyS":"fc-5k","tableHeaderSticky":"fc-VG","contentBox":"fc-Mp","offscreen":"fc-LD","srOnly":"fc-T1","alignCenter":"fc-Ky","alignStart":"fc-mb","alignEnd":"fc-T5","footerScrollbarSticky":"fc-ET","footerScrollbar":"fc-9W","breakInsideAvoid":"fc-WO","printCellContentMinHeight":"fc-2g","flowRoot":"fc-ae","z0":"fc-Vm","z1":"fc-fo","z2":"fc-cu","z3":"fc-mQ","z4":"fc-b3","z5":"fc-OM","z1000":"fc-4L","z9999":"fc-fM","focusZ2":"fc-f6","internalTimelineSlot":"fc-Hk","internalEvent":"fc-fj","internalEventMirror":"fc-z3","internalEventDraggable":"fc-Uu","internalEventSelected":"fc-s5","internalEventResizable":"fc-Zk","internalEventResizer":"fc-76","internalEventResizerStart":"fc-sc","internalEventResizerEnd":"fc-GQ","internalBgEvent":"fc-Xs","internalMoreLink":"fc-lE","internalNavLink":"fc-Io","internalPopover":"fc-qN","internalView":"fc-ve","internalScroller":"fc-P9"};
+  var classNames = {"popoverZ":"fc-pj","isolate":"fc-L2","borderBoxRoot":"fc-oK","notAllowed":"fc-Nr","noScrollbars":"fc-h3","noShrink":"fc-s2","calendarScreenRoot":"fc-Qd","safeTiles":"fc-j1","calendarPrintRoot":"fc-Fn","cursorPointer":"fc-3A","cursorResizeT":"fc-3Z","cursorResizeB":"fc-Bn","cursorResizeS":"fc-Bs","cursorResizeE":"fc-mJ","cursorColResizer":"fc-xg","hit":"fc-B6","hitX":"fc-If","hitY":"fc-uS","hitXSkinny":"fc-gw","selectNone":"fc-Qx","invisible":"fc-DP","borderless":"fc-m0","borderlessX":"fc-lH","borderlessY":"fc-T4","borderlessTop":"fc-7v","borderlessBottom":"fc-C1","borderlessStart":"fc-QG","borderlessEnd":"fc-N5","flexRow":"fc-4L","flexCol":"fc-Ir","grow":"fc-o7","liquid":"fc-bx","minHeight0":"fc-PC","liquidX":"fc-rJ","printTable":"fc-2n","noPadding":"fc-Ib","noPaddingY":"fc-ho","noMargin":"fc-Yg","noMarginY":"fc-4U","noMarginX":"fc-mC","whiteSpaceNoWrap":"fc-XZ","whiteSpacePre":"fc-5Z","overflowAnchorNone":"fc-0T","pointerEventsNone":"fc-8Y","crop":"fc-Zz","cropNowrap":"fc-Sr","rel":"fc-7Q","abs":"fc-Rs","start0":"fc-Hv","end0":"fc-97","fill":"fc-ou","fillTop":"fc-b1","fillX":"fc-7k","fillY":"fc-5V","fillStart":"fc-Z6","sticky":"fc-TI","stickyT":"fc-G7","stickyS":"fc-lC","tableHeaderSticky":"fc-hw","contentBox":"fc-Ap","offscreen":"fc-hI","srOnly":"fc-GR","alignCenter":"fc-Hi","alignStart":"fc-Yj","alignEnd":"fc-io","footerScrollbarSticky":"fc-4I","footerScrollbar":"fc-Nd","breakInsideAvoid":"fc-Gu","printCellContentMinHeight":"fc-2s","flowRoot":"fc-es","z0":"fc-QB","z1":"fc-eY","z2":"fc-qd","z3":"fc-9p","z4":"fc-65","z5":"fc-Hy","z1000":"fc-T7","z9999":"fc-mO","focusZ2":"fc-zL","internalTimelineSlot":"fc-7y","internalEvent":"fc-Rq","internalEventMirror":"fc-wf","internalEventDraggable":"fc-QY","internalEventSelected":"fc-1d","internalEventResizable":"fc-3d","internalEventResizer":"fc-bM","internalEventResizerStart":"fc-ik","internalEventResizerEnd":"fc-lw","internalBgEvent":"fc-Sz","internalMoreLink":"fc-4D","internalNavLink":"fc-Wa","internalPopover":"fc-JJ","internalView":"fc-Ix","internalScroller":"fc-0s"};
 
   function joinClassNames(...args) {
       return args.filter(Boolean).join(' ');
@@ -2776,6 +2776,74 @@ var FullCalendar = (function (exports) {
       };
   }
 
+  // TODO: new util arrayify?
+  // Array.prototype.slice.call(
+  function flatArray(items) {
+      const res = [];
+      for (const item of items) {
+          if (Array.isArray(item)) {
+              for (const subItem of item) {
+                  res.push(subItem);
+              }
+          }
+          else {
+              res.push(item);
+          }
+      }
+      return res;
+  }
+  function flatMapArray(inputs, mapFunc) {
+      const res = [];
+      for (let i = 0; i < inputs.length; i += 1) {
+          const output = mapFunc(inputs[i], i);
+          if (Array.isArray(output)) {
+              for (const subOutput of output) {
+                  res.push(subOutput);
+              }
+          }
+          else {
+              res.push(output);
+          }
+      }
+      return res;
+  }
+  function removeExact(array, exactItem) {
+      let removeCnt = 0;
+      let i = 0;
+      while (i < array.length) {
+          if (array[i] === exactItem) {
+              array.splice(i, 1);
+              removeCnt += 1;
+          }
+          else {
+              i += 1;
+          }
+      }
+      return removeCnt;
+  }
+  function isMaybeArraysEqual(array0, array1) {
+      if (Array.isArray(array0) && Array.isArray(array1)) {
+          return isArraysEqual(array0, array1);
+      }
+      return array0 === array1;
+  }
+  function isArraysEqual(array0, array1, itemsEqual = valuesIdentical) {
+      if (array0 === array1) {
+          return true;
+      }
+      let len = array0.length;
+      let i;
+      if (len !== array1.length) { // not array? or not same length?
+          return false;
+      }
+      for (i = 0; i < len; i += 1) {
+          if (!itemsEqual(array0[i], array1[i])) {
+              return false;
+          }
+      }
+      return true;
+  }
+
   const { hasOwnProperty } = Object.prototype;
   // Filter / Map
   // -------------------------------------------------------------------------------------------------
@@ -2857,6 +2925,27 @@ var FullCalendar = (function (exports) {
   function isPropsEqualShallow(props0, props1) {
       return isPropsEqualWithFunc(props0, props1, valuesIdentical);
   }
+  /*
+  For range inputs like { start, end }. Functions are compared by reference
+  */
+  function isMaybeDateRangeInputsEqual(range0, range1) {
+      if (typeof range0 === 'object' &&
+          typeof range1 === 'object' &&
+          range0 && range1 // both non-null objects
+      ) {
+          return isPropsEqualWithFunc(range0, range1, isDateInputsEqual);
+      }
+      return range0 === range1;
+  }
+  function isDateInputsEqual(input0, input1) {
+      if (input0 instanceof Date && input1 instanceof Date) {
+          return input0.valueOf() === input1.valueOf();
+      }
+      if (Array.isArray(input0) && Array.isArray(input1)) {
+          return isArraysEqual(input0, input1);
+      }
+      return input0 === input1;
+  }
   function isPropsEqualWithMap(props0, props1, equalityFuncMap) {
       return isPropsEqualWithFunc(props0, props1, (val0, val1, key) => {
           const equalityFunc = equalityFuncMap[key];
@@ -2926,74 +3015,6 @@ var FullCalendar = (function (exports) {
   }
   function mergePropsShallow(props0, props1) {
       return Object.assign({}, props0, props1);
-  }
-
-  // TODO: new util arrayify?
-  // Array.prototype.slice.call(
-  function flatArray(items) {
-      const res = [];
-      for (const item of items) {
-          if (Array.isArray(item)) {
-              for (const subItem of item) {
-                  res.push(subItem);
-              }
-          }
-          else {
-              res.push(item);
-          }
-      }
-      return res;
-  }
-  function flatMapArray(inputs, mapFunc) {
-      const res = [];
-      for (let i = 0; i < inputs.length; i += 1) {
-          const output = mapFunc(inputs[i], i);
-          if (Array.isArray(output)) {
-              for (const subOutput of output) {
-                  res.push(subOutput);
-              }
-          }
-          else {
-              res.push(output);
-          }
-      }
-      return res;
-  }
-  function removeExact(array, exactItem) {
-      let removeCnt = 0;
-      let i = 0;
-      while (i < array.length) {
-          if (array[i] === exactItem) {
-              array.splice(i, 1);
-              removeCnt += 1;
-          }
-          else {
-              i += 1;
-          }
-      }
-      return removeCnt;
-  }
-  function isMaybeArraysEqual(array0, array1) {
-      if (Array.isArray(array0) && Array.isArray(array1)) {
-          return isArraysEqual(array0, array1);
-      }
-      return array0 === array1;
-  }
-  function isArraysEqual(array0, array1, itemsEqual = valuesIdentical) {
-      if (array0 === array1) {
-          return true;
-      }
-      let len = array0.length;
-      let i;
-      if (len !== array1.length) { // not array? or not same length?
-          return false;
-      }
-      for (i = 0; i < len; i += 1) {
-          if (!itemsEqual(array0[i], array1[i])) {
-              return false;
-          }
-      }
-      return true;
   }
 
   // base options
@@ -3457,6 +3478,10 @@ var FullCalendar = (function (exports) {
       events: isMaybeArraysEqual,
       eventSources: isMaybeArraysEqual,
       ['resources']: isMaybeArraysEqual,
+      // otherwise, an equal-but-new value, like from a React rerender, rebuilds the date profile (#7069)
+      validRange: isMaybeDateRangeInputsEqual,
+      visibleRange: isMaybeDateRangeInputsEqual,
+      hiddenDays: isMaybeArraysEqual,
   };
   // util funcs
   // ----------------------------------------------------------------------------------------------------
@@ -6785,7 +6810,8 @@ var FullCalendar = (function (exports) {
           let dayCnt = 0;
           let i;
           if (this.props.weekends === false) {
-              hiddenDays.push(0, 6); // 0=sunday, 6=saturday
+              // copy. mutating the user's array would make it unequal to their next equal-but-new array (#7069)
+              hiddenDays = hiddenDays.concat([0, 6]); // 0=sunday, 6=saturday
           }
           for (i = 0; i < 7; i += 1) {
               if (!(isHiddenDayHash[i] = hiddenDays.indexOf(i) !== -1)) {
@@ -7176,6 +7202,9 @@ var FullCalendar = (function (exports) {
               const { name } = unrefinedDef;
               if (!name) {
                   throw new Error('Plugin must specify a name');
+              }
+              if (unrefinedDef.majorVersionError) { // a plugin from an older major version, which can't work here
+                  throw new Error(unrefinedDef.majorVersionError);
               }
               if (!pluginsByName[name]) {
                   const def = pluginsByName[name] = refinePluginDef(unrefinedDef);
@@ -12135,6 +12164,8 @@ var FullCalendar = (function (exports) {
           this.buildPrintPlan = memoize(buildDayGridPrintPlan);
           this.sortEventSegs = memoize(sortEventSegs);
           this.levelCapacity = DEFAULT_LEVEL_CAPACITY;
+          // React 18 Strict Mode replays mount lifecycles without reattaching DOM refs.
+          // Keep height observation and cleanup tied to the DOM ref.
           this.handleRootEl = (rootEl) => {
               this.disconnectHeight?.();
               this.disconnectHeight = undefined;
@@ -12143,6 +12174,9 @@ var FullCalendar = (function (exports) {
                   this.disconnectHeight = watchHeight(rootEl, (contentHeight) => {
                       setRef(this.props.heightRef, contentHeight);
                   });
+              }
+              else {
+                  setRef(this.props.heightRef, null);
               }
           };
           this.handleSegPositioning = () => {
@@ -12372,8 +12406,6 @@ var FullCalendar = (function (exports) {
       }
       componentWillUnmount() {
           this._isUnmounting = true;
-          this.disconnectHeight?.();
-          setRef(this.props.heightRef, null);
       }
       computeFgDims() {
           const { cells } = this.props;
@@ -12707,7 +12739,6 @@ var FullCalendar = (function (exports) {
       }
       componentWillUnmount() {
           this._isUnmounting = true;
-          this.disconnectMoreLinkHeight?.();
       }
       // Hit System
       // -----------------------------------------------------------------------------------------------
@@ -13659,7 +13690,6 @@ var FullCalendar = (function (exports) {
       }
       componentWillUnmount() {
           this._isUnmounting = true;
-          this.disconnectMoreLinkHeight?.();
       }
       queryHit(isRtl, positionLeft, positionTop, elWidth) {
           const { props, heightRef } = this;
@@ -13711,6 +13741,27 @@ var FullCalendar = (function (exports) {
           slatHeight = slatMinHeight;
       }
       return [slatHeight, slatLiquid];
+  }
+  /*
+  The day of the column that the now-indicator is drawn within. Usually now's own day, but when slotMaxTime
+  extends past midnight, it might only be within the previous day's column (#6394).
+  Undefined if now isn't within any column.
+  */
+  function computeNowIndicatorDayDate(nowDate, nowIndicatorSegsByCol, cells) {
+      const nowDayMs = startOfDay(nowDate).valueOf();
+      let firstDayDate;
+      for (let col = 0; col < cells.length; col++) {
+          if (nowIndicatorSegsByCol[col]?.length) {
+              const { date } = cells[col];
+              if (date.valueOf() === nowDayMs) {
+                  return date;
+              }
+              if (!firstDayDate) {
+                  firstDayDate = date;
+              }
+          }
+      }
+      return firstDayDate;
   }
   /*
   A `startOfDayDate` must be given for avoiding ambiguity over how to treat midnight.
@@ -14304,7 +14355,7 @@ var FullCalendar = (function (exports) {
           // TODO: just do this on the entire canvas within the scroller
           className: joinClassNames(classNames.fill, classNames.crop, classNames.pointerEventsNone, classNames.z2), children: u$1(NowIndicatorHeaderContainer, { className: classNames.abs, style: {
                   top: props.totalHeight != null
-                      ? props.totalHeight * computeDateTopFrac(props.nowDate, props.dateProfile)
+                      ? props.totalHeight * computeDateTopFrac(props.nowDate, props.dateProfile, props.dayDate)
                       : undefined
               }, date: props.nowDate }) }));
   }
@@ -14583,7 +14634,9 @@ var FullCalendar = (function (exports) {
       render() {
           const { props, state, context, headerLabelInnerWidthRefMap, headerLabelInnerHeightRefMap, headerMainInnerHeightRefMap, slatLabelInnerWidthRefMap, slatLabelInnerHeightRefMap, } = this;
           const { nowDate, headerTiers, forPrint } = props;
-          const nowTimeMs = nowDate.valueOf() - startOfDay(nowDate).valueOf();
+          const nowIndicatorDayDate = (!forPrint && context.options.nowIndicator)
+              ? computeNowIndicatorDayDate(nowDate, props.nowIndicatorSegsByCol, props.cells)
+              : undefined;
           const { axisWidth, totalWidth, clientWidth, clientHeight, bodyHeight, sticykBottomScrollbarWidth } = state;
           const { options } = context;
           const { borderlessX, borderlessTop, borderlessBottom } = computeViewBorderless(options);
@@ -14652,9 +14705,7 @@ var FullCalendar = (function (exports) {
                                           width: axisWidth,
                                       }, ref: this.axisScrollerRef, clientHeightRef: this.handleBodyHeight, children: !simplePrint && (u$1(S, { children: u$1("div", { role: 'rowheader', className: joinClassNames(classNames.flexCol, classNames.grow, classNames.rel), style: {
                                                   height: forcedBodyHeight,
-                                              }, children: [u$1("div", { className: classNames.srOnly, children: options.timedText }), u$1("div", { "aria-hidden": true, className: joinClassNames(classNames.flexCol, (verticalScrolling && options.expandRows) && classNames.grow, absPrint && classNames.fillX), children: props.slatMetas.map((slatMeta, slatI) => (k$1(TimeGridSlatHeader, { ...slatMeta /* FYI doesn't need isoTimeStr */, key: slatMeta.key, innerWidthRef: slatLabelInnerWidthRefMap.createRef(slatMeta.key), innerHeightRef: slatLabelInnerHeightRefMap.createRef(slatMeta.key), borderTop: Boolean(slatI), isNarrow: cellIsNarrow, height: slatLiquidHeight ? undefined : slatHeight, liquidHeight: slatLiquidHeight }))) }), !forPrint && options.nowIndicator && rangeContainsMarker(props.dateProfile.currentRange, nowDate) &&
-                                                      nowTimeMs >= props.dateProfile.slotMinTime.milliseconds &&
-                                                      nowTimeMs < props.dateProfile.slotMaxTime.milliseconds && (u$1(TimeGridNowIndicatorArrow, { nowDate: nowDate, dateProfile: props.dateProfile, totalHeight: slatHeight != null ? slatHeight * slatCnt : undefined })), Boolean(rowsNotExpanding || bottomScrollbarWidth) && (u$1("div", { className: joinClassNames(generateClassName(options.fillerClass, { inTableHeader: false }), classNames.borderlessX, classNames.borderlessBottom, rowsNotExpanding && classNames.liquid), style: {
+                                              }, children: [u$1("div", { className: classNames.srOnly, children: options.timedText }), u$1("div", { "aria-hidden": true, className: joinClassNames(classNames.flexCol, (verticalScrolling && options.expandRows) && classNames.grow, absPrint && classNames.fillX), children: props.slatMetas.map((slatMeta, slatI) => (k$1(TimeGridSlatHeader, { ...slatMeta /* FYI doesn't need isoTimeStr */, key: slatMeta.key, innerWidthRef: slatLabelInnerWidthRefMap.createRef(slatMeta.key), innerHeightRef: slatLabelInnerHeightRefMap.createRef(slatMeta.key), borderTop: Boolean(slatI), isNarrow: cellIsNarrow, height: slatLiquidHeight ? undefined : slatHeight, liquidHeight: slatLiquidHeight }))) }), nowIndicatorDayDate && (u$1(TimeGridNowIndicatorArrow, { nowDate: nowDate, dayDate: nowIndicatorDayDate, dateProfile: props.dateProfile, totalHeight: slatHeight != null ? slatHeight * slatCnt : undefined })), Boolean(rowsNotExpanding || bottomScrollbarWidth) && (u$1("div", { className: joinClassNames(generateClassName(options.fillerClass, { inTableHeader: false }), classNames.borderlessX, classNames.borderlessBottom, rowsNotExpanding && classNames.liquid), style: {
                                                           minHeight: bottomScrollbarWidth
                                                       } }))] }) })) }), u$1("div", { className: generateClassName(options.slotHeaderDividerClass, {
                                           inTableHeader: false,
@@ -14807,7 +14858,9 @@ var FullCalendar = (function (exports) {
       render() {
           const { props, state, context, slatLabelInnerWidthRefMap, slatLabelInnerHeightRefMap, headerLabelInnerWidthRefMap } = this;
           const { nowDate, forPrint } = props;
-          const nowTimeMs = nowDate.valueOf() - startOfDay(nowDate).valueOf();
+          const nowIndicatorDayDate = (!forPrint && context.options.nowIndicator)
+              ? computeNowIndicatorDayDate(nowDate, props.nowIndicatorSegsByCol, props.cells)
+              : undefined;
           const { axisWidth, clientWidth, totalWidth } = state;
           const { options } = context;
           const { borderlessX, borderlessTop, borderlessBottom } = computeViewBorderless(options);
@@ -14884,9 +14937,7 @@ var FullCalendar = (function (exports) {
                                                               className: classNames.flexCol, style: { width: axisWidth }, children: k$1(TimeGridSlatHeader, { ...slatMeta /* FYI doesn't need isoTimeStr */, key: slatMeta.key, innerWidthRef: slatLabelInnerWidthRefMap.createRef(slatMeta.key), innerHeightRef: slatLabelInnerHeightRefMap.createRef(slatMeta.key), borderTop: Boolean(slatI), isNarrow: cellIsNarrow }) }), u$1("div", { className: generateClassName(options.slotHeaderDividerClass, {
                                                                   inTableHeader: false,
                                                                   options: { dayMinWidth: options.dayMinWidth },
-                                                              }), style: { visibility: 'hidden' } }), k$1(TimeGridSlatLane, { ...slatMeta /* FYI doesn't need isoTimeStr */, key: slatMeta.key, borderTop: Boolean(slatI) })] }, slatMeta.key))) }), rowsNotExpanding && (u$1("div", { className: joinClassNames(generateClassName(options.fillerClass, { inTableHeader: false }), classNames.borderlessX, classNames.borderlessBottom, classNames.liquid) })), !forPrint && options.nowIndicator && rangeContainsMarker(props.dateProfile.currentRange, nowDate) &&
-                                                  nowTimeMs >= props.dateProfile.slotMinTime.milliseconds &&
-                                                  nowTimeMs < props.dateProfile.slotMaxTime.milliseconds && (u$1(TimeGridNowIndicatorArrow, { nowDate: nowDate, dateProfile: props.dateProfile, totalHeight: slatHeight != null ? slatHeight * slatCnt : undefined }))] }))] }) })] }), u$1(Ruler, { widthRef: this.handleTotalWidth })] }));
+                                                              }), style: { visibility: 'hidden' } }), k$1(TimeGridSlatLane, { ...slatMeta /* FYI doesn't need isoTimeStr */, key: slatMeta.key, borderTop: Boolean(slatI) })] }, slatMeta.key))) }), rowsNotExpanding && (u$1("div", { className: joinClassNames(generateClassName(options.fillerClass, { inTableHeader: false }), classNames.borderlessX, classNames.borderlessBottom, classNames.liquid) })), nowIndicatorDayDate && (u$1(TimeGridNowIndicatorArrow, { nowDate: nowDate, dayDate: nowIndicatorDayDate, dateProfile: props.dateProfile, totalHeight: slatHeight != null ? slatHeight * slatCnt : undefined }))] }))] }) })] }), u$1(Ruler, { widthRef: this.handleTotalWidth })] }));
       }
       // Lifecycle
       // -----------------------------------------------------------------------------------------------
@@ -17118,7 +17169,7 @@ var FullCalendar = (function (exports) {
                           };
                           let transformed = {};
                           for (let transformer of initialContext.getCurrentData().pluginHooks.eventDropTransformers) {
-                              Object.assign(transformed, transformer(validMutation, initialContext));
+                              Object.assign(transformed, transformer(validMutation, initialContext, eventDef));
                           }
                           initialContext.emitter.trigger('eventDrop', {
                               ...eventChangeData,
@@ -18541,7 +18592,6 @@ var FullCalendar = (function (exports) {
           const { options } = this.context;
           this._isUnmounting = true;
           this.disconnectTitleHeight();
-          this.disconnectTableHeaderHeight?.();
           options.singleMonthWillUnmount?.({
               el: this.rootEl,
               ...this.renderProps,
@@ -18853,7 +18903,7 @@ var FullCalendar = (function (exports) {
       return sliceEventStore(props.eventStore, props.eventUiBases, props.dateProfile.activeRange, allDay ? props.nextDayThreshold : null).fg;
   }
 
-  const version = '7.1.2';
+  const version = '7.1.3';
 
   var protectedStyles = /*#__PURE__*/Object.freeze({
   	__proto__: null,

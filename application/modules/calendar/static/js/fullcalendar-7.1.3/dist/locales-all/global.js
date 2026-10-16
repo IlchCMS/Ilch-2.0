@@ -1,12 +1,12 @@
 /*!
-FullCalendar (Vanilla JS) v7.1.2
+FullCalendar (Vanilla JS) v7.1.3
 Docs & License: https://fullcalendar.io
 (c) 2026 Adam Shaw
 */
 (function ({ F: globalLocales }) {
   
 
-  var __zh_tw$l78 = {
+  var __zh_tw$l80 = {
       code: 'zh-tw',
       prevText: '上個',
       nextText: '下個',
@@ -21,7 +21,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: '沒有任何活動',
   };
 
-  var __zh_cn$l77 = {
+  var __zh_cn$l79 = {
       code: 'zh-cn',
       week: {
           // GB/T 7408-1994《数据元和交换格式·信息交换·日期和时间表示法》与ISO 8601:1988等效
@@ -43,7 +43,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: '没有事件显示',
   };
 
-  var __vi$l76 = {
+  var __vi$l78 = {
       code: 'vi',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -65,7 +65,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Không có sự kiện để hiển thị',
   };
 
-  var __uz$l75 = {
+  var __uz$l77 = {
       code: 'uz',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -86,7 +86,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Ko\'rsatish uchun voqealar yo\'q',
   };
 
-  var __uz_cy$l74 = {
+  var __uz_cy$l76 = {
       code: 'uz-cy',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -106,7 +106,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Кўрсатиш учун воқеалар йўқ',
   };
 
-  var __uk$l73 = {
+  var __uk$l75 = {
       code: 'uk',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -128,7 +128,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Немає подій для відображення',
   };
 
-  var __ug$l72 = {
+  var __ug$l74 = {
       code: 'ug',
       prevText: 'ئالدىنقى',
       nextText: 'كېيىنكى',
@@ -141,7 +141,7 @@ Docs & License: https://fullcalendar.io
       allDayText: 'پۈتۈن كۈن',
   };
 
-  var __tr$l71 = {
+  var __tr$l73 = {
       code: 'tr',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -161,7 +161,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Gösterilecek etkinlik yok',
   };
 
-  var __th$l70 = {
+  var __th$l72 = {
       code: 'th',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -182,7 +182,30 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'ไม่มีกิจกรรมที่จะแสดง',
   };
 
-  var __ta_in$l69 = {
+  var __tg$l71 = {
+      code: 'tg',
+      week: {
+          dow: 1, // Monday is the first day of the week.
+          doy: 7, // The week that contains Jan 1st is the first week of the year.
+      },
+      prevText: 'Қаблӣ',
+      nextText: 'Баъдӣ',
+      todayText: 'Имрӯз',
+      yearText: 'Сол',
+      monthText: 'Моҳ',
+      weekTextLong: 'Ҳафта',
+      dayText: 'Рӯз',
+      listText: 'Рӯйхат',
+      allDayText: 'Тамоми рӯз',
+      moreLinkText(n) {
+          return '+ бештар ' + n;
+      },
+      noEventsText: 'Ҳеҷ рӯйдоде барои намоиш нест',
+      closeHint: 'Пӯшидан',
+      eventsHint: 'Рӯйдодҳо',
+  };
+
+  var __ta_in$l70 = {
       code: 'ta-in',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -203,7 +226,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'காண்பிக்க நிகழ்வுகள் இல்லை',
   };
 
-  var __sv$l68 = {
+  var __sv$l69 = {
       code: 'sv',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -239,7 +262,7 @@ Docs & License: https://fullcalendar.io
       eventsHint: 'Händelser',
   };
 
-  var __sr$l67 = {
+  var __sr$l68 = {
       code: 'sr',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -261,7 +284,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Nеma događaja za prikaz',
   };
 
-  var __sr_cyrl$l66 = {
+  var __sr_cyrl$l67 = {
       code: 'sr-cyrl',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -283,7 +306,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Нема догађаја за приказ',
   };
 
-  var __sq$l65 = {
+  var __sq$l66 = {
       code: 'sq',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -305,7 +328,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Nuk ka evente për të shfaqur',
   };
 
-  var __sm$l64 = {
+  var __sm$l65 = {
       code: 'sm',
       prevText: 'Talu ai',
       nextText: 'Mulimuli atu',
@@ -320,7 +343,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Leai ni mea na tutupu',
   };
 
-  var __sl$l63 = {
+  var __sl$l64 = {
       code: 'sl',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -339,7 +362,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Ni dogodkov za prikaz',
   };
 
-  var __sk$l62 = {
+  var __sk$l63 = {
       code: 'sk',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -361,7 +384,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Žiadne akcie na zobrazenie',
   };
 
-  var __si_lk$l61 = {
+  var __si_lk$l62 = {
       code: 'si-lk',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -381,7 +404,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'මුකුත් නැත',
   };
 
-  var __ru$l60 = {
+  var __ru$l61 = {
       code: 'ru',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -403,7 +426,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Нет событий для отображения',
   };
 
-  var __ro$l59 = {
+  var __ro$l60 = {
       code: 'ro',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -425,7 +448,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Nu există evenimente de afișat',
   };
 
-  var __pt$l58 = {
+  var __pt$l59 = {
       code: 'pt',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -445,7 +468,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Não há eventos para mostrar',
   };
 
-  var __pt_br$l57 = {
+  var __pt_br$l58 = {
       code: 'pt-br',
       prevText: 'Anterior',
       nextText: 'Próximo',
@@ -480,7 +503,7 @@ Docs & License: https://fullcalendar.io
       eventsHint: 'Eventos',
   };
 
-  var __pl$l56 = {
+  var __pl$l57 = {
       code: 'pl',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -500,7 +523,16 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Brak wydarzeń do wyświetlenia',
   };
 
-  var __nn$l55 = {
+  function __nn$unitLabel(unitText) {
+      return (unitText || 'periode').toLocaleLowerCase('nn');
+  }
+  const __nn$todayHints = {
+      day: 'I dag',
+      week: 'Denne veka',
+      month: 'Denne månaden',
+      year: 'I år',
+  };
+  var __nn$l56 = {
       code: 'nn',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -516,10 +548,28 @@ Docs & License: https://fullcalendar.io
       listText: 'Agenda',
       allDayText: 'Heile\ndagen',
       moreLinkText: 'til',
-      noEventsText: 'Ingen hendelser å vise',
+      noEventsText: 'Ingen hendingar å vise',
+      prevHint(unitText) {
+          return `Førre ${__nn$unitLabel(unitText)}`;
+      },
+      nextHint(unitText) {
+          return `Neste ${__nn$unitLabel(unitText)}`;
+      },
+      todayHint(unitText, unit) {
+          return __nn$todayHints[unit] || `Noverande ${__nn$unitLabel(unitText)}`;
+      },
+      viewHint(unitText) {
+          return `Vis ${__nn$unitLabel(unitText)}`;
+      },
+      navLinkHint: 'Gå til $0',
+      moreLinkHint(eventCnt) {
+          return `Vis ${eventCnt} hending${eventCnt === 1 ? '' : 'ar'} til`;
+      },
+      closeHint: 'Lukk',
+      eventsHint: 'Hendingar',
   };
 
-  var __nl$l54 = {
+  var __nl$l55 = {
       code: 'nl',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -538,7 +588,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Geen evenementen om te laten zien',
   };
 
-  var __ne$l53 = {
+  var __ne$l54 = {
       code: 'ne', // code for nepal
       week: {
           dow: 7, // Sunday is the first day of the week.
@@ -557,7 +607,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'देखाउनको लागि कुनै घटनाहरू छैनन्',
   };
 
-  var __nb$l52 = {
+  var __nb$l53 = {
       code: 'nb',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -584,7 +634,7 @@ Docs & License: https://fullcalendar.io
       },
   };
 
-  var __ms$l51 = {
+  var __ms$l52 = {
       code: 'ms',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -606,7 +656,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Tiada peristiwa untuk dipaparkan',
   };
 
-  var __mk$l50 = {
+  var __mk$l51 = {
       code: 'mk',
       prevText: 'претходно',
       nextText: 'следно',
@@ -624,7 +674,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Нема настани за прикажување',
   };
 
-  var __lv$l49 = {
+  var __lv$l50 = {
       code: 'lv',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -646,7 +696,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Nav notikumu',
   };
 
-  var __lt$l48 = {
+  var __lt$l49 = {
       code: 'lt',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -666,7 +716,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Nėra įvykių rodyti',
   };
 
-  var __lb$l47 = {
+  var __lb$l48 = {
       code: 'lb',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -686,7 +736,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Nee Evenementer ze affichéieren',
   };
 
-  var __ku$l46 = {
+  var __ku$l47 = {
       code: 'ku',
       week: {
           dow: 6, // Saturday is the first day of the week.
@@ -706,22 +756,24 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'هیچ ڕووداوێك نیە',
   };
 
-  var __ko$l45 = {
+  var __ko$l46 = {
       code: 'ko',
-      prevText: '이전달',
-      nextText: '다음달',
+      prevText: '이전',
+      nextText: '다음',
       todayText: '오늘',
-      yearText: '년도',
+      yearText: '연도',
       monthText: '월',
       weekTextLong: '주',
       dayText: '일',
-      listText: '일정목록',
+      listText: '일정',
       allDayText: '종일',
-      moreLinkText: '개',
+      moreLinkText(n) {
+          return `+${n}개 더보기`;
+      },
       noEventsText: '일정이 없습니다',
   };
 
-  var __km$l44 = {
+  var __km$l45 = {
       code: 'km',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -740,7 +792,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'គ្មានព្រឹត្តិការណ៍ត្រូវបង្ហាញ',
   };
 
-  var __kk$l43 = {
+  var __kk$l44 = {
       code: 'kk',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -761,7 +813,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Көрсету үшін оқиғалар жоқ',
   };
 
-  var __ka$l42 = {
+  var __ka$l43 = {
       code: 'ka',
       week: {
           dow: 1,
@@ -783,7 +835,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'ღონისძიებები არ არის',
   };
 
-  var __ja$l41 = {
+  var __ja$l42 = {
       code: 'ja',
       prevText: '前',
       nextText: '次',
@@ -800,7 +852,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: '表示する予定はありません',
   };
 
-  var __it$l40 = {
+  var __it$l41 = {
       code: 'it',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -822,7 +874,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Non ci sono eventi da visualizzare',
   };
 
-  var __is$l39 = {
+  var __is$l40 = {
       code: 'is',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -841,7 +893,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Engir viðburðir til að sýna',
   };
 
-  var __id$l38 = {
+  var __id$l39 = {
       code: 'id',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -861,7 +913,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Tidak ada acara untuk ditampilkan',
   };
 
-  var __hy_am$l37 = {
+  var __hy_am$l38 = {
       code: 'hy-am',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -883,7 +935,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Բացակայում է իրադարձությունը ցուցադրելու',
   };
 
-  var __hu$l36 = {
+  var __hu$l37 = {
       code: 'hu',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -902,7 +954,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Nincs megjeleníthető esemény',
   };
 
-  var __hr$l35 = {
+  var __hr$l36 = {
       code: 'hr',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -924,7 +976,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Nema događaja za prikaz',
   };
 
-  var __hi$l34 = {
+  var __hi$l35 = {
       code: 'hi',
       week: {
           dow: 0, // Sunday is the first day of the week.
@@ -946,7 +998,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'कोई घटनाओं को प्रदर्शित करने के लिए',
   };
 
-  var __he$l33 = {
+  var __he$l34 = {
       code: 'he',
       direction: 'rtl',
       prevText: 'הקודם',
@@ -962,7 +1014,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'אין אירועים להצגה',
   };
 
-  var __gl$l32 = {
+  var __gl$l33 = {
       code: 'gl',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -997,7 +1049,7 @@ Docs & License: https://fullcalendar.io
       eventsHint: 'Eventos',
   };
 
-  var __fr$l31 = {
+  var __fr$l32 = {
       code: 'fr',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1017,7 +1069,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Aucun évènement à afficher',
   };
 
-  var __fr_ch$l30 = {
+  var __fr_ch$l31 = {
       code: 'fr-ch',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1037,7 +1089,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Aucun évènement à afficher',
   };
 
-  var __fr_ca$l29 = {
+  var __fr_ca$l30 = {
       code: 'fr',
       prevText: 'Précédent',
       nextText: 'Suivant',
@@ -1053,7 +1105,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Aucun évènement à afficher',
   };
 
-  var __fi$l28 = {
+  var __fi$l29 = {
       code: 'fi',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1073,7 +1125,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Ei näytettäviä tapahtumia',
   };
 
-  var __fa$l27 = {
+  var __fa$l28 = {
       code: 'fa',
       week: {
           dow: 6, // Saturday is the first day of the week.
@@ -1082,6 +1134,8 @@ Docs & License: https://fullcalendar.io
       direction: 'rtl',
       prevText: 'قبلی',
       nextText: 'بعدی',
+      prevYearText: 'سال قبل',
+      nextYearText: 'سال بعد',
       todayText: 'امروز',
       yearText: 'سال',
       monthText: 'ماه',
@@ -1091,12 +1145,28 @@ Docs & License: https://fullcalendar.io
       listText: 'برنامه',
       allDayText: 'تمام روز',
       moreLinkText(n) {
-          return 'بیش از ' + n;
+          return '+' + n + ' بیشتر';
       },
-      noEventsText: 'هیچ رویدادی به نمایش',
+      noEventsText: 'هیچ رویدادی برای نمایش یافت نشد',
+      prevHint: '$0 قبلی',
+      nextHint: '$0 بعدی',
+      todayHint(unitText, unit) {
+          // → امروز, این هفته, این ماه, امسال
+          if (unit === 'day') {
+              return 'امروز';
+          }
+          if (unit === 'year') {
+              return 'امسال';
+          }
+          return `این ${unitText || 'دوره'}`;
+      },
+      viewHint: 'مشاهده $0',
+      navLinkHint: 'برو به $0',
+      closeHint: 'بستن',
+      eventsHint: 'رویدادها',
   };
 
-  var __eu$l26 = {
+  var __eu$l27 = {
       code: 'eu',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1116,7 +1186,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Ez dago ekitaldirik erakusteko',
   };
 
-  var __et$l25 = {
+  var __et$l26 = {
       code: 'et',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1138,7 +1208,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Kuvamiseks puuduvad sündmused',
   };
 
-  var __es$l24 = {
+  var __es$l25 = {
       code: 'es',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1173,7 +1243,7 @@ Docs & License: https://fullcalendar.io
       eventsHint: 'Eventos',
   };
 
-  var __es_us$l23 = {
+  var __es_us$l24 = {
       code: 'es',
       week: {
           dow: 0, // Sunday is the first day of the week.
@@ -1202,7 +1272,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'No hay eventos para mostrar',
   };
 
-  var __eo$l22 = {
+  var __eo$l23 = {
       code: 'eo',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1222,7 +1292,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Neniuj eventoj por montri',
   };
 
-  var __en_nz$l21 = {
+  var __en_nz$l22 = {
       code: 'en-nz',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1239,7 +1309,7 @@ Docs & License: https://fullcalendar.io
       },
   };
 
-  var __en_gb$l20 = {
+  var __en_gb$l21 = {
       code: 'en-gb',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1256,7 +1326,7 @@ Docs & License: https://fullcalendar.io
       },
   };
 
-  var __en_au$l19 = {
+  var __en_au$l20 = {
       code: 'en-au',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1273,7 +1343,7 @@ Docs & License: https://fullcalendar.io
       },
   };
 
-  var __el$l18 = {
+  var __el$l19 = {
       code: 'el',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1297,7 +1367,13 @@ Docs & License: https://fullcalendar.io
       return (unitText === 'Tag' || unitText === 'Monat') ? 'r' :
           unitText === 'Jahr' ? 's' : '';
   }
-  var __de$l17 = {
+  const __de$viewHints = {
+      Tag: 'Tagesansicht',
+      Woche: 'Wochenansicht',
+      Monat: 'Monatsansicht',
+      Jahr: 'Jahresansicht',
+  };
+  var __de$l18 = {
       code: 'de',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1331,9 +1407,8 @@ Docs & License: https://fullcalendar.io
           return `Diese${__de$affix(unitText)} ${unitText}`;
       },
       viewHint(unitText) {
-          // → Tagesansicht, Wochenansicht, Monatsansicht, Jahresansicht
-          const glue = unitText === 'Woche' ? 'n' : unitText === 'Monat' ? 's' : 'es';
-          return unitText + glue + 'ansicht';
+          // other button text, like Terminübersicht, already names the view
+          return __de$viewHints[unitText] || unitText;
       },
       navLinkHint: 'Gehe zu $0',
       moreLinkHint(eventCnt) {
@@ -1349,7 +1424,13 @@ Docs & License: https://fullcalendar.io
       return (unitText === 'Tag' || unitText === 'Monat') ? 'r' :
           unitText === 'Jahr' ? 's' : '';
   }
-  var __de_at$l16 = {
+  const __de_at$viewHints = {
+      Tag: 'Tagesansicht',
+      Woche: 'Wochenansicht',
+      Monat: 'Monatsansicht',
+      Jahr: 'Jahresansicht',
+  };
+  var __de_at$l17 = {
       code: 'de-at',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1383,9 +1464,8 @@ Docs & License: https://fullcalendar.io
           return `Diese${__de_at$affix(unitText)} ${unitText}`;
       },
       viewHint(unitText) {
-          // → Tagesansicht, Wochenansicht, Monatsansicht, Jahresansicht
-          const glue = unitText === 'Woche' ? 'n' : unitText === 'Monat' ? 's' : 'es';
-          return unitText + glue + 'ansicht';
+          // other button text, like Terminübersicht, already names the view
+          return __de_at$viewHints[unitText] || unitText;
       },
       navLinkHint: 'Gehe zu $0',
       moreLinkHint(eventCnt) {
@@ -1397,7 +1477,7 @@ Docs & License: https://fullcalendar.io
       eventsHint: 'Ereignisse',
   };
 
-  var __da$l15 = {
+  var __da$l16 = {
       code: 'da',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1416,7 +1496,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Ingen arrangementer at vise',
   };
 
-  var __cy$l14 = {
+  var __cy$l15 = {
       code: 'cy',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1435,7 +1515,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Dim digwyddiadau',
   };
 
-  var __cs$l13 = {
+  var __cs$l14 = {
       code: 'cs',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1443,7 +1523,7 @@ Docs & License: https://fullcalendar.io
       },
       prevText: 'Dříve',
       nextText: 'Později',
-      todayText: 'Nyní',
+      todayText: 'Dnes',
       yearText: 'Rok',
       monthText: 'Měsíc',
       weekTextLong: 'Týden',
@@ -1457,7 +1537,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Žádné akce k zobrazení',
   };
 
-  var __ca$l12 = {
+  var __ca$l13 = {
       code: 'ca',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1477,7 +1557,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'No hi ha esdeveniments per mostrar',
   };
 
-  var __bs$l11 = {
+  var __bs$l12 = {
       code: 'bs',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1499,7 +1579,7 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'Nema događaja za prikazivanje',
   };
 
-  var __bn$l10 = {
+  var __bn$l11 = {
       code: 'bn',
       week: {
           dow: 0, // Sunday is the first day of the week.
@@ -1520,7 +1600,14 @@ Docs & License: https://fullcalendar.io
       noEventsText: 'কোনো ইভেন্ট নেই',
   };
 
-  var __bg$l9 = {
+  // седмица and година are feminine; ден, месец, and the период fallback are masculine
+  function __bg$isFeminine(unit) {
+      return unit === 'week' || unit === 'year';
+  }
+  function __bg$unitLabel(unitText) {
+      return (unitText || 'период').toLocaleLowerCase('bg');
+  }
+  var __bg$l10 = {
       code: 'bg',
       week: {
           dow: 1, // Monday is the first day of the week.
@@ -1539,6 +1626,48 @@ Docs & License: https://fullcalendar.io
           return '+още ' + n;
       },
       noEventsText: 'Няма събития за показване',
+      prevHint(unitText, unit) {
+          return `${__bg$isFeminine(unit) ? 'Предишна' : 'Предишен'} ${__bg$unitLabel(unitText)}`;
+      },
+      nextHint(unitText, unit) {
+          return `${__bg$isFeminine(unit) ? 'Следваща' : 'Следващ'} ${__bg$unitLabel(unitText)}`;
+      },
+      todayHint(unitText, unit) {
+          if (unit === 'day') {
+              return 'Днес';
+          }
+          return `${__bg$isFeminine(unit) ? 'Тази' : 'Този'} ${__bg$unitLabel(unitText)}`;
+      },
+      navLinkHint: 'Отиди на $0',
+      moreLinkHint(eventCnt) {
+          return eventCnt === 1 ? 'Покажи още едно събитие' : `Покажи още ${eventCnt} събития`;
+      },
+      closeHint: 'Затвори',
+      eventsHint: 'Събития',
+  };
+
+  var __be$l9 = {
+      code: 'be',
+      week: {
+          dow: 1, // Monday is the first day of the week.
+          doy: 7, // The week that contains Jan 1st is the first week of the year.
+      },
+      prevText: 'Папярэдні',
+      nextText: 'Наступны',
+      todayText: 'Сёння',
+      yearText: 'Год',
+      monthText: 'Месяц',
+      weekTextLong: 'Тыдзень',
+      weekTextShort: 'Тыд',
+      dayText: 'Дзень',
+      listText: 'Парадак дня',
+      allDayText: 'Увесь дзень',
+      moreLinkText(n) {
+          return '+ яшчэ ' + n;
+      },
+      noEventsText: 'Няма падзей для адлюстравання',
+      closeHint: 'Закрыць',
+      eventsHint: 'Падзеі',
   };
 
   var __az$l8 = {
@@ -1722,7 +1851,7 @@ Docs & License: https://fullcalendar.io
   };
 
   globalLocales.push(
-    __af$l0, __ar_dz$l1, __ar_kw$l2, __ar_ly$l3, __ar_ma$l4, __ar_sa$l5, __ar_tn$l6, __ar$l7, __az$l8, __bg$l9, __bn$l10, __bs$l11, __ca$l12, __cs$l13, __cy$l14, __da$l15, __de_at$l16, __de$l17, __el$l18, __en_au$l19, __en_gb$l20, __en_nz$l21, __eo$l22, __es_us$l23, __es$l24, __et$l25, __eu$l26, __fa$l27, __fi$l28, __fr_ca$l29, __fr_ch$l30, __fr$l31, __gl$l32, __he$l33, __hi$l34, __hr$l35, __hu$l36, __hy_am$l37, __id$l38, __is$l39, __it$l40, __ja$l41, __ka$l42, __kk$l43, __km$l44, __ko$l45, __ku$l46, __lb$l47, __lt$l48, __lv$l49, __mk$l50, __ms$l51, __nb$l52, __ne$l53, __nl$l54, __nn$l55, __pl$l56, __pt_br$l57, __pt$l58, __ro$l59, __ru$l60, __si_lk$l61, __sk$l62, __sl$l63, __sm$l64, __sq$l65, __sr_cyrl$l66, __sr$l67, __sv$l68, __ta_in$l69, __th$l70, __tr$l71, __ug$l72, __uk$l73, __uz_cy$l74, __uz$l75, __vi$l76, __zh_cn$l77, __zh_tw$l78, 
+    __af$l0, __ar_dz$l1, __ar_kw$l2, __ar_ly$l3, __ar_ma$l4, __ar_sa$l5, __ar_tn$l6, __ar$l7, __az$l8, __be$l9, __bg$l10, __bn$l11, __bs$l12, __ca$l13, __cs$l14, __cy$l15, __da$l16, __de_at$l17, __de$l18, __el$l19, __en_au$l20, __en_gb$l21, __en_nz$l22, __eo$l23, __es_us$l24, __es$l25, __et$l26, __eu$l27, __fa$l28, __fi$l29, __fr_ca$l30, __fr_ch$l31, __fr$l32, __gl$l33, __he$l34, __hi$l35, __hr$l36, __hu$l37, __hy_am$l38, __id$l39, __is$l40, __it$l41, __ja$l42, __ka$l43, __kk$l44, __km$l45, __ko$l46, __ku$l47, __lb$l48, __lt$l49, __lv$l50, __mk$l51, __ms$l52, __nb$l53, __ne$l54, __nl$l55, __nn$l56, __pl$l57, __pt_br$l58, __pt$l59, __ro$l60, __ru$l61, __si_lk$l62, __sk$l63, __sl$l64, __sm$l65, __sq$l66, __sr_cyrl$l67, __sr$l68, __sv$l69, __ta_in$l70, __tg$l71, __th$l72, __tr$l73, __ug$l74, __uk$l75, __uz_cy$l76, __uz$l77, __vi$l78, __zh_cn$l79, __zh_tw$l80, 
   );
 
 })(FullCalendar.Shared);
