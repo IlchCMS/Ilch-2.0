@@ -737,31 +737,31 @@ class Statistic extends \Ilch\Mapper
                 if (preg_match('=Firefox/([\.a-zA-Z0-9]*)=', $useragent)) {
                     return 'Firefox';
                 }
-                if (preg_match('=MSIE ([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
+                if (preg_match('=MSIE ([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
                     return 'Internet Explorer';
                 }
-                if (preg_match('=rv:([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
+                if (preg_match('=rv:([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
                     return 'Internet Explorer';
                 }
                 if (preg_match('=Opera[/ ]([0-9\.]+)=', $useragent)) {
                     return 'Opera';
                 }
-                if (preg_match('=OPR\/([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
+                if (preg_match('=OPR\/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
                     return 'Opera';
                 }
-                if (preg_match('=Edge/([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
+                if (preg_match('=Edge/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
                     return 'Edge';
                 }
-                if (preg_match('=Edg/([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
+                if (preg_match('=Edg/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
                     return 'Edge';
                 }
-                if (preg_match('=Vivaldi\/([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
+                if (preg_match('=Vivaldi\/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
                     return 'Vivaldi';
                 }
-                if (preg_match('=SamsungBrowser\/([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
+                if (preg_match('=SamsungBrowser\/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
                     return 'Samsung Browser';
                 }
-                if (preg_match('=Chrome/([0-9]{1,2})\.[0-9]{1,2}=', $useragent)) {
+                if (preg_match('=Chrome/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
                     return 'Chrome';
                 }
                 if (str_contains($useragent, 'Safari/')) {
@@ -780,44 +780,44 @@ class Statistic extends \Ilch\Mapper
             if (preg_match('=Firefox/([\.a-zA-Z0-9]*)=', $useragent, $browser)) {
                 return $browser[1];
             }
-            if (preg_match('=MSIE ([0-9]{1,2})\.[0-9]{1,2}=', $useragent, $browser)) {
+            if (preg_match('=MSIE ([0-9]{1,3}\.[0-9]{1,3})=', $useragent, $browser)) {
                 return $browser[1];
             }
-            if (preg_match('=rv:([0-9]{1,2})\.[0-9]{1,2}=', $useragent, $browser)) {
+            if (preg_match('=rv:([0-9]{1,3}\.[0-9]{1,3})=', $useragent, $browser)) {
                 return $browser[1];
             }
             if (preg_match('=Opera[/ ]([0-9\.]+)=', $useragent, $browser)) {
                 return $browser[1];
             }
-            if (preg_match('=OPR\/([0-9]{1,2})\.[0-9]{1,2}=', $useragent, $browser)) {
+            if (preg_match('=OPR\/([0-9.]+)=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
                 }
                 return $browser[1];
             }
-            if (preg_match('=Edge/([0-9]{1,2})\.[0-9]{1,2}=', $useragent, $browser)) {
+            if (preg_match('=Edge/([0-9.]+)=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
                 }
                 return $browser[1];
             }
-            if (preg_match('=Edg/([0-9]{1,2})\.[0-9]{1,2}=', $useragent, $browser)) {
+            if (preg_match('=Edg/([0-9.]+)=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
                 }
                 return $browser[1];
             }
-            if (preg_match('=Vivaldi\/([0-9]{1,2})\.[0-9]{1,2}=', $useragent, $browser)) {
+            if (preg_match('=Vivaldi\/([0-9.]+)=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
                 }
                 return $browser[1];
             }
-            if (preg_match('=Chrome/([0-9]{1,2})\.[0-9]{1,2}=', $useragent, $browser)) {
+            if (preg_match('=Chrome/([0-9.]+)=', $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
