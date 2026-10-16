@@ -136,7 +136,7 @@ class Regist extends \Ilch\Controller\Frontend
 
                 $model = new UserModel();
                 if ($this->getConfig()->get('regist_confirm') == 0 && $this->getConfig()->get('regist_setfree') == 0) {
-                    $model->setDateConfirmed($currentDate->format('Y-m-d H:i:s', true));
+                    $model->setDateConfirmed($currentDate);
                 } else {
                     $selector = bin2hex(random_bytes(9));
                     // 33 bytes instead of 32 bytes just that the confirmedCode to confirm a registration
@@ -150,7 +150,7 @@ class Regist extends \Ilch\Controller\Frontend
                     ->setPassword((new PasswordService())->hash($this->getRequest()->getPost('password')))
                     ->setEmail($this->getRequest()->getPost('email'))
                     ->setLocale($this->getTranslator()->getLocale())
-                    ->setDateCreated($currentDate->format('Y-m-d H:i:s', true))
+                    ->setDateCreated($currentDate)
                     ->addGroup($userGroup);
                 $userId = $registMapper->save($model);
 

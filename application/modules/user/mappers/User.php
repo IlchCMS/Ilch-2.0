@@ -356,7 +356,7 @@ class User extends \Ilch\Mapper
         }
 
         if (isset($userRow['expires'])) {
-            $user->setExpires($userRow['expires']);
+            $user->setExpires(new IlchDate($userRow['expires']));
         }
 
         if (isset($userRow['locked'])) {
@@ -424,6 +424,7 @@ class User extends \Ilch\Mapper
         if ($user->getLocked() !== null) {
             $fields['locked'] = $user->getLocked();
         }
+
         if ($user->getSelectsDelete() !== null) {
             $fields['selectsdelete'] = $user->getSelectsDelete();
         }
@@ -611,8 +612,8 @@ class User extends \Ilch\Mapper
         $entries = $this->getUserList(['selectsdelete >' => '1000-01-01 00:00:00', 'selectsdelete <=' => $date]);
 
         foreach ($entries as $user) {
-            if ($user->getSelectsDelete() != '') {
-                $dateuser = new IlchDate($user->getSelectsDelete());
+            if ($user->getSelectsDelete() !== null) {
+                $dateuser = $user->getSelectsDelete();
                 if ($dateuser->getTimestamp() <= $date->getTimestamp()) {
                     $this->delete($user->getId());
                     $statisticMapper->deleteUserOnline($user->getId());

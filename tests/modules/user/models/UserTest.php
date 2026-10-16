@@ -316,7 +316,9 @@ class UserTest extends DatabaseTestCase
      * During installation the first user is created without explicitly setting
      * "confirmed". If the model default differs from the database default, the
      * stored value is silently wrong - e.g. the first user would not be
-     * confirmed and could not log in.
+     * confirmed and could not log in. The same applies to the opt-in flags,
+     * which are nullable in the schema and would be stored as NULL instead of
+     * the intended 1 on any creation path that does not set them.
      */
     public function testDefaultValuesMatchDatabaseSchema()
     {
@@ -339,6 +341,30 @@ class UserTest extends DatabaseTestCase
             0,
             $user->getGender(),
             'The default "gender" value of the user model is not 0 like in the users table.'
+        );
+        // `opt_mail` TINYINT(1) DEFAULT 1
+        self::assertEquals(
+            1,
+            $user->getOptMail(),
+            'The default "opt_mail" value of the user model is not 1 like in the users table. A user created without explicitly setting "opt_mail" (e.g. during registration) would be stored as NULL instead of 1.'
+        );
+        // `opt_comments` TINYINT(1) DEFAULT 1
+        self::assertEquals(
+            1,
+            $user->getOptComments(),
+            'The default "opt_comments" value of the user model is not 1 like in the users table. A user created without explicitly setting "opt_comments" (e.g. during registration) would be stored as NULL instead of 1.'
+        );
+        // `admin_comments` TINYINT(1) DEFAULT 1
+        self::assertEquals(
+            1,
+            $user->getAdminComments(),
+            'The default "admin_comments" value of the user model is not 1 like in the users table. A user created without explicitly setting "admin_comments" (e.g. during registration) would be stored as NULL instead of 1.'
+        );
+        // `opt_gallery` TINYINT(1) DEFAULT 1
+        self::assertEquals(
+            1,
+            $user->getOptGallery(),
+            'The default "opt_gallery" value of the user model is not 1 like in the users table. A user created without explicitly setting "opt_gallery" (e.g. during registration) would be stored as NULL instead of 1.'
         );
     }
 
