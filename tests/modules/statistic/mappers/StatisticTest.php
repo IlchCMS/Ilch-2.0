@@ -328,15 +328,24 @@ class StatisticTest extends DatabaseTestCase
     }
 
     /**
-     * Tests that getVisitsYearMonth() with month and year returns that month only.
+     * Tests that getVisitsYearMonth() always returns the per-month series of
+     * the year. It is called with 0 args (index: this year) or 1 arg (year
+     * view) and never filters to a single month; a second argument is
+     * silently ignored, so this pins down the real contract.
      */
-    public function testGetVisitsYearMonthWithMonth()
+    public function testGetVisitsYearMonthIgnoresExtraMonthArgument()
     {
         $result = $this->out->getVisitsYearMonth(2024, 6);
 
         self::assertNotNull($result);
-        self::assertCount(1, $result);
-        self::assertEquals(3, $result[0]->getVisits());
+        self::assertCount(2, $result);
+
+        // Same series as the 1-arg call: July (1), June (3), month DESC.
+        $visits = [];
+        foreach ($result as $model) {
+            $visits[] = $model->getVisits();
+        }
+        self::assertSame([1, 3], $visits);
     }
 
     /**
@@ -348,11 +357,11 @@ class StatisticTest extends DatabaseTestCase
     }
 
     /**
-     * Tests that getVisitsYearMonth() defaults to the current month (site-local).
+     * Tests that getVisitsYearMonth() defaults to all months of the current year (site-local).
      */
-    public function testGetVisitsYearMonthCurrentMonth()
+    public function testGetVisitsYearMonthCurrentYear()
     {
-        // Fixture rows are in 2024, so the current month is empty.
+        // Fixture rows are in 2024, so the current year is empty (unless run in 2024).
         self::assertNull($this->out->getVisitsYearMonth());
 
         $this->out->saveVisit($this->guestVisit());
