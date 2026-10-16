@@ -160,7 +160,7 @@ class Index extends \Ilch\Controller\Admin
 
             $model = new UserModel();
             $model->setId($this->getRequest()->getParam('id'));
-            $model->setDateConfirmed($date->format('Y-m-d H:i:s', true));
+            $model->setDateConfirmed($date);
             $model->setConfirmed(1);
             $userMapper->save($model);
 
@@ -323,7 +323,7 @@ class Index extends \Ilch\Controller\Admin
                     // The mail below links to "user/login/newpassword", which only accepts requests
                     // with a valid expiry date. Allow more time than for a password reset requested
                     // by the user themselves, because this mail is not triggered by the recipient.
-                    $user->setExpires(date('Y-m-d\TH:i:s', strtotime('+7 days')));
+                    $user->setExpires(new \Ilch\Date('+7 days'));
 
                     $name = $this->getLayout()->escape($user->getName());
                     $siteTitle = $this->getLayout()->escape($this->getConfig()->get('page_title'));

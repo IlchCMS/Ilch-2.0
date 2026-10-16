@@ -112,11 +112,14 @@ class Login extends \Ilch\Controller\Frontend
                 // The code has to be checked in every case. A missing or expired expiry date counts as
                 // invalid: otherwise knowing the selector alone would be enough to set a new password,
                 // because a selector created during registration is stored without an expiry date.
-                $validRequest = $user !== null
-                    && !empty($user->getExpires())
-                    && strtotime($user->getExpires()) >= time()
-                    && !empty($user->getConfirmedCode())
-                    && hash_equals($user->getConfirmedCode(), $confirmedCode);
+                $validRequest = false;
+                if ($user !== null) {
+                    $expires = $user->getExpires();
+                    $validRequest = $expires !== null
+                        && $expires->getTimestamp() >= time()
+                        && !empty($user->getConfirmedCode())
+                        && hash_equals($user->getConfirmedCode(), $confirmedCode);
+                }
 
                 if ($validRequest) {
                     Validation::setCustomFieldAliases([
@@ -181,7 +184,7 @@ class Login extends \Ilch\Controller\Frontend
                 $confirmedCode = bin2hex(random_bytes(32));
                 $user->setSelector($selector);
                 $user->setConfirmedCode($confirmedCode);
-                $user->setExpires(date('Y-m-d\TH:i:s', strtotime('+1 day')));
+                $user->setExpires(new \Ilch\Date('+1 day'));
                 if ($user->getId()) {
                     // TODO: Ideally call save() for a dummy user too. Currently not possible.
                     $userMapper->save($user);
