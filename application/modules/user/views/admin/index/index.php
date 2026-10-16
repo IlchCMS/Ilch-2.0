@@ -76,8 +76,10 @@
             </thead>
             <tbody>
             <?php
-            if ($this->get('userList') != '') :
-                foreach ($this->get('userList') as $user) :
+            /** @var \Modules\User\Models\User[] $userList */
+            $userList = $this->get('userList');
+            if ($userList != []) :
+                foreach ($userList as $user) :
                     $groups = '';
 
                     foreach ($user->getGroups() as $group) {
@@ -127,7 +129,7 @@
                             if ($this->get('timetodelete') > 0) {
                                 $date = new \Ilch\Date();
                                 $date->modify('-' . $this->get('timetodelete') . ' days');
-                                $dateuser = new \Ilch\Date($user->getSelectsDelete());
+                                $dateuser = $user->getSelectsDelete();
                                 $classadd = ($dateuser->getTimestamp() <= $date->getTimestamp() ? 'danger' : 'success');
                             } else {
                                 $classadd = 'danger';
