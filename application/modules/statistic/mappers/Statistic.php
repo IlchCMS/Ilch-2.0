@@ -34,8 +34,8 @@ class Statistic extends \Ilch\Mapper
 
         $users = [];
         foreach ($rows as $row) {
-            if ($row['user_id']) {
-                $users[] = $userMapper->getUserById($row['user_id']);
+            if ($row['user_id'] && ($user = $userMapper->getUserById($row['user_id'])) !== null) {
+                $users[] = $user;
             }
         }
 
@@ -299,9 +299,12 @@ class Statistic extends \Ilch\Mapper
      */
     public function getVisitsBrowser(?int $year = null, ?int $month = null, ?string $browser = null): ?array
     {
-        $browser = $this->db()->escape($browser);
+        if ($browser !== null) {
+            $browser = $this->db()->escape($browser);
+        }
+
         $sql = 'SELECT `browser`, COUNT(`id`) AS `visits`
-                FROM `[prefix]_visits_stats`';
+            FROM `[prefix]_visits_stats`';
         if ($month != null && $year != null && $browser != null) {
             $date = $year . '-' . $month . '-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '") AND browser = "' . $browser . '"';
@@ -317,7 +320,7 @@ class Statistic extends \Ilch\Mapper
         }
 
         $sql .= ' GROUP BY `browser`
-                  ORDER BY `visits` DESC';
+              ORDER BY `visits` DESC';
 
         $entryArray = $this->db()->queryArray($sql);
 
@@ -384,13 +387,16 @@ class Statistic extends \Ilch\Mapper
      */
     public function getVisitsOS(?int $year = null, ?int $month = null, ?string $os = null): ?array
     {
-        $os = $this->db()->escape($os);
+        if ($os !== null) {
+            $os = $this->db()->escape($os);
+        }
+
         $sql = 'SELECT 
-                MAX(`date`),
-                `os_version`,
-                `os`,
-                COUNT(`id`) AS `visits`
-                FROM `[prefix]_visits_stats`';
+            MAX(`date`),
+            `os_version`,
+            `os`,
+            COUNT(`id`) AS `visits`
+            FROM `[prefix]_visits_stats`';
         if ($month != null && $year != null && $os != null) {
             $date = $year . '-' . $month . '-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '") AND os = "' . $os . '"';
@@ -406,7 +412,7 @@ class Statistic extends \Ilch\Mapper
         }
 
         $sql .= ' GROUP BY `os`,`os_version`
-                  ORDER BY `visits` DESC';
+              ORDER BY `visits` DESC';
 
         $entryArray = $this->db()->queryArray($sql);
 
@@ -572,6 +578,10 @@ class Statistic extends \Ilch\Mapper
      */
     public function getPercent(int $count, int $totalcount): float
     {
+        if ($totalcount <= 0) {
+            return 0.0;
+        }
+
         return round(($count / $totalcount) * 100);
     }
 
@@ -876,19 +886,26 @@ class Statistic extends \Ilch\Mapper
         // not the DB server's CURDATE().
         $today = $date->format('Y-m-d', true);
 
+        // These values are interpolated into raw SQL below, so they must be
+        // escaped — session_id and especially the IP address can originate
+        // from client-supplied data (e.g. X-Forwarded-For).
+        $escapedSessionId = $this->db()->escape($row['session_id']);
+        $escapedIp = $this->db()->escape($row['ip']);
+        $userId = (int) $row['user_id'];
+
         $sql = 'SELECT id
-                FROM `[prefix]_visits_stats`';
+            FROM `[prefix]_visits_stats`';
 
         // Order by id and limit of 1 is necessary as because of a previous bug the database might contain multiple rows with the same user_id or ip-address on the same day.
-        if ($row['user_id']) {
+        if ($userId) {
             // Try to identify by session_id first as it should not change while the user is using the site.
             // If the user returns later (possible new session and re-authenticated with the remember me cookie) try to use the user id.
-            $sql .= ' WHERE (`session_id` = "' . $row['session_id'] . '" OR `user_id` = "' . $row['user_id'] . '") AND YEAR(`date`) = YEAR("' . $today . '") AND MONTH(`date`) = MONTH("' . $today . '") AND DAY(`date`) = DAY("' . $today . '")
-                      ORDER BY `id` DESC LIMIT 1';
+            $sql .= ' WHERE (`session_id` = "' . $escapedSessionId . '" OR `user_id` = "' . $userId . '") AND YEAR(`date`) = YEAR("' . $today . '") AND MONTH(`date`) = MONTH("' . $today . '") AND DAY(`date`) = DAY("' . $today . '")
+                  ORDER BY `id` DESC LIMIT 1';
         } else {
             // Session id might still be the same. If this returns no result then (in case of guests) fall-back to ip-address to avoid counting every visit with dropped session id.
-            $sql .= ' WHERE (`session_id` = "' . $row['session_id'] . '" OR (`ip_address` = "' . $row['ip'] . '" AND `user_id` = 0)) AND YEAR(`date`) = YEAR("' . $today . '") AND MONTH(`date`) = MONTH("' . $today . '") AND DAY(`date`) = DAY("' . $today . '")
-                      ORDER BY `id` DESC LIMIT 1';
+            $sql .= ' WHERE (`session_id` = "' . $escapedSessionId . '" OR (`ip_address` = "' . $escapedIp . '" AND `user_id` = 0)) AND YEAR(`date`) = YEAR("' . $today . '") AND MONTH(`date`) = MONTH("' . $today . '") AND DAY(`date`) = DAY("' . $today . '")
+                  ORDER BY `id` DESC LIMIT 1';
         }
 
         $uniqueUser = $this->db()->queryCell($sql);
