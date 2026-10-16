@@ -7,14 +7,47 @@
 
 namespace Modules\Statistic\Models;
 
+use Ilch\Registry;
 use PHPUnit\Framework\TestCase;
 
 class StatisticconfigModelTest extends TestCase
 {
     /**
-     * Tests that setSiteStatistic() sets and returns the value.
+     * Tests the list of known config names.
      */
-    public function testSetSiteStatistic()
+    public function testConfigNames()
+    {
+        $model = new Statisticconfig();
+
+        self::assertSame([
+            'siteStatistic',
+            'ilchVersionStatistic',
+            'modulesStatistic',
+            'visitsStatistic',
+            'browserStatistic',
+            'osStatistic',
+        ], $model->configNames);
+    }
+
+    /**
+     * Tests that default values are true for all statistics.
+     */
+    public function testDefaultValues()
+    {
+        $model = new Statisticconfig();
+
+        self::assertTrue($model->getSiteStatistic());
+        self::assertTrue($model->getIlchVersionStatistic());
+        self::assertTrue($model->getModulesStatistic());
+        self::assertTrue($model->getVisitsStatistic());
+        self::assertTrue($model->getBrowserStatistic());
+        self::assertTrue($model->getOsStatistic());
+    }
+
+    /**
+     * Tests that setSiteStatistic()/getSiteStatistic() work.
+     */
+    public function testGetSetSiteStatistic()
     {
         $model = new Statisticconfig();
         $model->setSiteStatistic(false);
@@ -23,9 +56,9 @@ class StatisticconfigModelTest extends TestCase
     }
 
     /**
-     * Tests that setIlchVersionStatistic() sets and returns the value.
+     * Tests that setIlchVersionStatistic()/getIlchVersionStatistic() work.
      */
-    public function testSetIlchVersionStatistic()
+    public function testGetSetIlchVersionStatistic()
     {
         $model = new Statisticconfig();
         $model->setIlchVersionStatistic(false);
@@ -34,9 +67,9 @@ class StatisticconfigModelTest extends TestCase
     }
 
     /**
-     * Tests that setModulesStatistic() sets and returns the value.
+     * Tests that setModulesStatistic()/getModulesStatistic() work.
      */
-    public function testSetModulesStatistic()
+    public function testGetSetModulesStatistic()
     {
         $model = new Statisticconfig();
         $model->setModulesStatistic(false);
@@ -45,9 +78,9 @@ class StatisticconfigModelTest extends TestCase
     }
 
     /**
-     * Tests that setVisitsStatistic() sets and returns the value.
+     * Tests that setVisitsStatistic()/getVisitsStatistic() work.
      */
-    public function testSetVisitsStatistic()
+    public function testGetSetVisitsStatistic()
     {
         $model = new Statisticconfig();
         $model->setVisitsStatistic(false);
@@ -56,9 +89,9 @@ class StatisticconfigModelTest extends TestCase
     }
 
     /**
-     * Tests that setBrowserStatistic() sets and returns the value.
+     * Tests that setBrowserStatistic()/getBrowserStatistic() work.
      */
-    public function testSetBrowserStatistic()
+    public function testGetSetBrowserStatistic()
     {
         $model = new Statisticconfig();
         $model->setBrowserStatistic(false);
@@ -67,9 +100,9 @@ class StatisticconfigModelTest extends TestCase
     }
 
     /**
-     * Tests that setOsStatistic() sets and returns the value.
+     * Tests that setOsStatistic()/getOsStatistic() work.
      */
-    public function testSetOsStatistic()
+    public function testGetSetOsStatistic()
     {
         $model = new Statisticconfig();
         $model->setOsStatistic(false);
@@ -114,21 +147,6 @@ class StatisticconfigModelTest extends TestCase
     }
 
     /**
-     * Tests that default values are true for all statistics.
-     */
-    public function testDefaultValues()
-    {
-        $model = new Statisticconfig();
-
-        self::assertTrue($model->getSiteStatistic());
-        self::assertTrue($model->getIlchVersionStatistic());
-        self::assertTrue($model->getModulesStatistic());
-        self::assertTrue($model->getVisitsStatistic());
-        self::assertTrue($model->getBrowserStatistic());
-        self::assertTrue($model->getOsStatistic());
-    }
-
-    /**
      * Tests that overwriting a previously set value works.
      */
     public function testOverwriteValues()
@@ -161,7 +179,7 @@ class StatisticconfigModelTest extends TestCase
     }
 
     /**
-     * Tests setByArray() with a CSV string (simulating DB value).
+     * Tests setByArray() with a comma separated string of ones.
      */
     public function testSetByArrayWithCsvString()
     {
@@ -177,7 +195,7 @@ class StatisticconfigModelTest extends TestCase
     }
 
     /**
-     * Tests setByArray() with a CSV string containing zeros.
+     * Tests setByArray() with a comma separated string of zeros.
      */
     public function testSetByArrayWithCsvStringZeros()
     {
@@ -190,6 +208,82 @@ class StatisticconfigModelTest extends TestCase
         self::assertFalse($model->getVisitsStatistic());
         self::assertFalse($model->getBrowserStatistic());
         self::assertFalse($model->getOsStatistic());
+    }
+
+    /**
+     * Tests setByArray() with named keys.
+     */
+    public function testSetByArrayWithNamedKeys()
+    {
+        $model = (new Statisticconfig())->setByArray(['siteStatistic' => false, 'osStatistic' => false]);
+
+        self::assertFalse($model->getSiteStatistic());
+        self::assertFalse($model->getOsStatistic());
+        self::assertTrue($model->getIlchVersionStatistic());
+        self::assertTrue($model->getModulesStatistic());
+        self::assertTrue($model->getVisitsStatistic());
+        self::assertTrue($model->getBrowserStatistic());
+    }
+
+    /**
+     * Tests that missing keys keep their default (true).
+     */
+    public function testSetByArrayWithMissingKeysKeepDefaults()
+    {
+        $model = (new Statisticconfig())->setByArray(['visitsStatistic' => false]);
+
+        self::assertTrue($model->getSiteStatistic());
+        self::assertFalse($model->getVisitsStatistic());
+        self::assertTrue($model->getOsStatistic());
+    }
+
+    /**
+     * Tests that setByArray() is chainable (returns $this).
+     */
+    public function testSetByArrayReturnsSelf()
+    {
+        $model = new Statisticconfig();
+
+        self::assertSame($model, $model->setByArray('1,1,1,1,1,1'));
+    }
+
+    public function testSetByArrayNullReadsRegistryConfig()
+    {
+        $registryConfig = new class {
+            public function get(string $key)
+            {
+                if ($key === 'statistic_visibleStats') {
+                    return '0,1,1,0,1,1';
+                }
+
+                return null;
+            }
+        };
+
+        // 'config' may already be registered (bootstrap or an earlier
+        // DatabaseTestCase test in the same process); Registry::set() throws then.
+        $hadConfig = Registry::has('config');
+        $previousConfig = $hadConfig ? Registry::get('config') : null;
+        Registry::remove('config');
+
+        try {
+            Registry::set('config', $registryConfig);
+
+            $model = (new Statisticconfig())->setByArray();
+
+            self::assertFalse($model->getSiteStatistic());
+            self::assertTrue($model->getIlchVersionStatistic());
+            self::assertTrue($model->getModulesStatistic());
+            self::assertFalse($model->getVisitsStatistic());
+            self::assertTrue($model->getBrowserStatistic());
+            self::assertTrue($model->getOsStatistic());
+        } finally {
+            Registry::remove('config');
+
+            if ($hadConfig) {
+                Registry::set('config', $previousConfig);
+            }
+        }
     }
 
     /**
@@ -261,6 +355,17 @@ class StatisticconfigModelTest extends TestCase
     }
 
     /**
+     * Tests setConfigBy() ignores unknown keys.
+     */
+    public function testSetConfigByUnknownKeyIsIgnored()
+    {
+        $model = (new Statisticconfig())->setConfigBy('bogus', false);
+
+        self::assertTrue($model->getSiteStatistic());
+        self::assertTrue($model->getOsStatistic());
+    }
+
+    /**
      * Tests getConfigString() returns CSV of all config values.
      */
     public function testGetConfigString()
@@ -284,6 +389,27 @@ class StatisticconfigModelTest extends TestCase
         $model = new Statisticconfig();
 
         self::assertSame('1,1,1,1,1,1', $model->getConfigString());
+    }
+
+    /**
+     * Tests getConfigString() round-trips values loaded via setByArray().
+     */
+    public function testGetConfigStringAfterSetByArray()
+    {
+        $model = (new Statisticconfig())->setByArray('1,0,1,1,0,1');
+
+        self::assertSame('1,0,1,1,0,1', $model->getConfigString());
+    }
+
+    /**
+     * Tests getConfigString() accepts another model instance.
+     */
+    public function testGetConfigStringAcceptsOtherModel()
+    {
+        $first = new Statisticconfig();
+        $second = (new Statisticconfig())->setByArray('0,1,1,0,1,1');
+
+        self::assertSame('0,1,1,0,1,1', $first->getConfigString($second));
     }
 
     /**
