@@ -246,32 +246,32 @@ class Config extends \Ilch\Config\Install
             case "1.9.1":
                 // no break
             case "1.9.2":
-                // Remove old version of fullcalendar as this version comes with version 6.1.10.
+                // Remove old version of FullCalendar as this version comes with version 6.1.10.
                 removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar_5_11_3/');
                 // no break
             case "1.10.0":
             case "1.11.0":
             case "1.11.1":
             case "1.11.2":
-                // Remove old version of fullcalendar as this version comes with version 6.1.15.
+                // Remove old version of FullCalendar as this version comes with version 6.1.15.
                 removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar-6.1.10/');
                 // no break
             case "1.11.3":
-                // Remove old version of fullcalendar as this version comes with version 6.1.17.
+                // Remove old version of FullCalendar as this version comes with version 6.1.17.
                 removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar-6.1.15/');
                 // no break
             case "1.11.4":
             case "1.11.5":
             case "1.11.6":
-                // Remove old version of fullcalendar as this version comes with version 7.0.0.
+                // Remove old version of FullCalendar as this version comes with version 7.0.0.
                 removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar-6.1.17/');
                 // no break
             case "1.11.7":
-                // Remove old version of fullcalendar as this version comes with version 7.1.0.
+                // Remove old version of FullCalendar as this version comes with version 7.1.0.
                 removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar-7.0.0/');
                 // no break
             case "1.11.8":
-                // Remove old version of fullcalendar as this version comes with version 7.1.2.
+                // Remove old version of FullCalendar as this version comes with version 7.1.3.
                 removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar-7.1.0/');
                 // no break
         }
