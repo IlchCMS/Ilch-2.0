@@ -58,7 +58,13 @@ class StatisticAggregate extends \Ilch\Mapper
     private const DEFAULT_MONTHLY_LIMIT      = 6;
     private const DEFAULT_YEARLY_LIMIT       = 12;
     private const DEFAULT_RECENT_DAYS        = 7;
-    private const DEFAULT_RAW_RETENTION_DAYS = 365;
+    /**
+     * ...
+     * Shipped as 0 in 2.2.22: the purge is a transitional no-op until the
+     * follow-up release, which raises this default to 365 and flips the task
+     * payload (frozen at 0 by ensureTask()) to 365 in one shot.
+     */
+    private const DEFAULT_RAW_RETENTION_DAYS = 0;
     private const DEFAULT_PURGE_LIMIT        = 30;
 
     /**

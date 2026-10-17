@@ -66,6 +66,13 @@ class Config extends \Ilch\Config\Install
         // (2.2.22) and never updated afterwards. The payload keys are overrides
         // only; the defaults live in \Modules\Statistic\Mappers\StatisticAggregate
         // (PHP), so changing defaults requires no re-registration.
+        //
+        // Exception: raw_retention_days is 0 on purpose (transitional). The
+        // retention/purge phase is deferred: 2.2.22 ships the aggregator without
+        // raw deletion so the raw-based totals stay stable until the
+        // aggregate-backed reads exist. The follow-up release enables it in one
+        // shot — PHP default raised to 365 and this frozen payload value flipped
+        // 0 -> 365 via a one-time updateTask() call in that release's update case.
         (new \Ilch\Scheduler\Scheduler($this->db()))->ensureTask([
             'name'       => 'statistic.aggregateVisits',
             'handler'    => 'statistic.aggregateVisits',
@@ -76,7 +83,7 @@ class Config extends \Ilch\Config\Install
                 'monthly_limit'      => 6,
                 'yearly_limit'       => 12,
                 'recent_days'        => 7,
-                'raw_retention_days' => 365,
+                'raw_retention_days' => 0,
                 'purge_limit'        => 30,
             ],
         ]);
