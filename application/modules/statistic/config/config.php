@@ -39,7 +39,7 @@ class Config extends \Ilch\Config\Install
                 'en_EN' => [
                     'name' => 'Statistic'
                 ]
-            ]
+            ],
         ],
         'ilchCore' => '2.2.0',
         'phpVersion' => '7.4'
@@ -51,6 +51,35 @@ class Config extends \Ilch\Config\Install
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('statistic_visibleStats', '1,1,1,1,1,1');
+
+        $this->createScheduledTasks();
+    }
+
+    public function createScheduledTasks(): void
+    {
+        // [prefix]_scheduler_tasks is guaranteed to exist here:
+        // - fresh installs: the install module installs system modules in a fixed
+        //   order (admin first, statistic last);
+        // - updates: the table was created with the 2.2.21 core release.
+        //
+        // ensureTask() is create-if-missing only: the task is created exactly once
+        // (2.2.22) and never updated afterwards. The payload keys are overrides
+        // only; the defaults live in \Modules\Statistic\Mappers\StatisticAggregate
+        // (PHP), so changing defaults requires no re-registration.
+        (new \Ilch\Scheduler\Scheduler($this->db()))->ensureTask([
+            'name'       => 'statistic.aggregateVisits',
+            'handler'    => 'statistic.aggregateVisits',
+            'type'       => \Ilch\Scheduler\Scheduler::TYPE_DAILY,
+            'daily_time' => '02:00:00',
+            'payload'    => [
+                'daily_limit'        => 14,
+                'monthly_limit'      => 6,
+                'yearly_limit'       => 12,
+                'recent_days'        => 7,
+                'raw_retention_days' => 365,
+                'purge_limit'        => 30,
+            ],
+        ]);
     }
 
     public function getInstallSql(): string
@@ -82,8 +111,58 @@ class Config extends \Ilch\Config\Install
                   `referer` VARCHAR(255) NOT NULL,
                   `lang` VARCHAR(11) NOT NULL,
                   `date` DATETIME NOT NULL,
-                  PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;';
+                  PRIMARY KEY (`id`),
+                  KEY `idx_date` (`date`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS [prefix]_visits_stats_daily (
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `date` DATE NOT NULL,
+                  `browser` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `browser_version` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `os` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `os_version` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `lang` VARCHAR(11) NOT NULL DEFAULT \'\',
+                  `dim_hash` CHAR(32) NOT NULL DEFAULT \'\',
+                  `visits` INT(11) NOT NULL DEFAULT 0,
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `uniq_period_dim` (`date`, `dim_hash`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS [prefix]_visits_stats_monthly (
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `month` DATE NOT NULL,
+                  `browser` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `browser_version` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `os` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `os_version` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `lang` VARCHAR(11) NOT NULL DEFAULT \'\',
+                  `dim_hash` CHAR(32) NOT NULL DEFAULT \'\',
+                  `visits` INT(11) NOT NULL DEFAULT 0,
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `uniq_period_dim` (`month`, `dim_hash`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS [prefix]_visits_stats_yearly (
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `year` INT(11) NOT NULL,
+                  `browser` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `browser_version` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `os` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `os_version` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `lang` VARCHAR(11) NOT NULL DEFAULT \'\',
+                  `dim_hash` CHAR(32) NOT NULL DEFAULT \'\',
+                  `visits` INT(11) NOT NULL DEFAULT 0,
+                  PRIMARY KEY (`id`),
+                  UNIQUE KEY `uniq_period_dim` (`year`, `dim_hash`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS [prefix]_visits_stats_progress (
+                  `level` VARCHAR(16) NOT NULL,
+                  `frontier` DATE NOT NULL,
+                  `updated` DATETIME NOT NULL,
+                  PRIMARY KEY (`level`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;';
     }
 
     public function getUpdate(string $installedVersion): string
@@ -96,6 +175,76 @@ class Config extends \Ilch\Config\Install
                 break;
             case "2.1.51":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = '" . $this->config['icon_small'] . "' WHERE `key` = '" . $this->config['key'] . "';");
+                break;
+            case "2.2.21":
+                // Visit statistics aggregation: aggregate tables + date index
+                // (all idempotent), then register the daily aggregation task.
+                $this->db()->queryMulti("CREATE TABLE IF NOT EXISTS [prefix]_visits_stats_daily (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `date` DATE NOT NULL,
+                    `browser` VARCHAR(255) NOT NULL DEFAULT '',
+                    `browser_version` VARCHAR(255) NOT NULL DEFAULT '',
+                    `os` VARCHAR(255) NOT NULL DEFAULT '',
+                    `os_version` VARCHAR(255) NOT NULL DEFAULT '',
+                    `lang` VARCHAR(11) NOT NULL DEFAULT '',
+                    `dim_hash` CHAR(32) NOT NULL DEFAULT '',
+                    `visits` INT(11) NOT NULL DEFAULT 0,
+                    PRIMARY KEY (`id`),
+                    UNIQUE KEY `uniq_period_dim` (`date`, `dim_hash`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS [prefix]_visits_stats_monthly (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `month` DATE NOT NULL,
+                    `browser` VARCHAR(255) NOT NULL DEFAULT '',
+                    `browser_version` VARCHAR(255) NOT NULL DEFAULT '',
+                    `os` VARCHAR(255) NOT NULL DEFAULT '',
+                    `os_version` VARCHAR(255) NOT NULL DEFAULT '',
+                    `lang` VARCHAR(11) NOT NULL DEFAULT '',
+                    `dim_hash` CHAR(32) NOT NULL DEFAULT '',
+                    `visits` INT(11) NOT NULL DEFAULT 0,
+                    PRIMARY KEY (`id`),
+                    UNIQUE KEY `uniq_period_dim` (`month`, `dim_hash`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS [prefix]_visits_stats_yearly (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `year` INT(11) NOT NULL,
+                    `browser` VARCHAR(255) NOT NULL DEFAULT '',
+                    `browser_version` VARCHAR(255) NOT NULL DEFAULT '',
+                    `os` VARCHAR(255) NOT NULL DEFAULT '',
+                    `os_version` VARCHAR(255) NOT NULL DEFAULT '',
+                    `lang` VARCHAR(11) NOT NULL DEFAULT '',
+                    `dim_hash` CHAR(32) NOT NULL DEFAULT '',
+                    `visits` INT(11) NOT NULL DEFAULT 0,
+                    PRIMARY KEY (`id`),
+                    UNIQUE KEY `uniq_period_dim` (`year`, `dim_hash`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS [prefix]_visits_stats_progress (
+                    `level` VARCHAR(16) NOT NULL,
+                    `frontier` DATE NOT NULL,
+                    `updated` DATETIME NOT NULL,
+                    PRIMARY KEY (`level`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+
+                // Guarded index creation (same pattern as the admin 2.2.20 update):
+                // the [prefix]_ token is rewritten by Mysql::getSqlWithPrefix().
+                $fileConfig = new \Ilch\Config\File();
+                $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
+                $dbName = (string)$fileConfig->get('dbName');
+
+                $hasIndex = $this->db()->queryCell(
+                    "SELECT EXISTS (SELECT 1 FROM information_schema.statistics
+                        WHERE table_schema = '" . $dbName . "'
+                          AND table_name = '[prefix]_visits_stats'
+                          AND index_name = 'idx_date')"
+                );
+                if (!$hasIndex) {
+                    $this->db()->query('CREATE INDEX `idx_date` ON [prefix]_visits_stats (`date`);');
+                }
+
+                $this->createScheduledTasks();
                 break;
         }
 
