@@ -40,6 +40,8 @@ use Ilch\Scheduler\Scheduler;
  * Raw SQL is used throughout: unquoted [prefix]_ table names (robust under
  * both readings of Mysql::getSqlWithPrefix()), backtick-quoted columns, and
  * machine-generated, format-validated boundary literals.
+ * 
+ * @since 2.2.22
  */
 class StatisticAggregate extends \Ilch\Mapper
 {
@@ -55,8 +57,14 @@ class StatisticAggregate extends \Ilch\Mapper
      * changes ship as PHP changes, not re-registrations.
      */
     private const DEFAULT_DAILY_LIMIT        = 14;
+
+    /** Max calendar months rolled up per run (monthly backlog phase). */
     private const DEFAULT_MONTHLY_LIMIT      = 6;
+
+    /** Max calendar years rolled up per run (yearly backlog phase). */
     private const DEFAULT_YEARLY_LIMIT       = 12;
+
+    /** Days of the recent window [cutoff, today] rebuilt every run. */
     private const DEFAULT_RECENT_DAYS        = 7;
     /**
      * ...
@@ -65,6 +73,8 @@ class StatisticAggregate extends \Ilch\Mapper
      * payload (frozen at 0 by ensureTask()) to 365 in one shot.
      */
     private const DEFAULT_RAW_RETENTION_DAYS = 0;
+
+    /** Max days with raw events purged per run (retention phase). */
     private const DEFAULT_PURGE_LIMIT        = 30;
 
     /**

@@ -55,13 +55,12 @@ class Config extends \Ilch\Config\Install
         $this->createScheduledTasks();
     }
 
+    /**
+     * Register the daily "statistic.aggregateVisits" task if it does not
+     * exist yet (create-if-missing only; payload rationale in the body).
+     */
     public function createScheduledTasks(): void
     {
-        // [prefix]_scheduler_tasks is guaranteed to exist here:
-        // - fresh installs: the install module installs system modules in a fixed
-        //   order (admin first, statistic last);
-        // - updates: the table was created with the 2.2.21 core release.
-        //
         // ensureTask() is create-if-missing only: the task is created exactly once
         // (2.2.22) and never updated afterwards. The payload keys are overrides
         // only; the defaults live in \Modules\Statistic\Mappers\StatisticAggregate
@@ -235,7 +234,7 @@ class Config extends \Ilch\Config\Install
                     PRIMARY KEY (`level`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
 
-                // Guarded index creation (same pattern as the admin 2.2.20 update):
+                // Guarded index creation
                 // the [prefix]_ token is rewritten by Mysql::getSqlWithPrefix().
                 $fileConfig = new \Ilch\Config\File();
                 $fileConfig->loadConfigFromFile(CONFIG_PATH . '/config.php');
