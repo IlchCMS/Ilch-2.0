@@ -11,8 +11,6 @@ use Ilch\Date;
 use PHPUnit\Ilch\DatabaseTestCase;
 use PHPUnit\Ilch\PhpunitDataset;
 use Modules\Statistic\Config\Config as ModuleConfig;
-use Modules\User\Config\Config as UserConfig;
-use Modules\Admin\Config\Config as AdminConfig;
 use Modules\Statistic\Mappers\StatisticAggregate as StatisticAggregateMapper;
 
 class StatisticAggregateTest extends DatabaseTestCase

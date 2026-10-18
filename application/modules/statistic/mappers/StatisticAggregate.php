@@ -40,7 +40,7 @@ use Ilch\Scheduler\Scheduler;
  * Raw SQL is used throughout: unquoted [prefix]_ table names (robust under
  * both readings of Mysql::getSqlWithPrefix()), backtick-quoted columns, and
  * machine-generated, format-validated boundary literals.
- * 
+ *
  * @since 2.2.22
  */
 class StatisticAggregate extends \Ilch\Mapper
