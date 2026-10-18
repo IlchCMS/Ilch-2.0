@@ -1,0 +1,68 @@
+visits_stats:
+  - id: 1
+    user_id: 0
+    session_id: 'sess_2022_01_a'
+    os: 'Windows'
+    os_version: '11'
+    browser: 'Chrome'
+    browser_version: '125.0'
+    ip_address: '192.168.1.10'
+    referer: 'https://google.com'
+    lang: 'en_EN'
+    date: '2022-01-15 10:00:00'
+  - id: 2
+    user_id: 0
+    session_id: 'sess_2022_01_b'
+    os: 'Linux'
+    os_version: '5.15'
+    browser: 'Chrome'
+    browser_version: '124.0'
+    ip_address: '192.168.1.20'
+    referer: ''
+    lang: 'de_DE'
+    date: '2022-01-15 11:30:00'
+  - id: 3
+    user_id: 0
+    session_id: 'sess_2022_12_a'
+    os: 'Windows'
+    os_version: '11'
+    browser: 'Chrome'
+    browser_version: '125.0'
+    ip_address: '192.168.1.30'
+    referer: 'https://bing.com'
+    lang: 'en_EN'
+    date: '2022-12-20 09:00:00'
+  - id: 4
+    user_id: 0
+    session_id: 'sess_2023_06_a'
+    os: 'Linux'
+    os_version: '5.15'
+    browser: 'Firefox'
+    browser_version: '121.0'
+    ip_address: '192.168.1.40'
+    referer: ''
+    lang: 'en_EN'
+    date: '2023-06-15 10:00:00'
+  - id: 5
+    user_id: 0
+    session_id: 'sess_2023_06_b'
+    os: 'Windows'
+    os_version: '11'
+    browser: 'Chrome'
+    browser_version: '125.0'
+    ip_address: '192.168.1.50'
+    referer: 'https://google.com'
+    lang: 'en_EN'
+    date: '2023-06-15 14:30:00'
+
+# State tables: declared as fixtures with no rows of their own.
+# PhpunitDataset::sendToDatabase() clears every fixture table with DELETE
+# before re-inserting, so any rows committed by a previous test's run()
+# (frontiers are GREATEST-monotonic and would otherwise make later tests
+# resume instead of replaying the 2022/2023 backlog) are wiped at the start
+# of every test. restoreWrittenTables() additionally recreates these tables
+# with a fresh counter per test where they carry an auto-increment column.
+visits_stats_progress: []
+visits_stats_daily: []
+visits_stats_monthly: []
+visits_stats_yearly: []
