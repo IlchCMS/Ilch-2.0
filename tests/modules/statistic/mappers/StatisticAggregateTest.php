@@ -25,8 +25,14 @@ class StatisticAggregateTest extends DatabaseTestCase
     // run() assertion deterministic independent of the test run date.
     protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database_aggregate.yml'];
 
+    /**
+     * @var PhpunitDataset
+     */
     protected PhpunitDataset $phpunitDataset;
 
+    /**
+     * Loads the aggregate fixture and instantiates the mapper under test.
+     */
     public function setUp(): void
     {
         parent::setUp();
@@ -84,21 +90,45 @@ class StatisticAggregateTest extends DatabaseTestCase
         return $byHash;
     }
 
+    /**
+     * Fetches the daily aggregate rows of one day.
+     *
+     * @param string $day 'Y-m-d'
+     * @return array[]
+     */
     private function dailyRowsFor(string $day): array
     {
         return $this->db->select('*')->from('visits_stats_daily')->where(['date' => $day])->execute()->fetchRows();
     }
 
+    /**
+     * Fetches the monthly aggregate rows of one month.
+     *
+     * @param string $monthStart 'Y-m-01'
+     * @return array[]
+     */
     private function monthlyRowsFor(string $monthStart): array
     {
         return $this->db->select('*')->from('visits_stats_monthly')->where(['month' => $monthStart])->execute()->fetchRows();
     }
 
+    /**
+     * Fetches the yearly aggregate rows of one year.
+     *
+     * @param int $year
+     * @return array[]
+     */
     private function yearlyRowsFor(int $year): array
     {
         return $this->db->select('*')->from('visits_stats_yearly')->where(['year' => $year])->execute()->fetchRows();
     }
 
+    /**
+     * Counts the raw visit rows of one calendar day.
+     *
+     * @param string $day 'Y-m-d'
+     * @return int
+     */
     private function rawCountFor(string $day): int
     {
         return (int)$this->db->select('COUNT(*)')
@@ -108,11 +138,23 @@ class StatisticAggregateTest extends DatabaseTestCase
             ->fetchCell();
     }
 
+    /**
+     * Counts all rows of a table (prefix-less table name, as used by the query builder).
+     *
+     * @param string $table Table name without prefix
+     * @return int
+     */
     private function countIn(string $table): int
     {
         return (int)$this->db->select('COUNT(*)')->from($table)->execute()->fetchCell();
     }
 
+    /**
+     * Fetches the progress row of one level, or null when none exists yet.
+     *
+     * @param string $level One of 'daily', 'monthly', 'yearly', 'raw'
+     * @return array|null
+     */
     private function progressRow(string $level): ?array
     {
         $rows = $this->db->select('*')->from('visits_stats_progress')->where(['level' => $level])->execute()->fetchRows();
