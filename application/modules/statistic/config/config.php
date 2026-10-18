@@ -129,7 +129,7 @@ class Config extends \Ilch\Config\Install
                   `os` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `os_version` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `lang` VARCHAR(11) NOT NULL DEFAULT \'\',
-                  `dim_hash` CHAR(32) NOT NULL DEFAULT \'\',
+                  `dim_hash` CHAR(64) NOT NULL DEFAULT \'\',
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`),
                   UNIQUE KEY `uniq_period_dim` (`date`, `dim_hash`)
@@ -143,7 +143,7 @@ class Config extends \Ilch\Config\Install
                   `os` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `os_version` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `lang` VARCHAR(11) NOT NULL DEFAULT \'\',
-                  `dim_hash` CHAR(32) NOT NULL DEFAULT \'\',
+                  `dim_hash` CHAR(64) NOT NULL DEFAULT \'\',
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`),
                   UNIQUE KEY `uniq_period_dim` (`month`, `dim_hash`)
@@ -157,7 +157,7 @@ class Config extends \Ilch\Config\Install
                   `os` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `os_version` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `lang` VARCHAR(11) NOT NULL DEFAULT \'\',
-                  `dim_hash` CHAR(32) NOT NULL DEFAULT \'\',
+                  `dim_hash` CHAR(64) NOT NULL DEFAULT \'\',
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`),
                   UNIQUE KEY `uniq_period_dim` (`year`, `dim_hash`)
@@ -193,7 +193,7 @@ class Config extends \Ilch\Config\Install
                     `os` VARCHAR(255) NOT NULL DEFAULT '',
                     `os_version` VARCHAR(255) NOT NULL DEFAULT '',
                     `lang` VARCHAR(11) NOT NULL DEFAULT '',
-                    `dim_hash` CHAR(32) NOT NULL DEFAULT '',
+                    `dim_hash` CHAR(64) NOT NULL DEFAULT '',
                     `visits` INT(11) NOT NULL DEFAULT 0,
                     PRIMARY KEY (`id`),
                     UNIQUE KEY `uniq_period_dim` (`date`, `dim_hash`)
@@ -207,7 +207,7 @@ class Config extends \Ilch\Config\Install
                     `os` VARCHAR(255) NOT NULL DEFAULT '',
                     `os_version` VARCHAR(255) NOT NULL DEFAULT '',
                     `lang` VARCHAR(11) NOT NULL DEFAULT '',
-                    `dim_hash` CHAR(32) NOT NULL DEFAULT '',
+                    `dim_hash` CHAR(64) NOT NULL DEFAULT '',
                     `visits` INT(11) NOT NULL DEFAULT 0,
                     PRIMARY KEY (`id`),
                     UNIQUE KEY `uniq_period_dim` (`month`, `dim_hash`)
@@ -221,7 +221,7 @@ class Config extends \Ilch\Config\Install
                     `os` VARCHAR(255) NOT NULL DEFAULT '',
                     `os_version` VARCHAR(255) NOT NULL DEFAULT '',
                     `lang` VARCHAR(11) NOT NULL DEFAULT '',
-                    `dim_hash` CHAR(32) NOT NULL DEFAULT '',
+                    `dim_hash` CHAR(64) NOT NULL DEFAULT '',
                     `visits` INT(11) NOT NULL DEFAULT 0,
                     PRIMARY KEY (`id`),
                     UNIQUE KEY `uniq_period_dim` (`year`, `dim_hash`)

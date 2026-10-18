@@ -63,11 +63,11 @@ class StatisticAggregateTest extends DatabaseTestCase
     }
 
     /**
-     * Mirrors the MD5(CONCAT(..., CHAR(31), ...)) expression used by the mapper.
+     * Mirrors the SHA2(CONCAT(..., CHAR(31), ...), 256) expression used by the mapper.
      */
     private function dimHash(string $browser, string $browserVersion, string $os, string $osVersion, string $lang): string
     {
-        return md5(implode(chr(31), [$browser, $browserVersion, $os, $osVersion, $lang]));
+        return hash('sha256', implode(chr(31), [$browser, $browserVersion, $os, $osVersion, $lang]));
     }
 
     /**
@@ -346,7 +346,7 @@ class StatisticAggregateTest extends DatabaseTestCase
      */
     public function testRebuildDailyReplacesStaleAggregates()
     {
-        $staleHash = md5('stale');
+        $staleHash = hash('sha256', 'stale');
         $this->db->insert('visits_stats_daily')
             ->values([
                 'date' => '2022-01-15',

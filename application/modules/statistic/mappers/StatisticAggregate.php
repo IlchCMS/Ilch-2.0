@@ -391,9 +391,9 @@ class StatisticAggregate extends \Ilch\Mapper
                 SELECT \"$date\",
                        IFNULL(`browser`,''), IFNULL(`browser_version`,''), IFNULL(`os`,''),
                        IFNULL(`os_version`,''), IFNULL(`lang`,''),
-                       MD5(CONCAT(IFNULL(`browser`,''), CHAR(31), IFNULL(`browser_version`,''), CHAR(31),
-                                 IFNULL(`os`,''), CHAR(31), IFNULL(`os_version`,''), CHAR(31),
-                                 IFNULL(`lang`,''))),
+                       SHA2(CONCAT(IFNULL(`browser`,''), CHAR(31), IFNULL(`browser_version`,''), CHAR(31),
+                                  IFNULL(`os`,''), CHAR(31), IFNULL(`os_version`,''), CHAR(31),
+                                  IFNULL(`lang`,'')), 256),
                        COUNT(*)
                 FROM [prefix]_visits_stats
                 WHERE `date` >= \"$date 00:00:00\" AND `date` < \"$next 00:00:00\"
