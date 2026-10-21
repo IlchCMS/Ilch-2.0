@@ -79,7 +79,7 @@ class Joins extends \Ilch\Mapper
      * @return null|JoinsModel
      * @since 1.22.0
      */
-    public function getEntryById($id): ?JoinsModel
+    public function getEntryById(JoinsModel|int $id): ?JoinsModel
     {
         if ($id instanceof JoinsModel) {
             $id = $id->getId();
@@ -136,7 +136,7 @@ class Joins extends \Ilch\Mapper
      * @param int|JoinsModel $id
      * @return JoinsModel|null
      */
-    public function getJoinById($id): ?JoinsModel
+    public function getJoinById(JoinsModel|int $id): ?JoinsModel
     {
         return $this->getEntryById($id);
     }
@@ -147,7 +147,7 @@ class Joins extends \Ilch\Mapper
      * @param int|JoinsModel $id
      * @return JoinsModel|null
      */
-    public function getJoinInHistoryById($id): ?JoinsModel
+    public function getJoinInHistoryById(JoinsModel|int $id): ?JoinsModel
     {
         if ($id instanceof JoinsModel) {
             $id = $id->getId();
@@ -177,16 +177,16 @@ class Joins extends \Ilch\Mapper
     /**
      * Get Age from date.
      *
-     * @param string|\ilch\Date $date
+     * @param string|\Ilch\Date $date
      * @return int
      */
-    public function getAge($date): int
+    public function getAge(string|Date $date): int
     {
         if (!$date instanceof Date) {
             $date = new Date($date);
         }
 
-        return (int)(substr(date('Ymd') - date('Ymd', strtotime($date)), 0, -4));
+        return (int)(substr(date('Ymd') - date('Ymd', strtotime((string)$date)), 0, -4));
     }
 
     /**
@@ -197,7 +197,7 @@ class Joins extends \Ilch\Mapper
      * @param int $decision
      * @return bool
      */
-    public function updateDecision($id, int $decision): bool
+    public function updateDecision(JoinsModel|int $id, int $decision): bool
     {
         if ($id instanceof JoinsModel) {
             $id = $id->getId();
@@ -236,16 +236,22 @@ class Joins extends \Ilch\Mapper
      * Delete Join with given Id.
      *
      * @param int|JoinsModel $id
-     * @return bool
+     * @return bool False when no join matches the given id.
      */
-    public function delete($id): bool
+    public function delete(JoinsModel|int $id): bool
     {
         if ($id instanceof JoinsModel) {
-            $id = $id->getId();
+            $entry = $id;
+        } else {
+            $entry = $this->getJoinById($id);
+        }
+
+        if (!$entry) {
+            return false;
         }
 
         return $this->db()->delete($this->tablename)
-            ->where(['id' => $id])
+            ->where(['id' => $entry->getId()])
             ->execute();
     }
 

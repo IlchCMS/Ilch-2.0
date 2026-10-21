@@ -78,7 +78,7 @@ class Teams extends \Ilch\Mapper
      * @return null|TeamsModel
      * @since 1.22.0
      */
-    public function getEntryById($id): ?TeamsModel
+    public function getEntryById(int|TeamsModel $id): ?TeamsModel
     {
         if ($id instanceof TeamsModel) {
             $id = $id->getId();
@@ -110,24 +110,25 @@ class Teams extends \Ilch\Mapper
      * @param int|TeamsModel $id
      * @return TeamsModel|null
      */
-    public function getTeamById($id): ?TeamsModel
+    public function getTeamById(int|TeamsModel $id): ?TeamsModel
     {
         return $this->getEntryById($id);
     }
 
     /**
      * Get Team by given group id.
+     * Returns the team with the lowest position in that group.
      *
      * @param int|TeamsModel $groupId
      * @return TeamsModel|null
      */
-    public function getTeamByGroupId($groupId): ?TeamsModel
+    public function getTeamByGroupId(int|TeamsModel $groupId): ?TeamsModel
     {
         if ($groupId instanceof TeamsModel) {
             $groupId = $groupId->getGroupId();
         }
 
-        $entries = $this->getEntriesBy(['groupId' => $groupId], []);
+        $entries = $this->getEntriesBy(['groupId' => $groupId], ['position' => 'ASC']);
 
         if (!empty($entries)) {
             return reset($entries);
@@ -143,7 +144,7 @@ class Teams extends \Ilch\Mapper
      * @param bool $noUpdate
      * @return bool
      */
-    public function delImageById($id, bool $noUpdate = false): bool
+    public function delImageById(int|TeamsModel $id, bool $noUpdate = false): bool
     {
         if ($id instanceof TeamsModel) {
             $entry = $id;
@@ -161,7 +162,7 @@ class Teams extends \Ilch\Mapper
 
         if (!$noUpdate) {
             $entry->setImg('');
-            return $this->save($entry);
+            return (bool) $this->save($entry);
         } else {
             return (!file_exists($entry->getImg()));
         }
@@ -174,7 +175,7 @@ class Teams extends \Ilch\Mapper
      * @param int $pos
      * @return bool
      */
-    public function sort($id, int $pos): bool
+    public function sort(int|TeamsModel $id, int $pos): bool
     {
         if ($id instanceof TeamsModel) {
             $id = $id->getId();
@@ -187,17 +188,20 @@ class Teams extends \Ilch\Mapper
     }
 
     /**
+     * Update or toggle the optShow flag of a team.
+     * When $show is -1 (default), the current value is toggled.
+     *
      * @param int|TeamsModel $id
      * @param int $show
      * @return bool
      */
-    public function updateShow($id, int $show = -1): bool
+    public function updateShow(int|TeamsModel $id, int $show = -1): bool
     {
         if ($show !== -1) {
             $showNow = $show;
         } else {
             if ($id instanceof TeamsModel) {
-                $show = $id->getOptShow();
+                $show = (int) $id->getOptShow();
             } else {
                 $show = (int) $this->db()->select('a.optShow')
                     ->from(['a' => $this->tablename])
@@ -251,7 +255,7 @@ class Teams extends \Ilch\Mapper
      * @param int|TeamsModel $id
      * @return bool
      */
-    public function delete($id): bool
+    public function delete(int|TeamsModel $id): bool
     {
         if ($id instanceof TeamsModel) {
             $entry = $id;

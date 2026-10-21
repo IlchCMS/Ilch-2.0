@@ -1,4 +1,3 @@
-
 users:
   -
     id: 1
@@ -116,3 +115,33 @@ teams_joins:
     text: ""
     decision: 0
     undecided: 1
+  -
+    id: 3
+    userId: 2
+    name: "HistoryUser"
+    email: "history@example.com"
+    gender: 1
+    birthday: "1999-05-05"
+    place: "Office"
+    skill: 2
+    teamId: 2
+    locale: "en_EN"
+    dateCreated: "2023-03-24 00:00:00"
+    text: "Some application text"
+    decision: 1
+    undecided: 0
+  -
+    id: 4
+    userId: 2
+    name: "HistoryUser"
+    email: "history@example.com"
+    gender: 1
+    birthday: "1999-05-05"
+    place: "Office"
+    skill: 2
+    teamId: 1
+    locale: "en_EN"
+    dateCreated: "2023-03-25 00:00:00"
+    text: "Second application text"
+    decision: 2
+    undecided: 0
