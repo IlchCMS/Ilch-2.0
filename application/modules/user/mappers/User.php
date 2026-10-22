@@ -146,15 +146,6 @@ class User extends \Ilch\Mapper
      * Get users (not all fields) by group ids. The users have to be in at least one of the groups.
      *
      * @param int[] $groupIds array of group ids.
-     * @param int $confirmed
-     * @param $pagination
-     * @return array
-     * @since 2.2.7
-     */
-    /**
-     * Get users (not all fields) by group ids. The users have to be in at least one of the groups.
-     *
-     * @param int[] $groupIds array of group ids.
      * @param int   $confirmed
      * @param $pagination
      * @return array
