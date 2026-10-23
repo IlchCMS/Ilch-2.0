@@ -67,6 +67,7 @@ class Index extends \Ilch\Controller\Admin
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('trainings', $trainingMapper->getEntriesBy([], ['t.date' => 'ASC'], $pagination));
+        $this->getView()->set('pagination', $pagination);
     }
 
     public function treatAction()
@@ -110,7 +111,6 @@ class Index extends \Ilch\Controller\Admin
                 'gameServer' => 'required|integer|min:0|max:1',
                 'groups' => 'required',
                 'calendarShow' => 'required|integer|min:0|max:1',
-                'periodType' => 'required',
             ];
 
             if ($this->getRequest()->getPost('periodType') == 'days') {
