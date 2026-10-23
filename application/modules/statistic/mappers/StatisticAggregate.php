@@ -56,7 +56,8 @@ class StatisticAggregate extends \Ilch\Mapper
      * scheduler's ensureTask() never updates an existing task, so default
      * changes ship as PHP changes, not re-registrations.
      */
-    private const DEFAULT_DAILY_LIMIT        = 14;
+    /** Max raw days rebuilt per run (daily backlog phase). */
+    private const DEFAULT_DAILY_LIMIT        = 90;
 
     /** Max calendar months rolled up per run (monthly backlog phase). */
     private const DEFAULT_MONTHLY_LIMIT      = 6;
@@ -74,8 +75,8 @@ class StatisticAggregate extends \Ilch\Mapper
      */
     private const DEFAULT_RAW_RETENTION_DAYS = 0;
 
-    /** Max days with raw events purged per run (retention phase). */
-    private const DEFAULT_PURGE_LIMIT        = 30;
+    /** Max days with raw events purged per run (retention phase); matches the daily advance. */
+    private const DEFAULT_PURGE_LIMIT        = 90;
 
     /**
      * Run all six aggregation phases.

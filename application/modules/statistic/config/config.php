@@ -41,8 +41,8 @@ class Config extends \Ilch\Config\Install
                 ]
             ],
         ],
-        'ilchCore' => '2.2.0',
-        'phpVersion' => '7.4'
+        'ilchCore' => '2.2.21',
+        'phpVersion' => '8.1'
     ];
 
     public function install()
@@ -78,12 +78,12 @@ class Config extends \Ilch\Config\Install
             'type'       => \Ilch\Scheduler\Scheduler::TYPE_DAILY,
             'daily_time' => '02:00:00',
             'payload'    => [
-                'daily_limit'        => 14,
+                'daily_limit'        => 90,
                 'monthly_limit'      => 6,
                 'yearly_limit'       => 12,
                 'recent_days'        => 7,
                 'raw_retention_days' => 0,
-                'purge_limit'        => 30,
+                'purge_limit'        => 90,
             ],
         ]);
     }
