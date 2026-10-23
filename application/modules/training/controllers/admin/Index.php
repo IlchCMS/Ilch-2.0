@@ -50,6 +50,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $pagination = new \Ilch\Pagination();
         $trainingMapper = new TrainingMapper();
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index']);
@@ -62,7 +63,10 @@ class Index extends \Ilch\Controller\Admin
                 ->to(['action' => 'index']);
         }
 
-        $this->getView()->set('trainings', $trainingMapper->getEntriesBy());
+        $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
+        $pagination->setPage($this->getRequest()->getParam('page'));
+
+        $this->getView()->set('trainings', $trainingMapper->getEntriesBy([], ['t.date' => 'ASC'], $pagination));
     }
 
     public function treatAction()
