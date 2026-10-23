@@ -146,15 +146,6 @@ class User extends \Ilch\Mapper
      * Get users (not all fields) by group ids. The users have to be in at least one of the groups.
      *
      * @param int[] $groupIds array of group ids.
-     * @param int $confirmed
-     * @param $pagination
-     * @return array
-     * @since 2.2.7
-     */
-    /**
-     * Get users (not all fields) by group ids. The users have to be in at least one of the groups.
-     *
-     * @param int[] $groupIds array of group ids.
      * @param int   $confirmed
      * @param $pagination
      * @return array
@@ -197,12 +188,16 @@ class User extends \Ilch\Mapper
      *
      * @param array $where
      * @param null $pagination
+     * @param array|null $fields Optional list of columns to select (e.g. ['id', 'name']).
+     *                            Null selects all columns ('*'). Models built from a
+     *                            limited field set are intended for read-only use —
+     *                            saving such a model would null the unloaded profile fields.
      * @return UserModel[]
      * @throws \Ilch\Database\Exception
      */
-    protected function getBy(array $where = [], $pagination = null): array
+    protected function getBy(array $where = [], $pagination = null, ?array $fields = null): array
     {
-        $select = $this->db()->select('*')
+        $select = $this->db()->select($fields ?? '*')
             ->from('users')
             ->where($where);
         if ($pagination !== null) {
@@ -219,27 +214,35 @@ class User extends \Ilch\Mapper
             return [];
         }
 
-        // One query for the groups of ALL requested users, instead of one per user.
-        $userIds = array_column($entryArray, 'id');
-        $groupRows = $this->db()->select(['uid' => 'ug.user_id', 'g.*'])
-            ->from(['g' => 'groups'])
-            ->join(['ug' => 'users_groups'], 'g.id = ug.group_id')
-            ->where(['ug.user_id' => $userIds])
-            ->execute()
-            ->fetchRows();
+        // Groups are keyed by user id, so they can only be attached when 'id' was selected.
+        $loadGroups = $fields === null || \in_array('id', $fields, true);
+
+        $groupRows = [];
+        if ($loadGroups) {
+            // One query for the groups of ALL requested users, instead of one per user.
+            $userIds = array_column($entryArray, 'id');
+            $groupRows = $this->db()->select(['uid' => 'ug.user_id', 'g.*'])
+                ->from(['g' => 'groups'])
+                ->join(['ug' => 'users_groups'], 'g.id = ug.group_id')
+                ->where(['ug.user_id' => $userIds])
+                ->execute()
+                ->fetchRows();
+        }
 
         $groupsByUserId = [];
         foreach ($groupRows as $groupRow) {
             $groupsByUserId[$groupRow['uid']][] = $groupRow;
         }
 
-        $groupMapper = new Group();
+        $groupMapper = $loadGroups ? new Group() : null;
         $users = [];
         foreach ($entryArray as $userRow) {
             $groups = [];
-            foreach ($groupsByUserId[$userRow['id']] ?? [] as $groupRow) {
-                unset($groupRow['uid']); // keep row shape identical to before
-                $groups[$groupRow['id']] = $groupMapper->loadFromArray($groupRow);
+            if ($loadGroups) {
+                foreach ($groupsByUserId[$userRow['id']] ?? [] as $groupRow) {
+                    unset($groupRow['uid']); // keep row shape identical to before
+                    $groups[$groupRow['id']] = $groupMapper->loadFromArray($groupRow);
+                }
             }
 
             $user = $this->loadFromArray($userRow);
@@ -521,12 +524,13 @@ class User extends \Ilch\Mapper
      *
      * @param array $where
      * @param null $pagination
+     * @param array|null $fields Optional list of columns to select, '*' (all) if omitted.
      * @return UserModel[]
      * @throws \Ilch\Database\Exception
      */
-    public function getUserList(array $where = [], $pagination = null): array
+    public function getUserList(array $where = [], $pagination = null, ?array $fields = null): array
     {
-        return $this->getBy($where, $pagination);
+        return $this->getBy($where, $pagination, $fields);
     }
 
     /**
@@ -609,8 +613,11 @@ class User extends \Ilch\Mapper
         $statisticMapper = new StatisticMapper();
 
         $date->modify('-' . $timetodelete . ' days');
-        $entries = $this->getUserList(['selectsdelete >' => '1000-01-01 00:00:00', 'selectsdelete <=' => $date]);
-
+        $entries = $this->getUserList(
+            ['selectsdelete >' => '1000-01-01 00:00:00', 'selectsdelete <=' => $date],
+            null,
+            ['id', 'selectsdelete']
+        );
         foreach ($entries as $user) {
             if ($user->getSelectsDelete() !== null) {
                 $dateuser = $user->getSelectsDelete();

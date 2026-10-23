@@ -119,7 +119,7 @@ class Index extends \Ilch\Controller\Admin
                 $rules['repeatUntil'] = 'required|date:Y-m-d\TH\:i';
             }
 
-            // Require atleast the address of the voice or gameserver if enabled.
+            // Require at least the address of the voice or gameserver if enabled.
             if ($this->getRequest()->getPost('voiceServer')) {
                 $rules['voiceServerIP'] = 'required';
             }
@@ -163,7 +163,7 @@ class Index extends \Ilch\Controller\Admin
             $this->getView()->set('calendarShow', 1);
         }
 
-        $this->getView()->set('users', $userMapper->getUserList(['confirmed' => 1]))
+        $this->getView()->set('users', $userMapper->getUserList(['confirmed' => 1], null, ['id', 'name']))
             ->set('userGroupList', $groupMapper->getGroupList())
             ->set('groups', explode(',', $model->getReadAccess()));
     }
