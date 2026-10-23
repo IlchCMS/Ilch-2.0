@@ -162,29 +162,6 @@ class Training extends \Ilch\Mapper
     }
 
     /**
-     * Gets Trainings by limit
-     *
-     * @param int|null $limit
-     * @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
-     * @param string $order
-     * @return TrainingModel[]|null
-     * @deprecated No longer used in this module.
-     */
-    public function getTrainingsListWithLimt(?int $limit = null, $groupIds = '3', string $order = 'ASC'): ?array
-    {
-        if (\is_string($groupIds)) {
-            $groupIds = explode(',', $groupIds);
-        }
-
-        if ($limit) {
-            $pagination = new Pagination();
-            $pagination->setRowsPerPage($limit);
-        }
-
-        return $this->getEntriesBy(($groupIds ? ['ra.read_access' => $groupIds] : []), ['t.date' => $order], $pagination ?? null);
-    }
-
-    /**
      * Get the next trainings.
      *
      * @param int|null $limit

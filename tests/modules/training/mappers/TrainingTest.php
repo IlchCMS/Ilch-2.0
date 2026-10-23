@@ -652,32 +652,6 @@ class TrainingTest extends DatabaseTestCase
     }
 
     /**
-     * Tests that the deprecated getTrainingsListWithLimt() limits the number of results.
-     *
-     * @deprecated No longer used in this module.
-     */
-    public function testGetTrainingsListWithLimt()
-    {
-        $entries = $this->mapper->getTrainingsListWithLimt(2, '1', 'ASC');
-
-        self::assertCount(2, $entries);
-        self::assertSame(1, $entries[0]->getId());
-        self::assertSame(2, $entries[1]->getId());
-    }
-
-    /**
-     * Tests that the deprecated getTrainingsListWithLimt() without a limit returns all trainings.
-     *
-     * @deprecated No longer used in this module.
-     */
-    public function testGetTrainingsListWithoutLimit()
-    {
-        $entries = $this->mapper->getTrainingsListWithLimt(null, '1', 'ASC');
-
-        self::assertCount(3, $entries);
-    }
-
-    /**
      * Tests that getNextTrainings() returns an empty array when there is no future training.
      */
     public function testGetNextTrainingsEmpty()
