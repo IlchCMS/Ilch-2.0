@@ -5,6 +5,9 @@
 /** @var \Modules\Training\Models\Training[]|null $trainings */
 $trainings = $this->get('trainings');
 
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
+
 $periodDays = [
     '1' => $this->getTranslator()->trans('Monday'),
     '2' => $this->getTranslator()->trans('Tuesday'),
@@ -88,6 +91,7 @@ $periodTypes = [
         </div>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
+    <?=$pagination->getHtml($this, ['action' => 'index']) ?>
 <?php else : ?>
     <?=$this->getTrans('noTraining') ?>
 <?php endif; ?>

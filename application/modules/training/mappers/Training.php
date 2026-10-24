@@ -110,12 +110,12 @@ class Training extends \Ilch\Mapper
     /**
      * Get the trainings between start and end.
      *
-     * @param string|null $start Y-m-d H:m:i
-     * @param string|null $end Y-m-d H:m:i
+     * @param Date|string|null $start Y-m-d H:m:i
+     * @param Date|string|null $end Y-m-d H:m:i
      * @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return TrainingModel[]|null
      */
-    public function getTrainingsForJson(?string $start, ?string $end, $groupIds = '3'): ?array
+    public function getTrainingsForJson($start = null, $end = null, $groupIds = '3'): ?array
     {
         if (\is_string($groupIds)) {
             $groupIds = explode(',', $groupIds);
@@ -128,47 +128,37 @@ class Training extends \Ilch\Mapper
             if (!is_a($end, Date::class)) {
                 $end = new Date($end);
             }
+
             $select = $this->db()->select();
-            return $this->getEntriesBy(
-                [
-                    $select->orX(
-                        [
-                            $select->andX(['t.end <=' => $end->format('Y-m-d') . ' 23:59:59']),
-                            $select->andX(['t.date >=' => $start->format('Y-m-d') . ' 00:00:00', 't.end <=' => $end->format('Y-m-d') . ' 23:59:59']),
-                            $select->andX(
-                                [
-                                    't.period_type !=' => '',
-                                    't.date <=' => $end->format('Y-m-d') . ' 00:00:00',
-                                    $select->orX(['t.end >=' => $start->format('Y-m-d') . ' 23:59:59', 't.end =' => '1000-01-01 00:00:00'])
-                                ]
-                            )
-                        ]
-                    ),
-                    'ra.group_id' => $groupIds
-                ]
-            );
-        } else {
-            return null;
-        }
-    }
 
-    /**
-     * Gets Trainings by limit
-     *
-     * @param int|null $limit
-     * @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
-     * @param string $order
-     * @return TrainingModel[]|null
-     * @deprecated No longer used in this module.
-     */
-    public function getTrainingsListWithLimt(?int $limit = null, $groupIds = '3', string $order = 'ASC'): ?array
-    {
-        if ($limit) {
-            $pagination = new Pagination();
-            $pagination->setRowsPerPage($limit);
+            // One-off trainings that start within the given range, plus recurrent
+            // trainings that started before the range but still run within it
+            // (or have no end date).
+            $where = [
+                $select->orX(
+                    [
+                        $select->andX(['t.date >=' => $start->format('Y-m-d') . ' 00:00:00', 't.end <=' => $end->format('Y-m-d') . ' 23:59:59']),
+                        $select->andX(
+                            [
+                                't.period_type !=' => '',
+                                't.date <=' => $end->format('Y-m-d') . ' 00:00:00',
+                                $select->orX(['t.end >=' => $start->format('Y-m-d') . ' 23:59:59', 't.end =' => '1000-01-01 00:00:00'])
+                            ]
+                        )
+                    ]
+                )
+            ];
+
+            // Use the ra.read_access key so that getEntriesBy() applies the
+            // access_all fallback, consistent with getTraining()/getEntriesBy().
+            if ($groupIds) {
+                $where['ra.read_access'] = $groupIds;
+            }
+
+            return $this->getEntriesBy($where);
         }
 
-        return $this->getEntriesBy(($groupIds ? ['ra.read_access' => $groupIds] : []), ['t.date' => $order], $pagination ?? null);
+        return null;
     }
 
     /**
@@ -181,6 +171,10 @@ class Training extends \Ilch\Mapper
      */
     public function getNextTrainings(?int $limit = null, $groupIds = '3'): ?array
     {
+        if (\is_string($groupIds)) {
+            $groupIds = explode(',', $groupIds);
+        }
+
         $pagination = null;
 
         if ($limit) {
@@ -189,7 +183,6 @@ class Training extends \Ilch\Mapper
         }
 
         $currentDate = new Date();
-        $currentDate->format('Y-m-d H:i:s');
 
         // Get all recurrent trainings with a repeat until date not in the past.
         $where = [
@@ -226,19 +219,24 @@ class Training extends \Ilch\Mapper
     }
 
     /**
-     * Gets the calculated Countdown
+     * Gets the calculated countdown until the given date.
      *
-     * @param Date $countdown_date
-     * @param int $countdown_time
-     * @return bool|string
+     * @param Date $countdown_date The start date of the training
+     * @param int $countdown_time The "live" window in minutes after the start
+     * @return bool|string Countdown like "1d 2h", "3h 5m" or "5m"; "live" if the
+     *                     training started within the last $countdown_time minutes;
+     *                     false if it started longer ago (i.e. it is not ongoing anymore)
      */
     public function countdown(Date $countdown_date, int $countdown_time = 60)
     {
-        $date = new Date();
-        $datenow = new Date($date->format('Y-m-d H:i:s', true));
+        $datenow = new Date();
         $difference = $countdown_date->getTimestamp() - $datenow->getTimestamp();
+
+        // The training already started. If it started within the countdown window,
+        // it is considered to be live. If it started longer than the countdown
+        // window ago, it has ended, so nothing is displayed.
         if ($difference < 0) {
-            if ($difference <= (60 * $countdown_time)) {
+            if ($difference <= (-(60 * $countdown_time))) {
                 return false;
             }
             $difference = 0;
@@ -247,6 +245,7 @@ class Training extends \Ilch\Mapper
         $days_left = floor($difference / 60 / 60 / 24);
         $hours_left = floor(($difference - $days_left * 60 * 60 * 24) / 60 / 60);
         $minutes_left = floor(($difference - $days_left * 60 * 60 * 24 - $hours_left * 60 * 60) / 60);
+
         // OUTPUT
         if ($days_left == '0') {
             if ($hours_left == '0' && $minutes_left > '0') {
@@ -268,7 +267,6 @@ class Training extends \Ilch\Mapper
      *
      * @param TrainingModel $training
      * @return void
-     * @throws \DateMalformedPeriodStringException
      * @since Version 1.10.0
      */
     public function calculateNextTrainingDate(TrainingModel $training)
@@ -286,8 +284,8 @@ class Training extends \Ilch\Mapper
             return;
         }
 
+        $factor = (int)$training->getPeriodDay();
         $interval = null;
-        $factor = $training->getPeriodDay();
 
         switch ($training->getPeriodType()) {
             case 'monthly':
@@ -307,17 +305,20 @@ class Training extends \Ilch\Mapper
                 $interval = DateInterval::createFromDateString($factor . ' years');
                 break;
             case 'days':
-                $days = [
-                    1 => 'Monday',
-                    2 => 'Tuesday',
-                    3 => 'Wednesday',
-                    4 => 'Thursday',
-                    5 => 'Friday',
-                    6 => 'Saturday',
-                    7 => 'Sunday'
-                ];
+                // Recurs on a fixed weekday: step in one-week intervals, anchored to
+                // the most recent occurrence of that weekday at the original time of
+                // day (DateInterval cannot express "next Monday").
+                if ($factor < 1 || $factor > 7) {
+                    return;
+                }
 
-                $interval = DateInterval::createFromDateString('next ' . $days[$factor] . ' ' . $begin->format('H:i:s'));
+                $anchor = new Date();
+                $anchor->setTime((int)$begin->format('G'), (int)$begin->format('i'), (int)$begin->format('s'));
+                while ((int)$anchor->format('N') !== $factor) {
+                    $anchor->modify('-1 day');
+                }
+                $begin = $anchor;
+                $interval = DateInterval::createFromDateString('1 weeks');
                 break;
         }
 
@@ -335,13 +336,14 @@ class Training extends \Ilch\Mapper
             break;
         }
 
-        // Calculate the end date for the next recurring training.
+        // Calculate the end date for the next recurring training. The end date has to
+        // belong to the (new) training, so it must not be before the new start date.
         $begin = new Date($training->getEnd());
         $datePeriod = new DatePeriod($begin, $interval, $end);
         $nextTrainingDate = new Date($training->getDate());
 
         foreach ($datePeriod as $date) {
-            if ($date < $givenDate && $date < $nextTrainingDate) {
+            if ($date < $nextTrainingDate) {
                 continue;
             }
 
@@ -369,6 +371,7 @@ class Training extends \Ilch\Mapper
             $itemId = $this->db()->insert($this->tablename)
                 ->values($fields)
                 ->execute();
+            $training->setId($itemId);
         }
 
         $this->saveAccess($itemId, $training->getReadAccess());
@@ -386,8 +389,14 @@ class Training extends \Ilch\Mapper
     public function saveAccess(int $trainingId, $access, bool $addAdmin = true)
     {
         if (\is_string($access)) {
-            $access = explode(',', $access);
+            // An empty string means "no groups" instead of a single empty group.
+            $access = ($access === '') ? [] : explode(',', $access);
+        } elseif (!\is_array($access)) {
+            $access = [];
         }
+
+        // Drop empty values (e.g. from "1,,2") so no group with id 0 is inserted.
+        $access = array_values(array_filter($access, fn ($groupId) => $groupId !== '' && $groupId !== null));
 
         // Delete possible old entries to later insert the new ones.
         $this->db()->delete($this->tablenameAccess)

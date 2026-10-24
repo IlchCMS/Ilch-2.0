@@ -6,30 +6,30 @@
 $training = $this->get('training');
 
 $periodDays = [
-    '1' => $this->getTranslator()->trans('Monday'),
-    '2' => $this->getTranslator()->trans('Tuesday'),
-    '3' => $this->getTranslator()->trans('Wednesday'),
-    '4' => $this->getTranslator()->trans('Thursday'),
-    '5' => $this->getTranslator()->trans('Friday'),
-    '6' => $this->getTranslator()->trans('Saturday'),
-    '7' => $this->getTranslator()->trans('Sunday')
+        '1' => $this->getTranslator()->trans('Monday'),
+        '2' => $this->getTranslator()->trans('Tuesday'),
+        '3' => $this->getTranslator()->trans('Wednesday'),
+        '4' => $this->getTranslator()->trans('Thursday'),
+        '5' => $this->getTranslator()->trans('Friday'),
+        '6' => $this->getTranslator()->trans('Saturday'),
+        '7' => $this->getTranslator()->trans('Sunday')
 ];
 $periodTypes = [
-    'daily' => $this->getTranslator()->trans('daily'),
-    'weekly' => $this->getTranslator()->trans('weekly'),
-    'monthly' => $this->getTranslator()->trans('monthly'),
-    'quarterly' => $this->getTranslator()->trans('quarterly'),
-    'yearly' => $this->getTranslator()->trans('yearly'),
-    'days' => $this->getTranslator()->trans('days'),
+        'daily' => $this->getTranslator()->trans('daily'),
+        'weekly' => $this->getTranslator()->trans('weekly'),
+        'monthly' => $this->getTranslator()->trans('monthly'),
+        'quarterly' => $this->getTranslator()->trans('quarterly'),
+        'yearly' => $this->getTranslator()->trans('yearly'),
+        'days' => $this->getTranslator()->trans('days'),
 ];
 
 $periodAppendix = [
-    'daily' => $this->getTranslator()->trans('daily'),
-    'weekly' => $this->getTranslator()->trans('weeks'),
-    'monthly' => $this->getTranslator()->trans('months'),
-    'yearly' => $this->getTranslator()->trans('years'),
-    'quarterly' => $this->getTranslator()->trans('quarter'),
-    'days' => $this->getTranslator()->trans('days'),
+        'daily' => $this->getTranslator()->trans('daily'),
+        'weekly' => $this->getTranslator()->trans('weeks'),
+        'monthly' => $this->getTranslator()->trans('months'),
+        'yearly' => $this->getTranslator()->trans('years'),
+        'quarterly' => $this->getTranslator()->trans('quarter'),
+        'days' => $this->getTranslator()->trans('days'),
 ];
 ?>
 <link href="<?=$this->getModuleUrl('static/css/training.css') ?>" rel="stylesheet">
@@ -159,14 +159,13 @@ $periodAppendix = [
         <div class="col-xl-2">
             <select class="form-select" id="contact" name="contact">
                 <?php
-                foreach ($this->get('users') as $user) {
-                    $selected = '';
-                    if ($this->originalInput('contact', $training->getContact()) == $user->getId()) {
-                        $selected = 'selected="selected"';
-                    }
-                    echo '<option ' . $selected . ' value="' . $user->getId() . '">' . $this->escape($user->getName()) . '</option>';
-                }
-                ?>
+                $contactId = $this->originalInput('contact', $training->getContact());
+                if (!empty($contactId) && $this->get('contactUser')) :
+                    ?>
+                    <option value="<?=$this->escape($contactId)?>" selected>
+                        <?=$this->escape($this->get('contactUser')->getName()) ?>
+                    </option>
+                <?php endif; ?>
             </select>
         </div>
     </div>
@@ -322,6 +321,45 @@ $periodAppendix = [
             ...choicesOptions,
             searchEnabled: true
         })
+    });
+
+    $(document).ready(function() {
+        // Contact person: lazily loaded via usersAction (choices.js v11.2.4).
+        const contactSelect = document.getElementById('contact');
+        const contactChoices = new Choices('#contact', {
+            ...choicesOptions,
+            searchEnabled: true
+        });
+
+        // Build the endpoint from the current page URL:
+        //   .../admin/training/index/treat  ->  .../admin/training/index/users/query/
+        // (A relative 'index.php/...' URL would resolve against the treat page's
+        //  directory and produce a doubled .../index/index.php/... path.)
+        const contactSearchUrl = window.location.pathname.replace(/\/[^/]+$/, '') + '/users/query/';
+
+        let contactSearchTimer;
+        contactSelect.addEventListener('search', (event) => {
+            const query = event.detail.value;
+            if (query === '') {
+                return;
+            }
+            clearTimeout(contactSearchTimer);
+            contactSearchTimer = setTimeout(() => {
+                contactChoices.setChoices(
+                    () => fetch(contactSearchUrl + encodeURIComponent(query), {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    }).then(response => {
+                        if (!response.ok) {
+                            throw new Error('users/query request failed: ' + response.status);
+                        }
+                        return response.json();
+                    }),
+                    'id',
+                    'name',
+                    true
+                );
+            }, 250);
+        });
     });
 
     $(document).ready(function() {

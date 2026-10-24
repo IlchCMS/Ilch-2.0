@@ -66,11 +66,13 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $training = $trainingMapper->getTrainingById($this->getRequest()->getParam('id', 0), $groupIds);
-        $trainingMapper->calculateNextTrainingDate($training);
         if (!$training) {
             $this->redirect(['action' => 'index'])
                 ->withMessage('noTraining', 'danger');
         }
+
+        $trainingMapper->calculateNextTrainingDate($training);
+
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuTraining'), ['controller' => 'index', 'action' => 'index'])
             ->add($training->getTitle(), ['controller' => 'index', 'action' => 'show', 'id' => $training->getId()]);
 

@@ -7,6 +7,7 @@
 
 namespace Modules\Training\Controllers\Admin;
 
+use Ilch\Pagination;
 use Ilch\Validation;
 use Modules\Training\Mappers\Training as TrainingMapper;
 use Modules\Training\Models\Training as TrainingModel;
@@ -49,6 +50,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $pagination = new \Ilch\Pagination();
         $trainingMapper = new TrainingMapper();
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index']);
@@ -61,7 +63,11 @@ class Index extends \Ilch\Controller\Admin
                 ->to(['action' => 'index']);
         }
 
-        $this->getView()->set('trainings', $trainingMapper->getEntriesBy());
+        $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
+        $pagination->setPage($this->getRequest()->getParam('page'));
+
+        $this->getView()->set('trainings', $trainingMapper->getEntriesBy([], ['t.date' => 'ASC'], $pagination));
+        $this->getView()->set('pagination', $pagination);
     }
 
     public function treatAction()
@@ -105,7 +111,6 @@ class Index extends \Ilch\Controller\Admin
                 'gameServer' => 'required|integer|min:0|max:1',
                 'groups' => 'required',
                 'calendarShow' => 'required|integer|min:0|max:1',
-                'periodType' => 'required',
             ];
 
             if ($this->getRequest()->getPost('periodType') == 'days') {
@@ -119,7 +124,7 @@ class Index extends \Ilch\Controller\Admin
                 $rules['repeatUntil'] = 'required|date:Y-m-d\TH\:i';
             }
 
-            // Require atleast the address of the voice or gameserver if enabled.
+            // Require at least the address of the voice or gameserver if enabled.
             if ($this->getRequest()->getPost('voiceServer')) {
                 $rules['voiceServerIP'] = 'required';
             }
@@ -163,9 +168,38 @@ class Index extends \Ilch\Controller\Admin
             $this->getView()->set('calendarShow', 1);
         }
 
-        $this->getView()->set('users', $userMapper->getUserList(['confirmed' => 1]))
+        // Only the currently selected contact person needs to be known by name
+        // for the pre-rendered <option>; the rest is loaded on demand by
+        // choices.js through usersAction().
+        $contactId = $this->getRequest()->getPost('contact');
+        if (empty($contactId)) {
+            $contactId = $this->getRequest()->getOldInput('contact');
+        }
+        if (empty($contactId)) {
+            $contactId = $model->getContact();
+        }
+
+        $this->getView()->set('contactUser', !empty($contactId) ? $userMapper->getUserById((int)$contactId) : null)
             ->set('userGroupList', $groupMapper->getGroupList())
             ->set('groups', explode(',', $model->getReadAccess()));
+    }
+
+    public function usersAction()
+    {
+        header('Content-Type: application/json; charset=utf-8');
+
+        $userMapper = new UserMapper();
+        $search = (string)$this->getRequest()->getParam('query', '');
+
+        $where = ['confirmed' => 1];
+        if ($search !== '') {
+            $where['name LIKE'] = '%' . $search . '%';
+        }
+
+        $pagination = new Pagination();
+        $pagination->setRowsPerPage(20);
+
+        $this->getView()->set('users', $userMapper->getUserList($where, $pagination, ['id', 'name']));
     }
 
     public function delAction()
