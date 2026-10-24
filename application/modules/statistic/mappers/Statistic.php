@@ -16,6 +16,19 @@ use Ilch\Database\Exception;
 class Statistic extends \Ilch\Mapper
 {
     /**
+     * Period start for "all time" queries. Matches the aggregation frontier
+     * epoch, so tiered reads can use it as a lower bound.
+     */
+    private const ALL_TIME_START = '1000-01-01';
+
+    /**
+     * Aggregation frontiers ('Y-m-d' per level), cached per mapper instance.
+     *
+     * @var array{daily: string, monthly: string, yearly: string}|null
+     */
+    private ?array $frontierCache = null;
+
+    /**
      * Returns all online users.
      *
      * @return array []|User[]
@@ -77,20 +90,27 @@ class Statistic extends \Ilch\Mapper
     /**
      * Returns all users who were online.
      *
+     * Stays on the raw table (identity data); the day range predicate is
+     * served by idx_date.
+     *
      * @return User[]
      * @since 2.1.20
      */
     public function getWhoWasOnline(): array
     {
         $userMapper = new UserMapper();
-        $date = new \Ilch\Date();
-        $dateString = $date->format('Y-m-d H:i:s', true);
+
+        // "Today" in the site-local timezone (same clock saveVisit() writes
+        // with), expressed as a range predicate for idx_date.
+        $today = (new \Ilch\Date())->format('Y-m-d', true);
+        $next = $this->aggregateMapper()->addDays($today, 1);
 
         $sql = 'SELECT `[prefix]_visits_stats`.user_id, `[prefix]_visits_stats`.date, `[prefix]_users`.*
                 FROM `[prefix]_visits_stats`
                 INNER JOIN `[prefix]_users` ON user_id = `[prefix]_users`.id
-                WHERE YEAR(`date`) = YEAR("' . $dateString . '") AND MONTH(`date`) = MONTH("' . $dateString
-            . '") AND DAY(`date`) = DAY("' . $dateString . '") AND `user_id` > 0
+                WHERE `[prefix]_visits_stats`.`date` >= "' . $today . ' 00:00:00"
+                  AND `[prefix]_visits_stats`.`date` < "' . $next . ' 00:00:00"
+                  AND `user_id` > 0
                 GROUP BY `user_id`';
 
         $rows = $this->db()->queryArray($sql);
@@ -104,6 +124,12 @@ class Statistic extends \Ilch\Mapper
     }
 
     /**
+     * Returns the visit count per hour of the given month/year.
+     *
+     * Stays on the raw table: hour is not part of the aggregate grain. The
+     * range predicate is served by idx_date; retention bounds the raw
+     * history depth.
+     *
      * @param int|null $year
      * @param int|null $month
      * @return null|StatisticModel[]
@@ -113,15 +139,8 @@ class Statistic extends \Ilch\Mapper
         $sql = 'SELECT
                 HOUR(`date`) AS `date_hour`,
                 COUNT(`id`) AS `visits`
-                FROM `[prefix]_visits_stats`';
-        if ($month != null && $year != null) {
-            $date = $year . '-' . $month . '-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '")';
-        } elseif ($year != null) {
-            $date = $year . '-01-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '")';
-        }
-        $sql .= ' GROUP BY HOUR(`date`)
+                FROM `[prefix]_visits_stats`' . $this->rawPeriodWhere($year, $month) . '
+                GROUP BY HOUR(`date`)
                 ORDER BY `date_hour` DESC';
 
         $entryArray = $this->db()->queryArray($sql);
@@ -142,38 +161,45 @@ class Statistic extends \Ilch\Mapper
     }
 
     /**
+     * Returns the visit count per weekday of the given month/year.
+     *
+     * Tiered like the other reads: the daily aggregate table serves every
+     * fully aggregated day (weekday is a function of the day, so the daily
+     * grain is sufficient — no schema change), the raw table serves the
+     * still-open recent tail (idx_date).
+     *
      * @param int|null $year
      * @param int|null $month
      * @return null|StatisticModel[]
      */
     public function getVisitsDay(?int $year = null, ?int $month = null): ?array
     {
-        $sql = 'SELECT
-                MAX(DATE(`date`)) AS `date_full`,
-                WEEKDAY(`date`) AS `date_week`,
-                COUNT(`id`) AS `visits`
-                FROM `[prefix]_visits_stats`';
-        if ($month != null && $year != null) {
-            $date = $year . '-' . $month . '-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '")';
-        } elseif ($year != null) {
-            $date = $year . '-01-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '")';
+        [$start, $end] = $this->resolvePeriodRange($year, $month);
+
+        $dailyFrontier = $this->frontier('daily');
+
+        $rows = [];
+        $tierEnd = min($end, $dailyFrontier);
+        if ($start < $tierEnd) {
+            $rows = $this->mergeWeekdayRows($rows, $this->aggregateWeekdayRows($start, $tierEnd));
         }
-        $sql .= ' GROUP BY WEEKDAY(`date`)
-                ORDER BY `date_week` ASC';
 
-        $entryArray = $this->db()->queryArray($sql);
+        $rawStart = max($start, $dailyFrontier);
+        if ($rawStart < $end) {
+            $rows = $this->mergeWeekdayRows($rows, $this->rawWeekdayRows($rawStart, $end));
+        }
 
-        if (empty($entryArray)) {
+        if (empty($rows)) {
             return null;
         }
 
+        ksort($rows); // Monday (0) .. Sunday (6), same order as the old ORDER BY date_week ASC
+
         $entry = [];
-        foreach ($entryArray as $entries) {
+        foreach ($rows as $data) {
             $statisticModel = new StatisticModel();
-            $statisticModel->setVisits($entries['visits']);
-            $statisticModel->setDate($entries['date_full']);
+            $statisticModel->setVisits($data['visits']);
+            $statisticModel->setDate($data['date_full']);
             $entry[] = $statisticModel;
         }
 
@@ -181,41 +207,44 @@ class Statistic extends \Ilch\Mapper
     }
 
     /**
+     * Returns the per-day visit totals of one calendar month.
+     *
+     * Reads the daily aggregate table for fully processed days and the raw
+     * table (idx_date) for the still-open recent window, so recent days stay
+     * exact between aggregation runs.
+     *
      * @param int|null $year
      * @param int|null $month
      * @return null|StatisticModel[]
      */
     public function getVisitsYearMonthDay(?int $year = null, ?int $month = null): ?array
     {
-        $sql = 'SELECT 
-                DATE(`date`) AS `date_full`,
-                YEAR(`date`) AS `date_year`,
-                MONTH(`date`) AS `date_month`,
-                COUNT(`id`) AS `visits`
-                FROM `[prefix]_visits_stats`';
-        if ($month != null && $year != null) {
-            $date = $year . '-' . $month . '-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '")';
-        } else {
-            // "Today" in the site-local timezone (same clock saveVisit() writes with),
-            // not the DB server's CURDATE().
-            $date = (new \Ilch\Date())->format('Y-m-d', true);
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '")';
+        [$start, $end] = $this->resolveMonthRange($year, $month);
+
+        $dailyFrontier = $this->frontier('daily');
+
+        $rows = [];
+        $tierEnd = min($end, $dailyFrontier);
+        if ($start < $tierEnd) {
+            $rows = $this->mergeDimRows($rows, $this->aggregateDimRows('visits_stats_daily', 'date', ['`date`'], '`date`', $start, $tierEnd));
         }
-        $sql .= ' GROUP BY YEAR(`date`), MONTH(`date`), DATE(`date`)
-                ORDER BY `date_full` DESC';
 
-        $entryArray = $this->db()->queryArray($sql);
+        $rawStart = max($start, $dailyFrontier);
+        if ($rawStart < $end) {
+            $rows = $this->mergeDimRows($rows, $this->rawDimRows(['DATE(`date`)'], 'DATE(`date`)', $rawStart, $end));
+        }
 
-        if (empty($entryArray)) {
+        if (empty($rows)) {
             return null;
         }
 
+        krsort($rows); // newest day first
+
         $entry = [];
-        foreach ($entryArray as $entries) {
+        foreach ($rows as $date => $visits) {
             $statisticModel = new StatisticModel();
-            $statisticModel->setVisits($entries['visits']);
-            $statisticModel->setDate($entries['date_full']);
+            $statisticModel->setVisits($visits);
+            $statisticModel->setDate($date);
             $entry[] = $statisticModel;
         }
 
@@ -223,36 +252,44 @@ class Statistic extends \Ilch\Mapper
     }
 
     /**
+     * Returns the per-month visit totals of one calendar year.
+     *
+     * A calendar year holds at most 365 daily aggregate days, so the daily
+     * table covers the whole processed prefix; only the still-open recent
+     * window is read from the raw table (idx_date).
+     *
      * @param int|null $year
      * @return null|StatisticModel[]
      */
     public function getVisitsYearMonth(?int $year = null): ?array
     {
-        $sql = 'SELECT YEAR(`date`) AS `date_year`, MONTH(`date`) AS `date_month`, COUNT(`id`) AS `visits`
-                FROM `[prefix]_visits_stats`';
-        if ($year != null) {
-            $date = $year . '-01-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '")';
-        } else {
-            // "This year" in the site-local timezone (same clock saveVisit() writes with),
-            // not the DB server's CURDATE().
-            $date = (new \Ilch\Date())->format('Y-m-d', true);
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '")';
+        [$start, $end] = $this->resolveYearRange($year);
+
+        $dailyFrontier = $this->frontier('daily');
+        $monthKey = "DATE_FORMAT(`date`, '%Y-%m-01')";
+
+        $rows = [];
+        $tierEnd = min($end, $dailyFrontier);
+        if ($start < $tierEnd) {
+            $rows = $this->mergeDimRows($rows, $this->aggregateDimRows('visits_stats_daily', 'date', [$monthKey], $monthKey, $start, $tierEnd));
         }
-        $sql .= ' GROUP BY YEAR(`date`), MONTH(`date`)
-                ORDER BY `date_month` DESC';
 
-        $entryArray = $this->db()->queryArray($sql);
+        $rawStart = max($start, $dailyFrontier);
+        if ($rawStart < $end) {
+            $rows = $this->mergeDimRows($rows, $this->rawDimRows([$monthKey], $monthKey, $rawStart, $end));
+        }
 
-        if (empty($entryArray)) {
+        if (empty($rows)) {
             return null;
         }
 
+        krsort($rows); // newest month first
+
         $entry = [];
-        foreach ($entryArray as $entries) {
+        foreach ($rows as $month => $visits) {
             $statisticModel = new StatisticModel();
-            $statisticModel->setVisits($entries['visits']);
-            $statisticModel->setDate($entries['date_year'] . '-' . $entries['date_month'] . '-01');
+            $statisticModel->setVisits($visits);
+            $statisticModel->setDate($month);
             $entry[] = $statisticModel;
         }
 
@@ -260,31 +297,60 @@ class Statistic extends \Ilch\Mapper
     }
 
     /**
+     * Returns the visit totals per year (one year when given, all years
+     * otherwise).
+     *
+     * Complete years are read straight from the yearly aggregate table; the
+     * still-open years (between the yearly frontier and the current year)
+     * are computed by the tiered total.
+     *
      * @param int|null $year
      * @return null|StatisticModel[]
      */
     public function getVisitsYear(?int $year = null): ?array
     {
-        $sql = 'SELECT YEAR(`date`) AS `year_full`, COUNT(`id`) AS `visits`
-                FROM `[prefix]_visits_stats`';
-        if ($year != null) {
-            $date = $year . '-01-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '")';
+        if ($year !== null && (int)$year > 0) {
+            $year = (int)$year;
+            $visits = $this->sumRange($year . '-01-01', ($year + 1) . '-01-01');
+            if ($visits <= 0) {
+                return null;
+            }
+
+            $statisticModel = new StatisticModel();
+            $statisticModel->setVisits($visits);
+            $statisticModel->setDate($year . '-01-01');
+
+            return [$statisticModel];
         }
-        $sql .= ' GROUP BY YEAR(`date`)
-                  ORDER BY `year_full` DESC';
 
-        $entryArray = $this->db()->queryArray($sql);
+        $yearlyFrontier = $this->frontier('yearly');
 
-        if (empty($entryArray)) {
+        $rows = $this->aggregateYearRows(self::ALL_TIME_START, $yearlyFrontier);
+
+        $currentYear = (int)substr($this->siteToday(), 0, 4);
+        $firstIncompleteYear = (int)substr($yearlyFrontier, 0, 4);
+        $firstDataYear = $this->firstDataYear();
+        if ($firstDataYear !== null) {
+            // Only years that can hold data (normally one or two iterations).
+            for ($y = max($firstIncompleteYear, $firstDataYear); $y <= $currentYear; $y++) {
+                $visits = $this->sumRange($y . '-01-01', ($y + 1) . '-01-01');
+                if ($visits > 0) {
+                    $rows[(string)$y] = $visits;
+                }
+            }
+        }
+
+        if (empty($rows)) {
             return null;
         }
 
+        krsort($rows); // newest year first
+
         $entry = [];
-        foreach ($entryArray as $entries) {
+        foreach ($rows as $yearKey => $visits) {
             $statisticModel = new StatisticModel();
-            $statisticModel->setVisits($entries['visits']);
-            $statisticModel->setDate($entries['year_full'] . '-01-01');
+            $statisticModel->setVisits($visits);
+            $statisticModel->setDate($yearKey . '-01-01');
             $entry[] = $statisticModel;
         }
 
@@ -292,6 +358,11 @@ class Statistic extends \Ilch\Mapper
     }
 
     /**
+     * Returns the visit totals per browser for a month, year or all time.
+     *
+     * Grouped from the aggregate tables (yearly / monthly / daily tiers),
+     * with an indexed raw tail for the unprocessed recent window.
+     *
      * @param int|null $year
      * @param int|null $month
      * @param string|null $browser
@@ -299,40 +370,26 @@ class Statistic extends \Ilch\Mapper
      */
     public function getVisitsBrowser(?int $year = null, ?int $month = null, ?string $browser = null): ?array
     {
-        if ($browser !== null) {
-            $browser = $this->db()->escape($browser);
+        [$start, $end] = $this->resolvePeriodRange($year, $month);
+
+        $filter = '';
+        if ($browser !== null && $browser !== '') {
+            $filter = '`browser` = "' . $this->db()->escape($browser) . '"';
         }
 
-        $sql = 'SELECT `browser`, COUNT(`id`) AS `visits`
-            FROM `[prefix]_visits_stats`';
-        if ($month != null && $year != null && $browser != null) {
-            $date = $year . '-' . $month . '-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '") AND browser = "' . $browser . '"';
-        } elseif ($month == null && $year != null && $browser != null) {
-            $date = $year . '-01-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND browser = "' . $browser . '"';
-        } elseif ($month != null && $year != null) {
-            $date = $year . '-' . $month . '-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '")';
-        } elseif ($month == null && $year != null) {
-            $date = $year . '-01-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '")';
-        }
+        $rows = $this->visitsByDimension(['`browser`'], '`browser`', $start, $end, $filter);
 
-        $sql .= ' GROUP BY `browser`
-              ORDER BY `visits` DESC';
-
-        $entryArray = $this->db()->queryArray($sql);
-
-        if (empty($entryArray)) {
+        if (empty($rows)) {
             return null;
         }
 
+        arsort($rows);
+
         $entry = [];
-        foreach ($entryArray as $entries) {
+        foreach ($rows as $browserName => $visits) {
             $statisticModel = new StatisticModel();
-            $statisticModel->setVisits($entries['visits']);
-            $statisticModel->setBrowser($entries['browser']);
+            $statisticModel->setVisits($visits);
+            $statisticModel->setBrowser($browserName);
             $entry[] = $statisticModel;
         }
 
@@ -340,39 +397,32 @@ class Statistic extends \Ilch\Mapper
     }
 
     /**
+     * Returns the visit totals per language for a month, year or all time.
+     *
+     * Grouped from the aggregate tables (yearly / monthly / daily tiers),
+     * with an indexed raw tail for the unprocessed recent window.
+     *
      * @param int|null $year
      * @param int|null $month
      * @return null|StatisticModel[]
      */
     public function getVisitsLanguage(?int $year = null, ?int $month = null): ?array
     {
-        $sql = 'SELECT
-                MAX(`date`),
-                `lang`,
-                COUNT(`id`) AS `visits`
-                FROM `[prefix]_visits_stats`';
-        if ($month != null && $year != null) {
-            $date = $year . '-' . $month . '-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '")';
-        } elseif ($month == null && $year != null) {
-            $date = $year . '-01-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '")';
-        }
+        [$start, $end] = $this->resolvePeriodRange($year, $month);
 
-        $sql .= ' GROUP BY `lang`
-                ORDER BY `visits` DESC';
+        $rows = $this->visitsByDimension(['`lang`'], '`lang`', $start, $end);
 
-        $entryArray = $this->db()->queryArray($sql);
-
-        if (empty($entryArray)) {
+        if (empty($rows)) {
             return null;
         }
 
+        arsort($rows);
+
         $entry = [];
-        foreach ($entryArray as $entries) {
+        foreach ($rows as $lang => $visits) {
             $statisticModel = new StatisticModel();
-            $statisticModel->setVisits($entries['visits']);
-            $statisticModel->setLang($entries['lang']);
+            $statisticModel->setVisits($visits);
+            $statisticModel->setLang($lang);
             $entry[] = $statisticModel;
         }
 
@@ -380,6 +430,12 @@ class Statistic extends \Ilch\Mapper
     }
 
     /**
+     * Returns the visit totals per OS (with version) for a month, year or
+     * all time.
+     *
+     * Grouped from the aggregate tables (yearly / monthly / daily tiers),
+     * with an indexed raw tail for the unprocessed recent window.
+     *
      * @param int|null $year
      * @param int|null $month
      * @param string|null $os
@@ -387,45 +443,35 @@ class Statistic extends \Ilch\Mapper
      */
     public function getVisitsOS(?int $year = null, ?int $month = null, ?string $os = null): ?array
     {
-        if ($os !== null) {
-            $os = $this->db()->escape($os);
+        [$start, $end] = $this->resolvePeriodRange($year, $month);
+
+        $filter = '';
+        if ($os !== null && $os !== '') {
+            $filter = '`os` = "' . $this->db()->escape($os) . '"';
         }
 
-        $sql = 'SELECT 
-            MAX(`date`),
-            `os_version`,
-            `os`,
-            COUNT(`id`) AS `visits`
-            FROM `[prefix]_visits_stats`';
-        if ($month != null && $year != null && $os != null) {
-            $date = $year . '-' . $month . '-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '") AND os = "' . $os . '"';
-        } elseif ($month == null && $year != null && $os != null) {
-            $date = $year . '-01-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND os = "' . $os . '"';
-        } elseif ($month != null && $year != null) {
-            $date = $year . '-' . $month . '-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '")';
-        } elseif ($month == null && $year != null) {
-            $date = $year . '-01-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '")';
-        }
+        $rows = $this->visitsByDimension(
+            ['`os`', '`os_version`'],
+            'CONCAT(`os`, CHAR(31), `os_version`)',
+            $start,
+            $end,
+            $filter
+        );
 
-        $sql .= ' GROUP BY `os`,`os_version`
-              ORDER BY `visits` DESC';
-
-        $entryArray = $this->db()->queryArray($sql);
-
-        if (empty($entryArray)) {
+        if (empty($rows)) {
             return null;
         }
 
+        arsort($rows);
+
         $entry = [];
-        foreach ($entryArray as $entries) {
+        foreach ($rows as $key => $visits) {
+            $parts = explode(chr(31), $key, 2);
+
             $statisticModel = new StatisticModel();
-            $statisticModel->setVisits($entries['visits']);
-            $statisticModel->setOS($entries['os']);
-            $statisticModel->setOSVersion($entries['os_version']);
+            $statisticModel->setVisits($visits);
+            $statisticModel->setOS($parts[0]);
+            $statisticModel->setOSVersion($parts[1] ?? '');
             $entry[] = $statisticModel;
         }
 
@@ -512,6 +558,12 @@ class Statistic extends \Ilch\Mapper
     }
 
     /**
+     * Total visits for a day, a month, a year, or all time.
+     *
+     * Composed from the aggregate tables where the period is fully
+     * processed and from an indexed raw count for the unprocessed recent
+     * tail (see sumRange()).
+     *
      * @param string|null $date
      * @param int|null $year
      * @param int|null $month
@@ -519,56 +571,60 @@ class Statistic extends \Ilch\Mapper
      */
     public function getVisitsCount(?string $date = null, ?int $year = null, ?int $month = null): int
     {
-        $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_visits_stats`';
-        if ($month != null && $year != null) {
-            $date = $year . '-' . $month . '-01 00:00:00';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '")';
-        } elseif ($month == null && $year != null) {
-            $date = $year . '-01-01 00:00:00';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '")';
-        } elseif ($date != null) {
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '") AND DAY(`date`) = DAY("' . $date . '")';
+        $ag = $this->aggregateMapper();
+
+        if ($month !== null && $year !== null && (int)$year > 0 && (int)$month > 0) {
+            $start = $this->monthStart((int)$year, (int)$month);
+            return $this->sumRange($start, $ag->addMonths($start, 1));
         }
 
-        return $this->db()->queryCell($sql);
+        if ($year !== null && (int)$year > 0) {
+            $year = (int)$year;
+            return $this->sumRange($year . '-01-01', ($year + 1) . '-01-01');
+        }
+
+        if ($date !== null && $date !== '') {
+            $start = $this->assertDateLiteral($date);
+            return $this->sumRange($start, $ag->addDays($start, 1));
+        }
+
+        return $this->sumRange(self::ALL_TIME_START, $ag->addDays($ag->siteToday(), 1));
     }
 
     /**
+     * Total visits of the given month, or of the current month.
+     *
      * @param int|null $year
      * @param int|null $month
      * @return int
      */
     public function getVisitsMonthCount(?int $year = null, ?int $month = null): int
     {
-        $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_visits_stats`';
-        if ($month != null && $year != null) {
-            $date = $year . '-' . $month . '-01';
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '")';
+        $ag = $this->aggregateMapper();
+
+        if ($year !== null && $month !== null && (int)$year > 0 && (int)$month > 0) {
+            $start = $this->monthStart((int)$year, (int)$month);
         } else {
-            // "This month" in the site-local timezone (same clock saveVisit() writes with),
-            // not the DB server's CURDATE().
-            $date = (new \Ilch\Date())->format('Y-m-d', true);
-            $sql .= ' WHERE YEAR(`date`) = YEAR("' . $date . '") AND MONTH(`date`) = MONTH("' . $date . '")';
+            // "This month" in the site-local timezone (same clock saveVisit()
+            // writes with).
+            $start = $ag->firstOfMonth($ag->siteToday());
         }
 
-        return $this->db()->queryCell($sql);
+        return $this->sumRange($start, $ag->addMonths($start, 1));
     }
 
     /**
+     * Total visits of the current year.
+     *
      * @return int
      */
     public function getVisitsYearCount(): int
     {
-        // "This year" in the site-local timezone (same clock saveVisit() writes with),
-        // not the DB server's CURDATE().
-        $date = (new \Ilch\Date())->format('Y-m-d', true);
-        $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_visits_stats`
-                WHERE YEAR(`date`) = YEAR("' . $date . '")';
+        // "This year" in the site-local timezone (same clock saveVisit()
+        // writes with).
+        $year = (int)substr($this->siteToday(), 0, 4);
 
-        return $this->db()->queryCell($sql);
+        return $this->sumRange($year . '-01-01', ($year + 1) . '-01-01');
     }
 
     /**
@@ -986,7 +1042,14 @@ class Statistic extends \Ilch\Mapper
     }
 
     /**
-     * Check if there is a row with a specified column contains a specific value.
+     * Check if there is a row with a specified column containing a specific
+     * value.
+     *
+     * History-aware: once the retention purge has deleted old raw rows, a
+     * value may only remain in the aggregate tables. The daily aggregate
+     * covers every historical day that ever had events (purged days are never
+     * rebuilt, so their rows persist), while the raw table covers the recent
+     * window — together they are the complete "ever seen" set.
      *
      * @param string $column
      * @param string|null $value
@@ -995,10 +1058,588 @@ class Statistic extends \Ilch\Mapper
      */
     private function columnWithValueExists(string $column, ?string $value): bool
     {
-        return (bool)$this->db()->select('id')
-            ->from('visits_stats')
-            ->where([$column => $value])
-            ->execute()
-            ->fetchCell();
+        if ($value === null || $value === '') {
+            return false;
+        }
+
+        $value = $this->db()->escape($value);
+
+        return (bool)$this->db()->queryCell(
+                "SELECT 1 FROM `[prefix]_visits_stats` WHERE `$column` = \"$value\" LIMIT 1"
+            )
+            || (bool)$this->db()->queryCell(
+                "SELECT 1 FROM `[prefix]_visits_stats_daily` WHERE `$column` = \"$value\" LIMIT 1"
+            );
+    }
+
+    /**
+     * @return StatisticAggregate
+     */
+    private function aggregateMapper(): StatisticAggregate
+    {
+        return new StatisticAggregate();
+    }
+
+    /**
+     * @param string $level One of 'daily', 'monthly', 'yearly'
+     * @return string 'Y-m-d' frontier (epoch when not set yet)
+     */
+    private function frontier(string $level): string
+    {
+        if ($this->frontierCache === null) {
+            $ag = $this->aggregateMapper();
+            $this->frontierCache = [
+                'daily' => $ag->getFrontier('daily'),
+                'monthly' => $ag->getFrontier('monthly'),
+                'yearly' => $ag->getFrontier('yearly'),
+            ];
+        }
+
+        return $this->frontierCache[$level];
+    }
+
+    /**
+     * Site-local "today" — the same calendar the raw rows are written with.
+     *
+     * @return string 'Y-m-d'
+     */
+    private function siteToday(): string
+    {
+        return $this->aggregateMapper()->siteToday();
+    }
+
+    /**
+     * @param int $year
+     * @param int $month
+     * @return string 'Y-m-01'
+     * @throws \InvalidArgumentException
+     */
+    private function monthStart(int $year, int $month): string
+    {
+        $start = sprintf('%d-%02d-01', $year, $month);
+        if (!preg_match('/^\d{4}-(0[1-9]|1[0-2])-01$/', $start)) {
+            throw new \InvalidArgumentException('Invalid year/month pair: ' . $year . '-' . $month);
+        }
+
+        return $start;
+    }
+
+    /**
+     * Validate a machine-generated boundary literal before it is
+     * interpolated.
+     *
+     * @param string $value
+     * @return string
+     * @throws \InvalidArgumentException
+     */
+    private function assertDateLiteral(string $value): string
+    {
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
+            throw new \InvalidArgumentException('Invalid Y-m-d date literal: ' . $value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param string $date 'Y-m-d'
+     * @return string 'YYYY-01-01'
+     */
+    private function yearStartOf(string $date): string
+    {
+        return substr($this->assertDateLiteral($date), 0, 4) . '-01-01';
+    }
+
+    /**
+     * Resolve a month query range: the given month when a valid (year, month)
+     * pair was given, the current month otherwise.
+     *
+     * @param int|null $year
+     * @param int|null $month
+     * @return array{0: string, 1: string} [start, endExclusive), 'Y-m-d'
+     */
+    private function resolveMonthRange(?int $year, ?int $month): array
+    {
+        $ag = $this->aggregateMapper();
+
+        if ($year !== null && $month !== null && (int)$year > 0 && (int)$month > 0) {
+            $start = $this->monthStart((int)$year, (int)$month);
+        } else {
+            $start = $ag->firstOfMonth($ag->siteToday());
+        }
+
+        return [$start, $ag->addMonths($start, 1)];
+    }
+
+    /**
+     * Resolve a year query range: the given year, or the current year.
+     *
+     * @param int|null $year
+     * @return array{0: string, 1: string} [start, endExclusive), 'Y-m-d'
+     */
+    private function resolveYearRange(?int $year): array
+    {
+        $year = ($year !== null && (int)$year > 0) ? (int)$year : (int)substr($this->siteToday(), 0, 4);
+
+        return [$year . '-01-01', ($year + 1) . '-01-01'];
+    }
+
+    /**
+     * Resolve a month/year/all-time query range (a month only counts together
+     * with a year, mirroring the legacy filter semantics).
+     *
+     * @param int|null $year
+     * @param int|null $month
+     * @return array{0: string, 1: string} [start, endExclusive), 'Y-m-d'
+     */
+    private function resolvePeriodRange(?int $year, ?int $month): array
+    {
+        $ag = $this->aggregateMapper();
+
+        if ($year !== null && $month !== null && (int)$year > 0 && (int)$month > 0) {
+            $start = $this->monthStart((int)$year, (int)$month);
+            return [$start, $ag->addMonths($start, 1)];
+        }
+
+        if ($year !== null && (int)$year > 0) {
+            $year = (int)$year;
+            return [$year . '-01-01', ($year + 1) . '-01-01'];
+        }
+
+        // All time: the yearly tier covers everything before the yearly
+        // frontier, the raw tail covers up to the end of today.
+        return [self::ALL_TIME_START, $ag->addDays($ag->siteToday(), 1)];
+    }
+
+    /**
+     * Range predicate for raw date queries (served by idx_date); '' when the
+     * query is unfiltered (all time).
+     *
+     * @param int|null $year
+     * @param int|null $month
+     * @return string
+     */
+    private function rawPeriodWhere(?int $year, ?int $month): string
+    {
+        $ag = $this->aggregateMapper();
+
+        if ($year !== null && $month !== null && (int)$year > 0 && (int)$month > 0) {
+            $start = $this->monthStart((int)$year, (int)$month);
+            $end = $ag->addMonths($start, 1);
+
+            return ' WHERE `date` >= "' . $start . ' 00:00:00" AND `date` < "' . $end . ' 00:00:00"';
+        }
+
+        if ($year !== null && (int)$year > 0) {
+            $year = (int)$year;
+
+            return ' WHERE `date` >= "' . $year . '-01-01 00:00:00" AND `date` < "' . ($year + 1) . '-01-01 00:00:00"';
+        }
+
+        return '';
+    }
+
+    /**
+     * Exact visit total over the calendar-aligned range [$start, $end).
+     *
+     * Combines the aggregate tiers (yearly, monthly, daily) for the fully
+     * processed prefix with an indexed raw count for the unprocessed tail,
+     * split at the persisted aggregation frontiers. The tiers are disjoint,
+     * so the total is exact in every state of the catch-up backlog.
+     *
+     * @param string $start 'Y-m-d'
+     * @param string $end 'Y-m-d' exclusive
+     * @return int
+     */
+    private function sumRange(string $start, string $end): int
+    {
+        $start = $this->assertDateLiteral($start);
+        $end = $this->assertDateLiteral($end);
+
+        $yearlyFrontier = $this->frontier('yearly');
+        $monthlyFrontier = $this->frontier('monthly');
+        $dailyFrontier = $this->frontier('daily');
+
+        $total = 0;
+        $cursor = $start;
+
+        // Whole-year tier: only when the range starts at a year boundary.
+        // Every selected year is fully present in the yearly table.
+        if ($cursor === $this->yearStartOf($cursor)) {
+            $lastWholeYear = (int)substr($end, 0, 4) - 1;
+            $lastCompleteYear = (int)substr($yearlyFrontier, 0, 4) - 1;
+            $tierEndYear = min($lastWholeYear, $lastCompleteYear);
+
+            if ((int)substr($cursor, 0, 4) <= $tierEndYear) {
+                $total += $this->sumTierYearly((int)substr($cursor, 0, 4), $tierEndYear + 1);
+                $cursor = ($tierEndYear + 1) . '-01-01';
+            }
+        }
+
+        $tierEnd = min($end, $monthlyFrontier);
+        if ($cursor < $tierEnd) {
+            $total += $this->sumTierMonthly($cursor, $tierEnd);
+            $cursor = $tierEnd;
+        }
+
+        $tierEnd = min($end, $dailyFrontier);
+        if ($cursor < $tierEnd) {
+            $total += $this->sumTierDaily($cursor, $tierEnd);
+            $cursor = $tierEnd;
+        }
+
+        $rawStart = max($cursor, $dailyFrontier);
+        if ($rawStart < $end) {
+            $total += $this->sumTierRaw($rawStart, $end);
+        }
+
+        return $total;
+    }
+
+    /**
+     * Sum of the yearly aggregate rows for whole years in [$yearStart, $yearEndExclusive).
+     *
+     * @param int $yearStart
+     * @param int $yearEndExclusive
+     * @return int
+     */
+    private function sumTierYearly(int $yearStart, int $yearEndExclusive): int
+    {
+        return (int)$this->db()->queryCell(
+            "SELECT COALESCE(SUM(`visits`), 0) FROM `[prefix]_visits_stats_yearly`
+             WHERE `year` >= $yearStart AND `year` < $yearEndExclusive"
+        );
+    }
+
+    /**
+     * Sum of the monthly aggregate rows for months in [$start, $endExclusive).
+     *
+     * @param string $start 'Y-m-01'
+     * @param string $end 'Y-m-01' exclusive
+     * @return int
+     */
+    private function sumTierMonthly(string $start, string $end): int
+    {
+        return (int)$this->db()->queryCell(
+            "SELECT COALESCE(SUM(`visits`), 0) FROM `[prefix]_visits_stats_monthly`
+             WHERE `month` >= \"$start\" AND `month` < \"$end\""
+        );
+    }
+
+    /**
+     * Sum of the daily aggregate rows for days in [$start, $endExclusive).
+     *
+     * @param string $start 'Y-m-d'
+     * @param string $end 'Y-m-d' exclusive
+     * @return int
+     */
+    private function sumTierDaily(string $start, string $end): int
+    {
+        return (int)$this->db()->queryCell(
+            "SELECT COALESCE(SUM(`visits`), 0) FROM `[prefix]_visits_stats_daily`
+             WHERE `date` >= \"$start\" AND `date` < \"$end\""
+        );
+    }
+
+    /**
+     * Indexed raw count for days in [$start, $endExclusive) (idx_date).
+     *
+     * @param string $start 'Y-m-d'
+     * @param string $end 'Y-m-d' exclusive
+     * @return int
+     */
+    private function sumTierRaw(string $start, string $end): int
+    {
+        return (int)$this->db()->queryCell(
+            "SELECT COUNT(*) FROM `[prefix]_visits_stats`
+             WHERE `date` >= \"$start 00:00:00\" AND `date` < \"$end 00:00:00\""
+        );
+    }
+
+    /**
+     * Per-dimension visit totals over a calendar-aligned range, combining
+     * the aggregate tiers with the raw tail.
+     *
+     * Yearly rows cover whole years that are fully rolled up, monthly rows
+     * cover months before the monthly frontier, daily rows cover processed
+     * days, and the raw tail covers the still-open recent window (bounded
+     * by idx_date). The tiers are disjoint, so their sums merge exactly.
+     *
+     * @param string[] $groupColumns Backticked dimension columns
+     * @param string $keyExpr SQL expression producing the merge key
+     * @param string $start 'Y-m-d'
+     * @param string $end 'Y-m-d' exclusive
+     * @param string $filter Optional extra predicate (escaped values only)
+     * @return array<string, int> key => visits
+     */
+    private function visitsByDimension(array $groupColumns, string $keyExpr, string $start, string $end, string $filter = ''): array
+    {
+        $start = $this->assertDateLiteral($start);
+        $end = $this->assertDateLiteral($end);
+
+        $yearlyFrontier = $this->frontier('yearly');
+        $monthlyFrontier = $this->frontier('monthly');
+        $dailyFrontier = $this->frontier('daily');
+
+        $rows = [];
+        $cursor = $start;
+
+        // Whole-year tier: only when the range starts at a year boundary.
+        // Every selected year is fully present in the yearly table.
+        if ($cursor === $this->yearStartOf($cursor)) {
+            $lastWholeYear = (int)substr($end, 0, 4) - 1;
+            $lastCompleteYear = (int)substr($yearlyFrontier, 0, 4) - 1;
+            $tierEndYear = min($lastWholeYear, $lastCompleteYear);
+
+            if ((int)substr($cursor, 0, 4) <= $tierEndYear) {
+                $rows = $this->mergeDimRows(
+                    $rows,
+                    $this->aggregateDimRows('visits_stats_yearly', 'year', $groupColumns, $keyExpr, $cursor, ($tierEndYear + 1) . '-01-01', $filter)
+                );
+                $cursor = ($tierEndYear + 1) . '-01-01';
+            }
+        }
+
+        // Monthly tier: months fully rolled up (before the monthly frontier).
+        $tierEnd = min($end, $monthlyFrontier);
+        if ($cursor < $tierEnd) {
+            $rows = $this->mergeDimRows($rows, $this->aggregateDimRows('visits_stats_monthly', 'month', $groupColumns, $keyExpr, $cursor, $tierEnd, $filter));
+            $cursor = $tierEnd;
+        }
+
+        // Daily tier: processed days (before the daily frontier).
+        $tierEnd = min($end, $dailyFrontier);
+        if ($cursor < $tierEnd) {
+            $rows = $this->mergeDimRows($rows, $this->aggregateDimRows('visits_stats_daily', 'date', $groupColumns, $keyExpr, $cursor, $tierEnd, $filter));
+            $cursor = $tierEnd;
+        }
+
+        // Raw tail: the recent window, still being written.
+        $rawStart = max($cursor, $dailyFrontier);
+        if ($rawStart < $end) {
+            $rows = $this->mergeDimRows($rows, $this->rawDimRows($groupColumns, $keyExpr, $rawStart, $end, $filter));
+        }
+
+        return $rows;
+    }
+
+    /**
+     * Per-dimension visit totals from one aggregate tier table.
+     *
+     * @param string $table 'visits_stats_daily' | 'visits_stats_monthly' | 'visits_stats_yearly'
+     * @param string $periodColumn 'date' | 'month' | 'year'
+     * @param string[] $groupColumns Backticked dimension columns (or key expressions)
+     * @param string $keyExpr SQL expression producing the merge key
+     * @param string $start 'Y-m-d' (only the year part is used for the yearly table)
+     * @param string $end 'Y-m-d' exclusive
+     * @param string $filter Optional extra predicate (escaped values only)
+     * @return array<string, int> key => visits
+     */
+    private function aggregateDimRows(string $table, string $periodColumn, array $groupColumns, string $keyExpr, string $start, string $end, string $filter = ''): array
+    {
+        $start = $this->assertDateLiteral($start);
+        $end = $this->assertDateLiteral($end);
+
+        if ($periodColumn === 'year') {
+            $periodSql = sprintf('`year` >= %d AND `year` < %d', (int)substr($start, 0, 4), (int)substr($end, 0, 4));
+        } else {
+            $periodSql = sprintf('`%s` >= "%s" AND `%s` < "%s"', $periodColumn, $start, $periodColumn, $end);
+        }
+
+        $sql = "SELECT $keyExpr AS `dim`, SUM(`visits`) AS `visits`
+                FROM `[prefix]_$table`
+                WHERE $periodSql" . ($filter !== '' ? " AND $filter" : '') . "
+                GROUP BY " . implode(', ', $groupColumns);
+
+        $rows = [];
+        foreach ($this->db()->queryArray($sql) as $row) {
+            $rows[(string)$row['dim']] = (int)$row['visits'];
+        }
+
+        return $rows;
+    }
+
+    /**
+     * Per-dimension visit counts from the raw table over one day range
+     * (idx_date), using the same grouping as the aggregate tiers.
+     *
+     * @param string[] $groupColumns Backticked dimension columns (or key expressions)
+     * @param string $keyExpr SQL expression producing the merge key
+     * @param string $start 'Y-m-d'
+     * @param string $end 'Y-m-d' exclusive
+     * @param string $filter Optional extra predicate (escaped values only)
+     * @return array<string, int> key => visits
+     */
+    private function rawDimRows(array $groupColumns, string $keyExpr, string $start, string $end, string $filter = ''): array
+    {
+        $start = $this->assertDateLiteral($start);
+        $end = $this->assertDateLiteral($end);
+
+        $sql = "SELECT $keyExpr AS `dim`, COUNT(*) AS `visits`
+                FROM `[prefix]_visits_stats`
+                WHERE `date` >= \"$start 00:00:00\" AND `date` < \"$end 00:00:00\"" . ($filter !== '' ? " AND $filter" : '') . "
+                GROUP BY " . implode(', ', $groupColumns);
+
+        $rows = [];
+        foreach ($this->db()->queryArray($sql) as $row) {
+            $rows[(string)$row['dim']] = (int)$row['visits'];
+        }
+
+        return $rows;
+    }
+
+    /**
+     * Per-weekday visit totals from the daily aggregate table for days in
+     * [$start, $endExclusive): visits summed per weekday, display date = the
+     * latest day of that weekday in range.
+     *
+     * @param string $start 'Y-m-d'
+     * @param string $end 'Y-m-d' exclusive
+     * @return array<int, array{visits: int, date_full: string}> weekday (0..6) => row
+     */
+    private function aggregateWeekdayRows(string $start, string $end): array
+    {
+        $start = $this->assertDateLiteral($start);
+        $end = $this->assertDateLiteral($end);
+
+        $sql = "SELECT WEEKDAY(`date`) AS `date_week`, MAX(`date`) AS `date_full`, SUM(`visits`) AS `visits`
+                FROM `[prefix]_visits_stats_daily`
+                WHERE `date` >= \"$start\" AND `date` < \"$end\"
+                GROUP BY WEEKDAY(`date`)";
+
+        $rows = [];
+        foreach ($this->db()->queryArray($sql) as $row) {
+            $rows[(int)$row['date_week']] = ['visits' => (int)$row['visits'], 'date_full' => (string)$row['date_full']];
+        }
+
+        return $rows;
+    }
+
+    /**
+     * Per-weekday visit counts from the raw table for days in
+     * [$start, $endExclusive) (idx_date), same shape as
+     * aggregateWeekdayRows().
+     *
+     * @param string $start 'Y-m-d'
+     * @param string $end 'Y-m-d' exclusive
+     * @return array<int, array{visits: int, date_full: string}> weekday (0..6) => row
+     */
+    private function rawWeekdayRows(string $start, string $end): array
+    {
+        $start = $this->assertDateLiteral($start);
+        $end = $this->assertDateLiteral($end);
+
+        $sql = "SELECT WEEKDAY(`date`) AS `date_week`, MAX(DATE(`date`)) AS `date_full`, COUNT(*) AS `visits`
+                FROM `[prefix]_visits_stats`
+                WHERE `date` >= \"$start 00:00:00\" AND `date` < \"$end 00:00:00\"
+                GROUP BY WEEKDAY(`date`)";
+
+        $rows = [];
+        foreach ($this->db()->queryArray($sql) as $row) {
+            $rows[(int)$row['date_week']] = ['visits' => (int)$row['visits'], 'date_full' => (string)$row['date_full']];
+        }
+
+        return $rows;
+    }
+
+    /**
+     * Merge per-weekday rows from several (disjoint) range result sets:
+     * visits summed, display date = the latest date seen.
+     *
+     * @param array<int, array{visits: int, date_full: string}> ...$rowSets weekday (0..6) => row
+     * @return array<int, array{visits: int, date_full: string}> weekday (0..6) => row
+     */
+    private function mergeWeekdayRows(array ...$rowSets): array
+    {
+        $merged = [];
+        foreach ($rowSets as $rowSet) {
+            foreach ($rowSet as $weekday => $data) {
+                if (!isset($merged[$weekday])) {
+                    $merged[$weekday] = $data;
+                } else {
+                    $merged[$weekday]['visits'] += $data['visits'];
+                    if ($data['date_full'] > $merged[$weekday]['date_full']) {
+                        $merged[$weekday]['date_full'] = $data['date_full'];
+                    }
+                }
+            }
+        }
+
+        return $merged;
+    }
+
+    /**
+     * Per-year totals from the yearly aggregate table for the years in
+     * [$start, $endExclusive).
+     *
+     * @param string $start 'Y-m-d' (year part used)
+     * @param string $end 'Y-m-d' exclusive (year part used)
+     * @return array<string, int> 'year' => visits
+     */
+    private function aggregateYearRows(string $start, string $end): array
+    {
+        $sql = "SELECT `year`, SUM(`visits`) AS `visits`
+                FROM `[prefix]_visits_stats_yearly`
+                WHERE `year` >= " . (int)substr($this->assertDateLiteral($start), 0, 4) . " AND `year` < " . (int)substr($this->assertDateLiteral($end), 0, 4) . "
+                GROUP BY `year`";
+
+        $rows = [];
+        foreach ($this->db()->queryArray($sql) as $row) {
+            $rows[(string)$row['year']] = (int)$row['visits'];
+        }
+
+        return $rows;
+    }
+
+    /**
+     * Year of the earliest recorded visit, or null when no data exists at
+     * all. Keeps the open-year loop in getVisitsYear() bounded on sites with
+     * a long history (avoids iterating from the epoch frontier).
+     *
+     * @return int|null
+     */
+    private function firstDataYear(): ?int
+    {
+        $candidates = [];
+
+        $minYear = $this->db()->queryCell("SELECT MIN(`year`) FROM `[prefix]_visits_stats_yearly`");
+        if ($minYear !== null && $minYear !== '') {
+            $candidates[] = (int)$minYear;
+        }
+
+        $minMonth = $this->db()->queryCell("SELECT MIN(`month`) FROM `[prefix]_visits_stats_monthly`");
+        if ($minMonth !== null && $minMonth !== '') {
+            $candidates[] = (int)substr((string)$minMonth, 0, 4);
+        }
+
+        $minDate = $this->db()->queryCell("SELECT MIN(`date`) FROM `[prefix]_visits_stats_daily`");
+        if ($minDate !== null && $minDate !== '') {
+            $candidates[] = (int)substr((string)$minDate, 0, 4);
+        }
+
+        $minRaw = $this->db()->queryCell("SELECT MIN(`date`) FROM `[prefix]_visits_stats`");
+        if ($minRaw !== null && $minRaw !== '') {
+            $candidates[] = (int)substr((string)$minRaw, 0, 4);
+        }
+
+        return $candidates === [] ? null : min($candidates);
+    }
+
+    /**
+     * Merge per-dimension rows from several (disjoint) tier result sets.
+     *
+     * @param array<string, int> ...$rowSets key => visits
+     * @return array<string, int> key => visits
+     */
+    private function mergeDimRows(array ...$rowSets): array
+    {
+        $merged = [];
+        foreach ($rowSets as $rowSet) {
+            foreach ($rowSet as $key => $visits) {
+                $merged[$key] = ($merged[$key] ?? 0) + (int)$visits;
+            }
+        }
+
+        return $merged;
     }
 }

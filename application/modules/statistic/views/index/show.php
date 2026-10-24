@@ -99,22 +99,26 @@ $browser = $this->getRequest()->getParam('browser');
                     <h4 class="card-title"><?=$this->getTrans('hour') ?></h4>
                 </div>
                 <div class="card-body">
-                    <div class="list-group">
-                        <?php
-                        /** @var Modules\Statistic\Models\Statistic $statisticList */
-                        foreach ($this->get('statisticHourList') as $statisticList) : ?>
-                            <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
-                            <div class="list-group-item">
-                                <strong><?=$statisticList->getDate() ?>:00 <?=$this->getTrans('clock') ?></strong>
-                                <span class="float-end"><?=$statisticList->getVisits() ?></span>
-                                <div class="radio">
-                                    <div class="progress" role="progressbar" aria-label="<?=$statisticList->getDate() ?>:00 <?=$this->getTrans('clock') ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
+                    <?php if ($this->get('statisticHourList') !== null) : ?>
+                        <div class="list-group">
+                            <?php
+                            /** @var Modules\Statistic\Models\Statistic $statisticList */
+                            foreach ($this->get('statisticHourList') as $statisticList) : ?>
+                                <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
+                                <div class="list-group-item">
+                                    <strong><?=$statisticList->getDate() ?>:00 <?=$this->getTrans('clock') ?></strong>
+                                    <span class="float-end"><?=$statisticList->getVisits() ?></span>
+                                    <div class="radio">
+                                        <div class="progress" role="progressbar" aria-label="<?=$statisticList->getDate() ?>:00 <?=$this->getTrans('clock') ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php elseif ($this->get('hourDataUnavailable')) : ?>
+                        <div class="alert alert-info"><?=$this->getTrans('hourDataNotAvailable') ?></div>
+                    <?php endif; ?>
                 </div>
 
                 <div class="card-footer">
@@ -122,21 +126,23 @@ $browser = $this->getRequest()->getParam('browser');
                 </div>
                 <div class="card-body">
                     <div class="list-group">
-                        <?php
-                        /** @var Modules\Statistic\Models\Statistic $statisticList */
-                        foreach ($this->get('statisticDayList') as $statisticList) : ?>
-                            <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
-                            <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
-                            <div class="list-group-item">
-                                <strong><?=$this->getTrans($date->format('l')) ?></strong>
-                                <span class="float-end"><?=$statisticList->getVisits() ?></span>
-                                <div class="radio">
-                                    <div class="progress" role="progressbar" aria-label="<?=$this->getTrans($date->format('l')) ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
+                        <?php if ($this->get('statisticDayList') !== null) : ?>
+                            <?php
+                            /** @var Modules\Statistic\Models\Statistic $statisticList */
+                            foreach ($this->get('statisticDayList') as $statisticList) : ?>
+                                <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
+                                <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
+                                <div class="list-group-item">
+                                    <strong><?=$this->getTrans($date->format('l')) ?></strong>
+                                    <span class="float-end"><?=$statisticList->getVisits() ?></span>
+                                    <div class="radio">
+                                        <div class="progress" role="progressbar" aria-label="<?=$this->getTrans($date->format('l')) ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -319,22 +325,26 @@ $browser = $this->getRequest()->getParam('browser');
                     <h4 class="card-title"><?=$this->getTrans('hour') ?></h4>
                 </div>
                 <div class="card-body">
-                    <div class="list-group">
-                        <?php
-                        /** @var Modules\Statistic\Models\Statistic $statisticList */
-                        foreach ($this->get('statisticHourList') as $statisticList) : ?>
-                            <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
-                            <div class="list-group-item">
-                                <strong><?=$statisticList->getDate() ?>:00 <?=$this->getTrans('clock') ?></strong>
-                                <span class="float-end"><?=$statisticList->getVisits() ?></span>
-                                <div class="radio">
-                                    <div class="progress" role="progressbar" aria-label="<?=$statisticList->getDate() ?>:00 <?=$this->getTrans('clock') ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
+                    <?php if ($this->get('statisticHourList') !== null) : ?>
+                        <div class="list-group">
+                            <?php
+                            /** @var Modules\Statistic\Models\Statistic $statisticList */
+                            foreach ($this->get('statisticHourList') as $statisticList) : ?>
+                                <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
+                                <div class="list-group-item">
+                                    <strong><?=$statisticList->getDate() ?>:00 <?=$this->getTrans('clock') ?></strong>
+                                    <span class="float-end"><?=$statisticList->getVisits() ?></span>
+                                    <div class="radio">
+                                        <div class="progress" role="progressbar" aria-label="<?=$statisticList->getDate() ?>:00 <?=$this->getTrans('clock') ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php elseif ($this->get('hourDataUnavailable')) : ?>
+                        <div class="alert alert-info"><?=$this->getTrans('hourDataNotAvailable') ?></div>
+                    <?php endif; ?>
                 </div>
 
                 <div class="card-footer">
@@ -342,21 +352,23 @@ $browser = $this->getRequest()->getParam('browser');
                 </div>
                 <div class="card-body">
                     <div class="list-group">
-                        <?php
-                        /** @var Modules\Statistic\Models\Statistic $statisticList */
-                        foreach ($this->get('statisticDayList') as $statisticList) : ?>
-                            <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
-                            <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
-                            <div class="list-group-item">
-                                <strong><?=$this->getTrans($date->format('l')) ?></strong>
-                                <span class="float-end"><?=$statisticList->getVisits() ?></span>
-                                <div class="radio">
-                                    <div class="progress" role="progressbar" aria-label="<?=$this->getTrans($date->format('l')) ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
+                        <?php if ($this->get('statisticDayList') !== null) : ?>
+                            <?php
+                            /** @var Modules\Statistic\Models\Statistic $statisticList */
+                            foreach ($this->get('statisticDayList') as $statisticList) : ?>
+                                <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
+                                <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
+                                <div class="list-group-item">
+                                    <strong><?=$this->getTrans($date->format('l')) ?></strong>
+                                    <span class="float-end"><?=$statisticList->getVisits() ?></span>
+                                    <div class="radio">
+                                        <div class="progress" role="progressbar" aria-label="<?=$this->getTrans($date->format('l')) ?>" aria-valuenow="<?=$progressWidth ?>" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar" style="width: <?=$progressWidth ?>%"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -511,7 +523,6 @@ $browser = $this->getRequest()->getParam('browser');
                                 </div>
                             </div>
                         <?php endforeach; ?>
-                        
                     </div>
                 </div>
             </div>
@@ -520,15 +531,15 @@ $browser = $this->getRequest()->getParam('browser');
 <?php endif; ?>
 
 <script>
-$(document).on('click', '.card-header span.clickable', function() {
-    if (!$(this).hasClass('panel-collapsed')) {
-        $(this).closest('.card').find('.card-body').slideUp();
-        $(this).addClass('panel-collapsed');
-        $(this).find('i').removeClass('fa-chevron-up').addClass('fa-chevron-down');
-    } else {
-        $(this).closest('.card').find('.card-body').slideDown();
-        $(this).removeClass('panel-collapsed');
-        $(this).find('i').removeClass('fa-chevron-down').addClass('fa-chevron-up');
-    }
-})
+    $(document).on('click', '.card-header span.clickable', function() {
+        if (!$(this).hasClass('panel-collapsed')) {
+            $(this).closest('.card').find('.card-body').slideUp();
+            $(this).addClass('panel-collapsed');
+            $(this).find('i').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+        } else {
+            $(this).closest('.card').find('.card-body').slideDown();
+            $(this).removeClass('panel-collapsed');
+            $(this).find('i').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+        }
+    })
 </script>

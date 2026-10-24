@@ -67,13 +67,14 @@ class StatisticAggregate extends \Ilch\Mapper
 
     /** Days of the recent window [cutoff, today] rebuilt every run. */
     private const DEFAULT_RECENT_DAYS        = 7;
+
     /**
-     * ...
-     * Shipped as 0 in 2.2.22: the purge is a transitional no-op until the
-     * follow-up release, which raises this default to 365 and flips the task
-     * payload (frozen at 0 by ensureTask()) to 365 in one shot.
+     * A payload value of 0 disables the purge entirely (legacy never-delete
+     * behavior). The 2.2.22 task payload was frozen at 0 as a transitional
+     * no-op until the aggregate-backed reads existed; that frozen value is
+     * flipped to 365 once in the "2.2.22" update case.
      */
-    private const DEFAULT_RAW_RETENTION_DAYS = 0;
+    private const DEFAULT_RAW_RETENTION_DAYS = 365;
 
     /** Max days with raw events purged per run (retention phase); matches the daily advance. */
     private const DEFAULT_PURGE_LIMIT        = 90;

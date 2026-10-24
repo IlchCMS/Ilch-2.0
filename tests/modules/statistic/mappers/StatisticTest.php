@@ -15,6 +15,9 @@ use Modules\User\Config\Config as UserConfig;
 use Modules\Admin\Config\Config as AdminConfig;
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
 use Modules\Statistic\Models\Statistic as StatisticModel;
+use Modules\Article\Config\Config as ArticleConfig;
+use Modules\Comment\Config\Config as CommentConfig;
+use Modules\User\Models\User;
 
 class StatisticTest extends DatabaseTestCase
 {
@@ -81,6 +84,110 @@ class StatisticTest extends DatabaseTestCase
                 'date_last_activity' => (new Date())->format('Y-m-d H:i:s', true),
             ], $overrides))
             ->execute();
+    }
+
+    /**
+     * Inserts a user row with an explicit id.
+     *
+     * @param int $id
+     * @param array $overrides
+     * @return int
+     */
+    private function insertUser(int $id, array $overrides = []): int
+    {
+        $this->db->insert('users')
+            ->values(array_merge([
+                'id' => $id,
+                'name' => 'user_' . $id,
+                'password' => 'password',
+                'email' => 'user_' . $id . '@example.com',
+                'date_created' => (new Date())->format('Y-m-d H:i:s', true),
+                'confirmed' => 1,
+                'locked' => 0,
+            ], $overrides))
+            ->execute();
+
+        return $id;
+    }
+
+    /**
+     * Inserts a raw visit row with a fixed date (inside June 2024).
+     *
+     * @param array $overrides
+     */
+    private function insertRawVisit(array $overrides = []): void
+    {
+        $this->db->insert('visits_stats')
+            ->values(array_merge([
+                'user_id' => 0,
+                'session_id' => 'sess_raw_visit',
+                'os' => 'Windows',
+                'os_version' => '11',
+                'browser' => 'Edge',
+                'browser_version' => '126.0',
+                'ip_address' => '10.0.0.9',
+                'referer' => '',
+                'lang' => 'en_EN',
+                'date' => '2024-06-25 09:00:00',
+            ], $overrides))
+            ->execute();
+    }
+
+    /**
+     * Inserts a daily aggregate row (dimension quintuple fixed to one group;
+     * only $day/$browser/$visits vary for the tiered-read tests).
+     *
+     * @param string $day 'Y-m-d'
+     * @param int $visits
+     * @param string $browser
+     */
+    private function insertDailyAggregate(string $day, int $visits, string $browser = 'Chrome'): void
+    {
+        $this->db->insert('visits_stats_daily')
+            ->values([
+                'date' => $day,
+                'browser' => $browser,
+                'browser_version' => '125.0',
+                'os' => 'Windows',
+                'os_version' => '11',
+                'lang' => 'en_EN',
+                'dim_hash' => hash('sha256', $day . ':' . $browser),
+                'visits' => $visits,
+            ])
+            ->execute();
+    }
+
+    /**
+     * Inserts a monthly aggregate row.
+     *
+     * @param string $monthStart 'Y-m-01'
+     * @param int $visits
+     */
+    private function insertMonthlyAggregate(string $monthStart, int $visits): void
+    {
+        $this->db->insert('visits_stats_monthly')
+            ->values([
+                'month' => $monthStart,
+                'browser' => 'Chrome',
+                'browser_version' => '125.0',
+                'os' => 'Windows',
+                'os_version' => '11',
+                'lang' => 'en_EN',
+                'dim_hash' => hash('sha256', 'monthly:' . $monthStart),
+                'visits' => $visits,
+            ])
+            ->execute();
+    }
+
+    /**
+     * Persists an aggregation frontier (see StatisticAggregateTest).
+     *
+     * @param string $level One of 'daily', 'monthly', 'yearly', 'raw'
+     * @param string $date 'Y-m-d'
+     */
+    private function setFrontier(string $level, string $date): void
+    {
+        (new StatisticAggregate())->saveFrontier($level, $date);
     }
 
     // ------------------------------------------------------------------
@@ -161,6 +268,94 @@ class StatisticTest extends DatabaseTestCase
         $this->insertOnlineRow(['session_id' => 'session-count-user', 'user_id' => 5]);
 
         self::assertEquals(2, $this->out->getVisitsCountOnline());
+    }
+
+    // ------------------------------------------------------------------
+    // getVisitsOnlineUser()
+    // ------------------------------------------------------------------
+
+    /**
+     * Tests that getVisitsOnlineUser() returns no users when there are no
+     * recent user rows: the fixture user row is from 2020 and the guest
+     * row has user_id 0.
+     */
+    public function testGetVisitsOnlineUserEmpty()
+    {
+        self::assertSame([], $this->out->getVisitsOnlineUser());
+    }
+
+    /**
+     * Tests that getVisitsOnlineUser() returns only recent rows of users
+     * that exist in the users table: guest rows and rows of unknown users
+     * are skipped.
+     */
+    public function testGetVisitsOnlineUser()
+    {
+        $this->insertUser(101);
+
+        // Recent row of an existing user: returned.
+        $this->insertOnlineRow(['session_id' => 'session-online-user', 'user_id' => 101]);
+        // Recent guest row: skipped (user_id 0).
+        $this->insertOnlineRow(['session_id' => 'session-online-guest']);
+        // Recent row of a user without a user row: skipped.
+        $this->insertOnlineRow(['session_id' => 'session-online-unknown', 'user_id' => 999]);
+
+        $users = $this->out->getVisitsOnlineUser();
+
+        self::assertCount(1, $users);
+        self::assertInstanceOf(User::class, $users[0]);
+        self::assertSame('user_101', $users[0]->getName());
+    }
+
+    // ------------------------------------------------------------------
+    // getWhoWasOnline()
+    // ------------------------------------------------------------------
+
+    /**
+     * Tests that getWhoWasOnline() returns no users when there are no
+     * non-guest visits today (all fixture rows are guests).
+     */
+    public function testGetWhoWasOnlineEmpty()
+    {
+        self::assertSame([], $this->out->getWhoWasOnline());
+    }
+
+    /**
+     * Tests that getWhoWasOnline() returns exactly the users with at least
+     * one visit today: multiple visits of one user are grouped to a single
+     * entry, guest visits and visits of users without a user row are
+     * excluded, and visits of other days are ignored.
+     */
+    public function testGetWhoWasOnline()
+    {
+        $today = (new Date())->format('Y-m-d', true);
+        $yesterday = (new Date())->modify('-1 day')->format('Y-m-d', true);
+
+        $this->insertUser(101);
+        $this->insertUser(102);
+
+        // Two visits of user 101 today: grouped to one entry.
+        $this->insertRawVisit(['user_id' => 101, 'session_id' => 'sess-who-101-a', 'date' => $today . ' 08:00:00']);
+        $this->insertRawVisit(['user_id' => 101, 'session_id' => 'sess-who-101-b', 'date' => $today . ' 12:00:00']);
+        // One visit of user 102 today.
+        $this->insertRawVisit(['user_id' => 102, 'session_id' => 'sess-who-102-a', 'date' => $today . ' 09:00:00']);
+        // Guest visit today: excluded (user_id > 0).
+        $this->insertRawVisit(['session_id' => 'sess-who-guest', 'date' => $today . ' 10:00:00']);
+        // Visit of a user without a user row: excluded by the inner join.
+        $this->insertRawVisit(['user_id' => 103, 'session_id' => 'sess-who-missing-user', 'date' => $today . ' 11:00:00']);
+        // Visit of user 101 from yesterday: excluded (today only).
+        $this->insertRawVisit(['user_id' => 101, 'session_id' => 'sess-who-101-yesterday', 'date' => $yesterday . ' 07:00:00']);
+
+        $users = $this->out->getWhoWasOnline();
+
+        self::assertCount(2, $users);
+
+        $names = [];
+        foreach ($users as $user) {
+            $names[] = $user->getName();
+        }
+        sort($names);
+        self::assertSame(['user_101', 'user_102'], $names);
     }
 
     // ------------------------------------------------------------------
@@ -306,6 +501,41 @@ class StatisticTest extends DatabaseTestCase
         self::assertCount(1, $result);
         self::assertSame((new Date())->format('Y-m-d', true), $result[0]->getDate());
         self::assertEquals(1, $result[0]->getVisits());
+    }
+
+    /**
+     * Tests that getVisitsYearMonthDay() merges the daily aggregate tier
+     * (fully processed days) with the raw tail (the still-open window) and
+     * does not double-count days below the daily frontier.
+     */
+    public function testGetVisitsYearMonthDayMergesDailyAggregateAndRawTail()
+    {
+        // June days 2024-06-15 (2 raw rows) and 2024-06-20 (1 raw row) are
+        // fully rolled up in the daily tier.
+        $this->insertDailyAggregate('2024-06-15', 2);
+        $this->insertDailyAggregate('2024-06-20', 1);
+
+        // Everything below the daily frontier is served by the tier; the
+        // raw tail starts there.
+        $this->setFrontier('daily', '2024-06-21');
+
+        // One raw visit inside the still-open window of June.
+        $this->insertRawVisit();
+
+        $result = $this->out->getVisitsYearMonthDay(2024, 6);
+
+        self::assertNotNull($result);
+        self::assertCount(3, $result);
+
+        // Newest day first: the raw tail day, then the aggregated days.
+        self::assertSame('2024-06-25', $result[0]->getDate());
+        self::assertEquals(1, $result[0]->getVisits());
+
+        self::assertSame('2024-06-20', $result[1]->getDate());
+        self::assertEquals(1, $result[1]->getVisits());
+
+        self::assertSame('2024-06-15', $result[2]->getDate());
+        self::assertEquals(2, $result[2]->getVisits());
     }
 
     // ------------------------------------------------------------------
@@ -497,6 +727,33 @@ class StatisticTest extends DatabaseTestCase
         self::assertNull($this->out->getVisitsBrowser(1999, 1, 'Chrome'));
     }
 
+    /**
+     * Tests that getVisitsBrowser() merges the daily aggregate tier with
+     * the raw tail per dimension, without double counting.
+     */
+    public function testGetVisitsBrowserMergesDailyAggregateAndRawTail()
+    {
+        // The June days below the daily frontier are rolled up per browser
+        // (matching the fixture's June raw rows).
+        $this->insertDailyAggregate('2024-06-15', 2, 'Chrome');
+        $this->insertDailyAggregate('2024-06-20', 1, 'Firefox');
+        $this->setFrontier('daily', '2024-06-21');
+
+        // One raw visit of a third browser inside the still-open window.
+        $this->insertRawVisit(['session_id' => 'sess_raw_edge']);
+
+        $result = $this->out->getVisitsBrowser(2024, 6);
+
+        self::assertNotNull($result);
+        self::assertCount(3, $result);
+
+        $byBrowser = [];
+        foreach ($result as $model) {
+            $byBrowser[$model->getBrowser()] = $model->getVisits();
+        }
+        self::assertEquals(['Chrome' => 2, 'Firefox' => 1, 'Edge' => 1], $byBrowser);
+    }
+
     // ------------------------------------------------------------------
     // getVisitsLanguage()
     // ------------------------------------------------------------------
@@ -684,6 +941,28 @@ class StatisticTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that getVisitsCount() serves fully rolled-up periods from the
+     * aggregate tiers and the open tail from the raw table, returning the
+     * same total as a pure raw count.
+     */
+    public function testGetVisitsCountUsesAggregateTiers()
+    {
+        // June 2024 is fully rolled up into the monthly tier (2 + 1 raw
+        // rows); with the frontiers at 2024-07-01 only July and later are
+        // read from the raw table.
+        $this->insertMonthlyAggregate('2024-06-01', 3);
+        $this->setFrontier('monthly', '2024-07-01');
+        $this->setFrontier('daily', '2024-07-01');
+
+        // June comes entirely from the monthly tier.
+        self::assertEquals(3, $this->out->getVisitsCount(null, 2024, 6));
+
+        // The year combines the monthly tier (June: 3) with the raw tail
+        // (2024-07-01: 1) and matches the raw-only total.
+        self::assertEquals(4, $this->out->getVisitsCount(null, 2024));
+    }
+
+    /**
      * Tests that getVisitsCount() returns 0 when no data for the day.
      */
     public function testGetVisitsCountZero()
@@ -731,6 +1010,96 @@ class StatisticTest extends DatabaseTestCase
         $this->out->saveVisit($this->guestVisit());
 
         self::assertEquals(1, $this->out->getVisitsYearCount());
+    }
+
+    // ------------------------------------------------------------------
+    // getCommentsCount() / getModulesCount() / getRegistUserCount() /
+    // getRegistNewUser() / getArticlesCount()
+    // ------------------------------------------------------------------
+
+    /**
+     * Tests that getCommentsCount() counts all comment rows.
+     */
+    public function testGetCommentsCount()
+    {
+        self::assertEquals(0, $this->out->getCommentsCount());
+
+        $insertComment = function (int $id, string $text): void {
+            $this->db->insert('comments')
+                ->values([
+                    'id' => $id,
+                    'key' => sprintf(ArticleConfig::COMMENT_KEY_TPL, 1),
+                    'text' => $text,
+                    'date_created' => '2024-06-15 10:00:00',
+                    'user_id' => 0,
+                    'fk_id' => 1,
+                    'up' => 0,
+                    'down' => 0,
+                    'voted' => '',
+                ])
+                ->execute();
+        };
+
+        $insertComment(1, 'First comment');
+        $insertComment(2, 'Second comment');
+
+        self::assertEquals(2, $this->out->getCommentsCount());
+    }
+
+    /**
+     * Tests that getModulesCount() counts only non-system modules.
+     */
+    public function testGetModulesCount()
+    {
+        self::assertEquals(0, $this->out->getModulesCount());
+
+        $this->db->insert('modules')
+            ->values(['key' => 'Statistic', 'system' => 0, 'icon_small' => 'fa-solid fa-chart-line'])
+            ->execute();
+        $this->db->insert('modules')
+            ->values(['key' => 'Admin', 'system' => 1, 'icon_small' => 'fa-solid fa-gears'])
+            ->execute();
+
+        self::assertEquals(1, $this->out->getModulesCount());
+    }
+
+    /**
+     * Tests that getRegistUserCount() counts only confirmed users.
+     */
+    public function testGetRegistUserCount()
+    {
+        self::assertEquals(0, $this->out->getRegistUserCount());
+
+        $this->insertUser(101);
+        $this->insertUser(102, ['confirmed' => 0]);
+
+        self::assertEquals(1, $this->out->getRegistUserCount());
+    }
+
+    /**
+     * Tests that getRegistNewUser() returns the highest id of a confirmed
+     * and unlocked user, or 0 when no such user exists.
+     */
+    public function testGetRegistNewUser()
+    {
+        self::assertEquals(0, $this->out->getRegistNewUser());
+
+        $this->insertUser(101);
+        $this->insertUser(102, ['locked' => 1]);
+        $this->insertUser(103, ['confirmed' => 0]);
+
+        self::assertEquals(101, $this->out->getRegistNewUser());
+    }
+
+    /**
+     * Tests that getArticlesCount() counts all articles. The install seeds
+     * one default article (category 1), so the unfiltered count is 1;
+     * category 3 does not exist, so the filtered count is 0.
+     */
+    public function testGetArticlesCount()
+    {
+        self::assertEquals(1, $this->out->getArticlesCount());
+        self::assertEquals(0, $this->out->getArticlesCount('3', 'en'));
     }
 
     // ------------------------------------------------------------------
@@ -1096,7 +1465,13 @@ class StatisticTest extends DatabaseTestCase
         $config = new ModuleConfig();
         $userConfig = new UserConfig();
         $adminConfig = new AdminConfig();
+        $articleConfig = new ArticleConfig();
+        $commentConfig = new CommentConfig();
 
-        return $adminConfig->getInstallSql() . $userConfig->getInstallSql() . $config->getInstallSql();
+        return $adminConfig->getInstallSql()
+            . $userConfig->getInstallSql()
+            . $articleConfig->getInstallSql()
+            . $commentConfig->getInstallSql()
+            . $config->getInstallSql();
     }
 }
