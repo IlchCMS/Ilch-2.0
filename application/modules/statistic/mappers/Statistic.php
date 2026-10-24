@@ -309,8 +309,8 @@ class Statistic extends \Ilch\Mapper
      */
     public function getVisitsYear(?int $year = null): ?array
     {
-        if ($year !== null && (int)$year > 0) {
-            $year = (int)$year;
+        if ($year !== null && $year > 0) {
+            $year = $year;
             $visits = $this->sumRange($year . '-01-01', ($year + 1) . '-01-01');
             if ($visits <= 0) {
                 return null;
@@ -573,13 +573,13 @@ class Statistic extends \Ilch\Mapper
     {
         $ag = $this->aggregateMapper();
 
-        if ($month !== null && $year !== null && (int)$year > 0 && (int)$month > 0) {
-            $start = $this->monthStart((int)$year, (int)$month);
+        if ($month !== null && $year !== null && $year > 0 && $month > 0) {
+            $start = $this->monthStart($year, $month);
             return $this->sumRange($start, $ag->addMonths($start, 1));
         }
 
-        if ($year !== null && (int)$year > 0) {
-            $year = (int)$year;
+        if ($year !== null && $year > 0) {
+            $year = $year;
             return $this->sumRange($year . '-01-01', ($year + 1) . '-01-01');
         }
 
@@ -602,8 +602,8 @@ class Statistic extends \Ilch\Mapper
     {
         $ag = $this->aggregateMapper();
 
-        if ($year !== null && $month !== null && (int)$year > 0 && (int)$month > 0) {
-            $start = $this->monthStart((int)$year, (int)$month);
+        if ($year !== null && $month !== null && $year > 0 && $month > 0) {
+            $start = $this->monthStart($year, $month);
         } else {
             // "This month" in the site-local timezone (same clock saveVisit()
             // writes with).
@@ -1064,10 +1064,10 @@ class Statistic extends \Ilch\Mapper
 
         $value = $this->db()->escape($value);
 
-        return (bool)$this->db()->queryCell(
-                "SELECT 1 FROM `[prefix]_visits_stats` WHERE `$column` = \"$value\" LIMIT 1"
-            )
-            || (bool)$this->db()->queryCell(
+        return $this->db()->queryCell(
+            "SELECT 1 FROM `[prefix]_visits_stats` WHERE `$column` = \"$value\" LIMIT 1"
+        )
+            || $this->db()->queryCell(
                 "SELECT 1 FROM `[prefix]_visits_stats_daily` WHERE `$column` = \"$value\" LIMIT 1"
             );
     }
@@ -1162,8 +1162,8 @@ class Statistic extends \Ilch\Mapper
     {
         $ag = $this->aggregateMapper();
 
-        if ($year !== null && $month !== null && (int)$year > 0 && (int)$month > 0) {
-            $start = $this->monthStart((int)$year, (int)$month);
+        if ($year !== null && $month !== null && $year > 0 && $month > 0) {
+            $start = $this->monthStart($year, $month);
         } else {
             $start = $ag->firstOfMonth($ag->siteToday());
         }
@@ -1179,7 +1179,7 @@ class Statistic extends \Ilch\Mapper
      */
     private function resolveYearRange(?int $year): array
     {
-        $year = ($year !== null && (int)$year > 0) ? (int)$year : (int)substr($this->siteToday(), 0, 4);
+        $year = ($year !== null && $year > 0) ? $year : (int)substr($this->siteToday(), 0, 4);
 
         return [$year . '-01-01', ($year + 1) . '-01-01'];
     }
@@ -1196,13 +1196,13 @@ class Statistic extends \Ilch\Mapper
     {
         $ag = $this->aggregateMapper();
 
-        if ($year !== null && $month !== null && (int)$year > 0 && (int)$month > 0) {
-            $start = $this->monthStart((int)$year, (int)$month);
+        if ($year !== null && $month !== null && $year > 0 && $month > 0) {
+            $start = $this->monthStart($year, $month);
             return [$start, $ag->addMonths($start, 1)];
         }
 
-        if ($year !== null && (int)$year > 0) {
-            $year = (int)$year;
+        if ($year !== null && $year > 0) {
+            $year = $year;
             return [$year . '-01-01', ($year + 1) . '-01-01'];
         }
 
@@ -1223,15 +1223,15 @@ class Statistic extends \Ilch\Mapper
     {
         $ag = $this->aggregateMapper();
 
-        if ($year !== null && $month !== null && (int)$year > 0 && (int)$month > 0) {
-            $start = $this->monthStart((int)$year, (int)$month);
+        if ($year !== null && $month !== null && $year > 0 && $month > 0) {
+            $start = $this->monthStart($year, $month);
             $end = $ag->addMonths($start, 1);
 
             return ' WHERE `date` >= "' . $start . ' 00:00:00" AND `date` < "' . $end . ' 00:00:00"';
         }
 
-        if ($year !== null && (int)$year > 0) {
-            $year = (int)$year;
+        if ($year !== null && $year > 0) {
+            $year = $year;
 
             return ' WHERE `date` >= "' . $year . '-01-01 00:00:00" AND `date` < "' . ($year + 1) . '-01-01 00:00:00"';
         }

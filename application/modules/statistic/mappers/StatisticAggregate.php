@@ -267,7 +267,7 @@ class StatisticAggregate extends \Ilch\Mapper
                 break;
             }
 
-            $yearEnd = (string)($year + 1) . '-01-01';
+            $yearEnd = $year + 1 . '-01-01';
             if ($yearEnd > $monthlyFrontier) {
                 // The year still intersects the unprocessed monthly range:
                 // wait for the monthly catch-up.
