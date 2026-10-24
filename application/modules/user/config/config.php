@@ -1106,6 +1106,14 @@ class Config extends \Ilch\Config\Install
                     $this->db()->query('ALTER TABLE `[prefix]_users_auth_providers` ADD UNIQUE KEY `uniq_provider_identifier` (`provider`, `identifier`) USING BTREE;');
                 }
                 break;
+            case "2.2.21":
+                // Remove no longer needed images.
+                removeDir(APPLICATION_PATH . '/modules/user/static/images/discord');
+                removeDir(APPLICATION_PATH . '/modules/user/static/images/facebook');
+                removeDir(APPLICATION_PATH . '/modules/user/static/images/google');
+                removeDir(APPLICATION_PATH . '/modules/user/static/images/teamspeak');
+                removeDir(APPLICATION_PATH . '/modules/user/static/images/twitter');
+                break;
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
