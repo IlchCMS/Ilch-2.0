@@ -66,12 +66,11 @@ class Config extends \Ilch\Config\Install
         // only; the defaults live in \Modules\Statistic\Mappers\StatisticAggregate
         // (PHP), so changing defaults requires no re-registration.
         //
-        // Exception: raw_retention_days is 0 on purpose (transitional). The
-        // retention/purge phase is deferred: 2.2.22 ships the aggregator without
-        // raw deletion so the raw-based totals stay stable until the
-        // aggregate-backed reads exist. The follow-up release enables it in one
-        // shot — PHP default raised to 365 and this frozen payload value flipped
-        // 0 -> 365 via a one-time updateTask() call in that release's update case.
+        // raw_retention_days ships at 365 for fresh installs. Installs created
+        // in 2.2.22 carry a payload frozen at 0 (the purge was deferred until
+        // the aggregate-backed reads existed); the "2.2.22" update case flips
+        // that single key to 365 exactly once via updateTask(), preserving any
+        // admin-tuned values in the other keys.
         (new \Ilch\Scheduler\Scheduler($this->db()))->ensureTask([
             'name'       => 'statistic.aggregateVisits',
             'handler'    => 'statistic.aggregateVisits',
@@ -82,7 +81,7 @@ class Config extends \Ilch\Config\Install
                 'monthly_limit'      => 6,
                 'yearly_limit'       => 12,
                 'recent_days'        => 7,
-                'raw_retention_days' => 0,
+                'raw_retention_days' => 365,
                 'purge_limit'        => 90,
             ],
         ]);
@@ -251,6 +250,26 @@ class Config extends \Ilch\Config\Install
                 }
 
                 $this->createScheduledTasks();
+                break;
+            case "2.2.22":
+                // One-shot: enable raw retention. ensureTask() is create-if-missing,
+                // so the frozen 2.2.22 payload value must be flipped explicitly.
+                // Read-merge-write (rather than a static payload) preserves any
+                // admin-tuned values in the other five keys, since updateTask()
+                // overwrites the payload unconditionally.
+                $taskRow = $this->db()->queryRow(
+                    "SELECT `payload` FROM [prefix]_scheduler_tasks
+                         WHERE `name` = 'statistic.aggregateVisits'"
+                );
+                if ($taskRow !== null) {
+                    $payload = json_decode((string)$taskRow['payload'], true);
+                    if (!is_array($payload)) {
+                        $payload = [];
+                    }
+                    $payload['raw_retention_days'] = 365;
+                    (new \Ilch\Scheduler\Scheduler($this->db()))
+                        ->updateTask('statistic.aggregateVisits', ['payload' => $payload]);
+                }
                 break;
         }
 
