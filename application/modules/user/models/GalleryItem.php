@@ -59,6 +59,13 @@ class GalleryItem extends \Ilch\Model
     protected ?string $desc = null;
 
     /**
+     * IsPublic flag of the item. 1 = public, 0 = private.
+     *
+     * @var int|null
+     */
+    protected ?int $isPublic = null;
+
+    /**
      * Gets the id.
      *
      * @return int|null
@@ -215,6 +222,29 @@ class GalleryItem extends \Ilch\Model
     public function setDesc(string $desc): static
     {
         $this->desc = $desc;
+
+        return $this;
+    }
+
+    /**
+     * Gets the isPublic flag.
+     *
+     * @return int|null
+     */
+    public function getIsPublic(): ?int
+    {
+        return $this->isPublic;
+    }
+
+    /**
+     * Sets the isPublic flag.
+     *
+     * @param int $isPublic
+     * @return GalleryItem
+     */
+    public function setIsPublic(int $isPublic): static
+    {
+        $this->isPublic = $isPublic;
 
         return $this;
     }

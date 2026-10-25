@@ -76,6 +76,13 @@ class GalleryImage extends \Ilch\Model
     protected ?string $visits = null;
 
     /**
+     * IsPublic flag of the item. 1 = public, 0 = private.
+     *
+     * @var int|null
+     */
+    protected ?int $isPublic = null;
+
+    /**
      * Get the id of the gallery image row (users_gallery_imgs.id).
      *
      * @return int|null
@@ -281,6 +288,29 @@ class GalleryImage extends \Ilch\Model
     public function setVisits(string $visits): static
     {
         $this->visits = $visits;
+
+        return $this;
+    }
+
+    /**
+     * Gets the isPublic flag.
+     *
+     * @return int|null
+     */
+    public function getIsPublic(): ?int
+    {
+        return $this->isPublic;
+    }
+
+    /**
+     * Sets the isPublic flag.
+     *
+     * @param int $isPublic
+     * @return GalleryItem
+     */
+    public function setIsPublic(int $isPublic): static
+    {
+        $this->isPublic = $isPublic;
 
         return $this;
     }

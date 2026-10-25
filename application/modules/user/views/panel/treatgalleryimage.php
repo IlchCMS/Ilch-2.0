@@ -40,6 +40,17 @@
                                           rows="8"><?=$image->getImageDesc() ?></textarea>
                             </div>
                         </div>
+                        <div class="row lg-3">
+                            <label for="imageVisibilityInput" class="col-lg-4 col-form-label">
+                                <?=$this->getTrans('visibility') ?>:
+                            </label>
+                            <div class="col-xl-8">
+                                <select class="form-control" id="imageVisibilityInput" name="imageVisibility">
+                                    <option value="1" <?= ((int)($image->getIsPublic() ?? 1)) === 1 ? 'selected' : '' ?>><?=$this->getTrans('public') ?></option>
+                                    <option value="0" <?= ((int)($image->getIsPublic() ?? 1)) === 0 ? 'selected' : '' ?>><?=$this->getTrans('private') ?></option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <?=$this->getSaveBar('saveButton') ?>

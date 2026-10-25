@@ -38,8 +38,8 @@ class Profil extends \Ilch\Controller\Frontend
             $commentsOnProfiles = $this->getConfig()->get('user_commentsOnProfiles');
 
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index'])
-                    ->add($profil->getName(), ['action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
+                ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index'])
+                ->add($profil->getName(), ['action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
 
             if ($this->getUser() && $profil->getOptComments() && $profil->getAdminComments() && $commentsOnProfiles) {
                 if ($this->getRequest()->getPost('saveComment')) {
@@ -69,6 +69,15 @@ class Profil extends \Ilch\Controller\Frontend
                 }
             }
 
+            $currentUser = $this->getUser();
+            $isUnrestricted = $currentUser !== null
+                && ($currentUser->getId() == $profil->getId()
+                    || $currentUser->isAdmin());
+
+            $galleryCount = $isUnrestricted
+                ? $galleryMapper->getCountGalleryByUser($profil->getId())
+                : $galleryMapper->getPublicCountGalleryByUser($profil->getId());
+
             $this->getView()->set('userMapper', $userMapper);
             $this->getView()->set('profil', $profil);
             $this->getView()->set('profileIconFields', $profileIconFields);
@@ -77,8 +86,9 @@ class Profil extends \Ilch\Controller\Frontend
             $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslation);
             $this->getView()->set('commentsOnProfiles', $commentsOnProfiles);
             $this->getView()->set('galleryAllowed', $this->getConfig()->get('usergallery_allowed'));
-            $this->getView()->set('gallery', $galleryMapper->getCountGalleryByUser($this->getRequest()->getParam('user')));
-            $this->getView()->set('isFriend', $friendsMapper->hasFriend($this->getUser()->getId(), $profil->getid()));
+            $this->getView()->set('gallery', $galleryCount);
+            $this->getView()->set('isFriend', $currentUser !== null
+                && $friendsMapper->hasFriend($currentUser->getId(), $profil->getId()));
         } else {
             $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'User', 'errorText' => 'notFound']);
         }

@@ -1,3 +1,7 @@
+<?php
+$galleryId = (int)$this->getRequest()->getParam('id');
+?>
+
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
 <div class="row">
@@ -6,8 +10,8 @@
 
         <div class="profile-content active">
             <h1>
-                <?=$this->getTrans('gallery') ?>: <?=$this->get('galleryTitle') ?>
-                <a id="<?=$this->getRequest()->getParam('id') ?>" href="javascript:media(<?=$this->getRequest()->getParam('id') ?>)">
+                <?=$this->getTrans('gallery') ?>: <?=$this->escape($this->get('galleryTitle')) ?>
+                <a id="<?=$galleryId ?>" href="javascript:media(<?=$galleryId ?>)">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                 </a>
             </h1>
@@ -21,6 +25,7 @@
                                 <col class="icon_width">
                                 <col class="icon_width">
                                 <col class="icon_width">
+                                <col class="icon_width">
                                 <col class="col-xl-2">
                                 <col class="col-xl-4">
                                 <col>
@@ -30,6 +35,7 @@
                                     <th><?=$this->getCheckAllCheckbox('check_gallery') ?></th>
                                     <th></th>
                                     <th></th>
+                                    <th></th>
                                     <th><?=$this->getTrans('images') ?></th>
                                     <th><?=$this->getTrans('title') ?></th>
                                     <th><?=$this->getTrans('description') ?></th>
@@ -37,10 +43,12 @@
                             </thead>
                             <tbody>
                                 <?php foreach ($this->get('image') as $image) : ?>
+                                    <?php $imageIsPublic = ((int)($image->getIsPublic() ?? 1)) === 1; ?>
                                     <tr>
                                         <td><?=$this->getDeleteCheckbox('check_gallery', $image->getImageId()) ?></td>
                                         <td><?=$this->getEditIcon(['action' => 'treatgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getId()]) ?></td>
                                         <td><?=$this->getDeleteIcon(['action' => 'delgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getImageId()]) ?></td>
+                                        <td><i class="fa-solid <?=$imageIsPublic ? 'fa-eye' : 'fa-eye-slash' ?>" title="<?=$this->escape($this->getTrans($imageIsPublic ? 'public' : 'private')) ?>"></i></td>
                                         <?php if (file_exists($image->getImageThumb())) : ?>
                                             <td><img class="image img-thumbnail img-fluid thumbnail" src="<?=$this->getUrl() . '/' . $image->getImageThumb() ?>"/></td>
                                         <?php else : ?>

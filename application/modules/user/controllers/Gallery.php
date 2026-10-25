@@ -22,17 +22,28 @@ class Gallery extends \Ilch\Controller\Frontend
         $imageMapper = new GalleryImageMapper();
         $userMapper = new UserMapper();
 
-        $profil = $userMapper->getUserById($this->getRequest()->getParam('user'));
+        $userId = (int)$this->getRequest()->getParam('user');
+        $profil = $userMapper->getUserById($userId);
+
+        if ($profil === null) {
+            $this->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'User', 'errorText' => 'notFound']);
+        }
+
+        $isUnrestricted = $this->getUser() !== null
+            && $profil !== null
+            && ($this->getUser()->getId() == $profil->getId()
+                || $this->getUser()->isAdmin());
 
         $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('gallery'));
+            ->add($this->getTranslator()->trans('gallery'));
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery'));
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index'])
-                ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
-                ->add($this->getTranslator()->trans('menuGallery'), ['action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
+            ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index'])
+            ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $userId])
+            ->add($this->getTranslator()->trans('menuGallery'), ['action' => 'index', 'user' => $userId]);
 
-        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent($this->getRequest()->getParam('user'), 0));
+        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent($userId, 0, !$isUnrestricted));
+        $this->getView()->set('unrestricted', $isUnrestricted);
         $this->getView()->set('galleryMapper', $galleryMapper);
         $this->getView()->set('imageMapper', $imageMapper);
     }
@@ -44,24 +55,39 @@ class Gallery extends \Ilch\Controller\Frontend
         $pagination = new \Ilch\Pagination();
         $userMapper = new UserMapper();
 
-        $id = $this->getRequest()->getParam('id');
+        $id = (int)$this->getRequest()->getParam('id');
+        $userId = (int)$this->getRequest()->getParam('user');
         $gallery = $galleryMapper->getGalleryById($id);
-        $profil = $userMapper->getUserById($this->getRequest()->getParam('user'));
+        $profil = $userMapper->getUserById($userId);
+
+        $isUnrestricted = $this->getUser() !== null
+            && $profil !== null
+            && ($this->getUser()->getId() == $profil->getId()
+                || $this->getUser()->isAdmin());
+
+        if ($profil === null
+            || $gallery === null
+            || (int)$gallery->getUserId() !== $userId
+            || (!$isUnrestricted && !$galleryMapper->isEffectivelyPublic($id))) {
+            $this->redirect()
+                ->withMessage('galleryNotAccessible', 'warning')
+                ->to(['controller' => 'profil', 'action' => 'index', 'user' => $userId]);
+        }
 
         $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('gallery'))
-                ->add($gallery->getTitle());
+            ->add($this->getTranslator()->trans('gallery'))
+            ->add($gallery->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery') . ' - ' . $gallery->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index', 'action' => 'index'])
-                ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
-                ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'gallery', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
-                ->add($gallery->getTitle(), ['action' => 'show', 'user' => $this->getRequest()->getParam('user'), 'id' => $id]);
+            ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index', 'action' => 'index'])
+            ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $userId])
+            ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'gallery', 'action' => 'index', 'user' => $userId])
+            ->add($gallery->getTitle(), ['action' => 'show', 'user' => $userId, 'id' => $id]);
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('user_picturesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('user_picturesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination));
+        $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination, !$isUnrestricted));
         $this->getView()->set('pagination', $pagination);
     }
 
@@ -69,27 +95,45 @@ class Gallery extends \Ilch\Controller\Frontend
     {
         $galleryMapper = new GalleryMapper();
         $imageMapper = new GalleryImageMapper();
-        $commentMapper = new CommentMapper();
         $userMapper = new UserMapper();
 
-        $id = $this->getRequest()->getParam('id');
-        $userId = $this->getRequest()->getParam('user');
+        $id = (int)$this->getRequest()->getParam('id');
+        $userId = (int)$this->getRequest()->getParam('user');
+
         $image = $imageMapper->getImageById($id);
-        $gallery = $galleryMapper->getGalleryById($image->getCat());
-        $profil = $userMapper->getUserById($this->getRequest()->getParam('user'));
+        $gallery = ($image !== null) ? $galleryMapper->getGalleryById((int)$image->getCat()) : null;
+        $profil = $userMapper->getUserById($userId);
+
+        $isUnrestricted = $this->getUser() !== null
+            && $profil !== null
+            && ($this->getUser()->getId() == $profil->getId()
+                || $this->getUser()->isAdmin());
+
+        // Blocked views must not increment the visit counter.
+        if ($image === null
+            || $gallery === null
+            || (int)$image->getUserId() !== $userId
+            || (int)$gallery->getUserId() !== $userId
+            || (!$isUnrestricted
+                && ((int)$image->getIsPublic() !== 1
+                    || !$galleryMapper->isEffectivelyPublic((int)$image->getCat())))) {
+            $this->redirect()
+                ->withMessage('imageNotAccessible', 'warning')
+                ->to(['controller' => 'profil', 'action' => 'index', 'user' => $userId]);
+        }
 
         $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('gallery'))
-                ->add($profil->getName())
-                ->add($gallery->getTitle())
-                ->add($image->getImageTitle());
+            ->add($this->getTranslator()->trans('gallery'))
+            ->add($profil->getName())
+            ->add($gallery->getTitle())
+            ->add($image->getImageTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery') . ' - ' . $gallery->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index', 'action' => 'index'])
-                ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
-                ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'gallery', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
-                ->add($gallery->getTitle(), ['action' => 'show', 'user' => $this->getRequest()->getParam('user'), 'id' => $gallery->getId()])
-                ->add($image->getImageTitle(), ['action' => 'showimage', 'user' => $this->getRequest()->getParam('user'), 'id' => $id]);
+            ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index', 'action' => 'index'])
+            ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $userId])
+            ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'gallery', 'action' => 'index', 'user' => $userId])
+            ->add($gallery->getTitle(), ['action' => 'show', 'user' => $userId, 'id' => $gallery->getId()])
+            ->add($image->getImageTitle(), ['action' => 'showimage', 'user' => $userId, 'id' => $id]);
 
         $model = new GalleryImageModel();
         $model->setImageId($image->getImageId());

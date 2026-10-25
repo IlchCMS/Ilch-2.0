@@ -112,6 +112,44 @@ class Media extends \Ilch\Mapper
     }
 
     /**
+     * Gets a media entry by its id.
+     *
+     * @param int $id
+     * @param int|null $userId Optional user id, restricts the lookup to that user.
+     * @return MediaModel|null
+     */
+    public function getMediaById(int $id, ?int $userId = null): ?MediaModel
+    {
+        $where = ['id' => $id];
+
+        if ($userId !== null) {
+            $where['user_id'] = $userId;
+        }
+
+        $mediaRow = $this->db()->select('*')
+            ->from('users_media')
+            ->where($where)
+            ->limit(1)
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($mediaRow)) {
+            return null;
+        }
+
+        $entryModel = new MediaModel();
+        $entryModel->setId($mediaRow['id']);
+        $entryModel->setUserId((int)$mediaRow['user_id']);
+        $entryModel->setUrl($mediaRow['url']);
+        $entryModel->setUrlThumb($mediaRow['url_thumb']);
+        $entryModel->setName($mediaRow['name']);
+        $entryModel->setEnding($mediaRow['ending']);
+        $entryModel->setDatetime($mediaRow['datetime']);
+
+        return $entryModel;
+    }
+
+    /**
      * Inserts media and writes the new auto-increment id back to the model.
      *
      * @param MediaModel $model

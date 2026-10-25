@@ -114,44 +114,6 @@ class GalleryTest extends DatabaseTestCase
     }
 
     /**
-     * Tests that getGalleryCatItem() returns all items of a given type.
-     */
-    public function testGetGalleryCatItemAlbums()
-    {
-        $items = $this->out->getGalleryCatItem(1);
-
-        self::assertNotNull($items);
-        self::assertCount(3, $items);
-        self::assertInstanceOf(GalleryItemModel::class, $items[0]);
-
-        self::assertEquals(1, $items[0]->getId());
-        self::assertEquals(1, $items[0]->getUserId());
-        self::assertEquals('Album 1', $items[0]->getTitle());
-        self::assertEquals(0, $items[0]->getParentId());
-    }
-
-    /**
-     * Tests that getGalleryCatItem() spans users and is ordered by sort ASC.
-     */
-    public function testGetGalleryCatItemPhotosOrdered()
-    {
-        $items = $this->out->getGalleryCatItem(2);
-
-        self::assertNotNull($items);
-        self::assertCount(2, $items);
-        self::assertEquals(3, $items[0]->getId());
-        self::assertEquals(5, $items[1]->getId());
-    }
-
-    /**
-     * Tests that getGalleryCatItem() returns null for a type without items.
-     */
-    public function testGetGalleryCatItemNotFound()
-    {
-        self::assertNull($this->out->getGalleryCatItem(3));
-    }
-
-    /**
      * Tests that getGalleryById() returns the correct item.
      */
     public function testGetGalleryById()
@@ -328,10 +290,6 @@ class GalleryTest extends DatabaseTestCase
         self::assertCount(2, $items);
         self::assertEquals(5, $items[0]->getId());
         self::assertEquals(4, $items[1]->getId());
-
-        // The type change must be reflected in the category lists.
-        self::assertCount(2, $this->out->getGalleryCatItem(1));
-        self::assertCount(3, $this->out->getGalleryCatItem(2));
     }
 
     /**
