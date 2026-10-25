@@ -110,8 +110,8 @@ class Training extends \Ilch\Mapper
     /**
      * Get the trainings between start and end.
      *
-     * @param Date|string|null $start Y-m-d H:m:i
-     * @param Date|string|null $end Y-m-d H:m:i
+     * @param Date|string|null $start Y-m-d H:i:s
+     * @param Date|string|null $end Y-m-d H:i:s
      * @param string|array|null $groupIds A string like '1,2,3' or an array like [1,2,3]
      * @return TrainingModel[]|null
      */
@@ -122,10 +122,10 @@ class Training extends \Ilch\Mapper
         }
 
         if ($start && $end) {
-            if (!is_a($start, Date::class)) {
+            if (!($start instanceof Date)) {
                 $start = new Date($start);
             }
-            if (!is_a($end, Date::class)) {
+            if (!($end instanceof Date)) {
                 $end = new Date($end);
             }
 
