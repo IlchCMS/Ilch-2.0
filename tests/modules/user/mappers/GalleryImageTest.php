@@ -46,6 +46,7 @@ class GalleryImageTest extends DatabaseTestCase
         self::assertEquals('Description 1', $image->getImageDesc());
         self::assertEquals(1, $image->getCat());
         self::assertEquals(10, $image->getVisits());
+        self::assertEquals(1, $image->getIsPublic());
     }
 
     /**
@@ -89,6 +90,80 @@ class GalleryImageTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that getImageByMediaId() returns the gallery image of the media entry.
+     */
+    public function testGetImageByMediaId()
+    {
+        $image = $this->out->getImageByMediaId(1);
+
+        self::assertNotNull($image);
+        self::assertInstanceOf(GalleryImageModel::class, $image);
+        self::assertEquals(1, $image->getId());
+        self::assertEquals(1, $image->getImageId());
+        self::assertEquals(1, $image->getUserId());
+        self::assertEquals('https://www.ilch.de/media1.jpg', $image->getImageUrl());
+        self::assertEquals('https://www.ilch.de/thumb_media1.jpg', $image->getImageThumb());
+        self::assertEquals('Image 1', $image->getImageTitle());
+        self::assertEquals('Description 1', $image->getImageDesc());
+        self::assertEquals(1, $image->getCat());
+        self::assertEquals(10, $image->getVisits());
+        self::assertEquals(1, $image->getIsPublic());
+    }
+
+    /**
+     * Tests that getImageByMediaId() works for the second user.
+     */
+    public function testGetImageByMediaIdSecondUser()
+    {
+        $image = $this->out->getImageByMediaId(3);
+
+        self::assertNotNull($image);
+        self::assertEquals(3, $image->getId());
+        self::assertEquals(3, $image->getImageId());
+        self::assertEquals(2, $image->getUserId());
+        self::assertEquals('Image 3', $image->getImageTitle());
+        self::assertEquals(2, $image->getCat());
+    }
+
+    /**
+     * Tests that getImageByMediaId() restricts the lookup to the given user.
+     */
+    public function testGetImageByMediaIdWithUserIdFilter()
+    {
+        $image = $this->out->getImageByMediaId(1, 1);
+
+        self::assertNotNull($image);
+        self::assertEquals(1, $image->getId());
+
+        // The image of media 1 belongs to user 1, not to user 2.
+        self::assertNull($this->out->getImageByMediaId(1, 2));
+    }
+
+    /**
+     * Tests that getImageByMediaId() works for a dangling media reference.
+     */
+    public function testGetImageByMediaIdDangling()
+    {
+        $image = $this->out->getImageByMediaId(99);
+
+        self::assertNotNull($image);
+        self::assertEquals(4, $image->getId());
+        self::assertEquals(99, $image->getImageId());
+        self::assertEquals(2, $image->getUserId());
+        self::assertEquals(null, $image->getImageUrl());
+    }
+
+    /**
+     * Tests that getImageByMediaId() returns null when no gallery image
+     * references the media entry.
+     */
+    public function testGetImageByMediaIdNotFound()
+    {
+        self::assertNull($this->out->getImageByMediaId(50));
+        self::assertNull($this->out->getImageByMediaId(9999));
+    }
+
+    /**
      * Tests that getLastImageByGalleryId() returns the newest image of a category.
      */
     public function testGetLastImageByGalleryId()
@@ -103,6 +178,7 @@ class GalleryImageTest extends DatabaseTestCase
         self::assertEquals('https://www.ilch.de/thumb_media2.jpg', $image->getImageThumb());
         self::assertEquals(1, $image->getCat());
         self::assertEquals(5, $image->getVisits());
+        self::assertEquals(1, $image->getIsPublic());
     }
 
     /**
@@ -130,6 +206,31 @@ class GalleryImageTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that getLastImageByGalleryId() skips private images when $onlyPublic is true.
+     */
+    public function testGetLastImageByGalleryIdOnlyPublic()
+    {
+        // Add a private image as the newest entry of category 1.
+        $model = new GalleryImageModel();
+        $model->setUserId(1)
+            ->setImageId('50')
+            ->setCat(1)
+            ->setIsPublic(0);
+        $this->out->save($model);
+
+        $last = $this->out->getLastImageByGalleryId(1);
+        self::assertNotNull($last);
+        self::assertGreaterThan(4, $last->getId());
+        self::assertEquals(0, $last->getIsPublic());
+
+        // With $onlyPublic the newest public image (id 2) must be returned.
+        $lastPublic = $this->out->getLastImageByGalleryId(1, true);
+        self::assertNotNull($lastPublic);
+        self::assertEquals(2, $lastPublic->getId());
+        self::assertEquals(1, $lastPublic->getIsPublic());
+    }
+
+    /**
      * Tests that getCountImageById() returns the number of images per category.
      */
     public function testGetCountImageById()
@@ -137,6 +238,23 @@ class GalleryImageTest extends DatabaseTestCase
         self::assertEquals(2, $this->out->getCountImageById(1));
         self::assertEquals(2, $this->out->getCountImageById(2));
         self::assertEquals(0, $this->out->getCountImageById(9999));
+    }
+
+    /**
+     * Tests that getCountImageById() only counts public images when $onlyPublic is true.
+     */
+    public function testGetCountImageByIdOnlyPublic()
+    {
+        // Make image 1 private.
+        $model = new GalleryImageModel();
+        $model->setId(1)
+            ->setImageTitle('Image 1')
+            ->setImageDesc('Description 1')
+            ->setIsPublic(0);
+        $this->out->saveImageTreat($model);
+
+        self::assertEquals(2, $this->out->getCountImageById(1));
+        self::assertEquals(1, $this->out->getCountImageById(1, true));
     }
 
     /**
@@ -159,6 +277,7 @@ class GalleryImageTest extends DatabaseTestCase
         self::assertEquals('Description 2', $images[0]->getImageDesc());
         self::assertEquals(5, $images[0]->getVisits());
         self::assertEquals(1, $images[0]->getCat());
+        self::assertEquals(1, $images[0]->getIsPublic());
 
         self::assertEquals(1, $images[1]->getId());
         self::assertEquals(1, $images[1]->getImageId());
@@ -213,32 +332,56 @@ class GalleryImageTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that getImageByGalleryId() only returns public images when $onlyPublic is true.
+     */
+    public function testGetImageByGalleryIdOnlyPublic()
+    {
+        // Make the newest image of category 1 private.
+        $model = new GalleryImageModel();
+        $model->setId(2)
+            ->setImageTitle('Image 2')
+            ->setImageDesc('Description 2')
+            ->setIsPublic(0);
+        $this->out->saveImageTreat($model);
+
+        $images = $this->out->getImageByGalleryId(1, null, true);
+
+        self::assertNotNull($images);
+        self::assertCount(1, $images);
+        self::assertEquals(1, $images[0]->getId());
+        self::assertEquals(1, $images[0]->getIsPublic());
+    }
+
+    /**
      * Tests inserting a new gallery image via save() (id 0 => insert).
      */
     public function testSaveInsert()
     {
+        // Media 1 is not part of category 3 in the fixture, so the insert is not
+        // skipped by the (image_id, cat) duplicate check.
         $model = new GalleryImageModel();
         $model->setUserId(1)
             ->setImageId('1')
-            ->setCat(1);
+            ->setCat(3);
 
         $this->out->save($model);
 
-        self::assertEquals(3, $this->out->getCountImageById(1));
+        self::assertEquals(1, $this->out->getCountImageById(3));
 
-        $images = $this->out->getImageByGalleryId(1);
-        self::assertCount(3, $images);
+        $images = $this->out->getImageByGalleryId(3);
+        self::assertCount(1, $images);
 
-        // The new image should be the first one (auto-increment, ordered DESC).
+        // The new image is the only one in the new category.
         $new = $images[0];
         self::assertGreaterThan(4, $new->getId());
         self::assertEquals(1, $new->getImageId());
         self::assertEquals('https://www.ilch.de/media1.jpg', $new->getImageUrl());
-        self::assertEquals(1, $new->getCat());
+        self::assertEquals(3, $new->getCat());
         self::assertEquals(0, $new->getVisits());
         // save() does not persist title/description on insert.
         self::assertEquals('', $new->getImageTitle());
         self::assertEquals('', $new->getImageDesc());
+        self::assertEquals(1, $new->getIsPublic());
     }
 
     /**
@@ -258,6 +401,23 @@ class GalleryImageTest extends DatabaseTestCase
         self::assertEquals(1, $image->getImageId());
         self::assertEquals('Image 1', $image->getImageTitle());
         self::assertEquals(10, $image->getVisits());
+    }
+
+    /**
+     * Tests that save() stores the isPublic flag on insert.
+     */
+    public function testSaveInsertIsPublic()
+    {
+        $model = new GalleryImageModel();
+        $model->setUserId(1)
+            ->setImageId('1')
+            ->setCat(9)
+            ->setIsPublic(0);
+        $this->out->save($model);
+
+        $images = $this->out->getImageByGalleryId(9);
+        self::assertCount(1, $images);
+        self::assertEquals(0, $images[0]->getIsPublic());
     }
 
     /**
@@ -420,6 +580,79 @@ class GalleryImageTest extends DatabaseTestCase
         self::assertNotNull($other);
         self::assertEquals('Image 2', $other->getImageTitle());
         self::assertEquals('Description 2', $other->getImageDesc());
+    }
+
+    /**
+     * Tests that deleteByImageId() removes the gallery image of the media entry
+     * for the given user.
+     */
+    public function testDeleteByImageId()
+    {
+        $this->out->deleteByImageId(1, 1);
+
+        self::assertNull($this->out->getImageById(1));
+
+        $images = $this->out->getImageByGalleryId(1);
+        self::assertCount(1, $images);
+        self::assertEquals(2, $images[0]->getId());
+    }
+
+    /**
+     * Tests that deleteByImageId() only deletes images that belong to the given user.
+     */
+    public function testDeleteByImageIdOtherUserUnaffected()
+    {
+        // Media 1's image belongs to user 1, so deleting as user 2 must do nothing.
+        $this->out->deleteByImageId(1, 2);
+
+        $image = $this->out->getImageById(1);
+        self::assertNotNull($image);
+        self::assertEquals(1, $image->getImageId());
+        self::assertEquals(2, $this->out->getCountImageById(1));
+    }
+
+    /**
+     * Tests that deleteByImageId() also removes images with a dangling media reference.
+     */
+    public function testDeleteByImageIdDangling()
+    {
+        $this->out->deleteByImageId(99, 2);
+
+        self::assertNull($this->out->getImageById(4));
+
+        $images = $this->out->getImageByGalleryId(2);
+        self::assertCount(1, $images);
+        self::assertEquals(3, $images[0]->getId());
+    }
+
+    /**
+     * Tests that deleteByImageId() on a non-existent media entry does not throw
+     * and leaves all images untouched.
+     */
+    public function testDeleteByImageIdNotFound()
+    {
+        $this->out->deleteByImageId(50, 1);
+
+        self::assertEquals(2, $this->out->getCountImageById(1));
+        self::assertEquals(2, $this->out->getCountImageById(2));
+    }
+
+    /**
+     * Tests that saveImageTreat() updates the isPublic flag, including the falsy value 0.
+     */
+    public function testSaveImageTreatUpdatesIsPublic()
+    {
+        $model = new GalleryImageModel();
+        $model->setId(1)
+            ->setImageTitle('Image 1')
+            ->setImageDesc('Description 1')
+            ->setIsPublic(0);
+        $this->out->saveImageTreat($model);
+
+        $image = $this->out->getImageById(1);
+        self::assertNotNull($image);
+        self::assertEquals(0, $image->getIsPublic());
+        self::assertEquals('Image 1', $image->getImageTitle());
     }
 
     /**

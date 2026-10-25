@@ -123,6 +123,36 @@ class MediaTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that getMediaById() returns the correct media entry.
+     */
+    public function testGetMediaById()
+    {
+        $media = $this->out->getMediaById(1);
+
+        self::assertNotNull($media);
+        self::assertInstanceOf(MediaModel::class, $media);
+        self::assertEquals(1, $media->getId());
+        self::assertEquals(1, $media->getUserId());
+        self::assertEquals('media1', $media->getName());
+        self::assertEquals('media1.jpg', $media->getUrl());
+        self::assertEquals('thumb_media1.jpg', $media->getUrlThumb());
+        self::assertEquals('jpg', $media->getEnding());
+        self::assertEquals('2014-01-01 12:12:12', $media->getDatetime());
+    }
+
+    /**
+     * Tests that getMediaById() restricts the lookup to the given user.
+     */
+    public function testGetMediaByIdWithUserIdFilter()
+    {
+        self::assertNotNull($this->out->getMediaById(1, 1));
+
+        // Media 1 belongs to user 1, so the lookup for user 2 must fail.
+        self::assertNull($this->out->getMediaById(1, 2));
+        self::assertNull($this->out->getMediaById(9999));
+    }
+
+    /**
      * Tests that save() inserts a new media entry.
      */
     public function testSave()

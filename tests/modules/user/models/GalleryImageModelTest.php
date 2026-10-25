@@ -219,6 +219,40 @@ class GalleryImageModelTest extends TestCase
     }
 
     /**
+     * Tests that setIsPublic() sets and returns the isPublic flag.
+     */
+    public function testSetIsPublic()
+    {
+        $model = new GalleryImageModel();
+        $model->setIsPublic(1);
+
+        self::assertSame(1, $model->getIsPublic());
+    }
+
+    /**
+     * Tests that setIsPublic() casts to int.
+     */
+    public function testSetIsPublicCastsToInt()
+    {
+        $model = new GalleryImageModel();
+        $model->setIsPublic('1');
+
+        self::assertSame(1, $model->getIsPublic());
+        self::assertIsInt($model->getIsPublic());
+    }
+
+    /**
+     * Tests that setIsPublic(0) stores zero (private, falsy but valid).
+     */
+    public function testSetIsPublicZero()
+    {
+        $model = new GalleryImageModel();
+        $model->setIsPublic(0);
+
+        self::assertSame(0, $model->getIsPublic());
+    }
+
+    /**
      * Tests that setters are chainable (return $this).
      */
     public function testSettersReturnSelf()
@@ -234,6 +268,7 @@ class GalleryImageModelTest extends TestCase
         self::assertSame($model, $model->setCat('5'));
         self::assertSame($model, $model->setVisits('0'));
         self::assertSame($model, $model->setImageUrl('image.jpg'));
+        self::assertSame($model, $model->setIsPublic(1));
     }
 
     /**
@@ -250,7 +285,8 @@ class GalleryImageModelTest extends TestCase
             ->setImageDesc('My description')
             ->setCat('5')
             ->setVisits('0')
-            ->setImageUrl('images/abc123.jpg');
+            ->setImageUrl('images/abc123.jpg')
+            ->setIsPublic(1);
 
         self::assertSame(1, $model->getId());
         self::assertSame(2, $model->getUserId());
@@ -261,6 +297,7 @@ class GalleryImageModelTest extends TestCase
         self::assertSame('5', $model->getCat());
         self::assertSame('0', $model->getVisits());
         self::assertSame('images/abc123.jpg', $model->getImageUrl());
+        self::assertSame(1, $model->getIsPublic());
     }
 
     /**
@@ -279,6 +316,7 @@ class GalleryImageModelTest extends TestCase
         self::assertNull($model->getCat());
         self::assertNull($model->getVisits());
         self::assertNull($model->getImageUrl());
+        self::assertNull($model->getIsPublic());
     }
 
     /**
@@ -292,17 +330,20 @@ class GalleryImageModelTest extends TestCase
         $model->setImageId('old');
         $model->setImageTitle('Old');
         $model->setImageUrl('old.jpg');
+        $model->setIsPublic(0);
 
         $model->setId(2);
         $model->setUserId(2);
         $model->setImageId('new');
         $model->setImageTitle('New');
         $model->setImageUrl('new.jpg');
+        $model->setIsPublic(1);
 
         self::assertSame(2, $model->getId());
         self::assertSame(2, $model->getUserId());
         self::assertSame('new', $model->getImageId());
         self::assertSame('New', $model->getImageTitle());
         self::assertSame('new.jpg', $model->getImageUrl());
+        self::assertSame(1, $model->getIsPublic());
     }
 }
