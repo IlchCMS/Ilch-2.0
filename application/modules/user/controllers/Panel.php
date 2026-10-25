@@ -790,8 +790,10 @@ class Panel extends BaseController
                     $id = (int)$id;
                     $parent = (int)$parent;
 
-                    if (!isset($ownItemIds[$id])
-                        || ($parent !== 0 && !isset($ownItemIds[$parent]))) {   // only own node and parent
+                    if (
+                        !isset($ownItemIds[$id])
+                        || ($parent !== 0 && !isset($ownItemIds[$parent]))
+                    ) {   // only own node and parent
                         continue;
                     }
 
@@ -901,10 +903,12 @@ class Panel extends BaseController
         $image = $imageMapper->getImageById($id);
         $gallery = $galleryMapper->getGalleryById($galleryId);
 
-        if ($image === null
+        if (
+            $image === null
             || $gallery === null
             || (int)$image->getUserId() !== $userId
-            || (int)$image->getCat() !== $galleryId) {
+            || (int)$image->getCat() !== $galleryId
+        ) {
             $this->redirect()
                 ->withMessage('badRequest', 'warning')
                 ->to(['action' => 'gallery']);

@@ -65,10 +65,12 @@ class Gallery extends \Ilch\Controller\Frontend
             && ($this->getUser()->getId() == $profil->getId()
                 || $this->getUser()->isAdmin());
 
-        if ($profil === null
+        if (
+            $profil === null
             || $gallery === null
             || (int)$gallery->getUserId() !== $userId
-            || (!$isUnrestricted && !$galleryMapper->isEffectivelyPublic($id))) {
+            || (!$isUnrestricted && !$galleryMapper->isEffectivelyPublic($id))
+        ) {
             $this->redirect()
                 ->withMessage('galleryNotAccessible', 'warning')
                 ->to(['controller' => 'profil', 'action' => 'index', 'user' => $userId]);
@@ -110,13 +112,15 @@ class Gallery extends \Ilch\Controller\Frontend
                 || $this->getUser()->isAdmin());
 
         // Blocked views must not increment the visit counter.
-        if ($image === null
+        if (
+            $image === null
             || $gallery === null
             || (int)$image->getUserId() !== $userId
             || (int)$gallery->getUserId() !== $userId
             || (!$isUnrestricted
                 && ((int)$image->getIsPublic() !== 1
-                    || !$galleryMapper->isEffectivelyPublic((int)$image->getCat())))) {
+                    || !$galleryMapper->isEffectivelyPublic((int)$image->getCat())))
+        ) {
             $this->redirect()
                 ->withMessage('imageNotAccessible', 'warning')
                 ->to(['controller' => 'profil', 'action' => 'index', 'user' => $userId]);
