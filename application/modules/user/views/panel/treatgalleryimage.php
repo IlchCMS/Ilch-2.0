@@ -46,8 +46,8 @@
                             </label>
                             <div class="col-xl-8">
                                 <select class="form-control" id="imageVisibilityInput" name="imageVisibility">
-                                    <option value="1" <?= ((int)($image->getIsPublic() ?? 1)) === 1 ? 'selected' : '' ?>><?=$this->getTrans('public') ?></option>
-                                    <option value="0" <?= ((int)($image->getIsPublic() ?? 1)) === 0 ? 'selected' : '' ?>><?=$this->getTrans('private') ?></option>
+                                    <option value="1" <?= ($image->getIsPublic() ?? 1) === 1 ? 'selected' : '' ?>><?=$this->getTrans('public') ?></option>
+                                    <option value="0" <?= ($image->getIsPublic() ?? 1) === 0 ? 'selected' : '' ?>><?=$this->getTrans('private') ?></option>
                                 </select>
                             </div>
                         </div>

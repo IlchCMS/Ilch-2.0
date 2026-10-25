@@ -56,7 +56,7 @@ class Gallery extends \Ilch\Mapper
      * @param int $id
      * @return GalleryItem|null
      */
-    public function getGalleryById($id): ?GalleryItem
+    public function getGalleryById(int $id): ?GalleryItem
     {
         $itemRows = $this->db()->select('*')
             ->from('users_gallery_items')

@@ -153,6 +153,9 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
+    var menuMustBeAddedFirst = <?=json_encode($this->getTrans('menuMustBeAddedFirst')) ?>;
+    var titleMustBeGiven = <?=json_encode($this->getTrans('titleMustBeGiven')) ?>;
+
     function resetBox() {
         $(':input','.changeBox')
             .not(':button, :submit, :reset, :hidden')
@@ -216,12 +219,12 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                 });
 
                 if (options == '' && ($(this).val() == '1')) {
-                    alert('Es muss zuerst ein Menü hinzugefügt werden');
+                    alert(menuMustBeAddedFirst);
                     $(this).val(0);
                     return;
                 }
 
-                menuHtml = '<div class="row mb-3"><label for="href" class="col-lg-4 col-form-label">Kategorie:</label>\n\
+                menuHtml = '<div class="row mb-3"><label for="href" class="col-lg-4 col-form-label"><?= $this->getTrans('cat') ?>:</label>\n\
                         <div class="col-xl-8"><select class="form-select" id="menukey">'+options+'</select></div></div>';
 
                 if ($(this).val() == '0') {
@@ -233,7 +236,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 
             $('#galleryForm').on('click', '#menuItemAdd', function () {
                 if ($('#title').val() == '') {
-                    alert('Es muss ein Titel angegeben werden');
+                    alert(titleMustBeGiven);
                     return;
                 }
 
@@ -260,8 +263,8 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
             });
 
             $('.sortable').on('click', '.item_edit', function() {
-                $('.actions').html('<input type="button" class="btn btn-outline-secondary" id="menuItemEdit" value="Editieren">\n\
-                               <input type="button" class="btn btn-outline-secondary" id="menuItemEditCancel" value="Abbrechen">');
+                $('.actions').html('<input type="button" class="btn btn-outline-secondary" id="menuItemEdit" value="<?= $this->getTrans('treat') ?>">\n\
+                               <input type="button" class="btn btn-outline-secondary" id="menuItemEditCancel" value="<?= $this->getTrans('cancel') ?>">');
                 $('#title').val($(this).parent().find('.hidden_title').val());
                 $('#desc').val($(this).parent().find('.hidden_desc').val());
                 $('#type').val($(this).parent().find('.hidden_type').val());
@@ -272,7 +275,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 
             $('#galleryForm').on('click', '#menuItemEdit', function () {
                 if ($('#title').val() == '') {
-                    alert('Es muss ein Titel angegeben werden');
+                    alert(titleMustBeGiven);
                     return;
                 }
 
@@ -285,7 +288,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
             });
 
             $('#galleryForm').on('click', '#menuItemEditCancel', function() {
-                $('.actions').html('<input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="Menuitem hinzufügen">');
+                $('.actions').html('<input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?= $this->getTrans('galleryItemAdd') ?>">');
                 resetBox();
             });
         }

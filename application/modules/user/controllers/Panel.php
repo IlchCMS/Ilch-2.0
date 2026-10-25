@@ -722,7 +722,7 @@ class Panel extends BaseController
                 $sortArray = [];
 
                 foreach ($sortItems as $sortItem) {
-                    if (is_object($sortItem) && isset($sortItem->id) && $sortItem->id !== null) {
+                    if (is_object($sortItem) && isset($sortItem->id)) {
                         $key = str_replace('list_', '', (string)$sortItem->id);
                         $parentId = isset($sortItem->parent_id)
                             ? str_replace('list_', '', (string)$sortItem->parent_id)
@@ -747,8 +747,8 @@ class Panel extends BaseController
                     $galleryItem = new GalleryItemModel();
                     $tmpKey = null;
 
-                    if (preg_match('/^tmp_?\d+$/', (string)$item['id'])) {
-                        $tmpKey = (string)$item['id'];   // new (unsaved) item
+                    if (preg_match('/^tmp_?\d+$/', $item['id'])) {
+                        $tmpKey = $item['id'];   // new (unsaved) item
                     } else {
                         $itemId = (int)$item['id'];
                         if (!isset($ownItemIds[$itemId])) {   // only own items
@@ -766,7 +766,7 @@ class Panel extends BaseController
                     $newId = $galleryMapper->saveItem($galleryItem);
 
                     if ($tmpKey !== null) {
-                        $ownItemIds[(int)$newId] = true;   // own item for the sort loop
+                        $ownItemIds[$newId] = true;   // own item for the sort loop
                         foreach ($sortArray as $id => $parentId) {
                             if ($id === $tmpKey) {
                                 unset($sortArray[$id]);
