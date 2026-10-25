@@ -220,3 +220,7 @@ div.input-group.filter input:not(:placeholder-shown) {
 .ck-content {
     overflow: auto;
 }
+
+.icon_width {
+    width: 15px;
+}

@@ -10,14 +10,14 @@
             <h1><?=$this->getTrans('treatImage') ?></h1>
             <form method="POST">
                 <?=$this->getTokenField() ?>
-                <div id="gallery">
-                    <div class="col-lg-5">
+                <div id="gallery" class="g-3">
+                    <div class="col-lg-5 mb-3">
                         <a href="<?=$this->getUrl() . '/' . $image->getImageUrl() ?>">
                             <img class="img-thumbnail" src="<?=$this->getUrl() . '/' . $image->getImageUrl() ?>"/>
                         </a>
                     </div>
                     <div class="col-lg-7">
-                        <div class="row lg-3">
+                        <div class="row mb-3">
                             <label for="imageTitleInput" class="col-lg-4 col-form-label">
                                 <?=$this->getTrans('title') ?>:
                             </label>
@@ -29,7 +29,7 @@
                                        value="<?=$image->getImageTitle() ?>" />
                             </div>
                         </div>
-                        <div class="row lg-3">
+                        <div class="row mb-3">
                             <label for="imageDescInput" class="col-lg-4 col-form-label">
                                 <?=$this->getTrans('description') ?>:
                             </label>
@@ -40,7 +40,7 @@
                                           rows="8"><?=$image->getImageDesc() ?></textarea>
                             </div>
                         </div>
-                        <div class="row lg-3">
+                        <div class="row mb-3">
                             <label for="imageVisibilityInput" class="col-lg-4 col-form-label">
                                 <?=$this->getTrans('visibility') ?>:
                             </label>

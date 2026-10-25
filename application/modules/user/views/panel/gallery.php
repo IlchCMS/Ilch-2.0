@@ -260,8 +260,8 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
             });
 
             $('.sortable').on('click', '.item_edit', function() {
-                $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="Editieren">\n\
-                               <input type="button" class="btn" id="menuItemEditCancel" value="Abbrechen">');
+                $('.actions').html('<input type="button" class="btn btn-outline-secondary" id="menuItemEdit" value="Editieren">\n\
+                               <input type="button" class="btn btn-outline-secondary" id="menuItemEditCancel" value="Abbrechen">');
                 $('#title').val($(this).parent().find('.hidden_title').val());
                 $('#desc').val($(this).parent().find('.hidden_desc').val());
                 $('#type').val($(this).parent().find('.hidden_type').val());

@@ -43,7 +43,7 @@ $galleryId = (int)$this->getRequest()->getParam('id');
                             </thead>
                             <tbody>
                                 <?php foreach ($this->get('image') as $image) : ?>
-                                    <?php $imageIsPublic = ((int)($image->getIsPublic() ?? 1)) === 1; ?>
+                                    <?php $imageIsPublic = ($image->getIsPublic() ?? 1) === 1; ?>
                                     <tr>
                                         <td><?=$this->getDeleteCheckbox('check_gallery', $image->getImageId()) ?></td>
                                         <td><?=$this->getEditIcon(['action' => 'treatgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getId()]) ?></td>
