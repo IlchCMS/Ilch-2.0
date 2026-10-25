@@ -638,10 +638,6 @@ class TrainingTest extends DatabaseTestCase
 
     /**
      * Tests that getTrainingsForJson() does not return trainings that ended before the start date.
-     *
-     * Note: This test currently FAILS. The first branch of the OR condition only checks
-     * "t.end <= end" without a lower bound on the start date, so training 1 (ended
-     * 2024-01-15) is returned although the range starts on 2024-02-01.
      */
     public function testGetTrainingsForJsonExcludesTrainingsBeforeStart()
     {
@@ -684,9 +680,6 @@ class TrainingTest extends DatabaseTestCase
     /**
      * Tests that getNextTrainings() accepts a comma separated group id string like the
      * other methods (e.g. getTraining()) do.
-     *
-     * Note: This test currently FAILS. getNextTrainings() does not explode a string, so
-     * '1,2' is sent to the database as a single value and matches no training.
      */
     public function testGetNextTrainingsGroupIdsString()
     {
@@ -759,10 +752,6 @@ class TrainingTest extends DatabaseTestCase
     /**
      * Tests that countdown() still returns "live" when the training ended only minutes ago
      * (within the default 60 minute countdown window).
-     *
-     * Note: This test currently FAILS. In countdown() the condition
-     * "$difference <= (60 * $countdown_time)" is always true for a negative difference,
-     * so every past date returns false and the "live" state is unreachable.
      */
     public function testCountdownRecentlyEnded()
     {
@@ -777,12 +766,7 @@ class TrainingTest extends DatabaseTestCase
      * dealing with a day based recurrent training, the initial date is in the past and
      * the repeat until date is in the future.
      *
-     * Note: This test is expected to FAIL. The "days" branch passes a date expression like
-     * "next Monday 05:00:00" to DateInterval::createFromDateString(), which only parses
-     * durations and therefore throws a \DateMalformedPeriodStringException.
-     *
      * @return void
-     * @throws \DateMalformedPeriodStringException
      */
     public function testCalculateNextTrainingDayBased()
     {
