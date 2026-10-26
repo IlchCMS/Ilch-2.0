@@ -49,6 +49,7 @@ jobs:
 
           zip -q -d Ilch-2.zip \
             'static/js/*' \
+            AGENTS.md \
             composer.json \
             composer.lock \
             CONTRIBUTING.md \
