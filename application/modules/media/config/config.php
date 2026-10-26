@@ -64,6 +64,10 @@ class Config extends \Ilch\Config\Install
             case "2.1.60":
                 $this->db()->query("UPDATE `[prefix]_modules` SET `icon_small` = '" . $this->config['icon_small'] . "' WHERE `key` = '" . $this->config['key'] . "';");
                 break;
+            case "2.2.21":
+                // Delete unused image.
+                unlink(APPLICATION_PATH . '/modules/media/static/img/check.png');
+                break;
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';
