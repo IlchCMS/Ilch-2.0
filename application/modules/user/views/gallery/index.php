@@ -2,10 +2,11 @@
 $galleryMapper = $this->get('galleryMapper');
 $galleryItems = $this->get('galleryItems');
 $imageMapper = $this->get('imageMapper');
+$onlyPublic = !$this->get('unrestricted');
 
-function rec($item, $galleryMapper, $obj, $imageMapper)
+function rec($item, $galleryMapper, $obj, $imageMapper, $onlyPublic = false)
 {
-    $subItems = $galleryMapper->getGalleryItemsByParent($item->getUserId(), $item->getId());
+    $subItems = $galleryMapper->getGalleryItemsByParent($item->getUserId(), $item->getId(), $onlyPublic);
 
     if ($item->getType() === 0) {
         echo '<div class="page-header">
@@ -14,7 +15,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
     }
 
     if ($item->getType() != 0) {
-        $lastImage = $imageMapper->getLastImageByGalleryId($item->getId());
+        $lastImage = $imageMapper->getLastImageByGalleryId($item->getId(), $onlyPublic);
         if ($lastImage !== null && file_exists($lastImage->getImageThumb())) {
             $image = $obj->getBaseUrl($lastImage->getImageThumb());
         } else {
@@ -34,7 +35,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                 <a href="' . $obj->getUrl(['action' => 'show', 'user' => $item->getUserId(), 'id' => $item->getId()]) . '" >
                                     ' . $obj->escape($item->getTitle()) . '
                                 </a>
-                                <p class="text-start">' . $obj->getTrans('images') . ': ' . $imageMapper->getCountImageById($item->getId()) . '</p>
+                                <p class="text-start">' . $obj->getTrans('images') . ': ' . $imageMapper->getCountImageById($item->getId(), $onlyPublic) . '</p>
                                 <div class="lib-header-seperator"></div>
 
                             </div>
@@ -49,7 +50,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 
     if (!empty($subItems)) {
         foreach ($subItems as $subItem) {
-            rec($subItem, $galleryMapper, $obj, $imageMapper);
+            rec($subItem, $galleryMapper, $obj, $imageMapper, $onlyPublic);
         }
     }
 }
@@ -62,7 +63,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
     <ul class="media-list">
         <?php if (!empty($galleryItems)) : ?>
             <?php foreach ($galleryItems as $item) : ?>
-                <?php rec($item, $galleryMapper, $this, $imageMapper); ?>
+                <?php rec($item, $galleryMapper, $this, $imageMapper, $onlyPublic); ?>
             <?php endforeach; ?>
         <?php else : ?>
             <?=$this->getTrans('noImages') ?>

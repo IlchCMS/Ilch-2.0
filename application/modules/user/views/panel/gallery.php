@@ -3,10 +3,14 @@ $galleryMapper = $this->get('galleryMapper');
 $galleryItems = $this->get('galleryItems');
 $imageMapper = $this->get('imageMapper');
 
+/** @var \Modules\User\Models\User $profil */
+$profil = $this->get('profil');
+
 function rec($item, $galleryMapper, $obj, $imageMapper)
 {
     $subItems = $galleryMapper->getGalleryItemsByParent($item->getUserId(), $item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
+    $isVisible = ($item->getIsPublic() ?? 1) === 1;
 
     if (empty($subItems)) {
         $class = 'mjs-nestedSortable-leaf';
@@ -15,16 +19,20 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
     echo '<li id="list_' . $item->getId() . '" class="' . $class . '">';
     echo '<div><span class="disclose"><i class="fa-solid fa-circle-minus"></i>
                     <input type="hidden" class="hidden_id" name="items[' . $item->getId() . '][id]" value="' . $item->getId() . '" />
-                    <input type="hidden" class="hidden_title" name="items[' . $item->getId() . '][title]" value="' . $item->getTitle() . '" />
-                    <input type="hidden" class="hidden_desc" name="items[' . $item->getId() . '][desc]" value="' . $item->getDesc() . '" />
+                    <input type="hidden" class="hidden_title" name="items[' . $item->getId() . '][title]" value="' . $obj->escape($item->getTitle()) . '" />
+                    <input type="hidden" class="hidden_desc" name="items[' . $item->getId() . '][desc]" value="' . $obj->escape($item->getDesc()) . '" />
                     <input type="hidden" class="hidden_type" name="items[' . $item->getId() . '][type]" value="' . $item->getType() . '" />
+                    <input type="hidden" class="hidden_visibility" name="items[' . $item->getId() . '][visibility]" value="' . ($item->getIsPublic() ?? 1) . '" />
                     <span></span>
                 </span>
-                <span class="title">' . $item->getTitle() . '</span>
+                <span class="title">' . $obj->escape($item->getTitle()) . '</span>
                 <span class="item_delete">
                     <i class="fa-solid fa-times-circle"></i>
                 </span><span class="item_edit">
                     <i class="fa-regular fa-pen-to-square"></i>
+                </span>
+                <span class="item_visibility" title="' . $obj->escape($obj->getTrans($isVisible ? 'public' : 'private')) . '">
+                    <i class="fa-solid ' . ($isVisible ? 'fa-eye' : 'fa-eye-slash') . '"></i>
                 </span>
                 <span class="upload" style="float:right; margin-right: 6px;">
                     <a href="javascript:media(' . $item->getId() . ')">
@@ -111,6 +119,17 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                     </select>
                                 </div>
                             </div>
+                            <div class="row mb-3">
+                                <label for="visibility" class="col-xl-4 col-form-label">
+                                    <?=$this->getTrans('visibility') ?>:
+                                </label>
+                                <div class="col-xl-8">
+                                    <select class="form-select" id="visibility" name="visibility">
+                                        <option value="1"><?=$this->getTrans('public') ?></option>
+                                        <option value="0"><?=$this->getTrans('private') ?></option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="dyn"></div>
                             <div class="row mb-3">
                                 <label class="col-xl-4 col-form-label"></label>
@@ -134,153 +153,155 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>') ?>
 <script>
-function resetBox() {
-    $(':input','.changeBox')
-    .not(':button, :submit, :reset, :hidden')
-    .val('')
-    .removeAttr('checked')
-    .removeAttr('selected');
+    var menuMustBeAddedFirst = <?=json_encode($this->getTrans('menuMustBeAddedFirst')) ?>;
+    var titleMustBeGiven = <?=json_encode($this->getTrans('titleMustBeGiven')) ?>;
 
-    $('#type').change();
-}
+    function resetBox() {
+        $(':input','.changeBox')
+            .not(':button, :submit, :reset, :hidden')
+            .val('')
+            .removeAttr('checked')
+            .removeAttr('selected');
 
-$(document).ready (
-    function () {
-        var itemId = 999;
-        $('.sortable').nestedSortable ({
-            forcePlaceholderSize: true,
-            handle: 'div',
-            helper: 'clone',
-            items: 'li',
-            opacity: .6,
-            placeholder: 'placeholder',
-            revert: 250,
-            tabSize: 25,
-            tolerance: 'pointer',
-            toleranceElement: '> div',
-            maxLevels: 2,
-            isTree: true,
-            expandOnHover: 700,
-            startCollapsed: false,
-            protectRoot: true
-        });
-        $('.disclose').on('click', function () {
-            $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
-            $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-plus-circle');
-        });
-        $('#galleryForm').submit (
-            function () {
-                $('#hiddenMenu').val(JSON.stringify($('.sortable').nestedSortable('toArray', {startDepthCount: 0})));
+        $('#type').change();
+        $('#visibility').val('1');
+    }
+
+    $(document).ready (
+        function () {
+            function escapeHtml(str) {
+                return String(str)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
             }
-        );
-        $('.sortable').on('click', '.item_delete', function() {
-            $(this).closest('li').remove();
-        });
 
-        $('#galleryForm').on('change', '#type', function() {
-            var options = '';
+            var itemId = 999;
+            $('.sortable').nestedSortable ({
+                forcePlaceholderSize: true,
+                handle: 'div',
+                helper: 'clone',
+                items: 'li',
+                opacity: .6,
+                placeholder: 'placeholder',
+                revert: 250,
+                tabSize: 25,
+                tolerance: 'pointer',
+                toleranceElement: '> div',
+                maxLevels: 2,
+                isTree: true,
+                expandOnHover: 700,
+                startCollapsed: false,
+                protectRoot: true
+            });
+            $('.disclose').on('click', function () {
+                $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
+                $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-plus-circle');
+            });
+            $('#galleryForm').submit (
+                function () {
+                    $('#hiddenMenu').val(JSON.stringify($('.sortable').nestedSortable('toArray', {startDepthCount: 0})));
+                }
+            );
+            $('.sortable').on('click', '.item_delete', function() {
+                $(this).closest('li').remove();
+            });
 
-            $('#sortable').find('li').each(function() {
-                if ($(this).find('input.hidden_type:first').val() == 0) {
-                    options += '<option value="'+$(this).find('input.hidden_id:first').val()+'">'+$(this).find('input.hidden_title:first').val()+'</option>';
+            $('#galleryForm').on('change', '#type', function() {
+                var options = '';
+
+                $('#sortable').find('li').each(function() {
+                    if ($(this).find('input.hidden_type:first').val() == 0) {
+                        options += '<option value="'+$(this).find('input.hidden_id:first').val()+'">'+escapeHtml($(this).find('input.hidden_title:first').val())+'</option>';
+                    }
+                });
+
+                if (options == '' && ($(this).val() == '1')) {
+                    alert(menuMustBeAddedFirst);
+                    $(this).val(0);
+                    return;
+                }
+
+                menuHtml = '<div class="row mb-3"><label for="href" class="col-lg-4 col-form-label"><?= $this->getTrans('cat') ?>:</label>\n\
+                        <div class="col-xl-8"><select class="form-select" id="menukey">'+options+'</select></div></div>';
+
+                if ($(this).val() == '0') {
+                    $('.dyn').html('');
+                } else if ($(this).val() == '1') {
+                    $('.dyn').html(menuHtml);
                 }
             });
 
-            if (options == '' && ($(this).val() == '1')) {
-                alert('Es muss zuerst ein Menü hinzugefügt werden');
-                $(this).val(0);
-                return;
-            }
-
-            menuHtml = '<div class="row mb-3"><label for="href" class="col-lg-4 col-form-label">Kategorie:</label>\n\
-                        <div class="col-xl-8"><select class="form-select" id="menukey">'+options+'</select></div></div>';
-
-            if ($(this).val() == '0') {
-                $('.dyn').html('');
-            } else if ($(this).val() == '1') {
-                $('.dyn').html(menuHtml);
-            }
-        });
-
-        $('#galleryForm').on('click', '#menuItemAdd', function () {
-            if ($('#title').val() == '') {
-                alert('Es muss ein Titel angegeben werden');
-                return;
-            }
-
-            append = '#sortable';
-            if ($('#type').val() != 0 && $('#menukey').val() != 0 ) {
-                id = $('#menukey').val();
-
-                if ($('#sortable #'+id+' ol').length > 0) {
-
-                } else {
-                    $('<ol></ol>').appendTo('#sortable #'+id);
+            $('#galleryForm').on('click', '#menuItemAdd', function () {
+                if ($('#title').val() == '') {
+                    alert(titleMustBeGiven);
+                    return;
                 }
 
-                if (!isNaN(id)) {
-                    append = '#sortable #list_'+id+' ol';
+                append = '#sortable';
+                if ($('#type').val() != 0 && $('#menukey').val() != 0 ) {
+                    id = $('#menukey').val();
 
-                    if ($(append).length == 0) {
+                    if ($('#sortable #list_'+id+' ol').length == 0) {
                         $('<ol></ol>').appendTo('#sortable #list_'+id);
                     }
-                } else {
-                    if ($(append).length == 0) {
-                        $('<ol></ol>').appendTo('#sortable #'+id);
-                    }
-                    append = '#sortable #'+id+' ol';
+
+                    append = '#sortable #list_'+id+' ol';
                 }
 
-            }
+                $('<li id="list_tmp'+itemId+'"><div><span class="disclose"><span>'
+                    +'<input type="hidden" class="hidden_id" name="items[tmp'+itemId+'][id]" value="tmp'+itemId+'" />'
+                    +'<input type="hidden" class="hidden_title" name="items[tmp'+itemId+'][title]" value="'+escapeHtml($('#title').val())+'" />'
+                    +'<input type="hidden" class="hidden_desc" name="items[tmp'+itemId+'][desc]" value="'+escapeHtml($('#desc').val())+'" />'
+                    +'<input type="hidden" class="hidden_type" name="items[tmp'+itemId+'][type]" value="'+$('#type').val()+'" />'
+                    +'<input type="hidden" class="hidden_visibility" name="items[tmp'+itemId+'][visibility]" value="'+$('#visibility').val()+'" />'
+                    +'</span></span><span class="title">'+escapeHtml($('#title').val())+'</span><span class="item_delete"><i class="fa-solid fa-times-circle"></i></span></div></li>').appendTo(append);
+                itemId++;
+                resetBox();
+            });
 
-            $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
-                    +'<input type="hidden" class="hidden_id" name="items[tmp_'+itemId+'][id]" value="tmp_'+itemId+'" />'
-                    +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+$('#title').val()+'" />'
-                    +'<input type="hidden" class="hidden_desc" name="items[tmp_'+itemId+'][desc]" value="'+$('#desc').val()+'" />'
-                    +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
-                    +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa-solid fa-times-circle"></i></span></div></li>').appendTo(append);
-            itemId++;
-            resetBox();
-        });
+            $('.sortable').on('click', '.item_edit', function() {
+                $('.actions').html('<input type="button" class="btn btn-outline-secondary" id="menuItemEdit" value="<?= $this->getTrans('treat') ?>">\n\
+                               <input type="button" class="btn btn-outline-secondary" id="menuItemEditCancel" value="<?= $this->getTrans('cancel') ?>">');
+                $('#title').val($(this).parent().find('.hidden_title').val());
+                $('#desc').val($(this).parent().find('.hidden_desc').val());
+                $('#type').val($(this).parent().find('.hidden_type').val());
+                $('#visibility').val($(this).parent().find('.hidden_visibility').val() || '1');
+                $('#id').val($(this).closest('li').attr('id'));
+                $('#type').change();
+            });
 
-        $('.sortable').on('click', '.item_edit', function() {
-           $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="Editieren">\n\
-                               <input type="button" class="btn" id="menuItemEditCancel" value="Abbrechen">');
-           $('#title').val($(this).parent().find('.hidden_title').val());
-           $('#desc').val($(this).parent().find('.hidden_desc').val());
-           $('#type').val($(this).parent().find('.hidden_type').val());
-           $('#id').val($(this).closest('li').attr('id'));
-           $('#type').change();
-        });
+            $('#galleryForm').on('click', '#menuItemEdit', function () {
+                if ($('#title').val() == '') {
+                    alert(titleMustBeGiven);
+                    return;
+                }
 
-        $('#galleryForm').on('click', '#menuItemEdit', function () {
-            if ($('#title').val() == '') {
-                alert('Es muss ein Titel angegeben werden');
-                return;
-            }
+                $('#'+$('#id').val()).find('.title:first').text($('#title').val());
+                $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
+                $('#'+$('#id').val()).find('.hidden_desc:first').val($('#desc').val());
+                $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
+                $('#'+$('#id').val()).find('.hidden_visibility:first').val($('#visibility').val());
+                resetBox();
+            });
 
-            $('#'+$('#id').val()).find('.title:first').text($('#title').val());
-            $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
-            $('#'+$('#id').val()).find('.hidden_desc:first').val($('#desc').val());
-            $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
-            resetBox();
-        });
-
-        $('#galleryForm').on('click', '#menuItemEditCancel', function() {
-            $('.actions').html('<input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="Menuitem hinzufügen">');
-            resetBox();
-        });
-    }
-);
+            $('#galleryForm').on('click', '#menuItemEditCancel', function() {
+                $('.actions').html('<input type="button" class="btn btn-outline-secondary" id="menuItemAdd" value="<?= $this->getTrans('galleryItemAdd') ?>">');
+                resetBox();
+            });
+        }
+    );
 </script>
 <script>
-<?=$this->getMedia()
-    ->addActionButton($this->getUrl('user/panel/treatgallery/id/' . $this->getRequest()->getParam('id')))
-    ->addMediaButton($this->getUrl('user/iframe/multi/type/multi/id/' . $this->getRequest()->getParam('id')))
-    ->addUploadController($this->getUrl('user/iframe/upload'))
-?>
+    <?=$this->getMedia()
+            ->addActionButton($this->getUrl('user/panel/treatgallery/id/' . $this->getRequest()->getParam('id')))
+            ->addMediaButton($this->getUrl('user/iframe/multi/type/multi/id/' . $this->getRequest()->getParam('id')))
+            ->addUploadController($this->getUrl('user/iframe/upload'))
+            ?>
 
-function reload() {
-    setTimeout(function(){window.location.reload(1);}, 1000);
-};
+    function reload() {
+        setTimeout(function(){window.location.reload(1);}, 1000);
+    };
 </script>

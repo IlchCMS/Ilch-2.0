@@ -251,6 +251,7 @@ class Config extends \Ilch\Config\Install
                 `image_title` VARCHAR(255) NOT NULL DEFAULT \'\',
                 `image_description` VARCHAR(255) NOT NULL DEFAULT \'\',
                 `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
+                `is_public` TINYINT(1) NOT NULL DEFAULT 1,
                 `visits` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`) USING BTREE,
                 INDEX `FK_[prefix]_users_gallery_imgs_[prefix]_users` (`user_id`) USING BTREE,
@@ -263,6 +264,7 @@ class Config extends \Ilch\Config\Install
                 `sort` INT(11) NOT NULL DEFAULT 0,
                 `parent_id` INT(11) NOT NULL DEFAULT 0,
                 `type` TINYINT(1) NOT NULL,
+                `is_public` TINYINT(1) NOT NULL DEFAULT 1,
                 `title` VARCHAR(255) NOT NULL,
                 `description` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`) USING BTREE,
@@ -1113,6 +1115,15 @@ class Config extends \Ilch\Config\Install
                 removeDir(APPLICATION_PATH . '/modules/user/static/images/google');
                 removeDir(APPLICATION_PATH . '/modules/user/static/images/teamspeak');
                 removeDir(APPLICATION_PATH . '/modules/user/static/images/twitter');
+
+                // Add the is_public columns so gallery items and images can be marked private.
+                if (!$this->db()->queryCell("SHOW COLUMNS FROM `[prefix]_users_gallery_items` LIKE 'is_public';")) {
+                    $this->db()->query('ALTER TABLE `[prefix]_users_gallery_items` ADD COLUMN `is_public` TINYINT(1) NOT NULL DEFAULT 1 AFTER `type`;');
+                }
+
+                if (!$this->db()->queryCell("SHOW COLUMNS FROM `[prefix]_users_gallery_imgs` LIKE 'is_public';")) {
+                    $this->db()->query('ALTER TABLE `[prefix]_users_gallery_imgs` ADD COLUMN `is_public` TINYINT(1) NOT NULL DEFAULT 1 AFTER `cat`;');
+                }
                 break;
         }
 

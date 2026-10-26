@@ -14,12 +14,18 @@ class Gallery extends \Ilch\Mapper
     /**
      * Gets all gallery items by parent item id.
      */
-    public function getGalleryItemsByParent($userId, $itemId): ?array
+    public function getGalleryItemsByParent(int $userId, int $itemId, bool $onlyPublic = false): ?array
     {
+        $where = ['user_id' => $userId, 'parent_id' => $itemId];
+
+        if ($onlyPublic) {
+            $where['is_public'] = 1;
+        }
+
         $items = [];
         $itemRows = $this->db()->select('*')
             ->from('users_gallery_items')
-            ->where(['user_id' => $userId, 'parent_id' => $itemId])
+            ->where($where)
             ->order(['sort' => 'ASC'])
             ->execute()
             ->fetchRows();
@@ -37,6 +43,7 @@ class Gallery extends \Ilch\Mapper
             $itemModel->setSort($itemRow['sort']);
             $itemModel->setParentId($itemId);
             $itemModel->setUserId($userId);
+            $itemModel->setIsPublic((int)$itemRow['is_public']);
             $items[] = $itemModel;
         }
 
@@ -44,38 +51,12 @@ class Gallery extends \Ilch\Mapper
     }
 
     /**
-     * Gets all gallery items by type.
+     * Gets a gallery item by its id.
+     *
+     * @param int $id
+     * @return GalleryItem|null
      */
-    public function getGalleryCatItem($type): ?array
-    {
-        $items = [];
-        $itemRows = $this->db()->select('*')
-            ->from('users_gallery_items')
-            ->where(['type' => $type])
-            ->order(['sort' => 'ASC'])
-            ->execute()
-            ->fetchRows();
-
-        if (empty($itemRows)) {
-            return null;
-        }
-
-        foreach ($itemRows as $itemRow) {
-            $itemModel = new GalleryItem();
-            $itemModel->setId($itemRow['id']);
-            $itemModel->setUserId($itemRow['user_id']);
-            $itemModel->setType($itemRow['type']);
-            $itemModel->setTitle($itemRow['title']);
-            $itemModel->setDesc($itemRow['description']);
-            $itemModel->setSort($itemRow['sort']);
-            $itemModel->setParentId($itemRow['parent_id']);
-            $items[] = $itemModel;
-        }
-
-        return $items;
-    }
-
-    public function getGalleryById($id): ?GalleryItem
+    public function getGalleryById(int $id): ?GalleryItem
     {
         $itemRows = $this->db()->select('*')
             ->from('users_gallery_items')
@@ -96,6 +77,7 @@ class Gallery extends \Ilch\Mapper
         $itemModel->setDesc($itemRows['description']);
         $itemModel->setSort($itemRows['sort']);
         $itemModel->setParentId($itemRows['parent_id']);
+        $itemModel->setIsPublic((int)$itemRows['is_public']);
 
         return $itemModel;
     }
@@ -129,6 +111,7 @@ class Gallery extends \Ilch\Mapper
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setSort($itemRow['sort']);
             $itemModel->setParentId($itemRow['parent_id']);
+            $itemModel->setIsPublic((int)$itemRow['is_public']);
             $items[] = $itemModel;
         }
 
@@ -148,6 +131,61 @@ class Gallery extends \Ilch\Mapper
     }
 
     /**
+     * Checks whether a gallery item is publicly visible.
+     *
+     * The item itself and all of its parents up to the root
+     * (parent_id = 0) must be marked public. Returns false if an
+     * item in the chain is missing, the parent chain contains a
+     * cycle or the depth cap of 10 is exceeded.
+     *
+     * @param int $itemId
+     * @return bool
+     */
+    public function isEffectivelyPublic(int $itemId): bool
+    {
+        $visited = [];
+        $currentId = $itemId;
+
+        for ($depth = 0; $depth < 10; $depth++) {
+            if (isset($visited[$currentId])) {
+                return false; // cycle / corrupt data
+            }
+            $visited[$currentId] = true;
+
+            $item = $this->getGalleryById($currentId);
+            if ($item === null) {
+                return false; // dangling/deleted row
+            }
+            if ((int)$item->getIsPublic() !== 1) {
+                return false;
+            }
+
+            $parentId = (int)$item->getParentId();
+            if ($parentId <= 0) {
+                return true; // root reached, all public so far
+            }
+            $currentId = $parentId;
+        }
+
+        return false; // depth cap reached
+    }
+
+    /**
+     * Gets the number of public root gallery items (parent_id = 0) of a user.
+     *
+     * @param int $userId
+     * @return int
+     */
+    public function getPublicCountGalleryByUser(int $userId): int
+    {
+        return (int)$this->db()->select('COUNT(*)')
+            ->from('users_gallery_items')
+            ->where(['user_id' => $userId, 'parent_id' => 0, 'is_public' => 1])
+            ->execute()
+            ->fetchCell();
+    }
+
+    /**
      * Save one gallery item.
      *
      * @param  GalleryItem $galleryItem
@@ -162,14 +200,18 @@ class Gallery extends \Ilch\Mapper
             'sort' => $galleryItem->getSort(),
             'parent_id' => $galleryItem->getParentId(),
             'type' => $galleryItem->getType(),
-            'description' => $galleryItem->getDesc()
+            'description' => $galleryItem->getDesc(),
+            'is_public' => $galleryItem->getIsPublic()
         ];
 
-        $itemId = (int)$this->db()->select('id')
-            ->from('users_gallery_items')
-            ->where(['id' => $galleryItem->getId()])
-            ->execute()
-            ->fetchCell();
+        $itemId = 0;
+        if ($galleryItem->getId() !== null) {
+            $itemId = (int)$this->db()->select('id')
+                ->from('users_gallery_items')
+                ->where(['id' => $galleryItem->getId()])
+                ->execute()
+                ->fetchCell();
+        }
 
         if ($itemId) {
             // Only update the fields that were actually set,
@@ -199,6 +241,7 @@ class Gallery extends \Ilch\Mapper
             $fields['description'] = $fields['description'] ?? '';
             $fields['sort'] = $fields['sort'] ?? 0;
             $fields['parent_id'] = $fields['parent_id'] ?? 0;
+            $fields['is_public'] = $fields['is_public'] ?? 1;
 
             $itemId = $this->db()->insert('users_gallery_items')
                 ->values($fields)

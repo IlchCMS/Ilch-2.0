@@ -592,93 +592,6 @@ class Panel extends BaseController
             ->to(['action' => 'dialog']);
     }
 
-    public function galleryAction()
-    {
-        $galleryMapper = new GalleryMapper();
-        $imageMapper = new GalleryImageMapper();
-
-        $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
-            ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'panel', 'action' => 'gallery']);
-
-        /*
-         * Saves the item tree to database.
-         */
-        if ($this->getRequest()->getPost('saveGallery')) {
-            $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
-            $items = $this->getRequest()->getPost('items');
-            $oldItems = $galleryMapper->getGalleryItems($this->getUser()->getId());
-
-            /*
-             * Deletes old entries from database.
-             */
-            if (!empty($oldItems)) {
-                foreach ($oldItems as $oldItem) {
-                    if (!isset($items[$oldItem->getId()])) {
-                        $galleryMapper->deleteItem($oldItem);
-                    }
-                }
-            }
-
-            if ($items) {
-                $sortArray = [];
-
-                foreach ($sortItems as $sortItem) {
-                    if ($sortItem->id !== null) {
-                        $sortArray[$sortItem->id] = (int)$sortItem->parent_id;
-                    }
-                }
-
-                foreach ($items as $item) {
-                    $galleryItem = new GalleryItemModel();
-
-                    if (strpos($item['id'], 'tmp_') !== false) {
-                        $tmpId = str_replace('tmp_', '', $item['id']);
-                    } else {
-                        $galleryItem->setId($item['id']);
-                    }
-
-                    $galleryItem->setUserId($this->getUser()->getId())
-                        ->setType($item['type'])
-                        ->setTitle($item['title'])
-                        ->setDesc($item['desc']);
-                    $newId = $galleryMapper->saveItem($galleryItem);
-
-                    if (isset($tmpId)) {
-                        foreach ($sortArray as $id => $parentId) {
-                            if ($id == $tmpId) {
-                                unset($sortArray[$id]);
-                                $sortArray[$newId] = $parentId;
-                            }
-
-                            if ($parentId == $tmpId) {
-                                $sortArray[$id] = $newId;
-                            }
-                        }
-                    }
-                }
-
-                $sort = 0;
-
-                foreach ($sortArray as $id => $parent) {
-                    $galleryItem = new GalleryItemModel();
-                    $galleryItem->setId($id)
-                        ->setSort($sort)
-                        ->setParentId($parent);
-                    $galleryMapper->saveItem($galleryItem);
-                    $sort += 10;
-                }
-            }
-
-            $this->addMessage('saveSuccess');
-            $this->redirect(['action' => 'gallery']);
-        }
-
-        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent($this->getUser()->getId(), 0))
-            ->set('galleryMapper', $galleryMapper)
-            ->set('imageMapper', $imageMapper);
-    }
-
     public function friendsAction()
     {
         $friendsMapper = new FriendsMapper();
@@ -720,6 +633,7 @@ class Panel extends BaseController
             // approved relation out of thin air.
             if ($friendsMapper->hasOpenFriendRequest($id, $userId)) {
                 // Flips the request row (user_id = $id, friend_user_id = $userId) to approved.
+                // Creates the reciprocal relation (user_id = $userId, friend_user_id = $id).
                 $friendsMapper->approveFriendRequest($userId, $id);
                 // Creates the reciprocal relation (user_id = $userId, friend_user_id = $id).
                 $friendsMapper->addFriend($userId, $id, 1);
@@ -755,14 +669,169 @@ class Panel extends BaseController
         }
     }
 
+    public function galleryAction()
+    {
+        $galleryMapper = new GalleryMapper();
+        $imageMapper = new GalleryImageMapper();
+
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'panel', 'action' => 'gallery']);
+
+        /*
+         * Save the item tree to the database.
+         */
+        if ($this->getRequest()->getPost('saveGallery')) {
+            $userId = $this->getUser()->getId();
+
+            $sortItems = json_decode((string)$this->getRequest()->getPost('hiddenMenu'));
+            if (!is_array($sortItems)) {
+                $sortItems = [];
+            }
+            $items = $this->getRequest()->getPost('items');
+            if (!is_array($items)) {
+                $items = [];
+            }
+            $oldItems = $galleryMapper->getGalleryItems($userId);
+
+            $ownItemIds = [];
+            if (!empty($oldItems)) {
+                foreach ($oldItems as $oldItem) {
+                    $ownItemIds[(int)$oldItem->getId()] = true;
+                }
+            }
+
+            /*
+             * Delete old entries from the database.
+             */
+            if (!empty($oldItems)) {
+                foreach ($oldItems as $oldItem) {
+                    if (!isset($items[(int)$oldItem->getId()])) {
+                        $galleryMapper->deleteItem($oldItem);
+                    }
+                }
+            }
+
+            if ($items) {
+                /*
+                 * Keys are client-side DOM ids: "list_5" for existing items,
+                 * "tmp999" for new ones. Strip the "list_" prefix and keep the
+                 * values as strings: an int cast would flatten the tree before
+                 * the tmp remap below can run.
+                 */
+                $sortArray = [];
+
+                foreach ($sortItems as $sortItem) {
+                    if (is_object($sortItem) && isset($sortItem->id)) {
+                        $key = str_replace('list_', '', (string)$sortItem->id);
+                        $parentId = isset($sortItem->parent_id)
+                            ? str_replace('list_', '', (string)$sortItem->parent_id)
+                            : '0';
+                        $sortArray[$key] = $parentId;
+                    }
+                }
+
+                foreach ($items as $item) {
+                    if (!is_array($item) || !isset($item['id'], $item['title'], $item['type']) || !is_string($item['id'])) {
+                        continue;
+                    }
+
+                    $type = (int)$item['type'];
+                    if (!in_array($type, [0, 1], true)) {
+                        continue;
+                    }
+
+                    // "0" => private, anything else => public
+                    $visibility = ((string)($item['visibility'] ?? '1') === '0') ? 0 : 1;
+
+                    $galleryItem = new GalleryItemModel();
+                    $tmpKey = null;
+
+                    if (preg_match('/^tmp_?\d+$/', $item['id'])) {
+                        $tmpKey = $item['id'];   // new (unsaved) item
+                    } else {
+                        $itemId = (int)$item['id'];
+                        if (!isset($ownItemIds[$itemId])) {   // only own items
+                            continue;
+                        }
+                        $galleryItem->setId($itemId);
+                    }
+
+                    $galleryItem
+                        ->setUserId($userId)
+                        ->setType($type)
+                        ->setTitle($item['title'])
+                        ->setDesc($item['desc'] ?? '')
+                        ->setIsPublic($visibility);
+                    $newId = $galleryMapper->saveItem($galleryItem);
+
+                    if ($tmpKey !== null) {
+                        $ownItemIds[$newId] = true;   // own item for the sort loop
+                        foreach ($sortArray as $id => $parentId) {
+                            if ($id === $tmpKey) {
+                                unset($sortArray[$id]);
+                                $sortArray[$newId] = $parentId;
+                            }
+                            if ($parentId === $tmpKey) {        // children of this new node
+                                $sortArray[$id] = (string)$newId;
+                            }
+                        }
+                    }
+                }
+
+                $sort = 0;
+
+                foreach ($sortArray as $id => $parent) {
+                    // Skip un-remapped tmp keys: the node or its parent is unknown.
+                    if (!is_numeric($id) || !is_numeric($parent)) {
+                        continue;
+                    }
+
+                    $id = (int)$id;
+                    $parent = (int)$parent;
+
+                    if (
+                        !isset($ownItemIds[$id])
+                        || ($parent !== 0 && !isset($ownItemIds[$parent]))
+                    ) {   // only own node and parent
+                        continue;
+                    }
+
+                    $galleryItem = new GalleryItemModel();
+                    $galleryItem->setId($id)
+                        ->setSort($sort)
+                        ->setParentId($parent);
+                    $galleryMapper->saveItem($galleryItem);
+                    $sort += 10;
+                }
+            }
+
+            $this->addMessage('saveSuccess');
+            $this->redirect(['action' => 'gallery']);
+        }
+
+        $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent($this->getUser()->getId(), 0))
+            ->set('galleryMapper', $galleryMapper)
+            ->set('imageMapper', $imageMapper)
+            ->set('galleryAllowed', $this->getConfig()->get('usergallery_allowed'))
+            ->set('profil', $this->getUser());
+    }
+
     public function treatGalleryAction()
     {
         $imageMapper = new GalleryImageMapper();
         $pagination = new \Ilch\Pagination();
         $galleryMapper = new GalleryMapper();
 
-        $id = $this->getRequest()->getParam('id');
+        $userId = $this->getUser()->getId();
+        $id = (int)$this->getRequest()->getParam('id');
         $gallery = $galleryMapper->getGalleryById($id);
+
+        if ($gallery === null || (int)$gallery->getUserId() !== $userId) {
+            $this->redirect()
+                ->withMessage('badRequest', 'warning')
+                ->to(['action' => 'gallery']);
+        }
 
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
@@ -772,22 +841,45 @@ class Panel extends BaseController
         if ($this->getRequest()->getPost('action') === 'delete') {
             $mediaMapper = new MediaMapper();
 
-            foreach ($this->getRequest()->getPost('check_gallery') as $imageId) {
-                $mediaMapper->delMediaById($imageId);
+            $validMediaIds = [];
+            foreach ($imageMapper->getImageByGalleryId($id) ?? [] as $img) {
+                $validMediaIds[(string)$img->getImageId()] = true;
+            }
+
+            $checkedImages = $this->getRequest()->getPost('check_gallery');
+            if (!is_array($checkedImages)) {
+                $checkedImages = [];
+            }
+
+            foreach ($checkedImages as $imageId) {
+                if (!isset($validMediaIds[(string)$imageId])) {
+                    continue;
+                }
+
+                $imageMapper->deleteByImageId((int)$imageId, $userId);   // remove gallery rows first
+                $mediaMapper->delMediaById((int)$imageId);
             }
 
             $this->addMessage('deleteSuccess');
-            $this->redirect(['action' => 'treatgallery','id' => $id]);
+            $this->redirect(['action' => 'treatgallery', 'id' => $id]);
         }
 
         if ($this->getRequest()->getPost()) {
-            foreach ($this->getRequest()->getPost('check_image') as $imageId) {
-                $catId = $this->getRequest()->getParam('id');
+            $mediaMapper = new MediaMapper();
+            $moveImages = $this->getRequest()->getPost('check_image');
+            if (!is_array($moveImages)) {
+                $moveImages = [];
+            }
+
+            foreach ($moveImages as $imageId) {
+                if ($mediaMapper->getMediaById((int)$imageId, $userId) === null) {   // only move own media
+                    continue;
+                }
 
                 $model = new GalleryImageModel();
-                $model->setUserId($this->getUser()->getId());
+                $model->setUserId($userId);
                 $model->setImageId($imageId);
-                $model->setCat($catId);
+                $model->setCat($id);
                 $imageMapper->save($model);
             }
         }
@@ -804,9 +896,23 @@ class Panel extends BaseController
         $imageMapper = new GalleryImageMapper();
         $galleryMapper = new GalleryMapper();
 
+        $userId = $this->getUser()->getId();
         $id = (int)$this->getRequest()->getParam('id');
         $galleryId = (int)$this->getRequest()->getParam('gallery');
+
+        $image = $imageMapper->getImageById($id);
         $gallery = $galleryMapper->getGalleryById($galleryId);
+
+        if (
+            $image === null
+            || $gallery === null
+            || (int)$image->getUserId() !== $userId
+            || (int)$image->getCat() !== $galleryId
+        ) {
+            $this->redirect()
+                ->withMessage('badRequest', 'warning')
+                ->to(['action' => 'gallery']);
+        }
 
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
@@ -815,29 +921,43 @@ class Panel extends BaseController
             ->add($this->getTranslator()->trans('treatImage'), ['action' => 'treatgalleryimage', 'gallery' => $galleryId, 'id' => $id]);
 
         if ($this->getRequest()->getPost()) {
-            $imageTitle = $this->getRequest()->getPost('imageTitle');
-            $imageDesc = $this->getRequest()->getPost('imageDesc');
+            $visibility = ((string)$this->getRequest()->getPost('imageVisibility') === '0') ? 0 : 1;
 
             $model = new GalleryImageModel();
-            $model->setId($id);
-            $model->setImageTitle($imageTitle);
-            $model->setImageDesc($imageDesc);
+            $model->setId($id)
+                ->setImageTitle((string)$this->getRequest()->getPost('imageTitle'))
+                ->setImageDesc((string)$this->getRequest()->getPost('imageDesc'))
+                ->setIsPublic($visibility);
             $imageMapper->saveImageTreat($model);
 
             $this->addMessage('saveSuccess');
+
+            $image = $imageMapper->getImageById($id);   // refresh so the form shows the saved values
         }
 
-        $this->getView()->set('image', $imageMapper->getImageById($id));
+        $this->getView()->set('image', $image);
     }
 
     public function delGalleryImageAction()
     {
+        $imageMapper = new GalleryImageMapper();
         $mediaMapper = new MediaMapper();
 
         if ($this->getRequest()->isSecure()) {
-            $mediaMapper->delMediaById($this->getRequest()->getParam('id'));
+            $userId = $this->getUser()->getId();
+            $mediaId = (int)$this->getRequest()->getParam('id');
 
-            $this->addMessage('deleteSuccess');
+            $image = $imageMapper->getImageByMediaId($mediaId, $userId);
+
+            if ($image !== null) {
+                $imageMapper->deleteByImageId($mediaId, $userId);
+                $mediaMapper->delMediaById($mediaId);
+
+                $this->addMessage('deleteSuccess');
+            } else {
+                $this->addMessage('badRequest', 'warning');
+            }
+
             $this->redirect(['action' => 'treatgallery', 'id' => $this->getRequest()->getParam('gallery')]);
         }
     }

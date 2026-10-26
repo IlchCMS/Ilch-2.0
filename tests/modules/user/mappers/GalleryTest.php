@@ -58,6 +58,7 @@ class GalleryTest extends DatabaseTestCase
         self::assertEquals('First album', $items[0]->getDesc());
         self::assertEquals(1, $items[0]->getSort());
         self::assertEquals(0, $items[0]->getParentId());
+        self::assertEquals(1, $items[0]->getIsPublic());
 
         self::assertEquals(2, $items[1]->getId());
         self::assertEquals('Album 2', $items[1]->getTitle());
@@ -114,41 +115,37 @@ class GalleryTest extends DatabaseTestCase
     }
 
     /**
-     * Tests that getGalleryCatItem() returns all items of a given type.
+     * Tests that getGalleryItemsByParent() only returns public items when $onlyPublic is true.
      */
-    public function testGetGalleryCatItemAlbums()
+    public function testGetGalleryItemsByParentOnlyPublic()
     {
-        $items = $this->out->getGalleryCatItem(1);
+        $privateModel = new GalleryItemModel();
+        $privateModel->setUserId(1)
+            ->setType(2)
+            ->setTitle('Private Photo')
+            ->setDesc('Private photo in album 1')
+            ->setParentId(1)
+            ->setSort(4)
+            ->setIsPublic(0);
+        $privateId = $this->out->saveItem($privateModel);
 
-        self::assertNotNull($items);
-        self::assertCount(3, $items);
-        self::assertInstanceOf(GalleryItemModel::class, $items[0]);
+        $publicModel = new GalleryItemModel();
+        $publicModel->setUserId(1)
+            ->setType(2)
+            ->setTitle('Public Photo')
+            ->setDesc('Public photo in album 1')
+            ->setParentId(1)
+            ->setSort(5)
+            ->setIsPublic(1);
+        $publicId = $this->out->saveItem($publicModel);
 
-        self::assertEquals(1, $items[0]->getId());
-        self::assertEquals(1, $items[0]->getUserId());
-        self::assertEquals('Album 1', $items[0]->getTitle());
-        self::assertEquals(0, $items[0]->getParentId());
-    }
+        $all = $this->out->getGalleryItemsByParent(1, 1);
+        self::assertCount(3, $all);
+        self::assertSame([3, $privateId, $publicId], [$all[0]->getId(), $all[1]->getId(), $all[2]->getId()]);
 
-    /**
-     * Tests that getGalleryCatItem() spans users and is ordered by sort ASC.
-     */
-    public function testGetGalleryCatItemPhotosOrdered()
-    {
-        $items = $this->out->getGalleryCatItem(2);
-
-        self::assertNotNull($items);
-        self::assertCount(2, $items);
-        self::assertEquals(3, $items[0]->getId());
-        self::assertEquals(5, $items[1]->getId());
-    }
-
-    /**
-     * Tests that getGalleryCatItem() returns null for a type without items.
-     */
-    public function testGetGalleryCatItemNotFound()
-    {
-        self::assertNull($this->out->getGalleryCatItem(3));
+        $publicOnly = $this->out->getGalleryItemsByParent(1, 1, true);
+        self::assertCount(2, $publicOnly);
+        self::assertSame([3, $publicId], [$publicOnly[0]->getId(), $publicOnly[1]->getId()]);
     }
 
     /**
@@ -166,6 +163,7 @@ class GalleryTest extends DatabaseTestCase
         self::assertEquals('Third album', $item->getDesc());
         self::assertEquals(4, $item->getSort());
         self::assertEquals(0, $item->getParentId());
+        self::assertEquals(1, $item->getIsPublic());
     }
 
     /**
@@ -221,6 +219,61 @@ class GalleryTest extends DatabaseTestCase
         self::assertEquals(2, $this->out->getCountGalleryByUser(1));
         self::assertEquals(1, $this->out->getCountGalleryByUser(2));
         self::assertEquals(0, $this->out->getCountGalleryByUser(3));
+    }
+
+    /**
+     * Tests that getPublicCountGalleryByUser() only counts public root items.
+     */
+    public function testGetPublicCountGalleryByUser()
+    {
+        // All fixture roots are public by default.
+        self::assertEquals(2, $this->out->getPublicCountGalleryByUser(1));
+        self::assertEquals(1, $this->out->getPublicCountGalleryByUser(2));
+        self::assertEquals(0, $this->out->getPublicCountGalleryByUser(3));
+
+        // A private root must not be counted ...
+        $privateModel = new GalleryItemModel();
+        $privateModel->setUserId(1)
+            ->setType(1)
+            ->setTitle('Private Root')
+            ->setDesc('Private root item')
+            ->setParentId(0)
+            ->setSort(9)
+            ->setIsPublic(0);
+        $privateId = $this->out->saveItem($privateModel);
+
+        self::assertEquals(2, $this->out->getPublicCountGalleryByUser(1));
+        // ... and the private flag must actually be stored.
+        $privateItem = $this->out->getGalleryById($privateId);
+        self::assertEquals(0, $privateItem->getIsPublic());
+
+        // ... but a public root is counted.
+        $publicModel = new GalleryItemModel();
+        $publicModel->setUserId(1)
+            ->setType(1)
+            ->setTitle('Public Root')
+            ->setDesc('Public root item')
+            ->setParentId(0)
+            ->setSort(9)
+            ->setIsPublic(1);
+        $this->out->saveItem($publicModel);
+
+        self::assertEquals(3, $this->out->getPublicCountGalleryByUser(1));
+
+        // Public child items (parent_id != 0) are not counted.
+        $childModel = new GalleryItemModel();
+        $childModel->setUserId(1)
+            ->setType(2)
+            ->setTitle('Public Child')
+            ->setDesc('Public child item')
+            ->setParentId(1)
+            ->setSort(9)
+            ->setIsPublic(1);
+        $this->out->saveItem($childModel);
+
+        self::assertEquals(3, $this->out->getPublicCountGalleryByUser(1));
+        // The total root count now includes the private root.
+        self::assertEquals(4, $this->out->getCountGalleryByUser(1));
     }
 
     /**
@@ -280,6 +333,31 @@ class GalleryTest extends DatabaseTestCase
         self::assertEquals(0, $item->getParentId());
         self::assertEquals(1, $item->getUserId());
         self::assertEquals(1, $item->getSort());
+        self::assertEquals(1, $item->getIsPublic());
+    }
+
+    /**
+     * Tests that saveItem() updates the isPublic flag of an existing item,
+     * even though 0 is a falsy value.
+     */
+    public function testSaveItemUpdateIsPublic()
+    {
+        $model = new GalleryItemModel();
+        $model->setId(1)
+            ->setIsPublic(0);
+
+        $itemId = $this->out->saveItem($model);
+        self::assertEquals(1, $itemId);
+
+        $item = $this->out->getGalleryById(1);
+        self::assertNotNull($item);
+        self::assertEquals(0, $item->getIsPublic());
+        // Untouched fields keep their old values.
+        self::assertEquals('Album 1', $item->getTitle());
+        self::assertEquals(1, $item->getUserId());
+        // The item is no longer counted as a public root.
+        self::assertEquals(1, $this->out->getPublicCountGalleryByUser(1));
+        self::assertEquals(2, $this->out->getCountGalleryByUser(1));
     }
 
     /**
@@ -328,10 +406,6 @@ class GalleryTest extends DatabaseTestCase
         self::assertCount(2, $items);
         self::assertEquals(5, $items[0]->getId());
         self::assertEquals(4, $items[1]->getId());
-
-        // The type change must be reflected in the category lists.
-        self::assertCount(2, $this->out->getGalleryCatItem(1));
-        self::assertCount(3, $this->out->getGalleryCatItem(2));
     }
 
     /**
@@ -467,6 +541,148 @@ class GalleryTest extends DatabaseTestCase
 
         self::assertCount(3, $this->out->getGalleryItems(1));
         self::assertCount(2, $this->out->getGalleryItems(2));
+    }
+
+    /**
+     * Tests that isEffectivelyPublic() returns true for a public root item.
+     */
+    public function testIsEffectivelyPublicRoot()
+    {
+        self::assertTrue($this->out->isEffectivelyPublic(1));
+        self::assertTrue($this->out->isEffectivelyPublic(4));
+    }
+
+    /**
+     * Tests that isEffectivelyPublic() returns true when the item and its whole
+     * parent chain up to the root are public.
+     */
+    public function testIsEffectivelyPublicPublicChain()
+    {
+        // Photo 1 (id 3) -> Album 1 (id 1) -> root
+        self::assertTrue($this->out->isEffectivelyPublic(3));
+        // Photo 2 (id 5) -> Album 3 (id 4) -> root
+        self::assertTrue($this->out->isEffectivelyPublic(5));
+    }
+
+    /**
+     * Tests that isEffectivelyPublic() returns false for a private item.
+     */
+    public function testIsEffectivelyPublicPrivateItem()
+    {
+        $model = new GalleryItemModel();
+        $model->setUserId(1)
+            ->setType(1)
+            ->setTitle('Private Item')
+            ->setDesc('Private item')
+            ->setParentId(0)
+            ->setSort(9)
+            ->setIsPublic(0);
+        $itemId = $this->out->saveItem($model);
+
+        self::assertFalse($this->out->isEffectivelyPublic($itemId));
+    }
+
+    /**
+     * Tests that isEffectivelyPublic() returns false for a public item whose
+     * parent is private.
+     */
+    public function testIsEffectivelyPublicPrivateParent()
+    {
+        $parentModel = new GalleryItemModel();
+        $parentModel->setUserId(1)
+            ->setType(1)
+            ->setTitle('Private Parent')
+            ->setDesc('Private parent')
+            ->setParentId(0)
+            ->setSort(9)
+            ->setIsPublic(0);
+        $parentId = $this->out->saveItem($parentModel);
+
+        $childModel = new GalleryItemModel();
+        $childModel->setUserId(1)
+            ->setType(2)
+            ->setTitle('Public Child')
+            ->setDesc('Public child')
+            ->setParentId($parentId)
+            ->setSort(9)
+            ->setIsPublic(1);
+        $childId = $this->out->saveItem($childModel);
+
+        self::assertFalse($this->out->isEffectivelyPublic($childId));
+        self::assertFalse($this->out->isEffectivelyPublic($parentId));
+    }
+
+    /**
+     * Tests that isEffectivelyPublic() returns false for a non-existent item.
+     */
+    public function testIsEffectivelyPublicNotFound()
+    {
+        self::assertFalse($this->out->isEffectivelyPublic(9999));
+    }
+
+    /**
+     * Tests that isEffectivelyPublic() returns false when the parent chain
+     * contains a cycle (corrupt data).
+     */
+    public function testIsEffectivelyPublicCycle()
+    {
+        // Insert two items that reference each other as parent.
+        $this->db->insert('users_gallery_items')
+            ->values(['id' => 100, 'user_id' => 1, 'sort' => 90, 'parent_id' => 101, 'type' => 1, 'is_public' => 1, 'title' => 'Cycle A', 'description' => 'Cycle item a'])
+            ->execute();
+        $this->db->insert('users_gallery_items')
+            ->values(['id' => 101, 'user_id' => 1, 'sort' => 91, 'parent_id' => 100, 'type' => 1, 'is_public' => 1, 'title' => 'Cycle B', 'description' => 'Cycle item b'])
+            ->execute();
+
+        self::assertFalse($this->out->isEffectivelyPublic(100));
+        self::assertFalse($this->out->isEffectivelyPublic(101));
+    }
+
+    /**
+     * Tests that isEffectivelyPublic() returns true when the public chain
+     * reaches the root exactly at the depth cap of 10.
+     */
+    public function testIsEffectivelyPublicDepthCapReachedExactly()
+    {
+        $this->insertPublicChain(10, 110);
+
+        self::assertTrue($this->out->isEffectivelyPublic(110));
+    }
+
+    /**
+     * Tests that isEffectivelyPublic() returns false when the parent chain
+     * exceeds the depth cap of 10.
+     */
+    public function testIsEffectivelyPublicDepthCapExceeded()
+    {
+        $this->insertPublicChain(11, 110);
+
+        self::assertFalse($this->out->isEffectivelyPublic(110));
+    }
+
+    /**
+     * Inserts a chain of $length public gallery items for user 1.
+     * The item with the lowest id is the leaf, the highest id is the root (parent_id 0).
+     */
+    private function insertPublicChain(int $length, int $startId): void
+    {
+        for ($i = 0; $i < $length; $i++) {
+            $id = $startId + $i;
+            $parentId = $i === $length - 1 ? 0 : $startId + $i + 1;
+
+            $this->db->insert('users_gallery_items')
+                ->values([
+                    'id' => $id,
+                    'user_id' => 1,
+                    'sort' => 90 + $i,
+                    'parent_id' => $parentId,
+                    'type' => 1,
+                    'is_public' => 1,
+                    'title' => 'Chain item ' . $id,
+                    'description' => 'Chain item',
+                ])
+                ->execute();
+        }
     }
 
     /**

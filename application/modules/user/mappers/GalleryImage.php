@@ -19,7 +19,7 @@ class GalleryImage extends \Ilch\Mapper
      */
     public function getImageById(int $id): ?GalleryImageModel
     {
-        $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
+        $imageRow = $this->db()->select(['g.user_id', 'g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.is_public', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'users_gallery_imgs'])
             ->join(['m' => 'users_media'], 'g.image_id = m.id', 'LEFT')
             ->where(['g.id' => $id])
@@ -38,6 +38,8 @@ class GalleryImage extends \Ilch\Mapper
         $entryModel->setImageDesc($imageRow['image_description']);
         $entryModel->setCat($imageRow['cat']);
         $entryModel->setVisits($imageRow['visits']);
+        $entryModel->setUserId((int)$imageRow['user_id']);
+        $entryModel->setIsPublic((int)$imageRow['is_public']);
 
         return $entryModel;
     }
@@ -48,12 +50,18 @@ class GalleryImage extends \Ilch\Mapper
      * @param int $id
      * @return GalleryImageModel|null
      */
-    public function getLastImageByGalleryId(int $id): ?GalleryImageModel
+    public function getLastImageByGalleryId(int $id, bool $onlyPublic = false): ?GalleryImageModel
     {
-        $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
+        $where = ['g.cat' => $id];
+
+        if ($onlyPublic) {
+            $where['g.is_public'] = 1;
+        }
+
+        $imageRow = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'g.is_public', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'users_gallery_imgs'])
             ->join(['m' => 'users_media'], 'g.image_id = m.id', 'LEFT')
-            ->where(['g.cat' => $id])
+            ->where($where)
             ->order(['g.id' => 'DESC'])
             ->limit(1)
             ->execute()
@@ -71,6 +79,7 @@ class GalleryImage extends \Ilch\Mapper
         $entryModel->setImageDesc($imageRow['image_description']);
         $entryModel->setCat($imageRow['cat']);
         $entryModel->setVisits($imageRow['visits']);
+        $entryModel->setIsPublic((int)$imageRow['is_public']);
 
         return $entryModel;
     }
@@ -81,10 +90,16 @@ class GalleryImage extends \Ilch\Mapper
      * @param int $id
      * @return false|string|null
      */
-    public function getCountImageById(int $id): bool|string|null
+    public function getCountImageById(int $id, bool $onlyPublic = false): bool|string|null
     {
+        $where = ['cat' => $id];
+
+        if ($onlyPublic) {
+            $where['is_public'] = 1;
+        }
+
         return $this->db()->select('COUNT(*)', 'users_gallery_imgs')
-            ->where(['cat' => $id])
+            ->where($where)
             ->execute()
             ->fetchCell();
     }
@@ -94,7 +109,9 @@ class GalleryImage extends \Ilch\Mapper
      *
      * Note: the update branch is a silent no-op for unknown ids, and the insert
      * branch does not persist image_title/image_description (column defaults
-     * apply; use saveImageTreat() for those).
+     * apply; use saveImageTreat() for those). The insert branch is also a no-op
+     * when (image_id, cat) already exists, so re-adding the same media to the
+     * same gallery cannot create duplicate rows.
      *
      * @param GalleryImageModel $model
      */
@@ -106,8 +123,18 @@ class GalleryImage extends \Ilch\Mapper
                 ->where(['id' => $model->getId()])
                 ->execute();
         } else {
+            $existing = (int)$this->db()->select('COUNT(*)')
+                ->from('users_gallery_imgs')
+                ->where(['image_id' => $model->getImageId(), 'cat' => $model->getCat()])
+                ->execute()
+                ->fetchCell();
+
+            if ($existing > 0) {
+                return;
+            }
+
             $this->db()->insert('users_gallery_imgs')
-                ->values(['user_id' => $model->getUserId(), 'image_id' => $model->getImageId(), 'cat' => $model->getCat()])
+                ->values(['user_id' => $model->getUserId(), 'image_id' => $model->getImageId(), 'cat' => $model->getCat(), 'is_public' => $model->getIsPublic() ?? 1])
                 ->execute();
         }
     }
@@ -119,12 +146,18 @@ class GalleryImage extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return array|null
      */
-    public function getImageByGalleryId(int $id, ?\Ilch\Pagination $pagination = null): ?array
+    public function getImageByGalleryId(int $id, ?\Ilch\Pagination $pagination = null, bool $onlyPublic = false): ?array
     {
-        $select = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
+        $where = ['g.cat' => $id];
+
+        if ($onlyPublic) {
+            $where['g.is_public'] = 1;
+        }
+
+        $select = $this->db()->select(['g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.visits', 'g.is_public', 'm.url', 'm.id', 'm.url_thumb'])
             ->from(['g' => 'users_gallery_imgs'])
             ->join(['m' => 'users_media'], 'g.image_id = m.id', 'LEFT')
-            ->where(['g.cat' => $id])
+            ->where($where)
             ->order(['g.id' => 'DESC']);
 
         if ($pagination !== null) {
@@ -154,10 +187,67 @@ class GalleryImage extends \Ilch\Mapper
             $galleryImageModel->setImageDesc($entry['image_description']);
             $galleryImageModel->setVisits($entry['visits']);
             $galleryImageModel->setCat($entry['cat']);
+            $galleryImageModel->setIsPublic((int)$entry['is_public']);
             $entries[] = $galleryImageModel;
         }
 
         return $entries;
+    }
+
+    /**
+     * Gets a gallery image by its media id.
+     *
+     * @param int $mediaId
+     * @param int|null $userId Optional user id, restricts the lookup to that user.
+     * @return GalleryImageModel|null
+     */
+    public function getImageByMediaId(int $mediaId, ?int $userId = null): ?GalleryImageModel
+    {
+        $where = ['g.image_id' => $mediaId];
+
+        if ($userId !== null) {
+            $where['g.user_id'] = $userId;
+        }
+
+        $imageRow = $this->db()->select(['g.user_id', 'g.image_id', 'g.cat', 'imgid' => 'g.id', 'g.image_title', 'g.image_description', 'g.is_public', 'g.visits', 'm.url', 'm.id', 'm.url_thumb'])
+            ->from(['g' => 'users_gallery_imgs'])
+            ->join(['m' => 'users_media'], 'g.image_id = m.id', 'LEFT')
+            ->where($where)
+            ->limit(1)
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($imageRow)) {
+            return null;
+        }
+
+        $entryModel = new GalleryImageModel();
+        $entryModel->setId($imageRow['imgid']);
+        $entryModel->setUserId((int)$imageRow['user_id']);
+        $entryModel->setImageId($imageRow['image_id']);
+        $entryModel->setImageUrl($imageRow['url']);
+        $entryModel->setImageThumb($imageRow['url_thumb']);
+        $entryModel->setImageTitle($imageRow['image_title']);
+        $entryModel->setImageDesc($imageRow['image_description']);
+        $entryModel->setIsPublic((int)$imageRow['is_public']);
+        $entryModel->setCat($imageRow['cat']);
+        $entryModel->setVisits($imageRow['visits']);
+
+        return $entryModel;
+    }
+
+    /**
+     * Deletes all gallery image entries that reference the given media
+     * entry and belong to the given user.
+     *
+     * @param int $mediaId
+     * @param int $userId
+     */
+    public function deleteByImageId(int $mediaId, int $userId): void
+    {
+        $this->db()->delete('users_gallery_imgs')
+            ->where(['image_id' => $mediaId, 'user_id' => $userId])
+            ->execute();
     }
 
     /**
@@ -198,7 +288,7 @@ class GalleryImage extends \Ilch\Mapper
     public function saveImageTreat(GalleryImageModel $model): void
     {
         $this->db()->update('users_gallery_imgs')
-            ->values(['image_title' => $model->getImageTitle(), 'image_description' => $model->getImageDesc()])
+            ->values(['image_title' => $model->getImageTitle(), 'image_description' => $model->getImageDesc(), 'is_public' => $model->getIsPublic() ?? 1])
             ->where(['id' => $model->getId()])
             ->execute();
     }

@@ -185,6 +185,40 @@ class GalleryItemModelTest extends TestCase
     }
 
     /**
+     * Tests that setIsPublic() sets and returns the isPublic flag.
+     */
+    public function testSetIsPublic()
+    {
+        $model = new GalleryItemModel();
+        $model->setIsPublic(1);
+
+        self::assertSame(1, $model->getIsPublic());
+    }
+
+    /**
+     * Tests that setIsPublic() casts to int.
+     */
+    public function testSetIsPublicCastsToInt()
+    {
+        $model = new GalleryItemModel();
+        $model->setIsPublic('1');
+
+        self::assertSame(1, $model->getIsPublic());
+        self::assertIsInt($model->getIsPublic());
+    }
+
+    /**
+     * Tests that setIsPublic(0) stores zero (private, falsy but valid).
+     */
+    public function testSetIsPublicZero()
+    {
+        $model = new GalleryItemModel();
+        $model->setIsPublic(0);
+
+        self::assertSame(0, $model->getIsPublic());
+    }
+
+    /**
      * Tests that setters are chainable (return $this).
      */
     public function testSettersReturnSelf()
@@ -198,6 +232,7 @@ class GalleryItemModelTest extends TestCase
         self::assertSame($model, $model->setParentId(5));
         self::assertSame($model, $model->setTitle('Test'));
         self::assertSame($model, $model->setDesc('Desc'));
+        self::assertSame($model, $model->setIsPublic(1));
     }
 
     /**
@@ -212,7 +247,8 @@ class GalleryItemModelTest extends TestCase
             ->setUserId(3)
             ->setParentId(4)
             ->setTitle('Album')
-            ->setDesc('Description');
+            ->setDesc('Description')
+            ->setIsPublic(1);
 
         self::assertSame(1, $model->getId());
         self::assertSame(2, $model->getSort());
@@ -221,6 +257,7 @@ class GalleryItemModelTest extends TestCase
         self::assertSame(4, $model->getParentId());
         self::assertSame('Album', $model->getTitle());
         self::assertSame('Description', $model->getDesc());
+        self::assertSame(1, $model->getIsPublic());
     }
 
     /**
@@ -237,6 +274,7 @@ class GalleryItemModelTest extends TestCase
         self::assertNull($model->getParentId());
         self::assertNull($model->getTitle());
         self::assertNull($model->getDesc());
+        self::assertNull($model->getIsPublic());
     }
 
     /**
@@ -245,9 +283,9 @@ class GalleryItemModelTest extends TestCase
     public function testOverwriteValues()
     {
         $model = new GalleryItemModel();
-        $model->setId(1)->setSort(1)->setType(1)->setUserId(1)->setParentId(1)->setTitle('Old')->setDesc('Old');
+        $model->setId(1)->setSort(1)->setType(1)->setUserId(1)->setParentId(1)->setTitle('Old')->setDesc('Old')->setIsPublic(0);
 
-        $model->setId(2)->setSort(2)->setType(2)->setUserId(2)->setParentId(2)->setTitle('New')->setDesc('New');
+        $model->setId(2)->setSort(2)->setType(2)->setUserId(2)->setParentId(2)->setTitle('New')->setDesc('New')->setIsPublic(1);
 
         self::assertSame(2, $model->getId());
         self::assertSame(2, $model->getSort());
@@ -256,5 +294,6 @@ class GalleryItemModelTest extends TestCase
         self::assertSame(2, $model->getParentId());
         self::assertSame('New', $model->getTitle());
         self::assertSame('New', $model->getDesc());
+        self::assertSame(1, $model->getIsPublic());
     }
 }
