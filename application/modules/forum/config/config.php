@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'forum',
-        'version' => '1.35.9',
+        'version' => '1.35.10',
         'icon_small' => 'fa-solid fa-list',
         'author' => 'Stantin Thomas',
         'link' => 'https://ilch.de',
@@ -258,6 +258,16 @@ class Config extends \Ilch\Config\Install
 
                         Viel Erfolg
                         Ilch", 0, UTC_TIMESTAMP(), 2);
+
+            UPDATE `[prefix]_forum_topics`
+            SET `last_post_id` = 1,
+                `last_post_date` = (SELECT `date_created` FROM `[prefix]_forum_posts` WHERE `id` = 1)
+            WHERE `id` = 1;
+            
+            UPDATE `[prefix]_forum_items`
+            SET `last_post_id` = 1,
+                `last_post_date` = (SELECT `date_created` FROM `[prefix]_forum_posts` WHERE `id` = 1)
+            WHERE `id` = 2;
 
             INSERT INTO `[prefix]_forum_ranks` (`id`, `title`, `posts`) VALUES
                 (1, "Anfänger", 0),
@@ -986,6 +996,50 @@ class Config extends \Ilch\Config\Install
                                         JOIN [prefix]_forum_topics t ON t.id = p.topic_id
                                         SET p.forum_id = t.forum_id
                                         WHERE p.forum_id <> t.forum_id;');
+
+                // no break
+            case "1.35.9":
+                // Fresh installs of 1.35.9 created the denormalized last-post
+                // columns, but the seed data (welcome topic/post) was never populated,
+                // and the 1.35.8 forum-items backfill only set 'last_post_date' but
+                // not 'last_post_id'. Re-run the backfill to repair existing installs.
+                // The queries are idempotent: on already migrated installations they
+                // simply recompute the same values from the posts.
+
+                // Backfill topics: newest post wins; break same-second ties by id.
+                $this->db()->query('UPDATE `[prefix]_forum_topics` t
+                                        SET t.`last_post_date` = (
+                                                SELECT MAX(p.`date_created`)
+                                                FROM `[prefix]_forum_posts` p
+                                                WHERE p.`topic_id` = t.`id`),
+                                            t.`last_post_id` = (
+                                                SELECT p2.`id`
+                                                FROM `[prefix]_forum_posts` p2
+                                                WHERE p2.`topic_id` = t.`id`
+                                                ORDER BY p2.`date_created` DESC, p2.`id` DESC
+                                                LIMIT 1)
+                                        WHERE EXISTS (SELECT 1 FROM `[prefix]_forum_posts` p WHERE p.`topic_id` = t.`id`)');
+
+                // Backfill forums (type = 1) from their topics, taking the topic with
+                // the newest last-post date (ties broken by last_post_id).
+                // Unlike the 1.35.8 version this also sets 'last_post_id'.
+                // Categories (type = 0) do not show last-post info, so they are skipped.
+                // Rows without a last post are excluded up front, otherwise NULL
+                // comparisons in the join would keep them as candidates.
+                $this->db()->query('UPDATE `[prefix]_forum_items` f
+                                        JOIN (
+                                            SELECT t1.`forum_id`, t1.`last_post_date` AS d, t1.`last_post_id` AS pid
+                                            FROM `[prefix]_forum_topics` t1
+                                            LEFT JOIN `[prefix]_forum_topics` t2
+                                                ON t2.`forum_id` = t1.`forum_id`
+                                               AND (t2.`last_post_date` > t1.`last_post_date`
+                                                    OR (t2.`last_post_date` = t1.`last_post_date`
+                                                        AND t2.`last_post_id` > t1.`last_post_id`))
+                                            WHERE t2.`id` IS NULL
+                                              AND t1.`last_post_date` IS NOT NULL
+                                              AND t1.`last_post_id` IS NOT NULL
+                                        ) m ON m.`forum_id` = f.`id` AND f.`type` = 1
+                                        SET f.`last_post_date` = m.d, f.`last_post_id` = m.pid');
 
                 // no break
         }

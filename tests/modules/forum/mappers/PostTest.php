@@ -400,6 +400,49 @@ class PostTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that deleting the last remaining post of a topic resets the topic's
+     * last-post meta and falls the forum/category back to the next newest topic.
+     */
+    public function testDeleteByIdOfLastPostOfTopic()
+    {
+        $this->out->deleteById(1);
+
+        self::assertCount(0, $this->out->getPostsByTopicId(1));
+
+        // Topic 1 is now empty and must not keep pointing to the deleted post.
+        $topic1 = $this->getTopicLastPostMeta(1);
+        self::assertNull($topic1['last_post_date']);
+        self::assertNull($topic1['last_post_id']);
+
+        // Forum and category fall back to topic 2.
+        $forum = $this->getItemLastPostMeta(2);
+        self::assertEquals('2024-01-16 11:00:00', $forum['last_post_date']);
+        self::assertEquals(2, $forum['last_post_id']);
+
+        $category = $this->getItemLastPostMeta(1);
+        self::assertEquals('2024-01-16 11:00:00', $category['last_post_date']);
+        self::assertEquals(2, $category['last_post_id']);
+    }
+
+    /**
+     * Tests that when the last post of the forum is deleted, the forum and its
+     * category lose their last-post meta instead of pointing to a deleted post.
+     */
+    public function testDeleteByIdOfLastPostOfForum()
+    {
+        $this->out->deleteById(1);
+        $this->out->deleteById(2);
+
+        $forum = $this->getItemLastPostMeta(2);
+        self::assertNull($forum['last_post_date']);
+        self::assertNull($forum['last_post_id']);
+
+        $category = $this->getItemLastPostMeta(1);
+        self::assertNull($category['last_post_date']);
+        self::assertNull($category['last_post_id']);
+    }
+
+    /**
      * Tests that isFirstPostOfTopic() only matches the first post of a topic.
      */
     public function testIsFirstPostOfTopic()

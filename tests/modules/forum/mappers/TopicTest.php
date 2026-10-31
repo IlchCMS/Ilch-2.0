@@ -390,6 +390,96 @@ class TopicTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that getLastPostsByTopicIds() skips a topic whose denormalized
+     * last_post_id is NULL (even though the topic has posts) instead of
+     * failing, and does not break the lookup for the other topics.
+     *
+     * This is the state the broken fresh install left behind: the showtopics
+     * controller builds no postTopicRelation entry for such a topic, and the
+     * view must render without a last post instead of crashing on null.
+     */
+    public function testGetLastPostsByTopicIdsWithNullLastPostId()
+    {
+        $newId = $this->createTopicWithPostButNullMeta();
+
+        // The NULL pointer yields no last post for that topic on its own.
+        self::assertNull($this->out->getLastPostsByTopicIds([$newId]));
+
+        // ... and it must not break the lookup for the other topics.
+        $posts = $this->out->getLastPostsByTopicIds([1, 2, $newId]);
+        self::assertNotNull($posts);
+        self::assertCount(2, $posts);
+        self::assertEquals(2, $posts[0]->getId());
+        self::assertEquals(2, $posts[0]->getTopicId());
+        self::assertEquals(1, $posts[1]->getId());
+        self::assertEquals(1, $posts[1]->getTopicId());
+    }
+
+    /**
+     * Tests that getLastPostByTopicId() returns null (not an error) for a topic
+     * whose last_post_id is NULL even though it has posts.
+     */
+    public function testGetLastPostByTopicIdWithNullLastPostId()
+    {
+        $newId = $this->createTopicWithPostButNullMeta();
+
+        self::assertNull($this->out->getLastPostByTopicId($newId));
+    }
+
+    /**
+     * Tests that getLastActiveTopics() excludes topics without a last_post_id,
+     * so a topic whose meta was never populated never shows up as "active"
+     * even though it contains posts.
+     */
+    public function testGetLastActiveTopicsExcludesTopicsWithoutLastPostId()
+    {
+        $this->createTopicWithPostButNullMeta();
+
+        $topics = $this->out->getLastActiveTopics();
+
+        self::assertCount(2, $topics);
+        self::assertEquals(2, $topics[0]['topic_id']);
+        self::assertEquals(1, $topics[1]['topic_id']);
+    }
+
+    /**
+     * Creates a topic in forum 2 that has one post but no last-post meta
+     * (last_post_id/last_post_date stay NULL) — the state of the broken install.
+     *
+     * @return int the new topic id
+     */
+    private function createTopicWithPostButNullMeta(): int
+    {
+        $prefix = new PrefixModel();
+        $prefix->setId(0);
+
+        $model = new TopicModel();
+        $model->setId(0)
+            ->setForumId(2)
+            ->setCreatorId(1)
+            ->setType(0)
+            ->setDateCreated('2024-01-17 09:00:00')
+            ->setTopicTitle('Topic with stale meta')
+            ->setTopicPrefix($prefix);
+
+        $newId = $this->out->save($model);
+
+        // Insert the post directly, bypassing Post::save(), so the topic's
+        // denormalized last-post meta is never populated.
+        $this->db->insert('forum_posts')
+            ->values([
+                'topic_id' => $newId,
+                'forum_id' => 2,
+                'text' => 'Post in the stale topic',
+                'user_id' => 1,
+                'date_created' => '2024-01-17 09:30:00',
+            ])
+            ->execute();
+
+        return $newId;
+    }
+
+    /**
      * Tests inserting a new topic via save() (id 0).
      */
     public function testSaveInsert()
