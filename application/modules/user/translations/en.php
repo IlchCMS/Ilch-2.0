@@ -80,6 +80,9 @@ return [
     'delDefaultGroups' => 'It is not allowed to delete the group "Administrator", "User" or "Guest".',
     'noGroupsExist' => 'No groups exist.',
     'newOrTreatGroupInvalid' => 'The entries for this group were invalid.',
+    'searchUsers' => 'Search users',
+    'showingOf' => 'Showing %%1 of %%2',
+    'noUsersFound' => 'No users found',
 
     'menuAccess' => 'Group rights',
     'lookAccess' => 'visible (Frontend)',
