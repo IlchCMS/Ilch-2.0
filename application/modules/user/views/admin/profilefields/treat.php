@@ -19,23 +19,23 @@ $multiArr = $this->get('multiTypes');
 
 /** @var array $type */
 $type = [
-    0 => 'profileFieldField',
-    1 => 'profileFieldCat',
-    2 => 'profileFieldIcon',
-    3 => 'profileFieldRadio',
-    4 => 'profileFieldCheck',
-    5 => 'profileFieldDrop',
-    6 => 'profileFieldDate'
+        0 => 'profileFieldField',
+        1 => 'profileFieldCat',
+        2 => 'profileFieldIcon',
+        3 => 'profileFieldRadio',
+        4 => 'profileFieldCheck',
+        5 => 'profileFieldDrop',
+        6 => 'profileFieldDate'
 ];
 /** @var array $iconArray */
 $iconArray = [
-    0 => 'fa-regular fa-pen-to-square',
-    1 => 'fa-solid fa-heading',
-    2 => 'fa-solid fa-icons',
-    3 => 'fa-regular fa-circle-check',
-    4 => 'fa-regular fa-square-check',
-    5 => 'fa-regular fa-square-caret-down',
-    6 => 'fa-regular fa-calendar-days'
+        0 => 'fa-regular fa-pen-to-square',
+        1 => 'fa-solid fa-heading',
+        2 => 'fa-solid fa-icons',
+        3 => 'fa-regular fa-circle-check',
+        4 => 'fa-regular fa-square-check',
+        5 => 'fa-regular fa-square-caret-down',
+        6 => 'fa-regular fa-calendar-days'
 ];
 ?>
 
@@ -70,9 +70,9 @@ $iconArray = [
                 <select class="form-select" id="profileFieldType" name="profileField[type]">
                     <?php foreach ($type as $key => $value) : ?>
                         <option value="<?=$key ?>"
-                            <?=($profileField->getId() && $profileField->getType() == $key) ? ' selected' : '' ?>
-                            <?=($profileField->getId() && $profileField->getType() != $key) ? ' disabled' : '' ?>
-                            >
+                                <?=($profileField->getId() && $profileField->getType() == $key) ? ' selected' : '' ?>
+                                <?=($profileField->getId() && $profileField->getType() != $key) ? ' disabled' : '' ?>
+                        >
                             <?=$this->getTrans($value) ?>
                         </option>
                     <?php endforeach; ?>
@@ -192,25 +192,24 @@ $iconArray = [
             </label>
             <div id="trans-container" class="col-xl-4">
                 <?php foreach ($profileFieldsTranslation as $profileFieldTranslation) : ?>
-                <div class="mb-3 input-group">
-                    <input type="hidden" name="profileFieldTrans_field_id[]" value="<?=$profileField->getId() ?>" />
-                    <input type="hidden" name="profileFieldTrans_oldLocale[]" value="<?=$profileFieldTranslation->getLocale() ?>" />
+                    <div class="mb-3 input-group">
+                        <input type="hidden" name="profileFieldTrans_field_id[]" value="<?=$profileField->getId() ?>" />
+                        <input type="hidden" name="profileFieldTrans_oldLocale[]" value="<?=$profileFieldTranslation->getLocale() ?>" />
 
-                    <select class="form-select selectTrans" name="profileFieldTrans_locale[]">
-                        <option selected="selected" disabled><?=$this->getTrans('pleaseSelect') ?></option>
-                        <?php foreach ($localeList as $key => $locale) : ?>
-                            <option value="<?=$key ?>"<?=((isset($localeList[$profileFieldTranslation->getLocale()]) && $locale == $localeList[$profileFieldTranslation->getLocale()]) ? ' selected' : ''); ?>><?=$locale ?></option>
-                            <?php next($localeList);
-                        endforeach; ?>
-                    </select>
-                    <input type="text"
-                           class="form-control"
-                           name="profileFieldTrans_name[]"
-                           placeholder="<?=$this->getTrans('profileFieldName') ?>"
-                           value="<?=$this->escape($profileFieldTranslation->getName()) ?>" />
-                    <button type="button" class="btn btn-outline-success btn-addTrans"><i class="fa-solid fa-plus"></i></button>
-                    <button type="button" class="btn btn-outline-secondary btn-removeTrans"><i class="fa-solid fa-minus"></i></button>
-                </div>
+                        <select class="form-select selectTrans" name="profileFieldTrans_locale[]">
+                            <option selected="selected" disabled><?=$this->getTrans('pleaseSelect') ?></option>
+                            <?php foreach ($localeList as $key => $locale) : ?>
+                                <option value="<?=$key ?>"<?=((isset($localeList[$profileFieldTranslation->getLocale()]) && $locale == $localeList[$profileFieldTranslation->getLocale()]) ? ' selected' : ''); ?>><?=$locale ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <input type="text"
+                               class="form-control"
+                               name="profileFieldTrans_name[]"
+                               placeholder="<?=$this->getTrans('profileFieldName') ?>"
+                               value="<?=$this->escape($profileFieldTranslation->getName()) ?>" />
+                        <button type="button" class="btn btn-outline-success btn-addTrans"><i class="fa-solid fa-plus"></i></button>
+                        <button type="button" class="btn btn-outline-secondary btn-removeTrans"><i class="fa-solid fa-minus"></i></button>
+                    </div>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -245,8 +244,10 @@ $iconArray = [
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="symbolDialogTitle"><?=$this->getTrans('chooseIcon') ?></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="col-6"><button type="button" class="btn btn-outline-secondary" id="noIcon" data-bs-dismiss="modal"><?=$this->getTrans('noIcon') ?></button></div>
+                <div class="d-flex align-items-center ms-auto">
+                    <button type="button" class="btn btn-outline-secondary me-2" id="noIcon" data-bs-dismiss="modal"><?=$this->getTrans('noIcon') ?></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
             </div>
             <div class="modal-body">
             </div>
@@ -265,7 +266,7 @@ $iconArray = [
     $('[name="profileField[type]"]').click(function () {
         const keysArr = [<?php foreach ($multiArr as $key => $value) {
             echo ($key > 0 ? ', ' : '') . '\'' . $value . '\'';
-                         } ?>];
+        } ?>];
         const thisKey = $(this).val();
         if (thisKey === "2") {
             $('#profileFieldIcons, #profileFieldAddition').removeAttr('hidden');
@@ -354,44 +355,51 @@ $iconArray = [
     });
 
     $("#symbolDialog").on('shown.bs.modal', function () {
-        let content = JSON.parse(<?=json_encode(file_get_contents(ROOT_PATH . '/vendor/fortawesome/font-awesome/metadata/icons.json')) ?>);
-        let icons = [];
-
-        $.each(content, function(index, icon) {
-            if (~icon.styles.indexOf('brands')) {
-                icons.push('fa-brands fa-' + index);
-            } else {
-                if (~icon.styles.indexOf('solid')) {
-                    icons.push('fa-solid fa-' + index);
-                }
-                if (~icon.styles.indexOf('regular')) {
-                    icons.push('fa-regular fa-' + index);
-                }
-            }
-        })
-
-        let div;
-        for (let x = 0; x < icons.length;) {
-            let y;
-            div = '<div class="row">';
-            for (y = x; y < x + 6; y++) {
-                div += '<div class="icon col-lg-2"><i id="' + icons[y] + '" class="faicon ' + icons[y] + ' fa-2x"></i></div>';
-            }
-            div += '</div>';
-            x = y;
-
-            $("#symbolDialog .modal-content .modal-body").append(div);
+        const $modalBody = $(this).find('.modal-body');
+        if ($modalBody.data('loaded')) {
+            return;
         }
+        $modalBody.data('loaded', true);
 
-        $(".faicon").click(function () {
-            $("#profileFieldIcon").val($(this).closest("i").attr('id'));
-            $("#chosensymbol").attr("class", $(this).closest("i").attr('id'));
-            $("#symbolDialog").modal('hide')
-        });
+        $.getJSON("<?= $this->getBaseurl() ?>/vendor/fortawesome/font-awesome/metadata/icons.json", function (content) {
+            let icons = [];
 
-        $("#noIcon").click(function () {
-            $("#profileFieldIcon").val("");
+            $.each(content, function (index, icon) {
+                if (~icon.styles.indexOf('brands')) {
+                    icons.push('fa-brands fa-' + index);
+                } else {
+                    if (~icon.styles.indexOf('solid')) {
+                        icons.push('fa-solid fa-' + index);
+                    }
+                    if (~icon.styles.indexOf('regular')) {
+                        icons.push('fa-regular fa-' + index);
+                    }
+                }
+            });
+
+            let div;
+            for (let x = 0; x < icons.length;) {
+                let y;
+                div = '<div class="row">';
+                for (y = x; y < x + 6; y++) {
+                    div += '<div class="icon col-lg-2"><i id="' + icons[y] + '" class="faicon ' + icons[y] + ' fa-2x"></i></div>';
+                }
+                div += '</div>';
+                x = y;
+
+                $modalBody.append(div);
+            }
         });
+    });
+
+    $(document).on('click', '.faicon', function () {
+        $("#profileFieldIcon").val($(this).closest("i").attr('id'));
+        $("#chosensymbol").attr("class", $(this).closest("i").attr('id'));
+        $("#symbolDialog").modal('hide');
+    });
+
+    $("#noIcon").on('click', function () {
+        $("#profileFieldIcon").val("");
     });
 
     $(document).ready(function() {

@@ -142,8 +142,6 @@ class ProfileFields extends Admin
             $profileFieldId = $profileFieldsMapper->save($profileField);
 
             foreach ($postData['profileFieldTrans_field_id'] as $i => $field_id) {
-                $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
-
                 if (empty($field_id)) {
                     $field_id = $profileFieldId;
                 }
