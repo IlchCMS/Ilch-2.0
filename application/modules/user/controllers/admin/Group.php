@@ -176,7 +176,7 @@ class Group extends \Ilch\Controller\Admin
 
         $userMapper = new UserMapper();
 
-        $search = trim((string)$this->getRequest()->getParam('query', ''));
+        $search = trim((string)$this->getRequest()->getParam('query', ''), " \f\n\r\t\v\x00");
         if ($search !== '') {
             // Escape LIKE wildcards from user input.
             $search = str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $search);
