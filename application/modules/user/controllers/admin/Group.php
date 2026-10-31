@@ -14,6 +14,7 @@ use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Mappers\Page as PageMapper;
 use Modules\Article\Mappers\Article as ArticleMapper;
 use Modules\User\Mappers\User as UserMapper;
+use Ilch\Pagination;
 use Ilch\Validation;
 
 /**
@@ -88,8 +89,8 @@ class Group extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuGroup'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuGroup'), ['action' => 'index']);
 
         $groupMapper = new GroupMapper();
 
@@ -109,7 +110,7 @@ class Group extends \Ilch\Controller\Admin
 
         foreach ($groupList as $group) {
             $groupId = $group->getId();
-            $groupUsers[$groupId] = $groupMapper->getUsersForGroup($groupId);
+            $groupUsers[$groupId] = $groupMapper->getUsersForGroup($groupId) ?? [];
         }
 
         $this->getView()->set('groupUsersList', $groupUsers);
@@ -145,19 +146,50 @@ class Group extends \Ilch\Controller\Admin
 
         if ($groupId && is_numeric($groupId) && $groupMapper->groupWithIdExists($groupId)) {
             $group = $groupMapper->getGroupById($groupId);
-            $groupUsers = $groupMapper->getUsersForGroup($group->getId());
+            $groupUsers = $groupMapper->getUsersForGroup($group->getId()) ?? [];
         } else {
             $group = new GroupModel();
             $groupUsers = [];
         }
 
-        $users = $userMapper->getUserList();
+        // The unassigned list is loaded on demand by the AJAX search
+        // (searchUsersAction), so the page only needs the group's own members.
+        // Fetched in one batched, field-limited query instead of one full-row
+        // query per member in the view.
+        $groupUserModels = $userMapper->getUserByIds($groupUsers);
 
         $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('UsersList', $users);
         $this->getView()->set('groupUsersList', $groupUsers);
+        $this->getView()->set('groupUsers', $groupUserModels);
         $this->getView()->set('group', $group);
         $this->getView()->set('groupList', $groupMapper->getGroupList());
+    }
+
+    /**
+     * Returns up to 50 users whose name matches the given search as JSON.
+     * AJAX endpoint for the user search on the treat page.
+     * Admin-only by extending \Ilch\Controller\Admin (like all actions here).
+     */
+    public function searchUsersAction()
+    {
+        header('Content-Type: application/json; charset=utf-8');
+
+        $userMapper = new UserMapper();
+
+        $search = trim((string)$this->getRequest()->getParam('query', ''), " \f\n\r\t\v\x00");
+        if ($search !== '') {
+            // Escape LIKE wildcards from user input.
+            $search = str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $search);
+        }
+
+        $pagination = new Pagination();
+        $pagination->setRowsPerPage(50); // page 1 by default
+
+        // Empty search => LIKE '%%' => first 50 users of the whole table.
+        $users = $userMapper->getUserList(['name LIKE' => '%' . $search . '%'], $pagination, ['id', 'name']);
+
+        $this->getView()->set('users', $users);
+        $this->getView()->set('total', (int)$pagination->getRows());
     }
 
     /**
@@ -177,7 +209,8 @@ class Group extends \Ilch\Controller\Admin
 
             if ($validation->isValid()) {
                 $groupData = $postData['group'];
-                $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
+                $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu') ?: '[]');
+                $sortItems = is_array($sortItems) ? $sortItems : [];
                 $groupMapper = new GroupMapper();
                 $group = $groupMapper->loadFromArray($groupData);
 
@@ -187,7 +220,7 @@ class Group extends \Ilch\Controller\Admin
 
                 $groupId = $groupMapper->save($group);
 
-                $groupUsers = $groupMapper->getUsersForGroup($groupId);
+                $groupUsers = $groupMapper->getUsersForGroup($groupId) ?? [];
                 $userMapper = new UserMapper();
                 foreach ($sortItems as $key => $user_Id) {
                     if (!\in_array($user_Id, $groupUsers)) {

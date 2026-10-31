@@ -214,8 +214,10 @@ class User extends \Ilch\Mapper
             return [];
         }
 
-        // Groups are keyed by user id, so they can only be attached when 'id' was selected.
-        $loadGroups = $fields === null || \in_array('id', $fields, true);
+        // Hydrate groups only for full-row loads. Field-limited loads are read-only
+        // (see docblock) and must stay cheap; otherwise even SELECT id, name would
+        // still materialise a Group model per user on large tables.
+        $loadGroups = $fields === null;
 
         $groupRows = [];
         if ($loadGroups) {
@@ -558,7 +560,9 @@ class User extends \Ilch\Mapper
     {
         $groupMapper = new GroupMapper();
 
-        if ($this->userWithIdExists($userId) && $groupMapper->groupWithIdExists($groupId) && !\in_array($userId, $groupMapper->getUsersForGroup($groupId))) {
+        $groupUsers = $groupMapper->getUsersForGroup($groupId) ?? [];
+
+        if ($this->userWithIdExists($userId) && $groupMapper->groupWithIdExists($groupId) && !\in_array($userId, $groupUsers)) {
             $this->db()->insert('users_groups')
                 ->values(['user_id' => $userId, 'group_id' => $groupId])
                 ->execute();
@@ -575,7 +579,9 @@ class User extends \Ilch\Mapper
     {
         $groupMapper = new GroupMapper();
 
-        if ($this->userWithIdExists($userId) && $groupMapper->groupWithIdExists($groupId) && \in_array($userId, $groupMapper->getUsersForGroup($groupId))) {
+        $groupUsers = $groupMapper->getUsersForGroup($groupId) ?? [];
+
+        if ($this->userWithIdExists($userId) && $groupMapper->groupWithIdExists($groupId) && \in_array($userId, $groupUsers)) {
             $this->db()->delete('users_groups')
                 ->where(['user_id' => $userId, 'group_id' => $groupId])
                 ->execute();

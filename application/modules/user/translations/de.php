@@ -80,6 +80,9 @@ return [
     'delDefaultGroups' => 'Es ist nicht erlaubt, die Gruppe "Administrator", "User" oder "Gast" zu entfernen.',
     'noGroupsExist' => 'Keine Gruppen vorhanden.',
     'newOrTreatGroupInvalid' => 'Die Eingaben für diese Gruppe waren ungültig.',
+    'searchUsers' => 'Benutzer suchen',
+    'showingOf' => 'Zeigt %%1 von %%2',
+    'noUsersFound' => 'Keine Benutzer gefunden',
 
     'menuAccess' => 'Gruppenrechte',
     'lookAccess' => 'sichtbar (Frontend)',
