@@ -238,11 +238,9 @@ class Post extends Mapper
     /**
      * Delete post by id.
      *
-     * @param int $id
-     * @return Result|int
-     */
-    /**
-     * Delete post by id.
+     * The denormalized last-post meta of the topic, the forum item and its
+     * parent category is re-derived afterwards. If the topic is left empty,
+     * its meta is reset to NULL.
      *
      * @param int $id
      * @return Result|int
@@ -268,15 +266,22 @@ class Post extends Mapper
                 ->order(['date_created' => 'DESC', 'id' => 'DESC'])
                 ->limit(1)
                 ->execute()
-                ->fetchAssoc(); // empty array => topic is now empty
+                ->fetchAssoc(); // empty => topic is now empty
 
-            $this->db()->update('forum_topics')
-                ->values([
-                    'last_post_date' => $last['date_created'] ?? null,
-                    'last_post_id'   => $last['id'] ?? null,
-                ])
-                ->where(['id' => $postRow['topic_id']])
-                ->execute();
+            if (empty($last)) {
+                // The topic is now empty: its meta must point at nothing. The
+                // query builder rejects an UPDATE whose values are all NULL,
+                // so the reset has to be done as a raw statement.
+                $this->db()->query('UPDATE `[prefix]_forum_topics` SET `last_post_date` = NULL, `last_post_id` = NULL WHERE `id` = ' . (int) $postRow['topic_id']);
+            } else {
+                $this->db()->update('forum_topics')
+                    ->values([
+                        'last_post_date' => $last['date_created'],
+                        'last_post_id'   => $last['id'],
+                    ])
+                    ->where(['id' => $postRow['topic_id']])
+                    ->execute();
+            }
 
             // Forum + parent category from the topic rows.
             $this->refreshLastPostMetaForForum((int) $postRow['forum_id']);
@@ -307,9 +312,9 @@ class Post extends Mapper
      * Re-derives forum_items.last_post_date/-id for the given forum and
      * its parent category from the (denormalized) topic rows.
      *
-     * Updates are skipped when no known value is left, because the target
-     * row already holds NULL in that case - and an UPDATE whose values are
-     * all NULL is rejected by the query builder.
+     * When no known value is left, the meta is explicitly reset to NULL.
+     * An UPDATE whose values are all NULL is rejected by the query builder,
+     * so the reset has to be done as a raw statement.
      *
      * @param int $forumId
      */
@@ -338,6 +343,11 @@ class Post extends Mapper
                 ->values($values)
                 ->where(['id' => $forumId])
                 ->execute();
+        } else {
+            // No known value is left: the meta must not keep pointing at a
+            // deleted post. The query builder rejects an UPDATE whose values
+            // are all NULL, so the reset has to be done as a raw statement.
+            $this->db()->query('UPDATE `[prefix]_forum_items` SET `last_post_date` = NULL, `last_post_id` = NULL WHERE `id` = ' . (int) $forumId);
         }
 
         // Parent category: latest among all of its child forums.
@@ -368,6 +378,9 @@ class Post extends Mapper
                     ->values($values)
                     ->where(['id' => (int)$parentId])
                     ->execute();
+            } else {
+                // Same reset for the category row.
+                $this->db()->query('UPDATE `[prefix]_forum_items` SET `last_post_date` = NULL, `last_post_id` = NULL WHERE `id` = ' . (int) $parentId);
             }
         }
     }
