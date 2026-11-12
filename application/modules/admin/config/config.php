@@ -1483,6 +1483,10 @@ class Config extends \Ilch\Config\Install
                 removeDir(ROOT_PATH . '/static/js/popper');
                 removeDir(ROOT_PATH . '/static/js/tempus-dominus');
                 break;
+            case "2.2.21":
+                // Update vendor folder to update various dependencies.
+                replaceVendorDirectory();
+                break;
         }
 
         return 'Update function executed.';
