@@ -21,7 +21,7 @@ class StatisticAggregateTest extends DatabaseTestCase
     protected StatisticAggregate $out;
 
     // Own fixture so the existing StatisticTest fixture (2024 rows) stays untouched.
-    // All fixture days are in 2022/2023 (strictly in the past), which keeps every
+    // All fixture days are in 2022/2023 (strictly below the retention floor (today - 365)), which keeps every
     // run() assertion deterministic independent of the test run date.
     protected static array $fixtureFiles = [__DIR__ . '/../_files/mysql_database_aggregate.yml'];
 
@@ -169,7 +169,10 @@ class StatisticAggregateTest extends DatabaseTestCase
     /**
      * Tests the full pipeline with the default payload:
      * daily backlog + window, monthly backlog + window, yearly backlog + window,
-     * no purge (raw_retention_days defaults to 0).
+     * and the retention purge (raw_retention_days defaults to 365).
+     *
+     * Precondition: every fixture day lies strictly below the retention floor
+     * (today - 365), which holds as long as the suite runs after 2024-06-15.
      */
     public function testRunFullPipelineWithDefaults()
     {
@@ -178,7 +181,9 @@ class StatisticAggregateTest extends DatabaseTestCase
         // Daily rows created: 2022-01-15 (2 groups), 2022-12-20 (1), 2023-06-15 (2).
         // Monthly rows: 2022-01 (2), 2022-12 (1), 2023-06 (2).
         // Yearly: only 2022 is closed by the monthly frontier (2 rows).
-        self::assertSame(['daily' => 5, 'monthly' => 5, 'yearly' => 2, 'raw_purged' => 0], $summary);
+        // Purged: all three fixture days — they are below the retention floor
+        // and fully aggregated by the end of this run (5 raw rows).
+        self::assertSame(['daily' => 5, 'monthly' => 5, 'yearly' => 2, 'raw_purged' => 3], $summary);
 
         // Daily aggregates per day, grouped by dimension quintuple.
         $rows = array_merge(
@@ -221,17 +226,30 @@ class StatisticAggregateTest extends DatabaseTestCase
         // and never reaches 2024-01-01.
         self::assertCount(0, $this->yearlyRowsFor(2023));
 
+        // Every raw row is purged; the aggregate data survives.
+        self::assertSame(0, $this->countIn('visits_stats'));
+        self::assertSame(5, $this->countIn('visits_stats_daily'));
+        self::assertSame(5, $this->countIn('visits_stats_monthly'));
+        self::assertSame(2, $this->countIn('visits_stats_yearly'));
+
         // Frontiers after the run.
         $today = $this->out->siteToday();
         self::assertSame($this->out->addDays($today, -6), $this->out->getFrontier('daily'));
         self::assertSame('2023-07-01', $this->out->getFrontier('monthly'));
         self::assertSame('2023-01-01', $this->out->getFrontier('yearly'));
-        self::assertSame('1000-01-01', $this->out->getFrontier('raw'));
+
+        // The raw frontier is pinned to the retention floor once the purge
+        // walker is exhausted below it.
+        self::assertSame($this->out->addDays($today, -365), $this->out->getFrontier('raw'));
     }
 
     /**
      * Tests that a second run is a no-op: all rebuilds are idempotent
      * (delete + insert in one transaction) and no data is duplicated.
+     *
+     * With the default retention of 365 days the first run already purged
+     * every fixture raw row, so the second run has neither raw data to
+     * rebuild nor raw rows left to purge.
      */
     public function testRunIsIdempotent()
     {
@@ -243,12 +261,16 @@ class StatisticAggregateTest extends DatabaseTestCase
         self::assertSame(5, $this->countIn('visits_stats_daily'));
         self::assertSame(5, $this->countIn('visits_stats_monthly'));
         self::assertSame(2, $this->countIn('visits_stats_yearly'));
-        self::assertSame(5, $this->countIn('visits_stats'));
+
+        // The raw table was fully purged by the first run (all fixture days
+        // lie below the retention floor); nothing is duplicated or restored.
+        self::assertSame(0, $this->countIn('visits_stats'));
     }
 
     /**
      * Tests that the payload registered by Config::createScheduledTasks()
-     * behaves like the PHP defaults (raw_retention_days frozen at 0: no purge).
+     * pins the legacy 0 behavior: an explicit raw_retention_days => 0 skips
+     * the purge even though the PHP default is now 365
      */
     public function testRunWithSchedulerPayloadFromConfig()
     {
@@ -323,32 +345,43 @@ class StatisticAggregateTest extends DatabaseTestCase
      * Tests that a bounded daily_limit makes one day of progress per run and
      * that consecutive runs resume where the frontier left off, converging to
      * the same final state as one unbounded run.
+     *
+     * The retention purge trails the daily frontier: as each run moves the
+     * daily frontier past a fixture day, that day becomes fully aggregated
+     * and is purged in the same run (one day per run).
      */
     public function testRunRespectsDailyLimitAndResumes()
     {
-        // Run 1: only 2022-01-15 is rebuilt (2 rows).
+        // Run 1: only 2022-01-15 is rebuilt (2 rows); the daily frontier moves
+        // to 2022-12-20, so 2022-01-15 is now fully aggregated and purged.
         $summary1 = $this->out->run(['daily_limit' => 1]);
-        self::assertSame(['daily' => 2, 'monthly' => 2, 'yearly' => 0, 'raw_purged' => 0], $summary1);
+        self::assertSame(['daily' => 2, 'monthly' => 2, 'yearly' => 0, 'raw_purged' => 1], $summary1);
         self::assertSame('2022-12-20', $this->out->getFrontier('daily'));
 
-        // Run 2: 2022-12-20 (1 row); 2022 is now closed by the monthly frontier.
+        // Run 2: 2022-12-20 (1 row); 2022 is now closed by the monthly
+        // frontier and the yearly table rolls up 2022 (2 rows). 2022-12-20
+        // is purged now that the daily frontier moved past it.
         $summary2 = $this->out->run(['daily_limit' => 1]);
-        self::assertSame(['daily' => 1, 'monthly' => 1, 'yearly' => 2, 'raw_purged' => 0], $summary2);
+        self::assertSame(['daily' => 1, 'monthly' => 1, 'yearly' => 2, 'raw_purged' => 1], $summary2);
         self::assertSame('2023-06-15', $this->out->getFrontier('daily'));
 
         // Run 3: 2023-06-15 (2 rows), then caught up to the cutoff.
+        // 2023-06-15 is purged last; the raw frontier is pinned to the floor.
         $summary3 = $this->out->run(['daily_limit' => 1]);
-        self::assertSame(['daily' => 2, 'monthly' => 2, 'yearly' => 0, 'raw_purged' => 0], $summary3);
+        self::assertSame(['daily' => 2, 'monthly' => 2, 'yearly' => 0, 'raw_purged' => 1], $summary3);
 
-        // Final state equals the single unbounded run.
+        // Final state equals the single unbounded run: all aggregates present,
+        // every raw row purged, raw frontier at the retention floor.
         self::assertSame(5, $this->countIn('visits_stats_daily'));
         self::assertSame(5, $this->countIn('visits_stats_monthly'));
         self::assertSame(2, $this->countIn('visits_stats_yearly'));
+        self::assertSame(0, $this->countIn('visits_stats'));
 
         $today = $this->out->siteToday();
         self::assertSame($this->out->addDays($today, -6), $this->out->getFrontier('daily'));
         self::assertSame('2023-07-01', $this->out->getFrontier('monthly'));
         self::assertSame('2023-01-01', $this->out->getFrontier('yearly'));
+        self::assertSame($this->out->addDays($today, -365), $this->out->getFrontier('raw'));
     }
 
     // ------------------------------------------------------------------
