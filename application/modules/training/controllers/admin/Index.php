@@ -181,7 +181,8 @@ class Index extends \Ilch\Controller\Admin
 
         $this->getView()->set('contactUser', !empty($contactId) ? $userMapper->getUserById((int)$contactId) : null)
             ->set('userGroupList', $groupMapper->getGroupList())
-            ->set('groups', explode(',', $model->getReadAccess()));
+            ->set('groups', explode(',', $model->getReadAccess()))
+            ->set('contactSearchUrl', $this->getLayout()->getUrl(['action' => 'users']));
     }
 
     public function usersAction()
