@@ -269,6 +269,119 @@ class UserTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that getUserIdsByGroupIds() returns the ids of the users in at least one of the groups.
+     */
+    public function testGetUserIdsByGroupIds()
+    {
+        $ids = $this->out->getUserIdsByGroupIds([1, 3], 1);
+
+        self::assertIsArray($ids);
+        self::assertCount(2, $ids);
+
+        sort($ids);
+        self::assertSame([1, 2], $ids);
+
+        // User 1 belongs to both requested groups but must only appear once (GROUP BY).
+        self::assertIsInt($ids[0]);
+    }
+
+    /**
+     * Tests that getUserIdsByGroupIds() returns no ids for unconfirmed users.
+     */
+    public function testGetUserIdsByGroupIdsUnconfirmed()
+    {
+        self::assertSame([], $this->out->getUserIdsByGroupIds([1, 2, 3]));
+    }
+
+    /**
+     * Tests that getUserIdsByGroupIds() returns an empty array when no group id is given.
+     */
+    public function testGetUserIdsByGroupIdsEmpty()
+    {
+        self::assertSame([], $this->out->getUserIdsByGroupIds([]));
+    }
+
+    /**
+     * Tests that getUserIdsByGroupIds() returns an empty array when no user matches the groups.
+     */
+    public function testGetUserIdsByGroupIdsUnknownGroups()
+    {
+        self::assertSame([], $this->out->getUserIdsByGroupIds([9999], 1));
+        self::assertSame([], $this->out->getUserIdsByGroupIds([2, 9999], 1)); // guest group has no users
+    }
+
+    /**
+     * Tests that getUserIdsByGroupIds() excludes unconfirmed users when filtering for confirmed ones,
+     * and includes them when filtering for unconfirmed ones.
+     */
+    public function testGetUserIdsByGroupIdsExcludesUnconfirmed()
+    {
+        $groupMapper = new GroupMapper();
+
+        $user = new UserModel();
+        $user->setName('UnconfirmedUser')
+            ->setPassword('hash')
+            ->setEmail('unconfirmed@host.de')
+            ->setDateCreated(new IlchDate('2020-01-01 10:00:00'))
+            ->setDateConfirmed(new IlchDate('2020-01-01 10:00:00'))
+            ->setConfirmed(0)
+            ->addGroup($groupMapper->getGroupById(1));
+
+        $userId = $this->out->save($user);
+        self::assertIsInt($userId);
+        self::assertGreaterThan(0, $userId);
+
+        self::assertSame([1], $this->out->getUserIdsByGroupIds([1], 1));
+        self::assertSame([$userId], $this->out->getUserIdsByGroupIds([1], 0));
+    }
+
+    /**
+     * Tests that getUserIdsByGroupId() returns the ids of the users of the group.
+     */
+    public function testGetUserIdsByGroupId()
+    {
+        $ids = $this->out->getUserIdsByGroupId(1, 1);
+
+        self::assertCount(1, $ids);
+        self::assertSame([1], $ids);
+    }
+
+    /**
+     * Tests that getUserIdsByGroupId() returns all users of the group.
+     */
+    public function testGetUserIdsByGroupIdMultiple()
+    {
+        $ids = $this->out->getUserIdsByGroupId(3, 1);
+
+        sort($ids);
+        self::assertSame([1, 2], $ids);
+    }
+
+    /**
+     * Tests that getUserIdsByGroupId() returns no ids for unconfirmed users (default confirmed = 0).
+     */
+    public function testGetUserIdsByGroupIdUnconfirmed()
+    {
+        self::assertSame([], $this->out->getUserIdsByGroupId(1));
+    }
+
+    /**
+     * Tests that getUserIdsByGroupId() returns an empty array when the group has no users.
+     */
+    public function testGetUserIdsByGroupIdEmpty()
+    {
+        self::assertSame([], $this->out->getUserIdsByGroupId(2, 1));
+    }
+
+    /**
+     * Tests that getUserIdsByGroupId() returns an empty array for an unknown group.
+     */
+    public function testGetUserIdsByGroupIdUnknown()
+    {
+        self::assertSame([], $this->out->getUserIdsByGroupId(9999, 1));
+    }
+
+    /**
      * Tests that getUserList() returns all users.
      */
     public function testGetUserList()
