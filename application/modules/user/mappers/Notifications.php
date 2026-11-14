@@ -205,46 +205,86 @@ class Notifications extends \Ilch\Mapper
      */
     public function addNotifications(array $notifications): int
     {
+        if ($notifications === []) {
+            return 0;
+        }
+
         $notificationPermissionMapper = new NotificationPermissionMapper();
 
-        $valuesOfRows = [];
-        $newPermssions = [];
-        $permissions = $notificationPermissionMapper->getPermissionsNotGranted();
+        // Pre-compute the not-granted permissions as lookup tables so the
+        // per-notification check is an O(1) array access instead of a linear
+        // scan over every not-granted permission (was O(N x P)).
+        $deniedModules = []; // "userId|module"   -> denied for all types (type IS NULL)
+        $deniedTypes = [];   // "userId|module|type" -> denied for this type
+        foreach ($notificationPermissionMapper->getPermissionsNotGranted() as $permission) {
+            $key = $permission->getUserId() . '|' . $permission->getModule();
+            if ($permission->getType() === null) {
+                $deniedModules[$key] = true;
+            } else {
+                $deniedTypes[$key . '|' . $permission->getType()] = true;
+            }
+        }
 
+        // Fast path: when every notification carries the same content and only
+        // the user differs, validating a single one is sufficient.
+        $validateEach = true;
+        if (count($notifications) > 1) {
+            $first = $notifications[0];
+            foreach ($notifications as $notification) {
+                if (
+                    $notification->getModule() !== $first->getModule()
+                    || $notification->getMessage() !== $first->getMessage()
+                    || $notification->getURL() !== $first->getURL()
+                    || $notification->getType() !== $first->getType()
+                ) {
+                    $validateEach = true;
+                    break;
+                }
+                $validateEach = false;
+            }
+            if (!$validateEach && !$this->isValidNotification($first)) {
+                throw new InvalidArgumentException('Invalid notification.');
+            }
+        }
+
+        $valuesOfRows = [];
+        $newPermissions = [];
         foreach ($notifications as $notification) {
-            if (!$this->isValidNotification($notification)) {
+            if ($validateEach && !$this->isValidNotification($notification)) {
                 throw new InvalidArgumentException('Invalid notification.');
             }
 
-            foreach ($permissions as $permission) {
-                if ($notification->getUserId() === $permission->getUserId() && $notification->getModule() === $permission->getModule() && ($permission->getType() === null || $notification->getType() === $permission->getType())) {
-                    continue 2;
-                }
+            $key = $notification->getUserId() . '|' . $notification->getModule();
+            if (isset($deniedModules[$key]) || isset($deniedTypes[$key . '|' . $notification->getType()])) {
+                continue;
             }
 
             $valuesOfRows[] = [$notification->getUserId(), $notification->getModule(), $notification->getMessage(), $notification->getUrl(), $notification->getType()];
-            $permissionModel = new NotificationPermissionModel();
-            $permissionModel->setUserId($notification->getUserId());
-            $permissionModel->setModule($notification->getModule());
-            $permissionModel->setType($notification->getType());
 
-            if (!\in_array($permissionModel, $newPermssions, true)) {
-                $newPermssions[] = $permissionModel;
+            // One permission entry per unique (user, module, type) triple, keyed
+            // so duplicates within this batch are detected in O(1).
+            $permissionKey = $key . '|' . $notification->getType();
+            if (!isset($newPermissions[$permissionKey])) {
+                $permissionModel = new NotificationPermissionModel();
+                $permissionModel->setUserId($notification->getUserId());
+                $permissionModel->setModule($notification->getModule());
+                $permissionModel->setType($notification->getType());
+                $newPermissions[$permissionKey] = $permissionModel;
             }
         }
 
         if ($valuesOfRows !== []) {
             $affectedRows = 0;
-            $chunks = array_chunk($valuesOfRows, 25);
-
-            foreach ($chunks as $chunk) {
+            foreach (array_chunk($valuesOfRows, 500) as $chunk) {
                 $affectedRows += $this->db()->insert('users_notifications')
                     ->columns(['user_id', 'module', 'message', 'url', 'type'])
                     ->values($chunk)
                     ->execute();
             }
 
-            $notificationPermissionMapper->addPermissions($newPermssions);
+            if ($newPermissions !== []) {
+                $notificationPermissionMapper->addPermissions(array_values($newPermissions));
+            }
             return $affectedRows;
         }
 

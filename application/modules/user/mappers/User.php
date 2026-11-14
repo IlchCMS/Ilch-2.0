@@ -183,6 +183,44 @@ class User extends \Ilch\Mapper
     }
 
     /**
+     * Get the ids of users by group id.
+     *
+     * @param int $groupId
+     * @param int $confirmed
+     * @return int[]
+     * @since 2.2.22
+     */
+    public function getUserIdsByGroupId(int $groupId, int $confirmed = 0): array
+    {
+        return $this->getUserIdsByGroupIds([$groupId], $confirmed);
+    }
+
+    /**
+     * Get the ids of users by group ids. The users have to be in at least one of the groups.
+     *
+     * @param int[] $groupIds array of group ids.
+     * @param int $confirmed
+     * @return int[]
+     * @since 2.2.22
+     */
+    public function getUserIdsByGroupIds(array $groupIds, int $confirmed = 0): array
+    {
+        if (empty($groupIds)) {
+            return [];
+        }
+
+        $select = $this->db()->select()
+            ->fields(['u.id'])
+            ->from(['u' => 'users'])
+            ->join(['g' => 'users_groups'], 'u.id = g.user_id', 'LEFT', ['group_id' => 'g.group_id'])
+            ->where(['group_id' => $groupIds], 'or')
+            ->andWhere(['confirmed' => $confirmed])
+            ->group(['u.id']);
+
+        return array_map('intval', $select->execute()->fetchList());
+    }
+
+    /**
      * Returns an array with user models found by the where clause of false if
      * none found.
      *

@@ -14,6 +14,7 @@ use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Group as UserGroupMapper;
 use Ilch\Validation;
 use Modules\User\Models\Notification as NotificationModel;
+use Ilch\Pagination;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -214,19 +215,24 @@ class Index extends \Ilch\Controller\Admin
                     ->setNotifyLeader($this->getRequest()->getPost('notifyLeader'));
                 $teamsMapper->save($model);
 
-                // Notify all users of the team.
+                // Notify all users of the team. Only the user ids are needed,
+                // so do not hydrate full user models for large groups.
                 if ($this->getConfig()->get('teams_userNotification')) {
-                    // Notify all users of the team.
                     $notificationsMapper = new NotificationsMapper();
-                    $notificationModels = [];
-                    $users = $userMapper->getUserListByGroupId($model->getGroupId(), 1);
+                    $userIds = $userMapper->getUserIdsByGroupId($model->getGroupId(), 1);
 
-                    foreach ($users as $user) {
+                    // Message and URL are identical for every recipient;
+                    // build them once instead of once per user.
+                    $message = $this->getTranslator()->trans('teamsAddedToTeam', $model->getName());
+                    $url = $this->getLayout()->getUrl(['module' => 'teams', 'controller' => 'index', 'action' => 'team', 'id' => $model->getId()], '');
+
+                    $notificationModels = [];
+                    foreach ($userIds as $userId) {
                         $notificationModel = new NotificationModel();
-                        $notificationModel->setUserId($user->getId())
+                        $notificationModel->setUserId($userId)
                             ->setModule('teams')
-                            ->setMessage($this->getTranslator()->trans('teamsAddedToTeam', $model->getName()))
-                            ->setURL($this->getLayout()->getUrl(['module' => 'teams', 'controller' => 'index', 'action' => 'team', 'id' => $model->getId()], ''))
+                            ->setMessage($message)
+                            ->setURL($url)
                             ->setType('teamsAddedToTeam');
                         $notificationModels[] = $notificationModel;
                     }
@@ -245,10 +251,11 @@ class Index extends \Ilch\Controller\Admin
                 ->to(['action' => 'treat']);
         }
 
-        $this->getView()->set('userList', $userMapper->getUserList())
-            ->set('userGroupList', $userGroupMapper->getGroupList());
+        $this->getView()->set('leaderUsers', $this->getSelectedUsers($userMapper, 'leader', $model->getLeader()))
+            ->set('coLeaderUsers', $this->getSelectedUsers($userMapper, 'coLeader', $model->getCoLeader()))
+            ->set('userGroupList', $userGroupMapper->getGroupList())
+            ->set('usersSearchUrl', $this->getLayout()->getUrl(['action' => 'users']));
     }
-
 
     public function updateAction()
     {
@@ -272,5 +279,51 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->redirect(['action' => 'index']);
+    }
+
+    public function usersAction()
+    {
+        header('Content-Type: application/json; charset=utf-8');
+
+        $userMapper = new UserMapper();
+        $search = (string)$this->getRequest()->getParam('query', '');
+
+        $where = ['confirmed' => 1];
+        if ($search !== '') {
+            $where['name LIKE'] = '%' . $search . '%';
+        }
+
+        $pagination = new Pagination();
+        $pagination->setRowsPerPage(20);
+
+        $this->getView()->set('users', $userMapper->getUserList($where, $pagination, ['id', 'name']));
+    }
+
+    /**
+     * Returns the users (id + name only) currently assigned to a
+     * comma-separated id field ('leader' or 'coLeader'), taken from
+     * the old input after a failed POST or from the team model itself.
+     *
+     * @param UserMapper $userMapper
+     * @param string $inputName
+     * @param string|null $stored
+     * @return \Modules\User\Models\User[]
+     */
+    private function getSelectedUsers(UserMapper $userMapper, string $inputName, ?string $stored): array
+    {
+        $ids = $this->getRequest()->getPost($inputName);
+        if (empty($ids)) {
+            $ids = $this->getRequest()->getOldInput($inputName);
+        }
+        if (empty($ids)) {
+            $ids = $stored ? explode(',', $stored) : [];
+        }
+
+        $ids = array_values(array_unique(array_filter(array_map('intval', (array)$ids))));
+        if (empty($ids)) {
+            return [];
+        }
+
+        return $userMapper->getUserList(['id' => $ids], null, ['id', 'name']);
     }
 }

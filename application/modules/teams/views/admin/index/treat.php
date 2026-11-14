@@ -5,8 +5,12 @@
 /** @var \Modules\Teams\Models\Teams $team */
 $team = $this->get('team');
 
-/** @var \Modules\User\Models\User[]|null $userList */
-$userList = $this->get('userList');
+/** @var \Modules\User\Models\User[] $leaderUsers */
+$leaderUsers = $this->get('leaderUsers') ?? [];
+
+/** @var \Modules\User\Models\User[] $coLeaderUsers */
+$coLeaderUsers = $this->get('coLeaderUsers') ?? [];
+
 /** @var \Modules\User\Models\Group[]|null $userGroupList */
 $userGroupList = $this->get('userGroupList');
 ?>
@@ -61,11 +65,10 @@ $userGroupList = $this->get('userGroupList');
                     data-placeholder="<?=$this->getTrans('selectLeader') ?>"
                     multiple>
                 <?php
-                $leaderIds = $this->originalInput('leader', explode(',', $team->getLeader()) ?? []);
                 /** @var \Modules\User\Models\User $user */
                 ?>
-                <?php foreach ($userList ?? [] as $user) : ?>
-                    <option value="<?=$user->getId() ?>" <?=(in_array($user->getId(), $leaderIds) ? 'selected="selected"' : '') ?>>
+                <?php foreach ($leaderUsers as $user) : ?>
+                    <option value="<?=$user->getId() ?>" selected="selected">
                         <?=$this->escape($user->getName()) ?>
                     </option>
                 <?php endforeach; ?>
@@ -83,11 +86,10 @@ $userGroupList = $this->get('userGroupList');
                     data-placeholder="<?=$this->getTrans('selectCoLeader') ?>"
                     multiple>
                 <?php
-                $coLeaderIds = $this->originalInput('coLeader', explode(',', $team->getCoLeader()) ?? []);
                 /** @var \Modules\User\Models\User $user */
                 ?>
-                <?php foreach ($userList ?? [] as $user) : ?>
-                    <option value="<?=$user->getId() ?>" <?=(in_array($user->getId(), $coLeaderIds) ? 'selected="selected"' : '') ?>>
+                <?php foreach ($coLeaderUsers as $user) : ?>
+                    <option value="<?=$user->getId() ?>" selected="selected">
                         <?=$this->escape($user->getName()) ?>
                     </option>
                 <?php endforeach; ?>
@@ -161,17 +163,47 @@ $userGroupList = $this->get('userGroupList');
 <?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('teamUsersInfoText')) ?>
 
 <script>
-    $(document).ready(function() {
-        new Choices('#leader', {
+$(document).ready(function() {
+    // The leader/coleader lists are not pre-loaded with all users.
+    // Only the currently selected users are pre-rendered as <option>s;
+    // everything else is loaded on demand by choices.js through usersAction().
+    function initUserSearchSelect(selectId) {
+        const select = document.getElementById(selectId);
+        const choices = new Choices('#' + selectId, {
             ...choicesOptions,
             searchEnabled: true
-        })
+        });
 
-        new Choices('#coLeader', {
-            ...choicesOptions,
-            searchEnabled: true
-        })
-    });
+        const searchUrl = '<?=$this->get('usersSearchUrl') ?>' + '/query/';
+
+        let searchTimer;
+        select.addEventListener('search', (event) => {
+            const query = event.detail.value;
+            if (query === '') {
+                return;
+            }
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                choices.setChoices(
+                    () => fetch(searchUrl + encodeURIComponent(query), {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    }).then(response => {
+                        if (!response.ok) {
+                            throw new Error('users/query request failed: ' + response.status);
+                        }
+                        return response.json();
+                    }),
+                    'id',
+                    'name',
+                    true
+                );
+            }, 250);
+        });
+    }
+
+    initUserSearchSelect('leader');
+    initUserSearchSelect('coLeader');
+});
 
 $(document).on('change', '.btn-file :file', function() {
     let input = $(this),
