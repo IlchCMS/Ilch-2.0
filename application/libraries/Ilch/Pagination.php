@@ -22,7 +22,7 @@ class Pagination
     /**
      * @var int
      */
-    protected $rows;
+    protected $rows = 0;
 
     /**
      * @param mixed $page
@@ -35,7 +35,7 @@ class Pagination
             $page = 1;
         }
 
-        $this->page = intval($page);
+        $this->page = max(1, intval($page));
     }
 
     /**
@@ -43,7 +43,7 @@ class Pagination
      */
     public function setRows(int $rows)
     {
-        $this->rows = $rows;
+        $this->rows = max(0, $rows);
     }
 
     /**
@@ -61,10 +61,40 @@ class Pagination
      */
     public function setRowsPerPage(?int $rowsPerPage)
     {
-        if ($rowsPerPage == null) {
+        if ($rowsPerPage == null || $rowsPerPage < 1) {
             $rowsPerPage = 20;
         }
         $this->rowsPerPage = $rowsPerPage;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPage(): int
+    {
+        return $this->page;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRowsPerPage(): int
+    {
+        return $this->rowsPerPage;
+    }
+
+    /**
+     * Get the number of pages (the last page number).
+     *
+     * @return int
+     */
+    public function getLastPage(): int
+    {
+        if (empty($this->rows)) {
+            return 0;
+        }
+
+        return (int) ceil($this->rows / $this->rowsPerPage);
     }
 
     /**
@@ -78,20 +108,21 @@ class Pagination
     /**
      * Return HTML needed to display the pagination.
      *
-     * @param $view
-     * @param $urlArray
+     * @param mixed $view
+     * @param array $urlArray
+     * @param string $pageKey Query parameter name used for the page number
      * @return string
      */
-    public function getHtml($view, $urlArray): string
+    public function getHtml($view, $urlArray, string $pageKey = 'page'): string
     {
         if (empty($this->rows)) {
             return '';
         }
 
         $links = 7;
-        $last = ceil($this->rows / $this->rowsPerPage);
+        $last = $this->getLastPage();
 
-        if ($last == 1) {
+        if ($last <= 1) {
             return '';
         }
 
@@ -101,31 +132,31 @@ class Pagination
         $html = '<ul class="pagination">';
 
         if ($this->page > 1) {
-            $urlArray['page'] = $this->page - 1;
-            $html .= '<li class="page-item active"><a href="' . $view->getUrl($urlArray) . '" class="page-link">&laquo;</a></li>';
+            $urlArray[$pageKey] = $this->page - 1;
+            $html .= '<li class="page-item"><a href="' . $view->getUrl($urlArray) . '" class="page-link">&laquo;</a></li>';
         }
 
         if ($start > 1) {
-            $urlArray['page'] = 1;
+            $urlArray[$pageKey] = 1;
             $html .= '<li class="page-item"><a href="' . $view->getUrl($urlArray) . '" class="page-link">1</a></li>';
             $html .= '<li class="page-item disabled"><span>...</span></li>';
         }
 
         for ($i = $start; $i <= $end; $i++) {
             $class = ($this->page == $i) ? 'active' : '';
-            $urlArray['page'] = $i;
+            $urlArray[$pageKey] = $i;
             $html .= '<li class="page-item ' . $class . '"><a href="' . $view->getUrl($urlArray) . '" class="page-link">' . $i . '</a></li>';
         }
 
         if ($end < $last) {
-            $urlArray['page'] = $last;
-            $html .= '<li class="disabled"><span>...</span></li>';
-            $html .= '<li><a href="' . $view->getUrl($urlArray) . '" class="page-link">' . $last . '</a></li>';
+            $urlArray[$pageKey] = $last;
+            $html .= '<li class="page-item disabled"><span>...</span></li>';
+            $html .= '<li class="page-item"><a href="' . $view->getUrl($urlArray) . '" class="page-link">' . $last . '</a></li>';
         }
 
         if ($last > $this->page) {
-            $urlArray['page'] = $this->page + 1;
-            $html .= '<li><a href="' . $view->getUrl($urlArray) . '" class="page-link">&raquo;</a></li>';
+            $urlArray[$pageKey] = $this->page + 1;
+            $html .= '<li class="page-item"><a href="' . $view->getUrl($urlArray) . '" class="page-link">&raquo;</a></li>';
         }
 
         $html .= '</ul>';
