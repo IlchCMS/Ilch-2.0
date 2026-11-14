@@ -61,21 +61,27 @@ calendar_events:
   -
     id: 1
     url: "calendar/events/index/"
+    enabled: 1
   -
     id: 2
     url: "war/wars/index/"
+    enabled: 1
   -
     id: 3
     url: "training/trainings/index/"
+    enabled: 1
   -
     id: 4
     url: "birthday/birthdays/index/"
+    enabled: 1
   -
     id: 5
     url: "events/events/index/"
+    enabled: 1
   -
     id: 6
     url: "away/aways/index/"
+    enabled: 1
 
 calendar_access:
   -

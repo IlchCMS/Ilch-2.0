@@ -110,6 +110,7 @@ class Events extends \Ilch\Model
             ($withId ? ['id' => $this->getId()] : []),
             [
                 'url' => $this->getUrl(),
+                'enabled' => (int)$this->isEnabled(),
             ]
         );
     }

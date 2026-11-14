@@ -77,6 +77,7 @@ class EventsModelTest extends TestCase
 
         self::assertSame($model, $model->setId(1));
         self::assertSame($model, $model->setUrl('calendar/events/index/'));
+        self::assertSame($model, $model->setIsEnabled(true));
     }
 
     /**
@@ -101,6 +102,7 @@ class EventsModelTest extends TestCase
 
         self::assertSame(0, $model->getId());
         self::assertSame('', $model->getUrl());
+        self::assertTrue($model->isEnabled());
     }
 
     /**
@@ -117,7 +119,7 @@ class EventsModelTest extends TestCase
     }
 
     /**
-     * Tests that getArray() returns all fields including the id.
+     * Tests that getArray() returns all fields (id, url, enabled).
      */
     public function testGetArray()
     {
@@ -127,6 +129,7 @@ class EventsModelTest extends TestCase
             [
                 'id' => 1,
                 'url' => 'calendar/events/index/',
+                'enabled' => 1,
             ],
             $model->getArray()
         );
@@ -143,6 +146,7 @@ class EventsModelTest extends TestCase
             [
                 'id' => 0,
                 'url' => '',
+                'enabled' => 1,
             ],
             $model->getArray()
         );
@@ -159,6 +163,21 @@ class EventsModelTest extends TestCase
 
         self::assertArrayNotHasKey('id', $array);
         self::assertSame('away/aways/index/', $array['url']);
+        self::assertSame(1, $array['enabled']);
+    }
+
+    /**
+     * Tests that getArray() reflects a disabled enabled flag.
+     */
+    public function testGetArrayWithDisabledFlag()
+    {
+        $model = (new Events())->setId(1)->setUrl('calendar/events/index/')->setIsEnabled(false);
+
+        $array = $model->getArray(false);
+
+        self::assertArrayNotHasKey('id', $array);
+        self::assertSame('calendar/events/index/', $array['url']);
+        self::assertSame(0, $array['enabled']);
     }
 
     /**
@@ -199,5 +218,77 @@ class EventsModelTest extends TestCase
 
         self::assertSame(1, $model->getId());
         self::assertSame('events/events/index/', $model->getUrl());
+    }
+
+    /**
+     * Tests that the default enabled state is true.
+     */
+    public function testIsEnabledDefault()
+    {
+        $model = new Events();
+
+        self::assertTrue($model->isEnabled());
+    }
+
+    /**
+     * Tests that setIsEnabled() sets the value and returns $this.
+     */
+    public function testSetIsEnabled()
+    {
+        $model = new Events();
+
+        self::assertSame($model, $model->setIsEnabled(false));
+        self::assertFalse($model->isEnabled());
+
+        self::assertSame($model, $model->setIsEnabled(true));
+        self::assertTrue($model->isEnabled());
+    }
+
+    /**
+     * Tests that setIsEnabled() casts to bool.
+     */
+    public function testSetIsEnabledCastsToBool()
+    {
+        $model = new Events();
+
+        $model->setIsEnabled(1);
+        self::assertTrue($model->isEnabled());
+        self::assertIsBool($model->isEnabled());
+
+        $model->setIsEnabled(0);
+        self::assertFalse($model->isEnabled());
+    }
+
+    /**
+     * Tests that chaining setters including setIsEnabled builds a complete model.
+     */
+    public function testChainedSettersWithIsEnabled()
+    {
+        $model = (new Events())
+            ->setId(2)
+            ->setUrl('war/wars/index/')
+            ->setIsEnabled(false);
+
+        self::assertSame(2, $model->getId());
+        self::assertSame('war/wars/index/', $model->getUrl());
+        self::assertFalse($model->isEnabled());
+    }
+
+    /**
+     * Tests that setByArray() sets the enabled flag from the array.
+     */
+    public function testSetByArrayWithEnabled()
+    {
+        $model = (new Events())->setByArray(
+            [
+                'id' => 3,
+                'url' => 'training/trainings/index/',
+                'enabled' => 0,
+            ]
+        );
+
+        self::assertSame(3, $model->getId());
+        self::assertSame('training/trainings/index/', $model->getUrl());
+        self::assertFalse($model->isEnabled());
     }
 }

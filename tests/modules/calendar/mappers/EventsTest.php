@@ -105,6 +105,43 @@ class EventsTest extends DatabaseTestCase
         self::assertSame('testurl', $entry->getUrl());
     }
 
+    /**
+     * Tests that save() persists the enabled flag on insert.
+     */
+    public function testSavePersistsEnabledOnInsert()
+    {
+        $model = new EntriesModel();
+        $model->setUrl('testurl');
+        $model->setIsEnabled(false);
+        $id = $this->mapper->save($model);
+
+        $entry = $this->mapper->getEntryById($id);
+
+        self::assertNotNull($entry);
+        self::assertEquals($id, $entry->getId());
+        self::assertSame('testurl', $entry->getUrl());
+        self::assertFalse($entry->isEnabled());
+    }
+
+    /**
+     * Tests that save() persists the enabled flag on update.
+     */
+    public function testSavePersistsEnabledOnUpdate()
+    {
+        $model = new EntriesModel();
+        $model->setId(1);
+        $model->setUrl('testurl');
+        $model->setIsEnabled(false);
+        $id = $this->mapper->save($model);
+
+        $entry = $this->mapper->getEntryById($id);
+
+        self::assertNotNull($entry);
+        self::assertEquals(1, $id);
+        self::assertSame('testurl', $entry->getUrl());
+        self::assertFalse($entry->isEnabled());
+    }
+
     public function testdeleteEvents()
     {
         self::assertSame(true, $this->mapper->delete(1));
@@ -193,6 +230,59 @@ class EventsTest extends DatabaseTestCase
         $other = $this->mapper->getEntryById(2);
         self::assertNotNull($other);
         self::assertSame('war/wars/index/', $other->getUrl());
+    }
+
+    /**
+     * Tests that setEnabled() disables an entry and persists it.
+     */
+    public function testSetEnabledFalse()
+    {
+        self::assertTrue($this->mapper->setEnabled(1, false));
+
+        $entry = $this->mapper->getEntryById(1);
+        self::assertNotNull($entry);
+        self::assertSame(1, $entry->getId());
+        self::assertFalse($entry->isEnabled());
+    }
+
+    /**
+     * Tests that setEnabled() can re-enable a previously disabled entry.
+     */
+    public function testSetEnabledTrue()
+    {
+        self::assertTrue($this->mapper->setEnabled(1, false));
+        self::assertTrue($this->mapper->setEnabled(1, true));
+
+        $entry = $this->mapper->getEntryById(1);
+        self::assertNotNull($entry);
+        self::assertTrue($entry->isEnabled());
+    }
+
+    /**
+     * Tests that disabling one entry does not affect other entries.
+     */
+    public function testSetEnabledDoesNotAffectOthers()
+    {
+        self::assertTrue($this->mapper->setEnabled(1, false));
+
+        $other = $this->mapper->getEntryById(2);
+        self::assertNotNull($other);
+        self::assertSame('war/wars/index/', $other->getUrl());
+        self::assertTrue($other->isEnabled());
+    }
+
+    /**
+     * Tests that setEnabled() on a non-existent id does not affect existing entries.
+     */
+    public function testSetEnabledNotFound()
+    {
+        $this->mapper->setEnabled(9999, false);
+
+        self::assertCount(6, $this->mapper->getEntries());
+
+        $entry = $this->mapper->getEntryById(1);
+        self::assertNotNull($entry);
+        self::assertTrue($entry->isEnabled());
     }
 
     /**
