@@ -231,10 +231,12 @@ class Notifications extends \Ilch\Mapper
         if (count($notifications) > 1) {
             $first = $notifications[0];
             foreach ($notifications as $notification) {
-                if ($notification->getModule() !== $first->getModule()
+                if (
+                    $notification->getModule() !== $first->getModule()
                     || $notification->getMessage() !== $first->getMessage()
                     || $notification->getURL() !== $first->getURL()
-                    || $notification->getType() !== $first->getType()) {
+                    || $notification->getType() !== $first->getType()
+                ) {
                     $validateEach = true;
                     break;
                 }
