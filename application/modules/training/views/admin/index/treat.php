@@ -331,11 +331,9 @@ $periodAppendix = [
             searchEnabled: true
         });
 
-        // Build the endpoint from the current page URL:
-        //   .../admin/training/index/treat  ->  .../admin/training/index/users/query/
-        // (A relative 'index.php/...' URL would resolve against the treat page's
-        //  directory and produce a doubled .../index/index.php/... path.)
-        const contactSearchUrl = window.location.pathname.replace(/\/[^/]+$/, '') + '/users/query/';
+        // Endpoint is built server-side (usersAction of this controller), so
+        // it is identical for .../treat and .../treat/id/<id>.
+        const contactSearchUrl = '<?=$this->get('contactSearchUrl') ?>' + '/query/';
 
         let contactSearchTimer;
         contactSelect.addEventListener('search', (event) => {
