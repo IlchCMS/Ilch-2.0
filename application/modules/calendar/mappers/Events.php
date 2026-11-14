@@ -88,10 +88,10 @@ class Events extends \Ilch\Mapper
             $id = $id->getId();
         }
 
-        $entrys = $this->getEntriesBy(['id' => (int)$id], []);
+        $entries = $this->getEntriesBy(['id' => (int)$id], []);
 
-        if (!empty($entrys)) {
-            return reset($entrys);
+        if (!empty($entries)) {
+            return reset($entries);
         }
 
         return null;
@@ -120,6 +120,22 @@ class Events extends \Ilch\Mapper
         }
 
         return $result;
+    }
+
+    /**
+     * Set if enabled or disabled.
+     *
+     * @param int $id
+     * @param bool $enable
+     * @return bool
+     * @since 1.12.0
+     */
+    public function setEnabled(int $id, bool $enable): bool
+    {
+        return (bool)$this->db()->update($this->tablename)
+            ->values(['enabled' => $enable])
+            ->where(['id' => $id])
+            ->execute();
     }
 
     /**

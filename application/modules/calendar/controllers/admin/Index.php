@@ -29,6 +29,12 @@ class Index extends \Ilch\Controller\Admin
                     'icon' => 'fa-solid fa-circle-plus',
                     'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
                 ]
+            ],
+            [
+                'name' => 'settings',
+                'active' => false,
+                'icon' => 'fa-solid fa-gears',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
 

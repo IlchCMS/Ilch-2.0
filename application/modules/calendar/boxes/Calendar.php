@@ -15,7 +15,7 @@ class Calendar extends \Ilch\Box
     {
         $eventsMapper = new EventsMapper();
 
-        $this->getView()->set('events', $eventsMapper->getEntries());
+        $this->getView()->set('events', $eventsMapper->getEntriesBy(['enabled' => 1]));
         $this->getView()->set('uniqid', $this->getUniqid());
     }
 }
