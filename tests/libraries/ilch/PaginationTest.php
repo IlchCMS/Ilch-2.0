@@ -9,6 +9,8 @@ namespace Ilch;
 
 use PHPUnit\Framework\TestCase;
 
+require_once __DIR__ . '/TestView.php';
+
 class PaginationTest extends TestCase
 {
     private const URL = 'http://localhost/index.php';
@@ -431,18 +433,5 @@ class PaginationTest extends TestCase
     {
         return '<li class="page-item"><a href="' . self::URL . '?page=' . $number
             . '" class="page-link">' . $label . '</a></li>';
-    }
-}
-
-/**
- * Stub for the view passed to Pagination::getHtml(). Renders deterministic URLs.
- */
-class TestView
-{
-    public function getUrl(array $urlArray): string
-    {
-        $query = http_build_query($urlArray);
-
-        return 'http://localhost/index.php' . ($query === '' ? '' : '?' . $query);
     }
 }
