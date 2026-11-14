@@ -62,14 +62,20 @@ class Index extends \Ilch\Controller\Frontend
             // Leaders/coleaders first, so they are always on the first page.
             $allIds = array_values(array_unique(array_merge($leaderIds, $coLeaderIds, $groupUserIds)));
 
-            $page = max(1, (int) $this->getRequest()->getParam('page_' . $team->getId(), 1));
-            $offset = ($page - 1) * $membersPerPage;
-            $pagedIds = array_slice($allIds, $offset, $membersPerPage);
+            // Each team gets its own page parameter (page_<id>), because several
+            // paginated lists are rendered on this one page.
+            $pagination = new Pagination();
+            $pagination->setPage($this->getRequest()->getParam('page_' . $team->getId()));
+            $pagination->setRowsPerPage($membersPerPage);
+            $pagination->setRows(count($allIds));
 
+            $limit = $pagination->getLimit();
+            $pagedIds = array_slice($allIds, $limit[0], $limit[1]);
+
+            // One field-limited query for the whole page instead of one
+            // full user load (with groups and Date objects) per member.
             $users = [];
             if (!empty($pagedIds)) {
-                // One field-limited query for the whole page instead of one
-                // full user load (with groups and Date objects) per member.
                 $userById = [];
                 foreach ($userMapper->getUserList(['id' => $pagedIds, 'confirmed' => 1], null, ['id', 'name', 'opt_mail']) as $user) {
                     $userById[$user->getId()] = $user;
@@ -86,9 +92,7 @@ class Index extends \Ilch\Controller\Frontend
                 'leaderIds' => $leaderIds,
                 'coLeaderIds' => $coLeaderIds,
                 'allIds' => $allIds, // full set, still needed for the "apply" check
-                'page' => $page,
-                'hasPrevious' => $page > 1,
-                'hasNext' => $offset + $membersPerPage < count($allIds),
+                'pagination' => $pagination,
             ];
         }
 

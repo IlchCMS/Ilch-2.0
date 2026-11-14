@@ -174,9 +174,7 @@ $(document).ready(function() {
             searchEnabled: true
         });
 
-        // Build the endpoint from the current page URL:
-        //   .../admin/teams/index/treat  ->  .../admin/teams/index/users/query/
-        const searchUrl = window.location.pathname.replace(/\/[^/]+$/, '') + '/users/query/';
+        const searchUrl = '<?=$this->get('usersSearchUrl') ?>' + '/query/';
 
         let searchTimer;
         select.addEventListener('search', (event) => {

@@ -253,9 +253,9 @@ class Index extends \Ilch\Controller\Admin
 
         $this->getView()->set('leaderUsers', $this->getSelectedUsers($userMapper, 'leader', $model->getLeader()))
             ->set('coLeaderUsers', $this->getSelectedUsers($userMapper, 'coLeader', $model->getCoLeader()))
-            ->set('userGroupList', $userGroupMapper->getGroupList());
+            ->set('userGroupList', $userGroupMapper->getGroupList())
+            ->set('usersSearchUrl', $this->getLayout()->getUrl(['action' => 'users']));
     }
-
 
     public function updateAction()
     {
