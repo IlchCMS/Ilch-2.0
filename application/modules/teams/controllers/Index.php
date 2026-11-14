@@ -19,6 +19,7 @@ use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMap
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 use Modules\Admin\Models\Notification as NotificationModel;
 use Ilch\Validation;
+use Ilch\Pagination;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -41,10 +42,59 @@ class Index extends \Ilch\Controller\Frontend
         $profileIconFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
         $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
 
-        $this->getView()->set('userMapper', $userMapper)
-            ->set('groupMapper', $groupMapper)
-            ->set('profileFieldsContentMapper', $profileFieldsContentMapper)
-            ->set('teams', $teamsMapper->getTeams())
+        $teams = $teamsMapper->getTeams();
+
+        // Only a limited number of members per team is rendered. Without this,
+        // teams with huge groups would render every member on one page and
+        // exhaust the memory limit (and issue one query per member).
+        $membersPerPage = (int) ($this->getConfig()->get('defaultPaginationObjects') ?: 50);
+
+        $teamData = [];
+        foreach ($teams ?? [] as $team) {
+            if ($team->getOptShow() != 1) {
+                continue;
+            }
+
+            $groupUserIds = array_map('intval', $groupMapper->getUsersForGroup($team->getGroupId()));
+            $leaderIds = $team->getLeader() ? array_map('intval', explode(',', $team->getLeader())) : [];
+            $coLeaderIds = $team->getCoLeader() ? array_map('intval', explode(',', $team->getCoLeader())) : [];
+
+            // Leaders/coleaders first, so they are always on the first page.
+            $allIds = array_values(array_unique(array_merge($leaderIds, $coLeaderIds, $groupUserIds)));
+
+            $page = max(1, (int) $this->getRequest()->getParam('page_' . $team->getId(), 1));
+            $offset = ($page - 1) * $membersPerPage;
+            $pagedIds = array_slice($allIds, $offset, $membersPerPage);
+
+            $users = [];
+            if (!empty($pagedIds)) {
+                // One field-limited query for the whole page instead of one
+                // full user load (with groups and Date objects) per member.
+                $userById = [];
+                foreach ($userMapper->getUserList(['id' => $pagedIds, 'confirmed' => 1], null, ['id', 'name', 'opt_mail']) as $user) {
+                    $userById[$user->getId()] = $user;
+                }
+                foreach ($pagedIds as $id) {
+                    if (isset($userById[$id])) {
+                        $users[] = $userById[$id];
+                    }
+                }
+            }
+
+            $teamData[$team->getId()] = [
+                'users' => $users,
+                'leaderIds' => $leaderIds,
+                'coLeaderIds' => $coLeaderIds,
+                'allIds' => $allIds, // full set, still needed for the "apply" check
+                'page' => $page,
+                'hasPrevious' => $page > 1,
+                'hasNext' => $offset + $membersPerPage < count($allIds),
+            ];
+        }
+
+        $this->getView()->set('profileFieldsContentMapper', $profileFieldsContentMapper)
+            ->set('teams', $teams)
+            ->set('teamData', $teamData)
             ->set('profileIconFields', $profileIconFields)
             ->set('profileFieldsTranslation', $profileFieldsTranslation);
     }
@@ -77,10 +127,48 @@ class Index extends \Ilch\Controller\Frontend
         $profileIconFields = $profileFieldsMapper->getProfileFields(['type' => 2]);
         $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
 
-        $this->getView()->set('userMapper', $userMapper)
-            ->set('groupMapper', $groupMapper)
-            ->set('profileFieldsContentMapper', $profileFieldsContentMapper)
+        // Only a limited number of members is rendered per page, otherwise
+        // teams with huge groups would exhaust the memory limit (and issue
+        // one full user load per member).
+        $membersPerPage = (int) ($this->getConfig()->get('defaultPaginationObjects') ?: 50);
+
+        $groupUserIds = array_map('intval', $groupMapper->getUsersForGroup($team->getGroupId()));
+        $leaderIds = $team->getLeader() ? array_map('intval', explode(',', $team->getLeader())) : [];
+        $coLeaderIds = $team->getCoLeader() ? array_map('intval', explode(',', $team->getCoLeader())) : [];
+
+        // Leaders/coleaders first, so they are always on the first page.
+        $allIds = array_values(array_unique(array_merge($leaderIds, $coLeaderIds, $groupUserIds)));
+
+        $pagination = new Pagination();
+        $pagination->setPage($this->getRequest()->getParam('page'));
+        $pagination->setRowsPerPage($membersPerPage);
+        $pagination->setRows(count($allIds));
+
+        $limit = $pagination->getLimit();
+        $pagedIds = array_slice($allIds, $limit[0], $limit[1]);
+
+        // One field-limited query for the whole page instead of one full user
+        // load (with groups and Date objects) per member.
+        $users = [];
+        if (!empty($pagedIds)) {
+            $userById = [];
+            foreach ($userMapper->getUserList(['id' => $pagedIds, 'confirmed' => 1], null, ['id', 'name', 'opt_mail']) as $user) {
+                $userById[$user->getId()] = $user;
+            }
+            foreach ($pagedIds as $id) {
+                if (isset($userById[$id])) {
+                    $users[] = $userById[$id];
+                }
+            }
+        }
+
+        $this->getView()->set('profileFieldsContentMapper', $profileFieldsContentMapper)
             ->set('team', $team)
+            ->set('users', $users)
+            ->set('leaderIds', $leaderIds)
+            ->set('coLeaderIds', $coLeaderIds)
+            ->set('allIds', $allIds)
+            ->set('pagination', $pagination)
             ->set('profileIconFields', $profileIconFields)
             ->set('profileFieldsTranslation', $profileFieldsTranslation);
     }

@@ -35,6 +35,8 @@ return [
     'failedFilesize' => 'The image has a disallowed width, height or is too big.',
     'leaderCoLeaderIdentic' => 'The leader and CoLeader are identical.',
     'rightsOfGroup' => 'Members of a team receive the rights of the associated group.',
+    'previousPage' => 'Previous page',
+    'nextPage' => 'Next page',
 
     'menuJoin' => 'Join',
     'menuApplications' => 'Applications',

@@ -35,6 +35,8 @@ return [
     'failedFilesize' => 'Das Bild hat eine unerlaubte Breite, Höhe oder ist zu groß.',
     'leaderCoLeaderIdentic' => 'Der Leader und CoLeader sind identisch.',
     'rightsOfGroup' => 'Mitglieder eines Teams übernehmen die Rechte der zugehörigen Gruppe.',
+    'previousPage' => 'Vorherige Seite',
+    'nextPage' => 'Nächste Seite',
 
     'menuJoin' => 'Beitreten',
     'menuApplications' => 'Bewerbungen',

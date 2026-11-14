@@ -208,34 +208,57 @@ class NotificationPermission extends \Ilch\Mapper
     /**
      * Add multiple permissions.
      *
+     * Only (user_id, module, type) combinations that do not exist yet are
+     * inserted, with granted = 1 (the permission is materialised because a
+     * notification of this type was delivered - same semantics as
+     * addPermissionForModule()).
+     *
      * @param NotificationPermissionModel[] $permissionModels
      * @return int
      */
     public function addPermissions(array $permissionModels): int
     {
-        $permissions = $this->getPermissions();
-        $valuesOfRows = [];
+        if ($permissionModels === []) {
+            return 0;
+        }
 
+        // Load the existing (user_id, type) combinations with one query per
+        // involved module instead of loading the whole permission table.
+        $modules = [];
         foreach ($permissionModels as $permissionModel) {
-            foreach ($permissions as $permission) {
-                if ($permission->getUserId() === $permissionModel->getUserId() && $permission->getModule() === $permissionModel->getModule() && $permission->getType() === $permissionModel->getType()) {
-                    continue 2;
-                }
-            }
+            $modules[$permissionModel->getModule()] = true;
+        }
 
-            $row = [$permissionModel->getUserId(), $permissionModel->getModule(), $permissionModel->getType()];
-            if (!\in_array($row, $valuesOfRows, true)) {
-                $valuesOfRows[] = $row;
+        $existing = [];
+        foreach ($modules as $module => $_) {
+            $rows = $this->db()->select(['user_id', 'type'])
+                ->from('users_notifications_permission')
+                ->where(['module' => $module])
+                ->execute()
+                ->fetchRows();
+
+            foreach ($rows as $row) {
+                $existing[$module . '|' . $row['user_id'] . '|' . ($row['type'] ?? '')] = true;
             }
+        }
+
+        $valuesOfRows = [];
+        $seen = [];
+        foreach ($permissionModels as $permissionModel) {
+            $key = $permissionModel->getModule() . '|' . $permissionModel->getUserId() . '|' . ($permissionModel->getType() ?? '');
+            if (isset($seen[$key]) || isset($existing[$key])) {
+                continue;
+            }
+            $seen[$key] = true;
+
+            $valuesOfRows[] = [$permissionModel->getUserId(), $permissionModel->getModule(), $permissionModel->getType(), 1];
         }
 
         if ($valuesOfRows !== []) {
             $affectedRows = 0;
-            $chunks = array_chunk($valuesOfRows, 25);
-
-            foreach ($chunks as $chunk) {
+            foreach (array_chunk($valuesOfRows, 500) as $chunk) {
                 $affectedRows += $this->db()->insert('users_notifications_permission')
-                    ->columns(['user_id', 'module', 'type'])
+                    ->columns(['user_id', 'module', 'type', 'granted'])
                     ->values($chunk)
                     ->execute();
             }

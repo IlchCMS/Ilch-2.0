@@ -2,19 +2,26 @@
 
 /** @var \Ilch\View $this */
 
-/** @var \Modules\User\Mappers\User $userMapper */
-$userMapper = $this->get('userMapper');
-/** @var \Modules\User\Mappers\Group $groupMapper */
-$groupMapper = $this->get('groupMapper');
 /** @var \Modules\User\Mappers\ProfileFieldsContent $profileFieldsContentMapper */
 $profileFieldsContentMapper = $this->get('profileFieldsContentMapper');
-/** @var \Modules\User\Mappers\ProfileFields $profileIconFields */
+/** @var \Modules\User\Mappers\ProfileFields[]|null $profileIconFields */
 $profileIconFields = $this->get('profileIconFields');
-/** @var \Modules\User\Mappers\ProfileFieldsTranslation $profileFieldsTranslation */
+/** @var \Modules\User\Mappers\ProfileFieldsTranslation[]|null $profileFieldsTranslation */
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 
 /** @var \Modules\Teams\Models\Teams $team */
 $team = $this->get('team');
+
+/** @var \Modules\User\Models\User[] $users */
+$users = $this->get('users');
+/** @var int[] $leaderIds */
+$leaderIds = $this->get('leaderIds');
+/** @var int[] $coLeaderIds */
+$coLeaderIds = $this->get('coLeaderIds');
+/** @var int[] $allIds */
+$allIds = $this->get('allIds');
+/** @var \Ilch\Pagination $pagination */
+$pagination = $this->get('pagination');
 ?>
 <h1><?=$this->getTrans('menuTeam') ?></h1>
 <div class="teams">
@@ -28,12 +35,6 @@ $team = $this->get('team');
                 <?php endif; ?>
             </div>
             <div class="col-xl-12">
-                <?php
-                $groupList = $groupMapper->getUsersForGroup($team->getGroupId());
-                $leaderIds = explode(',', $team->getLeader());
-                $coLeaderIds = explode(',', $team->getCoLeader());
-                $groupList = array_unique(array_filter(array_merge($leaderIds, $coLeaderIds, $groupList)));
-                ?>
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
                         <colgroup>
@@ -42,61 +43,56 @@ $team = $this->get('team');
                             <col />
                         </colgroup>
                         <tbody>
-                        <?php foreach ($groupList as $userId) : ?>
-                            <?php $user = $userMapper->getUserById($userId); ?>
-                            <?php if ($user && $user->getConfirmed() == 1) : ?>
-                                <?php $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($user->getId()); ?>
-                                <tr>
-                                    <td>
-                                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" title="<?=$this->escape($user->getName()) ?>s <?=$this->getTrans('profile') ?>">
-                                            <?=$this->escape($user->getName()) ?>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <?php
-                                        if (in_array($user->getId(), $leaderIds)) {
-                                            echo $this->getTrans('leader');
-                                        } elseif (in_array($user->getId(), $coLeaderIds)) {
-                                            echo $this->getTrans('coLeader');
-                                        } else {
-                                            echo $this->getTrans('member');
-                                        }
-                                        ?>
-                                    </td>
-                                    <td class="contact-links">
-                                        <?php if ($this->getUser() && $this->getUser()->getId() != $this->escape($user->getId())) : ?>
-                                            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'panel', 'action' => 'dialognew', 'id' => $user->getId()]) ?>" class="fa-solid fa-comment" title="<?=$this->getTrans('privateMessage') ?>"></a>
-                                        <?php endif; ?>
-                                        <?php if ($user->getOptMail() == 1 && $this->getUser() && $this->getUser()->getId() != $user->getID()) : ?>
-                                            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'mail', 'action' => 'index', 'user' => $user->getId()]) ?>" class="fa-solid fa-envelope" title="<?=$this->getTrans('email') ?>"></a>
-                                        <?php endif; ?>
+                        <?php foreach ($users as $user) : ?>
+                            <?php $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($user->getId()); ?>
+                            <tr>
+                                <td>
+                                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" title="<?=$this->escape($user->getName()) ?> <?=$this->getTrans('profile') ?>">
+                                        <?=$this->escape($user->getName()) ?>
+                                    </a>
+                                </td>
+                                <td>
+                                    <?php if (in_array($user->getId(), $leaderIds)) : ?>
+                                        <?=$this->getTrans('leader') ?>
+                                    <?php elseif (in_array($user->getId(), $coLeaderIds)) : ?>
+                                        <?=$this->getTrans('coLeader') ?>
+                                    <?php else : ?>
+                                        <?=$this->getTrans('member') ?>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="contact-links">
+                                    <?php if ($this->getUser() && $this->getUser()->getId() != $user->getId()) : ?>
+                                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'panel', 'action' => 'dialognew', 'id' => $user->getId()]) ?>" class="fa-solid fa-comment" title="<?=$this->getTrans('privateMessage') ?>"></a>
+                                    <?php endif; ?>
+                                    <?php if ($user->getOptMail() == 1 && $this->getUser() && $this->getUser()->getId() != $user->getId()) : ?>
+                                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'mail', 'action' => 'index', 'user' => $user->getId()]) ?>" class="fa-solid fa-envelope" title="<?=$this->getTrans('email') ?>"></a>
+                                    <?php endif; ?>
 
-                                        <?php foreach ($profileIconFields as $profileIconField) {
-                                            if ($profileIconField->getShow()) {
-                                                foreach ($profileFieldsContent as $profileFieldContent) {
-                                                    if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
-                                                        $profileFieldName = $profileIconField->getKey();
-                                                        foreach ($profileFieldsTranslation as $profileFieldTrans) {
-                                                            if ($profileIconField->getId() == $profileFieldTrans->getFieldId()) {
-                                                                $profileFieldName = $profileFieldTrans->getName();
-                                                                break;
-                                                            }
+                                    <?php foreach ($profileIconFields as $profileIconField) {
+                                        if ($profileIconField->getShow()) {
+                                            foreach ($profileFieldsContent as $profileFieldContent) {
+                                                if ($profileFieldContent->getValue() && $profileIconField->getId() == $profileFieldContent->getFieldId()) {
+                                                    $profileFieldName = $profileIconField->getKey();
+                                                    foreach ($profileFieldsTranslation as $profileFieldTrans) {
+                                                        if ($profileIconField->getId() == $profileFieldTrans->getFieldId()) {
+                                                            $profileFieldName = $profileFieldTrans->getName();
+                                                            break;
                                                         }
-
-                                                        echo '<a href="' . $profileIconField->getAddition() . $profileFieldContent->getValue() . '" target="_blank" rel="noopener" class="' . $profileIconField->getIcon() . '" title="' . $profileFieldName . '"></a>';
-                                                        break;
                                                     }
+
+                                                    echo '<a href="' . $profileIconField->getAddition() . $profileFieldContent->getValue() . '" target="_blank" rel="noopener" class="' . $profileIconField->getIcon() . '" title="' . $profileFieldName . '"></a>';
+                                                    break;
                                                 }
                                             }
                                         }
-                                        ?>
-                                    </td>
-                                </tr>
-                            <?php endif; ?>
+                                    }
+                                    ?>
+                                </td>
+                            </tr>
                         <?php endforeach; ?>
 
-                        <?php ($this->getUser()) ? $userId = $this->getUser()->getId() : $userId = 0 ?>
-                        <?php  if ($team->getOptIn() == 1 && (!in_array($userId, $groupList) || $userId == 0)) : ?>
+                        <?php $userId = $this->getUser() ? $this->getUser()->getId() : 0; ?>
+                        <?php if ($team->getOptIn() == 1 && (!in_array($userId, $allIds) || $userId == 0)) : ?>
                             <tr>
                                 <td colspan="3"><a href="<?=$this->getUrl(['action' => 'join', 'id' => $team->getId()]) ?>"><?=$this->getTrans('apply') ?></a></td>
                             </tr>
@@ -104,6 +100,11 @@ $team = $this->get('team');
                         </tbody>
                     </table>
                 </div>
+                <?php if ($pagination->getRows() > 0) : ?>
+                    <div class="text-center mt-2">
+                        <?php echo $pagination->getHtml($this, ['action' => 'team', 'id' => $team->getId()]); ?>
+                    </div>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
     </div>
