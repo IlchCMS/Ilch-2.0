@@ -46,4 +46,8 @@ return [
     'years' => 'Jahr(e)',
 
     'listweek' => 'Wochenliste',
+
+    'calendarSourceInfo' => 'Kalendereinträge können aus verschiedenen Modulen stammen. Hier können Sie Kalenderquellen aktivieren oder deaktivieren.',
+    'calendarSource' => 'Kalenderquelle',
+    'calendarSourceSaveFailure' => 'Änderung konnte nicht gespeichert werden.',
 ];

@@ -24,6 +24,14 @@ class Events extends \Ilch\Model
     protected string $url = '';
 
     /**
+     * Is entry enabled or disabled.
+     *
+     * @var bool
+     * @since 1.12.0
+     */
+    protected bool $isEnabled = true;
+
+    /**
      * Sets Model by Array.
      *
      * @param array $entries
@@ -37,10 +45,12 @@ class Events extends \Ilch\Model
         if (isset($entries['url'])) {
             $this->setUrl($entries['url']);
         }
+        if (isset($entries['enabled'])) {
+            $this->setIsEnabled($entries['enabled']);
+        }
 
         return $this;
     }
-
 
     /**
      * Gets the Id of the events.
@@ -102,5 +112,29 @@ class Events extends \Ilch\Model
                 'url' => $this->getUrl(),
             ]
         );
+    }
+
+    /**
+     * Returns if entry is enabled.
+     *
+     * @return bool
+     * @since 1.12.0
+     */
+    public function isEnabled(): bool
+    {
+        return $this->isEnabled;
+    }
+
+    /**
+     * Set if entry is enabled or disabled.
+     *
+     * @param bool $isEnabled
+     * @return $this
+     * @since 1.12.0
+     */
+    public function setIsEnabled(bool $isEnabled): Events
+    {
+        $this->isEnabled = $isEnabled;
+        return $this;
     }
 }

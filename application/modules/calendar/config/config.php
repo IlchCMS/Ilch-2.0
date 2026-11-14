@@ -15,7 +15,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'calendar',
-        'version' => '1.11.10',
+        'version' => '1.12.0',
         'icon_small' => 'fa-solid fa-calendar',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -103,6 +103,7 @@ class Config extends \Ilch\Config\Install
         CREATE TABLE IF NOT EXISTS `[prefix]_calendar_events` (
           `id` INT(11) NOT NULL AUTO_INCREMENT,
           `url` VARCHAR(255) NOT NULL,
+          `enabled` TINYINT(1) NOT NULL DEFAULT \'1\',
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 
@@ -277,7 +278,10 @@ class Config extends \Ilch\Config\Install
             case "1.11.9":
                 // Remove old version of FullCalendar as this version comes with version 7.1.5.
                 removeDir(APPLICATION_PATH . '/modules/calendar/static/js/fullcalendar-7.1.3/');
-            // no break
+
+                // Add new enabled column to the calendar_events table.
+                $this->db()->query('ALTER TABLE `[prefix]_calendar_events` ADD COLUMN `enabled` TINYINT(1) NOT NULL DEFAULT \'1\' AFTER `url`;');
+                // no break
         }
 
         return '"' . $this->config['key'] . '" Update-function executed.';

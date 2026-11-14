@@ -20,6 +20,6 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuCalendar'), ['controller' => 'index']);
 
-        $this->getView()->set('events', $eventsMapper->getEntries());
+        $this->getView()->set('events', $eventsMapper->getEntriesBy(['enabled' => 1]));
     }
 }

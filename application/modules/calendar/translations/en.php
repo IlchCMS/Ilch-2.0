@@ -46,4 +46,8 @@ return [
     'years' => 'year(s)',
 
     'listweek' => 'Weekly List',
+
+    'calendarSourceInfo' => 'Calendar events can come from different modules. You can enable or disable calendar sources here.',
+    'calendarSource' => 'Calendar source',
+    'calendarSourceSaveFailure' => 'The change could not be saved.',
 ];
