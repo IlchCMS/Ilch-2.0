@@ -1,16 +1,16 @@
 <?php
 
 /**
-* @copyright Ilch 2
-* @package ilch
-*/
+ * @copyright Ilch 2
+ * @package ilch
+ */
 
 namespace Ilch\Database\Mysql\Expression;
 
 /**
  * Placeholder for a Expression which will not be automatically quoted
  */
-class Expression
+class Expression implements CompositePart
 {
     /** @var  string */
     protected $expression;

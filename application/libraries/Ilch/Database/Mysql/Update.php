@@ -89,6 +89,10 @@ class Update extends QueryBuilder
             throw new \RuntimeException('table must be set');
         }
 
+        if (isset($this->having)) {
+            throw new \RuntimeException('HAVING is only supported for SELECT queries');
+        }
+
         $sql = 'UPDATE ' . $this->db->quote('[prefix]_' . $this->table) . ' SET ';
         $up = [];
 

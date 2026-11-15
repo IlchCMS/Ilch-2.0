@@ -53,9 +53,14 @@ class Delete extends QueryBuilder
      * Gets delete query builder sql.
      *
      * @return string
+     * @throws \RuntimeException
      */
     public function generateSql()
     {
+        if (isset($this->having)) {
+            throw new \RuntimeException('HAVING is only supported for SELECT queries');
+        }
+
         $sql = 'DELETE FROM ' . $this->db->quote('[prefix]_' . $this->table);
 
         $sql .= $this->generateWhereSql();

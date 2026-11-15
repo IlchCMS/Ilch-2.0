@@ -58,14 +58,16 @@ class Select extends QueryBuilder
      * @param array|null $where conditions @see QueryBuilder::where()
      * @param array|null $orderBy
      * @param array|int|null $limit
+     * @param array|Expression\CompositePart|null $having conditions @see QueryBuilder::having()
      */
     public function __construct(
         DB $db,
-        $fields = null,
+           $fields = null,
         ?string $table = null,
         ?array $where = null,
         ?array $orderBy = null,
-        $limit = null
+        $limit = null,
+        array|Expression\CompositePart|null $having = null
     ) {
         parent::__construct($db);
 
@@ -83,6 +85,9 @@ class Select extends QueryBuilder
         }
         if (isset($limit)) {
             $this->limit($limit);
+        }
+        if (isset($having)) {
+            $this->having($having);
         }
     }
 
@@ -326,6 +331,7 @@ class Select extends QueryBuilder
         $sql .= $this->generateWhereSql();
         $groupBy = $this->generateGroupBySql();
         $sql .= $groupBy;
+        $sql .= $this->generateHavingSql();
 
         // Special handling for sql queries with the group by clause.
         if ($groupBy !== '') {
@@ -365,6 +371,7 @@ class Select extends QueryBuilder
 
         $sql .= $this->generateWhereSql();
         $sql .= $this->generateGroupBySql();
+        $sql .= $this->generateHavingSql();
 
         $sql .= $this->generateOrderBySql();
 
@@ -457,7 +464,7 @@ class Select extends QueryBuilder
             //function like COUNT()
             if (strpos($fields, '(') !== false) {
                 $fields = [new Expression\Expression($fields)];
-            //single field
+                //single field
             } elseif (strpos($fields, ' ') !== false) {
                 // Added to support for example "DISTINCT c1, c2, c3"
                 $fields = [new Expression\Expression($fields)];

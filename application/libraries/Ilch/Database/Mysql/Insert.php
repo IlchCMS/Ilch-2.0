@@ -91,6 +91,10 @@ class Insert extends QueryBuilder
             throw new \RuntimeException('table must be set');
         }
 
+        if (isset($this->having)) {
+            throw new \RuntimeException('HAVING is only supported for SELECT queries');
+        }
+
         $sql = 'INSERT INTO ' . $this->db->quote('[prefix]_' . $this->table) . ' (';
         $sqlValues = [];
         $sqlFields = $sqlValues;
