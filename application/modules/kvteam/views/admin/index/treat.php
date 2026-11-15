@@ -4,6 +4,9 @@
 
 /** @var Modules\Kvteam\Models\Team $team */
 $team = $this->get('team');
+
+/** @var \Modules\User\Models\User[] $userList */
+$userList = $this->get('userList') ?? [];
 ?>
 <link href="<?=$this->getModuleUrl('static/css/team.css') ?>" rel="stylesheet">
 
@@ -32,10 +35,11 @@ $team = $this->get('team');
                     name="userIds[]"
                     data-placeholder="<?=$this->getTrans('selectMembers') ?>"
                     multiple>
-                <?php foreach ($this->get('userList') as $userList) :
-                    $userIds = explode(',', $team->getUserIds());
-                    ?>
-                    <option value="<?=$userList->getId() ?>" <?=(in_array($userList->getId(), $userIds) ? 'selected="selected"' : '') ?>>
+                <?php
+                /** @var \Modules\User\Models\User $userList */
+                ?>
+                <?php foreach ($userList as $userList) : ?>
+                    <option value="<?=$userList->getId() ?>" selected="selected">
                         <?=$this->escape($userList->getName()) ?>
                     </option>
                 <?php endforeach; ?>
@@ -48,9 +52,39 @@ $team = $this->get('team');
 
 <script>
     $(document).ready(function() {
-        new Choices('#userIds', {
+        // The members list is not pre-loaded with all users.
+        // Only the currently selected users are pre-rendered as <option>s;
+        // everything else is loaded on demand by choices.js through usersAction().
+        const select = document.getElementById('userIds');
+        const choices = new Choices('#userIds', {
             ...choicesOptions,
             searchEnabled: true
-        })
+        });
+
+        const searchUrl = '<?=$this->get('usersSearchUrl') ?>' + '/query/';
+
+        let searchTimer;
+        select.addEventListener('search', (event) => {
+            const query = event.detail.value;
+            if (query === '') {
+                return;
+            }
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                choices.setChoices(
+                    () => fetch(searchUrl + encodeURIComponent(query), {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    }).then(response => {
+                        if (!response.ok) {
+                            throw new Error('users/query request failed: ' + response.status);
+                        }
+                        return response.json();
+                    }),
+                    'id',
+                    'name',
+                    true
+                );
+            }, 250);
+        });
     });
 </script>

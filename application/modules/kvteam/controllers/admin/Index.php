@@ -11,6 +11,7 @@ use Modules\Kvteam\Mappers\Team as TeamMapper;
 use Modules\Kvteam\Models\Team as TeamModel;
 use Modules\User\Mappers\User as UserMapper;
 use Ilch\Validation;
+use Ilch\Pagination;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -125,7 +126,26 @@ class Index extends \Ilch\Controller\Admin
                 ->to(($this->getRequest()->getParam('id')) ? ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')] : ['action' => 'treat']);
         }
 
-        $this->getView()->set('userList', $userMapper->getUserList());
+        $this->getView()->set('userList', $this->getSelectedUsers($userMapper, 'userIds', $team->getUserIds()))
+            ->set('usersSearchUrl', $this->getLayout()->getUrl(['action' => 'users']));
+    }
+
+    public function usersAction()
+    {
+        header('Content-Type: application/json; charset=utf-8');
+
+        $userMapper = new UserMapper();
+        $search = (string)$this->getRequest()->getParam('query', '');
+
+        $where = ['confirmed' => 1];
+        if ($search !== '') {
+            $where['name LIKE'] = '%' . $search . '%';
+        }
+
+        $pagination = new Pagination();
+        $pagination->setRowsPerPage(20);
+
+        $this->getView()->set('users', $userMapper->getUserList($where, $pagination, ['id', 'name']));
     }
 
     public function delAction()
@@ -138,5 +158,33 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Returns the users (id + name only) currently assigned to a
+     * comma-separated id field ('userIds'), taken from the old input
+     * after a failed POST or from the team model itself.
+     *
+     * @param UserMapper $userMapper
+     * @param string $inputName
+     * @param string|null $stored
+     * @return \Modules\User\Models\User[]
+     */
+    private function getSelectedUsers(UserMapper $userMapper, string $inputName, ?string $stored): array
+    {
+        $ids = $this->getRequest()->getPost($inputName);
+        if (empty($ids)) {
+            $ids = $this->getRequest()->getOldInput($inputName);
+        }
+        if (empty($ids)) {
+            $ids = $stored ? explode(',', $stored) : [];
+        }
+
+        $ids = array_values(array_unique(array_filter(array_map('intval', (array)$ids))));
+        if (empty($ids)) {
+            return [];
+        }
+
+        return $userMapper->getUserList(['id' => $ids], null, ['id', 'name']);
     }
 }
