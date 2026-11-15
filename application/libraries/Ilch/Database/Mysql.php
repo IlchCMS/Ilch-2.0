@@ -282,7 +282,9 @@ class Mysql
         if ($this->transactionLevel === 1) {
             $this->query($commit ? 'COMMIT' : 'ROLLBACK');
         } else {
-            $savepoint = 'sp' . $this->transactionLevel;
+            // Savepoints are named after the level that was active *before*
+            // beginTransaction() incremented it: level 2 -> sp1, level 3 -> sp2, ...
+            $savepoint = 'sp' . ($this->transactionLevel - 1);
             $this->query(($commit ? 'RELEASE SAVEPOINT ' : 'ROLLBACK TO SAVEPOINT ') . $savepoint);
             $this->query('RELEASE SAVEPOINT ' . $savepoint);
         }
@@ -297,21 +299,21 @@ class Mysql
      */
     public function getSqlWithPrefix(string $sql): string
     {
-        if (\preg_match("/^UPDATE `?\[prefix\]_\S+`?\s+SET/is", $sql)) {
+        if (\preg_match('/^UPDATE `?\[prefix\]_\S+`?\s+SET/is', $sql)) {
             $sql = \preg_replace(
-                "/^UPDATE `?\[prefix\]_(\S+?)`?([\s\.,]|$)/i",
+                '/^UPDATE `?\[prefix\]_(\S+?)`?([\s\.,]|$)/i',
                 'UPDATE `' . $this->prefix . "\\1`\\2",
                 $sql
             );
-        } elseif (\preg_match("/^INSERT INTO `?\[prefix\]_\S+`?\s+[a-z0-9\s,\)\(]*?VALUES/is", $sql)) {
+        } elseif (\preg_match('/^INSERT INTO `?\[prefix\]_\S+`?\s+[a-z0-9\s,\)\(]*?VALUES/is', $sql)) {
             $sql = \preg_replace(
-                "/^INSERT INTO `?\[prefix\]_(\S+?)`?([\s\.,]|$)/i",
+                '/^INSERT INTO `?\[prefix\]_(\S+?)`?([\s\.,]|$)/i',
                 'INSERT INTO `' . $this->prefix . "\\1`\\2",
                 $sql
             );
         } else {
-            while (\preg_match("/\[prefix\]_(\S+?)([\s\.,]|$)/", $sql)) {
-                $sql = \preg_replace("/\[prefix\]_(\S+?)([\s\.,]|$)/", $this->prefix . "\\1\\2", $sql);
+            while (\preg_match('/\[prefix\]_(\S+?)([\s\.,]|$)/', $sql)) {
+                $sql = \preg_replace('/\[prefix\]_(\S+?)([\s\.,]|$)/', $this->prefix . "\\1\\2", $sql);
             }
         }
 
@@ -551,7 +553,7 @@ class Mysql
      */
     protected function getFieldsSql($fields): string
     {
-        if (!\is_array($fields) && ($fields === '*' || strpos($fields, '(') !== false)) {
+        if (!\is_array($fields) && ($fields === '*' || str_contains($fields, '('))) {
             return $fields;
         }
 
@@ -586,7 +588,7 @@ class Mysql
      */
     public function quote($field, bool $complete = false): string
     {
-        if ($complete || \strpos($field, '.') === false) {
+        if ($complete || !str_contains($field, '.')) {
             if ($field === '*') {
                 return $field;
             } else {
@@ -612,7 +614,7 @@ class Mysql
     {
         $escaped = \mysqli_real_escape_string($this->conn, $value ?? '');
 
-        if ($andQuote == true) {
+        if ($andQuote) {
             $escaped = '"' . $escaped . '"';
         }
         return $escaped;
@@ -711,7 +713,6 @@ class Mysql
                 $subQueryString = $subQuery !== null ? sprintf('[SubQuery %d]', $subQuery) : '';
                 $errorMessage = \sprintf("MySQL Error: %s\nin Query%s: %s", $this->conn->error, $subQueryString, $sql);
                 throw new Exception($errorMessage, $this->conn->errno);
-                break;
             case self::IGNORE_ERRORS:
                 break;
         }

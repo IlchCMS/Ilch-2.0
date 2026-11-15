@@ -108,7 +108,7 @@ class MysqlDebug extends Mysql
     {
         return array_reduce($this->executedStatements, static function ($v, $s) {
             $m = $s->getEndMemory();
-            return $m > $v ? $m : $v;
+            return max($m, $v);
         });
     }
 

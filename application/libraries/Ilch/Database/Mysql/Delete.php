@@ -41,7 +41,7 @@ class Delete extends QueryBuilder
     /**
      * Execute the query builder.
      *
-     * @return integer number of deleted rows
+     * @return int number of deleted rows
      */
     public function execute()
     {

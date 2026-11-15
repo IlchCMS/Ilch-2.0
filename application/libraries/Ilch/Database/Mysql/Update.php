@@ -69,7 +69,7 @@ class Update extends QueryBuilder
     /**
      * Execute the generated query
      *
-     * @return integer number of changed rows
+     * @return int number of changed rows
      */
     public function execute()
     {

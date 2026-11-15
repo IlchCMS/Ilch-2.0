@@ -68,7 +68,7 @@ class Insert extends QueryBuilder
     /**
      * Execute the query builder.
      *
-     * @return integer generated autoincrement primary key
+     * @return int generated autoincrement primary key
      */
     public function execute()
     {

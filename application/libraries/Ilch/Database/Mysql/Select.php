@@ -150,7 +150,7 @@ class Select extends QueryBuilder
      */
     public function page(int $page): Select
     {
-        $this->page = (int) $page;
+        $this->page = $page;
         return $this;
     }
 
@@ -185,7 +185,7 @@ class Select extends QueryBuilder
      */
     public function offset(int $offset): Select
     {
-        $this->offset = (int) $offset;
+        $this->offset = $offset;
         return $this;
     }
 
@@ -257,7 +257,7 @@ class Select extends QueryBuilder
      */
     public function useFoundRows(bool $useFoundRows = true): Select
     {
-        $this->useFoundRows = (bool) $useFoundRows;
+        $this->useFoundRows = $useFoundRows;
         return $this;
     }
 
@@ -412,7 +412,7 @@ class Select extends QueryBuilder
 
         foreach ($fields as $key => $value) {
             if (!$value instanceof Expression\Expression) {
-                if (strpos($value, '(') === false) {
+                if (!str_contains($value, '(')) {
                     $value = $this->db->quote($value);
                 }
             }
@@ -462,10 +462,10 @@ class Select extends QueryBuilder
     {
         if (\is_string($fields)) {
             //function like COUNT()
-            if (strpos($fields, '(') !== false) {
+            if (str_contains($fields, '(')) {
                 $fields = [new Expression\Expression($fields)];
                 //single field
-            } elseif (strpos($fields, ' ') !== false) {
+            } elseif (str_contains($fields, ' ')) {
                 // Added to support for example "DISTINCT c1, c2, c3"
                 $fields = [new Expression\Expression($fields)];
             } else {
@@ -525,7 +525,7 @@ class Select extends QueryBuilder
             $fields = [];
             foreach ($this->order as $column => $direction) {
                 // function with ( )
-                if (strpos($column, '(') !== false) {
+                if (str_contains($column, '(')) {
                     $fields[] = $column . ' ' . $direction;
                 } else {
                     $fields[] = $this->db->quote($column) . ' ' . $direction;

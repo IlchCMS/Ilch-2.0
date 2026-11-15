@@ -347,7 +347,7 @@ abstract class QueryBuilder
     /**
      * Create Expression for Comparison
      *
-     * @param string|integer $key
+     * @param string|int $key
      * @param mixed $value
      * @return Expression\Comparison
      * @throws \InvalidArgumentException
@@ -422,7 +422,7 @@ abstract class QueryBuilder
      */
     protected function quoteExpressionPart(string $part): string
     {
-        if (\strpos($part, '(') !== false) {
+        if (str_contains($part, '(')) {
             return $part;
         }
 
