@@ -34,6 +34,15 @@ class Mysql
     protected ?string $dbName = null;
 
     /**
+     * Number of active transaction levels. 0 means no transaction is active,
+     * 1 means a top-level transaction is active, values greater than 1 mean
+     * nested transactions (savepoints) are active.
+     *
+     * @var int
+     */
+    private int $transactionLevel = 0;
+
+    /**
      * Close database connection.
      */
     public function __destruct()
@@ -148,6 +157,136 @@ class Mysql
         }
 
         return $mysqliResult;
+    }
+
+    /**
+     * Start a transaction.
+     *
+     * If no transaction is active, a BEGIN statement is sent to the database.
+     * If a transaction is already active, a savepoint is created instead,
+     * which makes nested transactions possible. A nested commit()/rollback()
+     * call only affects the innermost level.
+     *
+     * @return $this
+     */
+    public function beginTransaction(): self
+    {
+        if ($this->transactionLevel === 0) {
+            $this->query('BEGIN');
+        } else {
+            $this->query('SAVEPOINT sp' . $this->transactionLevel);
+        }
+        $this->transactionLevel++;
+        return $this;
+    }
+
+    /**
+     * Commit the active transaction.
+     *
+     * If the transaction is nested, the innermost savepoint is released instead.
+     *
+     * @return $this
+     * @throws Exception if no transaction is active
+     */
+    public function commit(): self
+    {
+        $this->endTransaction(true);
+        return $this;
+    }
+
+    /**
+     * Roll back the active transaction.
+     *
+     * If the transaction is nested, only the changes made since the innermost
+     * savepoint are rolled back, changes of outer levels are kept.
+     *
+     * @return $this
+     * @throws Exception if no transaction is active
+     */
+    public function rollback(): self
+    {
+        $this->endTransaction(false);
+        return $this;
+    }
+
+    /**
+     * Returns whether a transaction (or savepoint) is currently active.
+     *
+     * @return bool
+     */
+    public function inTransaction(): bool
+    {
+        return $this->transactionLevel > 0;
+    }
+
+    /**
+     * Executes the given callback within a (possibly nested) transaction.
+     *
+     * The callback is called with the database adapter as its only argument,
+     * so query builders can be used directly:
+     * ```php
+     * $db->transaction(function (Mysql $db) {
+     *     $db->update('user', ['name' => 'foo'], ['id' => 1])->execute();
+     *     $db->insert('user_log', ['event' => 'rename'])->execute();
+     * });
+     * ```
+     *
+     * If the callback throws an exception, the transaction is rolled back and
+     * the original exception is rethrown. While the callback is executed, the
+     * error handling is temporarily switched to THROW_EXCEPTIONS so that a
+     * failed query cannot lead to partially committed data, the previous
+     * handling mode is restored afterwards.
+     *
+     * Note: DDL statements (CREATE/ALTER/DROP) cause an implicit commit in MySQL.
+     *
+     * @template T
+     * @param callable(Mysql): T $callback the callback executed within the transaction
+     * @return T the return value of the callback
+     * @throws Exception the exception thrown by the callback (rethrown after the rollback)
+     */
+    public function transaction(callable $callback)
+    {
+        $previousErrorHandling = self::$errorHandling;
+        self::$errorHandling = self::THROW_EXCEPTIONS;
+
+        $this->beginTransaction();
+        try {
+            $result = $callback($this);
+        } catch (\Throwable $e) {
+            try {
+                $this->rollback();
+            } catch (\Throwable) {
+                // if the rollback fails (e.g. connection lost), do not hide the original exception
+            }
+            throw $e;
+        } finally {
+            self::$errorHandling = $previousErrorHandling;
+        }
+
+        $this->commit();
+        return $result;
+    }
+
+    /**
+     * Ends the innermost transaction or savepoint.
+     *
+     * @param bool $commit true to commit/release, false to roll back
+     * @throws Exception if no transaction is active
+     */
+    private function endTransaction(bool $commit): void
+    {
+        if ($this->transactionLevel === 0) {
+            throw new Exception('Commit/rollback without active transaction');
+        }
+
+        if ($this->transactionLevel === 1) {
+            $this->query($commit ? 'COMMIT' : 'ROLLBACK');
+        } else {
+            $savepoint = 'sp' . $this->transactionLevel;
+            $this->query(($commit ? 'RELEASE SAVEPOINT ' : 'ROLLBACK TO SAVEPOINT ') . $savepoint);
+            $this->query('RELEASE SAVEPOINT ' . $savepoint);
+        }
+        $this->transactionLevel--;
     }
 
     /**
