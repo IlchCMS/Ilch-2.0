@@ -62,7 +62,7 @@ class Select extends QueryBuilder
      */
     public function __construct(
         DB $db,
-           $fields = null,
+        $fields = null,
         ?string $table = null,
         ?array $where = null,
         ?array $orderBy = null,
