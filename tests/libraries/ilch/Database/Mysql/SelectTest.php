@@ -17,15 +17,21 @@ class SelectTest extends \PHPUnit\Framework\TestCase
      */
     protected $out;
 
+    /**
+     * Mocked database adapter
+     * @var \Ilch\Database\Mysql
+     */
+    protected $db;
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        $db = $this->getMockBuilder('\Ilch\Database\Mysql')
+        $this->db = $this->getMockBuilder('\Ilch\Database\Mysql')
             ->disableOriginalConstructor()
             ->onlyMethods(['escape'])
             ->getMock();
-        $db->method('escape')
+        $this->db->method('escape')
             ->willReturnCallback(function ($value, $addQuotes = false) {
                 if ($addQuotes) {
                     $value = '"' . $value . '"';
@@ -33,7 +39,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
                 return $value;
             });
 
-        $this->out = new Select($db);
+        $this->out = new Select($this->db);
     }
 
     public function testGenerateSqlWithoutTable()
@@ -195,9 +201,9 @@ class SelectTest extends \PHPUnit\Framework\TestCase
             'complex condition' => [
                 'where'           => function (Select $out) {
                     return [
-                            'field1' => 5,
-                            $out->orX([$out->comp('field2', 'super'), $out->comp('field2', 'geil')])
-                        ];
+                        'field1' => 5,
+                        $out->orX([$out->comp('field2', 'super'), $out->comp('field2', 'geil')])
+                    ];
                 },
                 'expectedSqlPart' => '(`field1` = "5" AND (`field2` = "super" OR `field2` = "geil"))'
             ],
@@ -317,6 +323,261 @@ class SelectTest extends \PHPUnit\Framework\TestCase
                 'expectedSqlPart' => '((`field1` < "0" AND `field2` = "3") OR `field1` = "2" OR `field1` > "5")'
             ],
         ];
+    }
+
+    /**
+     * @dataProvider dpForHaving
+     *
+     * @param array|callable $having
+     * @param string $expectedSqlPart
+     * @param string|null $type
+     */
+    public function testGenerateSqlForHaving($having, string $expectedSqlPart, ?string $type = null)
+    {
+        if (\is_callable($having)) {
+            $having = $having($this->out);
+        }
+
+        $this->out->from('Test');
+        if (isset($type)) {
+            $this->out->having($having, $type);
+        } else {
+            $this->out->having($having);
+        }
+
+        $expected = 'SELECT * FROM `[prefix]_Test`'
+            . ' HAVING ' . $expectedSqlPart;
+
+        self::assertEquals($expected, $this->out->generateSql());
+    }
+
+    /**
+     * Data provider for testGenerateSqlForHaving
+     * @return array
+     */
+    public static function dpForHaving(): array
+    {
+        return [
+            'single expression' => [
+                'having' => function (Select $out) {
+                    return $out->expr('COUNT(*) > 1');
+                },
+                'expectedSqlPart' => 'COUNT(*) > 1'
+            ],
+            'single comparison' => [
+                'having' => function (Select $out) {
+                    return $out->comp('COUNT(*) >', 1);
+                },
+                'expectedSqlPart' => 'COUNT(*) > "1"'
+            ],
+            'and conditions by array keys' => [
+                'having' => ['COUNT(*) >' => 1, 'SUM(`amount`) >=' => 100],
+                'expectedSqlPart' => '(COUNT(*) > "1" AND SUM(`amount`) >= "100")'
+            ],
+            'or conditions by type' => [
+                'having' => ['COUNT(*) >' => 1, 'SUM(`amount`) >=' => 100],
+                'expectedSqlPart' => '(COUNT(*) > "1" OR SUM(`amount`) >= "100")',
+                'type' => 'or'
+            ],
+            'multiple expressions' => [
+                'having' => function (Select $out) {
+                    return [$out->expr('COUNT(*) > 1'), $out->expr('SUM(`amount`) >= 100')];
+                },
+                'expectedSqlPart' => '(COUNT(*) > 1 AND SUM(`amount`) >= 100)'
+            ],
+            'mixed expressions and comparisons' => [
+                'having' => function (Select $out) {
+                    return [$out->expr('COUNT(*) > 1'), $out->comp('SUM(`amount`) >', 100)];
+                },
+                'expectedSqlPart' => '(COUNT(*) > 1 AND SUM(`amount`) > "100")'
+            ]
+        ];
+    }
+
+    /**
+     * Makes sure the HAVING clause is placed after WHERE/GROUP BY and before ORDER BY/LIMIT.
+     */
+    public function testGenerateSqlForHavingClausePosition()
+    {
+        $this->out->from('Test')
+            ->where(['id' => 5])
+            ->group(['field1'])
+            ->having($this->out->expr('COUNT(*) > 1'))
+            ->order(['field1' => 'DESC'])
+            ->limit(10);
+
+        $expected = 'SELECT * FROM `[prefix]_Test`'
+            . ' WHERE `id` = "5"'
+            . ' GROUP BY `field1`'
+            . ' HAVING COUNT(*) > 1'
+            . ' ORDER BY `field1` DESC'
+            . ' LIMIT 10';
+
+        self::assertEquals($expected, $this->out->generateSql());
+    }
+
+    /**
+     * Tests the HAVING parameter of the Select constructor.
+     */
+    public function testGenerateSqlForHavingInConstructor()
+    {
+        $select = new Select($this->db, null, 'Test', null, null, null, new Expression('COUNT(*) > 1'));
+
+        $expected = 'SELECT * FROM `[prefix]_Test`'
+            . ' HAVING COUNT(*) > 1';
+
+        self::assertEquals($expected, $select->generateSql());
+    }
+
+    public function testHavingWithInvalidType()
+    {
+        $this->out->from('Test');
+
+        self::expectException(\InvalidArgumentException::class);
+        self::expectExceptionMessage('Invalid type: "and" or "or" expected');
+
+        $this->out->having(['COUNT(*) >' => 1], 'bogus');
+    }
+
+    public function testHavingWithInvalidArgument()
+    {
+        $this->out->from('Test');
+
+        self::expectException(\InvalidArgumentException::class);
+        self::expectExceptionMessage('array or Expression\CompositePart expected');
+
+        $this->out->having('COUNT(*) > 1');
+    }
+
+    /**
+     * @dataProvider dpForOrHaving
+     *
+     * @param array|bool $having
+     * @param string|bool $type
+     * @param array $orHaving
+     * @param string $expectedSqlPart
+     */
+    public function testGenerateSqlForOrHaving($having, $type, array $orHaving, string $expectedSqlPart)
+    {
+        $this->out->from('Test');
+        if (!empty($having)) {
+            $this->out->having($having, $type);
+        }
+        $this->out->orHaving($orHaving);
+
+        $expected = 'SELECT * FROM `[prefix]_Test`'
+            . ' HAVING ' . $expectedSqlPart;
+
+        self::assertEquals($expected, $this->out->generateSql());
+    }
+
+    /**
+     * @return array
+     */
+    public static function dpForOrHaving(): array
+    {
+        return [
+            'with empty having and single condition' => [
+                'having' => false,
+                'type' => false,
+                'orHaving' => ['COUNT(*) >' => 1],
+                'expectedSqlPart' => 'COUNT(*) > "1"'
+            ],
+            'with empty having and multiple conditions' => [
+                'having' => false,
+                'type' => false,
+                'orHaving' => ['COUNT(*) >' => 1, 'SUM(`amount`) >=' => 100],
+                'expectedSqlPart' => '(COUNT(*) > "1" OR SUM(`amount`) >= "100")'
+            ],
+            'with or having and multiple conditions' => [
+                'having' => ['COUNT(*) >' => 0],
+                'type' => 'or',
+                'orHaving' => ['COUNT(*) >' => 1, 'SUM(`amount`) >=' => 100],
+                'expectedSqlPart' => '(COUNT(*) > "0" OR COUNT(*) > "1" OR SUM(`amount`) >= "100")'
+            ],
+            'with and having and multiple conditions' => [
+                'having' => ['COUNT(*) >' => 0, 'SUM(`amount`) >=' => 100],
+                'type' => 'and',
+                'orHaving' => ['COUNT(*) >' => 1],
+                'expectedSqlPart' => '((COUNT(*) > "0" AND SUM(`amount`) >= "100") OR COUNT(*) > "1")'
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider dpForAndHaving
+     *
+     * @param array|bool $having
+     * @param string|bool $type
+     * @param array $andHaving
+     * @param string $expectedSqlPart
+     */
+    public function testGenerateSqlForAndHaving($having, $type, array $andHaving, string $expectedSqlPart)
+    {
+        $this->out->from('Test');
+        if (!empty($having)) {
+            $this->out->having($having, $type);
+        }
+        $this->out->andHaving($andHaving);
+
+        $expected = 'SELECT * FROM `[prefix]_Test`'
+            . ' HAVING ' . $expectedSqlPart;
+
+        self::assertEquals($expected, $this->out->generateSql());
+    }
+
+    /**
+     * @return array
+     */
+    public static function dpForAndHaving(): array
+    {
+        return [
+            'with empty having and single condition' => [
+                'having' => false,
+                'type' => false,
+                'andHaving' => ['COUNT(*) >=' => 2],
+                'expectedSqlPart' => 'COUNT(*) >= "2"'
+            ],
+            'with and having and multiple conditions' => [
+                'having' => ['COUNT(*) >' => 0],
+                'type' => 'and',
+                'andHaving' => ['COUNT(*) >=' => 2, 'SUM(`amount`) >=' => 100],
+                'expectedSqlPart' => '(COUNT(*) > "0" AND COUNT(*) >= "2" AND SUM(`amount`) >= "100")'
+            ],
+            'with or having and multiple conditions' => [
+                'having' => ['COUNT(*) >' => 0],
+                'type' => 'or',
+                'andHaving' => ['COUNT(*) >=' => 2, 'SUM(`amount`) >=' => 100],
+                'expectedSqlPart' => '(COUNT(*) > "0" AND COUNT(*) >= "2" AND SUM(`amount`) >= "100")'
+            ]
+        ];
+    }
+
+    /**
+     * Tests that the found-rows query (replacement for SQL_CALC_FOUND_ROWS)
+     * respects the HAVING clause.
+     */
+    public function testGenerateSqlFoundRowsWithHaving()
+    {
+        $this->out->from('Test')
+            ->group(['field1'])
+            ->having($this->out->expr('COUNT(*) > 1'));
+
+        $expected = 'SELECT COUNT(*) FROM (SELECT COUNT(*) FROM `[prefix]_Test`'
+            . ' GROUP BY `field1` HAVING COUNT(*) > 1) AS countOfRows';
+
+        self::assertEquals($expected, $this->out->generateSqlFoundRows());
+    }
+
+    public function testGenerateSqlFoundRowsWithHavingWithoutGroupBy()
+    {
+        $this->out->from('Test')
+            ->having($this->out->expr('COUNT(*) > 1'));
+
+        $expected = 'SELECT COUNT(*) FROM `[prefix]_Test`'
+            . ' HAVING COUNT(*) > 1';
+
+        self::assertEquals($expected, $this->out->generateSqlFoundRows());
     }
 
     /**

@@ -270,6 +270,10 @@ class Mysql
     /**
      * Ends the innermost transaction or savepoint.
      *
+     * The transaction level is decremented before the SQL is issued, so the
+     * internal state stays consistent even if the statement itself fails
+     * (e.g. connection lost).
+     *
      * @param bool $commit true to commit/release, false to roll back
      * @throws Exception if no transaction is active
      */
@@ -280,15 +284,22 @@ class Mysql
         }
 
         if ($this->transactionLevel === 1) {
+            $this->transactionLevel--;
             $this->query($commit ? 'COMMIT' : 'ROLLBACK');
         } else {
             // Savepoints are named after the level that was active *before*
             // beginTransaction() incremented it: level 2 -> sp1, level 3 -> sp2, ...
             $savepoint = 'sp' . ($this->transactionLevel - 1);
-            $this->query(($commit ? 'RELEASE SAVEPOINT ' : 'ROLLBACK TO SAVEPOINT ') . $savepoint);
-            $this->query('RELEASE SAVEPOINT ' . $savepoint);
+            $this->transactionLevel--;
+            if ($commit) {
+                // releasing the savepoint destroys it, so it must only be released once
+                $this->query('RELEASE SAVEPOINT ' . $savepoint);
+            } else {
+                // ROLLBACK TO SAVEPOINT keeps the savepoint, so it is released afterwards
+                $this->query('ROLLBACK TO SAVEPOINT ' . $savepoint);
+                $this->query('RELEASE SAVEPOINT ' . $savepoint);
+            }
         }
-        $this->transactionLevel--;
     }
 
     /**

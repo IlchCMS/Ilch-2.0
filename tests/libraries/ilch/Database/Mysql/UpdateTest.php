@@ -55,7 +55,7 @@ class UpdateTest extends \PHPUnit\Framework\TestCase
     public function testGenerateSqlForValues()
     {
         $this->out->table('Test')
-                  ->values(['super' => 'data', 'next' => 'fieldData']);
+            ->values(['super' => 'data', 'next' => 'fieldData']);
 
         $expected = 'UPDATE `[prefix]_Test` SET '
             . '`super` = "data",`next` = "fieldData"';
@@ -74,5 +74,21 @@ class UpdateTest extends \PHPUnit\Framework\TestCase
             . ' WHERE `id` = "5"';
 
         self::assertEquals($expected, $this->out->generateSql());
+    }
+
+    /**
+     * HAVING is only valid for SELECT queries and must not be silently
+     * ignored in UPDATE statements.
+     */
+    public function testGenerateSqlWithHavingThrows()
+    {
+        $this->out->table('Test')
+            ->values(['super' => 'data', 'next' => 'fieldData'])
+            ->having($this->out->expr('COUNT(*) > 1'));
+
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('HAVING is only supported for SELECT queries');
+
+        $this->out->generateSql();
     }
 }
