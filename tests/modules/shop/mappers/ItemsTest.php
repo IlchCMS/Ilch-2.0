@@ -468,6 +468,93 @@ class ItemsTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that addStock() rejects a quantity of zero and leaves the stock unchanged.
+     */
+    public function testAddStockWithZeroQuantity()
+    {
+        $newStock = $this->out->addStock(1, 0);
+
+        self::assertNull($newStock);
+
+        $item = $this->out->getShopItemById(1);
+
+        self::assertEquals(14, $item->getStock());
+    }
+
+    /**
+     * Tests that addStock() rejects a negative quantity and leaves the stock unchanged.
+     */
+    public function testAddStockWithNegativeQuantity()
+    {
+        $newStock = $this->out->addStock(1, -5);
+
+        self::assertNull($newStock);
+
+        $item = $this->out->getShopItemById(1);
+
+        self::assertEquals(14, $item->getStock());
+    }
+
+    /**
+     * Tests that removeStock() rejects a quantity of zero and leaves the stock unchanged.
+     */
+    public function testRemoveStockWithZeroQuantity()
+    {
+        $newStock = $this->out->removeStock(1, 0);
+
+        self::assertNull($newStock);
+
+        $item = $this->out->getShopItemById(1);
+
+        self::assertEquals(14, $item->getStock());
+    }
+
+    /**
+     * Tests that removeStock() rejects a negative quantity and leaves the stock unchanged.
+     */
+    public function testRemoveStockWithNegativeQuantity()
+    {
+        $newStock = $this->out->removeStock(1, -5);
+
+        self::assertNull($newStock);
+
+        $item = $this->out->getShopItemById(1);
+
+        self::assertEquals(14, $item->getStock());
+    }
+
+    /**
+     * Tests that removeStock() rejects a quantity that would leave a negative stock
+     * and leaves the stock unchanged.
+     */
+    public function testRemoveStockExceedingStock()
+    {
+        // Item 1 has a stock of 14, so removing 15 would result in -1.
+        $newStock = $this->out->removeStock(1, 15);
+
+        self::assertNull($newStock);
+
+        $item = $this->out->getShopItemById(1);
+
+        self::assertEquals(14, $item->getStock());
+    }
+
+    /**
+     * Tests that removeStock() allows removing exactly the full stock.
+     */
+    public function testRemoveStockFullStock()
+    {
+        // Item 1 has a stock of 14, so removing 14 results in exactly 0.
+        $newStock = $this->out->removeStock(1, 14);
+
+        self::assertSame(0, $newStock);
+
+        $item = $this->out->getShopItemById(1);
+
+        self::assertEquals(0, $item->getStock());
+    }
+
+    /**
      * Tests that changeStatus() changes the status of multiple items.
      */
     public function testChangeStatusMultiple()

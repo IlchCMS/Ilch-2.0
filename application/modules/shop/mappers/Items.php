@@ -197,10 +197,16 @@ class Items extends Mapper
      *
      * @param int $id
      * @param int $quantity
-     * @return int|null New stock value, or null if the item was not updated.
+     * @return int|null New stock value, or null if the item was not found,
+     *                  the quantity is not positive or the update failed.
      */
     public function addStock(int $id, int $quantity): ?int
     {
+        // Reject non-positive quantities so stock can never be decreased via this method.
+        if ($quantity <= 0) {
+            return null;
+        }
+
         $dbStock = $this->db()->select('stock')
             ->from('shop_items')
             ->where(['id' => $id])
@@ -226,10 +232,17 @@ class Items extends Mapper
      *
      * @param int $id
      * @param int $quantity
-     * @return int|null New stock value, or null if the item was not updated.
+     * @return int|null New stock value, or null if the item was not found,
+     *                  the quantity is not positive, the update failed or the
+     *                  operation would leave a negative stock.
      */
     public function removeStock(int $id, int $quantity): ?int
     {
+        // Reject non-positive quantities so stock can never be increased via this method.
+        if ($quantity <= 0) {
+            return null;
+        }
+
         $dbStock = $this->db()->select('stock')
             ->from('shop_items')
             ->where(['id' => $id])
@@ -241,6 +254,12 @@ class Items extends Mapper
         }
 
         $newStock = (int)$dbStock - $quantity;
+
+        // Never allow the stock to drop below zero.
+        if ($newStock < 0) {
+            return null;
+        }
+
         $updatedId = $this->updateStock($id, $newStock);
 
         if ($updatedId === null) {

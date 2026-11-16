@@ -17,22 +17,22 @@ if (isset($_POST['code']) && $_POST['code'] != '' && isset($_POST['quantity']) &
     $image = $shopItem->getImage();
 
     $cartArray = [
-        $code => [
-        'id' => $id,
-        'code' => $code,
-        'quantity' => $quantity]
+            $code => [
+                    'id' => $id,
+                    'code' => $code,
+                    'quantity' => $quantity]
     ];
 
     if (empty($_SESSION['shopping_cart'])) {
         $_SESSION['shopping_cart'] = $cartArray;
-        $status = '<div id="infobox" class="alert alert-success" role="alert">' . $this->getTrans('theProduct') . ' <b>' . $name . '</b> ' . $this->getTrans('addToCart') . '</div>';
+        $status = '<div id="infobox" class="alert alert-success" role="alert">' . $this->getTrans('theProduct') . ' <b>' . $this->escape($name) . '</b> ' . $this->getTrans('addToCart') . '</div>';
     } else {
         $array_keys = array_keys($_SESSION['shopping_cart']);
         if (in_array($code, $array_keys)) {
-            $status = '<div id="infobox" class="alert alert-danger" role="alert">' . $this->getTrans('theProduct') . ' <b>' . $name . '</b> ' . $this->getTrans('alreadyInCart') . '</div>';
+            $status = '<div id="infobox" class="alert alert-danger" role="alert">' . $this->getTrans('theProduct') . ' <b>' . $this->escape($name) . '</b> ' . $this->getTrans('alreadyInCart') . '</div>';
         } else {
             $_SESSION['shopping_cart'] = array_merge($_SESSION['shopping_cart'], $cartArray);
-            $status = '<div id="infobox" class="alert alert-success" role="alert">' . $this->getTrans('theProduct') . ' <b>' . $name . '</b> ' . $this->getTrans('addToCart') . '</div>';
+            $status = '<div id="infobox" class="alert alert-success" role="alert">' . $this->getTrans('theProduct') . ' <b>' . $this->escape($name) . '</b> ' . $this->getTrans('addToCart') . '</div>';
         }
     }
 }
@@ -150,27 +150,27 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
                 <col>
             </colgroup>
             <tbody>
-                <tr>
-                    <th><?=$this->getTrans('productName') ?></th>
-                    <td><?=$this->escape($shopItem->getName()) ?></td>
-                </tr>
-                <tr>
-                    <th><?=$this->getTrans('itemNumber') ?></th>
-                    <td><?=$this->escape($shopItem->getItemnumber()) ?></td>
-                </tr>
-                <tr>
-                    <th><?=$this->getTrans('price') ?> <small>(<?=$this->getTrans('withTax') ?> <?=$this->escape($shopItem->getTax()) ?>%)</small></th>
-                    <td><?=number_format($shopItem->getPrice(), 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></td>
-                </tr>
-                <tr>
-                    <th><?=$this->getTrans('shippingCosts') ?></th>
-                    <td><?=($shopItem->getShippingCosts() == '0.00') ? $this->getTrans('free') : number_format($shopItem->getShippingCosts(), 2, '.', '') . ' ' . $this->escape($this->get('currency')) ?></td>
-                </tr>
-                <tr>
-                    <th><?=$this->getTrans('shippingTime') ?></th>
-                    <td><?=$this->getTrans('approx') ?> <?=$this->escape($shopItem->getShippingTime()) ?> <?=$this->getTrans('days') ?></td>
-                </tr>
-                <?php if ($variants) : ?>
+            <tr>
+                <th><?=$this->getTrans('productName') ?></th>
+                <td><?=$this->escape($shopItem->getName()) ?></td>
+            </tr>
+            <tr>
+                <th><?=$this->getTrans('itemNumber') ?></th>
+                <td><?=$this->escape($shopItem->getItemnumber()) ?></td>
+            </tr>
+            <tr>
+                <th><?=$this->getTrans('price') ?> <small>(<?=$this->getTrans('withTax') ?> <?=$this->escape($shopItem->getTax()) ?>%)</small></th>
+                <td><?=number_format($shopItem->getPrice(), 2, '.', '') ?> <?=$this->escape($this->get('currency')) ?></td>
+            </tr>
+            <tr>
+                <th><?=$this->getTrans('shippingCosts') ?></th>
+                <td><?=($shopItem->getShippingCosts() == '0.00') ? $this->getTrans('free') : number_format($shopItem->getShippingCosts(), 2, '.', '') . ' ' . $this->escape($this->get('currency')) ?></td>
+            </tr>
+            <tr>
+                <th><?=$this->getTrans('shippingTime') ?></th>
+                <td><?=$this->getTrans('approx') ?> <?=$this->escape($shopItem->getShippingTime()) ?> <?=$this->getTrans('days') ?></td>
+            </tr>
+            <?php if ($variants) : ?>
                 <tr>
                     <th><?=$this->getTrans('variants') ?></th>
                     <td>
@@ -186,44 +186,44 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
                         </div>
                     </td>
                 </tr>
-                <?php endif; ?>
-                <tr>
-                    <td colspan="2"><b><?=$this->getTrans('shortInfo') ?></b><br /><br /><small class="ck-content"><?=$this->purify($shopItem->getInfo()) ?></small></td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="text-center">
-                        <?php if ($shopItem->getStock() >= 1) { ?>
-                            <form method="post" action="#shopAnker">
+            <?php endif; ?>
+            <tr>
+                <td colspan="2"><b><?=$this->getTrans('shortInfo') ?></b><br /><br /><small class="ck-content"><?=$this->purify($shopItem->getInfo()) ?></small></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-center">
+                    <?php if ($shopItem->getStock() >= 1) { ?>
+                        <form method="post" action="#shopAnker">
                             <?=$this->getTokenField() ?>
-                            <input type="hidden" name="code" value="<?=$shopItem->getCode() ?>" />
-                                <div class="input-group input-group-sm quantity">
-                                    <button class="btn btn-outline-secondary plus-btn" type="button" name="button"><i class="fa-solid fa-plus"></i></button>
-                                    <input class="form-control item-quantity"
-                                        type="text"
-                                        id="quantity"
-                                        name="quantity"
-                                        value="1"
-                                        readonly>
-                                    <button class="btn btn-outline-secondary minus-btn" type="button" name="button"><i class="fa-solid fa-minus"></i></button>
-                                </div>
-                                <button type="submit" class="btn btn-sm btn-warning"><i class="fa-solid fa-shopping-cart"></i> <?=$this->getTrans('inToCart') ?></button>
-                            </form>
-                        <?php } else { ?>
-                            <button class="btn btn-outline-secondary">
-                                <i class="fa-solid fa-store-slash"></i> <b><?=$this->getTrans('currentlySoldOut') ?></b>
-                            </button>
-                        <?php } ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="text-center">
-                        <div class="btn-group btn-group-sm">
-                            <a class="btn btn-outline-secondary" href="<?=$this->getUrl('shop/index') ?>#shopAnker"><i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?></a>
-                            <a class="btn btn-outline-secondary" href="<?=$this->getUrl('shop/index/agb') ?>#shopAnker"><i class="fa-solid fa-gavel"></i> <?=$this->getTrans('menuAGB') ?></a>
-                            <a class="btn btn-outline-secondary" href="<?=$this->getUrl('shop/index/cart') ?>#shopAnker"><i class="fa-solid fa-shopping-basket"></i> <?=$this->getTrans('menuCart') ?></a>
-                        </div>
-                    </td>
-                </tr>
+                            <input type="hidden" name="code" value="<?=$this->escape($shopItem->getCode()) ?>" />
+                            <div class="input-group input-group-sm quantity">
+                                <button class="btn btn-outline-secondary plus-btn" type="button" name="button"><i class="fa-solid fa-plus"></i></button>
+                                <input class="form-control item-quantity"
+                                       type="text"
+                                       id="quantity"
+                                       name="quantity"
+                                       value="1"
+                                       readonly>
+                                <button class="btn btn-outline-secondary minus-btn" type="button" name="button"><i class="fa-solid fa-minus"></i></button>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-warning"><i class="fa-solid fa-shopping-cart"></i> <?=$this->getTrans('inToCart') ?></button>
+                        </form>
+                    <?php } else { ?>
+                        <button class="btn btn-outline-secondary">
+                            <i class="fa-solid fa-store-slash"></i> <b><?=$this->getTrans('currentlySoldOut') ?></b>
+                        </button>
+                    <?php } ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="text-center">
+                    <div class="btn-group btn-group-sm">
+                        <a class="btn btn-outline-secondary" href="<?=$this->getUrl('shop/index') ?>#shopAnker"><i class="fa-solid fa-backward"></i> <?=$this->getTrans('back') ?></a>
+                        <a class="btn btn-outline-secondary" href="<?=$this->getUrl('shop/index/agb') ?>#shopAnker"><i class="fa-solid fa-gavel"></i> <?=$this->getTrans('menuAGB') ?></a>
+                        <a class="btn btn-outline-secondary" href="<?=$this->getUrl('shop/index/cart') ?>#shopAnker"><i class="fa-solid fa-shopping-basket"></i> <?=$this->getTrans('menuCart') ?></a>
+                    </div>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
@@ -231,7 +231,7 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
         <table class="table table-striped border">
             <tr>
                 <td class="ck-content">
-                    <?=$shopItem->getDesc() ?>
+                    <?=$this->purify($shopItem->getDesc()) ?>
                 </td>
             </tr>
         </table>
@@ -241,46 +241,46 @@ if ($shopItem->getImage() && file_exists(ROOT_PATH . '/' . $shopItem->getImage()
 
 <script src="<?=BASE_URL ?>/application/modules/shop/static/js/jquery.touchSwipe.min.js"></script>
 <script>
-$(document).ready(function () {
-    setTimeout(function() {
-        $('#infobox').slideUp("slow");
-    }, 5000);
-    $('a.thumbimg').click(function () {
-        $('#productimage').attr('src',$(this).children('img').attr('src'));
-        $('.thumbimg img').removeClass('selected');
-        $(this).children('img').addClass('selected');
+    $(document).ready(function () {
+        setTimeout(function() {
+            $('#infobox').slideUp("slow");
+        }, 5000);
+        $('a.thumbimg').click(function () {
+            $('#productimage').attr('src',$(this).children('img').attr('src'));
+            $('.thumbimg img').removeClass('selected');
+            $(this).children('img').addClass('selected');
+        });
     });
-});
-$('.minus-btn').on('click', function(e) {
-    e.preventDefault();
-    const $this = $(this);
-    const $input = $this.closest('div').find('input');
-    let value = parseInt($input.val());
-    if (value > 2) {
-        value = value - 1;
-    } else {
-        value = 1;
-    }
-    $input.val(value);
-});
-$('.plus-btn').on('click', function(e) {
-    e.preventDefault();
-    const $this = $(this);
-    const $input = $this.closest('div').find('input');
-    let value = parseInt($input.val());
-    const maxStock = '<?=$shopItem->getStock() ?>';
-    if (value < maxStock) {
-        value = value + 1;
-    } else {
-        value = maxStock;
-    }
-    $input.val(value);
-});
-$(".carousel").swipe({
-    swipe: function(event, direction) {
-        if (direction === 'left') $(this).carousel('next');
-        if (direction === 'right') $(this).carousel('prev');
-    },
-    allowPageScroll:"vertical"
-});
+    $('.minus-btn').on('click', function(e) {
+        e.preventDefault();
+        const $this = $(this);
+        const $input = $this.closest('div').find('input');
+        let value = parseInt($input.val());
+        if (value > 2) {
+            value = value - 1;
+        } else {
+            value = 1;
+        }
+        $input.val(value);
+    });
+    $('.plus-btn').on('click', function(e) {
+        e.preventDefault();
+        const $this = $(this);
+        const $input = $this.closest('div').find('input');
+        let value = parseInt($input.val());
+        const maxStock = '<?=$shopItem->getStock() ?>';
+        if (value < maxStock) {
+            value = value + 1;
+        } else {
+            value = maxStock;
+        }
+        $input.val(value);
+    });
+    $(".carousel").swipe({
+        swipe: function(event, direction) {
+            if (direction === 'left') $(this).carousel('next');
+            if (direction === 'right') $(this).carousel('prev');
+        },
+        allowPageScroll:"vertical"
+    });
 </script>

@@ -43,6 +43,7 @@ return [
     'confirmation' => 'Confirmation and completion',
     'InvalidOrderWillCollectDisabled' => 'An error occurred. Unfortunately, self-collection is not possible.',
     'invalidOrder' => 'An error occurred while processing your order.',
+    'orderItemsUnavailable' => 'Some items in your order are no longer available. Please review your cart.',
     'contentShopCart' => 'Contents of the shopping cart',
     'cordon' => 'Ribbon',
     'cordonColor' => 'Ribbon color',
