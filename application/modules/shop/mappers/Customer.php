@@ -9,6 +9,7 @@ namespace Modules\Shop\Mappers;
 
 use Ilch\Mapper;
 use Modules\Shop\Models\Customer as CustomerModel;
+use Modules\Shop\Mappers\Orders as OrdersMapper;
 
 class Customer extends Mapper
 {
@@ -105,5 +106,35 @@ class Customer extends Mapper
         return (bool) $this->db()->delete('shop_customers')
             ->where(['id' => $id])
             ->execute();
+    }
+
+    /**
+     * Completely deletes the customer: the customer row (addresses,
+     * orders and order details cascade via foreign keys) plus the invoice
+     * PDF files of all orders that are no longer subject to the statutory
+     * retention period.
+     *
+     * If any of the customer's orders still has an invoice within the
+     * retention period, nothing is deleted.
+     *
+     * @param int $id
+     * @return bool true if the customer was deleted, false otherwise
+     */
+    public function deleteComplete(int $id): bool
+    {
+        $ordersMapper = new OrdersMapper();
+
+        foreach ($ordersMapper->getOrdersByCustomerId($id) as $order) {
+            // A retention document still exists → refuse, touch nothing.
+            if ($ordersMapper->isWithinInvoiceRetentionPeriod($order)) {
+                return false;
+            }
+
+            // Invoices whose retention period has expired (and orders
+            // without an invoice) lose their PDF file at this point.
+            $ordersMapper->deleteInvoiceFile($order);
+        }
+
+        return $this->delete($id);
     }
 }

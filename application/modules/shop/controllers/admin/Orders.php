@@ -94,15 +94,29 @@ class Orders extends Admin
 
         if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_orders')) {
             $orderInUse = 0;
+            $orderInRetention = 0;
+
             foreach ($this->getRequest()->getPost('check_orders') as $orderId) {
-                if ($ordersMapper->getOrderById($orderId)->getStatus() == 0 || $ordersMapper->getOrderById($orderId)->getStatus() == 1) {
+                $orderId = (int) $orderId;
+                $order = $ordersMapper->getOrderById($orderId);
+
+                if (!$order || $order->getStatus() == 0 || $order->getStatus() == 1) {
                     $orderInUse++;
                     continue;
                 }
-                $ordersMapper->delete($orderId);
+
+                if ($ordersMapper->isWithinInvoiceRetentionPeriod($order)) {
+                    $orderInRetention++;
+                    continue;
+                }
+
+                $ordersMapper->deleteComplete($orderId);
             }
+
             if ($orderInUse > 0) {
                 $this->addMessage('ordersInUse', 'danger');
+            } elseif ($orderInRetention > 0) {
+                $this->addMessage('ordersInRetentionPeriod', 'danger');
             } else {
                 $this->addMessage('deleteSuccess');
             }
@@ -170,10 +184,14 @@ class Orders extends Admin
             }
 
             if ($this->getRequest()->getPost('delete') == 1) {
-                if ($ordersMapper->getOrderById($this->getRequest()->getParam('id'))->getStatus() == 0 || $ordersMapper->getOrderById($this->getRequest()->getParam('id'))->getStatus() == 1) {
+                $order = $ordersMapper->getOrderById((int) $this->getRequest()->getParam('id'));
+
+                if (!$order || $order->getStatus() == 0 || $order->getStatus() == 1) {
                     $this->addMessage('orderInUse', 'danger');
+                } elseif ($ordersMapper->isWithinInvoiceRetentionPeriod($order)) {
+                    $this->addMessage('orderInRetentionPeriod', 'danger');
                 } else {
-                    $ordersMapper->delete($this->getRequest()->getParam('id'));
+                    $ordersMapper->deleteComplete((int) $this->getRequest()->getParam('id'));
                     $this->addMessage('deleteSuccess');
                     $this->redirect(['action' => 'index']);
                 }
@@ -303,13 +321,18 @@ class Orders extends Admin
     {
         if ($this->getRequest()->isSecure()) {
             $ordersMapper = new OrdersMapper();
-            if ($ordersMapper->getOrderById($this->getRequest()->getParam('id'))->getStatus() == 0 || $ordersMapper->getOrderById($this->getRequest()->getParam('id'))->getStatus() == 1) {
+            $order = $ordersMapper->getOrderById((int) $this->getRequest()->getParam('id'));
+
+            if (!$order || $order->getStatus() == 0 || $order->getStatus() == 1) {
                 $this->addMessage('orderInUse', 'danger');
+            } elseif ($ordersMapper->isWithinInvoiceRetentionPeriod($order)) {
+                $this->addMessage('orderInRetentionPeriod', 'danger');
             } else {
-                $ordersMapper->delete($this->getRequest()->getParam('id'));
+                $ordersMapper->deleteComplete((int) $this->getRequest()->getParam('id'));
                 $this->addMessage('deleteSuccess');
             }
         }
+
         $this->redirect(['action' => 'index']);
     }
 }

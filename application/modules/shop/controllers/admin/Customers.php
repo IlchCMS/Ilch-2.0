@@ -88,12 +88,27 @@ class Customers extends Admin
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('menuCustomers'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('action') === 'delete') {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_customers')) {
+            $retentionBlocked = 0;
+
             foreach ($this->getRequest()->getPost('check_customers') as $customerId) {
-                $customerMapper->delete($customerId);
+                $customerId = (int) $customerId;
+
+                if (!$customerMapper->getCustomerById($customerId)) {
+                    continue;
+                }
+
+                if (!$customerMapper->deleteComplete($customerId)) {
+                    $retentionBlocked++;
+                }
             }
 
-            $this->addMessage('deleteSuccess');
+            if ($retentionBlocked > 0) {
+                $this->addMessage('customersInRetentionPeriod', 'danger');
+            } else {
+                $this->addMessage('deleteSuccess');
+            }
+
             $this->redirect(['action' => 'index']);
         }
 
@@ -134,9 +149,15 @@ class Customers extends Admin
     {
         if ($this->getRequest()->isSecure() && $this->getRequest()->getParam('id') && is_numeric($this->getRequest()->getParam('id'))) {
             $customerMapper = new CustomerMapper();
+            $customerId = (int) $this->getRequest()->getParam('id');
 
-            $customerMapper->delete($this->getRequest()->getParam('id'));
-            $this->addMessage('deleteSuccess');
+            if (!$customerMapper->getCustomerById($customerId)) {
+                $this->addMessage('customerNotFound', 'danger');
+            } elseif ($customerMapper->deleteComplete($customerId)) {
+                $this->addMessage('deleteSuccess');
+            } else {
+                $this->addMessage('customerInRetentionPeriod', 'danger');
+            }
         } else {
             $this->addMessage('deleteCustomerFailed', 'danger');
         }
