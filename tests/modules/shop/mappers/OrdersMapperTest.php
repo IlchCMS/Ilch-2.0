@@ -22,12 +22,36 @@ class OrdersMapperTest extends DatabaseTestCase
 
     protected PhpunitDataset $phpunitDataset;
 
+    /**
+     * Paths of the invoice PDF files created by the tests.
+     *
+     * @var string[]
+     */
+    protected array $createdInvoiceFiles = [];
+
     public function setUp(): void
     {
+        if (!defined('ROOT_PATH')) {
+            define('ROOT_PATH', sys_get_temp_dir() . '/ilch-shop-test');
+        }
+
         parent::setUp();
         $this->phpunitDataset = new PhpunitDataset($this->db);
         $this->phpunitDataset->loadFromFiles(static::$fixtureFiles);
         $this->out = new OrdersMapper();
+    }
+
+    protected function tearDown(): void
+    {
+        foreach ($this->createdInvoiceFiles as $path) {
+            if (is_file($path)) {
+                @unlink($path);
+            }
+        }
+
+        $this->createdInvoiceFiles = [];
+
+        parent::tearDown();
     }
 
     /**
@@ -79,6 +103,7 @@ class OrdersMapperTest extends DatabaseTestCase
         self::assertInstanceOf(AddressModel::class, $deliveryAddress);
         self::assertEquals(4, $deliveryAddress->getId());
         self::assertEquals('Ingrid', $deliveryAddress->getPrename());
+        self::assertEquals('Musterfrau', $deliveryAddress->getLastname());
         self::assertEquals('Musterstr. 7', $deliveryAddress->getStreet());
         self::assertEquals('Musterort', $deliveryAddress->getCity());
 
@@ -467,6 +492,225 @@ class OrdersMapperTest extends DatabaseTestCase
 
         self::assertIsArray($orders);
         self::assertCount(4, $orders);
+    }
+
+    /**
+     * Tests that getInvoiceRetentionEnd() returns null when the order has no
+     * invoice file.
+     */
+    public function testGetInvoiceRetentionEndWithoutInvoiceFile()
+    {
+        $order = $this->out->getOrderById(1);
+
+        self::assertInstanceOf(OrderModel::class, $order);
+        self::assertSame('', $order->getInvoiceFilename());
+        self::assertNull($this->out->getInvoiceRetentionEnd($order));
+    }
+
+    /**
+     * Tests that getInvoiceRetentionEnd() is the last day of December,
+     * 10 years after the calendar year in which the order was placed.
+     */
+    public function testGetInvoiceRetentionEnd()
+    {
+        $order = $this->out->getOrderById(1); // placed 2020-04-22 11:47:27
+        $order->setInvoiceFilename('order-1');
+
+        $end = $this->out->getInvoiceRetentionEnd($order);
+
+        self::assertInstanceOf(\DateTime::class, $end);
+        self::assertSame('2030-12-31 11:47:27', $end->format('Y-m-d H:i:s'));
+    }
+
+    /**
+     * Tests that getInvoiceRetentionEnd() counts the retention period from the
+     * current year when the order date cannot be parsed.
+     */
+    public function testGetInvoiceRetentionEndMalformedDate()
+    {
+        $order = $this->out->getOrderById(1);
+        $order->setDatetime('not-a-valid-date');
+        $order->setInvoiceFilename('order-1');
+
+        $end = $this->out->getInvoiceRetentionEnd($order);
+
+        $expected = (new \DateTime())
+            ->modify('last day of December')
+            ->modify('+' . OrdersMapper::RETENTION_YEARS . ' years');
+
+        self::assertInstanceOf(\DateTime::class, $end);
+        self::assertSame($expected->format('Y-m-d H:i:s'), $end->format('Y-m-d H:i:s'));
+    }
+
+    /**
+     * Tests that isWithinInvoiceRetentionPeriod() is true while the
+     * retention period has not expired.
+     */
+    public function testIsWithinInvoiceRetentionPeriodWithinPeriod()
+    {
+        $order = $this->out->getOrderById(2); // placed 2020 -> retained until 31-12-2030
+        $order->setInvoiceFilename('order-2');
+
+        self::assertTrue($this->out->isWithinInvoiceRetentionPeriod($order));
+    }
+
+    /**
+     * Tests that isWithinInvoiceRetentionPeriod() is false once the
+     * retention period has expired.
+     */
+    public function testIsWithinInvoiceRetentionPeriodExpired()
+    {
+        $order = $this->out->getOrderById(2);
+        $order->setDatetime('2010-05-15 08:30:00'); // retained until 31-12-2020
+        $order->setInvoiceFilename('order-2');
+
+        self::assertFalse($this->out->isWithinInvoiceRetentionPeriod($order));
+    }
+
+    /**
+     * Tests that isWithinInvoiceRetentionPeriod() is false when the order
+     * has no invoice file (e.g. after the "PDF LÖSCHEN" action).
+     */
+    public function testIsWithinInvoiceRetentionPeriodWithoutInvoiceFile()
+    {
+        $order = $this->out->getOrderById(3);
+
+        self::assertSame('', $order->getInvoiceFilename());
+        self::assertFalse($this->out->isWithinInvoiceRetentionPeriod($order));
+    }
+
+    /**
+     * Tests that deleteInvoiceFile() returns false when the order has no
+     * invoice file.
+     */
+    public function testDeleteInvoiceFileWithoutFilename()
+    {
+        $order = $this->out->getOrderById(1);
+
+        self::assertFalse($this->out->deleteInvoiceFile($order));
+    }
+
+    /**
+     * Tests that deleteInvoiceFile() returns false when the file does not
+     * exist on disk.
+     */
+    public function testDeleteInvoiceFileMissingOnDisk()
+    {
+        $order = $this->out->getOrderById(1);
+        $order->setInvoiceFilename('missing-invoice-12345');
+
+        self::assertFalse($this->out->deleteInvoiceFile($order));
+    }
+
+    /**
+     * Tests that deleteInvoiceFile() removes the invoice PDF file on disk.
+     */
+    public function testDeleteInvoiceFile()
+    {
+        $order = $this->out->getOrderById(1);
+        $order->setInvoiceFilename('invoice-to-delete');
+
+        $path = $this->createInvoiceFile('invoice-to-delete');
+        self::assertFileExists($path);
+
+        self::assertTrue($this->out->deleteInvoiceFile($order));
+        self::assertFileDoesNotExist($path);
+    }
+
+    /**
+     * Tests that deleteComplete() returns false for a non-existent order.
+     */
+    public function testDeleteCompleteNotFound()
+    {
+        self::assertFalse($this->out->deleteComplete(9999));
+
+        self::assertCount(4, $this->out->getOrders());
+    }
+
+    /**
+     * Tests that deleteComplete() removes the order row, the order details
+     * (foreign key cascade) and the invoice and delivery address rows.
+     */
+    public function testDeleteComplete()
+    {
+        self::assertTrue($this->out->deleteComplete(1));
+
+        self::assertFalse($this->out->getOrderById(1));
+        self::assertCount(3, $this->out->getOrders());
+
+        // Order details cascade via the foreign key.
+        self::assertCount(0, $this->db->select('*')->from('shop_orderdetails')
+            ->where(['orderId' => 1])->execute()->fetchRows());
+
+        // Invoice and delivery address (both id 1) are removed explicitly.
+        self::assertCount(0, $this->db->select('*')->from('shop_addresses')
+            ->where(['id' => 1])->execute()->fetchRows());
+
+        // The address of order 2 and the customer itself are untouched.
+        self::assertCount(1, $this->db->select('*')->from('shop_addresses')
+            ->where(['id' => 2])->execute()->fetchRows());
+        self::assertCount(1, $this->db->select('*')->from('shop_customers')
+            ->where(['id' => 1])->execute()->fetchRows());
+    }
+
+    /**
+     * Tests that deleteComplete() removes the invoice PDF file on disk as well.
+     */
+    public function testDeleteCompleteRemovesInvoiceFile()
+    {
+        $order = $this->out->getOrderById(1);
+        $order->setInvoiceFilename('order-1-invoice');
+        $this->out->save($order);
+
+        $path = $this->createInvoiceFile('order-1-invoice');
+
+        self::assertTrue($this->out->deleteComplete(1));
+
+        self::assertFileDoesNotExist($path);
+        self::assertFalse($this->out->getOrderById(1));
+    }
+
+    /**
+     * Tests that deleteComplete() performs no retention check: even an order
+     * whose invoice is still within the retention period is deleted
+     * completely, including its invoice PDF file.
+     */
+    public function testDeleteCompleteIgnoresRetentionPeriod()
+    {
+        $order = $this->out->getOrderById(4);
+        $order->setDatetime('2025-11-05 09:15:00'); // retained until 31-12-2035
+        $order->setInvoiceFilename('recent-invoice');
+        $this->out->save($order);
+
+        self::assertTrue($this->out->isWithinInvoiceRetentionPeriod($order));
+
+        $path = $this->createInvoiceFile('recent-invoice');
+
+        self::assertTrue($this->out->deleteComplete(4));
+
+        self::assertFileDoesNotExist($path);
+        self::assertFalse($this->out->getOrderById(4));
+        self::assertCount(3, $this->out->getOrders());
+    }
+
+    /**
+     * Creates a fake invoice PDF on disk and registers it for cleanup in tearDown().
+     *
+     * @param string $filename filename without extension
+     * @return string absolute path of the created file
+     */
+    private function createInvoiceFile(string $filename): string
+    {
+        $path = ROOT_PATH . '/application/modules/shop/static/invoice/' . $filename . '.pdf';
+
+        if (!is_dir(dirname($path))) {
+            mkdir(dirname($path), 0775, true);
+        }
+
+        file_put_contents($path, "%PDF-1.4\nfake invoice");
+        $this->createdInvoiceFiles[] = $path;
+
+        return $path;
     }
 
     private function createAddressModel(
