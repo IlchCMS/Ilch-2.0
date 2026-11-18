@@ -89,7 +89,13 @@ class Customerarea extends Frontend
     public function downloadAction(): void
     {
         if (!$this->getRequest()->isSecure()) {
-            return;
+            $this->addMessage('invoiceNotFound', 'danger');
+            $this->redirect(['controller' => 'customerarea', 'action' => 'index']);
+        }
+
+        if (!$this->getUser()) {
+            $this->addMessage('loginRequiredCustomerArea', 'danger');
+            $this->redirect(['module' => 'user', 'controller' => 'login', 'action' => 'index']);
         }
 
         set_time_limit(0);
@@ -97,36 +103,43 @@ class Customerarea extends Frontend
 
         $id = $this->getRequest()->getParam('id');
 
-        if (!empty($id) && is_numeric($id)) {
-            $ordersMapper = new OrdersMapper();
-            $order = $ordersMapper->getOrderById($id);
-
-            if ($order) {
-                $fullPath = $shopInvoicePath . $order->getInvoiceFilename() . '.pdf';
-                $fd = fopen($fullPath, 'rb');
-                if ($fd) {
-                    $path_parts = pathinfo($fullPath);
-                    // Remove the random part of the filename as it should not end in e.g. the browser history.
-                    $publicFileName = preg_replace('/_[^_.]*\./', '.', $path_parts['basename']);
-
-                    header('Content-type: application/pdf');
-                    header('Content-Disposition: filename="' . $publicFileName . '"');
-                    header('Content-length: ' . filesize($fullPath));
-                    // RFC2616 section 14.9.1: Indicates that all or part of the response message is intended for a single user and MUST NOT be cached by a shared cache, such as a proxy server.
-                    header('Cache-control: private');
-                    while (!feof($fd)) {
-                        $buffer = fread($fd, 2048);
-                        echo $buffer;
-                    }
-                } else {
-                    $this->addMessage('invoiceNotFound', 'danger');
-                }
-                fclose($fd);
-            }
-        } else {
+        if (empty($id) || !is_numeric($id)) {
             $this->addMessage('invoiceNotFound', 'danger');
+            $this->redirect(['controller' => 'customerarea', 'action' => 'show', 'id' => $id]);
         }
 
-        $this->redirect(['controller' => 'customerarea', 'action' => 'show', 'id' => $id]);
+        $ordersMapper = new OrdersMapper();
+        $order = $ordersMapper->getOrderById($id);
+
+        $customerMapper = new CustomerMapper();
+        $customer = $customerMapper->getCustomerByUserId($this->getUser()->getId());
+
+        if (!$order || !$customer || $order->getCustomerId() !== $customer->getId()) {
+            $this->addMessage('invoiceNotFound', 'danger');
+            $this->redirect(['controller' => 'customerarea', 'action' => 'show', 'id' => $id]);
+        }
+
+        $fullPath = $shopInvoicePath . $order->getInvoiceFilename() . '.pdf';
+        $fd = fopen($fullPath, 'rb');
+        if ($fd) {
+            $path_parts = pathinfo($fullPath);
+            // Remove the random part of the filename as it should not end in e.g. the browser history.
+            $publicFileName = preg_replace('/_[^_.]*\./', '.', $path_parts['basename']);
+
+            header('Content-type: application/pdf');
+            header('Content-Disposition: filename="' . $publicFileName . '"');
+            header('Content-length: ' . filesize($fullPath));
+            // RFC2616 section 14.9.1: Indicates that all or part of the response message is intended for a single user and MUST NOT be cached by a shared cache, such as a proxy server.
+            header('Cache-control: private');
+            while (!feof($fd)) {
+                $buffer = fread($fd, 2048);
+                echo $buffer;
+            }
+            fclose($fd);
+            exit();
+        } else {
+            $this->addMessage('invoiceNotFound', 'danger');
+            $this->redirect(['controller' => 'customerarea', 'action' => 'show', 'id' => $id]);
+        }
     }
 }

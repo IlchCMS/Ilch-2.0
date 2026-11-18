@@ -31,7 +31,13 @@ if (!empty($_SESSION['shopping_cart']) && $this->getRequest()->isSecure()) {
             }
         }
 
-        $_SESSION['shopping_willCollect'] = $_POST['willCollect'] ?? null;
+        // The quantity forms carry a hidden "willCollect" field which sends an empty
+        // string while the checkbox has never been ticked. Treat an empty (or any
+        // non-string, e.g. willCollect[]=... from a tampered request) value as
+        // "not selected", so a plain quantity change cannot silently switch the
+        // cart into "will collect" mode (free shipping).
+        $willCollect = $_POST['willCollect'] ?? null;
+        $_SESSION['shopping_willCollect'] = (is_string($willCollect) && $willCollect !== '') ? $willCollect : null;
     }
 }
 

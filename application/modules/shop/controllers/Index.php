@@ -167,12 +167,14 @@ class Index extends Frontend
     public function orderAction(): void
     {
         $addressMapper = new AddressMapper();
-        $emailsMapper = new EmailsMapper();
+        $categoryMapper = new CategoryMapper();
         $customerMapper = new CustomerMapper();
         $currencyMapper = new CurrencyMapper();
         $itemsMapper = new ItemsMapper();
         $ordersMapper = new OrdersMapper();
         $settingsMapper = new SettingsMapper();
+        $userMapper = new UserMapper();
+        $emailsMapper = new EmailsMapper();
         $ilchDate = new Date();
         $captchaNeeded = captchaNeeded();
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('shop_currency'));
@@ -197,20 +199,38 @@ class Index extends Frontend
             $addresses = $addressMapper->getAddressesByCustomerId($customer->getId());
         }
 
+        // Groups the current user may read from (same logic as indexAction/showAction).
+        $user = null;
+        if ($this->getUser()) {
+            $user = $userMapper->getUserById($this->getUser()->getId());
+        }
+
+        $readAccess = [3];
+        if ($user) {
+            foreach ($user->getGroups() as $us) {
+                $readAccess[] = $us->getId();
+            }
+        }
+
         if ($this->getRequest()->getPost('saveOrder')) {
+            // Accepting the terms (AGB), a valid email address and the will-collect
+            // flag are ALWAYS required - also when a stored address is selected.
             $validationRules = [
-                'prename' => 'required',
-                'lastname' => 'required',
-                'street' => 'required',
-                'postcode' => 'required',
-                'city' => 'required',
                 'email' => 'required|email',
                 'acceptOrder' => 'required',
                 'willCollect' => 'required|integer|min:0|max:1'
             ];
 
             if ($this->getRequest()->getPost('dropdownDeliveryAddress')) {
-                $validationRules = ['dropdownDeliveryAddress' => 'required|numeric'];
+                // A stored delivery address is selected - the address is read from the
+                // database, so the manual delivery address fields are not required.
+                $validationRules['dropdownDeliveryAddress'] = 'required|numeric';
+            } else {
+                $validationRules['prename'] = 'required';
+                $validationRules['lastname'] = 'required';
+                $validationRules['street'] = 'required';
+                $validationRules['postcode'] = 'required';
+                $validationRules['city'] = 'required';
             }
 
             if ($this->getRequest()->getPost('differentInvoiceAddress')) {
@@ -241,25 +261,44 @@ class Index extends Frontend
                 }
 
                 $arrayOrder = json_decode(str_replace("'", '"', $this->getRequest()->getPost('order')), true);
-                $arrayOrderValid = true;
+
+                // Reject order payloads that don't decode to a non-empty list of items.
+                if (!is_array($arrayOrder) || empty($arrayOrder)) {
+                    $arrayOrder = [];
+                }
+                $arrayOrderValid = !empty($arrayOrder);
 
                 // Validate the details of the order and create an array of IDs to later fetch the item details.
+                // IDs and quantities must be positive - negative quantities are rejected here.
                 $validationRules = [
-                    'id' => 'required|integer',
-                    'quantity' => 'required|integer'
+                    'id' => 'required|integer|min:1',
+                    'quantity' => 'required|integer|min:1'
                 ];
 
                 $itemIds = [];
+                $mergedOrder = [];
                 foreach ($arrayOrder as $orderItem) {
                     $validation = Validation::create($orderItem, $validationRules);
                     if (!$validation->isValid()) {
                         $arrayOrderValid = false;
                         break;
                     }
-                    $itemIds[] = $orderItem['id'];
+                    // The order payload is user input and can contain several lines with the
+                    // same item id (e.g. 2x6 with a stock of 10). Merge those lines so every
+                    // check below (availability, stock, order details, removeStock) sees the
+                    // total quantity per item and the stock cannot be overbooked.
+                    if (isset($mergedOrder[$orderItem['id']])) {
+                        $mergedOrder[$orderItem['id']]['quantity'] += $orderItem['quantity'];
+                    } else {
+                        $mergedOrder[$orderItem['id']] = $orderItem;
+                        $itemIds[] = $orderItem['id'];
+                    }
                 }
 
                 if ($arrayOrderValid) {
+                    // One line per item id from here on.
+                    $arrayOrder = array_values($mergedOrder);
+
                     $model = new OrdersModel();
                     $model->setDatetime($ilchDate->toDb());
                     $model->setCurrencyId($currency->getId());
@@ -268,11 +307,18 @@ class Index extends Frontend
                         // Don't use possible user input. Get the address from the database.
                         if (empty($customer)) {
                             // Pretends to select a known address of him, but isn't a customer? Redirect with error message.
-                            $this->addMessage('unknownCustomer', 'danger');
+                            $this->addMessage('customerNotFound', 'danger');
                             $this->redirect()
                                 ->to(['action' => 'order']);
                         }
-                        $address = $addressMapper->getAddresses(['id' => $this->getRequest()->getPost('dropdownDeliveryAddress'), 'customerId' => $customer->getId()])[0];
+                        $addressResults = $addressMapper->getAddresses(['id' => $this->getRequest()->getPost('dropdownDeliveryAddress'), 'customerId' => $customer->getId()]);
+                        if (empty($addressResults)) {
+                            // Unknown address or an address belonging to another customer.
+                            $this->addMessage('customerNotFound', 'danger');
+                            $this->redirect()
+                                ->to(['action' => 'order']);
+                        }
+                        $address = $addressResults[0];
 
                         $model->getDeliveryAddress()->setId($address->getId());
                         $model->getDeliveryAddress()->setPrename($address->getPrename());
@@ -290,9 +336,49 @@ class Index extends Frontend
                         $model->getDeliveryAddress()->setCountry($this->getRequest()->getPost('country'));
                     }
 
+                    // The email is still user-supplied (the field is only readonly, not disabled),
+                    // but it is now validated in all cases, so only a syntactically valid
+                    // address ends up in the order record and in the confirmation mail.
                     $model->setEmail($this->getRequest()->getPost('email'));
 
                     $items = $itemsMapper->getShopItemsByIds($itemIds);
+
+                    // Every ordered item must still exist, be active (status = 1) and be located in a
+                    // category the user is allowed to read. Deactivated items and items from restricted
+                    // categories are no longer orderable. (getShopItemsByIds() returns items keyed by ID.)
+                    $itemsAvailable = true;
+                    $categoryIds = [];
+                    foreach ($arrayOrder as $orderItem) {
+                        if (!isset($items[$orderItem['id']]) || $items[$orderItem['id']]->getStatus() != 1) {
+                            $itemsAvailable = false;
+                            break;
+                        }
+                        $categoryIds[] = $items[$orderItem['id']]->getCatId();
+                    }
+
+                    if ($itemsAvailable) {
+                        // Single query for all categories of this order.
+                        $categories = $categoryMapper->getCategories(['id' => array_unique($categoryIds)]);
+                        $readAccessById = [];
+                        foreach ($categories as $category) {
+                            $readAccessById[$category->getId()] = $category->getReadAccess();
+                        }
+
+                        foreach ($categoryIds as $catId) {
+                            if (!isset($readAccessById[$catId]) || !is_in_array($readAccess, explode(',', $readAccessById[$catId]))) {
+                                $itemsAvailable = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!$itemsAvailable) {
+                        $this->addMessage('orderItemsUnavailable', 'danger');
+                        $this->redirect()
+                            ->withInput()
+                            ->to(['action' => 'order']);
+                    }
+
                     $itemDetails = [];
                     foreach ($items as $item) {
                         $itemDetails[$item->getId()]['price'] = $item->getPrice();
@@ -325,11 +411,18 @@ class Index extends Frontend
                             // Don't use possible user input. Get the address from the database.
                             if (empty($customer)) {
                                 // Pretends to select a known address of him, but isn't a customer? Redirect with error message.
-                                $this->addMessage('unknownCustomer', 'danger');
+                                $this->addMessage('customerNotFound', 'danger');
                                 $this->redirect()
                                     ->to(['action' => 'order']);
                             }
-                            $address = $addressMapper->getAddresses(['id' => $this->getRequest()->getPost('dropdownInvoiceAddress'), 'customerId' => $customer->getId()])[0];
+                            $addressResults = $addressMapper->getAddresses(['id' => $this->getRequest()->getPost('dropdownInvoiceAddress'), 'customerId' => $customer->getId()]);
+                            if (empty($addressResults)) {
+                                // Unknown address or an address belonging to another customer.
+                                $this->addMessage('customerNotFound', 'danger');
+                                $this->redirect()
+                                    ->to(['action' => 'order']);
+                            }
+                            $address = $addressResults[0];
 
                             $model->getInvoiceAddress()->setId($address->getId());
                             $model->getInvoiceAddress()->setPrename($address->getPrename());
@@ -350,21 +443,13 @@ class Index extends Frontend
                         $model->setInvoiceAddress($model->getDeliveryAddress());
                     }
 
-                    // Check if stock is sufficient for this order. Get stock of all items with one query to save queries.
-                    $itemIds = [];
-                    foreach ($arrayOrder as $product) {
-                        $itemIds[] = $product['id'];
-                    }
-                    $items = $itemsMapper->getShopItemsByIds($itemIds);
-
-                    $itemsAssoc = [];
-                    foreach ($items as $item) {
-                        $itemsAssoc[$item->getId()] = $item;
-                    }
-
+                    // Check if stock is sufficient for this order.
+                    // $arrayOrder is already merged per item id, so $product['quantity'] is the total
+                    // quantity of this item and splitting an item into several lines cannot
+                    // bypass the stock check.
                     $messages = [];
                     foreach ($arrayOrder as $product) {
-                        $item = $itemsAssoc[$product['id']];
+                        $item = $items[$product['id']];
 
                         if ($item->getStock() < $product['quantity']) {
                             $messages[] = $this->getTranslator()->trans('currentStockInsufficientDetails', $item->getName(), $item->getStock(), $item->getUnitName());

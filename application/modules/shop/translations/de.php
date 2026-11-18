@@ -43,6 +43,7 @@ return [
     'confirmation' => 'Bestätigung und Abschluss',
     'InvalidOrderWillCollectDisabled' => 'Es ist ein Fehler aufgetreten. Leider ist die Selbstabholung nicht möglich.',
     'invalidOrder' => 'Es ist ein Fehler beim Auswerten Ihrer Bestellung aufgetreten.',
+    'orderItemsUnavailable' => 'Einige Artikel in Ihrer Bestellung sind nicht (mehr) verfügbar. Bitte prüfen Sie Ihren Warenkorb.',
     'contentShopCart' => 'Inhalt des Warenkorbs',
     'cordon' => 'Infoband',
     'cordonColor' => 'Infoband Farbe',
