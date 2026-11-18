@@ -120,13 +120,13 @@ class Customer extends Mapper
      * @param int $id
      * @return bool true if the customer was deleted, false otherwise
      */
-    public function deleteComplete(int $id): bool
+    public function deleteComplete(int $id, int $retentionYears): bool
     {
         $ordersMapper = new OrdersMapper();
 
         foreach ($ordersMapper->getOrdersByCustomerId($id) as $order) {
             // A retention document still exists → refuse, touch nothing.
-            if ($ordersMapper->isWithinInvoiceRetentionPeriod($order)) {
+            if ($ordersMapper->isWithinInvoiceRetentionPeriod($order, $retentionYears)) {
                 return false;
             }
 

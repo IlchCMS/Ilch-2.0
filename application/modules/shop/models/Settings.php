@@ -194,6 +194,13 @@ class Settings extends Model
     protected bool $paypalMePresetAmount = false;
 
     /**
+     * Invoice retention period in years.
+     *
+     * @var int
+     */
+    protected int $retentionYears = 8;
+
+    /**
      * The ifSampleData of the settings.
      *
      * @var int
@@ -718,6 +725,29 @@ class Settings extends Model
     public function setPaypalMePresetAmount(bool $paypalMePresetAmount): void
     {
         $this->paypalMePresetAmount = $paypalMePresetAmount;
+    }
+
+    /**
+     * Get invoice retention period in years.
+     *
+     * @return int
+     */
+    public function getRetentionYears(): int
+    {
+        return $this->retentionYears;
+    }
+
+    /**
+     * Set invoice retention period in years.
+     *
+     * @param int $retentionYears
+     * @return $this
+     */
+    public function setRetentionYears(int $retentionYears): Settings
+    {
+        $this->retentionYears = $retentionYears;
+
+        return $this;
     }
 
     /**

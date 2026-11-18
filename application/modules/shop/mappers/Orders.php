@@ -16,12 +16,6 @@ use Modules\Shop\Mappers\Orderdetails as OrderdetailsMapper;
 class Orders extends Mapper
 {
     /**
-     * Statutory retention period in years for invoices
-     * (cf. § 257 HGB, § 147 AO).
-     */
-    public const RETENTION_YEARS = 10;
-
-    /**
      * Gets orders.
      *
      * @param array $where
@@ -218,23 +212,21 @@ class Orders extends Mapper
             ->execute();
     }
 
-
     /**
      * Returns the end date of the statutory retention period for the
      * order's invoice.
      *
      * Only orders that still have an invoice file are retention
-     * documents. The retention period starts at the end of the calendar
-     * year in which the order was placed.
+     * documents. The retention period starts at the end of the
+     * calendar year in which the order was placed.
      *
      * @param OrdersModel $order
-     * @return \DateTime|null null if the order has no invoice file
+     * @param int         $retentionYears Configured retention period in years
+     * @return \DateTime|null Null if the order has no invoice file
      */
-    public function getInvoiceRetentionEnd(OrdersModel $order): ?\DateTime
+    public function getInvoiceRetentionEnd(OrdersModel $order, int $retentionYears): ?\DateTime
     {
-        // Without an invoice file, there is nothing to retain.
-        // The "PDF LÖSCHEN" action clears invoicefilename and deliberately
-        // lifts the protection.
+        // Without an invoice file there is nothing to retain.
         if (empty($order->getInvoiceFilename())) {
             return null;
         }
@@ -246,9 +238,17 @@ class Orders extends Mapper
             $startDate = new \DateTime();
         }
 
+        // German transition rule: documents arising before 2025 were
+        // subject to the previous 10-year period (4th Bureaucracy
+        // Reduction Act). The configured period is therefore never
+        // applied below 10 years for those.
+        $years = ((int) $startDate->format('Y') < 2025)
+            ? max($retentionYears, 10)
+            : $retentionYears;
+
         return $startDate
             ->modify('last day of December')
-            ->modify('+' . self::RETENTION_YEARS . ' years');
+            ->modify('+' . $years . ' years');
     }
 
     /**
@@ -256,11 +256,12 @@ class Orders extends Mapper
      * retention period. Such an order must not be deleted.
      *
      * @param OrdersModel $order
+     * @param int         $retentionYears
      * @return bool
      */
-    public function isWithinInvoiceRetentionPeriod(OrdersModel $order): bool
+    public function isWithinInvoiceRetentionPeriod(OrdersModel $order, int $retentionYears): bool
     {
-        $retentionEnd = $this->getInvoiceRetentionEnd($order);
+        $retentionEnd = $this->getInvoiceRetentionEnd($order, $retentionYears);
 
         return $retentionEnd !== null && $retentionEnd > new \DateTime();
     }

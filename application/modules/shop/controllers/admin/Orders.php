@@ -87,6 +87,7 @@ class Orders extends Admin
     public function indexAction(): void
     {
         $ordersMapper = new OrdersMapper();
+        $retentionYears = (new SettingsMapper())->getSettings()->getRetentionYears();
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
@@ -105,7 +106,7 @@ class Orders extends Admin
                     continue;
                 }
 
-                if ($ordersMapper->isWithinInvoiceRetentionPeriod($order)) {
+                if ($ordersMapper->isWithinInvoiceRetentionPeriod($order, $retentionYears)) {
                     $orderInRetention++;
                     continue;
                 }
@@ -131,6 +132,7 @@ class Orders extends Admin
         $itemsMapper = new ItemsMapper();
         $ordersMapper = new OrdersMapper();
         $settingsMapper = new SettingsMapper();
+        $retentionYears = $settingsMapper->getSettings()->getRetentionYears();
 
         $this->getLayout()->getAdminHmenu()
             ->add($this->getTranslator()->trans('menuShops'), ['controller' => 'index', 'action' => 'index'])
@@ -188,7 +190,7 @@ class Orders extends Admin
 
                 if (!$order || $order->getStatus() == 0 || $order->getStatus() == 1) {
                     $this->addMessage('orderInUse', 'danger');
-                } elseif ($ordersMapper->isWithinInvoiceRetentionPeriod($order)) {
+                } elseif ($ordersMapper->isWithinInvoiceRetentionPeriod($order, $retentionYears)) {
                     $this->addMessage('orderInRetentionPeriod', 'danger');
                 } else {
                     $ordersMapper->deleteComplete((int) $this->getRequest()->getParam('id'));
@@ -321,11 +323,12 @@ class Orders extends Admin
     {
         if ($this->getRequest()->isSecure()) {
             $ordersMapper = new OrdersMapper();
+            $retentionYears = (new SettingsMapper())->getSettings()->getRetentionYears();
             $order = $ordersMapper->getOrderById((int) $this->getRequest()->getParam('id'));
 
             if (!$order || $order->getStatus() == 0 || $order->getStatus() == 1) {
                 $this->addMessage('orderInUse', 'danger');
-            } elseif ($ordersMapper->isWithinInvoiceRetentionPeriod($order)) {
+            } elseif ($ordersMapper->isWithinInvoiceRetentionPeriod($order, $retentionYears)) {
                 $this->addMessage('orderInRetentionPeriod', 'danger');
             } else {
                 $ordersMapper->deleteComplete((int) $this->getRequest()->getParam('id'));
