@@ -118,6 +118,7 @@ class Customer extends Mapper
      * retention period, nothing is deleted.
      *
      * @param int $id
+     * @param int $retentionYears
      * @return bool true if the customer was deleted, false otherwise
      */
     public function deleteComplete(int $id, int $retentionYears): bool

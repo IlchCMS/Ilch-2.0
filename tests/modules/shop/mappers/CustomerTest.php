@@ -29,6 +29,15 @@ class CustomerTest extends DatabaseTestCase
      */
     protected array $createdInvoiceFiles = [];
 
+    /**
+     * Configured retention period in years, passed to the mapper calls.
+     *
+     * Documents arising before 2025 remain subject to the previous
+     * 10-year period (4th Bureaucracy Reduction Act), so every sample
+     * order is effectively retained for 10 years.
+     */
+    private const RETENTION_YEARS = 8;
+
     public function setUp(): void
     {
         if (!defined('ROOT_PATH')) {
@@ -273,7 +282,7 @@ class CustomerTest extends DatabaseTestCase
      */
     public function testDeleteCompleteNotFound()
     {
-        self::assertFalse($this->out->deleteComplete(9999));
+        self::assertFalse($this->out->deleteComplete(9999, self::RETENTION_YEARS));
 
         self::assertCount(4, $this->out->getCustomers());
     }
@@ -290,7 +299,7 @@ class CustomerTest extends DatabaseTestCase
 
         $id = $this->out->save($model);
 
-        self::assertTrue($this->out->deleteComplete($id));
+        self::assertTrue($this->out->deleteComplete($id, self::RETENTION_YEARS));
         self::assertFalse($this->out->getCustomerById($id));
         self::assertCount(4, $this->out->getCustomers());
     }
@@ -302,7 +311,7 @@ class CustomerTest extends DatabaseTestCase
     public function testDeleteComplete()
     {
         // Sample order 1 has no invoice file, so nothing has to be retained.
-        self::assertTrue($this->out->deleteComplete(1));
+        self::assertTrue($this->out->deleteComplete(1, self::RETENTION_YEARS));
 
         self::assertFalse($this->out->getCustomerById(1));
         self::assertCount(3, $this->out->getCustomers());
@@ -367,7 +376,7 @@ class CustomerTest extends DatabaseTestCase
         $path1 = $this->createInvoiceFile('order-1-invoice');
         $path2 = $this->createInvoiceFile('order-2-invoice');
 
-        self::assertTrue($this->out->deleteComplete(1));
+        self::assertTrue($this->out->deleteComplete(1, self::RETENTION_YEARS));
 
         self::assertFileDoesNotExist($path1);
         self::assertFileDoesNotExist($path2);
@@ -392,7 +401,7 @@ class CustomerTest extends DatabaseTestCase
         $path = $this->createInvoiceFile('order-1-invoice');
         self::assertFileExists($path);
 
-        self::assertFalse($this->out->deleteComplete(1));
+        self::assertFalse($this->out->deleteComplete(1, self::RETENTION_YEARS));
 
         // Nothing may have been touched.
         self::assertInstanceOf(CustomerModel::class, $this->out->getCustomerById(1));

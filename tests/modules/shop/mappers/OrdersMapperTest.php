@@ -29,6 +29,15 @@ class OrdersMapperTest extends DatabaseTestCase
      */
     protected array $createdInvoiceFiles = [];
 
+    /**
+     * Configured retention period in years, passed to the mapper calls.
+     *
+     * Documents arising before 2025 remain subject to the previous
+     * 10-year period (4th Bureaucracy Reduction Act), so the effective
+     * period for those sample orders is 10 years.
+     */
+    private const RETENTION_YEARS = 8;
+
     public function setUp(): void
     {
         if (!defined('ROOT_PATH')) {
@@ -105,6 +114,7 @@ class OrdersMapperTest extends DatabaseTestCase
         self::assertEquals('Ingrid', $deliveryAddress->getPrename());
         self::assertEquals('Musterfrau', $deliveryAddress->getLastname());
         self::assertEquals('Musterstr. 7', $deliveryAddress->getStreet());
+        self::assertEquals('34567', $deliveryAddress->getPostcode());
         self::assertEquals('Musterort', $deliveryAddress->getCity());
 
         $details = $order->getOrderdetails();
@@ -504,19 +514,23 @@ class OrdersMapperTest extends DatabaseTestCase
 
         self::assertInstanceOf(OrderModel::class, $order);
         self::assertSame('', $order->getInvoiceFilename());
-        self::assertNull($this->out->getInvoiceRetentionEnd($order));
+        self::assertNull($this->out->getInvoiceRetentionEnd($order, self::RETENTION_YEARS));
     }
 
     /**
      * Tests that getInvoiceRetentionEnd() is the last day of December,
      * 10 years after the calendar year in which the order was placed.
+     *
+     * The 10 years come from the statutory floor: the configured period
+     * (8 years) is never applied below 10 years to documents arising
+     * before 2025.
      */
     public function testGetInvoiceRetentionEnd()
     {
         $order = $this->out->getOrderById(1); // placed 2020-04-22 11:47:27
         $order->setInvoiceFilename('order-1');
 
-        $end = $this->out->getInvoiceRetentionEnd($order);
+        $end = $this->out->getInvoiceRetentionEnd($order, self::RETENTION_YEARS);
 
         self::assertInstanceOf(\DateTime::class, $end);
         self::assertSame('2030-12-31 11:47:27', $end->format('Y-m-d H:i:s'));
@@ -532,11 +546,11 @@ class OrdersMapperTest extends DatabaseTestCase
         $order->setDatetime('not-a-valid-date');
         $order->setInvoiceFilename('order-1');
 
-        $end = $this->out->getInvoiceRetentionEnd($order);
+        $end = $this->out->getInvoiceRetentionEnd($order, self::RETENTION_YEARS);
 
         $expected = (new \DateTime())
             ->modify('last day of December')
-            ->modify('+' . OrdersMapper::RETENTION_YEARS . ' years');
+            ->modify('+' . self::RETENTION_YEARS . ' years');
 
         self::assertInstanceOf(\DateTime::class, $end);
         self::assertSame($expected->format('Y-m-d H:i:s'), $end->format('Y-m-d H:i:s'));
@@ -551,7 +565,7 @@ class OrdersMapperTest extends DatabaseTestCase
         $order = $this->out->getOrderById(2); // placed 2020 -> retained until 31-12-2030
         $order->setInvoiceFilename('order-2');
 
-        self::assertTrue($this->out->isWithinInvoiceRetentionPeriod($order));
+        self::assertTrue($this->out->isWithinInvoiceRetentionPeriod($order, self::RETENTION_YEARS));
     }
 
     /**
@@ -564,7 +578,7 @@ class OrdersMapperTest extends DatabaseTestCase
         $order->setDatetime('2010-05-15 08:30:00'); // retained until 31-12-2020
         $order->setInvoiceFilename('order-2');
 
-        self::assertFalse($this->out->isWithinInvoiceRetentionPeriod($order));
+        self::assertFalse($this->out->isWithinInvoiceRetentionPeriod($order, self::RETENTION_YEARS));
     }
 
     /**
@@ -576,7 +590,7 @@ class OrdersMapperTest extends DatabaseTestCase
         $order = $this->out->getOrderById(3);
 
         self::assertSame('', $order->getInvoiceFilename());
-        self::assertFalse($this->out->isWithinInvoiceRetentionPeriod($order));
+        self::assertFalse($this->out->isWithinInvoiceRetentionPeriod($order, self::RETENTION_YEARS));
     }
 
     /**
@@ -678,11 +692,11 @@ class OrdersMapperTest extends DatabaseTestCase
     public function testDeleteCompleteIgnoresRetentionPeriod()
     {
         $order = $this->out->getOrderById(4);
-        $order->setDatetime('2025-11-05 09:15:00'); // retained until 31-12-2035
+        $order->setDatetime('2025-11-05 09:15:00'); // retained until 31-12-2033
         $order->setInvoiceFilename('recent-invoice');
         $this->out->save($order);
 
-        self::assertTrue($this->out->isWithinInvoiceRetentionPeriod($order));
+        self::assertTrue($this->out->isWithinInvoiceRetentionPeriod($order, self::RETENTION_YEARS));
 
         $path = $this->createInvoiceFile('recent-invoice');
 
