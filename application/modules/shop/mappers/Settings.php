@@ -56,6 +56,7 @@ class Settings extends Mapper
         $model->setClientID($serverRow['paymentClientID']);
         $model->setPayPalMe($serverRow['paypalMe']);
         $model->setPaypalMePresetAmount($serverRow['paypalMePresetAmount']);
+        $model->setRetentionYears($serverRow['retentionYears']);
         $model->setIfSampleData($serverRow['ifSampleData']);
 
         return $model;
@@ -123,8 +124,10 @@ class Settings extends Mapper
                 'fixShippingCosts' => $settingDefault->getFixShippingCosts(),
                 'fixShippingTime' => $settingDefault->getFixShippingTime(),
                 'allowWillCollect' => $settingDefault->getAllowWillCollect(),
+                'deliveryTextTop' => $settingDefault->getDeliveryTextTop(),
                 'invoiceTextTop' => $settingDefault->getInvoiceTextTop(),
-                'invoiceTextBottom' => $settingDefault->getInvoiceTextBottom()
+                'invoiceTextBottom' => $settingDefault->getInvoiceTextBottom(),
+                'retentionYears' => $settingDefault->getRetentionYears(),
             ])
             ->where(['id' => '1'])
             ->execute();

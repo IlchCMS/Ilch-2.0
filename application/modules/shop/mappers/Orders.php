@@ -211,4 +211,122 @@ class Orders extends Mapper
             ->where(['id' => $id])
             ->execute();
     }
+
+    /**
+     * Returns the end date of the statutory retention period for the
+     * order's invoice.
+     *
+     * Only orders that still have an invoice file are retention
+     * documents. The retention period starts at the end of the
+     * calendar year in which the order was placed.
+     *
+     * @param OrdersModel $order
+     * @param int         $retentionYears Configured retention period in years
+     * @return \DateTime|null Null if the order has no invoice file
+     */
+    public function getInvoiceRetentionEnd(OrdersModel $order, int $retentionYears): ?\DateTime
+    {
+        // Without an invoice file there is nothing to retain.
+        if (empty($order->getInvoiceFilename())) {
+            return null;
+        }
+
+        try {
+            $startDate = new \DateTime($order->getDatetime());
+        } catch (\Exception) {
+            // Malformed date: count the retention period from the current year.
+            $startDate = new \DateTime();
+        }
+
+        // German transition rule: documents arising before 2025 were
+        // subject to the previous 10-year period (4th Bureaucracy
+        // Reduction Act). The configured period is therefore never
+        // applied below 10 years for those.
+        $years = ((int) $startDate->format('Y') < 2025)
+            ? max($retentionYears, 10)
+            : $retentionYears;
+
+        return $startDate
+            ->modify('last day of December')
+            ->modify('+' . $years . ' years');
+    }
+
+    /**
+     * Checks whether the order's invoice is still within the statutory
+     * retention period. Such an order must not be deleted.
+     *
+     * @param OrdersModel $order
+     * @param int         $retentionYears
+     * @return bool
+     */
+    public function isWithinInvoiceRetentionPeriod(OrdersModel $order, int $retentionYears): bool
+    {
+        $retentionEnd = $this->getInvoiceRetentionEnd($order, $retentionYears);
+
+        return $retentionEnd !== null && $retentionEnd > new \DateTime();
+    }
+
+    /**
+     * Deletes the invoice PDF file of the given order on disk.
+     *
+     * @param OrdersModel $order
+     * @return bool true if a file was deleted
+     */
+    public function deleteInvoiceFile(OrdersModel $order): bool
+    {
+        $filename = $order->getInvoiceFilename();
+
+        if (empty($filename)) {
+            return false;
+        }
+
+        $filePath = ROOT_PATH . '/application/modules/shop/static/invoice/' . $filename . '.pdf';
+
+        if (is_file($filePath)) {
+            return @unlink($filePath);
+        }
+
+        return false;
+    }
+
+    /**
+     * Completely deletes the order: the order row (order details cascade
+     * via foreign key), the invoice and delivery address rows, and the
+     * invoice PDF file on disk.
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function deleteComplete(int $id): bool
+    {
+        $order = $this->getOrderById($id);
+
+        if (!$order) {
+            return false;
+        }
+
+        $this->deleteInvoiceFile($order);
+
+        // Delete the order row first, so the address rows are no longer
+        // referenced (regardless of the FK constraint definition).
+        if (!$this->delete($id)) {
+            return false;
+        }
+
+        // The address rows are not covered by a foreign key cascade from
+        // shop_orders, so they have to be removed explicitly.
+        $addressMapper = new AddressMapper();
+
+        $invoiceAddressId = $order->getInvoiceAddress()->getId();
+        if ($invoiceAddressId !== null) {
+            $addressMapper->delete($invoiceAddressId);
+        }
+
+        $deliveryAddressId = $order->getDeliveryAddress()->getId();
+        if ($deliveryAddressId !== null) {
+            $addressMapper->delete($deliveryAddressId);
+        }
+
+        return true;
+    }
 }

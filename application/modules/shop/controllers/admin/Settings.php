@@ -182,6 +182,7 @@ class Settings extends Admin
                 'fixShippingCosts' => 'required',
                 'fixShippingTime' => 'required|numeric|integer|min:1',
                 'allowWillCollect' => 'required|numeric|integer|min:0|max:1',
+                'retentionYears' => 'required|numeric|integer|min:1|max:100',
                 'deliveryTextTop' => 'required',
                 'invoiceTextTop' => 'required',
                 'invoiceTextBottom' => 'required',
@@ -194,6 +195,7 @@ class Settings extends Admin
                 $model->setFixShippingCosts($this->getRequest()->getPost('fixShippingCosts'));
                 $model->setFixShippingTime($this->getRequest()->getPost('fixShippingTime'));
                 $model->setAllowWillCollect($this->getRequest()->getPost('allowWillCollect'));
+                $model->setRetentionYears($this->getRequest()->getPost('retentionYears'));
                 $model->setDeliveryTextTop($this->getRequest()->getPost('deliveryTextTop'));
                 $model->setInvoiceTextTop($this->getRequest()->getPost('invoiceTextTop'));
                 $model->setInvoiceTextBottom($this->getRequest()->getPost('invoiceTextBottom'));

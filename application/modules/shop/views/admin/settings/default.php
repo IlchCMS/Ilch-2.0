@@ -112,6 +112,27 @@
             </div>
         </div>
     </div>
+    <div class="row mb-3<?= $this->validation()->hasError('retentionYears') ? ' has-error' : '' ?>">
+        <label for="retentionYears" class="col-xl-2 col-form-label">
+            <?= $this->getTrans('retentionYears') ?>:
+        </label>
+        <div class="col-xl-3">
+            <div class="input-group">
+                <input type="number"
+                       class="form-control"
+                       id="retentionYears"
+                       name="retentionYears"
+                       min="1"
+                       max="100"
+                       placeholder="8"
+                       value="<?=($this->escape($this->get('settings')->getRetentionYears()) != '') ? $this->escape($this->get('settings')->getRetentionYears()) : $this->escape($this->originalInput('retentionYears')) ?>" />
+                <span class="input-group-text">
+                    <b><?= $this->getTrans('years') ?></b>
+                </span>
+            </div>
+            <div class="form-text" id="basic-addon4"><?= $this->getTrans('retentionYearsInfo') ?></div>
+        </div>
+    </div>
     <div class="row mb-3<?=$this->validation()->hasError('allowWillCollect') ? ' has-error' : '' ?>">
         <div class="col-xl-2 col-form-label">
             <?=$this->getTrans('allowWillCollect') ?>

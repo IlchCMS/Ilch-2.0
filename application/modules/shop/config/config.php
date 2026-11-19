@@ -14,7 +14,7 @@ class Config extends Install
 {
     public array $config = [
         'key' => 'shop',
-        'version' => '1.4.5',
+        'version' => '1.4.6',
         'icon_small' => 'fa-solid fa-cart-shopping',
         'author' => 'blackcoder & LordSchirmer',
         'link' => 'https://ilch.de',
@@ -195,6 +195,7 @@ class Config extends Install
                     `paymentClientID` VARCHAR(255) NOT NULL,
                     `paypalMe` VARCHAR(255) NOT NULL,
                     `paypalMePresetAmount` TINYINT NULL DEFAULT 1,
+                    `retentionYears` INT(11) NOT NULL DEFAULT 8,
                     `ifSampleData` TINYINT NULL DEFAULT 0,
                     PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
@@ -475,6 +476,12 @@ class Config extends Install
                 $this->migrateForeignKeysToShortNames();
                 // no break
             case '1.4.1':
+            case '1.4.2':
+            case '1.4.3':
+            case '1.4.4':
+            case '1.4.5':
+                // Add column for the configurable invoice retention period.
+                $this->db()->query('ALTER TABLE `[prefix]_shop_settings` ADD COLUMN `retentionYears` INT(11) NOT NULL DEFAULT 8 AFTER `paypalMePresetAmount`;');
                 // no break
         }
     }
