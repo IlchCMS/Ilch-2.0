@@ -127,14 +127,10 @@
                        placeholder="8"
                        value="<?=($this->escape($this->get('settings')->getRetentionYears()) != '') ? $this->escape($this->get('settings')->getRetentionYears()) : $this->escape($this->originalInput('retentionYears')) ?>" />
                 <span class="input-group-text">
-                    <?= $this->getTrans('years') ?>
+                    <b><?= $this->getTrans('years') ?></b>
                 </span>
             </div>
-        </div>
-        <div class="col-xl-7">
-            <div class="text-muted">
-                <?= $this->getTrans('retentionYearsInfo') ?>
-            </div>
+            <div class="form-text" id="basic-addon4"><?= $this->getTrans('retentionYearsInfo') ?></div>
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('allowWillCollect') ? ' has-error' : '' ?>">
