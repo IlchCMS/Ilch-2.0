@@ -69,7 +69,7 @@ class Update extends QueryBuilder
     /**
      * Execute the generated query
      *
-     * @return integer number of changed rows
+     * @return int number of changed rows
      */
     public function execute()
     {
@@ -87,6 +87,10 @@ class Update extends QueryBuilder
     {
         if (!isset($this->table)) {
             throw new \RuntimeException('table must be set');
+        }
+
+        if (isset($this->having)) {
+            throw new \RuntimeException('HAVING is only supported for SELECT queries');
         }
 
         $sql = 'UPDATE ' . $this->db->quote('[prefix]_' . $this->table) . ' SET ';

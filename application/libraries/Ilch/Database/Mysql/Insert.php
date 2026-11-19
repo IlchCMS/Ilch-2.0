@@ -68,7 +68,7 @@ class Insert extends QueryBuilder
     /**
      * Execute the query builder.
      *
-     * @return integer generated autoincrement primary key
+     * @return int generated autoincrement primary key
      */
     public function execute()
     {
@@ -89,6 +89,10 @@ class Insert extends QueryBuilder
     {
         if (!isset($this->table)) {
             throw new \RuntimeException('table must be set');
+        }
+
+        if (isset($this->having)) {
+            throw new \RuntimeException('HAVING is only supported for SELECT queries');
         }
 
         $sql = 'INSERT INTO ' . $this->db->quote('[prefix]_' . $this->table) . ' (';

@@ -27,6 +27,11 @@ abstract class QueryBuilder
     protected $where;
 
     /**
+     * @var \Ilch\Database\Mysql\Expression\CompositePart|null
+     */
+    protected $having;
+
+    /**
      * Injects the database adapter.
      *
      * @param \Ilch\Database\Mysql $db
@@ -125,12 +130,73 @@ abstract class QueryBuilder
 
     /**
      * Content that wont be escaped when inserted into a query (builder)
+     *
+     * Example:
+     * ```php
+     *    $qb->expr('NOW()');
+     *    $select->having($qb->expr('COUNT(*) > 1'));
+     * ```
+     *
      * @param $content
      * @return Expression\Expression
      */
     public function expr($content)
     {
         return new Expression\Expression($content);
+    }
+
+    /**
+     * Adds having to query builder (only effective for SELECT queries).
+     *
+     * Example:
+     * ```php
+     *    $select->having($qb->expr('COUNT(*) > 1'));
+     *    $select->having([$qb->expr('COUNT(*) > 1'), $qb->expr('SUM(amount) >= 100')]);
+     * ```
+     *
+     * @param array|\Ilch\Database\Mysql\Expression\CompositePart $having
+     * @param string $type [default: 'and'] 'and' or 'or'
+     * @return $this|\Ilch\Database\Mysql\QueryBuilder
+     * @throws \InvalidArgumentException
+     */
+    public function having($having, $type = 'and')
+    {
+        if (\is_array($having)) {
+            if (!\in_array($type, ['and', 'or'])) {
+                throw new \InvalidArgumentException('Invalid type: "and" or "or" expected');
+            }
+            $having = $this->createCompositeExpression($having, $type);
+        }
+        if (!$having instanceof Expression\CompositePart) {
+            throw new \InvalidArgumentException('array or Expression\CompositePart expected');
+        }
+        $this->having = $having;
+
+        return $this;
+    }
+
+    /**
+     * Adds OR conditions to the existing having conditions
+     *
+     * @param array|\Ilch\Database\Mysql\Expression\CompositePart $having
+     * @return $this|\Ilch\Database\Mysql\QueryBuilder
+     * @throws \InvalidArgumentException
+     */
+    public function orHaving($having)
+    {
+        return $this->addHaving('or', $having);
+    }
+
+    /**
+     * Adds AND conditions to the existing having conditions
+     *
+     * @param array|\Ilch\Database\Mysql\Expression\CompositePart $having
+     * @return $this|\Ilch\Database\Mysql\QueryBuilder
+     * @throws \InvalidArgumentException
+     */
+    public function andHaving($having)
+    {
+        return $this->addHaving('and', $having);
     }
 
     /**
@@ -159,6 +225,23 @@ abstract class QueryBuilder
             $where = (string) $this->where;
             if (!empty($where)) {
                 $sql = ' WHERE ' . $where;
+            }
+        }
+        return $sql;
+    }
+
+    /**
+     * Generate HAVING part for SQL
+     *
+     * @return string
+     */
+    protected function generateHavingSql()
+    {
+        $sql = '';
+        if (isset($this->having)) {
+            $having = (string) $this->having;
+            if (!empty($having)) {
+                $sql = ' HAVING ' . $having;
             }
         }
         return $sql;
@@ -198,6 +281,39 @@ abstract class QueryBuilder
     }
 
     /**
+     * Helper for and/orHaving methods
+     *
+     * @param string $type 'and' or 'or'
+     * @param array|\Ilch\Database\Mysql\Expression\CompositePart $having
+     * @return $this|QueryBuilder
+     * @throws \InvalidArgumentException
+     */
+    protected function addHaving($type, $having)
+    {
+        $oppositeType = $type === 'and' ? 'or' : 'and';
+        // add to existing or
+        if (is_a($this->having, __NAMESPACE__ . '\Expression\\' . ucfirst($type) . 'X', true)) {
+            if (\is_array($having)) {
+                $this->having->addParts($this->createCompositePartArray($having));
+            } elseif ($having instanceof Expression\CompositePart) {
+                $this->having->add($having);
+            } else {
+                throw new \InvalidArgumentException('array or Expression\CompositePart expected');
+            }
+            return $this;
+        }
+
+        // new or insert existing having into condition
+        if (is_a($this->having, __NAMESPACE__ . '\Expression\\' . ucfirst($oppositeType) . 'X', true)) {
+            if (!\is_array($having)) {
+                $having = [$having];
+            }
+            array_unshift($having, $this->having);
+        }
+        return $this->having($having, $type);
+    }
+
+    /**
      * Creates Expression for Where
      *
      * @param array $where parts as CompositePart or array
@@ -231,7 +347,7 @@ abstract class QueryBuilder
     /**
      * Create Expression for Comparison
      *
-     * @param string|integer $key
+     * @param string|int $key
      * @param mixed $value
      * @return Expression\Comparison
      * @throws \InvalidArgumentException
@@ -247,7 +363,7 @@ abstract class QueryBuilder
                 throw new \InvalidArgumentException('Invalid comparison expression');
             }
 
-            $left = $this->db->quote($conditionParts[0]);
+            $left = $this->quoteExpressionPart($conditionParts[0]);
             if (\count($conditionParts) == 4) {
                 $operator = $conditionParts[1] . ' ' . $conditionParts[2];
             } else {
@@ -257,14 +373,14 @@ abstract class QueryBuilder
             if (\in_array($operator, ['IS', 'IS NOT'])) {
                 $right = 'NULL';
             } elseif (\count($conditionParts) == 4) {
-                $right = $this->db->quote($conditionParts[3]);
+                $right = $this->quoteExpressionPart($conditionParts[3]);
             } else {
-                $right = $this->db->quote($conditionParts[2]);
+                $right = $this->quoteExpressionPart($conditionParts[2]);
             }
         } else {
             // string key -> comparison with value(s)
             $keyParts = explode(' ', $key);
-            $left = $this->db->quote(array_shift($keyParts));
+            $left = $this->quoteExpressionPart(array_shift($keyParts));
             if (!empty($keyParts)) {
                 $operator = implode(' ', $keyParts);
             } else {
@@ -294,5 +410,22 @@ abstract class QueryBuilder
         }
 
         return new Expression\Comparison($left, $operator, $right);
+    }
+
+    /**
+     * Quotes an expression part for SQL.
+     * Function calls (containing an opening parenthesis, f.e. `COUNT(*)`)
+     * are returned as-is, as they must not be quoted like identifiers.
+     *
+     * @param string $part
+     * @return string
+     */
+    protected function quoteExpressionPart(string $part): string
+    {
+        if (str_contains($part, '(')) {
+            return $part;
+        }
+
+        return $this->db->quote($part);
     }
 }

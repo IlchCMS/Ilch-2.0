@@ -60,7 +60,7 @@ class InsertTest extends \PHPUnit\Framework\TestCase
     public function testGenerateSqlForValues()
     {
         $this->out->into('Test')
-                  ->values(['super' => 'data', 'next' => 'fieldData']);
+            ->values(['super' => 'data', 'next' => 'fieldData']);
 
         $expected = 'INSERT INTO `[prefix]_Test` '
             . '(`super`,`next`) VALUES ("data","fieldData")';
@@ -124,6 +124,22 @@ class InsertTest extends \PHPUnit\Framework\TestCase
 
         $this->expectException('RuntimeException');
         $this->expectExceptionMessage('no valid values for insert');
+
+        $this->out->generateSql();
+    }
+
+    /**
+     * HAVING is only valid for SELECT queries and must not be silently
+     * ignored in INSERT statements.
+     */
+    public function testGenerateSqlWithHavingThrows()
+    {
+        $this->out->into('Test')
+            ->values(['super' => 'data', 'next' => 'fieldData'])
+            ->having($this->out->expr('COUNT(*) > 1'));
+
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('HAVING is only supported for SELECT queries');
 
         $this->out->generateSql();
     }

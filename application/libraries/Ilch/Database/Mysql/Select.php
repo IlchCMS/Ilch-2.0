@@ -58,6 +58,7 @@ class Select extends QueryBuilder
      * @param array|null $where conditions @see QueryBuilder::where()
      * @param array|null $orderBy
      * @param array|int|null $limit
+     * @param array|Expression\CompositePart|null $having conditions @see QueryBuilder::having()
      */
     public function __construct(
         DB $db,
@@ -65,7 +66,8 @@ class Select extends QueryBuilder
         ?string $table = null,
         ?array $where = null,
         ?array $orderBy = null,
-        $limit = null
+        $limit = null,
+        array|Expression\CompositePart|null $having = null
     ) {
         parent::__construct($db);
 
@@ -83,6 +85,9 @@ class Select extends QueryBuilder
         }
         if (isset($limit)) {
             $this->limit($limit);
+        }
+        if (isset($having)) {
+            $this->having($having);
         }
     }
 
@@ -145,7 +150,7 @@ class Select extends QueryBuilder
      */
     public function page(int $page): Select
     {
-        $this->page = (int) $page;
+        $this->page = $page;
         return $this;
     }
 
@@ -180,7 +185,7 @@ class Select extends QueryBuilder
      */
     public function offset(int $offset): Select
     {
-        $this->offset = (int) $offset;
+        $this->offset = $offset;
         return $this;
     }
 
@@ -252,7 +257,7 @@ class Select extends QueryBuilder
      */
     public function useFoundRows(bool $useFoundRows = true): Select
     {
-        $this->useFoundRows = (bool) $useFoundRows;
+        $this->useFoundRows = $useFoundRows;
         return $this;
     }
 
@@ -326,6 +331,7 @@ class Select extends QueryBuilder
         $sql .= $this->generateWhereSql();
         $groupBy = $this->generateGroupBySql();
         $sql .= $groupBy;
+        $sql .= $this->generateHavingSql();
 
         // Special handling for sql queries with the group by clause.
         if ($groupBy !== '') {
@@ -365,6 +371,7 @@ class Select extends QueryBuilder
 
         $sql .= $this->generateWhereSql();
         $sql .= $this->generateGroupBySql();
+        $sql .= $this->generateHavingSql();
 
         $sql .= $this->generateOrderBySql();
 
@@ -405,7 +412,7 @@ class Select extends QueryBuilder
 
         foreach ($fields as $key => $value) {
             if (!$value instanceof Expression\Expression) {
-                if (strpos($value, '(') === false) {
+                if (!str_contains($value, '(')) {
                     $value = $this->db->quote($value);
                 }
             }
@@ -455,10 +462,10 @@ class Select extends QueryBuilder
     {
         if (\is_string($fields)) {
             //function like COUNT()
-            if (strpos($fields, '(') !== false) {
+            if (str_contains($fields, '(')) {
                 $fields = [new Expression\Expression($fields)];
-            //single field
-            } elseif (strpos($fields, ' ') !== false) {
+                //single field
+            } elseif (str_contains($fields, ' ')) {
                 // Added to support for example "DISTINCT c1, c2, c3"
                 $fields = [new Expression\Expression($fields)];
             } else {
@@ -518,7 +525,7 @@ class Select extends QueryBuilder
             $fields = [];
             foreach ($this->order as $column => $direction) {
                 // function with ( )
-                if (strpos($column, '(') !== false) {
+                if (str_contains($column, '(')) {
                     $fields[] = $column . ' ' . $direction;
                 } else {
                     $fields[] = $this->db->quote($column) . ' ' . $direction;

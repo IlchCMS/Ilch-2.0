@@ -11,11 +11,11 @@ use Ilch\Database\Mysql as DB;
 
 class Result
 {
-    /** @var integer TYPE for fetchRows or fetchArray */
+    /** @var int TYPE for fetchRows or fetchArray */
     const ASSOC = MYSQLI_ASSOC;
-    /** @var integer TYPE for fetchRows or fetchArray */
+    /** @var int TYPE for fetchRows or fetchArray */
     const BOTH = MYSQLI_BOTH;
-    /** @var integer TYPE for fetchRows or fetchArray */
+    /** @var int TYPE for fetchRows or fetchArray */
     const NUM = MYSQLI_NUM;
 
     /** @var \mysqli_result */
@@ -49,7 +49,7 @@ class Result
     /**
      * Fetches one field of the current result row
      *
-     * @param integer|string|null $name name or number of field
+     * @param int|string|null $name name or number of field
      * @return string|false|null value of field; false if the field is not in the result, null if no more rows in the result
      */
     public function fetchCell($name = null)
@@ -78,7 +78,7 @@ class Result
 
     /**
      * Returns array with numerical and string keys of the current row or null if no more rows are in the result
-     * @param integer $type type of returned array
+     * @param int $type type of returned array
      * @return array|null
      */
     public function fetchArray($type = self::BOTH)
@@ -118,7 +118,7 @@ class Result
     /**
      * Returns a array with all rows of the result
      * @param mixed $keyField name/number of a "unique" field used for key of the returned array
-     * @param integer $type type of returned array
+     * @param int $type type of returned array
      * @return array[]
      */
     public function fetchRows($keyField = null, $type = self::ASSOC)
@@ -170,7 +170,7 @@ class Result
 
     /**
      * Returns number of rows in the result
-     * @return integer
+     * @return int
      */
     public function getNumRows()
     {
@@ -179,7 +179,7 @@ class Result
 
     /**
      * Returns number of fields in the result
-     * @return integer
+     * @return int
      */
     public function getFieldCount()
     {
