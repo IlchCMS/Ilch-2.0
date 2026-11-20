@@ -57,4 +57,5 @@ return [
     'noStatistic' => 'No Statistic available',
 
     'everythingDisabled' => 'The administrator has hidden all statistics.',
+    'hourDataNotAvailable' => 'Hour details for this period are no longer available.',
 ];

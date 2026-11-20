@@ -41,7 +41,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index']);
 
         $this->getView()->set('dateCmsInstalled', $this->getConfig()->get('date_cms_installed'));
         $this->getView()->set('registUserCount', $statisticMapper->getRegistUserCount());
@@ -87,7 +87,7 @@ class Index extends \Ilch\Controller\Frontend
         if (!empty($browser) && !$statisticMapper->browserSeenBefore($browser)) {
             $this->addMessage('unknownOrUnseenBrowser', 'danger');
             $this->redirect()
-             ->to(['action' => 'index']);
+                ->to(['action' => 'index']);
         }
         if (!empty($os) && !$statisticMapper->osSeenBefore($os)) {
             $this->addMessage('unknownOrUnseenOS', 'danger');
@@ -179,8 +179,15 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year));
             $this->getView()->set('statisticBrowserVersionList', $statisticMapper->getVisitsBrowser($year, 0, $browser));
         } elseif ($year != '' && $month != '') {
-            $this->getView()->set('visitsTotal', $statisticMapper->getVisitsMonthCount($year, $month));
-            $this->getView()->set('statisticHourList', $statisticMapper->getVisitsHour($year, $month));
+            $visitsTotal = $statisticMapper->getVisitsMonthCount($year, $month);
+            $statisticHourList = $statisticMapper->getVisitsHour($year, $month);
+
+            $this->getView()->set('visitsTotal', $visitsTotal);
+            $this->getView()->set('statisticHourList', $statisticHourList);
+            // The hour list is raw-only and can be empty for periods that the
+            // retention purge already passed, even though the tiered period
+            // total still holds data — surface that instead of a blank list.
+            $this->getView()->set('hourDataUnavailable', $statisticHourList === null && $visitsTotal > 0);
             $this->getView()->set('statisticDayList', $statisticMapper->getVisitsDay($year, $month));
             $this->getView()->set('statisticYearMonthDayList', $statisticMapper->getVisitsYearMonthDay($year, $month));
             $this->getView()->set('statisticYearList', $statisticMapper->getVisitsYear($year));
@@ -188,8 +195,12 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage($year, $month));
             $this->getView()->set('statisticOSList', $statisticMapper->getVisitsOS($year, $month));
         } elseif ($month == '' && $year != '') {
-            $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year));
-            $this->getView()->set('statisticHourList', $statisticMapper->getVisitsHour($year));
+            $visitsTotal = $statisticMapper->getVisitsCount('', $year);
+            $statisticHourList = $statisticMapper->getVisitsHour($year);
+
+            $this->getView()->set('visitsTotal', $visitsTotal);
+            $this->getView()->set('statisticHourList', $statisticHourList);
+            $this->getView()->set('hourDataUnavailable', $statisticHourList === null && $visitsTotal > 0);
             $this->getView()->set('statisticDayList', $statisticMapper->getVisitsDay($year));
             $this->getView()->set('statisticYearMonthList', $statisticMapper->getVisitsYearMonth($year));
             $this->getView()->set('statisticYearList', $statisticMapper->getVisitsYear($year));
@@ -207,8 +218,8 @@ class Index extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuOnline'), ['action' => 'online']);
+            ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuOnline'), ['action' => 'online']);
 
         $this->getView()->set('modulesMapper', $moduleMapper);
         $this->getView()->set('userMapper', $userMapper);
