@@ -174,7 +174,10 @@ abstract class Base
         $def->addElement('figcaption', 'Inline', 'Flow', 'Common');
 
         // Allow <details> and <summary> elements.
-        $def->addElement('details', 'Block', 'Optional: (summary, Flow) | Flow', 'Common', [
+        // Plain "Flow" models are used on purpose: the spec-accurate
+        // "Optional: (summary, Flow) | Flow" model does not work with HTMLPurifier
+        // (content after <summary> gets stripped).
+        $def->addElement('details', 'Block', 'Flow', 'Common', [
             'open' => 'Bool',
         ]);
         $def->addElement('summary', 'Block', 'Flow', 'Common');

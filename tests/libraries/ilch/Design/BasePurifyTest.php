@@ -530,4 +530,38 @@ class BasePurifyTest extends TestCase
         $output = $this->view->purify('<figure class="image image-style-align-left"><img style="aspect-ratio:554/600;" src="http://localhost/application/modules/media/static/upload/67750a712e50801 (3).jpg" alt="test" width="554" height="600"><figcaption>captionA</figcaption></figure><p>Test</p>');
         self::assertEquals('<figure class="image image-style-align-left"><img style="aspect-ratio:554/600;" src="http://localhost/application/modules/media/static/upload/67750a712e50801%20(3).jpg" alt="test" width="554" height="600" /><figcaption>captionA</figcaption></figure><p>Test</p>', $output);
     }
+
+    /**
+     * details and summary element (not natively supported by CKEditor 5,
+     * allowed via explicit HTMLPurifier element definitions).
+     *
+     * @return void
+     */
+    public function testPurifyDetailsSummary()
+    {
+        $output = $this->view->purify('<details><summary>Details</summary>Something small enough to escape casual notice.</details>');
+        self::assertEquals('<details><summary>Details</summary>Something small enough to escape casual notice.</details>', $output);
+    }
+
+    /**
+     * details element with open attribute
+     *
+     * @return void
+     */
+    public function testPurifyDetailsSummaryOpen()
+    {
+        $output = $this->view->purify('<details open><summary>Details</summary>Something small enough to escape casual notice.</details>');
+        self::assertEquals('<details open=""><summary>Details</summary>Something small enough to escape casual notice.</details>', $output);
+    }
+
+    /**
+     * details element without summary
+     *
+     * @return void
+     */
+    public function testPurifyDetailsWithoutSummary()
+    {
+        $output = $this->view->purify('<details>Something small enough to escape casual notice.</details>');
+        self::assertEquals('<details>Something small enough to escape casual notice.</details>', $output);
+    }
 }
