@@ -660,6 +660,8 @@ class Statistic extends \Ilch\Mapper
                         '=Chrome OS=' => 'Chrome OS',
                         '=iOS=' => 'iOS',
                         '=macOS=' => 'Mac OS',
+                        // HarmonyOS NEXT devices report their platform as "OpenHarmony".
+                        '=OpenHarmony=' => 'OpenHarmony',
                         '=Unknown=' => 'Unknown'
                     ];
 
@@ -696,7 +698,12 @@ class Statistic extends \Ilch\Mapper
                 ];
             } elseif ($version != null) {
                 $osArray = [
+                    '=Android 16.0=' => '16.0',
+                    '=Android 16=' => '16.0',
+                    '=Android 15.0=' => '15.0',
+                    '=Android 15=' => '15.0',
                     '=Android 14.0=' => '14.0',
+                    '=Android 14=' => '14.0',
                     '=Android 13.0=' => '13.0',
                     '=Android 12.0=' => '12.0',
                     '=Android 11.0=' => '11.0',
@@ -713,6 +720,14 @@ class Statistic extends \Ilch\Mapper
                     '=Android 3=' => '3.x',
                     '=Android 2.3=' => '2.3',
                     '=Android 2.2=' => '2.2',
+
+                    // iPhone/iPad: the UA carries the iOS major version as
+                    // "CPU OS x_y" ("iPhone OS x_y" on older devices).
+                    '=CPU OS 26_|iPhone OS 26_=' => '26',
+                    '=CPU OS 18_|iPhone OS 18_=' => '18',
+                    '=CPU OS 17_|iPhone OS 17_=' => '17',
+                    '=CPU OS 16_|iPhone OS 16_=' => '16',
+                    '=CPU OS 15_|iPhone OS 15_=' => '15',
 
                     '=Windows NT 11.0|Windows 11=' => '11',
                     '=Windows NT 10.0|Windows 10=' => '10',
@@ -731,6 +746,13 @@ class Statistic extends \Ilch\Mapper
                     '=Windows Phone OS 8.1=' => 'Phone 8.1',
                     '=Windows Phone OS 10=' => 'Phone 10 Mobile',
 
+                    // Note: Safari UAs carry the kernel version ("10_15", "10_16"),
+                    // which spans several marketing versions, so the kernel
+                    // mapping below is deliberately left as-is. The marketing-
+                    // number entries cover UAs that use the marketing version
+                    // directly.
+                    '=Mac OS X 26|Mac OS X 26=' => '26',
+                    '=Mac OS X 15|Mac OS X 15=' => '15',
                     '=Mac OS X 14|Mac OS X 14=' => '14',
                     '=Mac OS X 13|Mac OS X 13=' => '13',
                     '=Mac OS X 12.0|Mac OS X 12_0=' => '12.0',
@@ -760,13 +782,32 @@ class Statistic extends \Ilch\Mapper
     /**
      * Detect which browser is used.
      *
+     * Chrome-based browsers that carry their own user-agent token (Brave,
+     * Arc, UC Browser, Yandex) are checked before the generic Chrome check,
+     * because their user agents also contain "Chrome/".
+     *
      * @param string|null $version
      * @return string
      */
     public function getBrowser(?string $version = null): string
     {
         if (ISHTTPSPAGE && isset($_SERVER['HTTP_SEC_CH_UA'])) {
+            // Brave and Arc do not expose their own client-hints brand
+            // (Brave advertises "Google Chrome"), so they must be identified
+            // from the raw user agent before the hints are consulted.
+            if (isset($_SERVER['HTTP_USER_AGENT'])) {
+                if (preg_match('=Brave/([0-9.]+)=', $_SERVER['HTTP_USER_AGENT'], $match)) {
+                    return $version != null ? 'Brave' : $this->truncateBrowserVersion($match[1]);
+                }
+
+                if (preg_match('=Arc/([0-9.]+)=', $_SERVER['HTTP_USER_AGENT'], $match)) {
+                    return $version != null ? 'Arc' : $this->truncateBrowserVersion($match[1]);
+                }
+            }
+
             $browserArray = [
+                // Before Chrome: Samsung Internet carries Chromium-based hints.
+                '=Samsung Internet\";v\=\"([\.a-zA-Z0-9]*)=' => 'Samsung Browser',
                 '=Google Chrome\";v\=\"([\.a-zA-Z0-9]*)=' => 'Chrome',
                 '=Microsoft Edge\";v\=\"([\.a-zA-Z0-9]*)=' => 'Edge',
                 '=Opera\";v\=\"([\.a-zA-Z0-9]*)=' => 'Opera',
@@ -779,117 +820,182 @@ class Statistic extends \Ilch\Mapper
                     if ($version != null) {
                         return $name;
                     }
+
                     return $browser[1];
                 }
             }
-        } else {
-            if (!isset($_SERVER['HTTP_USER_AGENT'])) {
-                return '';
+
+            // No known brand advertised: fall through to the user-agent
+            // parsing below instead of giving up.
+        }
+
+        if (!isset($_SERVER['HTTP_USER_AGENT'])) {
+            return '';
+        }
+
+        $useragent = $_SERVER['HTTP_USER_AGENT'];
+
+        if ($version != null) {
+            if (preg_match('=Firefox/([\.a-zA-Z0-9]*)=', $useragent)) {
+                return 'Firefox';
             }
 
-            $useragent = $_SERVER['HTTP_USER_AGENT'];
-
-            if ($version != null) {
-                if (preg_match('=Firefox/([\.a-zA-Z0-9]*)=', $useragent)) {
-                    return 'Firefox';
-                }
-                if (preg_match('=MSIE ([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
-                    return 'Internet Explorer';
-                }
-                if (preg_match('=rv:([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
-                    return 'Internet Explorer';
-                }
-                if (preg_match('=Opera[/ ]([0-9\.]+)=', $useragent)) {
-                    return 'Opera';
-                }
-                if (preg_match('=OPR\/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
-                    return 'Opera';
-                }
-                if (preg_match('=Edge/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
-                    return 'Edge';
-                }
-                if (preg_match('=Edg/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
-                    return 'Edge';
-                }
-                if (preg_match('=Vivaldi\/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
-                    return 'Vivaldi';
-                }
-                if (preg_match('=SamsungBrowser\/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
-                    return 'Samsung Browser';
-                }
-                if (preg_match('=Chrome/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
-                    return 'Chrome';
-                }
-                if (str_contains($useragent, 'Safari/')) {
-                    return 'Safari';
-                }
-                if (str_contains($useragent, 'Konqueror')) {
-                    return 'Konqueror';
-                }
-                if (preg_match('=Netscape|Navigator=', $useragent)) {
-                    return 'Netscape';
-                }
-
-                return '';
+            if (preg_match('=MSIE ([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
+                return 'Internet Explorer';
             }
 
-            if (preg_match('=Firefox/([\.a-zA-Z0-9]*)=', $useragent, $browser)) {
-                return $browser[1];
+            if (preg_match('=rv:([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
+                return 'Internet Explorer';
             }
-            if (preg_match('=MSIE ([0-9]{1,3}\.[0-9]{1,3})=', $useragent, $browser)) {
-                return $browser[1];
+
+            if (preg_match('=Opera[/ ]([0-9\.]+)=', $useragent)) {
+                return 'Opera';
             }
-            if (preg_match('=rv:([0-9]{1,3}\.[0-9]{1,3})=', $useragent, $browser)) {
-                return $browser[1];
+
+            if (preg_match('=OPR\/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
+                return 'Opera';
             }
-            if (preg_match('=Opera[/ ]([0-9\.]+)=', $useragent, $browser)) {
-                return $browser[1];
+
+            if (preg_match('=Edge/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
+                return 'Edge';
             }
-            if (preg_match('=OPR\/([0-9.]+)=', $useragent, $browser)) {
-                $tmp = explode('.', $browser[1]);
-                if (count($tmp) > 2) {
-                    $browser[1] = $tmp[0] . '.' . $tmp[1];
-                }
-                return $browser[1];
+
+            if (preg_match('=Edg/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
+                return 'Edge';
             }
-            if (preg_match('=Edge/([0-9.]+)=', $useragent, $browser)) {
-                $tmp = explode('.', $browser[1]);
-                if (count($tmp) > 2) {
-                    $browser[1] = $tmp[0] . '.' . $tmp[1];
-                }
-                return $browser[1];
+
+            if (preg_match('=Vivaldi\/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
+                return 'Vivaldi';
             }
-            if (preg_match('=Edg/([0-9.]+)=', $useragent, $browser)) {
-                $tmp = explode('.', $browser[1]);
-                if (count($tmp) > 2) {
-                    $browser[1] = $tmp[0] . '.' . $tmp[1];
-                }
-                return $browser[1];
+
+            if (preg_match('=SamsungBrowser\/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
+                return 'Samsung Browser';
             }
-            if (preg_match('=Vivaldi\/([0-9.]+)=', $useragent, $browser)) {
-                $tmp = explode('.', $browser[1]);
-                if (count($tmp) > 2) {
-                    $browser[1] = $tmp[0] . '.' . $tmp[1];
-                }
-                return $browser[1];
+
+            // Chrome-based browsers: their own token before the generic Chrome.
+            if (preg_match('=Brave/([0-9.]+)=', $useragent)) {
+                return 'Brave';
             }
-            if (preg_match('=Chrome/([0-9.]+)=', $useragent, $browser)) {
-                $tmp = explode('.', $browser[1]);
-                if (count($tmp) > 2) {
-                    $browser[1] = $tmp[0] . '.' . $tmp[1];
-                }
-                return $browser[1];
+
+            if (preg_match('=Arc/([0-9.]+)=', $useragent)) {
+                return 'Arc';
             }
+
+            if (preg_match('=UCBrowser/([0-9.]+)=', $useragent)) {
+                return 'UC Browser';
+            }
+
+            if (preg_match('=YaBrowser/([0-9.]+)=', $useragent)) {
+                return 'Yandex Browser';
+            }
+
+            if (preg_match('=Chrome/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
+                return 'Chrome';
+            }
+
             if (str_contains($useragent, 'Safari/')) {
-                if (preg_match('=Version/([\.0-9]*)=', $useragent, $browser)) {
-                    return $browser[1];
-                } else {
-                    return '';
-                }
+                return 'Safari';
             }
+
+            if (str_contains($useragent, 'Konqueror')) {
+                return 'Konqueror';
+            }
+
+            if (preg_match('=Netscape|Navigator=', $useragent)) {
+                return 'Netscape';
+            }
+
+            return '';
+        }
+
+        if (preg_match('=Firefox/([\.a-zA-Z0-9]*)=', $useragent, $browser)) {
+            return $browser[1];
+        }
+
+        if (preg_match('=MSIE ([0-9]{1,3}\.[0-9]{1,3})=', $useragent, $browser)) {
+            return $browser[1];
+        }
+
+        if (preg_match('=rv:([0-9]{1,3}\.[0-9]{1,3})=', $useragent, $browser)) {
+            return $browser[1];
+        }
+
+        if (preg_match('=Opera[/ ]([0-9\.]+)=', $useragent, $browser)) {
+            return $browser[1];
+        }
+
+        if (preg_match('=OPR\/([0-9.]+)=', $useragent, $browser)) {
+            return $this->truncateBrowserVersion($browser[1]);
+        }
+
+        if (preg_match('=Edge/([0-9.]+)=', $useragent, $browser)) {
+            return $this->truncateBrowserVersion($browser[1]);
+        }
+
+        if (preg_match('=Edg/([0-9.]+)=', $useragent, $browser)) {
+            return $this->truncateBrowserVersion($browser[1]);
+        }
+
+        if (preg_match('=Vivaldi\/([0-9.]+)=', $useragent, $browser)) {
+            return $this->truncateBrowserVersion($browser[1]);
+        }
+
+        // Before Chrome so the underlying Chrome version is not returned for
+        // Samsung/Brave/Arc/UC traffic (name and version stay consistent).
+        if (preg_match('=SamsungBrowser\/([0-9.]+)=', $useragent, $browser)) {
+            return $this->truncateBrowserVersion($browser[1]);
+        }
+
+        // Chrome-based browsers: their own token before the generic Chrome.
+        if (preg_match('=Brave/([0-9.]+)=', $useragent, $browser)) {
+            return $this->truncateBrowserVersion($browser[1]);
+        }
+
+        if (preg_match('=Arc/([0-9.]+)=', $useragent, $browser)) {
+            return $this->truncateBrowserVersion($browser[1]);
+        }
+
+        if (preg_match('=UCBrowser/([0-9.]+)=', $useragent, $browser)) {
+            return $this->truncateBrowserVersion($browser[1]);
+        }
+
+        // Yandex versions start with a constant "1.0" prefix, so truncating
+        // to two segments would throw away the meaningful part.
+        if (preg_match('=YaBrowser/([0-9.]+)=', $useragent, $browser)) {
+            return $browser[1];
+        }
+
+        if (preg_match('=Chrome/([0-9.]+)=', $useragent, $browser)) {
+            return $this->truncateBrowserVersion($browser[1]);
+        }
+
+        if (str_contains($useragent, 'Safari/')) {
+            if (preg_match('=Version/([\.0-9]*)=', $useragent, $browser)) {
+                return $browser[1];
+            }
+
+            return '';
         }
 
         return '';
+    }
+
+    /**
+     * Reduce a dotted browser version to its first two segments
+     * ('125.0.6422.165' => '125.0'), keeping shorter versions unchanged.
+     *
+     * @param string $version
+     * @return string
+     */
+    private function truncateBrowserVersion(string $version): string
+    {
+        $parts = explode('.', $version);
+
+        if (count($parts) > 2) {
+            return $parts[0] . '.' . $parts[1];
+        }
+
+        return $version;
     }
 
     /**
