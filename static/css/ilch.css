@@ -221,6 +221,26 @@ div.input-group.filter input:not(:placeholder-shown) {
     overflow: auto;
 }
 
+.ck-content details {
+    border: 1px solid #b3b3b3;
+    padding: 0.5em 0.5em 0;
+}
+
+.ck-content summary {
+    font-weight: bold;
+    margin: -0.5em -0.5em 0;
+    padding: 0.5em;
+}
+
+.ck-content details[open] {
+    padding: 0.5em;
+}
+
+.ck-content details[open] summary {
+    border-bottom: 1px solid #b3b3b3;
+    margin-bottom: 0.5em;
+}
+
 .icon_width {
     width: 15px;
 }

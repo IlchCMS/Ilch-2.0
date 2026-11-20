@@ -173,21 +173,27 @@ abstract class Base
         $def->addElement('figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow', 'Common');
         $def->addElement('figcaption', 'Inline', 'Flow', 'Common');
 
+        // Allow <details> and <summary> elements.
+        $def->addElement('details', 'Block', 'Optional: (summary, Flow) | Flow', 'Common', [
+            'open' => 'Bool',
+        ]);
+        $def->addElement('summary', 'Block', 'Flow', 'Common');
+
         // https://github.com/ezyang/htmlpurifier/issues/152
         $def->addAttribute('a', 'download', 'URI');
 
-        $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', array(
+        $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', [
             'autoplay' => 'Bool',
             'src' => new EmbedUrlDef(),
             'width' => 'Length',
             'height' => 'Length',
             'preload' => 'Enum#auto,metadata,none',
             'controls' => 'Bool',
-        ));
-        $def->addElement('source', 'Block', 'Flow', 'Common', array(
+        ]);
+        $def->addElement('source', 'Block', 'Flow', 'Common', [
             'src' => new EmbedUrlDef(),
             'type' => 'Text',
-        ));
+        ]);
 
         // Workaround for HTMLPurifier mangling "aspect-ratio: 16 / 9" to the invalid "aspect-ratio:16 9".
         // Its CSS_Multiple wrapper splits the value at spaces and drops the "/". CSS_Ratio itself
