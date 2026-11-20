@@ -1456,6 +1456,62 @@ class StatisticTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that Chrome-based browsers with their own token are detected
+     * before the generic Chrome fallback.
+     */
+    public function testGetBrowserChromeBasedVariants()
+    {
+        // Brave
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Brave/131.0.0.0';
+        self::assertSame('Brave', $this->out->getBrowser('version'));
+        self::assertSame('131.0', $this->out->getBrowser());
+
+        // Arc
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Arc/130.0';
+        self::assertSame('Arc', $this->out->getBrowser('version'));
+        self::assertSame('130.0', $this->out->getBrowser());
+
+        // UC Browser
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; U; Android 13; en-US; SM-G9910) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/111.0.4280.141 Mobile Safari/537.36 UCBrowser/15.7.9.1312';
+        self::assertSame('UC Browser', $this->out->getBrowser('version'));
+        self::assertSame('15.7', $this->out->getBrowser());
+
+        // Yandex Browser (full version kept, "1.0" prefix is constant)
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 YaBrowser/1.0.24.1.81833';
+        self::assertSame('Yandex Browser', $this->out->getBrowser('version'));
+        self::assertSame('1.0.24.1.81833', $this->out->getBrowser());
+
+        // Plain Chrome stays Chrome.
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+        self::assertSame('Chrome', $this->out->getBrowser('version'));
+        self::assertSame('120.0', $this->out->getBrowser());
+
+        unset($_SERVER['HTTP_USER_AGENT']);
+    }
+
+    /**
+     * Tests the extended Android, iPhone and iPad version tables.
+     */
+    public function testGetOSVersionNewAndroidAndIos()
+    {
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.6723.92 Mobile Safari/537.36';
+        self::assertSame('15.0', $this->out->getOS(null, 'version'));
+
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; Android 16; SM-S938B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36';
+        self::assertSame('16.0', $this->out->getOS(null, 'version'));
+
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (iPhone; CPU OS 18_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.2 Mobile/15E148 Safari/604.1';
+        self::assertSame('iPhone', $this->out->getOS('name'));
+        self::assertSame('18', $this->out->getOS(null, 'version'));
+
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (iPad; CPU OS 26_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Mobile/15E148 Safari/604.1';
+        self::assertSame('iPad', $this->out->getOS('name'));
+        self::assertSame('26', $this->out->getOS(null, 'version'));
+
+        unset($_SERVER['HTTP_USER_AGENT']);
+    }
+
+    /**
      * Returns database schema SQL statements to initialize database.
      *
      * @return string
