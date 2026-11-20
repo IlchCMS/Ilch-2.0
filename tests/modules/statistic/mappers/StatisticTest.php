@@ -1457,7 +1457,7 @@ class StatisticTest extends DatabaseTestCase
 
     /**
      * Tests that Chrome-based browsers with their own token are detected
-     * before the generic Chrome fallback.
+     * before the generic Chrome and Safari fallbacks.
      */
     public function testGetBrowserChromeBasedVariants()
     {
@@ -1481,10 +1481,54 @@ class StatisticTest extends DatabaseTestCase
         self::assertSame('Yandex Browser', $this->out->getBrowser('version'));
         self::assertSame('1.0.24.1.81833', $this->out->getBrowser());
 
+        // DuckDuckGo, mobile ("DuckDuckGo/" token; UA also contains
+        // "Version/4.0" and "Chrome/157").
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; Android 17) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/157.0.0.0 Mobile DuckDuckGo/5 Safari/537.36';
+        self::assertSame('DuckDuckGo', $this->out->getBrowser('version'));
+        self::assertSame('5', $this->out->getBrowser());
+
+        // DuckDuckGo, desktop macOS: no "Chrome/" token, so without the
+        // DuckDuckGo check this would fall through to the Safari/ fallback
+        // (name "Safari", version "18.6" from "Version/").
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 DuckDuckGo/7 Safari/605.1.15';
+        self::assertSame('DuckDuckGo', $this->out->getBrowser('version'));
+        self::assertSame('7', $this->out->getBrowser());
+
+        // DuckDuckGo, "Ddg/" token spelling (also no "Chrome/" token).
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1 Ddg/26.6';
+        self::assertSame('DuckDuckGo', $this->out->getBrowser('version'));
+        self::assertSame('26.6', $this->out->getBrowser());
+
         // Plain Chrome stays Chrome.
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
         self::assertSame('Chrome', $this->out->getBrowser('version'));
         self::assertSame('120.0', $this->out->getBrowser());
+
+        unset($_SERVER['HTTP_USER_AGENT']);
+    }
+
+    /**
+     * Tests that the Ecosia UA token ("(Ecosia <platform>@<version>)") wins
+     * over the Chrome/ and Safari/ fallbacks.
+     */
+    public function testGetBrowserEcosia()
+    {
+        // Android: the UA also contains "Chrome/" and "Safari/".
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Mobile Safari/537.36 (Ecosia android@152.0.0.0)';
+        self::assertSame('Ecosia', $this->out->getBrowser('version'));
+        self::assertSame('152.0', $this->out->getBrowser());
+
+        // iOS: the UA contains "Safari/" and "Version/"; without the Ecosia
+        // check this would be reported as Safari 18.7.10 (the iOS major).
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7_10 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.7.10 Mobile/15E148 Safari/604.1 (Ecosia ios@12.6.0.3386)';
+        self::assertSame('Ecosia', $this->out->getBrowser('version'));
+        self::assertSame('12.6', $this->out->getBrowser());
+
+        // Older iOS variant without any "Safari/" token: without the Ecosia
+        // check this falls through to an empty browser.
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_7_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) (Ecosia ios@4.0.6.795)';
+        self::assertSame('Ecosia', $this->out->getBrowser('version'));
+        self::assertSame('4.0', $this->out->getBrowser());
 
         unset($_SERVER['HTTP_USER_AGENT']);
     }
@@ -1500,7 +1544,17 @@ class StatisticTest extends DatabaseTestCase
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; Android 16; SM-S938B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36';
         self::assertSame('16.0', $this->out->getOS(null, 'version'));
 
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; Android 17; Pixel 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Mobile Safari/537.36';
+        self::assertSame('17.0', $this->out->getOS(null, 'version'));
+        self::assertSame('Android', $this->out->getOS('name'));
+
         $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (iPhone; CPU OS 18_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.2 Mobile/15E148 Safari/604.1';
+        self::assertSame('iPhone', $this->out->getOS('name'));
+        self::assertSame('18', $this->out->getOS(null, 'version'));
+
+        // "CPU iPhone OS" spelling (as sent by DuckDuckGo): only the
+        // "iPhone OS x_y" alternative matches, not "CPU OS x_y".
+        $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1 Ddg/26.6';
         self::assertSame('iPhone', $this->out->getOS('name'));
         self::assertSame('18', $this->out->getOS(null, 'version'));
 
