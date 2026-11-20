@@ -698,6 +698,8 @@ class Statistic extends \Ilch\Mapper
                 ];
             } elseif ($version != null) {
                 $osArray = [
+                    '=Android 17.0=' => '17.0',
+                    '=Android 17=' => '17.0',
                     '=Android 16.0=' => '16.0',
                     '=Android 16=' => '16.0',
                     '=Android 15.0=' => '15.0',
@@ -803,6 +805,22 @@ class Statistic extends \Ilch\Mapper
                 if (preg_match('=Arc/([0-9.]+)=', $_SERVER['HTTP_USER_AGENT'], $match)) {
                     return $version != null ? 'Arc' : $this->truncateBrowserVersion($match[1]);
                 }
+
+                if (preg_match('=DuckDuckGo/([0-9.]+)=', $_SERVER['HTTP_USER_AGENT'], $match)) {
+                    return $version != null ? 'DuckDuckGo' : $this->truncateBrowserVersion($match[1]);
+                }
+
+                if (preg_match('=Ddg/([0-9.]+)=', $_SERVER['HTTP_USER_AGENT'], $match)) {
+                    return $version != null ? 'DuckDuckGo' : $this->truncateBrowserVersion($match[1]);
+                }
+
+                // Ecosia's token is parenthesized and platform-prefixed
+                // ("(Ecosia ios@…)", "(Ecosia android@…)"); Chromium builds
+                // may advertise "Google Chrome" hints, so the token must
+                // win before the hints are consulted.
+                if (preg_match('=\(Ecosia [A-Za-z]+@([0-9.]+)\)=', $_SERVER['HTTP_USER_AGENT'], $match)) {
+                    return $version != null ? 'Ecosia' : $this->truncateBrowserVersion($match[1]);
+                }
             }
 
             $browserArray = [
@@ -889,6 +907,23 @@ class Statistic extends \Ilch\Mapper
                 return 'Yandex Browser';
             }
 
+            // DuckDuckGo UAs also contain "Chrome/" on mobile and "Safari/"
+            // everywhere, so both token spellings must come before those
+            // fallbacks.
+            if (preg_match('=DuckDuckGo/([0-9.]+)=', $useragent)) {
+                return 'DuckDuckGo';
+            }
+
+            if (preg_match('=Ddg/([0-9.]+)=', $useragent)) {
+                return 'DuckDuckGo';
+            }
+
+            // Ecosia: token before the Chrome/ and Safari/ fallbacks for the
+            // same reason as DuckDuckGo.
+            if (preg_match('=\(Ecosia [A-Za-z]+@([0-9.]+)\)=', $useragent)) {
+                return 'Ecosia';
+            }
+
             if (preg_match('=Chrome/([0-9]{1,3})\.[0-9]{1,3}=', $useragent)) {
                 return 'Chrome';
             }
@@ -963,6 +998,23 @@ class Statistic extends \Ilch\Mapper
         // to two segments would throw away the meaningful part.
         if (preg_match('=YaBrowser/([0-9.]+)=', $useragent, $browser)) {
             return $browser[1];
+        }
+
+        // DuckDuckGo before the generic Chrome check, so the underlying
+        // Chromium version is not returned for DDG traffic (name and
+        // version stay consistent with the name branch).
+        if (preg_match('=DuckDuckGo/([0-9.]+)=', $useragent, $browser)) {
+            return $this->truncateBrowserVersion($browser[1]);
+        }
+
+        if (preg_match('=Ddg/([0-9.]+)=', $useragent, $browser)) {
+            return $this->truncateBrowserVersion($browser[1]);
+        }
+
+        // The version part is the app version (e.g. "ios@12.6.0.3386");
+        // on Android it happens to equal the bundled Chromium version.
+        if (preg_match('=\(Ecosia [A-Za-z]+@([0-9.]+)\)=', $useragent, $browser)) {
+            return $this->truncateBrowserVersion($browser[1]);
         }
 
         if (preg_match('=Chrome/([0-9.]+)=', $useragent, $browser)) {
