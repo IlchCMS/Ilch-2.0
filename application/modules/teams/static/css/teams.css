@@ -1,11 +1,11 @@
-.teams .team-name {
-    margin-top: 25px;
+/* Team banner inside the accordion header button */
+.teams .accordion-button img {
+    max-height: 40px;
+    width: auto;
+    margin-right: 10px;
 }
-.teams .team-name:first-child {
-    margin-top: 0;
-}
-.teams .team-name h3 {
-    margin-top: 0;
+.teams .accordion-button .team-name {
+    margin: 0;
 }
 .teams .contact-links {
     text-align: right;
@@ -20,6 +20,14 @@
 .teams .contact-links a:hover,
 .teams .contact-links a:focus {
     text-decoration: none;
+}
+
+/* User avatars in the member table */
+.teams img.avatar {
+    height: 30px;
+    width: 30px;
+    margin-right: 5px;
+    vertical-align: middle;
 }
 
 /* backend image upload */

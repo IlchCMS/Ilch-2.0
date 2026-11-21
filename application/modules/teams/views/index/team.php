@@ -47,6 +47,9 @@ $pagination = $this->get('pagination');
                             <?php $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($user->getId()); ?>
                             <tr>
                                 <td>
+                                    <?php if ($team->getOptAvatars()) : ?>
+                                        <img class="avatar" src="<?=$this->getStaticUrl() . '../' . $user->getAvatar() ?>" alt="<?=$this->escape($user->getName()) ?>" />
+                                    <?php endif; ?>
                                     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" title="<?=$this->escape($user->getName()) ?> <?=$this->getTrans('profile') ?>">
                                         <?=$this->escape($user->getName()) ?>
                                     </a>

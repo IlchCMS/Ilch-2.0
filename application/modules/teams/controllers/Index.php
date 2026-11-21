@@ -77,7 +77,7 @@ class Index extends \Ilch\Controller\Frontend
             $users = [];
             if (!empty($pagedIds)) {
                 $userById = [];
-                foreach ($userMapper->getUserList(['id' => $pagedIds, 'confirmed' => 1], null, ['id', 'name', 'opt_mail']) as $user) {
+                foreach ($userMapper->getUserList(['id' => $pagedIds, 'confirmed' => 1], null, ['id', 'name', 'opt_mail', 'avatar']) as $user) {
                     $userById[$user->getId()] = $user;
                 }
                 foreach ($pagedIds as $id) {
@@ -156,7 +156,7 @@ class Index extends \Ilch\Controller\Frontend
         $users = [];
         if (!empty($pagedIds)) {
             $userById = [];
-            foreach ($userMapper->getUserList(['id' => $pagedIds, 'confirmed' => 1], null, ['id', 'name', 'opt_mail']) as $user) {
+            foreach ($userMapper->getUserList(['id' => $pagedIds, 'confirmed' => 1], null, ['id', 'name', 'opt_mail', 'avatar']) as $user) {
                 $userById[$user->getId()] = $user;
             }
             foreach ($pagedIds as $id) {
