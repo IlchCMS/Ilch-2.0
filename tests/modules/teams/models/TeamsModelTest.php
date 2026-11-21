@@ -28,6 +28,8 @@ class TeamsModelTest extends TestCase
         self::assertFalse($model->getOptShow());
         self::assertFalse($model->getOptIn());
         self::assertFalse($model->getNotifyLeader());
+        self::assertFalse($model->getOptCollapse());
+        self::assertFalse($model->getOptAvatars());
     }
 
     /**
@@ -141,6 +143,28 @@ class TeamsModelTest extends TestCase
     }
 
     /**
+     * Tests that setOptCollapse() sets and returns the optCollapse flag.
+     */
+    public function testSetOptCollapse()
+    {
+        $model = new Teams();
+        $model->setOptCollapse(true);
+
+        self::assertTrue($model->getOptCollapse());
+    }
+
+    /**
+     * Tests that setOptAvatars() sets and returns the optAvatars flag.
+     */
+    public function testSetOptAvatars()
+    {
+        $model = new Teams();
+        $model->setOptAvatars(true);
+
+        self::assertTrue($model->getOptAvatars());
+    }
+
+    /**
      * Tests that all setters are chainable (return $this).
      */
     public function testSettersReturnSelf()
@@ -157,6 +181,8 @@ class TeamsModelTest extends TestCase
         self::assertSame($model, $model->setOptShow(true));
         self::assertSame($model, $model->setOptIn(false));
         self::assertSame($model, $model->setNotifyLeader(false));
+        self::assertSame($model, $model->setOptCollapse(true));
+        self::assertSame($model, $model->setOptAvatars(false));
     }
 
     /**
@@ -174,7 +200,9 @@ class TeamsModelTest extends TestCase
             ->setGroupId(1)
             ->setOptShow(true)
             ->setOptIn(false)
-            ->setNotifyLeader(false);
+            ->setNotifyLeader(false)
+            ->setOptCollapse(true)
+            ->setOptAvatars(false);
 
         self::assertSame(1, $model->getId());
         self::assertSame(1, $model->getPosition());
@@ -186,6 +214,8 @@ class TeamsModelTest extends TestCase
         self::assertTrue($model->getOptShow());
         self::assertFalse($model->getOptIn());
         self::assertFalse($model->getNotifyLeader());
+        self::assertTrue($model->getOptCollapse());
+        self::assertFalse($model->getOptAvatars());
     }
 
     /**
@@ -204,6 +234,8 @@ class TeamsModelTest extends TestCase
         $model->setOptShow(true);
         $model->setOptIn(false);
         $model->setNotifyLeader(false);
+        $model->setOptCollapse(false);
+        $model->setOptAvatars(false);
 
         self::assertSame([
             'id' => 1,
@@ -216,6 +248,8 @@ class TeamsModelTest extends TestCase
             'optShow' => true,
             'optIn' => false,
             'notifyLeader' => false,
+            'optCollapse' => false,
+            'optAvatars' => false,
         ], $model->getArray());
     }
 
@@ -251,6 +285,8 @@ class TeamsModelTest extends TestCase
             'optShow' => 1,
             'optIn' => 0,
             'notifyLeader' => 0,
+            'optCollapse' => 1,
+            'optAvatars' => 1,
         ]);
 
         self::assertSame($model, $result);
@@ -264,6 +300,8 @@ class TeamsModelTest extends TestCase
         self::assertTrue($model->getOptShow());
         self::assertFalse($model->getOptIn());
         self::assertFalse($model->getNotifyLeader());
+        self::assertTrue($model->getOptCollapse());
+        self::assertTrue($model->getOptAvatars());
     }
 
     /**
@@ -272,13 +310,15 @@ class TeamsModelTest extends TestCase
     public function testSetByArrayPartial()
     {
         $model = new Teams();
-        $model->setByArray(['name' => 'Partial', 'groupId' => 4]);
+        $model->setByArray(['name' => 'Partial', 'groupId' => 4, 'optCollapse' => 1]);
 
         self::assertSame('Partial', $model->getName());
         self::assertSame(4, $model->getGroupId());
         self::assertSame(0, $model->getId());
         self::assertSame('', $model->getLeader());
         self::assertFalse($model->getOptShow());
+        self::assertTrue($model->getOptCollapse());
+        self::assertFalse($model->getOptAvatars());
     }
 
     /**

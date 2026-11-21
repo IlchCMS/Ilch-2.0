@@ -61,6 +61,8 @@ teams:
     optShow: 1
     optIn: 0
     notifyLeader: 0
+    optCollapse: 0
+    optAvatars: 0
   -
     id: 2
     name: "Team 2"
@@ -72,6 +74,8 @@ teams:
     optShow: 1
     optIn: 1
     notifyLeader: 1
+    optCollapse: 1
+    optAvatars: 1
   -
     id: 3
     name: "Team 3"
@@ -83,6 +87,8 @@ teams:
     optShow: 1
     optIn: 1
     notifyLeader: 1
+    optCollapse: 1
+    optAvatars: 0
 
 teams_joins:
   -
