@@ -1484,6 +1484,7 @@ class Config extends \Ilch\Config\Install
                 removeDir(ROOT_PATH . '/static/js/tempus-dominus');
                 break;
             case "2.2.21":
+            case "2.2.22":
                 // Update vendor folder to update various dependencies.
                 replaceVendorDirectory();
                 break;
