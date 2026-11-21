@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.25.5',
+        'version' => '1.26.0',
         'icon_small' => 'fa-solid fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -77,6 +77,8 @@ class Config extends \Ilch\Config\Install
                 `optShow` TINYINT(1) NOT NULL,
                 `optIn` TINYINT(1) NOT NULL,
                 `notifyLeader` TINYINT(1) NOT NULL,
+                `optCollapse` TINYINT(1) NOT NULL DEFAULT 0,
+                `optAvatars` TINYINT(1) NOT NULL DEFAULT 0,
                 `position` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
@@ -257,8 +259,16 @@ class Config extends \Ilch\Config\Install
                 $databaseConfig->set('teams_userNotification', 1);
                 // no break
             case "1.25.0":
-                // no break
             case "1.25.1":
+            case "1.25.2":
+            case "1.25.3":
+            case "1.25.4":
+            case "1.25.5":
+                // Add per-team frontend display options:
+                // optCollapse - collapse the team by default in the frontend team list.
+                // optAvatars  - show the user avatars in the frontend team views.
+                $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `optCollapse` TINYINT(1) NOT NULL DEFAULT 0 AFTER `notifyLeader`;');
+                $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `optAvatars` TINYINT(1) NOT NULL DEFAULT 0 AFTER `optCollapse`;');
                 // no break
         }
 

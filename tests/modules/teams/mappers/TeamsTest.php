@@ -75,6 +75,8 @@ class TeamsTest extends DatabaseTestCase
         self::assertEquals(1, $entries[$i]->getOptShow());
         self::assertEquals(0, $entries[$i]->getOptIn());
         self::assertEquals(0, $entries[$i]->getNotifyLeader());
+        self::assertEquals(0, $entries[$i]->getOptCollapse());
+        self::assertEquals(0, $entries[$i]->getOptAvatars());
 
         $i++;
         self::assertEquals(3, $entries[$i]->getId());
@@ -87,6 +89,8 @@ class TeamsTest extends DatabaseTestCase
         self::assertEquals(1, $entries[$i]->getOptShow());
         self::assertEquals(1, $entries[$i]->getOptIn());
         self::assertEquals(1, $entries[$i]->getNotifyLeader());
+        self::assertEquals(1, $entries[$i]->getOptCollapse());
+        self::assertEquals(0, $entries[$i]->getOptAvatars());
 
         $i++;
         self::assertEquals(2, $entries[$i]->getId());
@@ -99,6 +103,8 @@ class TeamsTest extends DatabaseTestCase
         self::assertEquals(1, $entries[$i]->getOptShow());
         self::assertEquals(1, $entries[$i]->getOptIn());
         self::assertEquals(1, $entries[$i]->getNotifyLeader());
+        self::assertEquals(1, $entries[$i]->getOptCollapse());
+        self::assertEquals(1, $entries[$i]->getOptAvatars());
     }
 
     /**
@@ -292,6 +298,8 @@ class TeamsTest extends DatabaseTestCase
         $model->setOptShow(1);
         $model->setOptIn(1);
         $model->setNotifyLeader(0);
+        $model->setOptCollapse(1);
+        $model->setOptAvatars(1);
         $id = $this->mapper->save($model);
 
         self::assertTrue(file_exists($file));
@@ -326,6 +334,8 @@ class TeamsTest extends DatabaseTestCase
         $model->setOptShow(1);
         $model->setOptIn(1);
         $model->setNotifyLeader(0);
+        $model->setOptCollapse(1);
+        $model->setOptAvatars(1);
         $id = $this->mapper->save($model);
 
         $entry = $this->mapper->getEntryById($id);
@@ -341,6 +351,8 @@ class TeamsTest extends DatabaseTestCase
         self::assertEquals($model->getOptShow(), $entry->getOptShow());
         self::assertEquals($model->getOptIn(), $entry->getOptIn());
         self::assertEquals($model->getNotifyLeader(), $entry->getNotifyLeader());
+        self::assertEquals($model->getOptCollapse(), $entry->getOptCollapse());
+        self::assertEquals($model->getOptAvatars(), $entry->getOptAvatars());
     }
 
     /**
@@ -359,6 +371,8 @@ class TeamsTest extends DatabaseTestCase
         $model->setOptShow(1);
         $model->setOptIn(1);
         $model->setNotifyLeader(0);
+        $model->setOptCollapse(1);
+        $model->setOptAvatars(1);
         $id = $this->mapper->save($model);
 
         $entry = $this->mapper->getEntryById($id);
@@ -375,6 +389,8 @@ class TeamsTest extends DatabaseTestCase
         self::assertEquals($model->getOptShow(), $entry->getOptShow());
         self::assertEquals($model->getOptIn(), $entry->getOptIn());
         self::assertEquals($model->getNotifyLeader(), $entry->getNotifyLeader());
+        self::assertEquals($model->getOptCollapse(), $entry->getOptCollapse());
+        self::assertEquals($model->getOptAvatars(), $entry->getOptAvatars());
     }
 
     /**

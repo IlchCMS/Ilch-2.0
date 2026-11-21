@@ -120,7 +120,9 @@ class Index extends \Ilch\Controller\Admin
                 'name' => 'required|unique:teams,name,' . $model->getId(),
                 'groupId' => 'required|numeric|integer|min:1',
                 'optIn' => 'required|numeric|integer|min:0|max:1',
-                'notifyLeader' => 'required|numeric|integer|min:0|max:1'
+                'notifyLeader' => 'required|numeric|integer|min:0|max:1',
+                'optCollapse' => 'required|numeric|integer|min:0|max:1',
+                'optAvatars' => 'required|numeric|integer|min:0|max:1'
             ]);
 
             // No need to check if the leader and coleader are identical if one of them is empty.
@@ -212,7 +214,9 @@ class Index extends \Ilch\Controller\Admin
                     ->setGroupId($this->getRequest()->getPost('groupId'))
                     ->setOptShow($this->getRequest()->getPost('optShow'))
                     ->setOptIn($this->getRequest()->getPost('optIn'))
-                    ->setNotifyLeader($this->getRequest()->getPost('notifyLeader'));
+                    ->setNotifyLeader($this->getRequest()->getPost('notifyLeader'))
+                    ->setOptCollapse($this->getRequest()->getPost('optCollapse'))
+                    ->setOptAvatars($this->getRequest()->getPost('optAvatars'));
                 $teamsMapper->save($model);
 
                 // Notify all users of the team. Only the user ids are needed,

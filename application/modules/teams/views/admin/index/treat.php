@@ -117,7 +117,7 @@ $userGroupList = $this->get('userGroupList');
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('optShow') ? ' has-error' : '' ?>">
         <label for="optShow" class="col-xl-2 col-form-label">
-            <?=$this->getTrans('optShow') ?>:
+            <?=$this->getTrans('optShow') ?>
         </label>
         <div class="col-xl-4">
             <div class="flipswitch">
@@ -131,7 +131,7 @@ $userGroupList = $this->get('userGroupList');
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('optIn') ? ' has-error' : '' ?>">
         <label for="optIn" class="col-xl-2 col-form-label">
-            <?=$this->getTrans('optIn') ?>:
+            <?=$this->getTrans('optIn') ?>
         </label>
         <div class="col-xl-4">
             <div class="flipswitch">
@@ -145,7 +145,7 @@ $userGroupList = $this->get('userGroupList');
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('notifyLeader') ? ' has-error' : '' ?>" id="notifyLeader">
         <label for="notifyLeader" class="col-xl-2 col-form-label">
-            <?=$this->getTrans('notifyLeader') ?>:
+            <?=$this->getTrans('notifyLeader') ?>
         </label>
         <div class="col-xl-4">
             <div class="flipswitch">
@@ -153,6 +153,34 @@ $userGroupList = $this->get('userGroupList');
                 <label for="notifyLeader-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
                 <input type="radio" class="flipswitch-input" id="notifyLeader-off" name="notifyLeader" value="0" <?=(!$this->originalInput('notifyLeader', $team->getNotifyLeader()) ? 'checked="checked"' : '') ?> />
                 <label for="notifyLeader-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3<?=$this->validation()->hasError('optCollapse') ? ' has-error' : '' ?>">
+        <label for="optCollapse" class="col-xl-2 col-form-label">
+            <?=$this->getTrans('optCollapse') ?>
+        </label>
+        <div class="col-xl-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="optCollapse-on" name="optCollapse" value="1" <?=($this->originalInput('optCollapse', $team->getOptCollapse()) ? 'checked="checked"' : '') ?> />
+                <label for="optCollapse-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="optCollapse-off" name="optCollapse" value="0" <?=(!$this->originalInput('optCollapse', $team->getOptCollapse()) ? 'checked="checked"' : '') ?> />
+                <label for="optCollapse-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3<?=$this->validation()->hasError('optAvatars') ? ' has-error' : '' ?>">
+        <label for="optAvatars" class="col-xl-2 col-form-label">
+            <?=$this->getTrans('optAvatars') ?>
+        </label>
+        <div class="col-xl-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="optAvatars-on" name="optAvatars" value="1" <?=($this->originalInput('optAvatars', $team->getOptAvatars()) ? 'checked="checked"' : '') ?> />
+                <label for="optAvatars-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="optAvatars-off" name="optAvatars" value="0" <?=(!$this->originalInput('optAvatars', $team->getOptAvatars()) ? 'checked="checked"' : '') ?> />
+                <label for="optAvatars-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>

@@ -80,6 +80,20 @@ class Teams extends \Ilch\Model
     protected bool $optShow = false;
 
     /**
+     * Whether the team is collapsed by default in the frontend team list.
+     *
+     * @var bool
+     */
+    protected bool $optCollapse = false;
+
+    /**
+     * Whether the user avatars are shown in the frontend team views.
+     *
+     * @var bool
+     */
+    protected bool $optAvatars = false;
+
+    /**
      * Set this Model by Array
      *
      * @param array $entries
@@ -117,6 +131,12 @@ class Teams extends \Ilch\Model
         }
         if (isset($entries['notifyLeader'])) {
             $this->setNotifyLeader($entries['notifyLeader']);
+        }
+        if (isset($entries['optCollapse'])) {
+            $this->setOptCollapse($entries['optCollapse']);
+        }
+        if (isset($entries['optAvatars'])) {
+            $this->setOptAvatars($entries['optAvatars']);
         }
 
         return $this;
@@ -353,6 +373,52 @@ class Teams extends \Ilch\Model
     }
 
     /**
+     * Gets whether the team is collapsed by default in the frontend team list.
+     *
+     * @return bool
+     */
+    public function getOptCollapse(): bool
+    {
+        return $this->optCollapse;
+    }
+
+    /**
+     * Sets whether the team is collapsed by default in the frontend team list.
+     *
+     * @param bool $optCollapse
+     * @return $this
+     */
+    public function setOptCollapse(bool $optCollapse): Teams
+    {
+        $this->optCollapse = $optCollapse;
+
+        return $this;
+    }
+
+    /**
+     * Gets whether the user avatars are shown in the frontend team views.
+     *
+     * @return bool
+     */
+    public function getOptAvatars(): bool
+    {
+        return $this->optAvatars;
+    }
+
+    /**
+     * Sets whether the user avatars are shown in the frontend team views.
+     *
+     * @param bool $optAvatars
+     * @return $this
+     */
+    public function setOptAvatars(bool $optAvatars): Teams
+    {
+        $this->optAvatars = $optAvatars;
+
+        return $this;
+    }
+
+    /**
      * Get Array of this Model
      *
      * @param bool $withId
@@ -372,7 +438,9 @@ class Teams extends \Ilch\Model
                 'groupId' => $this->getGroupId(),
                 'optShow' => $this->getOptShow(),
                 'optIn' => $this->getOptIn(),
-                'notifyLeader' => $this->getNotifyLeader()
+                'notifyLeader' => $this->getNotifyLeader(),
+                'optCollapse' => $this->getOptCollapse(),
+                'optAvatars' => $this->getOptAvatars()
             ]
         );
     }
