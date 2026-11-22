@@ -988,6 +988,9 @@ class Article extends \Ilch\Mapper
         $this->setTopArticle($id, (int)$article->getTopArticle());
         $this->saveReadAccess($id, $article->getReadAccess());
 
+        // Search index: re-index the article (all locales, access, category).
+        \Ilch\Search\Queue::enqueue('article', \Ilch\Search\Queue::OP_INDEX, 'article', $id);
+
         return $id;
     }
 
@@ -1087,9 +1090,14 @@ class Article extends \Ilch\Mapper
     public function delete(int $id): int
     {
         // Rows in articles_access and articles_content get automatically deleted due to foreign key constraints.
-        return $this->db()->delete('articles')
+        $result = $this->db()->delete('articles')
             ->where(['id' => $id])
             ->execute();
+
+        // Search index: remove all locale documents of the article.
+        \Ilch\Search\Queue::enqueue('article', \Ilch\Search\Queue::OP_DELETE, 'article', $id);
+
+        return $result;
     }
 
     /**

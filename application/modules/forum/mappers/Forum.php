@@ -868,6 +868,10 @@ class Forum extends Mapper
                         ->execute();
                 }
             }
+
+            // Search index: title/description/access changes re-index the
+            // whole forum scope (topic + post documents).
+            \Ilch\Search\Queue::enqueue('forum', \Ilch\Search\Queue::OP_REINDEX_SCOPE, '', null, '', 'forum_id', $itemId);
         }
 
         return $itemId;
@@ -894,5 +898,11 @@ class Forum extends Mapper
         $this->db()->delete('forum_items')
             ->where(['id' => $ids])
             ->execute();
+
+        // Search index: remove the documents of every deleted forum scope
+        // (no-op for categories, which carry no documents).
+        foreach ($ids as $itemId) {
+            \Ilch\Search\Queue::enqueue('forum', \Ilch\Search\Queue::OP_DELETE_SCOPE, '', null, '', 'forum_id', (int)$itemId);
+        }
     }
 }

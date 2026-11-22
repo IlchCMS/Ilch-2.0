@@ -396,7 +396,7 @@ class Index extends \Ilch\Controller\Frontend
     public function configurationAction()
     {
         $fields = ['usage' => '', 'domain' => '', 'adminName' => '', 'adminPassword' => '', 'adminPassword2' => '', 'adminEmail' => ''];
-        $systemModules = ['admin', 'user', 'article', 'comment', 'contact', 'cookieconsent', 'error', 'imprint', 'install', 'media', 'privacy', 'statistic'];
+        $systemModules = ['admin', 'user', 'article', 'comment', 'contact', 'cookieconsent', 'error', 'imprint', 'install', 'media', 'privacy', 'search', 'statistic'];
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
@@ -513,7 +513,7 @@ class Index extends \Ilch\Controller\Frontend
 
                 foreach ($modulesToInstall as $module) {
                     // Will not be linked in the menu
-                    if (in_array($module, ['admin', 'comment', 'contact', 'cookieconsent', 'error', 'imprint', 'install', 'media', 'newsletter', 'privacy', 'shoutbox', 'statistic'])) {
+                    if (in_array($module, ['admin', 'comment', 'contact', 'cookieconsent', 'error', 'imprint', 'install', 'media', 'newsletter', 'privacy', 'search', 'shoutbox', 'statistic'])) {
                         continue;
                     }
 
