@@ -40,9 +40,7 @@ class Config extends \Ilch\Config\Install
                     'name' => 'Statistic'
                 ]
             ],
-        ],
-        'ilchCore' => '2.2.21',
-        'phpVersion' => '8.1'
+        ]
     ];
 
     public function install()
