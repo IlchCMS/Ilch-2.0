@@ -152,4 +152,6 @@ return [
     'postNotFound' => 'Beitrag nicht gefunden.',
     'topicNotFound' => 'Thema nicht gefunden.',
     'forumNotFound' => 'Forum nicht gefunden.',
+    'searchInForum' => 'Im Forum suchen…',
+    'allForums' => 'Alle Foren',
 ];

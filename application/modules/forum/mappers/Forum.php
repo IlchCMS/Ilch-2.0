@@ -601,6 +601,45 @@ class Forum extends Mapper
     }
 
     /**
+     * Get all forums (type 1) as a flat list, ordered like the forum index view.
+     * The items returned by getForumItemsUser() are walked depth-first from the
+     * roots in sort order, so each forum appears in the same position as in
+     * the forum overview.
+     *
+     * @param User|null $user
+     * @return array|ForumItem[]
+     */
+    public function getForumListUser(?User $user = null): array
+    {
+        /** @var ForumItem[]|null $items */
+        $items = $this->getForumItemsUser($user);
+        if (empty($items)) {
+            return [];
+        }
+
+        // The flat list is already sorted by i.sort ASC, so each parent group
+        // keeps the display order of the index view.
+        $children = [];
+        foreach ($items as $item) {
+            $children[$item->getParentId()][] = $item;
+        }
+
+        $forums = [];
+        $walk = function (array $branch) use (&$walk, &$forums, $children): void {
+            foreach ($branch as $item) {
+                if ($item->getType() === 1) {
+                    $forums[] = $item;
+                } else {
+                    $walk($children[$item->getId()] ?? []);
+                }
+            }
+        };
+        $walk($children[0] ?? []);
+
+        return $forums;
+    }
+
+    /**
      * Gets a list of all Ids of the forum items.
      *
      * @return array|null

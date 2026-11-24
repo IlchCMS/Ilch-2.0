@@ -598,6 +598,97 @@ class ForumTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that getForumListUser() returns only forums without categories for a guest.
+     */
+    public function testGetForumListUser()
+    {
+        $forums = $this->out->getForumListUser();
+
+        self::assertIsArray($forums);
+        self::assertCount(1, $forums);
+
+        $forum = $forums[0];
+        self::assertInstanceOf(ForumItemModel::class, $forum);
+        self::assertEquals(2, $forum->getId());
+        self::assertEquals(1, $forum->getType());
+        self::assertSame('Mein Forum', $forum->getTitle());
+    }
+
+    /**
+     * Tests that getForumListUser() follows the index view order instead of the flat sort order.
+     */
+    public function testGetForumListUserFollowsIndexViewOrder()
+    {
+        $catId = $this->db->insert('forum_items')
+            ->values(['sort' => 5, 'parent_id' => 0, 'type' => 0, 'title' => 'Zweite Kategorie', 'description' => ''])
+            ->execute();
+        $secondCatForumId = $this->db->insert('forum_items')
+            ->values(['sort' => 20, 'parent_id' => $catId, 'type' => 1, 'title' => 'Forum B', 'description' => ''])
+            ->execute();
+        // Root forum with a sort value between the two categories.
+        $rootForumId = $this->db->insert('forum_items')
+            ->values(['sort' => 15, 'parent_id' => 0, 'type' => 1, 'title' => 'Forum Wurzel', 'description' => ''])
+            ->execute();
+
+        $forums = $this->out->getForumListUser();
+
+        // The index view renders category 1 with its forum, then the second
+        // category with its forum, then the root forum. A flat sort by sort
+        // value would put the root forum (15) before the forum of the second
+        // category (20).
+        self::assertCount(3, $forums);
+        self::assertEquals(2, $forums[0]->getId());
+        self::assertEquals($secondCatForumId, $forums[1]->getId());
+        self::assertEquals($rootForumId, $forums[2]->getId());
+    }
+
+    /**
+     * Tests that getForumListUser() includes forums of nested categories in tree position.
+     */
+    public function testGetForumListUserIncludesNestedCategories()
+    {
+        $subCatId = $this->db->insert('forum_items')
+            ->values(['sort' => 5, 'parent_id' => 1, 'type' => 0, 'title' => 'Sub-Kategorie', 'description' => ''])
+            ->execute();
+        $nestedForumId = $this->db->insert('forum_items')
+            ->values(['sort' => 6, 'parent_id' => $subCatId, 'type' => 1, 'title' => 'Forum C', 'description' => ''])
+            ->execute();
+
+        $forums = $this->out->getForumListUser();
+
+        // The sub category (sort 5) is rendered before the forum of category 1 (sort 10).
+        self::assertCount(2, $forums);
+        self::assertEquals($nestedForumId, $forums[0]->getId());
+        self::assertEquals(2, $forums[1]->getId());
+    }
+
+    /**
+     * Tests that getForumListUser() returns an empty array without items.
+     */
+    public function testGetForumListUserEmpty()
+    {
+        $this->out->deleteItems([1, 2]);
+
+        self::assertSame([], $this->out->getForumListUser());
+    }
+
+    /**
+     * Tests that getForumListUser() also works with a logged in user.
+     */
+    public function testGetForumListUserWithUser()
+    {
+        $user = (new UserMapper())->getUserById(1);
+
+        self::assertNotNull($user);
+
+        $forums = $this->out->getForumListUser($user);
+
+        self::assertIsArray($forums);
+        self::assertCount(1, $forums);
+        self::assertEquals(2, $forums[0]->getId());
+    }
+
+    /**
      * Tests that getForumItemsIds() returns all item ids.
      */
     public function testGetForumItemsIds()

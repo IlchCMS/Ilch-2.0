@@ -129,10 +129,13 @@ function rec(\Modules\Forum\Models\ForumItem $item, \Ilch\View $obj)
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
 <div id="forum">
-    <h1>
-        <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
-        <i class="fa-solid fa-chevron-right"></i> <?=$this->escape($cat->getTitle()) ?>
-    </h1>
+    <div class="forum-head">
+        <h1>
+            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
+            <i class="fa-solid fa-chevron-right"></i> <?=$this->escape($cat->getTitle()) ?>
+        </h1>
+        <?php include APPLICATION_PATH . '/modules/forum/views/searchbox.php'; ?>
+    </div>
     <?php
     $adminAccess = null;
     if ($this->getUser()) {
