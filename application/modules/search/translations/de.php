@@ -19,6 +19,8 @@ return [
     'inTopic' => 'im Thema %s',
     'locale' => 'Sprache',
     'localeAny' => 'Alle',
+    'from' => 'Von',
+    'to' => 'Bis',
     'approxResults' => 'ungenau',
     'tooManySearches' => 'Zu viele Suchanfragen, bitte in einer Minute erneut versuchen.',
 

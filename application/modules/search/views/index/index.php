@@ -8,6 +8,14 @@ $search = $this->get('search');
 $filter = $this->get('filter');
 /** @var string $locale */
 $locale = $this->get('locale');
+/** @var string $from */
+$from = $this->get('from');
+/** @var string $to */
+$to = $this->get('to');
+/** @var string $scopeKey */
+$scopeKey = $this->get('scopeKey');
+/** @var int $scopeId */
+$scopeId = (int)$this->get('scopeId');
 /** @var array $tokens */
 $tokens = $this->get('tokens');
 /** @var \Ilch\Search\SearchHit[] $hits */
@@ -39,6 +47,16 @@ if ($filter !== '') {
 }
 if ($locale !== '') {
     $baseParams['locale'] = $locale;
+}
+if ($from !== '') {
+    $baseParams['from'] = $from;
+}
+if ($to !== '') {
+    $baseParams['to'] = $to;
+}
+if ($scopeKey !== '' && $scopeId > 0) {
+    $baseParams['scopeKey'] = $scopeKey;
+    $baseParams['scopeId'] = (string)$scopeId;
 }
 
 // Module tabs, one per module that has an indexer (localized label).
@@ -133,6 +151,12 @@ $articleHits = array_values(array_filter($hits, static fn ($hit) => $hit->module
             </select>
         </form>
     <?php endif; ?>
+    <form method="get" action="<?=$this->getUrl($baseParams) ?>" class="search-date-form">
+        <label for="searchFrom"><?=$this->getTrans('from') ?>:</label>
+        <input type="date" id="searchFrom" name="from" value="<?=$this->escape($from) ?>" onchange="this.form.submit()">
+        <label for="searchTo"><?=$this->getTrans('to') ?>:</label>
+        <input type="date" id="searchTo" name="to" value="<?=$this->escape($to) ?>" onchange="this.form.submit()">
+    </form>
 </div>
 
 <?php if ($forumGroups !== []): ?>

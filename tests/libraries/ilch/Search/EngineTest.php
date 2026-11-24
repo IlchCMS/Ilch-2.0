@@ -231,6 +231,67 @@ class EngineTest extends DatabaseTestCase
         self::assertSame(1, $result['total']);
     }
 
+    /**
+     * Tests the activity date range filter (FULLTEXT path).
+     */
+    public function testDateRangeFilter()
+    {
+        $user = ['isAdmin' => true];
+
+        // April to June 2025: 301 (04-01), 302 (05-01), 204 (06-01).
+        $mid = $this->out->search('zebra', ['from' => '2025-04-01', 'to' => '2025-06-30'], $user);
+        self::assertDocIdSet($mid, [204, 301, 302]);
+        self::assertSame(3, $mid['total']);
+
+        // January 2025 only: 101, 201, 208 (all dated 2025-01-01).
+        $jan = $this->out->search('zebra', ['from' => '2025-01-01', 'to' => '2025-01-31'], $user);
+        self::assertDocIdSet($jan, [101, 201, 208]);
+        self::assertSame(3, $jan['total']);
+
+        // Invalid bounds are dropped silently (whitelist safety).
+        $invalid = $this->out->search('zebra', ['from' => 'not-a-date', 'to' => '2025-99-99'], $user);
+        self::assertDocIdSet($invalid, [101, 201, 204, 301, 302, 208]);
+        self::assertSame(6, $invalid['total']);
+    }
+
+    /**
+     * Tests that the LIKE path shares the date range WHERE clause.
+     */
+    public function testDateRangeAppliesToLikePath()
+    {
+        $this->requireDefaultMinTokenSize();
+
+        // Of the 'ab' hits (203, 205, 206, 207) only 207 is dated 2025-06-01.
+        $result = $this->out->search('ab', ['from' => '2025-06-01'], ['isAdmin' => true]);
+
+        self::assertSame('like', $result['engine']);
+        self::assertDocIdSet($result, [207]);
+        self::assertSame(1, $result['total']);
+    }
+
+    /**
+     * Tests the forum/category scope filter (scopeKey + scopeId).
+     */
+    public function testScopeFilter()
+    {
+        $user = ['isAdmin' => true];
+
+        // Forum 11: topic 101, post 201, body doc 208.
+        $forum = $this->out->search('zebra', ['scopeKey' => 'forum_id', 'scopeId' => 11], $user);
+        self::assertDocIdSet($forum, [101, 201, 208]);
+        self::assertSame(3, $forum['total']);
+
+        // Category 21: both article locales.
+        $cat = $this->out->search('zebra', ['scopeKey' => 'cat_id', 'scopeId' => 21], $user);
+        self::assertDocIdSet($cat, [301, 302]);
+        self::assertSame(2, $cat['total']);
+
+        // A scope key without an id does not filter (both must be set).
+        $noId = $this->out->search('zebra', ['scopeKey' => 'forum_id'], $user);
+        self::assertDocIdSet($noId, [101, 201, 204, 301, 302, 208]);
+        self::assertSame(6, $noId['total']);
+    }
+
     // ------------------------------------------------------------------
     // LIKE path + degradation
     // ------------------------------------------------------------------

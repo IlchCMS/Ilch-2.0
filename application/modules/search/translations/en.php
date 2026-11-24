@@ -19,6 +19,8 @@ return [
     'inTopic' => 'in topic %s',
     'locale' => 'Locale',
     'localeAny' => 'Any',
+    'from' => 'From',
+    'to' => 'To',
     'approxResults' => 'approximate',
     'tooManySearches' => 'Too many searches, please try again in a minute.',
 
