@@ -29,7 +29,7 @@ class Excerpt
      */
     public static function make(string $text, array $tokens, int $radius = 90): string
     {
-        $text = trim((string)$text);
+        $text = trim((string)$text, " \f\n\r\t\v\x00");
         if ($text === '' || $tokens === []) {
             return '';
         }
@@ -63,7 +63,7 @@ class Excerpt
         $prefix  = $start > 0 ? '…' : '';
         $suffix  = $end < mb_strlen($text) ? '…' : '';
 
-        return $prefix . trim($excerpt) . $suffix;
+        return $prefix . trim($excerpt, " \f\n\r\t\v\x00") . $suffix;
     }
 
     /**

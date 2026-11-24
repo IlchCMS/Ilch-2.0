@@ -290,6 +290,6 @@ final class Forum implements Indexer
     private static function strip(string $text): string
     {
         $text = strip_tags((string)html_entity_decode($text, ENT_QUOTES));
-        return trim((string)preg_replace('/\s+/', ' ', $text));
+        return trim((string)preg_replace('/\s+/', ' ', $text), " \f\n\r\t\v\x00");
     }
 }

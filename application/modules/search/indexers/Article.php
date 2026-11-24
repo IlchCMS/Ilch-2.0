@@ -128,7 +128,7 @@ final class Article implements Indexer
         $accessGroups = $this->articleAccessCsv((int)$articleId);
 
         // First category id (0 when none): cat_id may be a single id or a CSV.
-        $catId    = trim((string)$article['cat_id']);
+        $catId    = trim((string)$article['cat_id'], " \f\n\r\t\v\x00");
         $catParts = $catId === '' ? [] : explode(',', $catId);
         $scopeId  = $catParts === [] ? 0 : (int)reset($catParts);
 
@@ -194,6 +194,6 @@ final class Article implements Indexer
     private static function strip(string $text): string
     {
         $text = strip_tags((string)html_entity_decode($text, ENT_QUOTES));
-        return trim((string)preg_replace('/\s+/', ' ', $text));
+        return trim((string)preg_replace('/\s+/', ' ', $text), " \f\n\r\t\v\x00");
     }
 }

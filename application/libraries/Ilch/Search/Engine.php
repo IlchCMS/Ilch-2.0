@@ -114,7 +114,7 @@ class Engine
     ): array {
         $empty = ['hits' => [], 'total' => 0, 'approximate' => false, 'engine' => 'like'];
 
-        $query = trim((string)$query);
+        $query = trim((string)$query, " \f\n\r\t\v\x00");
         if ($query === '') {
             return $empty;
         }

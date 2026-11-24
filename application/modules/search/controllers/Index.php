@@ -61,7 +61,7 @@ class Index extends \Ilch\Controller\Frontend
         // so they keep their current URL (input() still handles them).
         $source = $this->getRequest()->getPost('search')
             ?? $this->getRequest()->getQuery('search');
-        $canonical = mb_substr(trim((string)$source), 0, 100);
+        $canonical = mb_substr(trim((string)$source, " \f\n\r\t\v\x00"), 0, 100);
         if ($canonical !== '' && strpos($canonical, '/') === false) {
             $this->redirect($this->getLayout()->getUrl([
                 'module' => 'search',
@@ -71,7 +71,7 @@ class Index extends \Ilch\Controller\Frontend
             ]));
         }
 
-        $query = mb_substr(trim($this->input('search')), 0, 100);
+        $query = mb_substr(trim($this->input('search'), " \f\n\r\t\v\x00"), 0, 100);
 
         // Module filter; the param is named "filter" (not "module") so it
         // never collides with the URL's own module key when links are rebuilt.
@@ -81,7 +81,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         // Optional locale filter (off by default).
-        $locale = trim($this->input('locale'));
+        $locale = trim($this->input('locale'), " \f\n\r\t\v\x00");
 
         // Rate limit: a sliding window of recent search times in the session.
         // Only non-empty queries count (empty queries return early in the
