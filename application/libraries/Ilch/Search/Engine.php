@@ -7,6 +7,7 @@
 
 namespace Ilch\Search;
 
+use DateTime;
 use Ilch\Database\Mysql;
 use Ilch\Registry;
 
@@ -99,7 +100,7 @@ class Engine
 
     /**
      * @param string $query raw query string (trimmed, max 100 chars enforced by caller)
-     * @param array $filters {module?: string, locale?: string}
+     * @param array $filters {module?: string, locale?: string, from?: string, to?: string, scopeKey?: string, scopeId?: int}
      * @param array $user {isAdmin: bool, groups: int[]} (groups always include 3)
      * @param int $page
      * @param int $pageSize
@@ -139,9 +140,20 @@ class Engine
         }
         $tokens = array_values(array_unique(array_map('strval', $tokens)));
 
+        // Date range bounds must be strict, real calendar dates; anything
+        // else is dropped silently (this whitelist is the only filter path).
+        $from = (string)($filters['from'] ?? '');
+        $from = self::validCalendarDate($from) ? $from : '';
+        $to = (string)($filters['to'] ?? '');
+        $to = self::validCalendarDate($to) ? $to : '';
+
         $filters = [
-            'module' => isset($filters['module']) && $filters['module'] !== '' ? (string)$filters['module'] : '',
-            'locale' => isset($filters['locale']) && $filters['locale'] !== '' ? (string)$filters['locale'] : '',
+            'module'   => isset($filters['module']) && $filters['module'] !== '' ? (string)$filters['module'] : '',
+            'locale'   => isset($filters['locale']) && $filters['locale'] !== '' ? (string)$filters['locale'] : '',
+            'from'     => $from,
+            'to'       => $to,
+            'scopeKey' => (string)($filters['scopeKey'] ?? ''),
+            'scopeId'  => (int)($filters['scopeId'] ?? 0),
         ];
         $predicate = $this->accessPredicate($user);
         $conditions = $predicate[0] . $this->filterConditions($filters);
@@ -202,6 +214,22 @@ class Engine
     // ------------------------------------------------------------------
 
     /**
+     * Strict Y-m-d that also round-trips as a real calendar date
+     * (createFromFormat overflows out-of-range values instead of failing).
+     *
+     * @param string $value
+     * @return bool
+     */
+    private static function validCalendarDate(string $value): bool
+    {
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
+            return false;
+        }
+        $date = DateTime::createFromFormat('Y-m-d', $value);
+        return $date instanceof DateTime && $date->format('Y-m-d') === $value;
+    }
+
+    /**
      * At least one token long enough for the InnoDB tokenizer. All-short
      * token queries fall back to LIKE, because InnoDB would silently ignore
      * every token and return zero rows.
@@ -221,7 +249,7 @@ class Engine
     }
 
     /**
-     * @param array $filters {module, locale}
+     * @param array $filters {module, locale, from, to, scopeKey, scopeId}
      * @return string additional AND conditions (empty string when none)
      */
     private function filterConditions(array $filters): string
@@ -232,6 +260,19 @@ class Engine
         }
         if ($filters['locale'] !== '') {
             $sql .= ' AND d.locale = ' . $this->db->escape($filters['locale'], true);
+        }
+        // Activity date range (validated in search()); rows with a NULL
+        // date_activity drop out when a bound is set.
+        if ($filters['from'] !== '') {
+            $sql .= ' AND d.date_activity >= ' . $this->db->escape($filters['from'] . ' 00:00:00', true);
+        }
+        if ($filters['to'] !== '') {
+            $sql .= ' AND d.date_activity <= ' . $this->db->escape($filters['to'] . ' 23:59:59', true);
+        }
+        // Forum/category scope: applies only when key AND id are both set.
+        if ($filters['scopeKey'] !== '' && $filters['scopeId'] > 0) {
+            $sql .= ' AND d.scope_key = ' . $this->db->escape($filters['scopeKey'], true)
+                . ' AND d.scope_id = ' . $filters['scopeId'];
         }
         return $sql;
     }
@@ -244,7 +285,7 @@ class Engine
      * only reorders rows within the fetched page (bounded perturbation).
      *
      * @param array $tokens
-     * @param string $conditions access predicate + module/locale filters
+     * @param string $conditions access predicate + filters
      * @param int $page
      * @param int $pageSize
      * @return array
@@ -291,7 +332,7 @@ class Engine
      * approximate = true (ranking is only correct within the fetch window).
      *
      * @param array $tokens
-     * @param string $conditions access predicate + module/locale filters
+     * @param string $conditions access predicate + filters
      * @param int $page
      * @param int $pageSize
      * @return array

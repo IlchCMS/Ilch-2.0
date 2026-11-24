@@ -83,6 +83,23 @@ class Index extends \Ilch\Controller\Frontend
         // Optional locale filter (off by default).
         $locale = trim($this->input('locale'), " \f\n\r\t\v\x00");
 
+        // Optional date range and forum/category scope filters (off by
+        // default); the engine validates the values and drops anything
+        // it does not understand.
+        $from     = $this->input('from');
+        $to       = $this->input('to');
+        $scopeKey = trim($this->input('scopeKey'), " \f\n\r\t\v\x00");
+        $scopeId  = (int)$this->input('scopeId');
+
+        $filters = [
+            'module'   => $filter,
+            'locale'   => $locale,
+            'from'     => $from,
+            'to'       => $to,
+            'scopeKey' => $scopeKey,
+            'scopeId'  => $scopeId,
+        ];
+
         // Rate limit: a sliding window of recent search times in the session.
         // Only non-empty queries count (empty queries return early in the
         // engine without any DB work); a blocked attempt is not recorded, so
@@ -96,7 +113,7 @@ class Index extends \Ilch\Controller\Frontend
             if (count($recent) >= self::RATE_LIMIT_MAX) {
                 $_SESSION['search_times'] = $recent;
                 $this->addMessage('tooManySearches', 'danger');
-                $this->renderEmpty($query, $filter, $locale);
+                $this->renderEmpty($query, $filters);
                 return;
             }
             $recent[] = $now;
@@ -119,7 +136,7 @@ class Index extends \Ilch\Controller\Frontend
         $result = (new Engine())
             ->search(
                 $query,
-                ['module' => $filter, 'locale' => $locale],
+                $filters,
                 $user,
                 $pagination->getPage(),
                 self::PAGE_SIZE
@@ -153,8 +170,12 @@ class Index extends \Ilch\Controller\Frontend
 
         $this->getView()
             ->set('search', $query)
-            ->set('filter', $filter)
-            ->set('locale', $locale)
+            ->set('filter', $filters['module'])
+            ->set('locale', $filters['locale'])
+            ->set('from', $filters['from'])
+            ->set('to', $filters['to'])
+            ->set('scopeKey', $filters['scopeKey'])
+            ->set('scopeId', $filters['scopeId'])
             ->set('tokens', $tokens)
             ->set('hits', $hits)
             ->set('total', $result['total'])
@@ -183,10 +204,9 @@ class Index extends \Ilch\Controller\Frontend
      * (used when the rate limit is exceeded; the flash message explains).
      *
      * @param string $query
-     * @param string $filter
-     * @param string $locale
+     * @param array $filters {module, locale, from, to, scopeKey, scopeId}
      */
-    private function renderEmpty(string $query, string $filter, string $locale): void
+    private function renderEmpty(string $query, array $filters): void
     {
         $pagination = new Pagination();
         $pagination->setRowsPerPage(self::PAGE_SIZE);
@@ -194,8 +214,12 @@ class Index extends \Ilch\Controller\Frontend
 
         $this->getView()
             ->set('search', $query)
-            ->set('filter', $filter)
-            ->set('locale', $locale)
+            ->set('filter', $filters['module'])
+            ->set('locale', $filters['locale'])
+            ->set('from', $filters['from'])
+            ->set('to', $filters['to'])
+            ->set('scopeKey', $filters['scopeKey'])
+            ->set('scopeId', $filters['scopeId'])
             ->set('tokens', [])
             ->set('hits', [])
             ->set('total', 0)
