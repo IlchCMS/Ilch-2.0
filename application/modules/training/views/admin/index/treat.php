@@ -167,6 +167,9 @@ $periodAppendix = [
                     </option>
                 <?php endif; ?>
             </select>
+            <div class="form-text">
+                <?=$this->getTrans('searchUserHint') ?>
+            </div>
         </div>
     </div>
     <div class="row mb-3<?=$this->validation()->hasError('voiceServer') ? ' has-error' : '' ?>">
@@ -336,26 +339,35 @@ $periodAppendix = [
         const contactSearchUrl = '<?=$this->get('contactSearchUrl') ?>' + '/query/';
 
         let contactSearchTimer;
+        let contactSearchRequest = 0;
         contactSelect.addEventListener('search', (event) => {
             const query = event.detail.value;
             if (query === '') {
                 return;
             }
             clearTimeout(contactSearchTimer);
-            contactSearchTimer = setTimeout(() => {
-                contactChoices.setChoices(
-                    () => fetch(contactSearchUrl + encodeURIComponent(query), {
+            contactSearchTimer = setTimeout(async () => {
+                const request = ++contactSearchRequest;
+                try {
+                    const response = await fetch(contactSearchUrl + encodeURIComponent(query), {
                         headers: { 'X-Requested-With': 'XMLHttpRequest' }
-                    }).then(response => {
-                        if (!response.ok) {
-                            throw new Error('users/query request failed: ' + response.status);
-                        }
-                        return response.json();
-                    }),
-                    'id',
-                    'name',
-                    true
-                );
+                    });
+                    if (!response.ok) {
+                        throw new Error('users/query request failed: ' + response.status);
+                    }
+                    const users = await response.json();
+                    if (request !== contactSearchRequest) {
+                        // Ignore stale responses from an earlier search.
+                        return;
+                    }
+                    // Pass a plain array (not a promise-returning function):
+                    // Choices.js would otherwise enter its loading state,
+                    // which disables the search input and steals focus
+                    // while typing.
+                    contactChoices.setChoices(users, 'id', 'name', true);
+                } catch (error) {
+                    console.error(error);
+                }
             }, 250);
         });
     });

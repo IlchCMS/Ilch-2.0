@@ -11,6 +11,7 @@ return [
     'users' => 'Benutzer',
     'members' => 'Mitglieder',
     'selectMembers' => 'Mitglieder auswählen',
+    'searchMembersHint' => 'Gib einen Namen ein, um Mitglieder zu suchen',
     'noTeams' => 'Keine Teams vorhanden',
 
     'privateMessage' => 'Private Nachricht',

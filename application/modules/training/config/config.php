@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
 {
     public array $config = [
         'key' => 'training',
-        'version' => '1.10.5',
+        'version' => '1.10.6',
         'icon_small' => 'fa-solid fa-graduation-cap',
         'author' => 'Veldscholten, Kevin',
         'link' => 'https://ilch.de',
@@ -38,7 +38,7 @@ class Config extends \Ilch\Config\Install
                 ]
             ]
         ],
-        'ilchCore' => '2.2.22',
+        'ilchCore' => '2.2.23',
         'phpVersion' => '8.1'
     ];
 

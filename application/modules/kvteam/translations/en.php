@@ -11,6 +11,7 @@ return [
     'users' => 'Users',
     'members' => 'Members',
     'selectMembers' => 'Select members',
+    'searchMembersHint' => 'Type a name to search for members',
     'noTeams' => 'No teams available',
 
     'privateMessage' => 'Private message',

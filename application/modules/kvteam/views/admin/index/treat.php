@@ -44,6 +44,9 @@ $userList = $this->get('userList') ?? [];
                     </option>
                 <?php endforeach; ?>
             </select>
+            <div class="form-text">
+                <?=$this->getTrans('searchMembersHint') ?>
+            </div>
         </div>
     </div>
 
@@ -64,26 +67,35 @@ $userList = $this->get('userList') ?? [];
         const searchUrl = '<?=$this->get('usersSearchUrl') ?>' + '/query/';
 
         let searchTimer;
+        let searchRequest = 0;
         select.addEventListener('search', (event) => {
             const query = event.detail.value;
             if (query === '') {
                 return;
             }
             clearTimeout(searchTimer);
-            searchTimer = setTimeout(() => {
-                choices.setChoices(
-                    () => fetch(searchUrl + encodeURIComponent(query), {
+            searchTimer = setTimeout(async () => {
+                const request = ++searchRequest;
+                try {
+                    const response = await fetch(searchUrl + encodeURIComponent(query), {
                         headers: { 'X-Requested-With': 'XMLHttpRequest' }
-                    }).then(response => {
-                        if (!response.ok) {
-                            throw new Error('users/query request failed: ' + response.status);
-                        }
-                        return response.json();
-                    }),
-                    'id',
-                    'name',
-                    true
-                );
+                    });
+                    if (!response.ok) {
+                        throw new Error('users/query request failed: ' + response.status);
+                    }
+                    const users = await response.json();
+                    if (request !== searchRequest) {
+                        // Ignore stale responses from an earlier search.
+                        return;
+                    }
+                    // Pass a plain array (not a promise-returning function):
+                    // Choices.js would otherwise enter its loading state,
+                    // which disables the search input and steals focus
+                    // while typing.
+                    choices.setChoices(users, 'id', 'name', true);
+                } catch (error) {
+                    console.error(error);
+                }
             }, 250);
         });
     });
