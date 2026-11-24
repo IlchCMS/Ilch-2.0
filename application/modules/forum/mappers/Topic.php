@@ -376,9 +376,13 @@ class Topic extends Mapper
                 $postMapper->refreshLastPostMetaForForum($oldForumId);
                 $postMapper->refreshLastPostMetaForForum($model->getForumId());
             }
+
+            // Search index: any topic change (rename, move) re-indexes the
+            // whole topic scope (topic doc + all post docs).
+            \Ilch\Search\Queue::enqueue('forum', \Ilch\Search\Queue::OP_REINDEX_SCOPE, '', null, '', 'topic_id', (int)$model->getId());
             return $model->getId();
         } else {
-            return $this->db()->insert('forum_topics')
+            $topicId = $this->db()->insert('forum_topics')
                 ->values([
                     'topic_prefix' => $model->getTopicPrefix()->getId(),
                     'topic_title' => $model->getTopicTitle(),
@@ -388,6 +392,10 @@ class Topic extends Mapper
                     'date_created' => $model->getDateCreated()
                 ])
                 ->execute();
+
+            // Search index: index the new topic scope.
+            \Ilch\Search\Queue::enqueue('forum', \Ilch\Search\Queue::OP_REINDEX_SCOPE, '', null, '', 'topic_id', (int)$topicId);
+            return $topicId;
         }
     }
 
@@ -480,6 +488,9 @@ class Topic extends Mapper
         $this->db()->delete('forum_topics')
             ->where(['id' => $id])
             ->execute();
+
+        // Search index: remove the topic document and its post documents.
+        \Ilch\Search\Queue::enqueue('forum', \Ilch\Search\Queue::OP_DELETE_SCOPE, '', null, '', 'topic_id', $id);
 
         if (!empty($forumId)) {
             // Forum + parent category, from the remaining topics.

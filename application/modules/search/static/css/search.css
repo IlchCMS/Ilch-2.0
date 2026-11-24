@@ -1,0 +1,64 @@
+/* Search module (frontend) styling: filter row and result cards. */
+
+/* Filter row: module tabs and locale dropdown share one line. */
+.search-filters {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.search-filters .nav-tabs {
+    flex: 1 1 auto;
+    margin-bottom: 0;
+}
+
+.search-locale-form {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin: 0;
+}
+
+/* One result card (topic group or article). */
+.search-result {
+    border: 1px solid #dee2e6;
+    border-radius: .375rem;
+    padding: .75rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.search-result h3 {
+    margin-bottom: .25rem;
+    font-size: 1.1rem;
+}
+
+.search-result h3 a {
+    text-decoration: none;
+}
+
+.search-result h3 a:hover {
+    text-decoration: underline;
+}
+
+.search-result p {
+    margin-bottom: .5rem;
+}
+
+/* Meta line (module badge, forum/topic, date). */
+.search-result-meta {
+    margin-top: .25rem;
+    font-size: .875rem;
+    color: #6c757d;
+}
+
+/* Forum posts nested under their topic. */
+.search-result-post {
+    margin-top: .75rem;
+    padding-left: 1rem;
+    border-left: 2px solid #dee2e6;
+}
+
+.search-result-post p {
+    margin-bottom: .25rem;
+}

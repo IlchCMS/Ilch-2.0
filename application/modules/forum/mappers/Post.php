@@ -182,6 +182,10 @@ class Post extends Mapper
                 ])
                 ->where(['id' => $model->getId()])
                 ->execute();
+
+            // Search index: re-index the post (guarded no-op if the search
+            // module is not installed).
+            \Ilch\Search\Queue::enqueue('forum', \Ilch\Search\Queue::OP_INDEX, 'post', (int)$model->getId());
         } else {
             $postId = $this->db()->insert('forum_posts')
                 ->values([
@@ -202,6 +206,9 @@ class Post extends Mapper
 
             // Forum + parent category in one consistent call.
             $this->refreshLastPostMetaForForum($model->getForumId());
+
+            // Search index: re-index the new post.
+            \Ilch\Search\Queue::enqueue('forum', \Ilch\Search\Queue::OP_INDEX, 'post', $postId);
         }
     }
 
@@ -232,6 +239,9 @@ class Post extends Mapper
                 ])
                 ->where(['topic_id' => $model->getTopicId()])
                 ->execute();
+
+            // Search index: topic/forum moved, refresh the post document.
+            \Ilch\Search\Queue::enqueue('forum', \Ilch\Search\Queue::OP_INDEX, 'post', (int)$model->getId());
         }
     }
 
@@ -257,6 +267,9 @@ class Post extends Mapper
         $result = $this->db()->delete('forum_posts')
             ->where(['id' => $id])
             ->execute();
+
+        // Search index: remove the post document.
+        \Ilch\Search\Queue::enqueue('forum', \Ilch\Search\Queue::OP_DELETE, 'post', $id);
 
         if (!empty($postRow)) {
             // Re-derive the topic's last post from the remaining posts.
