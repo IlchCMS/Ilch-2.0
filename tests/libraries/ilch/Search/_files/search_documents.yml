@@ -1,0 +1,169 @@
+search_documents:
+  - id: 1
+    module: 'forum'
+    doc_type: 'topic'
+    doc_id: 101
+    locale: ''
+    parent_id: null
+    scope_key: 'forum_id'
+    scope_id: 11
+    title: 'Zebra topic'
+    body: 'A zebra is a striped horse with bold lines.'
+    access_groups: ''
+    date_activity: '2025-01-01 08:00:00'
+    meta: null
+    content_hash: 'hash-001'
+  - id: 2
+    module: 'forum'
+    doc_type: 'post'
+    doc_id: 201
+    locale: ''
+    parent_id: 101
+    scope_key: 'forum_id'
+    scope_id: 11
+    title: 'Zebra post'
+    body: 'My first zebra post on zebra facts.'
+    access_groups: '1'
+    date_activity: '2025-01-01 09:00:00'
+    meta: null
+    content_hash: 'hash-002'
+  - id: 3
+    module: 'forum'
+    doc_type: 'post'
+    doc_id: 202
+    locale: ''
+    parent_id: 101
+    scope_key: 'forum_id'
+    scope_id: 11
+    title: 'Unrelated post'
+    body: 'Nothing interesting in this post.'
+    access_groups: '1,2'
+    date_activity: '2025-03-01 10:00:00'
+    meta: null
+    content_hash: 'hash-003'
+  - id: 4
+    module: 'article'
+    doc_type: 'article'
+    doc_id: 301
+    locale: 'de'
+    parent_id: 21
+    scope_key: 'cat_id'
+    scope_id: 21
+    title: 'Zebra article'
+    body: 'German zebra article on striped horses.'
+    access_groups: '3'
+    date_activity: '2025-04-01 11:00:00'
+    meta: '{"tag":"test"}'
+    content_hash: 'hash-004'
+  - id: 5
+    module: 'article'
+    doc_type: 'article'
+    doc_id: 302
+    locale: 'en'
+    parent_id: 21
+    scope_key: 'cat_id'
+    scope_id: 21
+    title: 'Zebra article EN'
+    body: 'English zebra article in plain words.'
+    access_groups: ''
+    date_activity: '2025-05-01 12:00:00'
+    meta: null
+    content_hash: 'hash-005'
+  - id: 6
+    module: 'forum'
+    doc_type: 'post'
+    doc_id: 203
+    locale: ''
+    parent_id: 102
+    scope_key: 'forum_id'
+    scope_id: 12
+    title: 'Short token doc'
+    body: 'ab ab short token doc'
+    access_groups: ''
+    date_activity: '2025-01-01 14:00:00'
+    meta: null
+    content_hash: 'hash-006'
+  - id: 7
+    module: 'forum'
+    doc_type: 'topic'
+    doc_id: 102
+    locale: ''
+    parent_id: null
+    scope_key: 'forum_id'
+    scope_id: 12
+    title: 'Stopword topic'
+    body: 'This is the only stopword body.'
+    access_groups: ''
+    date_activity: '2025-07-01 15:00:00'
+    meta: null
+    content_hash: 'hash-007'
+  - id: 8
+    module: 'forum'
+    doc_type: 'post'
+    doc_id: 204
+    locale: ''
+    parent_id: 102
+    scope_key: 'forum_id'
+    scope_id: 12
+    title: 'Recent zebra'
+    body: 'A recent zebra update post.'
+    access_groups: '1'
+    date_activity: '2025-06-01 16:00:00'
+    meta: null
+    content_hash: 'hash-008'
+  - id: 9
+    module: 'forum'
+    doc_type: 'post'
+    doc_id: 208
+    locale: ''
+    parent_id: 101
+    scope_key: 'forum_id'
+    scope_id: 11
+    title: 'Quiet body doc'
+    body: 'A quiet body document on a zebra.'
+    access_groups: ''
+    date_activity: '2025-01-01 17:00:00'
+    meta: null
+    content_hash: 'hash-009'
+  - id: 10
+    module: 'forum'
+    doc_type: 'post'
+    doc_id: 205
+    locale: ''
+    parent_id: 102
+    scope_key: 'forum_id'
+    scope_id: 12
+    title: 'ab titled doc'
+    body: 'no token here'
+    access_groups: ''
+    date_activity: '2025-01-01 18:00:00'
+    meta: null
+    content_hash: 'hash-010'
+  - id: 11
+    module: 'forum'
+    doc_type: 'post'
+    doc_id: 206
+    locale: ''
+    parent_id: 102
+    scope_key: 'forum_id'
+    scope_id: 12
+    title: 'plain titled doc'
+    body: 'plain body with ab once'
+    access_groups: ''
+    date_activity: '2025-01-01 19:00:00'
+    meta: null
+    content_hash: 'hash-011'
+  - id: 12
+    module: 'forum'
+    doc_type: 'post'
+    doc_id: 207
+    locale: ''
+    parent_id: 102
+    scope_key: 'forum_id'
+    scope_id: 12
+    title: 'plain titled doc two'
+    body: 'plain body with ab once too'
+    access_groups: ''
+    date_activity: '2025-06-01 20:00:00'
+    meta: null
+    content_hash: 'hash-012'

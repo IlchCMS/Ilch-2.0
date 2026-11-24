@@ -79,7 +79,9 @@ class Excerpt
      */
     private static function findPosition(string $haystack, string $needle): ?array
     {
-        $pattern = '/(?<!\p{L}\p{N})' . preg_quote($needle, '/') . '(?!\p{L}\p{N})/iu';
+        // Word boundary = no letter, digit or underscore on either side
+        // (matches the tokenization of Engine::search()).
+        $pattern = '/(?<![\p{L}\p{N}_])' . preg_quote($needle, '/') . '(?![\p{L}\p{N}_])/iu';
         if (preg_match($pattern, $haystack, $matches, PREG_OFFSET_CAPTURE) !== 1) {
             return null;
         }
