@@ -22,6 +22,7 @@ return [
     'profile' => 'Profile',
     'selectLeader' => 'Select a Leader',
     'selectCoLeader' => 'Select a CoLeader',
+    'searchUserHint' => 'Type a name to search for users',
     'noTeams' => 'No Teams available',
     'noTeam' => 'Team not available',
     'imageDelete' => 'Delete image?',

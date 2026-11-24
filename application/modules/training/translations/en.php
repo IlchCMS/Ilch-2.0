@@ -33,6 +33,7 @@ return [
     'gameServerPW' => 'Game server password',
     'note' => 'Note',
     'contactPerson' => 'Contact person',
+    'searchUserHint' => 'Type a name to search for users',
 
     'noTrainings' => 'No trainings available',
     'boxNexttrainingLimit' => 'Next Trainings Limit',

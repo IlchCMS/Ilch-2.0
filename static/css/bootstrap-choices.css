@@ -27,3 +27,10 @@
 .choices__list--dropdown {
   --choices-z-index: 2;
 }
+/* The .choices container carries a 24px bottom gutter meant for the
+   next element. When a form-text hint directly follows the widget,
+   the gap would land between widget and hint, so cancel it and keep
+   Bootstrap's usual 4px form-text spacing. */
+.choices + .form-text {
+    margin-top: calc(.25rem - var(--choices-guttering, 24px));
+}
