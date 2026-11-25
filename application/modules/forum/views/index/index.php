@@ -155,7 +155,10 @@ function rec(ForumItem $item, View $obj, ?int $i)
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
 <div id="forum">
-    <h1><?=$this->getTrans('forum') ?></h1>
+    <div class="forum-head">
+        <h1><?=$this->getTrans('forum') ?></h1>
+        <?php include APPLICATION_PATH . '/modules/forum/views/searchbox.php'; ?>
+    </div>
     <?php foreach ($forumItems as $item) : ?>
         <div class="forabg">
             <?php rec($item, $this, $i = null) ?>

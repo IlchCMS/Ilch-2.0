@@ -63,12 +63,26 @@ class Index extends \Ilch\Controller\Frontend
             ?? $this->getRequest()->getQuery('search');
         $canonical = mb_substr(trim((string)$source, " \f\n\r\t\v\x00"), 0, 100);
         if ($canonical !== '' && strpos($canonical, '/') === false) {
-            $this->redirect($this->getLayout()->getUrl([
+            $url = [
                 'module' => 'search',
                 'controller' => 'index',
                 'action' => 'index',
                 'search' => urlencode($canonical),
-            ]));
+            ];
+
+            // Carry active filters over so scoped searches (e.g. the forum
+            // search box) survive the redirect. Values containing "/" stay
+            // in the query string; input() reads both.
+            foreach (['filter', 'locale', 'from', 'to', 'scopeKey', 'scopeId'] as $key) {
+                $value = (string)($this->getRequest()->getPost($key)
+                    ?? $this->getRequest()->getQuery($key)
+                    ?? '');
+                if ($value !== '' && strpos($value, '/') === false) {
+                    $url[$key] = $value;
+                }
+            }
+
+            $this->redirect($this->getLayout()->getUrl($url));
         }
 
         $query = mb_substr(trim($this->input('search'), " \f\n\r\t\v\x00"), 0, 100);

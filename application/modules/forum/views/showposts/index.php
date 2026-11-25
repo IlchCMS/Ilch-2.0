@@ -33,12 +33,15 @@ $pagination = $this->get('pagination');
 
 <?php if ($adminAccess || $forum->getReadAccess()) : ?>
     <div id="forum">
-        <h1>
-            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
-            <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$this->escape($cat->getTitle()) ?></a>
-            <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()]) ?>"><?=$this->escape($forum->getTitle()) ?></a>
-            <i class="fa-solid fa-chevron-right"></i> <?=$this->escape($prefix . $topicpost->getTopicTitle()) ?>
-        </h1>
+        <div class="forum-head">
+            <h1>
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
+                <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$this->escape($cat->getTitle()) ?></a>
+                <i class="fa-solid fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()]) ?>"><?=$this->escape($forum->getTitle()) ?></a>
+                <i class="fa-solid fa-chevron-right"></i> <?=$this->escape($prefix . $topicpost->getTopicTitle()) ?>
+            </h1>
+            <?php include APPLICATION_PATH . '/modules/forum/views/searchbox.php'; ?>
+        </div>
         <div class="row">
             <div class="col-xl-12">
                 <?php if ($topicpost->getStatus() == 0) : ?>

@@ -19,10 +19,13 @@ $pagination = $this->get('pagination');
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
 <div id="forum">
-    <h1>
-        <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
-        <i class="fa-solid fa-chevron-right"></i> <?=$this->getTrans('showNewPosts') ?>
-    </h1>
+    <div class="forum-head">
+        <h1>
+            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
+            <i class="fa-solid fa-chevron-right"></i> <?=$this->getTrans('showNewPosts') ?>
+        </h1>
+        <?php include APPLICATION_PATH . '/modules/forum/views/searchbox.php'; ?>
+    </div>
     <div class="forabg">
         <ul class="topiclist">
             <li class="header">
