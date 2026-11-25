@@ -105,10 +105,32 @@ $articleHits = array_values(array_filter($hits, static fn ($hit) => $hit->module
     <?php endif; ?>
 </h1>
 
-<?php if ($search === ''): ?>
-    <p><?=$this->getTrans('noResults') ?></p>
-    <?php return; ?>
-<?php endif; ?>
+<form method="get" action="<?=$this->getUrl(['module' => 'search', 'controller' => 'index', 'action' => 'index']) ?>" class="search-form">
+    <div class="input-group">
+        <input type="text" class="form-control" name="search" value="<?=$this->escape($search) ?>" placeholder="<?=$this->getTrans('searchPlaceholder') ?>" aria-label="<?=$this->getTrans('search') ?>">
+        <button type="submit" class="btn btn-secondary btn-hover-success">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </div>
+    <?php if ($filter !== ''): ?>
+        <input type="hidden" name="filter" value="<?=$this->escape($filter) ?>">
+    <?php endif; ?>
+    <?php if ($locale !== ''): ?>
+        <input type="hidden" name="locale" value="<?=$this->escape($locale) ?>">
+    <?php endif; ?>
+    <?php if ($from !== ''): ?>
+        <input type="hidden" name="from" value="<?=$this->escape($from) ?>">
+    <?php endif; ?>
+    <?php if ($to !== ''): ?>
+        <input type="hidden" name="to" value="<?=$this->escape($to) ?>">
+    <?php endif; ?>
+    <?php if ($scopeKey !== '' && $scopeId > 0): ?>
+        <input type="hidden" name="scopeKey" value="<?=$this->escape($scopeKey) ?>">
+        <input type="hidden" name="scopeId" value="<?=$scopeId ?>">
+    <?php endif; ?>
+</form>
+
+<?php if ($search !== ''): ?>
 
 <p>
     <?php if ($total > 0): ?>
@@ -256,3 +278,5 @@ $articleHits = array_values(array_filter($hits, static fn ($hit) => $hit->module
 <div class="float-end">
     <?=$pagination->getHtml($this, $baseParams, 'page') ?>
 </div>
+
+<?php endif; ?>
