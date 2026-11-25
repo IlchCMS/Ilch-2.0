@@ -13,6 +13,7 @@ class Config extends \Ilch\Config\Install
         'key' => 'search',
         'icon_small' => 'fa-solid fa-magnifying-glass',
         'system_module' => true,
+        'hide_menu' => true,
         'languages' => [
             'de_DE' => [
                 'name' => 'Suche',

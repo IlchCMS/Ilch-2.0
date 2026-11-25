@@ -1,4 +1,10 @@
-/* Search module (frontend) styling: filter row and result cards. */
+/* Search module (frontend) styling: search form, filter row and result cards. */
+
+/* Search form (entry point, and term refinement on the results page). */
+.search-form {
+    max-width: 480px;
+    margin-bottom: 1rem;
+}
 
 /* Filter row: module tabs and locale dropdown share one line. */
 .search-filters {
