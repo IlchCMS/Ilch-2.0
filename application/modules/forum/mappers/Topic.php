@@ -448,6 +448,12 @@ class Topic extends Mapper
             ->values([$column => $value])
             ->where(['id' => $id])
             ->execute();
+
+        // Search index: a title rename re-indexes the topic doc and all
+        // post docs of the topic (they embed the topic title).
+        if ($column === 'topic_title') {
+            \Ilch\Search\Queue::enqueue('forum', \Ilch\Search\Queue::OP_REINDEX_SCOPE, '', null, '', 'topic_id', (int)$id);
+        }
     }
 
     /**
