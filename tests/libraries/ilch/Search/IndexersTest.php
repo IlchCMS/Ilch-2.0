@@ -7,7 +7,6 @@
 
 namespace Ilch\Search;
 
-use Modules\Guestbook\Indexers\Guestbook;
 use Modules\Search\Indexers\Article;
 use Modules\Search\Indexers\Forum;
 
@@ -28,15 +27,6 @@ class IndexersTest extends SearchFixtureTestCase
     {
         self::assertInstanceOf(Forum::class, Indexers::get('forum'));
         self::assertInstanceOf(Article::class, Indexers::get('article'));
-    }
-
-    /**
-     * Tests that the real convention module (guestbook) is discovered from
-     * disk and instantiated.
-     */
-    public function testConventionGuestbookIndexerIsResolved()
-    {
-        self::assertInstanceOf(Guestbook::class, Indexers::get('guestbook'));
     }
 
     /**
@@ -70,7 +60,7 @@ class IndexersTest extends SearchFixtureTestCase
 
     /**
      * Tests that modules() lists the MAP entries plus every convention
-     * module found on disk (here: guestbook and the fixture module).
+     * module found on disk (here: the fixture module).
      */
     public function testModulesListsMapAndConventionModules()
     {
@@ -78,9 +68,8 @@ class IndexersTest extends SearchFixtureTestCase
 
         self::assertSame(Forum::class, $modules['forum']);
         self::assertSame(Article::class, $modules['article']);
-        self::assertSame(Guestbook::class, $modules['guestbook']);
         self::assertSame('Modules\Fixturemod\Indexers\Fixturemod', $modules[self::FIXTURE_MODULE_KEY]);
-        self::assertCount(4, $modules);
+        self::assertCount(3, $modules);
     }
 
     /**
