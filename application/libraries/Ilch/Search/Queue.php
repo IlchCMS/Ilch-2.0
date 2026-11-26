@@ -10,6 +10,7 @@ namespace Ilch\Search;
 use Ilch\Database\Mysql;
 use Ilch\Registry;
 use Ilch\Scheduler\Scheduler;
+use Modules\Admin\Mappers\Logs as LogsMapper;
 
 /**
  * Work queue between the hooked source modules and the search index.
@@ -31,6 +32,12 @@ class Queue
     public const OP_ENSURE_SCHEMA = 5;
 
     private const TABLE = '[prefix]_search_queue';
+
+    /**
+     * The logs table has no system user; the queue writes with the admin
+     * user id (1) as the system identity.
+     */
+    private const LOG_USER_ID = 1;
 
     private Mysql $db;
 
@@ -65,6 +72,9 @@ class Queue
      * duplicate enqueues coalesce), then attempt an inline flush so the
      * write is searchable almost immediately.
      *
+     * A null docId/scopeId is stored as 0: MySQL unique indexes treat NULLs
+     * as distinct values, which would silently defeat the coalescing.
+     *
      * No-op while import mode is set or when the search tables do not exist
      * (fresh-install ordering). Never throws.
      *
@@ -97,15 +107,15 @@ class Queue
             $queue->db->query(
                 'INSERT IGNORE INTO ' . self::TABLE . ' (module, op, doc_type, doc_id, locale, scope_key, scope_id, created) VALUES ('
                 . $queue->db->escape($module, true) . ', ' . (int)$op . ', '
-                . $queue->db->escape($docType, true) . ', ' . ($docId === null ? 'NULL' : (int)$docId) . ', '
+                . $queue->db->escape($docType, true) . ', ' . (int)($docId ?? 0) . ', '
                 . $queue->db->escape($locale, true) . ', '
-                . $queue->db->escape($scopeKey, true) . ', ' . ($scopeId === null ? 'NULL' : (int)$scopeId) . ', '
+                . $queue->db->escape($scopeKey, true) . ', ' . (int)($scopeId ?? 0) . ', '
                 . 'NOW())'
             );
             $queue->flush(10, 250);
         } catch (\Throwable $e) {
             // Search must never break a writing module.
-            \error_log('Ilch Search queue enqueue failed: ' . $e->getMessage());
+            self::logFailure('Ilch Search queue enqueue failed: ' . $e->getMessage());
         }
     }
 
@@ -139,9 +149,9 @@ class Queue
      * delete the processed rows in one DELETE ... WHERE id IN (...).
      *
      * Stops (rows stay queued) on: time limit, scheduler budget exhausted
-     * (timeLeftMs() <= 100), or the first failing op (the error goes to PHP
-     * error_log with module/op/ids; the scheduler task's retry picks the
-     * queue up later).
+     * (timeLeftMs() <= 100), or the first failing op (the error goes to the
+     * admin logs with module/op/ids, \error_log() as fallback; the scheduler
+     * task's retry picks the queue up later).
      *
      * OP_ENSURE_SCHEMA is processed directly (no indexer) and only when a
      * Scheduler instance is passed — never by the inline flush, so a page
@@ -174,7 +184,14 @@ class Queue
                 break;
             }
 
-            $row = $this->db->queryRow('SELECT * FROM ' . self::TABLE . ' ORDER BY id ASC LIMIT 1');
+            // The batched DELETE below only runs after the loop, so already
+            // processed rows must be excluded here — otherwise the same first
+            // row would be re-selected (and re-dispatched) up to $maxRows
+            // times and every later row would be starved.
+            $where = $done === [] ? '' : ' WHERE id NOT IN (' . implode(', ', $done) . ')';
+            $row = $this->db->queryRow(
+                'SELECT * FROM ' . self::TABLE . $where . ' ORDER BY id ASC LIMIT 1'
+            );
             if ($row === null) {
                 break;
             }
@@ -192,7 +209,7 @@ class Queue
                 try {
                     (new Store($this->db))->ensureFulltextIndex();
                 } catch (\Throwable $e) {
-                    \error_log('Ilch Search queue: OP_ENSURE_SCHEMA failed: ' . $e->getMessage());
+                    self::logFailure('Ilch Search queue: OP_ENSURE_SCHEMA failed: ' . $e->getMessage());
                     break;
                 }
                 $done[] = $id;
@@ -229,7 +246,7 @@ class Queue
                 $done[] = $id;
                 $processed++;
             } catch (\Throwable $e) {
-                \error_log('Ilch Search queue: op ' . $op . ' failed for module=' . $module
+                self::logFailure('Ilch Search queue: op ' . $op . ' failed for module=' . $module
                     . ' doc_type=' . $row['doc_type'] . ' doc_id=' . $row['doc_id']
                     . ' locale=' . $row['locale'] . ' scope=' . $row['scope_key'] . '/' . $row['scope_id']
                     . ': ' . $e->getMessage());
@@ -243,5 +260,39 @@ class Queue
         }
 
         return $processed;
+    }
+
+    /**
+     * Write a failure message to the admin logs (admin center > Infos >
+     * Logs). If the log write itself fails (e.g. the
+     * database is down), the message still goes to \error_log().
+     *
+     * The mapper deduplicates identical messages per user per minute, so a
+     * persistently failing op cannot spam the admin logs.
+     *
+     * @param string $message
+     * @return void
+     */
+    private static function logFailure(string $message): void
+    {
+        $message = self::sanitizeLog($message);
+        try {
+            (new LogsMapper())->saveLog(self::LOG_USER_ID, $message);
+        } catch (\Throwable) {
+            \error_log($message);
+        }
+    }
+
+    /**
+     * Strip control characters and cap the message so it fits the logs
+     * table's info column (VARCHAR(255)); saveLog() does not truncate.
+     *
+     * @param string $message
+     * @return string
+     */
+    private static function sanitizeLog(string $message): string
+    {
+        $message = preg_replace('/[\x00-\x1F\x7F]/', ' ', $message);
+        return function_exists('mb_substr') ? mb_substr($message, 0, 255) : substr($message, 0, 255);
     }
 }

@@ -11,6 +11,7 @@ use Ilch\Pagination;
 use Ilch\Search\Engine;
 use Ilch\Search\SearchHit;
 use Ilch\Search\Store;
+use Modules\Admin\Mappers\Module as ModuleMapper;
 
 /**
  * Frontend search controller.
@@ -90,7 +91,8 @@ class Index extends \Ilch\Controller\Frontend
         // Module filter; the param is named "filter" (not "module") so it
         // never collides with the URL's own module key when links are rebuilt.
         $filter = $this->input('filter');
-        if (!in_array($filter, ['forum', 'article'], true)) {
+        // Allowlist = every module that has an indexer (MAP + convention).
+        if (!isset(\Ilch\Search\Indexers::modules()[$filter])) {
             $filter = '';
         }
 
@@ -196,7 +198,7 @@ class Index extends \Ilch\Controller\Frontend
             ->set('approximate', $result['approximate'])
             ->set('engine', $result['engine'])
             ->set('topicDocs', $topicDocs)
-            ->set('modules', \Ilch\Search\Indexers::modules())
+            ->set('moduleLabels', $this->moduleLabels())
             ->set('pagination', $pagination);
     }
 
@@ -211,6 +213,31 @@ class Index extends \Ilch\Controller\Frontend
         return (string)($this->getRequest()->getParam($key)
             ?? $this->getRequest()->getQuery($key)
             ?? '');
+    }
+
+    /**
+     * Localized module name for every module that has an indexer (from the
+     * module table, same pattern as the admin overview; the module key
+     * itself when the module is unknown or the locale row is missing).
+     *
+     * @return array<string, string> module key => localized name
+     */
+    private function moduleLabels(): array
+    {
+        $modulesMapper = new ModuleMapper();
+        $locale        = $this->getConfig() !== null
+            ? $this->getConfig()->get('locale')
+            : '';
+
+        $labels = [];
+        foreach (\Ilch\Search\Indexers::modules() as $moduleKey => $class) {
+            $moduleModel = $modulesMapper->getModulesByKey((string)$moduleKey, $locale);
+            $labels[(string)$moduleKey] = $moduleModel !== null
+                ? $moduleModel->getName()
+                : (string)$moduleKey;
+        }
+
+        return $labels;
     }
 
     /**
@@ -240,7 +267,7 @@ class Index extends \Ilch\Controller\Frontend
             ->set('approximate', false)
             ->set('engine', 'like')
             ->set('topicDocs', [])
-            ->set('modules', \Ilch\Search\Indexers::modules())
+            ->set('moduleLabels', $this->moduleLabels())
             ->set('pagination', $pagination);
     }
 

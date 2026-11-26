@@ -83,10 +83,10 @@ class Config extends \Ilch\Config\Install
                   `module` VARCHAR(32) NOT NULL,
                   `op` TINYINT(1) NOT NULL,
                   `doc_type` VARCHAR(32) NOT NULL DEFAULT \'\',
-                  `doc_id` INT(11) NULL DEFAULT NULL,
+                  `doc_id` INT(11) NOT NULL DEFAULT 0,
                   `locale` VARCHAR(16) NOT NULL DEFAULT \'\',
                   `scope_key` VARCHAR(32) NOT NULL DEFAULT \'\',
-                  `scope_id` INT(11) NULL DEFAULT NULL,
+                  `scope_id` INT(11) NOT NULL DEFAULT 0,
                   `created` DATETIME NOT NULL,
                   PRIMARY KEY (`id`),
                   UNIQUE KEY `uniq_op` (`module`, `op`, `doc_type`, `doc_id`, `locale`, `scope_key`, `scope_id`)

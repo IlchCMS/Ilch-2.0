@@ -28,8 +28,8 @@ $approximate = $this->get('approximate');
 $engine = $this->get('engine');
 /** @var array $topicDocs */
 $topicDocs = $this->get('topicDocs');
-/** @var array $modules */
-$modules = $this->get('modules');
+/** @var array<string, string> $moduleLabels */
+$moduleLabels = $this->get('moduleLabels');
 /** @var \Ilch\Pagination $pagination */
 $pagination = $this->get('pagination');
 
@@ -59,16 +59,17 @@ if ($scopeKey !== '' && $scopeId > 0) {
     $baseParams['scopeId'] = (string)$scopeId;
 }
 
-// Module tabs, one per module that has an indexer (localized label).
-$tabLabels = ['' => 'filterAll'];
-foreach ($modules as $moduleKey => $indexerClass) {
-    $tabLabels[(string)$moduleKey] = 'filter' . ucfirst((string)$moduleKey);
+// Module tabs, one per module that has an indexer (localized name from
+// the module table; the '' tab is the unfiltered "All" tab).
+$tabLabels = ['' => $this->getTrans('filterAll')];
+foreach ($moduleLabels as $moduleKey => $label) {
+    $tabLabels[(string)$moduleKey] = (string)$label;
 }
 
-// Distinct content locales among the article hits (locale dropdown options).
+// Distinct content locales among all hits (locale dropdown options).
 $locales = [];
 foreach ($hits as $hit) {
-    if ($hit->module === 'article' && $hit->locale !== '' && !in_array($hit->locale, $locales, true)) {
+    if ($hit->locale !== '' && !in_array($hit->locale, $locales, true)) {
         $locales[] = $hit->locale;
     }
 }
@@ -92,7 +93,14 @@ foreach ($hits as $hit) {
         $forumGroups[$topicId]['posts'][] = $hit;
     }
 }
-$articleHits = array_values(array_filter($hits, static fn ($hit) => $hit->module === 'article'));
+// All non-forum hits grouped by module key (the forum hits are rendered in
+// the topic-grouped block below).
+$moduleHits = [];
+foreach ($hits as $hit) {
+    if ($hit->module !== 'forum') {
+        $moduleHits[$hit->module][] = $hit;
+    }
+}
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/search.css') ?>" rel="stylesheet">
@@ -157,7 +165,7 @@ $articleHits = array_values(array_filter($hits, static fn ($hit) => $hit->module
         ?>
             <li class="nav-item">
                 <a class="nav-link<?= ($tabValue === $filter) ? ' active' : '' ?>" href="<?=$this->getUrl($tabParams) ?>">
-                    <?=$this->getTrans($tabLabel) ?>
+                    <?=$this->escape($tabLabel) ?>
                 </a>
             </li>
         <?php endforeach; ?>
@@ -247,16 +255,26 @@ $articleHits = array_values(array_filter($hits, static fn ($hit) => $hit->module
     <?php endforeach; ?>
 <?php endif; ?>
 
-<?php if ($articleHits !== []): ?>
-    <h2><?=$this->getTrans('filterArticle') ?></h2>
-    <?php foreach ($articleHits as $hit):
+<?php foreach ($moduleHits as $moduleKey => $moduleHitList):
+    $label = $moduleLabels[$moduleKey] ?? (string)$moduleKey;
+?>
+    <h2><?=$this->escape($label) ?></h2>
+    <?php foreach ($moduleHitList as $hit):
         $excerpt = \Ilch\Search\Excerpt::make($hit->body, $tokens);
+        // Indexers store the document's URL params in meta['url'] (an assoc
+        // array for getUrl()); a missing or malformed value renders the
+        // title without a link.
+        $hitUrl = isset($hit->meta['url']) && is_array($hit->meta['url'])
+            ? $this->getUrl($hit->meta['url'])
+            : null;
     ?>
         <div class="search-result">
             <h3>
-                <a href="<?=$this->getUrl(['module' => 'article', 'controller' => 'index', 'action' => 'show', 'id' => $hit->docId]) ?>">
+                <?php if ($hitUrl !== null): ?>
+                    <a href="<?=$hitUrl ?>"><?=$this->escape($hit->title) ?></a>
+                <?php else: ?>
                     <?=$this->escape($hit->title) ?>
-                </a>
+                <?php endif; ?>
                 <?php if ($locale !== '' && $hit->locale !== ''): ?>
                     <span class="badge bg-secondary search-result-locale"><?=$this->escape($hit->locale) ?></span>
                 <?php endif; ?>
@@ -265,15 +283,15 @@ $articleHits = array_values(array_filter($hits, static fn ($hit) => $hit->module
                 <p><?=$this->escape($excerpt) ?></p>
             <?php endif; ?>
             <div class="search-result-meta">
-                <span class="badge bg-secondary"><?=$this->getTrans('filterArticle') ?></span>
+                <span class="badge bg-secondary"><?=$this->escape($label) ?></span>
                 <?php if ($hit->dateActivity !== null): ?>
-                    &middot; <?php $articleDate = new \Ilch\Date($hit->dateActivity); ?>
-                    <?=$articleDate->format('d.m.Y - H:i', true) ?>
+                    &middot; <?php $hitDate = new \Ilch\Date($hit->dateActivity); ?>
+                    <?=$hitDate->format('d.m.Y - H:i', true) ?>
                 <?php endif; ?>
             </div>
         </div>
     <?php endforeach; ?>
-<?php endif; ?>
+<?php endforeach; ?>
 
 <div class="float-end">
     <?=$pagination->getHtml($this, $baseParams, 'page') ?>
