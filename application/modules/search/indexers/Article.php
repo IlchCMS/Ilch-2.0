@@ -160,7 +160,14 @@ final class Article implements Indexer
                 'body'         => $body,
                 'accessGroups' => $accessGroups,
                 'dateActivity' => !empty($article['date_created']) ? (string)$article['date_created'] : null,
-                'meta'         => '{}',
+                'meta'         => json_encode([
+                    'url' => [
+                        'module' => 'article',
+                        'controller' => 'index',
+                        'action' => 'show',
+                        'id' => (int)$articleId,
+                    ],
+                ]),
                 'contentHash'  => md5($title . $body),
             ]);
         }

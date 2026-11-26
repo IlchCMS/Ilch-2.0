@@ -13,6 +13,11 @@ namespace Ilch\Search;
  * An indexer knows how to read one source module and to upsert/delete the
  * corresponding rows in the shared [prefix]_search_documents table (via
  * \Ilch\Search\Store). It is created on demand by \Ilch\Search\Indexers.
+ *
+ * Modules: deliver the class as
+ * Modules\<Key>\Indexers\<Key> in application/modules/<key>/indexers/
+ * (the module key decides the class name) and it is discovered
+ * automatically — no MAP entry, no registration.
  */
 interface Indexer
 {
