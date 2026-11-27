@@ -51,6 +51,82 @@ class Module extends \Ilch\Mapper
     }
 
     /**
+     * Searches the installed modules by their localized name and key.
+     *
+     * Pure in-memory ranking over the locale-filtered module list returned
+     * by getModules() (the same source as the admin navigation dropdown):
+     * a case-insensitive match on the localized name ranks above a match
+     * on the module key (shifted by 3), an exact match ranks above a
+     * prefix, which ranks above a plain substring, and ties are broken by
+     * name and then key.
+     *
+     * @param string $query
+     * @return array<int, array{module: ModuleModel, rank: int}> sorted by
+     *         rank, then name, then key
+     */
+    public function searchModules(string $query): array
+    {
+        $query = mb_strtolower(trim($query, " \f\n\r\t\v\x00"));
+        if ($query === '') {
+            return [];
+        }
+
+        $matches = [];
+        foreach ($this->getModules() as $module) {
+            $name = mb_strtolower($module->getName());
+            $key = mb_strtolower((string)$module->getKey());
+
+            $rank = $this->matchRank($query, $name);
+            if ($rank === 0) {
+                $keyRank = $this->matchRank($query, $key);
+                $rank = $keyRank > 0 ? $keyRank + 3 : 0;
+            }
+            if ($rank === 0) {
+                continue;
+            }
+
+            $matches[] = ['module' => $module, 'rank' => $rank];
+        }
+
+        usort($matches, function (array $a, array $b): int {
+            if ($a['rank'] !== $b['rank']) {
+                return $a['rank'] <=> $b['rank'];
+            }
+            $aName = mb_strtolower($a['module']->getName());
+            $bName = mb_strtolower($b['module']->getName());
+            if ($aName !== $bName) {
+                return strcasecmp($aName, $bName);
+            }
+            return strcasecmp((string)$a['module']->getKey(), (string)$b['module']->getKey());
+        });
+
+        return $matches;
+    }
+
+    /**
+     * Match rank of needle in haystack: 1 for an exact match, 2 for a
+     * prefix, 3 for a plain substring, 0 for no match. Both values are
+     * expected to be lower-cased.
+     *
+     * @param string $needle
+     * @param string $haystack
+     * @return int
+     */
+    private function matchRank(string $needle, string $haystack): int
+    {
+        if ($needle === $haystack) {
+            return 1;
+        }
+        if (str_starts_with($haystack, $needle)) {
+            return 2;
+        }
+        if (str_contains($haystack, $needle)) {
+            return 3;
+        }
+        return 0;
+    }
+
+    /**
      * Gets the keys of all locally available modules.
      *
      * @return string[]

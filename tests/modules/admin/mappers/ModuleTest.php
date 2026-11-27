@@ -99,6 +99,140 @@ class ModuleTest extends DatabaseTestCase
     }
 
     /**
+     * Tests that searchModules() returns an empty array for an empty query.
+     */
+    public function testSearchModulesEmptyQuery()
+    {
+        self::assertSame([], $this->out->searchModules(''));
+        self::assertSame([], $this->out->searchModules('   '));
+    }
+
+    /**
+     * Tests that searchModules() returns no match for unknown terms.
+     */
+    public function testSearchModulesNoMatch()
+    {
+        self::assertSame([], $this->out->searchModules('unknown'));
+    }
+
+    /**
+     * Tests that searchModules() finds a module by an exact name match.
+     */
+    public function testSearchModulesExactNameMatch()
+    {
+        $matches = $this->out->searchModules('Last War');
+
+        self::assertCount(1, $matches);
+        self::assertSame('lastwar', $matches[0]['module']->getKey());
+        self::assertSame(1, $matches[0]['rank']);
+    }
+
+    /**
+     * Tests that searchModules() is case-insensitive.
+     */
+    public function testSearchModulesCaseInsensitive()
+    {
+        $matches = $this->out->searchModules('lAsT wAr');
+
+        self::assertCount(1, $matches);
+        self::assertSame('lastwar', $matches[0]['module']->getKey());
+        self::assertSame(1, $matches[0]['rank']);
+    }
+
+    /**
+     * Tests that searchModules() finds a module by a name prefix.
+     */
+    public function testSearchModulesNamePrefix()
+    {
+        $matches = $this->out->searchModules('last');
+
+        self::assertCount(1, $matches);
+        self::assertSame('lastwar', $matches[0]['module']->getKey());
+        // "last" is a prefix of the name "last war" (rank 2); the key
+        // match would be shifted to rank 5 and ranks below.
+        self::assertSame(2, $matches[0]['rank']);
+    }
+
+    /**
+     * Tests that searchModules() finds a module by a name substring.
+     */
+    public function testSearchModulesNameSubstring()
+    {
+        $matches = $this->out->searchModules('istra');
+
+        self::assertCount(1, $matches);
+        self::assertSame('admin', $matches[0]['module']->getKey());
+        self::assertSame(3, $matches[0]['rank']);
+    }
+
+    /**
+     * Tests that searchModules() finds a module by key when the name
+     * does not match.
+     */
+    public function testSearchModulesKeyMatch()
+    {
+        $matches = $this->out->searchModules('lastwar');
+
+        self::assertCount(1, $matches);
+        self::assertSame('lastwar', $matches[0]['module']->getKey());
+        // "lastwar" is the exact key (rank 1, shifted to 4); the name
+        // "last war" does not contain "lastwar".
+        self::assertSame(4, $matches[0]['rank']);
+    }
+
+    /**
+     * Tests that a name match ranks above a key match.
+     */
+    public function testSearchModulesNameMatchBeatsKeyMatch()
+    {
+        // Module "zebra" matches by name only ("Alpha"), module "alpha"
+        // by key only.
+        $this->createTestModule('zebra', 'Alpha');
+        $this->createTestModule('alpha', 'Zebra');
+
+        $matches = $this->out->searchModules('alpha');
+
+        self::assertCount(2, $matches);
+        self::assertSame('zebra', $matches[0]['module']->getKey());
+        self::assertSame(1, $matches[0]['rank']);
+        self::assertSame('alpha', $matches[1]['module']->getKey());
+        self::assertSame(4, $matches[1]['rank']);
+    }
+
+    /**
+     * Tests that rank ties are broken by name and then key.
+     */
+    public function testSearchModulesTieBrokenAlphabetically()
+    {
+        // Both modules match by exact name ("Alpha"); the order falls
+        // back to the module key.
+        $this->createTestModule('delta', 'Alpha');
+        $this->createTestModule('b_beta', 'Alpha');
+
+        $matches = $this->out->searchModules('alpha');
+
+        self::assertCount(2, $matches);
+        self::assertSame('b_beta', $matches[0]['module']->getKey());
+        self::assertSame('delta', $matches[1]['module']->getKey());
+    }
+
+    /**
+     * Inserts a temporary module with a de_DE content row. The writes are
+     * rolled back by the test database after the test.
+     *
+     * @param string $key
+     * @param string $name
+     */
+    private function createTestModule(string $key, string $name): void
+    {
+        $module = new ModuleModel();
+        $module->setKey($key)
+            ->addContent('de_DE', ['name' => $name, 'description' => $name]);
+
+        $this->out->save($module);
+    }
+
+    /**
      * Tests that getModulesByKey() returns the module content for key and locale.
      */
     public function testGetModulesByKey()

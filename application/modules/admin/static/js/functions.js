@@ -25,6 +25,7 @@ $(document).ready(function() {
 
     function addSearch() {
         $('#search-div').addClass('opens');
+        $('#search-div input[name="search"]').focus();
     };
 
     var element = document.getElementById('search-header');
