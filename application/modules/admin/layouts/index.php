@@ -322,10 +322,13 @@ $accesses = $this->get('accesses');
                 <li>
                     <i id="search-header" class="fa-solid fa-magnifying-glass search-btn"><span class="search-text d-lg-none"><?=$this->getTrans('search') ?></span></i>
                     <div id="search-div" class="search-close">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="<?=$this->getTrans('search') ?>">
-                            <button type="button" class="btn btn-secondary"><?=$this->getTrans('go') ?></button>
-                        </div>
+                        <form method="post" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'nav', 'action' => 'index']) ?>">
+                            <div class="input-group">
+                                <?=$this->getTokenField() ?>
+                                <input type="text" name="search" class="form-control" placeholder="<?=$this->getTrans('search') ?>">
+                                <button type="submit" class="btn btn-secondary"><?=$this->getTrans('go') ?></button>
+                            </div>
+                        </form>
                     </div>
                 </li>
                 <!-- Search Block End -->
