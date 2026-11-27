@@ -19,12 +19,11 @@ use Modules\Admin\Mappers\Module as ModuleMapper;
  * the action dispatch and does all the work; the default action name is
  * "index", so the rendered view is views/admin/nav/index.php.
  *
- * Canonical URL: the box POSTs the term; a posted or query (?search=...)
- * value is redirected to the path-style URL (…/admin/nav/index/index/
- * search/<term>). A path param means the URL is already canonical, so it
- * never triggers the redirect. Terms containing "/" cannot round-trip
- * through path params, so they keep their current URL (the term is still
- * read below).
+ * Canonical URL: the box POSTs the term, which is redirected to the
+ * path-style URL (…/admin/nav/index/index/search/<term>). A path param
+ * means the URL is already canonical, so it never triggers the redirect.
+ * Terms containing "/" cannot round-trip through path params, so they
+ * keep their current URL (the term is still read below).
  */
 class Nav extends \Ilch\Controller\Admin
 {
@@ -32,14 +31,13 @@ class Nav extends \Ilch\Controller\Admin
     {
         $this->getLayout()->removeSidebar();
 
-        // The search box POSTs the term; legacy links may still carry it
-        // as ?search=.... Both are redirected to the canonical path-style
-        // URL. Only POST/query values trigger the redirect - a path param
-        // means the URL is already canonical, so redirecting on it would
-        // loop. Terms containing "/" cannot round-trip through path params,
-        // so they keep their current URL (the term is still read below).
-        $source = $this->getRequest()->getPost('search')
-            ?? $this->getRequest()->getQuery('search');
+        // The search box POSTs the term; it is redirected to the canonical
+        // path-style URL. The redirect is based on the POST value only - a
+        // path param means the URL is already canonical, so redirecting on
+        // it would loop. Terms containing "/" cannot round-trip through
+        // path params, so they keep their current URL (the term is still
+        // read below).
+        $source = $this->getRequest()->getPost('search');
         $canonical = mb_substr(trim((string)$source, " \f\n\r\t\v\x00"), 0, 100);
         if ($canonical !== '' && strpos($canonical, '/') === false) {
             $this->redirect($this->getLayout()->getUrl([
@@ -50,9 +48,9 @@ class Nav extends \Ilch\Controller\Admin
             ]));
         }
 
-        // The canonical URL carries the term as a path param; POST and
-        // query terms (including "/"-containing ones that skipped the
-        // redirect) are read from the source.
+        // The canonical URL carries the term as a path param; POST terms
+        // (including "/"-containing ones that skipped the redirect) are
+        // read from the source.
         $term = mb_substr(trim((string)($this->getRequest()->getParam('search')
             ?? $source
             ?? ''), " \f\n\r\t\v\x00"), 0, 100);
