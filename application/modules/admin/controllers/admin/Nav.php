@@ -91,8 +91,10 @@ class Nav extends \Ilch\Controller\Admin
             $module = $match['module'];
             $key = (string)$module->getKey();
 
-            if (!$user->hasAccess('module_' . $key)
-                && !($key === 'article' && $accesses->hasAccess('Admin', null, Accesses::TYPE_ARTICLE))) {
+            if (
+                !$user->hasAccess('module_' . $key)
+                && !($key === 'article' && $accesses->hasAccess('Admin', null, Accesses::TYPE_ARTICLE))
+            ) {
                 continue;
             }
             if (!$accesses->hasAccess('Admin_' . $key, $key)) {
